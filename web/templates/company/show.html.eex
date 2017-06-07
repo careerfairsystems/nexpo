@@ -5,6 +5,13 @@
   <li>
     <strong>Name:</strong>
     <%= @company.name %>
+
+    <h1> Categories </h1>
+    <ul>
+    <%= for category <- @categories, @conn do %>
+        <li><%= category.title %></li>
+    <% end %>
+    </ul>
   </li>
 
 </ul>

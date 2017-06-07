@@ -2,6 +2,7 @@ defmodule Nexpo.CompanyController do
   use Nexpo.Web, :controller
 
   alias Nexpo.Company
+  alias Nexpo.CompanyCategory
 
   def index(conn, _params) do
     companies = Repo.all(Company)
@@ -28,7 +29,8 @@ defmodule Nexpo.CompanyController do
 
   def show(conn, %{"id" => id}) do
     company = Repo.get!(Company, id)
-    render(conn, "show.html", company: company)
+    categories = Repo.all(CompanyCategory)
+    render(conn, "show.html", company: company, categories: categories)
   end
 
   def edit(conn, %{"id" => id}) do
