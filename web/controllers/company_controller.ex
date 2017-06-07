@@ -29,7 +29,10 @@ defmodule Nexpo.CompanyController do
 
   def show(conn, %{"id" => id}) do
     company = Repo.get!(Company, id)
-    categories = Repo.all(CompanyCategory)
+    categories =
+    Repo.all(CompanyCategory)
+    |> Repo.preload(:attributes)
+
     render(conn, "show.html", company: company, categories: categories)
   end
 

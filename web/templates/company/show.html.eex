@@ -7,11 +7,15 @@
     <%= @company.name %>
 
     <h1> Categories </h1>
-    <ul>
     <%= for category <- @categories, @conn do %>
-        <li><%= category.title %></li>
+        <h2><%= category.title %></h2>
+            <ul>
+            <%= for attribute <- category.attributes, @conn do %>
+                <li> <%= attribute.title %> </li>
+             <% end %>
+            </ul>
+
     <% end %>
-    </ul>
   </li>
 
 </ul>

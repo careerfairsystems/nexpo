@@ -1,10 +1,13 @@
-defmodule Nexpo.CompanyCategory do
+defmodule Nexpo.CompanyCategoryAttribute do
   use Nexpo.Web, :model
 
-  schema "company_categories" do
+  schema "company_category_attributes" do
     field :title, :string
+    field :type, :string
+    field :value, :string
 
-    has_many :attributes, Nexpo.CompanyCategoryAttribute
+    field :company_category_id, :integer
+    has_one :category, Nexpo.CompanyCategory
 
     timestamps()
   end
