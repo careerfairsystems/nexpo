@@ -4,6 +4,8 @@ defmodule Nexpo.Company do
   schema "companies" do
     field :name, :string
 
+    has_many :entries, Nexpo.AttributeEntry
+
     timestamps()
   end
 

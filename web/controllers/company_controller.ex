@@ -5,8 +5,12 @@ defmodule Nexpo.CompanyController do
   alias Nexpo.CompanyCategory
 
   def index(conn, _params) do
-    companies = Repo.all(Company)
-    render(conn, "index.html", companies: companies)
+    companies =
+    Repo.all(Company)
+    |> Repo.preload(entries: :attribute)
+
+    render(conn, "index.json", companies: companies)
+    # render(conn, "index.html", companies: companies)
   end
 
   def new(conn, _params) do
@@ -28,12 +32,10 @@ defmodule Nexpo.CompanyController do
   end
 
   def show(conn, %{"id" => id}) do
-    company = Repo.get!(Company, id)
-    categories =
-    Repo.all(CompanyCategory)
-    |> Repo.preload(:attributes)
-
-    render(conn, "show.html", company: company, categories: categories)
+    company =
+    Repo.get!(Company, id)
+    |> Repo.preload(:entries)
+    render(conn, "show.json", company: company)
   end
 
   def edit(conn, %{"id" => id}) do

@@ -6,8 +6,12 @@ defmodule Nexpo.CompanyCategoryAttribute do
     field :type, :string
     field :value, :string
 
-    field :company_category_id, :integer
-    has_one :category, Nexpo.CompanyCategory
+    #field :company_category_id, :integer
+    belongs_to :category, Nexpo.CompanyCategory, foreign_key: :company_category_id
+
+    #field :attribute_entry_id, :integer
+    has_many :entries, Nexpo.AttributeEntry#, foreign_key: :attribute_entry_id
+
 
     timestamps()
   end
