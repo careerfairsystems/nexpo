@@ -1,8 +1,8 @@
-defmodule Nexpo.Repo.Migrations.CreateCompanyCategoryAttribute do
+defmodule Nexpo.Repo.Migrations.CreateCompanyAttribute do
   use Ecto.Migration
 
   def change do
-    create table(:company_category_attributes) do
+    create table(:company_attributes) do
       add :title, :string
       add :type, :string
       add :value, :string

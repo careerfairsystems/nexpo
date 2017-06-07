@@ -19,6 +19,7 @@ defmodule Nexpo.CompanyView do
       |> Enum.map(fn e ->
         Map.put(%{}, e.attribute.title, e.value)
       end)
+      |> IO.inspect()
       |> Enum.reduce(fn o, acc -> Map.merge(acc, o) end)
 
       Map.merge(result, base)

@@ -1,18 +1,18 @@
-defmodule Nexpo.AttributeEntryTest do
+defmodule Nexpo.CompanyEntryTest do
   use Nexpo.ModelCase
 
-  alias Nexpo.AttributeEntry
+  alias Nexpo.CompanyEntry
 
   @valid_attrs %{value: "some content"}
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do
-    changeset = AttributeEntry.changeset(%AttributeEntry{}, @valid_attrs)
+    changeset = CompanyEntry.changeset(%CompanyEntry{}, @valid_attrs)
     assert changeset.valid?
   end
 
   test "changeset with invalid attributes" do
-    changeset = AttributeEntry.changeset(%AttributeEntry{}, @invalid_attrs)
+    changeset = CompanyEntry.changeset(%CompanyEntry{}, @invalid_attrs)
     refute changeset.valid?
   end
 end

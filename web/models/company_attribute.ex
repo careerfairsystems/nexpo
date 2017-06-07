@@ -1,7 +1,7 @@
-defmodule Nexpo.CompanyCategoryAttribute do
+defmodule Nexpo.CompanyAttribute do
   use Nexpo.Web, :model
 
-  schema "company_category_attributes" do
+  schema "company_attributes" do
     field :title, :string
     field :type, :string
     field :value, :string
@@ -10,7 +10,7 @@ defmodule Nexpo.CompanyCategoryAttribute do
     belongs_to :category, Nexpo.CompanyCategory, foreign_key: :company_category_id
 
     #field :attribute_entry_id, :integer
-    has_many :entries, Nexpo.AttributeEntry#, foreign_key: :attribute_entry_id
+    has_many :entries, Nexpo.CompanyEntry#, foreign_key: :company_entry_id
 
 
     timestamps()
