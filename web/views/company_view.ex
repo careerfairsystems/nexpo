@@ -15,17 +15,24 @@ defmodule Nexpo.CompanyView do
         name: company.name
       }
 
-      result = company.entries
-      |> Enum.map(fn e ->
-        Map.put(%{}, e.attribute.title, e.value)
-      end)
-      |> IO.inspect()
-      |> Enum.reduce(fn o, acc -> Map.merge(acc, o) end)
+      if (not ListCheck.is_empty(company.entries)) do
+          result = company.entries
+          |> Enum.map(fn e ->
+            Map.put(%{}, e.attribute.title, e.value)
+          end)
+          |> Enum.reduce(fn o, acc -> Map.merge(acc, o) end)
 
-      Map.merge(result, base)
-
-
+          Map.merge(result, base)
+      end
 
     end
 
+
+end
+
+defmodule ListCheck do
+  def is_empty([]), do: true
+  def is_empty(list) when is_list(list) do
+    false
+  end
 end
