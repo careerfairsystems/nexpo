@@ -49,7 +49,7 @@ Repo.insert!(%CompanyAttribute{title: "Koli", company_category_id: 1})
 Repo.insert!(%CompanyAttribute{title: "Beskrivning", company_category_id: 2})
 Repo.insert!(%CompanyAttribute{title: "Länk till document", company_category_id: 2})
 Repo.insert!(%CompanyAttribute{title: "Ansvarig", company_category_id: 2})
-Repo.insert!(%CompanyAttribute{title: "Kontakt", company_category_id: 2})
+Repo.insert!(%CompanyAttribute{title: "Kontakt Uppgifter", company_category_id: 2})
 
 Repo.insert!(%CompanyAttribute{title: "Udda beställning", company_category_id: 3})
 Repo.insert!(%CompanyAttribute{title: "Extra ketchup", company_category_id: 3})

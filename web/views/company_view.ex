@@ -23,6 +23,8 @@ defmodule Nexpo.CompanyView do
           |> Enum.reduce(fn o, acc -> Map.merge(acc, o) end)
 
           Map.merge(result, base)
+      else
+          base
       end
 
     end
