@@ -27,6 +27,9 @@ defmodule Nexpo.ConnCase do
 
       import Nexpo.Router.Helpers
 
+      # Make factory work in tests
+      alias Nexpo.Factory
+
       # The default endpoint for testing
       @endpoint Nexpo.Endpoint
     end
