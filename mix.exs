@@ -39,7 +39,8 @@ defmodule Nexpo.Mixfile do
      {:gettext, "~> 0.11"},
      {:cowboy, "~> 1.0"},
      {:ex_machina, "~> 2.0"},
-     {:poison, "~> 2.0"}]
+     {:poison, "~> 2.0"},
+     {:mix_test_watch, "~> 0.3", only: :dev, runtime: false},]
   end
 
   # Aliases are shortcuts or tasks specific to the current project.

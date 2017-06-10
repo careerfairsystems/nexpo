@@ -1,5 +1,11 @@
 use Mix.Config
 
+# Configure test watcher
+if Mix.env == :dev do
+  config :mix_test_watch,
+    clear: true
+end
+
 # For development, we disable any cache and enable
 # debugging and code reloading.
 #
