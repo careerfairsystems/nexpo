@@ -22,6 +22,10 @@ defmodule Nexpo.ModelCase do
       import Ecto.Changeset
       import Ecto.Query
       import Nexpo.ModelCase
+
+      # Make factory work in tests
+      alias Nexpo.Factory
+
     end
   end
 

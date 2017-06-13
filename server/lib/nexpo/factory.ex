@@ -17,13 +17,13 @@ defmodule Nexpo.Factory do
         }
     end
 
-    def company_attributes_factory do
+    def company_attribute_factory do
         %Nexpo.CompanyAttribute{
             title: sequence("Generated Attribute"),
             type: sequence("Generated type"),
             value: sequence("Generated value"),
 
-            # category: build(:company_category),
+            category: build(:company_category),
             # entries: [build(:company_entry)]
         }
     end
@@ -32,8 +32,8 @@ defmodule Nexpo.Factory do
         %Nexpo.CompanyEntry{
             value: sequence("Generated value"),
 
-            # company: build(:company),
-            # attribute: build(:company_attribute)
+            company: build(:company),
+            attribute: build(:company_attribute)
         }
     end
 
