@@ -18,14 +18,13 @@ defmodule Nexpo.Router do
 
     get "/", PageController, :index
 
-    resources "/companies", CompanyController
   end
 
   # Other scopes may use custom stacks.
    scope "/api", Nexpo do
      pipe_through :api
 
-     resources "/companies", CompanyController
+     resources "/companies", CompanyController, only: [:index, :show]
 
    end
 end
