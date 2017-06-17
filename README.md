@@ -1,3 +1,32 @@
+# Table of Contents
+<!--
+To update table of contents, use doctoc:
+  npm i -g doctoc
+  doctoc README.md --github
+
+Further read: https://github.com/thlorenz/doctoc
+-->
+
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+
+- [Technical Description](#technical-description)
+- [System Requirements](#system-requirements)
+- [Development](#development)
+  - [Setup environment](#setup-environment)
+    - [Mac](#mac)
+    - [Linux](#linux)
+    - [Windows](#windows)
+  - [Develop](#develop)
+    - [Phoenix](#phoenix)
+    - [React](#react)
+  - [Documentation](#documentation)
+- [Deployment](#deployment)
+- [Who do I contact?](#who-do-i-contact)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # Technical Description
 Nexpo consists of two parts
 - Phoenix backend
@@ -50,11 +79,12 @@ Tests reside in ```/test```.
 - Start development server using ```yarn start```
 
 ## Documentation
-[REST API docs](https://careerfairsystems.github.io/nexpo/).
+[REST API docs](https://careerfairsystems.github.io/nexpo/)
 
 The REST API is documented using [Slate](https://github.com/lord/slate)
 - Documentation is changed in the ```docs``` branch.
 - run ```./deploy.sh``` after you have pushed your changes, to publish them
+- This builds the files, and pushes them to the ```gh-pages``` branch
 
 # Deployment
 >Pending.
@@ -62,8 +92,8 @@ The REST API is documented using [Slate](https://github.com/lord/slate)
 - Phoenix has a Heroku buildpack
 - React frontend must be built on heroku push
 
-[Phoenix deployment](http://www.phoenixframework.org/docs/deployment).
+[Phoenix deployment](http://www.phoenixframework.org/docs/deployment)
 
-# Who do I contanct?
-- [Joel Klint](mailto:joel.klint@gmail.com)
-- [Oscar Rydh](mailto:oscar.rydh.93@gmail.com)
+# Who do I contact?
+- [Joel Klint](mailto:joel.klint@gmail.com) (Developer 2017)
+- [Oscar Rydh](mailto:oscar.rydh.93@gmail.com) (Developer 2017)
