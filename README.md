@@ -1,20 +1,69 @@
-# Nexpo
+# Technical Description
+Nexpo consists of two parts
+- Phoenix backend
+- [React frontend](priv/react_app)
 
-To start your Phoenix app:
+# System Requirements
+This system intends to follow stable releases. The system is verified to work with the follow setup
+- Elixir 1.4.4
+- Erlang OTP 19
+- Node 6.11.0
+- PostgreSQL 9.6.2
 
-  * Install dependencies with `mix deps.get`
-  * Create and migrate your database with `mix ecto.create && mix ecto.migrate`
-  * Install Node.js dependencies with `npm install`
-  * Start Phoenix endpoint with `mix phoenix.server`
+# Development
+## Setup environment
+This project assumes you have some programs installed:
+- ```nvm``` - [Installation instructions](https://github.com/creationix/nvm#install-script)
+- ```brew``` (If you are on mac) - [Installation instructions](https://brew.sh/index.html)
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+Copy paste the relevant code block into your terminal.
+### Mac
+```sh
+brew update
+brew install elixir
+mix local.hex
+mix archive.install https://github.com/phoenixframework/archives/raw/master/phoenix_new.ez
+nvm install 6.11.0 --lts
+brew install postgresql
+brew services start postgresql
 
-Ready to run in production? Please [check our deployment guides](http://www.phoenixframework.org/docs/deployment).
+mix deps.get
+mix ecto.create
+mix ecto.migrate
+cd priv/react_app && yarn install
+```
+### Linux
+>Pending
 
-## Learn more
+### Windows
+Get a grip of yourself. Get a real OS, and then come back
 
-  * Official website: http://www.phoenixframework.org/
-  * Guides: http://phoenixframework.org/docs/overview
-  * Docs: https://hexdocs.pm/phoenix
-  * Mailing list: http://groups.google.com/group/phoenix-talk
-  * Source: https://github.com/phoenixframework/phoenix
+## Develop
+### Phoenix
+The Phoenix server is developed using [TDD](https://en.wikipedia.org/wiki/Test-driven_development).
+Tests reside in ```/test```.
+- Run testwatcher using ```mix test.watch```
+- Start server using ```mix phoenix.server```
+
+### React
+- You must stand in ```/priv/react_app```
+- Start development server using ```yarn start```
+
+## Documentation
+[REST API docs](https://careerfairsystems.github.io/nexpo/).
+
+The REST API is documented using [Slate](https://github.com/lord/slate)
+- Documentation is changed in the ```docs``` branch.
+- run ```./deploy.sh``` after you have pushed your changes, to publish them
+
+# Deployment
+>Pending.
+
+- Phoenix has a Heroku buildpack
+- React frontend must be built on heroku push
+
+[Phoenix deployment](http://www.phoenixframework.org/docs/deployment).
+
+# Who do I contanct?
+- [Joel Klint](mailto:joel.klint@gmail.com)
+- [Oscar Rydh](mailto:oscar.rydh.93@gmail.com)
