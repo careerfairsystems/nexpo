@@ -3,6 +3,7 @@ defmodule Nexpo.Company do
 
   schema "companies" do
     field :name, :string
+    field :email, :string
 
     has_many :entries, Nexpo.CompanyEntry
 

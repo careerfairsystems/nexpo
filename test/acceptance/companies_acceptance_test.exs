@@ -63,4 +63,15 @@ defmodule Nexpo.CompaniesAcceptanceTest do
 
   end
 
+  test "/companies can contain an email", %{conn: conn} do
+    companies = Factory.insert_list(3, :company)
+    conn = conn |> get("/api/companies")
+    assert json_response(conn, 200)
+    response = Poison.decode!(conn.resp_body)["data"]
+    assert length(companies) == length(response)
+    #assert response == nil
+    emails = Enum.map(response, fn entry -> Map.get(entry, "email") end)
+    assert Enum.map(emails, fn email -> String.contains?(email, "Generated@email.com") end)
+  end
+
 end

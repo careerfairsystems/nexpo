@@ -51,7 +51,8 @@ defmodule Nexpo.CompanyView do
       # Define parameters from company table to be included
       base = %{
         id: company.id,
-        name: company.name
+        name: company.name,
+        email: company.email
       }
 
       # Merge the company parameters with formatted categories/attributes/entries

@@ -4,6 +4,7 @@ defmodule Nexpo.Factory do
     def company_factory do
         %Nexpo.Company{
             name: sequence("Generated Company"),
+            email: sequence("Generated@email.com")
 
             # entries: [build(:company_entry)]
         }
