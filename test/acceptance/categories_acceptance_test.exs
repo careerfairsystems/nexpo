@@ -4,10 +4,7 @@ defmodule Nexpo.CategoriesAcceptanceTest do
   setup %{conn: conn} do
     {:ok, conn: put_req_header(conn, "accept", "application/json")}
   end
-
-
-
-
+  
   test "GET /categories returns all companies", %{conn: conn} do
     company_categories = Factory.insert_list(3, :company_category)
     conn = conn |> get("/api/categories")
