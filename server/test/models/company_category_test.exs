@@ -3,25 +3,16 @@ defmodule Nexpo.CompanyCategoryTest do
 
   alias Nexpo.CompanyCategory
 
-  test "changeset can change all valid params" do
-    params = Factory.params_with_assocs(:company_category)
-    changeset = CompanyCategory.changeset(%CompanyCategory{}, params)
+  @valid_attrs %{title: "some content"}
+  @invalid_attrs %{}
 
-    # Assert no errors
-    assert length(changeset.errors) == 0
-    # Assert all params were changed
-    changes = changeset.changes
-    assert Map.get(params, :title) == Map.get(changes, :title)
+  test "changeset with valid attributes" do
+    changeset = CompanyCategory.changeset(%CompanyCategory{}, @valid_attrs)
+    assert changeset.valid?
   end
 
-  test "compulsory parameters must exist" do
-    errors =
-    CompanyCategory.changeset(%CompanyCategory{}, %{})
-    |> Map.get(:errors)
-    |> Enum.map(&Tuple.to_list(&1))
-
-    # Test that all errors exists
-    assert Enum.any?(errors, &(List.first(&1) == :title))
+  test "changeset with invalid attributes" do
+    changeset = CompanyCategory.changeset(%CompanyCategory{}, @invalid_attrs)
+    refute changeset.valid?
   end
-
 end

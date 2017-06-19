@@ -23,5 +23,10 @@ erl_crash.dump
 # variables.
 /config/prod.secret.exs
 
+#config due to new behavior on linux
+/config/
+
+
 # Editor stuff
 .idea
+
