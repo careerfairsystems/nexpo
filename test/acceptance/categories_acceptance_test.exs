@@ -16,7 +16,7 @@ defmodule Nexpo.CategoriesAcceptanceTest do
     assert Enum.map(response, fn entry -> Map.keys(entry) |> Enum.map(&String.contains?(&1, "Generated Category")) end)
   end
 
-  test "/categories returns attributes correctly" do
+  test "/categories returns attributes correctly", %{conn: conn} do
     #Check the first attribute
     company_categories = Factory.insert_list(3, :company_category)
     Factory.insert_list(2, :company_attribute, %{category: Enum.at(company_categories, 0)})
@@ -38,8 +38,6 @@ defmodule Nexpo.CategoriesAcceptanceTest do
     end)
     attr_keys = Map.keys(List.first(attributes))
     assert Enum.map(attr_keys, &String.contains?(&1, "Generated Attribute"))
-    #assert val == nil
-
 
 
   end

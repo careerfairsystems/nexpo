@@ -16,7 +16,7 @@ defmodule Nexpo.Router do
   scope "/", Nexpo do
     pipe_through :browser # Use the default browser stack
 
-    get "/", PageController, :index
+    # get "/", PageController, :index
 
   end
 
