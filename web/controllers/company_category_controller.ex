@@ -8,26 +8,26 @@ defmodule Nexpo.CompanyCategoryController do
     render(conn, "index.json", company_categories: company_categories)
   end
 
-#  def create(conn, %{"company_category" => company_category_params}) do
-#    changeset = CompanyCategory.changeset(%CompanyCategory{}, company_category_params)
+  def create(conn,company_category_params) do
+    changeset = CompanyCategory.changeset(%CompanyCategory{}, company_category_params)
+    company_categories = Repo.all(CompanyCategory)
+    case Repo.insert(changeset) do
+      {:ok, company_category} ->
+        conn
+        |> put_status(:created)
+        |> put_resp_header("location", company_category_path(conn, :show, company_category))
+        |> render("show.json", company_category: company_category)
+      {:error, changeset} ->
+        conn
+        |> put_status(:unprocessable_entity)
+        |> render(Nexpo.ChangesetView, "error.json", changeset: changeset)
+    end
+  end
 #
-#    case Repo.insert(changeset) do
-#      {:ok, company_category} ->
-#        conn
-#        |> put_status(:created)
-#        |> put_resp_header("location", company_category_path(conn, :show, company_category))
-#        |> render("show.json", company_category: company_category)
-#      {:error, changeset} ->
-#        conn
-#        |> put_status(:unprocessable_entity)
-#        |> render(Nexpo.ChangesetView, "error.json", changeset: changeset)
-#    end
-#  end
-#
-#  def show(conn, %{"id" => id}) do
-#    company_category = Repo.get!(CompanyCategory, id)
-#    render(conn, "show.json", company_category: company_category)
-#  end
+  def show(conn, %{"id" => id}) do
+    company_category = Repo.get!(CompanyCategory, id)
+    render(conn, "show.json", company_category: company_category)
+  end
 #
 #  def update(conn, %{"id" => id, "company_category" => company_category_params}) do
 #    company_category = Repo.get!(CompanyCategory, id)

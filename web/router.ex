@@ -25,7 +25,7 @@ defmodule Nexpo.Router do
      pipe_through :api
 
      resources "/companies", CompanyController, only: [:index, :show]
-     resources "/categories", CompanyCategoryController, only: [:index]
+     resources "/categories", CompanyCategoryController, only: [:index, :create, :show]
 
    end
 end

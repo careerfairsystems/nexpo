@@ -5,7 +5,7 @@ defmodule Nexpo.CategoriesAcceptanceTest do
     {:ok, conn: put_req_header(conn, "accept", "application/json")}
   end
 
-  test "/categories returns all companies", %{conn: conn} do
+  test "GET /categories returns all companies", %{conn: conn} do
     company_categories = Factory.insert_list(3, :company_category)
     conn = conn |> get("/api/categories")
 
@@ -16,7 +16,7 @@ defmodule Nexpo.CategoriesAcceptanceTest do
     assert Enum.map(response, fn entry -> Map.keys(entry) |> Enum.map(&String.contains?(&1, "Generated Category")) end)
   end
 
-  test "/categories returns attributes correctly", %{conn: conn} do
+  test "GET /categories returns attributes correctly", %{conn: conn} do
     #Check the first attribute
     company_categories = Factory.insert_list(3, :company_category)
     Factory.insert_list(2, :company_attribute, %{category: Enum.at(company_categories, 0)})
@@ -24,7 +24,7 @@ defmodule Nexpo.CategoriesAcceptanceTest do
     assert json_response(conn, 200)
     response = Poison.decode!(conn.resp_body)["data"]
 
-    company_categories = Enum.map(response, &Map.keys(&1))
+    company_categories = Enum.map(response, &Map.keys(&1) |> Enum.filter(fn entry -> not String.contains?(entry, "id") end))
     assert length(company_categories) == 3
     assert Enum.map(company_categories, fn category_list -> Enum.map(category_list, &String.contains?(&1, "Generated Category")) end)
 
@@ -42,12 +42,39 @@ defmodule Nexpo.CategoriesAcceptanceTest do
 
   end
 
-  test "/categories returns empty list if there are no categories", %{conn: conn} do
+  test "GET /categories returns empty list if there are no categories", %{conn: conn} do
     conn = conn |> get("/api/categories")
 
     assert json_response(conn, 200)
     response = Poison.decode!(conn.resp_body)["data"]
     assert length(response) == 0
+  end
+
+
+  test "POST /categories can insert a valid record", %{conn: conn} do
+    conn = conn |> post("/api/categories", %{title: "TestCat"})
+    assert json_response(conn, 201)
+
+    conn = conn |> get("/api/categories")
+    assert json_response(conn, 200)
+    response = Poison.decode!(conn.resp_body)["data"]
+    assert List.first(response) |> Map.keys() |> List.first()  == "TestCat"
+
+   end
+
+  test "POST /categories cannot insert an empty record", %{conn: conn} do
+    conn = conn |> post("/api/categories", %{title: ""})
+    assert json_response(conn, 422)
+  end
+
+  test "POST /categories cannot insert an invalid record", %{conn: conn} do
+    conn = conn |> post("/api/categories", %{some_random_key: "Some random value"})
+    assert json_response(conn, 422)
+    conn = conn |> post("/api/categories", %{title: "A fully valid category", some_random_key: "Some random value"})
+    response = Poison.decode!(conn.resp_body)["data"]
+    assert Map.keys(response) |> List.first() == "A fully valid category"
+    assert Map.keys(response) |> Enum.map(fn entry -> String.contains?(entry, "Some random value") end)
+    assert json_response(conn, 201)
   end
 
 

@@ -23,7 +23,7 @@ defmodule Nexpo.CompanyCategoryView do
      #Put into a map
      if (result != []) do
      categories = Enum.map(result, fn category ->
-     %{} |> Map.put(category.title, Enum.map(category.attributes, fn attribute ->
+     %{id: category.id} |> Map.put(category.title, Enum.map(category.attributes, fn attribute ->
         %{} |> Map.put(attribute.title, attribute.value)
       end)
       |> Enum.reduce(fn x, acc -> Map.merge(acc, x) end)
@@ -35,7 +35,8 @@ defmodule Nexpo.CompanyCategoryView do
       query = from( category in Nexpo.CompanyCategory,
                    where: category.title == ^company_category.title)
       result = Nexpo.Repo.all(query)
-      %{} |> Map.put(List.first(result) |> Map.get(:title), %{})
+      final = %{} |> Map.put(List.first(result) |> Map.get(:title), %{})
+      Map.merge(%{id: company_category.id}, final)
     end
   end
 end
