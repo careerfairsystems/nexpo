@@ -22,7 +22,6 @@ defmodule Nexpo.CompanyCategoryView do
      result = Nexpo.Repo.all(query)
      #Put into a map
      if (result != []) do
-     #if (category.attributes != [])do
      categories = Enum.map(result, fn category ->
      %{} |> Map.put(category.title, Enum.map(category.attributes, fn attribute ->
         %{} |> Map.put(attribute.title, attribute.value)
