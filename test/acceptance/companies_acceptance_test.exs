@@ -5,7 +5,7 @@ defmodule Nexpo.CompaniesAcceptanceTest do
     {:ok, conn: put_req_header(conn, "accept", "application/json")}
   end
 
-  test "/companies returns all companies", %{conn: conn} do
+  test "GET /companies returns all companies", %{conn: conn} do
     companies = Factory.insert_list(3, :company)
     conn = conn |> get("/api/companies")
 
@@ -14,7 +14,7 @@ defmodule Nexpo.CompaniesAcceptanceTest do
     assert length(response) == length(companies)
   end
 
-  test "/companies returns empty list if there are no companies", %{conn: conn} do
+  test "GET /companies returns empty list if there are no companies", %{conn: conn} do
     conn = conn |> get("/api/companies")
 
     assert json_response(conn, 200)
@@ -22,7 +22,7 @@ defmodule Nexpo.CompaniesAcceptanceTest do
     assert length(response) == 0
   end
 
-  test "/companies/:id returns the entire company structure even if company does not have all entries", %{conn: conn} do
+  test "GET /companies/:id returns the entire company structure even if company does not have all entries", %{conn: conn} do
     # Create the structure
     categories = Factory.insert_list(3, :company_category)
     attributes_1 = Factory.insert_list(2, :company_attribute, %{category: Enum.at(categories, 0)})
@@ -72,6 +72,21 @@ defmodule Nexpo.CompaniesAcceptanceTest do
     #assert response == nil
     emails = Enum.map(response, fn entry -> Map.get(entry, "email") end)
     assert Enum.map(emails, fn email -> String.contains?(email, "Generated@email.com") end)
+  end
+
+  test "POST /companies with valid params work", %{conn: conn} do
+    conn = conn |> post("/api/companies", %{name: "Test Company"})
+    assert json_response(conn, 201)
+  end
+
+  test "POST /companies with empty params do not work", %{conn: conn} do
+    conn = conn |> post("/api/companies", %{name: ""})
+        assert json_response(conn, 422)
+  end
+
+  test "POST /companies with invalid params do not work", %{conn: conn} do
+    conn = conn |> post("/api/companies", %{nameless: "Test Company"})
+    assert json_response(conn, 422)
   end
 
 end

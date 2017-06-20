@@ -8,9 +8,8 @@ defmodule Nexpo.CompanyCategoryController do
     render(conn, "index.json", company_categories: company_categories)
   end
 
-  def create(conn,company_category_params) do
+  def create(conn, company_category_params) do
     changeset = CompanyCategory.changeset(%CompanyCategory{}, company_category_params)
-    company_categories = Repo.all(CompanyCategory)
     case Repo.insert(changeset) do
       {:ok, company_category} ->
         conn
