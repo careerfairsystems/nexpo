@@ -75,8 +75,37 @@ defmodule Nexpo.CompaniesAcceptanceTest do
   end
 
   test "POST /companies with valid params work", %{conn: conn} do
-    conn = conn |> post("/api/companies", %{name: "Test Company"})
+    conn = conn |> post("/api/companies", %{name: "Test Company 1"})
     assert json_response(conn, 201)
+    conn = conn |> post("/api/companies", %{name: "Test Company 2"})
+    assert json_response(conn, 201)
+    conn = conn |> post("/api/companies", %{name: "Test Company 3"})
+    assert json_response(conn, 201)
+
+    conn = conn |> get("/api/companies")
+    assert json_response(conn, 200)
+    response = Poison.decode!(conn.resp_body)["data"]
+
+    assert length(response) == 3
+    assert Enum.map(response, fn entry -> String.contains?(entry["name"], "Test Company") end)
+
+    conn = conn |> post("/api/companies", %{name: "Test Company 4", email: "Best1@email.com"})
+    assert json_response(conn, 201)
+    conn = conn |> post("/api/companies", %{name: "Test Company 5", email: "Best2@email.com"})
+    assert json_response(conn, 201)
+    conn = conn |> post("/api/companies", %{name: "Test Company 6", email: "Best3@email.com"})
+    assert json_response(conn, 201)
+
+    conn = conn |> get("/api/companies")
+    assert json_response(conn, 200)
+    response = Poison.decode!(conn.resp_body)["data"]
+    assert Enum.map(response, fn entry ->
+      case entry["email"] do
+        nil -> true
+        _ -> String.contains?(entry["email"], "@email.com")
+      end
+    end)
+
   end
 
   test "POST /companies with empty params do not work", %{conn: conn} do
@@ -87,6 +116,24 @@ defmodule Nexpo.CompaniesAcceptanceTest do
   test "POST /companies with invalid params do not work", %{conn: conn} do
     conn = conn |> post("/api/companies", %{nameless: "Test Company"})
     assert json_response(conn, 422)
+    conn = conn |> post("/api/companies", %{email: "an email without company name"})
+    assert json_response(conn, 422)
+  end
+
+  test "POST /companies email and company must be unique. Email defaults to nil", %{conn: conn} do
+    conn = conn |> post("/api/companies", %{name: "Test Company 1"})
+    assert json_response(conn, 201)
+    conn = conn |> post("/api/companies", %{name: "Test Company 1"})
+    assert json_response(conn, 422)
+    conn = conn |> post("/api/companies", %{name: "Test Company 2", email: "Best@email.com"})
+    assert json_response(conn, 201)
+    conn = conn |> post("/api/companies", %{name: "Test Company 3", email: "Best@email.com"})
+    assert json_response(conn, 201)
+    conn = conn |> get("/api/companies/3")
+    assert json_response(conn, 200)
+    response = Poison.decode!(conn.resp_body)["data"]
+
+    assert response["email"] == nil
   end
 
 end
