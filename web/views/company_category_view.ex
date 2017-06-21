@@ -24,7 +24,18 @@ defmodule Nexpo.CompanyCategoryView do
      if (result != []) do
      categories = Enum.map(result, fn category ->
      %{id: category.id} |> Map.put(category.title, Enum.map(category.attributes, fn attribute ->
-        %{} |> Map.put(attribute.title, attribute.value)
+        # Filtering out all metadata. __meta__ Also gives encoding errors for some reason with Poison
+        filtered_keys = Map.keys(attribute) |> Enum.filter(fn key ->
+          case key do
+            :value -> true
+            :type -> true
+            _ -> false
+          end
+        end)
+        attribute_meta_map = %{}
+        attribute_meta_map = Enum.map(filtered_keys, fn key -> Map.put(attribute_meta_map, key, Map.get(attribute, key)) end)
+        attribute_meta_map = Enum.reduce(attribute_meta_map ,fn x, acc -> Map.merge(acc, x) end)
+        %{} |> Map.put(attribute.title, attribute_meta_map)
       end)
       |> Enum.reduce(fn x, acc -> Map.merge(acc, x) end)
       )

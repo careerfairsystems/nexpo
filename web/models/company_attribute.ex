@@ -21,7 +21,7 @@ defmodule Nexpo.CompanyAttribute do
   """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:title, :company_category_id])
+    |> cast(params, [:title, :type, :value, :company_category_id])
     |> validate_required([:title, :company_category_id])
     |> foreign_key_constraint(:company_category_id)
   end

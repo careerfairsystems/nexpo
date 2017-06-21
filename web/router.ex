@@ -26,6 +26,7 @@ defmodule Nexpo.Router do
 
      resources "/companies", CompanyController, only: [:index, :create, :show]
      resources "/categories", CompanyCategoryController, only: [:index, :create, :show]
+     resources "/attributes", CompanyAttributeController, only: [:create]
 
    end
 end
