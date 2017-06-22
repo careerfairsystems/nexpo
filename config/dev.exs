@@ -1,4 +1,4 @@
-  use Mix.Config
+use Mix.Config
 
 # Configure test watcher
 if Mix.env == :dev do
@@ -42,8 +42,5 @@ config :phoenix, :stacktrace_depth, 20
 # Configure your database
 config :nexpo, Nexpo.Repo,
   adapter: Ecto.Adapters.Postgres,
-  username: "postgres",
-  password: "postgres",
   database: "nexpo_dev",
-  hostname: "localhost",
   pool_size: 10

@@ -1,0 +1,12 @@
+# A file that defines how to build assets
+
+# PWD is already ./priv/react_app
+# Specified by assets_path in phoenix_static_buildpack.config
+
+yarn run build
+
+
+# It seems create-react-app digests stuff for us
+# Otherwise, this is the default phoenix way
+# cd $phoenix_dir
+# mix "${phoenix_ex}.digest" priv/react_app/build priv/react_app/build
