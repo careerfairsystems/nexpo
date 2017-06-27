@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "jumpstate": "^2.2.2",
+    "material-ui": "^0.18.4",
     "react": "^15.6.0",
     "react-dom": "^15.6.0",
     "react-redux": "^5.0.5",
