@@ -24,6 +24,8 @@ defmodule Nexpo.AttributesAcceptanceTest do
     assert json_response(conn, 200)
     response = Poison.decode!(conn.resp_body)["data"]
 
+    assert Enum.map(Map.keys(List.first(response)), fn key -> String.contains?(key, "Logistik") end)
+
     #assert response.title == "Logistik"
     #assert Enum.map(Map.keys(List.first(response)), fn key ->  end)
 
