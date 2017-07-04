@@ -1,6 +1,8 @@
 defmodule Nexpo.CompanyCategory do
   use Nexpo.Web, :model
-
+   # This modell represents a company:
+   # title: company title
+   # id: company id
    schema "company_categories" do
      field :title, :string
 

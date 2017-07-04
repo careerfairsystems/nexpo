@@ -5,7 +5,7 @@ defmodule Nexpo.CategoriesAcceptanceTest do
     {:ok, conn: put_req_header(conn, "accept", "application/json")}
   end
 
-  test "GET /categories returns all companies", %{conn: conn} do
+  test "GET /categories returns all categories", %{conn: conn} do
     company_categories = Factory.insert_list(3, :company_category)
     conn = conn |> get("/api/categories")
 
@@ -13,7 +13,9 @@ defmodule Nexpo.CategoriesAcceptanceTest do
     response = Poison.decode!(conn.resp_body)["data"]
     assert length(response) == length(company_categories)
     assert Enum.count(response) == 3
-    assert Enum.map(response, fn entry -> Map.keys(entry) |> Enum.map(&String.contains?(&1, "Generated Category")) end)
+    assert response == nil
+    assert Enum.map(response, fn entry -> String.contains?(entry.title, "Generated Category") end)
+
   end
 
   test "GET /categories returns attributes correctly", %{conn: conn} do

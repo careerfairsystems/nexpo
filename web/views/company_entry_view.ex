@@ -1,30 +1,23 @@
-defmodule Nexpo.CompanyCategoryView do
+defmodule Nexpo.CompanyEntryView do
   use Nexpo.Web, :view
 
-  def render("index.json", %{company_categories: company_categories}) do
-    %{data: render_many(company_categories, Nexpo.CompanyCategoryView, "company_category.json")}
+  def render("index.json", %{company_entries: company_entries}) do
+    %{data: render_many(company_entries, Nexpo.CompanyEntryView, "company_entry.json")}
   end
 
-  def render("show.json", %{company_category: company_category}) do
-    %{data: render_one(company_category, Nexpo.CompanyCategoryView, "company_category.json")}
+  def render("show.json", %{company_entry: company_entry}) do
+    %{data: render_one(company_entry, Nexpo.CompanyEntryView, "company_entry.json")}
   end
 
-  def render("company_category.json", %{company_category: company_category}) do
+  def render("company_entry.json", %{company_entry: company_entry}) do
     import Ecto.Query
     #Get categories and attributes
 
-
     base = %{
-        "title": company_category.title,
-        "id": company_category.id,
-        "attributes": nil
-    }
+        "value": company_entry.value
+     }
 
-    if (Map.has_key?(company_category, :attributes)) do
-        IO.inspect(Map.get(company_category, :attributes))
-      base = Map.put(base, :attributes, render_many(Map.get(company_category, :attributes), Nexpo.CompanyAttributeView, "company_attribute.json"))
-    end
-    base
+
      #IO.inspect(company_category)
      #result = %{"title": List.first(company_category)}
      #company_category = List.delete(company_category, List.first(company_category))
