@@ -30,16 +30,22 @@
     {
       "id": 1,
       "title": "Logistik",
-      "entries": [
+      "attributes": [
         {
           "title": "Ståbord",
           "type": "number",
-          "value": 3
+          "value": "Var vänligt skriv in hur många ståbord du vill ha",
+          "entry": {
+            "value": 3
+          }
         },
         {
           "title": "Eluttag",
           "type": "number",
-          "value": 7
+          "value": "Här kan du skriva in så många eluttag du ska ha",
+          "entry": {
+            "value": null
+          }
         },
       ]
     }
