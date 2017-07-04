@@ -22,7 +22,7 @@ defmodule Nexpo.AttributesAcceptanceTest do
 
     conn = conn |> get("/api/categories")
     assert json_response(conn, 200)
-    response = Poison.decode!(conn.resp_body)["data"]
+    # response = Poison.decode!(conn.resp_body)["data"]
 
     #assert response.title == "Logistik"
     #assert Enum.map(Map.keys(List.first(response)), fn key ->  end)
