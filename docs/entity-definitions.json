@@ -1,0 +1,47 @@
+// Category
+{
+  "id": 1,
+  "title": "Logistik",
+  "attributes": [
+    {
+      "title": "Ståbord",
+      "type": "number",
+      "value": "Var vänligt skriv in hur många ståbord du vill ha"
+    },
+    {
+      "title": "Eluttag",
+      "type": "number",
+      "value": "Här kan du skriva in så många eluttag du ska ha"
+    },
+    {
+      "title": "Kontakt",
+      "type": "heading"
+      // "value": "Här kan du skriva in så många eluttag du ska ha"
+    }
+  ]
+}
+
+// Company förslag 1
+{
+  "id": 1,
+  "name": "Spotify",
+  "email": "info@spotify.se",
+  "categories": [
+    {
+      "id": 1,
+      "title": "Logistik",
+      "entries": [
+        {
+          "title": "Ståbord",
+          "type": "number",
+          "value": 3
+        },
+        {
+          "title": "Eluttag",
+          "type": "number",
+          "value": 7
+        },
+      ]
+    }
+  ]
+}
