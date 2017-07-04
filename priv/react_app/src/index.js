@@ -10,7 +10,8 @@ import {
   Switch,
 } from 'react-router-dom'
 
-//
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+
 import App from './App'
 import CounterState from './state/counter'
 import './index.css'
@@ -28,12 +29,14 @@ const store = createStore(
 
 ReactDOM.render(
   <Provider store={store}>
-    <Router>
-      <Switch>
-        <Route exact path='/' component={App}/>
-        <Route path='/test' render={() => <div>This is another route</div>}/>
-      </Switch>
-    </Router>
+    <MuiThemeProvider>
+      <Router>
+        <Switch>
+          <Route exact path='/' component={App}/>
+          <Route path='/test' render={() => <div>This is another route</div>}/>
+        </Switch>
+      </Router>
+    </MuiThemeProvider>
   </Provider>,
   document.getElementById('root')
 );

@@ -12,8 +12,5 @@ config :logger, level: :warn
 # Configure your database
 config :nexpo, Nexpo.Repo,
   adapter: Ecto.Adapters.Postgres,
-  username: "postgres",
-  password: "postgres",
   database: "nexpo_test",
-  hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox

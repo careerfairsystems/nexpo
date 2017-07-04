@@ -1,0 +1,2 @@
+server: mix phoenix.server
+react: cd priv/react_app && yarn start
