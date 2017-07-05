@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/careerfairsystems/nexpo.svg?branch=master)](https://travis-ci.org/careerfairsystems/nexpo)
 # Table of Contents
 <!--
 To update table of contents, use doctoc:
