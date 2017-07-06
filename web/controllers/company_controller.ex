@@ -28,6 +28,25 @@ defmodule Nexpo.CompanyController do
          |> render(Nexpo.ChangesetView, "error.json", changeset: changeset)     end
    end
 
+  @apidoc """
+  @api {GET} /companies/:id Get company
+  @apiName Get Company
+  @apiGroup Company
+
+  @apiParam {Number} id ID of the company
+
+  @apiSuccessExample {json} Success
+    HTTP 200 Ok
+    {
+      "id": 1,
+      "name": "CodeComp",
+      "email": "info@codecomp.com",
+      "categories": []
+    }
+
+  @apiUse NotFoundError
+  @apiUse InternalServerError
+  """
   def show(conn, %{"id" => id}) do
     categories = Repo.all from(
       category in Nexpo.CompanyCategory,
