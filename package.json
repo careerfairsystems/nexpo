@@ -1,8 +1,12 @@
 {
   "scripts": {
-    "generate-docs": "apidoc -i web -o API_DOCS"
+    "generate-docs": "apidoc -i web -o API_DOCS",
+    "dev-backend": "mix phoenix.server",
+    "dev-frontend": "cd priv/react_app && npm start",
+    "dev": "npm-run-all -p dev-backend dev-frontend"
   },
   "devDependencies": {
-    "apidoc": "^0.17.6"
+    "apidoc": "^0.17.6",
+    "npm-run-all": "^4.0.2"
   }
 }

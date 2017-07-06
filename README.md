@@ -47,7 +47,7 @@ This project assumes you have some programs installed:
 - ```nenv``` - [Installation instructions](https://github.com/ryuone/nenv#installation)
 - ```yarn```- [Installation instructions](https://yarnpkg.com/en/docs/install)
 - ```brew``` (If you are on mac) - [Installation instructions](https://brew.sh/index.html)
-- ```heroku CLI``` - [Installation instructions](https://devcenter.heroku.com/articles/heroku-cli)
+- ```heroku CLI``` (For deployment) - [Installation instructions](https://devcenter.heroku.com/articles/heroku-cli)
 - ```PostgreSQL```
 
 ```cd``` to the base catalog, then copy paste the relevant code block in your terminal.
@@ -91,10 +91,12 @@ Phoenix tests reside in [/test](/test)
 >TODO: Define how react tests works and where they are
 
 ### Start dev servers
-A separate development Procfile exists which allows us to start react dev server in parallell with phoenix server
-```sh
-heroku local -f Procfile.dev
-```
+There are three commands to start the servers:
+| Command                | Description                |
+|------------------------|----------------------------|
+| `npm run dev-backend`  | Start the backend          |
+| `npm run dev-frontend` | Start the frontend         |
+| `npm run dev`          | Start frontend and backend |
 
 ## Documentation
 The HTTP API is documented using [apiDoc](http://apidocjs.com).
