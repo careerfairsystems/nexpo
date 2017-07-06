@@ -13,20 +13,20 @@ defmodule Nexpo.CompanyController do
   #   render(conn, "new.html", changeset: changeset)
   # end
 
-   def create(conn, company_params) do
-     changeset = Company.changeset(%Company{}, company_params)
+  # def create(conn, company_params) do
+  #   changeset = Company.changeset(%Company{}, company_params)
 
-     case Repo.insert(changeset) do
-       {:ok, company} ->
-         conn
-         |> put_status(:created)
-         |> put_resp_header("location", company_category_path(conn, :show, company))
-         |> render("show.json", company: company)
-       {:error, changeset} ->
-         conn
-         |> put_status(:unprocessable_entity)
-         |> render(Nexpo.ChangesetView, "error.json", changeset: changeset)     end
-   end
+  #   case Repo.insert(changeset) do
+  #     {:ok, company} ->
+  #       conn
+  #       |> put_status(:created)
+  #       |> put_resp_header("location", company_category_path(conn, :show, company))
+  #       |> render("show.json", company: company)
+  #     {:error, changeset} ->
+  #       conn
+  #       |> put_status(:unprocessable_entity)
+  #       |> render(Nexpo.ChangesetView, "error.json", changeset: changeset)     end
+  # end
 
   @apidoc """
   @api {GET} /companies/:id Get company
