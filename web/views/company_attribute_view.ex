@@ -10,51 +10,13 @@ defmodule Nexpo.CompanyAttributeView do
   end
 
   def render("company_attribute.json", %{company_attribute: company_attribute}) do
-    import Ecto.Query
-    #Get categories and attributes
+    # Define own parameters to keep
+    base = [:title, :type, :value]
 
-    base = %{
-        "title": company_attribute.title,
-        "type": company_attribute.type,
-        "value": company_attribute.value,
-    }
+    # Define all relations to render
+    relations = [:entry]
 
-    #if (Map.has_key?(company_attribute, :entries)) do
-    #  base = Map.put(base, :entries, render_many(Map.get(company_attribute, :entries), Nexpo.CompanyEntryView, "company_entry.json"))
-    #end
-
-    base
-     #IO.inspect(company_category)
-     #result = %{"title": List.first(company_category)}
-     #company_category = List.delete(company_category, List.first(company_category))
-     #result = Map.put(result, "id", List.first(company_category))
-     #Put into a map
-#     categories = Enum.map(result, fn category ->
-#     %{id: category.id} |> Map.put(category.title, Enum.map(category.attributes, fn attribute ->
-#        # Filtering out all metadata. __meta__ Also gives encoding errors for some reason with Poison
-#        filtered_keys = Map.keys(attribute) |> Enum.filter(fn key ->
-#          case key do
-#            :value -> true
-#            :type -> true
-#            _ -> false
-#          end
-#        end)
-#        attribute_meta_map = %{}
-#        attribute_meta_map = Enum.map(filtered_keys, fn key -> Map.put(attribute_meta_map, key, Map.get(attribute, key)) end)
-#        attribute_meta_map = Enum.reduce(attribute_meta_map ,fn x, acc -> Map.merge(acc, x) end)
-#        %{} |> Map.put(attribute.title, attribute_meta_map)
-#      end)
-#      |> Enum.reduce(fn x, acc -> Map.merge(acc, x) end)
-#      )
-#     end)
-#     #Merge to single object
-#      Enum.reduce(categories, fn x, acc -> Map.merge(acc, x) end)
-#      else
-#      query = from( category in Nexpo.CompanyCategory,
-#                   where: category.title == ^company_category.title)
-#      result = Nexpo.Repo.all(query)
-#      final = %{} |> Map.put(List.first(result) |> Map.get(:title), %{})
-#      Map.merge(%{id: company_category.id}, final)
-
+    Nexpo.Support.View.render_object(company_attribute, base, relations)
   end
+
 end
