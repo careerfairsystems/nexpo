@@ -61,32 +61,4 @@ defmodule Nexpo.CategoriesAcceptanceTest do
     assert length(response) == 0
   end
 
-
-  test "POST /categories can insert a valid record", %{conn: conn} do
-    conn = conn |> post("/api/categories", %{title: "TestCat"})
-    assert json_response(conn, 201)
-
-    conn = conn |> get("/api/categories")
-    assert json_response(conn, 200)
-    response = Poison.decode!(conn.resp_body)["data"]
-    assert List.first(response) |> Map.keys() |> List.first()  == "TestCat"
-
-   end
-
-  test "POST /categories cannot insert an empty record", %{conn: conn} do
-    conn = conn |> post("/api/categories", %{title: ""})
-    assert json_response(conn, 422)
-  end
-
-  test "POST /categories cannot insert an invalid record", %{conn: conn} do
-    conn = conn |> post("/api/categories", %{some_random_key: "Some random value"})
-    assert json_response(conn, 422)
-    conn = conn |> post("/api/categories", %{title: "A fully valid category", some_random_key: "Some random value"})
-    response = Poison.decode!(conn.resp_body)["data"]
-    assert Map.keys(response) |> List.first() == "A fully valid category"
-    assert Map.keys(response) |> Enum.map(fn entry -> String.contains?(entry, "Some random value") end)
-    assert json_response(conn, 201)
-  end
-
-
 end

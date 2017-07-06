@@ -8,19 +8,19 @@ defmodule Nexpo.CompanyAttributeController do
 #    render(conn, "index.json", company_categories: company_categories)
 #  end
 
-  def create(conn, company_attribute_params) do
-    changeset = CompanyAttribute.changeset(%CompanyAttribute{}, company_attribute_params)
-    case Repo.insert(changeset) do
-      {:ok, _company_attribute} ->
-        conn
-        |> put_status(:created)
-        |> json(company_attribute_params)
-      {:error, changeset} ->
-        conn
-        |> put_status(:unprocessable_entity)
-        |> render(Nexpo.ChangesetView, "error.json", changeset: changeset)
-    end
-  end
+  # def create(conn, company_attribute_params) do
+  #   changeset = CompanyAttribute.changeset(%CompanyAttribute{}, company_attribute_params)
+  #   case Repo.insert(changeset) do
+  #     {:ok, _company_attribute} ->
+  #       conn
+  #       |> put_status(:created)
+  #       |> json(company_attribute_params)
+  #     {:error, changeset} ->
+  #       conn
+  #       |> put_status(:unprocessable_entity)
+  #       |> render(Nexpo.ChangesetView, "error.json", changeset: changeset)
+  #   end
+  # end
 #
 #  def show(conn, %{"id" => id}) do
 #    company_category = Repo.get!(CompanyCategory, id)
