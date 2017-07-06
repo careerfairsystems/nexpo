@@ -29,7 +29,14 @@ defmodule Nexpo.CompanyController do
    end
 
   def show(conn, %{"id" => id}) do
-    company = Repo.get(Company, id)
+    categories = Repo.all from(
+      category in Nexpo.CompanyCategory,
+      join: attribute in assoc(category, :attributes),
+      left_join: entry in Nexpo.CompanyEntry, on: entry.company_attribute_id == attribute.id and entry.company_id == ^id,
+      preload: [attributes: {attribute, entries: entry}]
+    )
+    company = Repo.get!(Company, id) |> Map.put(:categories, categories)
+    # company = Repo.get!(Company, id)
     render(conn, "show.json", company: company)
   end
 
