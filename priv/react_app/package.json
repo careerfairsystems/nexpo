@@ -29,7 +29,7 @@
     "build": "npm run build-css && react-scripts build",
     "test-js": "react-scripts test --env=jsdom",
     "test": "npm-run-all -p watch-css test-js",
-    "test-ci": "npm run build-css && npm run test-js",
+    "test-ci": "npm run build-css && CI=true npm run test-js",
     "eject": "react-scripts eject"
   }
 }

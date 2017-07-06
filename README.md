@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/careerfairsystems/nexpo.svg?branch=master)](https://travis-ci.org/careerfairsystems/nexpo)
+[![codebeat badge](https://codebeat.co/badges/144efba7-bfd8-47d6-807f-a5eda28a9590)](https://codebeat.co/projects/github-com-careerfairsystems-nexpo-master)
 # Table of Contents
 <!--
 To update table of contents, use doctoc:
@@ -47,12 +48,13 @@ This project assumes you have some programs installed:
 - ```nenv``` - [Installation instructions](https://github.com/ryuone/nenv#installation)
 - ```yarn```- [Installation instructions](https://yarnpkg.com/en/docs/install)
 - ```brew``` (If you are on mac) - [Installation instructions](https://brew.sh/index.html)
-- ```heroku CLI``` - [Installation instructions](https://devcenter.heroku.com/articles/heroku-cli)
+- ```heroku CLI``` (For deployment) - [Installation instructions](https://devcenter.heroku.com/articles/heroku-cli)
 - ```PostgreSQL```
 
 ```cd``` to the base catalog, then copy paste the relevant code block in your terminal.
 ### Mac
 ```sh
+# System requirements
 brew update
 brew install elixir
 mix local.hex
@@ -61,10 +63,13 @@ nenv install 6.11.0
 brew install postgresql
 brew services start postgresql
 
+# Language requirements
 mix deps.get
 mix ecto.create
 mix ecto.migrate
+yarn install
 cd priv/react_app && yarn install
+
 cd ../..
 ```
 ### Linux
@@ -87,18 +92,22 @@ Phoenix tests reside in [/test](/test)
 >TODO: Define how react tests works and where they are
 
 ### Start dev servers
-A separate development Procfile exists which allows us to start react dev server in parallell with phoenix server
-```sh
-heroku local -f Procfile.dev
-```
+There are three commands to start the servers:
+| Command                | Description                |
+|------------------------|----------------------------|
+| `npm run dev-backend`  | Start the backend          |
+| `npm run dev-frontend` | Start the frontend         |
+| `npm run dev`          | Start frontend and backend |
 
 ## Documentation
-[REST API docs](https://careerfairsystems.github.io/nexpo/)
+The HTTP API is documented using [apiDoc](http://apidocjs.com).
+Documentation is changed in the code via special tags. More detailed information can be found [here](http://apidocjs.com/#params)
 
-The REST API is documented using [Slate](https://github.com/lord/slate)
-- Documentation is changed in the [docs](careerfairsystems/nexpo/tree/docs) branch.
-- run ```./deploy.sh``` after you have pushed your changes, to publish them
-- This builds the files, and pushes them to the [gh-pages](careerfairsystems/nexpo/tree/gh-pages) branch
+Documentation generation instructions
+```sh
+npm run generate-docs
+```
+Documentation can be found in API_DOCS directory
 
 # Deployment
 The system is hosted at [arkad-nexpo.herokuapp.com](https://arkad-nexpo.herokuapp.com)
