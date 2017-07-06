@@ -7,7 +7,7 @@ matrix:
       install:
         - cd priv/react_app && npm install -g yarn && yarn install
       script:
-        - npm run test
+        - npm run test-ci
         - npm run build
     - elixir: 1.4.4
       otp_release: 19.3
