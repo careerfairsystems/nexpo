@@ -11,7 +11,7 @@ defmodule Nexpo.CompanyCategoryView do
 
   def render("company_category.json", %{company_category: company_category}) do
     # Define own parameters to keep
-    base = [:title, :id]
+    base = [:id, :title]
 
     # Define all relations to render
     relations = [:attributes]

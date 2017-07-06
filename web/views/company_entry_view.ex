@@ -11,7 +11,7 @@ defmodule Nexpo.CompanyEntryView do
 
   def render("company_entry.json", %{company_entry: company_entry}) do
     # Define own parameters to keep
-    base = [:value]
+    base = [:id, :value]
 
     # Define all relations to render
     relations = []

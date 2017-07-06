@@ -10,7 +10,7 @@ defmodule Nexpo.Support.View do
 
     # Populate relations
     relations = relations_params
-    |> Enum.filter(fn r -> Map.has_key?(object, r) end)
+    |> Enum.filter(fn r -> Map.has_key?(object, r) && is_loaded(Map.get(object, r)) end)
     |> Enum.map(fn r -> render_relation(r, object) end)
 
     # Return base if there are no relations
@@ -36,6 +36,14 @@ defmodule Nexpo.Support.View do
         %{:entry => render_one(object.entry, Nexpo.CompanyEntryView, "company_entry.json")}
       _ ->
         %{}
+    end
+  end
+
+  # Checks wheter association has been loaded
+  defp is_loaded(object) do
+    case object do
+      %Ecto.Association.NotLoaded{} -> false
+      _ -> true
     end
   end
 

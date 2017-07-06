@@ -4,13 +4,8 @@ defmodule Nexpo.CompanyCategoryController do
   alias Nexpo.CompanyCategory
 
   def index(conn, _params) do
-    query = from(
-      category in Nexpo.CompanyCategory,
-      distinct: true,
-      join: attribute in assoc(category, :attributes),
-      preload: :attributes
-    )
-    company_categories = Repo.all(query)
+
+    company_categories = Repo.all(CompanyCategory) |> Repo.preload(:attributes)
 
     render(conn, "index.json", company_categories: company_categories)
   end
