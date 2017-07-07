@@ -1,13 +1,7 @@
 [![Build Status](https://travis-ci.org/careerfairsystems/nexpo.svg?branch=master)](https://travis-ci.org/careerfairsystems/nexpo)
 [![codebeat badge](https://codebeat.co/badges/144efba7-bfd8-47d6-807f-a5eda28a9590)](https://codebeat.co/projects/github-com-careerfairsystems-nexpo-master)
 # Table of Contents
-<!--
-To update table of contents, use doctoc:
-  yarn global add doctoc
-  doctoc README.md --github
-
-Further read: https://github.com/thlorenz/doctoc
--->
+<!-- To update table of contents: npm run update-toc-readme -->
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -21,8 +15,9 @@ Further read: https://github.com/thlorenz/doctoc
     - [Linux](#linux)
     - [Windows](#windows)
   - [Develop](#develop)
-    - [TDD](#tdd)
+    - [Testing](#testing)
     - [Start dev servers](#start-dev-servers)
+    - [Helpful scripts](#helpful-scripts)
   - [Documentation](#documentation)
 - [Deployment](#deployment)
   - [Heroku](#heroku)
@@ -36,7 +31,7 @@ Nexpo consists of two parts
 - [React frontend](priv/react_app)
 
 # System Requirements
-This system intends to follow stable releases. The system is verified to work with the follow setup
+This system intends to follow stable releases. The system is verified to work with the following setup
 - Elixir 1.4.4
 - Erlang OTP 19.3
 - Node 6.11.0
@@ -80,33 +75,37 @@ Get a grip of yourself. Get a real OS, and then come back
 
 ## Develop
 
-### TDD
+### Testing
 This project is developed with [TDD](https://en.wikipedia.org/wiki/Test-driven_development).
 
-This is how you start phoenix testwatcher
-```sh
-mix test.watch
-```
-Phoenix tests reside in [/test](/test)
+| Command                      | Description                     |
+|------------------------------|---------------------------------|
+| `npm run backend-testwatch`  | Starts testwatcher for backend  |
+| `npm run frontend-testwatch` | Starts testwatcher for frontend |
 
->TODO: Define how react tests works and where they are
+- Phoenix tests reside in [/test](/test)
+- React tests reside beside each component. A test file must be named <COMPONENT_NAME>.test.js
 
 ### Start dev servers
-There are three commands to start the servers:
 | Command                | Description                |
 |------------------------|----------------------------|
 | `npm run dev-backend`  | Start the backend          |
 | `npm run dev-frontend` | Start the frontend         |
 | `npm run dev`          | Start frontend and backend |
 
+### Helpful scripts
+| Command                         | Description                               |
+|---------------------------------|-------------------------------------------|
+| `npm run generate-docs`         | Generates documentation for HTTP API      |
+| `npm run validate-editorconfig` | Identifies breakage of editorconfig rules |
+| `npm run update-toc-readme`     | Updates Table of Contents in README       |
+
+
 ## Documentation
 The HTTP API is documented using [apiDoc](http://apidocjs.com).
 Documentation is changed in the code via special tags. More detailed information can be found [here](http://apidocjs.com/#params)
 
-Documentation generation instructions
-```sh
-npm run generate-docs
-```
+See documentation generation instructions under [Helpful scripts](#helpful-scripts).
 Documentation can be found in API_DOCS directory
 
 # Deployment
