@@ -1,12 +1,18 @@
 {
   "scripts": {
-    "generate-docs": "apidoc -i web -o API_DOCS",
     "dev-backend": "mix phoenix.server",
     "dev-frontend": "cd priv/react_app && npm start",
-    "dev": "npm-run-all -p dev-backend dev-frontend"
+    "dev": "npm-run-all -p dev-backend dev-frontend",
+    "backend-testwatch": "mix test.watch",
+    "frontend-testwatch": "cd priv/react_app && npm run test",
+    "generate-docs": "apidoc -i web -o API_DOCS",
+    "validate-editorconfig": "eclint check * 'web/**/*' 'test/**/*' 'priv/gettext/**/*' 'priv/repo/**/*' 'priv/react_app/src/**/*' 'priv/react_app/*' 'lib/**/*' 'config/**/*'",
+    "update-toc-readme": "doctoc README.md --github"
   },
   "devDependencies": {
     "apidoc": "^0.17.6",
+    "doctoc": "^1.3.0",
+    "eclint": "^2.2.0",
     "npm-run-all": "^4.0.2"
   }
 }
