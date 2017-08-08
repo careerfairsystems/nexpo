@@ -63,6 +63,7 @@ brew services start postgresql
 mix deps.get
 mix ecto.create
 mix ecto.migrate
+yarn install
 cd priv/react_app && yarn install
 cd ../..
 ```
