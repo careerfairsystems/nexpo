@@ -80,8 +80,11 @@ This project is developed with [TDD](https://en.wikipedia.org/wiki/Test-driven_d
 
 | Command                      | Description                     |
 |------------------------------|---------------------------------|
-| `npm run backend-testwatch`  | Starts testwatcher for backend  |
-| `npm run frontend-testwatch` | Starts testwatcher for frontend |
+| `npm run test`               | Runs all tests                  |
+| `npm run test-frontend`      | Runs all frontend tests         |
+| `npm run test-backend`       | Runs all backend tests          |
+| `npm run testwatch-backend`  | Starts testwatcher for backend  |
+| `npm run testwatch-frontend` | Starts testwatcher for frontend |
 
 - Phoenix tests reside in [/test](/test)
 - React tests reside beside each component. A test file must be named <COMPONENT_NAME>.test.js
@@ -89,9 +92,9 @@ This project is developed with [TDD](https://en.wikipedia.org/wiki/Test-driven_d
 ### Start dev servers
 | Command                | Description                |
 |------------------------|----------------------------|
+| `npm run dev`          | Start frontend and backend |
 | `npm run dev-backend`  | Start the backend          |
 | `npm run dev-frontend` | Start the frontend         |
-| `npm run dev`          | Start frontend and backend |
 
 ### Helpful scripts
 | Command                         | Description                               |
