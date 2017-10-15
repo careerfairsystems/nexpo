@@ -13,10 +13,8 @@ defmodule Nexpo.CompanyAttributeView do
     # Define own parameters to keep
     base = [:id, :title, :type, :value]
 
-    # Define all relations to render
-    relations = [:entry]
+    Nexpo.Support.View.render_object(company_attribute, base)
 
-    Nexpo.Support.View.render_object(company_attribute, base, relations)
   end
 
 end

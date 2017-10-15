@@ -3,10 +3,31 @@ defmodule Nexpo.CompanyCategoryController do
 
   alias Nexpo.CompanyCategory
 
+  @apidoc """
+  @api {GET} /categories/ List categories
+  @apiName List Categories
+  @apiGroup Category
+
+  @apiSuccessExample {json} Success
+    HTTP 200 Ok
+    [
+      {
+        "id": 1,
+        "title": "Example category",
+        "attributes": []
+      },
+      {
+        "id": 2,
+        "title": "Other category",
+        "attributes": []
+      }
+    ]
+
+  @apiUse NotFoundError
+  @apiUse InternalServerError
+  """
   def index(conn, _params) do
-
     company_categories = Repo.all(CompanyCategory) |> Repo.preload(:attributes)
-
     render(conn, "index.json", company_categories: company_categories)
   end
 
@@ -25,15 +46,26 @@ defmodule Nexpo.CompanyCategoryController do
   #   end
   # end
 
+  @apidoc """
+  @api {GET} /categories/:id Get category
+  @apiName Get Category
+  @apiGroup Category
+
+  @apiParam {Number} id ID of the category
+
+  @apiSuccessExample {json} Success
+    HTTP 200 Ok
+    {
+      "id": 1,
+      "title": "Example category",
+      "attributes": []
+    }
+
+  @apiUse NotFoundError
+  @apiUse InternalServerError
+  """
   def show(conn, %{"id" => id}) do
-          query  =
-          from(category in Nexpo.CompanyCategory,
-           where: category.id == ^id,
-           join: attribute in assoc(category, :attributes),
-           preload: :attributes
-           )
-      company_category = Repo.all(query)
-      company_category = List.first(company_category)
+    company_category = Repo.get!(CompanyCategory, id) |> Repo.preload(:attributes)
     render(conn, "show.json", company_category: company_category)
   end
 #

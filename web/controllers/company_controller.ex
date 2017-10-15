@@ -3,8 +3,42 @@ defmodule Nexpo.CompanyController do
 
   alias Nexpo.Company
 
+  @apidoc """
+  @api {GET} /companies List companies
+  @apiName List Company
+  @apiGroup Company
+
+  @apiSuccessExample {json} Success
+    HTTP 200 Ok
+    [
+      {
+        "id": 1,
+        "name": "CodeComp",
+        "email": "info@codecomp.com",
+        "categories": [
+          {
+            "attribute": {}
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "name": "Other Comp",
+        "email": "info@othercomp.com",
+        "categories": [
+          {
+            "attribute": {}
+          }
+        ]
+      }
+    ]
+
+  @apiUse NotFoundError
+  @apiUse InternalServerError
+  """
   def index(conn, _params) do
     companies = Repo.all(Company)
+    |> Repo.preload(entries: [attribute: [:category]])
     render(conn, "index.json", companies: companies)
   end
 
@@ -48,14 +82,8 @@ defmodule Nexpo.CompanyController do
   @apiUse InternalServerError
   """
   def show(conn, %{"id" => id}) do
-    categories = Repo.all from(
-      category in Nexpo.CompanyCategory,
-      join: attribute in assoc(category, :attributes),
-      left_join: entry in Nexpo.CompanyEntry, on: entry.company_attribute_id == attribute.id and entry.company_id == ^id,
-      preload: [attributes: {attribute, entries: entry}]
-    )
-    company = Repo.get!(Company, id) |> Map.put(:categories, categories)
-    # company = Repo.get!(Company, id)
+    company = Repo.get!(Company, id)
+    |> Repo.preload(entries: [attribute: [:category]])
     render(conn, "show.json", company: company)
   end
 
