@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Paper from 'material-ui/Paper'
-import MailLink from '../MailLink'
+import MailLink from '../../Components/MailLink'
 import { find } from 'ramda'
 import './Company.css'
 

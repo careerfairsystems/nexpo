@@ -9,7 +9,7 @@ import {
   TableRow,
   TableRowColumn,
 } from 'material-ui/Table';
-import InvisibleLink from '../InvisibleLink'
+import InvisibleLink from '../../Components/InvisibleLink'
 
 /**
  * Responsible for rendering a list of companies
