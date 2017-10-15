@@ -9,11 +9,11 @@ import {
   Switch,
   Redirect,
 } from 'react-router-dom'
-import InvisibleLink from './Components/InvisibleLink'
+import Companies from './Screens/Companies'
+import Company from './Screens/Company'
+import NotFound from './Screens/NotFound'
 
-import Companies from './Components/Companies'
-import Company from './Components/Company'
-import NotFound from './Components/NotFound'
+import InvisibleLink from './Components/InvisibleLink'
 
 /**
  * The base of the application. Defines the basic layout
