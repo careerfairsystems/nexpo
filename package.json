@@ -17,5 +17,6 @@
     "doctoc": "^1.3.0",
     "eclint": "^2.2.0",
     "npm-run-all": "^4.0.2"
-  }
+  },
+  "dependencies": {}
 }
