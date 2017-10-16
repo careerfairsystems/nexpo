@@ -1,4 +1,10 @@
 defmodule Nexpo.Support.View do
+  @moduledoc """
+  A module that can render all models
+
+  The helper makes sure to render all preloaded associations and ignores
+  all relations which are not preloaded
+  """
   use Nexpo.Web, :view
 
   @doc """
@@ -8,6 +14,7 @@ defmodule Nexpo.Support.View do
     # Build base object
     base = Map.take(object, base_params)
 
+    # Construct an array with all relations that should get rendered
     # TODO: Redo how relations array are created
     relations = []
     relations = relations ++ case Map.get(object, :entries) do
@@ -31,7 +38,7 @@ defmodule Nexpo.Support.View do
       _ -> [:category]
     end
 
-    # Populate relations
+    # Render all relations
     relations = relations
     |> Enum.filter(fn r -> Map.has_key?(object, r) && is_loaded(Map.get(object, r)) end)
     |> Enum.map(fn r -> render_relation(r, object) end)
@@ -47,7 +54,7 @@ defmodule Nexpo.Support.View do
     end
   end
 
-  # Defines how to render all entities in database
+  # Defines how to render all possible relations in database
   # Both in plural and singular
   defp render_relation(relation, object) do
     case relation do
