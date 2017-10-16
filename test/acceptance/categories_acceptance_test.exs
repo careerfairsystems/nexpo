@@ -21,68 +21,78 @@ defmodule Nexpo.CategoriesAcceptanceTest do
     assert length(respose) == 0
   end
 
-  test "GET /categories returns an empty attributes list if no exist", %{conn: conn} do
-    Factory.insert_list(3, :company_category)
-    #Factory.insert_list(2, :company_attribute, %{category: Enum.at(init_cats, 0)})
+  test "GET /categories/:id returns an empty attributes list if no exist", %{conn: conn} do
+    category = Factory.insert(:company_category)
 
-    conn = conn |> get("/api/categories")
+    conn = conn |> get("/api/categories/#{category.id}")
     assert json_response(conn, 200)
     response = Poison.decode!(conn.resp_body)["data"]
-    Enum.each(response, fn category ->
-      assert Map.has_key?(category, "attributes")
-      assert is_list(Map.get(category, "attributes"))
-      assert length(Map.get(category, "attributes")) == 0
-    end)
+
+    schema = %{
+      "type" => "object",
+      "additionalProperties" => false,
+      "properties" => %{
+        "id" => %{"type" => "number"},
+        "title" => %{"type" => "string"},
+        "attributes" => %{
+          "type" => "array",
+          "maxItems" => 0
+        }
+      }
+    } |> ExJsonSchema.Schema.resolve
+
+    assert ExJsonSchema.Validator.validate(schema, response) == :ok
   end
 
-  test "GET /categories returns all attributes assigned to a category", %{conn: conn} do
-    # Create 4 categories some attributes some without
-    categories = Factory.insert_list(4, :company_category)
-    Factory.insert_list(2, :company_attribute, %{category: Enum.at(categories, 0)})
-    Factory.insert_list(5, :company_attribute, %{category: Enum.at(categories, 1)})
-
+  test "GET /categories returns data on the right format", %{conn: conn} do
+    Factory.insert(:company_category) |> Factory.with_attributes(3)
+    Factory.insert(:company_category) |> Factory.with_attributes(3)
     conn = conn |> get("/api/categories")
+
     assert json_response(conn, 200)
     response = Poison.decode!(conn.resp_body)["data"]
 
-    empty_categories = Enum.filter(response, fn category -> 
-      att = Map.get(category, "attributes")
-      length(att) == 0
-    end)
+    schema = %{
+      "type" => "array",
+      "minItems" => 2,
+      "items" => %{
+        "type" => "object",
+        "additionalProperties" => false,
+        "properties" => %{
+          "id" => %{"type" => "number"},
+          "title" => %{"type" => "string"},
+          "attributes" => %{
+            "type" => "array",
+            "minItems" => 3
+          }
+        }
+      }
+    } |> ExJsonSchema.Schema.resolve
 
-    categories_with_attributes = Enum.filter(response, fn category -> 
-      att = Map.get(category, "attributes")
-      length(att) != 0    
-    end)
-    
-    # Check that all values exist in categories without attributes
-      Enum.each(empty_categories, fn category ->
-        assert Map.has_key?(category, "title")
-        assert Map.get(category, "title") != ""
-        assert Map.has_key?(category, "id")
-        assert Map.get(category, "id") != ""
-        assert Map.has_key?(category, "attributes")
-        assert length(Map.get(category, "attributes")) == 0
-      end)
+    assert ExJsonSchema.Validator.validate(schema, response) == :ok
+  end
 
-    # Check that all values exist in categories with attributes 
-    Enum.each(categories_with_attributes, fn category ->
-      assert Map.has_key?(category, "title")
-      assert Map.get(category, "title") != ""
-      assert Map.has_key?(category, "id")
-      assert Map.get(category, "id") != ""
-      assert Map.has_key?(category, "attributes")
-      assert length(Map.get(category, "attributes")) != 0
-      Enum.each(Map.get(category, "attributes"), fn attribute -> 
-          assert Map.has_key?(attribute, "title")
-          assert Map.get(attribute, "title") != ""
-          assert Map.has_key?(attribute, "type")
-          assert Map.get(attribute, "type") != ""
-          assert Map.has_key?(attribute, "value")
-          assert Map.get(attribute, "value") != ""
-        end)
-    end)
+  test "GET /categories/:id returns data on the right format", %{conn: conn} do
+    category = Factory.insert(:company_category) |> Factory.with_attributes(3)
+    conn = conn |> get("/api/categories/#{category.id}")
 
+    assert json_response(conn, 200)
+    response = Poison.decode!(conn.resp_body)["data"]
+
+    schema = %{
+      "type" => "object",
+      "additionalProperties" => false,
+      "properties" => %{
+        "id" => %{"type" => "number"},
+        "title" => %{"type" => "string"},
+        "attributes" => %{
+          "type" => "array",
+          "minItems" => 3
+        }
+      }
+    } |> ExJsonSchema.Schema.resolve
+
+    assert ExJsonSchema.Validator.validate(schema, response) == :ok
   end
 
 end

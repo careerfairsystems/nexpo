@@ -22,38 +22,55 @@ defmodule Nexpo.CompaniesAcceptanceTest do
     assert length(response) == 0
   end
 
-  test "GET /companies/:id returns categories and attributes nested", %{conn: conn} do
-    # Create the structure
-    categories = Factory.insert_list(3, :company_category)
-    Factory.insert_list(2, :company_attribute, %{category: Enum.at(categories, 0)})
-    Factory.insert_list(3, :company_attribute, %{category: Enum.at(categories, 1)})
-    Factory.insert_list(4, :company_attribute, %{category: Enum.at(categories, 2)})
+  test "GET /companies returns data in the correct format", %{conn: conn} do
+    Factory.insert(:company) |> Factory.with_entries(2)
+    Factory.insert(:company) |> Factory.with_entries(3)
+    conn = conn |> get("/api/companies")
 
-    # Create company without any entries
-    company = Factory.insert(:company)
-
-    conn = conn |> get("/api/companies/#{company.id}")
-    assert json_response(conn, 200)
     response = Poison.decode!(conn.resp_body)["data"]
 
-    res_categories = Map.get(response, "categories")
-    assert length(res_categories) == length(categories)
+    schema = %{
+      "type" => "array",
+      "minItems" => 2,
+      "items" => %{
+        "type" => "object",
+        "additionalProperties" => false,
+        "properties" => %{
+          "id" => %{"type" => "integer"},
+          "name" => %{"type" => "string"},
+          "email" => %{"type" => "string"},
+          "entries" => %{
+            "type" => "array",
+            "minItems" => 2
+          }
+        }
+      }
+    } |> ExJsonSchema.Schema.resolve
 
-    Enum.each(res_categories, fn res_cat ->
-      res_attrs = Map.get(res_cat, "attributes")
-      refute Enum.empty?(res_attrs)
-    end)
+    assert ExJsonSchema.Validator.validate(schema, response) == :ok
   end
 
-  test "GET /companies contains emails", %{conn: conn} do
-    companies = Factory.insert_list(3, :company)
-    conn = conn |> get("/api/companies")
-    assert json_response(conn, 200)
+  test "GET /companies/:id returns data in the correct format", %{conn: conn} do
+    company = Factory.insert(:company, %{id: 3}) |> Factory.with_entries(2)
+    conn = conn |> get("/api/companies/#{company.id}")
+
     response = Poison.decode!(conn.resp_body)["data"]
-    assert length(companies) == length(response)
-    Enum.each(response, fn res ->
-      assert Map.has_key?(res, "email")
-    end)
+
+    schema = %{
+      "type" => "object",
+      "additionalProperties" => false,
+      "properties" => %{
+        "id" => %{"type" => "integer"},
+        "name" => %{"type" => "string"},
+        "email" => %{"type" => "string"},
+        "entries" => %{
+          "type" => "array",
+          "minItems" => 2
+        }
+      }
+    } |> ExJsonSchema.Schema.resolve
+
+    assert ExJsonSchema.Validator.validate(schema, response) == :ok
   end
 
 end

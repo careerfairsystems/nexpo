@@ -1,41 +1,70 @@
 defmodule Nexpo.Factory do
-    use ExMachina.Ecto, repo: Nexpo.Repo
+  @moduledoc """
+  Exposes ways to easily create test data
 
-    def company_factory do
-        %Nexpo.Company{
-            name: sequence("Generated Company"),
-            email: sequence("Generated@email.com")
+  Always define relations on the models that has the foreign key,
+  create helper methods for easily creating relations on models that do not own the foreign key
+  """
+  use ExMachina.Ecto, repo: Nexpo.Repo
 
-            # entries: [build(:company_entry)]
-        }
-    end
+  @doc """
+  Create a Company
+  """
+  def company_factory do
+    %Nexpo.Company{
+      name: sequence("Generated Company"),
+      email: sequence("Generated@email.com")
+    }
+  end
 
-    def company_category_factory do
-        %Nexpo.CompanyCategory{
-            title: sequence("Generated Category"),
+  @doc """
+  Give a Company entries
+  """
+  def with_entries(%Nexpo.Company{} = company, amount \\ 3) do
+    insert_list(amount, :company_entry, %{company: company})
+    company
+  end
 
-            # attributes: [build(:company_attribute)]
-        }
-    end
+  @doc """
+  Create a CompanyCategory
+  """
+  def company_category_factory do
+    %Nexpo.CompanyCategory{
+      title: sequence("Generated Category"),
+    }
+  end
 
-    def company_attribute_factory do
-        %Nexpo.CompanyAttribute{
-            title: sequence("Generated Attribute"),
-            type: sequence("Generated type"),
-            value: sequence("Generated value"),
+  @doc """
+  Give a CompanyCategory attributes
+  """
+  def with_attributes(%Nexpo.CompanyCategory{} = category, amount \\ 3) do
+    insert_list(amount, :company_attribute, %{category: category})
+    category
+  end
 
-            category: build(:company_category),
-            # entries: [build(:company_entry)]
-        }
-    end
+  @doc """
+  Create a CompanyAttribute
+  """
+  def company_attribute_factory do
+    %Nexpo.CompanyAttribute{
+      title: sequence("Generated Attribute"),
+      type: sequence("Generated type"),
+      value: sequence("Generated value"),
 
-    def company_entry_factory do
-        %Nexpo.CompanyEntry{
-            value: sequence("Generated value"),
+      category: build(:company_category),
+    }
+  end
 
-            company: build(:company),
-            attribute: build(:company_attribute)
-        }
-    end
+  @doc """
+  Create a CompanyEntry
+  """
+  def company_entry_factory do
+    %Nexpo.CompanyEntry{
+      value: sequence("Generated value"),
+
+      company: build(:company),
+      attribute: build(:company_attribute)
+    }
+  end
 
 end
