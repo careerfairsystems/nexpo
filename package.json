@@ -20,5 +20,7 @@
     "jest-cli": "^21.2.1",
     "npm-run-all": "^4.0.2"
   },
-  "dependencies": {}
+  "engines": {
+    "node": "6.11.4"
+  }
 }
