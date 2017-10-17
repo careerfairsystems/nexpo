@@ -21,6 +21,18 @@ config :nexpo, Nexpo.Endpoint,
 # Do not print debug messages in production
 config :logger, level: :info
 
+# Config error tracking to Sentry
+# TODO: Config Sentry with user context when there is login functionality
+config :sentry,
+  dsn: System.get_env("SENTRY_DSN"),
+  environment_name: :prod,
+  enable_source_code_context: true,
+  root_source_code_path: File.cwd!,
+  tags: %{
+    env: "production"
+  },
+  included_environments: [:prod]
+
 # ## SSL Support
 #
 # To get SSL working, you will need to add the `https` key

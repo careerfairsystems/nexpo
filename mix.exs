@@ -17,9 +17,22 @@ defmodule Nexpo.Mixfile do
   #
   # Type `mix help compile.app` for more information.
   def application do
-    [mod: {Nexpo, []},
-     applications: [:ex_machina, :phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger, :gettext,
-                    :phoenix_ecto, :postgrex]]
+    [
+      mod: {Nexpo, []},
+      applications: [
+        :ex_machina,
+        :phoenix,
+        :phoenix_pubsub,
+        :phoenix_html,
+        :cowboy,
+        :sentry,
+        :logger,
+        :gettext,
+        :phoenix_ecto,
+        :postgrex,
+
+      ]
+    ]
   end
 
   # Specifies which paths to compile per environment.
@@ -43,7 +56,9 @@ defmodule Nexpo.Mixfile do
       {:poison, "~> 2.0"},
       {:mix_test_watch, "~> 0.3", only: :dev, runtime: false},
       {:cors_plug, "~> 1.3"},
-      {:ex_json_schema, "~> 0.5.4"}
+      {:plug_static_index_html, "~> 0.1.2"},
+      {:ex_json_schema, "~> 0.5.4"},
+      {:sentry, "~> 6.0.0"}
     ]
   end
 
