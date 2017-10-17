@@ -13,13 +13,6 @@ defmodule Nexpo.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/", Nexpo do
-    pipe_through :browser # Use the default browser stack
-
-    # get "/", PageController, :index
-
-  end
-
   # Other scopes may use custom stacks.
    scope "/api", Nexpo do
      pipe_through :api
@@ -28,4 +21,12 @@ defmodule Nexpo.Router do
      resources "/categories", CompanyCategoryController, only: [:index, :show]
 
    end
+
+   scope "/", Nexpo do
+    pipe_through :browser # Use the default browser stack
+
+    # Catch all other routes, and serve frontend from them
+    get "/*path", PageController, :serve_frontend
+  end
+
 end

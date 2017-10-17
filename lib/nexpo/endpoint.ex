@@ -11,9 +11,6 @@ defmodule Nexpo.Endpoint do
   #   at: "/", from: :nexpo, gzip: false,
   #   only: ~w(css fonts images js favicon.ico robots.txt)
 
-  plug Plug.Static.IndexHtml,
-    at: "/"
-
   plug Plug.Static,
     at: "/",
     from: "priv/react_app/build/",

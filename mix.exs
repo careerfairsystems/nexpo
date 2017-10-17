@@ -43,7 +43,6 @@ defmodule Nexpo.Mixfile do
       {:poison, "~> 2.0"},
       {:mix_test_watch, "~> 0.3", only: :dev, runtime: false},
       {:cors_plug, "~> 1.3"},
-      {:plug_static_index_html, "~> 0.1.2"},
       {:ex_json_schema, "~> 0.5.4"}
     ]
   end
