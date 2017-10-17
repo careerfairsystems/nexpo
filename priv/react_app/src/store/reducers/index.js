@@ -2,10 +2,10 @@
  * This file gathers all redux reducers and exports them as one global reducer
  */
 
-import DataReducer from './DataReducer'
+import CompaniesReducer from './CompaniesReducer'
 
 const RootReducer = {
-  data: DataReducer
+  companies: CompaniesReducer
 }
 
 export default RootReducer
