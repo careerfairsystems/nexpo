@@ -16,6 +16,8 @@
     "apidoc": "^0.17.6",
     "doctoc": "^1.3.0",
     "eclint": "^2.2.0",
+    "jest": "^21.2.1",
+    "jest-cli": "^21.2.1",
     "npm-run-all": "^4.0.2"
   },
   "dependencies": {}

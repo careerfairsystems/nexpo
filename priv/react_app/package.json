@@ -20,7 +20,8 @@
     "redux": "^3.6.0"
   },
   "devDependencies": {
-    "react-scripts": "1.0.7"
+    "react-scripts": "1.0.7",
+    "jest-cli": "^21.2.1"
   },
   "scripts": {
     "build-css": "node-sass-chokidar --include-path ./src src/ -o src/",
