@@ -1,5 +1,5 @@
 language: elixir
-cache: bundler
+cache: false
 matrix:
   include:
     - node_js: 6.11.0

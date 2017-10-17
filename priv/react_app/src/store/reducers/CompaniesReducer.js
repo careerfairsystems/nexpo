@@ -2,7 +2,7 @@
  * Defines a reducer updates the state based on the action created after a call to the server.
  */
 
- import Normalize from '../normalizr/Normalize.js';
+ import Normalize from '../normalizr/normalize.js';
  import actionTypes from '../ActionTypes.js';
 
 let initialState = []
