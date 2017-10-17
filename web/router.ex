@@ -1,6 +1,10 @@
 defmodule Nexpo.Router do
   use Nexpo.Web, :router
 
+  # Needed for Sentry error logging
+  use Plug.ErrorHandler
+  use Sentry.Plug
+
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
