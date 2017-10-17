@@ -1,18 +1,29 @@
-import { schema, normalize} from 'normalizr';
-
-const category = new norm.schema.Entity('categories');
-
-const attribute = new norm.schema.Entity('attributes', {
-    category: category
-});
-
-const entry = new norm.schema.Entity('entries', {
-    attribute: attribute,
-});
-
-const company = new norm.schema.Entity('companies', {
-    entries: [entry]
-});
+import { schema, normalize } from 'normalizr';
 
 
-export default doNormalise = (originalData) =>  norm.normalize(originalData, company);
+class Normalize {
+
+    normalizeCompany(originalCompany, array=false) {
+        const category = new schema.Entity('categories');
+
+        const attribute = new schema.Entity('attributes', {
+            category: category
+        });
+
+        const entry = new schema.Entity('entries', {
+            attribute: attribute,
+        });
+
+        const company = new schema.Entity('companies', {
+            entries: [entry]
+        });
+        if (array) {
+            return normalize(originalCompany, [company]);
+        } else {
+            return normalize(originalCompany, company);
+        }
+    }
+
+}
+
+export default Normalize;
