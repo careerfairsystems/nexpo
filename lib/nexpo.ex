@@ -6,15 +6,7 @@ defmodule Nexpo do
   def start(_type, _args) do
     import Supervisor.Spec
 
-    # Define workers and child supervisors to be supervised
-    children = [
-      # Start the Ecto repository
-      supervisor(Nexpo.Repo, []),
-      # Start the endpoint when the application starts
-      supervisor(Nexpo.Endpoint, []),
-      # Start your own worker by calling: Nexpo.Worker.start_link(arg1, arg2, arg3)
-      # worker(Nexpo.Worker, [arg1, arg2, arg3]),
-    ]
+    children = get_children()
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html
     # for other strategies and supported options
@@ -31,5 +23,18 @@ defmodule Nexpo do
   def config_change(changed, _new, removed) do
     Nexpo.Endpoint.config_change(changed, removed)
     :ok
+  end
+
+  @doc """
+  Defines workers and child supervisors to be supervised
+  """
+  defp get_children() do
+    import Supervisor.Spec
+    [
+      supervisor(Nexpo.Repo, []), # Start the Ecto repository
+      supervisor(Nexpo.Endpoint, []), # Start the endpoint when the application starts
+      # Start your own worker by calling: Nexpo.Worker.start_link(arg1, arg2, arg3)
+      # worker(Nexpo.Worker, [arg1, arg2, arg3]),
+    ]
   end
 end
