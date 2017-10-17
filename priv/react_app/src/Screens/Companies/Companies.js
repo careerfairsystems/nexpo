@@ -16,6 +16,29 @@ import { Helmet } from "react-helmet";
  * Responsible for rendering a list of companies
  */
 class Companies extends Component {
+
+  _renderTableHeader() {
+    return (
+      <TableHeader>
+        <TableRow>
+          <TableHeaderColumn>Name</TableHeaderColumn>
+          <TableHeaderColumn>Email</TableHeaderColumn>
+        </TableRow>
+      </TableHeader>
+    )
+  }
+
+  _renderTableRow(company) {
+    return (
+      <TableRow key={company.id}>
+        <TableRowColumn>
+          <InvisibleLink to={`/companies/${company.id}`}>{company.name}</InvisibleLink>
+        </TableRowColumn>
+        <TableRowColumn>{company.email}</TableRowColumn>
+      </TableRow>
+    )
+  }
+
   render() {
     return (
       <div>
@@ -25,25 +48,10 @@ class Companies extends Component {
 
         <Table>
 
-          <TableHeader>
-            <TableRow>
-              <TableHeaderColumn>Name</TableHeaderColumn>
-              <TableHeaderColumn>Email</TableHeaderColumn>
-            </TableRow>
-          </TableHeader>
+          {this._renderTableHeader()}
 
           <TableBody>
-
-            {this.props.companies.map(c => {
-              return (
-                  <TableRow key={c.id}>
-                    <TableRowColumn>
-                      <InvisibleLink to={`/companies/${c.id}`}>{c.name}</InvisibleLink>
-                    </TableRowColumn>
-                    <TableRowColumn>{c.email}</TableRowColumn>
-                  </TableRow>
-              )
-            })}
+            {this.props.companies.map(c => this._renderTableRow(c))}
           </TableBody>
 
         </Table>
