@@ -10,6 +10,7 @@ import {
   TableRowColumn,
 } from 'material-ui/Table';
 import InvisibleLink from '../../Components/InvisibleLink'
+import { Helmet } from "react-helmet";
 
 /**
  * Responsible for rendering a list of companies
@@ -17,30 +18,36 @@ import InvisibleLink from '../../Components/InvisibleLink'
 class Companies extends Component {
   render() {
     return (
-      <Table>
+      <div>
+        <Helmet>
+          <title>Nexpo | Companies</title>
+        </Helmet>
 
-        <TableHeader>
-          <TableRow>
-            <TableHeaderColumn>Name</TableHeaderColumn>
-            <TableHeaderColumn>Email</TableHeaderColumn>
-          </TableRow>
-        </TableHeader>
+        <Table>
 
-        <TableBody>
+          <TableHeader>
+            <TableRow>
+              <TableHeaderColumn>Name</TableHeaderColumn>
+              <TableHeaderColumn>Email</TableHeaderColumn>
+            </TableRow>
+          </TableHeader>
 
-          {this.props.companies.map(c => {
-            return (
-                <TableRow key={c.id}>
-                  <TableRowColumn>
-                    <InvisibleLink to={`/companies/${c.id}`}>{c.name}</InvisibleLink>
-                  </TableRowColumn>
-                  <TableRowColumn>{c.email}</TableRowColumn>
-                </TableRow>
-            )
-          })}
-        </TableBody>
+          <TableBody>
 
-      </Table>
+            {this.props.companies.map(c => {
+              return (
+                  <TableRow key={c.id}>
+                    <TableRowColumn>
+                      <InvisibleLink to={`/companies/${c.id}`}>{c.name}</InvisibleLink>
+                    </TableRowColumn>
+                    <TableRowColumn>{c.email}</TableRowColumn>
+                  </TableRow>
+              )
+            })}
+          </TableBody>
+
+        </Table>
+      </div>
     )
   }
 }
