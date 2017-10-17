@@ -13,10 +13,7 @@ defmodule Nexpo.CompanyCategoryView do
     # Define own parameters to keep
     base = [:id, :title]
 
-    # Define all relations to render
-    relations = [:attributes]
-
-    Nexpo.Support.View.render_object(company_category, base, relations)
+    Nexpo.Support.View.render_object(company_category, base)
   end
 
 end
