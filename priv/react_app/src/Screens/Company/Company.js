@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Paper from 'material-ui/Paper'
 import MailLink from '../../Components/MailLink'
+import { Helmet } from "react-helmet";
 import { find } from 'ramda'
 import './Company.css'
 
@@ -21,6 +22,10 @@ class Company extends Component {
     const {name, email} = company
     return(
       <div className="Company_Component">
+
+        <Helmet>
+          <title>Nexpo | {name}</title>
+        </Helmet>
 
         <div className="left-col">
 
