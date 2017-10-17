@@ -4,6 +4,7 @@ matrix:
     - node_js: 6.11.4
       before_install:
         - nvm install 6.11.4
+        - npm i -g npm
       install:
         - cd priv/react_app && npm install
       script:
