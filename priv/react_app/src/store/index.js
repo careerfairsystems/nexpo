@@ -1,5 +1,5 @@
 /**
- * This file exposes a method for retrieving the redux store
+ *  This file exposes a method for retrieving the redux store
  */
 
 import { createStore, combineReducers, applyMiddleware } from 'redux'

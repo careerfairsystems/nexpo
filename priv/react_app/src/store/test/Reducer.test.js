@@ -1,3 +1,8 @@
+/*
+*   This file tests the reducers handling incoming actions.
+*   See http://redux.js.org/docs/recipes/WritingTests.html for writing action and reducer tests.
+*/
+
 import reducer from '../reducers/CompaniesReducer'
 import actionTypes from '../ActionTypes'
 

@@ -29,13 +29,12 @@
     "build-css": "node-sass-chokidar --include-path ./src src/ -o src/",
     "watch-css": "npm run build-css && node-sass-chokidar --include-path ./src src/ -o src/ --watch --recursive",
     "start-js": "react-scripts start",
-    "start": "npm-run-all -p watch-css start-js",
+    "start": "REACT_APP_API_URL=http://localhost:4000/api npm-run-all -p watch-css start-js",
     "build": "npm run build-css && react-scripts build",
-    "test": "npm run test-ci",
+    "test": "REACT_APP_API_URL=http://localhost:4000/api npm run test-ci",
     "test-js": "react-scripts test --env=jsdom",
     "test-watch": "npm-run-all -p watch-css test-js",
     "test-ci": "npm run build-css && CI=true npm run test-js",
     "eject": "react-scripts eject"
-  },
-  "proxy": "http://localhost/api:4000"
+  }
 }
