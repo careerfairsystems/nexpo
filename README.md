@@ -109,7 +109,7 @@ The HTTP API is documented using [apiDoc](http://apidocjs.com).
 Documentation is changed in the code via special tags. More detailed information can be found [here](http://apidocjs.com/#params)
 
 See documentation generation instructions under [Helpful scripts](#helpful-scripts).
-Documentation can be found in API_DOCS directory
+Documentation can be found in docs/ directory
 
 # Deployment
 The system is hosted at [arkad-nexpo.herokuapp.com](https://arkad-nexpo.herokuapp.com)
