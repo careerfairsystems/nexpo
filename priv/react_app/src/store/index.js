@@ -1,16 +1,18 @@
 /**
- * This file exposes a method for retrieving the redux store
+ *  This file exposes a method for retrieving the redux store
  */
 
-import { createStore, combineReducers } from 'redux'
+import { createStore, combineReducers, applyMiddleware } from 'redux'
 import reducers from './reducers'
+import thunk from 'redux-thunk'
 
 let store = undefined
 
 const createStoreIfNotExist = () => {
   if(!store) {
     store = createStore(
-      combineReducers(reducers)
+      combineReducers(reducers),
+      applyMiddleware(thunk)
     )
   }
 }

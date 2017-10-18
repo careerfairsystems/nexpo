@@ -28,4 +28,6 @@ erl_crash.dump
 
 # Editor stuff
 .idea
+.vscode
+
 

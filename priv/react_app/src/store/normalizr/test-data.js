@@ -1,40 +1,40 @@
 const testData = {
-    "company_object": 
-    {
-        "name": "Spotify",
-        "id": 1,
-        "entries": [
-            {
-                "value": "55",
-                "id": 48,
-                "attribute": {
-                    "value": null,
-                    "type": null,
-                    "title": "Trevligthetsskala",
-                    "id": 11,
-                    "category": {
-                        "title": "Övrigt",
-                        "id": 3
-                    }
-                }
-            },
-            {
-                "value": "65",
-                "id": 66,
-                "attribute": {
-                    "value": null,
-                    "type": null,
-                    "title": "Internetkoder",
-                    "id": 2,
-                    "category": {
-                        "title": "Logistik",
-                        "id": 1
-                    }
-                }
-            },
-        ],
-        "email": null
-    },
+	"company_object":
+	{
+		"name": "Spotify",
+		"id": 1,
+		"entries": [
+			{
+				"value": "55",
+				"id": 48,
+				"attribute": {
+					"value": null,
+					"type": null,
+					"title": "Trevligthetsskala",
+					"id": 11,
+					"category": {
+						"title": "Övrigt",
+						"id": 3
+					}
+				}
+			},
+			{
+				"value": "65",
+				"id": 66,
+				"attribute": {
+					"value": null,
+					"type": null,
+					"title": "Internetkoder",
+					"id": 2,
+					"category": {
+						"title": "Logistik",
+						"id": 1
+					}
+				}
+			},
+		],
+		"email": null
+	},
 	"company_array": [
 		{
 			"name": "Spotify",
