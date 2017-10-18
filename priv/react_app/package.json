@@ -12,6 +12,7 @@
     "ramda": "^0.24.1",
     "react": "^15.6.0",
     "react-dom": "^15.6.0",
+    "react-helmet": "^5.2.0",
     "react-redux": "^5.0.5",
     "react-router-dom": "^4.1.1",
     "react-tap-event-plugin": "^2.0.1",
@@ -33,5 +34,8 @@
     "test-watch": "npm-run-all -p watch-css test-js",
     "test-ci": "npm run build-css && CI=true npm run test-js",
     "eject": "react-scripts eject"
+  },
+  "engines": {
+    "node": "6.11.4"
   }
 }
