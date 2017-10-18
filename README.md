@@ -34,7 +34,7 @@ Nexpo consists of two parts
 This system intends to follow stable releases. The system is verified to work with the following setup
 - Elixir 1.4.4
 - Erlang OTP 19.3
-- Node 6.11.0
+- Node 6.11.4
 - PostgreSQL 9.6.2
 
 # Development
@@ -54,7 +54,7 @@ brew update
 brew install elixir
 mix local.hex
 mix archive.install https://github.com/phoenixframework/archives/raw/master/phoenix_new.ez
-nenv install 6.11.0
+nenv install 6.11.4
 brew install postgresql
 brew services start postgresql
 
