@@ -4,7 +4,7 @@ import Normalize from './normalize.js';
 const normalizer = new Normalize();
 
 test('normalizes a company object to entities', () => {
-	const normalized = normalizer.normalizeCompany(testData.company_object)
+	const normalized = Normalize.normalizeCompany(testData.company_object)
 	expect(normalized.entities).toHaveProperty('categories');
 	expect(normalized.entities).toHaveProperty('entries');
 	expect(normalized.entities).toHaveProperty('attributes');
@@ -12,7 +12,7 @@ test('normalizes a company object to entities', () => {
 });
 
 test('normalizes a company array to entities', () => {
-	const normalized = normalizer.normalizeCompany(testData.company_array, true);
+	const normalized = Normalize.normalizeCompanies(testData.company_array);
 	expect(normalized.entities).toHaveProperty('categories');
 	expect(normalized.entities).toHaveProperty('entries');
 	expect(normalized.entities).toHaveProperty('attributes');

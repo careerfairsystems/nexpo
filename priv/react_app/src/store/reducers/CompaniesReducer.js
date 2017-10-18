@@ -11,8 +11,7 @@ let initialState = []
 const companies = (state = initialState, action) => {
   switch(action.type) {
     case actionTypes.FETCH_COMPANIES_SUCCESS: 
-      const norm = new Normalize();
-      const normalizedData = norm.normalizeCompany(action.companies, true);
+      const normalizedData=  Normalize.normalizeCompanies(action.companies);
       const companies = normalizedData.entities.companies;
       const companyKeys = Object.keys(companies);
       const companyData = companyKeys.map((key) => {

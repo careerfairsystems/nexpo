@@ -35,7 +35,7 @@ describe('Companies reducer', () => {
 								}
 							}
 						],
-						email: "legend@spotify.com"
+						"email": "legend@spotify.com"
 					},
 					{
 						"name": "Google",
