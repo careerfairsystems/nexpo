@@ -11,6 +11,7 @@ import {
 } from 'material-ui/Table';
 import InvisibleLink from '../../Components/InvisibleLink';
 import LoadingSpinner from '../../Components/LoadingSpinner';
+import './Companies.css'
 import { Helmet } from "react-helmet";
 
 /**
@@ -42,9 +43,9 @@ class Companies extends Component {
 
   _renderLoading() {
     return (
-      <div>
+      <div className="loading-spinner">
         <LoadingSpinner />
-      </ div>
+      </div>
     )
   }
 
