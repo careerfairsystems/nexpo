@@ -5,9 +5,8 @@
 
 class CompanyApi {
 
-	static apiUrl = process.env.REACT_APP_API_URL;
 	static getCompanies() {
-		return fetch(this.apiUrl + '/companies')
+		return fetch('/api/companies')
 			.then((response) => {
 				if (!response.ok) {
 					throw Error(response.statusText);

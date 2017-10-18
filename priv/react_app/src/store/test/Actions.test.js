@@ -16,7 +16,7 @@ describe('async actions', () => {
   })
 
   it('creates FETCH_COMPANIES_SUCCESS when fetching companies has been done', () => {
-    nock(process.env.REACT_APP_API_URL)
+    nock('/api')
       .get('/companies')
       .reply(200, { companies: [{"name": "spotify", "id": 1}] })
 
@@ -30,7 +30,7 @@ describe('async actions', () => {
     })
   })
     it('creates FETCH_COMPANIES_FAILURE when fetching companies could not be done', () => {
-    nock(process.env.REACT_APP_API_URL)
+    nock('/api')
       .get('/companies')
       .reply(500)
 
