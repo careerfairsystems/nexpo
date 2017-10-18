@@ -8,12 +8,20 @@ import actionTypes from '../ActionTypes'
 
 describe('Companies reducer', () => {
 	it('should return the empty initial state', () => {
-		expect(reducer(undefined, {})).toEqual([])
+		expect(reducer(undefined, {})).toEqual({companies: [], fetching: false})
 	})
+
+	it('should handle FETCH_COMPANIES'), () => {
+		expect(
+			reducer({companies: [], fetching: false}, {
+				type: actionTypes.FETCH_COMPANIES
+			}).toEqual({ companies: [], fetching: true })
+		)
+	}
 
 	it('should handle FETCH_COMPANIES_SUCCESS', () => {
 		expect(
-			reducer([], {
+			reducer({companies: [], fetching: true}, {
 				type: actionTypes.FETCH_COMPANIES_SUCCESS,
 				companies: [
 					{
@@ -88,17 +96,22 @@ describe('Companies reducer', () => {
 					}
 				]
 			})
-		).toEqual([
+		).toEqual(
 			{
-				"name": 'Spotify',
-				"id": 1,
-				"email": "legend@spotify.com"
-			},
-			{
-				"name": 'Google',
-				"id": 2,
-				"email": "pro@gmail.com"
+				companies: [
+					{
+						"name": 'Spotify',
+						"id": 1,
+						"email": "legend@spotify.com"
+					},
+					{
+						"name": 'Google',
+						"id": 2,
+						"email": "pro@gmail.com"
+					}
+				], 
+				fetching: false
 			}
-		])
+		)
 	})
 })

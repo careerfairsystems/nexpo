@@ -3,7 +3,8 @@ import { connect } from 'react-redux'
 
 const stateful = connect(state => {
   return {
-    companies: state.companies
+    companies: state.companyState.companies,
+    fetching: state.companyState.fetching  
   }
 })
 

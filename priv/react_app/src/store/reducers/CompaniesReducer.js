@@ -5,10 +5,10 @@
  import Normalize from '../normalizr/normalize.js';
  import actionTypes from '../ActionTypes.js';
 
-let initialState = []
+let initialState = {companies: [], fetching: false}
 
 
-const companies = (state = initialState, action) => {
+const companyState = (state = initialState, action) => {
   switch(action.type) {
     case actionTypes.FETCH_COMPANIES_SUCCESS: 
       const normalizedData=  Normalize.normalizeCompanies(action.companies);
@@ -18,19 +18,18 @@ const companies = (state = initialState, action) => {
         const company = companies[key];
         return {"name": company.name, "id": company.id, "email": company.email}
       })
-      const newState = companyData;
+      const newState = {companies: companyData, fetching: false };
       return newState;
 
     case actionTypes.FETCH_COMPANIES_FAILURE:
-      return state;
+      return {companies: [], fetching: false };
     
     case actionTypes.FETCH_COMPANIES:
-      //Vad ska vi göra här? 
-      return state;
+      return {companies: [], fetching: true };
 
     default:
       return state;
   }
 }
 
-export default companies;
+export default companyState;

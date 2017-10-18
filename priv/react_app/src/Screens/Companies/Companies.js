@@ -9,7 +9,8 @@ import {
   TableRow,
   TableRowColumn,
 } from 'material-ui/Table';
-import InvisibleLink from '../../Components/InvisibleLink'
+import InvisibleLink from '../../Components/InvisibleLink';
+import LoadingSpinner from '../../Components/LoadingSpinner';
 import { Helmet } from "react-helmet";
 
 /**
@@ -39,33 +40,52 @@ class Companies extends Component {
     )
   }
 
-  render() {
+  _renderLoading() {
+    return (
+      <div>
+        <LoadingSpinner />
+      </ div>
+    )
+  }
+
+  _renderCompanies() {
     return (
       <div>
         <Helmet>
           <title>Nexpo | Companies</title>
         </Helmet>
-
         <Table>
-
           {this._renderTableHeader()}
-
           <TableBody>
             {this.props.companies.map(c => this._renderTableRow(c))}
           </TableBody>
-
         </Table>
       </div>
-    )
+      )
+  }
+
+
+  render() {
+    if(this.props.fetching) {
+      return (
+        this._renderLoading()
+      )
+    } else {
+      return (
+        this._renderCompanies()
+      )
+    }
   }
 }
 
 Companies.propTypes = {
-  companies: PropTypes.array
+  companies: PropTypes.array,
+  fetching: PropTypes.bool
 }
 
 Companies.defaultProps = {
-  companies: []
+  companies: [],
+  fetching: false
 }
 
 export default Companies

@@ -5,7 +5,7 @@
 import CompaniesReducer from './CompaniesReducer'
 
 const RootReducer = {
-  companies: CompaniesReducer
+  companyState: CompaniesReducer
 }
 
 export default RootReducer
