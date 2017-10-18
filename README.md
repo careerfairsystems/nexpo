@@ -41,7 +41,7 @@ This system intends to follow stable releases. The system is verified to work wi
 ## Setup environment
 This project assumes you have some programs installed:
 - ```nenv``` - [Installation instructions](https://github.com/ryuone/nenv#installation)
-- ```yarn```- [Installation instructions](https://yarnpkg.com/en/docs/install)
+- ```npm```- [Installation instructions](https://www.npmjs.com/get-npm)
 - ```brew``` (If you are on mac) - [Installation instructions](https://brew.sh/index.html)
 - ```heroku CLI``` (For deployment) - [Installation instructions](https://devcenter.heroku.com/articles/heroku-cli)
 - ```PostgreSQL```
@@ -62,8 +62,8 @@ brew services start postgresql
 mix deps.get
 mix ecto.create
 mix ecto.migrate
-yarn install
-cd priv/react_app && yarn install
+npm install
+cd priv/react_app && npm install
 
 cd ../..
 ```

@@ -3,7 +3,7 @@
 # PWD is already ./priv/react_app
 # Specified by assets_path in phoenix_static_buildpack.config
 
-yarn run build
+npm run build
 
 
 # It seems create-react-app digests stuff for us
