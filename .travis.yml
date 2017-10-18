@@ -1,5 +1,5 @@
 language: elixir
-gmatrix:
+matrix:
   include:
     - node_js: 6.11.0
       before_install:
