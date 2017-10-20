@@ -95,4 +95,47 @@ defmodule Nexpo.CategoriesAcceptanceTest do
     assert ExJsonSchema.Validator.validate(schema, response) == :ok
   end
 
+  test "POST /categories/ creates a category given correct parameters", %{conn: conn} do
+    params = Factory.params_for(:company_category)
+    conn = post(conn, "/api/categories", params)
+
+    assert json_response(conn, 201)
+
+    new_company = Nexpo.Repo.get_by(Nexpo.CompanyCategory, params)
+    assert new_company != nil
+
+  end
+
+  test "POST /categories fails given insufficient data", %{conn: conn} do
+    params = %{}
+    conn = post(conn, "/api/categories", params)
+
+    assert json_response(conn, 422)
+
+    # Test incorrect data types
+    params = %{title: 1}
+    conn = post(conn, "/api/categories", params)
+
+    assert json_response(conn, 422)
+  end
+
+  test "POST /categories/ returns the category on success", %{conn: conn} do
+    params = Factory.params_for(:company_category)
+    conn = post(conn, "/api/categories", params)
+
+    assert json_response(conn, 201)
+    response = Poison.decode!(conn.resp_body)["data"]
+
+    schema = %{
+      "type" => "object",
+      "additionalProperties" => false,
+      "properties" => %{
+        "id" => %{"type" => "number"},
+        "title" => %{"type" => "string"}
+      }
+    } |> ExJsonSchema.Schema.resolve
+
+    assert ExJsonSchema.Validator.validate(schema, response) == :ok
+  end
+
 end
