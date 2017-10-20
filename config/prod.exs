@@ -33,6 +33,10 @@ config :sentry,
   },
   included_environments: [:prod]
 
+# Config prod specific settings for guardin
+config :guardian, Guardian,
+  secret_key: System.get_env("SECRET_KEY_BASE"),
+
 # ## SSL Support
 #
 # To get SSL working, you will need to add the `https` key

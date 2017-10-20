@@ -1,7 +1,7 @@
 defmodule Nexpo.CompanyAttributeController do
   use Nexpo.Web, :controller
 
-  alias Nexpo.CompanyAttribute
+  # alias Nexpo.CompanyAttribute
 
 #  def index(conn, _params) do
 #    company_categories = Repo.all(CompanyCategory)

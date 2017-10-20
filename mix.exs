@@ -60,6 +60,7 @@ defmodule Nexpo.Mixfile do
       {:sentry, "~> 6.0.0"},
       {:comeonin, "~> 4.0"},
       {:bcrypt_elixir, "~> 0.12"},
+      {:guardian, "~> 0.14.5"}
     ]
   end
 
