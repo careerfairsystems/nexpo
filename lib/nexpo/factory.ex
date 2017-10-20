@@ -67,4 +67,14 @@ defmodule Nexpo.Factory do
     }
   end
 
+  @doc """
+  Create a Company
+  """
+  def user_factory do
+    %Nexpo.User{
+      username: sequence("Generated username"),
+      password: sequence("63n3r4t3dP4ssw0rd")
+    }
+  end
+
 end
