@@ -2,8 +2,10 @@ defmodule Nexpo.Router do
   use Nexpo.Web, :router
 
   # Needed for Sentry error logging
-  use Plug.ErrorHandler
-  use Sentry.Plug
+  if Mix.env == :prod do
+    use Plug.ErrorHandler
+    use Sentry.Plug
+  end
 
   pipeline :browser do
     plug :accepts, ["html"]
