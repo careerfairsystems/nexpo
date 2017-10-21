@@ -12,6 +12,7 @@ import {
 import Companies from './Screens/Companies'
 import Company from './Screens/Company'
 import NotFound from './Screens/NotFound'
+import Login from './Screens/Login'
 
 import InvisibleLink from './Components/InvisibleLink'
 
@@ -52,6 +53,7 @@ class App extends Component {
           <Route exact path="/" render={() => <Redirect to="/companies" />} />
           <Route exact path="/companies" component={Companies} />
           <Route path="/companies/:id" component={Company} />
+          <Route path="/login" component={Login} />
           <Route component={NotFound} />
         </Switch>
       </div>
