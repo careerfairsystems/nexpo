@@ -1,34 +1,30 @@
 import React, { Component } from 'react'
-import './Login.css'
-import TextField from 'material-ui/TextField';
-import RaisedButton from 'material-ui/RaisedButton';
-import Snackbar from 'material-ui/Snackbar';
+import TextField from 'material-ui/TextField'
+import RaisedButton from 'material-ui/RaisedButton'
+import AlertWarning from 'material-ui/svg-icons/alert/warning';
+import {yellow500} from 'material-ui/styles/colors';
 import { Redirect } from 'react-router-dom'
+import './DevelopmentLogin.css'
 
 /**
- * Handles login. Supports redirecting to back to the route that redirected here
- *
- * This is not integrated with rest of application as there are another pull request touching state
- * - It can authenticate a user, it simply needs to be integrated in global state
+ * Handles authorization in development
  */
-class Login extends Component {
+class DevelopLogin extends Component {
 
   state = {
     email: '',
-    password: '',
     failure: false,
   }
 
   login() {
-    const { email, password } = this.state
+    const { email } = this.state
 
     this.setState({failure: false})
 
-    fetch(`/api/login`, {
+    fetch(`/api/development_login`, {
       method: 'POST',
       body: JSON.stringify({
-        email: this.state.email,
-        password: this.state.password
+        email: email
       }),
       headers: new Headers({
         'Content-Type': 'application/json'
@@ -56,7 +52,7 @@ class Login extends Component {
   }
 
   render() {
-    const { email, password, failure } = this.state
+    const { email, failure } = this.state
     const { isAuthenticated } = this.props
 
     // Url that redirected here
@@ -69,40 +65,34 @@ class Login extends Component {
     }
 
     return (
-      <div className="Login_Component">
-        <h1>Login</h1>
+      <div className="DevelopmentLogin_Component">
+        <AlertWarning color={yellow500} style={styles.icon}/>
+        <h1>Development Login</h1>
         <TextField
           floatingLabelText="Email"
-          errorText={failure ? 'Try something else' : null}
+          errorText={failure ? 'User does not exist' : null}
           value={email}
           autoFocus
           onChange={(event, val) => this.setState({email: val})}
           onKeyPress={event => event.key === 'Enter' ? this.login() : null}
         />
         <br/>
-        <TextField
-          floatingLabelText="Password"
-          errorText={failure ? 'Try something else' : null}
-          value={password}
-          type='password'
-          onChange={(event, val) => this.setState({password: val})}
-          onKeyPress={event => event.key === 'Enter' ? this.login() : null}
-        />
         <br/>
         <RaisedButton
-          label="Login"
+          label="Login as user"
           primary
           onTouchTap={() => this.login()}
-        />
-        <Snackbar
-          open={this.state.failure}
-          message="That email and password combination is incorrect"
-          autoHideDuration={4000}
         />
       </div>
     )
   }
 }
 
-export default Login
+const styles = {
+  icon: {
+    height: '200px',
+    width: 'auto',
+  }
+}
 
+export default DevelopLogin

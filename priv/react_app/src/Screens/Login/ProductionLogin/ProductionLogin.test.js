@@ -1,11 +1,10 @@
 import React from 'react'
-import { expect } from 'chai';
-import { shallow, mount } from 'enzyme'
-import Login from './Login'
+import { shallow } from 'enzyme'
+import ProductionLogin from './ProductionLogin'
 import { MemoryRouter } from 'react-router-dom'
 
 it('should render without crashing', () => {
-  shallow(<MemoryRouter><Login /></MemoryRouter>)
+  shallow(<MemoryRouter><ProductionLogin /></MemoryRouter>)
 })
 
 it('should have input fields for username and password')
