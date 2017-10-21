@@ -72,7 +72,7 @@ defmodule Nexpo.Factory do
   """
   def user_factory do
     %Nexpo.User{
-      username: sequence("Generated username"),
+      email: sequence("generated@email.test"),
       password: sequence("63n3r4t3dP4ssw0rd")
     }
   end

@@ -2,7 +2,7 @@ defmodule Nexpo.User do
   use Nexpo.Web, :model
 
   schema "users" do
-    field :username, :string
+    field :email, :string
     field :hashed_password, :string
     field :password, :string, virtual: true
 
@@ -20,8 +20,8 @@ defmodule Nexpo.User do
 
   defp new_changeset(%Nexpo.User{}, params) do
     %Nexpo.User{}
-    |> cast(params, [:username, :password])
-    |> validate_required([:username, :password])
+    |> cast(params, [:email, :password])
+    |> validate_required([:email, :password])
     |> unique_constraint(:email)
     |> validate_length(:password, min: 6)
     |> hash_password(params)
@@ -29,7 +29,7 @@ defmodule Nexpo.User do
 
   defp alter_changeset(struct, params) do
     struct
-    |> cast(params, [:username, :password])
+    |> cast(params, [:email, :password])
     |> unique_constraint(:email)
     |> validate_length(:password, min: 6)
     |> hash_password(params)
@@ -53,8 +53,8 @@ defmodule Nexpo.User do
     end
   end
 
-  def authenticate(%{:username => username, :password => password}) do
-    case Nexpo.Repo.get_by(Nexpo.User, username: username) do
+  def authenticate(%{:email => email, :password => password}) do
+    case Nexpo.Repo.get_by(Nexpo.User, email: email) do
       nil -> {:error, "No such user"}
       user ->
         case Comeonin.Bcrypt.checkpw(password, user.hashed_password) do

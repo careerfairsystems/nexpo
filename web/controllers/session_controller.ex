@@ -3,8 +3,8 @@ defmodule Nexpo.SessionController do
 
   alias Nexpo.User
 
-  def create(conn, %{"username" => username, "password" => password}) do
-    case User.authenticate(%{username: username, password: password}) do
+  def create(conn, %{"email" => email, "password" => password}) do
+    case User.authenticate(%{email: email, password: password}) do
       {:ok, user} ->
         new_conn = Guardian.Plug.api_sign_in(conn, user)
         jwt = Guardian.Plug.current_token(new_conn)
