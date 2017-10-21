@@ -9,6 +9,9 @@ config :nexpo, Nexpo.Endpoint,
 # Print only warnings and errors during test
 config :logger, level: :warn
 
+config :nexpo, Nexpo.Mailer,
+  adapter: Bamboo.TestAdapter
+
 # Configure your database
 config :nexpo, Nexpo.Repo,
   adapter: Ecto.Adapters.Postgres,

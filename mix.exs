@@ -20,6 +20,8 @@ defmodule Nexpo.Mixfile do
     [
       mod: {Nexpo, []},
       applications: [
+        :bamboo,
+        :bamboo_smtp,
         :ex_machina,
         :phoenix,
         :phoenix_pubsub,
@@ -60,7 +62,9 @@ defmodule Nexpo.Mixfile do
       {:sentry, "~> 6.0.0"},
       {:comeonin, "~> 4.0"},
       {:bcrypt_elixir, "~> 0.12"},
-      {:guardian, "~> 0.14.5"}
+      {:guardian, "~> 0.14.5"},
+      {:bamboo, "~> 0.8"},
+      {:bamboo_smtp, "~> 1.4.0"}
     ]
   end
 

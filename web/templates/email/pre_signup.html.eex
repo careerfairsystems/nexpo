@@ -1,0 +1,6 @@
+<html>
+  <head></head>
+  <body>
+    <h1>Please proceed with sign up by clicking here<a href=<%= Nexpo.User.signup_url(@user) %>>This is the link</a></h1>
+  </body>
+</html>

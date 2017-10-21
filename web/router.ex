@@ -19,6 +19,11 @@ defmodule Nexpo.Router do
     plug :accepts, ["json"]
   end
 
+  # Allows us to see mails sent in dev to /sent_emails
+  if Mix.env == :dev do
+    forward "/sent_emails", Bamboo.EmailPreviewPlug
+  end
+
   # Other scopes may use custom stacks.
   scope "/api", Nexpo do
     pipe_through :api
@@ -30,6 +35,9 @@ defmodule Nexpo.Router do
     if Mix.env != :prod do
       post "/development_login", SessionController, :development_create
     end
+    post "/initial_signup", UserController, :create
+    get "/initial_signup/:key", UserController, :get_current_signup
+    post "/final_signup/:signup_key", UserController, :final_create
 
   end
 
