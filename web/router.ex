@@ -20,15 +20,18 @@ defmodule Nexpo.Router do
   end
 
   # Other scopes may use custom stacks.
-   scope "/api", Nexpo do
-     pipe_through :api
+  scope "/api", Nexpo do
+    pipe_through :api
 
-     resources "/companies", CompanyController, only: [:index, :show]
-     resources "/categories", CompanyCategoryController, only: [:index, :show]
+    resources "/companies", CompanyController, only: [:index, :show]
+    resources "/categories", CompanyCategoryController, only: [:index, :show]
 
-     post "/login", SessionController, :create
+    post "/login", SessionController, :create
+    if Mix.env != :prod do
+      post "/development_login", SessionController, :development_create
+    end
 
-   end
+  end
 
    scope "/", Nexpo do
     pipe_through :browser # Use the default browser stack
