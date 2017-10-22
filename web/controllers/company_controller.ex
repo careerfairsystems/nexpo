@@ -5,35 +5,35 @@ defmodule Nexpo.CompanyController do
 
   @apidoc """
   @api {GET} /companies List companies
-  @apiName List Company
   @apiGroup Company
 
   @apiSuccessExample {json} Success
     HTTP 200 Ok
-    [
-      {
-        "id": 1,
-        "name": "CodeComp",
-        "email": "info@codecomp.com",
-        "categories": [
-          {
-            "attribute": {}
-          }
-        ]
-      },
-      {
-        "id": 2,
-        "name": "Other Comp",
-        "email": "info@othercomp.com",
-        "categories": [
-          {
-            "attribute": {}
-          }
-        ]
-      }
-    ]
+    {
+      "data": [
+        {
+          "id": 1,
+          "name": "CodeComp",
+          "email": "info@codecomp.com",
+          "categories": [
+            {
+              "attribute": {}
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "name": "Other Comp",
+          "email": "info@othercomp.com",
+          "categories": [
+            {
+              "attribute": {}
+            }
+          ]
+        }
+      ]
+    }
 
-  @apiUse NotFoundError
   @apiUse InternalServerError
   """
   def index(conn, _params) do
@@ -64,7 +64,6 @@ defmodule Nexpo.CompanyController do
 
   @apidoc """
   @api {GET} /companies/:id Get company
-  @apiName Get Company
   @apiGroup Company
 
   @apiParam {Number} id ID of the company
@@ -72,10 +71,12 @@ defmodule Nexpo.CompanyController do
   @apiSuccessExample {json} Success
     HTTP 200 Ok
     {
-      "id": 1,
-      "name": "CodeComp",
-      "email": "info@codecomp.com",
-      "categories": []
+      "data": {
+        "id": 1,
+        "name": "CodeComp",
+        "email": "info@codecomp.com",
+        "categories": []
+      }
     }
 
   @apiUse NotFoundError

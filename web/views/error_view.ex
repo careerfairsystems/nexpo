@@ -1,44 +1,44 @@
 defmodule Nexpo.ErrorView do
   use Nexpo.Web, :view
 
-  # @apidoc """
-  # @apiDefine NotFoundError
-  # @apiErrorExample {json} Not Found
-  #   HTTP 404 Not Found
-  # """
-  def render("404.json", _assigns) do
-    %{error: "Could not be found"}
-  end
-
-  # @apidoc """
-  # @apiDefine BadRequestError
-  # @apiErrorExample {json} Bad Request
-  #   HTTP 400 Bad Request
-  # """
+  @apidoc """
+  @apiDefine BadRequestError
+  @apiErrorExample {json} Bad Request
+    HTTP 400 Bad Request
+  """
   def render("400.json", _assigns) do
     %{error: "Bad Request"}
   end
 
-  # @apidoc """
-  # @apiDefine UnauthorizedError
-  # @apiErrorExample {json} Unauthorized
-  #   HTTP 401 Unauthorized
-  # """
+  @apidoc """
+  @apiDefine UnauthorizedError
+  @apiErrorExample {json} Unauthorized
+    HTTP 401 Unauthorized
+  """
   def render("401.json", _assigns) do
     %{error: "Unauthorized"}
   end
 
-  # @apidoc """
-  # @apiDefine InternalServerError
-  # @apiErrorExample {json} Internal server error
-  #   HTTP 500 Internal server error
-  # """
+  @apidoc """
+  @apiDefine NotFoundError
+  @apiErrorExample {json} Not Found
+    HTTP 404 Not Found
+  """
+  def render("404.json", _assigns) do
+    %{error: "Could not be found"}
+  end
+
+  @apidoc """
+  @apiDefine InternalServerError
+  @apiErrorExample {json} Internal server error
+    HTTP 500 Internal server error
+  """
   def render("500.json", _assigns) do
     %{error: "Internal server error"}
   end
 
-  # # In case no render clause matches or no
-  # # template is found, let's render it as 500
+  # In case no render clause matches or no
+  # template is found, let's render it as 500
   def template_not_found(_template, _assigns) do
     render "500.json"
   end

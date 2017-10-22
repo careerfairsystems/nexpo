@@ -3,6 +3,24 @@ defmodule Nexpo.SessionController do
 
   alias Nexpo.User
 
+  @apidoc """
+  @api {POST} /login Login
+  @apiGroup Login
+
+  @apiParam {String} email      Username
+  @apiParam {String} password   Password
+
+  @apiSuccessExample {json} Success
+    HTTP 201 Created
+    {
+      "data": {
+        "jwt": "randomly-generated-string"
+      }
+    }
+
+  @apiUse BadRequestError
+  @apiUse UnauthorizedError
+  """
   def create(conn, %{"email" => email, "password" => password}) do
     case User.authenticate(%{email: email, password: password}) do
       {:ok, user} ->
@@ -10,6 +28,7 @@ defmodule Nexpo.SessionController do
         jwt = Guardian.Plug.current_token(new_conn)
         session = %{ jwt: jwt, user: user}
         new_conn
+        |> put_status(200)
         |> put_resp_header("authorization", "Bearer #{jwt}")
         |> render("login.json", session: session)
       {:error, _} ->
@@ -19,6 +38,10 @@ defmodule Nexpo.SessionController do
     end
   end
 
+  @doc """
+  Endpoint only available in development
+  This allows developers to login as anybody, by only specifying email
+  """
   def development_create(conn, %{"email" => email}) do
     case Nexpo.Repo.get_by(Nexpo.User, email: email) do
       nil ->
