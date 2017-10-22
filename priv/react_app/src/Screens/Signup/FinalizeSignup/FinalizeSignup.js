@@ -24,6 +24,9 @@ type State = {
   finished: boolean
 }
 
+/**
+ * A component which allows users to complete a sign up process
+ */
 class FinalizeSignup extends Component<Props, State> {
 
   state = {

@@ -9,6 +9,7 @@ import HtmlTitle from '../../../Components/HtmlTitle'
 
 /**
  * Handles authorization in development
+ * - Allows login by only specifying email
  */
 class DevelopLogin extends Component {
 

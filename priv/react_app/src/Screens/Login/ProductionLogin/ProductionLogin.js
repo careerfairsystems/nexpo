@@ -7,10 +7,10 @@ import { Redirect, Link } from 'react-router-dom'
 import HtmlTitle from '../../../Components/HtmlTitle'
 
 /**
- * Handles login in production. Supports redirecting to back to the route that redirected here
+ * Handles login in production. Supports redirecting back to the route that redirected here
  *
  * This is not integrated with rest of application as there are another pull request touching state
- * - It can authenticate a user, it simply needs to be integrated in global state
+ * - It can authenticate a user, it simply needs to be integrated into global state
  * - By passing isAuthenticated prop, this component will redirect back to where user came from
  */
 class ProductionLogin extends Component {

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Helmet } from 'react-helmet'
 
 /**
- * Set HtmlTitle of page
+ * A component which sets the html title of the page
  */
 const HtmlTitle = ({title}) => {
   const text = title ? `Nexpo | ${title}` : 'Nexpo'

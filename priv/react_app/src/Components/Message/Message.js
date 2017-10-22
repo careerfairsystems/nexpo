@@ -10,6 +10,10 @@ import {green500} from 'material-ui/styles/colors';
 import { Link } from 'react-router-dom'
 import './Message.css'
 
+/**
+ * A Component which renders a message
+ * - Consists of an icon, text, and a link
+ */
 const Message = ({message, linkUrl, linkText, type}) => {
 
   let icon = null

@@ -7,6 +7,9 @@ import { isNil } from 'ramda'
 
 import SuccessMessage from '../../../Components/SuccessMessage'
 
+/**
+ * Component which allows user to initiate a sign up process
+ */
 class InitialSignup extends Component {
 
   state = {
