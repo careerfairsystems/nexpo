@@ -1,7 +1,7 @@
-<html>
-  <head></head>
-  <body>
-    <h1>Good job signing up!</h1>
-    <div>Start working in Nexpo by clicking <a href="<%= application_url() %>">here</a>
-  </body>
-</html>
+<h1>Welcome to Nexpo, <%= @user.first_name %>!</h1>
+
+<br/>
+<a href="<%= application_url() %>">
+  Start working in Nexpo by clicking here
+</a>
+

@@ -5,19 +5,20 @@ defmodule Nexpo.Email do
   def pre_signup_email(user) do
     base_email()
     |> to(user.email)
-    |> subject("Proceed with signup")
+    |> subject("Nexpo | Verify your email")
     |> render("pre_signup.html", user: user)
   end
 
   def completed_sign_up_mail(user) do
     base_email()
     |> to(user.email)
-    |> subject("Welcome to Nexpo!")
-    |> render("completed_signup.html")
+    |> subject("Nexpo | Welcome!")
+    |> render("completed_signup.html", user: user)
   end
 
   defp base_email do
     new_email()
     |> from("nexpo@arkad.se")
+    |> put_html_layout({Nexpo.LayoutView, "email.html"})
   end
 end
