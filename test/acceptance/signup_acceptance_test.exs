@@ -1,4 +1,4 @@
-defmodule Nexpo.UsersAcceptanceTest do
+defmodule Nexpo.SignupAcceptanceTest do
   use Nexpo.ConnCase
   use Bamboo.Test
 
@@ -35,10 +35,23 @@ defmodule Nexpo.UsersAcceptanceTest do
     assert json_response(conn, 201)
   end
 
+  test "POST /initial_signup lower cases email", %{conn: conn} do
+    params = Factory.params_for(:initial_signup)
+    email = User.convert_username_to_email(params.username)
+    params = Map.put(params, :username, String.upcase(params.username))
+
+    conn = post(conn, "/api/initial_signup", params)
+
+    assert json_response(conn, 201)
+
+    user = Repo.get_by!(User, email: email)
+
+    assert user != nil
+  end
+
   test "POST /initial_signup rejects usernames that are already signed up", %{conn: conn} do
     params = Factory.params_for(:initial_signup)
-    user_params = Factory.params_for(:user, email: params.username <> "@student.lu.se")
-    User.changeset(%User{}, user_params) |> Repo.insert
+    User.initial_signup!(params)
 
     conn = post(conn, "/api/initial_signup", params)
 
@@ -51,7 +64,8 @@ defmodule Nexpo.UsersAcceptanceTest do
 
     assert json_response(conn, 201)
 
-    user = Repo.get_by!(User, email: params.username <> "@student.lu.se")
+    email = User.convert_username_to_email(params.username)
+    user = Repo.get_by!(User, email: email)
 
     assert_delivered_email Nexpo.Email.pre_signup_email(user)
   end
@@ -61,7 +75,7 @@ defmodule Nexpo.UsersAcceptanceTest do
     user = User.initial_signup!(params)
 
     params = Factory.params_for(:final_signup)
-    params = Map.put(params, :passwordConfirmation, params.password <> "invalid")
+    params = Map.put(params, :password_confirmation, params.password <> "invalid")
 
     conn = post(conn, "/api/final_signup/#{user.signup_key}", params)
 
@@ -73,7 +87,6 @@ defmodule Nexpo.UsersAcceptanceTest do
     user = User.initial_signup!(params)
 
     params = Factory.params_for(:final_signup)
-    params = Map.put(params, :passwordConfirmation, params.password)
 
     conn = post(conn, "/api/final_signup/#{user.signup_key}invalid", params)
 
@@ -91,7 +104,20 @@ defmodule Nexpo.UsersAcceptanceTest do
     assert json_response(conn, 200)
     response = Poison.decode!(conn.resp_body)["data"]
 
+    user = Repo.get!(User, user.id)
+
+    # Assert id and email in response
+    assert response["id"] != nil
+    assert response["email"] != nil
+
+    # Assert correct data in response
     assert response["id"] == user.id
+    assert response["email"] == user.email
+    assert response["first_name"] == params.first_name
+    assert response["last_name"] == params.last_name
+
+    # Assert sign_up key has been destroyed
+    assert user.signup_key == nil
 
     assert_delivered_email Nexpo.Email.completed_sign_up_mail(user)
   end

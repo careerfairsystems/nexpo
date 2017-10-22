@@ -11,13 +11,9 @@ defmodule Nexpo.UserView do
 
   def render("user.json", %{user: user}) do
     # Define own parameters to keep
-    base = [:id, :email]
+    base = [:id, :email, :first_name, :last_name]
 
     Nexpo.Support.View.render_object(user, base)
-  end
-
-  def render("pre_signup.json", _data) do
-    Nexpo.Support.View.render_object(%{}, [])
   end
 
 end

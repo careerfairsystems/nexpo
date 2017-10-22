@@ -9,6 +9,8 @@ defmodule Nexpo.User do
     field :hashed_password, :string
     field :password, :string, virtual: true
     field :signup_key, :string
+    field :first_name, :string
+    field :last_name, :string
 
     timestamps()
   end
@@ -16,6 +18,7 @@ defmodule Nexpo.User do
   def initial_signup_changeset(%Nexpo.User{} = user, params \\ %{}) do
     user
     |> cast(params, [:email, :signup_key])
+    |> update_change(:email, &String.downcase(&1) )
     |> generate_signup_key()
     |> validate_required([:email, :signup_key])
     |> unique_constraint(:email)
@@ -23,11 +26,12 @@ defmodule Nexpo.User do
 
   def final_signup_changeset(user, params \\ %{}) do
     user
-    |> cast(params, [:password])
+    |> cast(params, [:password, :first_name, :last_name])
     |> validate_length(:password, min: 6)
     |> validate_confirmation(:password)
     |> hash_password(params)
-    |> validate_required([:email, :hashed_password])
+    |> put_change(:signup_key, nil)
+    |> validate_required([:email, :hashed_password, :first_name, :last_name])
     |> unique_constraint(:email)
   end
 
@@ -104,8 +108,8 @@ defmodule Nexpo.User do
     end
   end
 
-  defp convert_username_to_email(username) do
-    username <> "@student.lu.se"
+  def convert_username_to_email(username) do
+    String.downcase(username) <> "@student.lu.se"
   end
 
   # Does the initial signup

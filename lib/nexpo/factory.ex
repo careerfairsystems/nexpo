@@ -93,7 +93,9 @@ defmodule Nexpo.Factory do
     password = sequence("63n3r4t3dP4ssw0rd")
     %{
       password: password,
-      passwordConfirmation: password,
+      password_confirmation: password,
+      first_name: sequence("Fake first_name"),
+      last_name: sequence("Fake last_name"),
     }
   end
 
