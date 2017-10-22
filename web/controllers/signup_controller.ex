@@ -16,10 +16,10 @@ defmodule Nexpo.SignupController do
         conn
         |> put_status(201)
         |> render("initial_signup.json", %{})
-      {:error, _changeset} ->
+      {:error, changeset} ->
         conn
         |> put_status(400)
-        |> render(ErrorView, "400.json")
+        |> render(ChangesetView, "error.json", changeset: changeset)
     end
   end
 

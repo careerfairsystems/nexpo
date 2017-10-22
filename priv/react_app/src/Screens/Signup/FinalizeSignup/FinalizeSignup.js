@@ -5,7 +5,9 @@ import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
 import './FinalizeSignup.css'
 
-import { Redirect } from 'react-router-dom'
+import ErrorMessage from '../../../Components/ErrorMessage'
+import SuccessMessage from '../../../Components/SuccessMessage'
+import {isNil} from 'ramda'
 
 type Props = {
   signupKey: string
@@ -14,26 +16,33 @@ type Props = {
 type State = {
   email: string,
   password: string,
-  passwordConf: string,
-  firstName: string,
-  lastName: string,
-  failure: boolean,
-  noSuchKey: boolean
+  password_confirmation: string,
+  first_name: string,
+  last_name: string,
+  errors: object,
+  noSuchKey: boolean,
+  finished: boolean
 }
 
-class GatherDetails extends Component<Props, State> {
+class FinalizeSignup extends Component<Props, State> {
 
   state = {
-    email: '',
-    password: '',
-    passwordConf: '',
-    firstName: '',
-    lastName: '',
-    failure: false,
-    noSuchKey: false
+    email: undefined,
+    password: undefined,
+    password_confirmation: undefined,
+    first_name: undefined,
+    last_name: undefined,
+    errors: {},
+    noSuchKey: false,
+    finished: false
   }
 
   componentDidMount() {
+    // Fetch current sign up process from backend
+    this._fetchCurrentSignup()
+  }
+
+  _fetchCurrentSignup = () => {
     const { signupKey } = this.props
     fetch(`/api/initial_signup/${signupKey}`)
     .then(res => {
@@ -45,10 +54,12 @@ class GatherDetails extends Component<Props, State> {
       }
     })
     .then(res => {
+      // Signup key is valid
       const user = res.data
       this.setState({email: user.email})
     })
     .catch(err => {
+      // Sign up key is invalid
       this.setState({noSuchKey: true})
       console.error(err)
     })
@@ -56,12 +67,12 @@ class GatherDetails extends Component<Props, State> {
 
   _signup = () => {
     const {signupKey} = this.props
-    const {password,passwordConf,firstName,lastName} = this.state
+    const {password,password_confirmation,first_name,last_name} = this.state
     const params = {
       password,
-      passwordConfirmation: passwordConf,
-      firstName,
-      lastName
+      password_confirmation,
+      first_name,
+      last_name
     }
     fetch(`/api/final_signup/${signupKey}`, {
       method: 'POST',
@@ -70,92 +81,143 @@ class GatherDetails extends Component<Props, State> {
         'Content-Type': 'application/json'
       })
     })
+    .then(res => res.json())
     .then(res => {
-      if(res.ok) {
-        return res.json()
+      // Signup successful
+      if(isNil(res.errors)) {
+        this.setState({errors: {}, finished: true})
       }
+      // There was errors
       else {
-        throw Error(res.statusText)
+        this.setState({errors: res.errors})
       }
-    })
-    .then(res => {
-      // this.setState({failure: false})
-      alert('Success!')
     })
     .catch(err => {
-      console.log(err)
-      // this.setState({failure: true})
+      console.error(err)
     })
   }
 
+  _renderEmailInput = () => {
+    const { email } = this.state
+    return (
+      <TextField
+        floatingLabelText="Email"
+        value={email || ''}
+        disabled
+        type='text'
+        onChange={(event, val) => this.setState({email: val})}
+      />
+    )
+  }
+
+  _renderPasswordInput = () => {
+    const { password, errors } = this.state
+    return (
+      <TextField
+        floatingLabelText="Password"
+        errorText={errors.password ? errors.password[0] : null}
+        value={password || ''}
+        type='password'
+        onChange={(event, val) => this.setState({password: val})}
+      />
+    )
+  }
+
+  _renderPasswordConfirmationInput = () => {
+    const { password_confirmation, errors } = this.state
+    return (
+      <TextField
+        floatingLabelText="Password confirmation"
+        errorText={
+          errors.password_confirmation
+          ? errors.password_confirmation[0] : null
+        }
+        value={password_confirmation || ''}
+        type='password'
+        onChange={(event, val) => this.setState({password_confirmation: val})}
+      />
+    )
+  }
+
+  _renderFirstNameInput = () => {
+    const { first_name, errors } = this.state
+    return (
+      <TextField
+        floatingLabelText="First name"
+        errorText={errors.first_name ? errors.first_name[0] : null}
+        value={first_name || ''}
+        onChange={(event, val) => this.setState({first_name: val})}
+      />
+    )
+  }
+
+  _renderLastNameInput = () => {
+    const { last_name, errors } = this.state
+    return (
+      <TextField
+        floatingLabelText="Last name"
+        errorText={errors.last_name ? errors.last_name[0] : null}
+        value={last_name || ''}
+        onChange={(event, val) => this.setState({last_name: val})}
+      />
+    )
+  }
+
+  _renderSignupButton = () => {
+    return (
+      <RaisedButton
+        label="Sign up"
+        primary
+        onTouchTap={() => this._signup()}
+      />
+    )
+  }
+
   render() {
-    const {
-      email,
-      password,
-      passwordConf,
-      firstName,
-      lastName,
-      failure,
-      noSuchKey
-    } = this.state
+    const { noSuchKey, finished } = this.state
 
     // Redirect to root url if sign up key is incorrect
     if(noSuchKey) {
-      return <Redirect to='/' />
+      return (
+        <ErrorMessage
+          message="This link seems to be broken!"
+          linkUrl="/signup"
+          linkText="Click here to sign up"
+        />
+      )
+    }
+    else if(finished) {
+      return (
+        <SuccessMessage
+          message="You have signed up!"
+          linkUrl="/"
+          linkText="Click here to go home"
+        />
+      )
     }
 
     return (
       <div className="GatherDetails_Component">
         <h1>Sign up</h1>
-        <TextField
-          floatingLabelText="Email"
-          errorText={failure ? 'Try something else' : null}
-          value={email}
-          disabled
-          onChange={(event, val) => this.setState({email: val})}
-        />
+        {this._renderEmailInput()}
+        {this._renderPasswordInput()}
+        {this._renderPasswordConfirmationInput()}
+        {this._renderFirstNameInput()}
+        {this._renderLastNameInput()}
         <br/>
-        <TextField
-          floatingLabelText="Password"
-          errorText={failure ? 'Try something else' : null}
-          value={password}
-          type='password'
-          onChange={(event, val) => this.setState({password: val})}
-        />
-        <TextField
-          floatingLabelText="Password confirmation"
-          errorText={failure ? 'Try something else' : null}
-          value={passwordConf}
-          type='password'
-          onChange={(event, val) => this.setState({passwordConf: val})}
-        />
-        <TextField
-          floatingLabelText="First name"
-          value={firstName}
-          onChange={(event, val) => this.setState({firstName: val})}
-        />
-        <TextField
-          floatingLabelText="Last name"
-          value={lastName}
-          onChange={(event, val) => this.setState({lastName: val})}
-        />
         <br/>
-        <RaisedButton
-          label="Sign up"
-          primary
-          onTouchTap={() => this._signup()}
-        />
+        {this._renderSignupButton()}
       </div>
     )
   }
 }
 
-GatherDetails.propTypes = {
+FinalizeSignup.propTypes = {
   signupKey: PropTypes.string.isRequired
 }
 
-GatherDetails.defaultProps = {
-  signupKey: '' //Change this
+FinalizeSignup.defaultProps = {
+  signupKey: undefined
 }
 
-export default GatherDetails
+export default FinalizeSignup

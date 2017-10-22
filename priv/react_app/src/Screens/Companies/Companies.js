@@ -10,7 +10,7 @@ import {
   TableRowColumn,
 } from 'material-ui/Table';
 import InvisibleLink from '../../Components/InvisibleLink'
-import { Helmet } from "react-helmet";
+import HtmlTitle from '../../Components/HtmlTitle'
 
 /**
  * Responsible for rendering a list of companies
@@ -42,9 +42,7 @@ class Companies extends Component {
   render() {
     return (
       <div>
-        <Helmet>
-          <title>Nexpo | Companies</title>
-        </Helmet>
+        <HtmlTitle title="Companies" />
 
         <Table>
 

@@ -37,8 +37,13 @@ defmodule Nexpo.SignupAcceptanceTest do
 
   test "POST /initial_signup lower cases email", %{conn: conn} do
     params = Factory.params_for(:initial_signup)
-    email = User.convert_username_to_email(params.username)
-    params = Map.put(params, :username, String.upcase(params.username))
+
+    incorrect_username = String.upcase(params.username)
+
+    correct_username = params.username |> String.trim |> String.downcase
+    email = correct_username <> User.global_email_domain()
+
+    params = Map.put(params, :username, incorrect_username)
 
     conn = post(conn, "/api/initial_signup", params)
 
@@ -47,6 +52,34 @@ defmodule Nexpo.SignupAcceptanceTest do
     user = Repo.get_by!(User, email: email)
 
     assert user != nil
+    assert user.email == email
+  end
+
+  test "POST /initial_signup does not allow usernames with blankspace", %{conn: conn} do
+    params = Factory.params_for(:initial_signup)
+
+    incorrect_username = "  " <> params.username <> "  "
+
+    correct_username = params.username |> String.trim |> String.downcase
+    email = correct_username <> User.global_email_domain()
+
+    params = Map.put(params, :username, incorrect_username)
+
+    conn = post(conn, "/api/initial_signup", params)
+
+    assert json_response(conn, 400)
+
+    user = Repo.get_by(User, email: email)
+
+    assert user == nil
+  end
+
+  test "POST /initial_signup rejects empty usernames", %{conn: conn} do
+    params = Factory.params_for(:initial_signup, username: "")
+
+    conn = post(conn, "/api/initial_signup", params)
+
+    assert json_response(conn, 400)
   end
 
   test "POST /initial_signup rejects usernames that are already signed up", %{conn: conn} do
@@ -70,7 +103,31 @@ defmodule Nexpo.SignupAcceptanceTest do
     assert_delivered_email Nexpo.Email.pre_signup_email(user)
   end
 
-  test "POST /final_signup/:key fails given invalid passwords", %{conn: conn} do
+  test "POST /final_signup/:key fails given no passwords", %{conn: conn} do
+    params = Factory.params_for(:initial_signup)
+    user = User.initial_signup!(params)
+
+    params = Factory.params_for(:final_signup) |> Map.drop([:password, :password_confirmation])
+
+    conn = post(conn, "/api/final_signup/#{user.signup_key}", params)
+
+    assert json_response(conn, 400)
+  end
+
+  test "POST /final_signup/:key fails given no to short password", %{conn: conn} do
+    params = Factory.params_for(:initial_signup)
+    user = User.initial_signup!(params)
+
+    params = Factory.params_for(:final_signup)
+    |> Map.put(:password, "short")
+    |> Map.put(:password_confirmation, "short")
+
+    conn = post(conn, "/api/final_signup/#{user.signup_key}", params)
+
+    assert json_response(conn, 400)
+  end
+
+  test "POST /final_signup/:key fails given non-matching passwords", %{conn: conn} do
     params = Factory.params_for(:initial_signup)
     user = User.initial_signup!(params)
 

@@ -1,71 +1,95 @@
 import React, { Component } from 'react'
 import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
+import { Link } from 'react-router-dom'
 import './InitialSignup.css'
+import { isNil } from 'ramda'
 
-class GatherEmail extends Component {
+import SuccessMessage from '../../../Components/SuccessMessage'
+
+class InitialSignup extends Component {
 
   state = {
     username: '',
-    failure: false,
+    errors: {},
+    finished: false,
   }
 
   _signup = () => {
     const { username } = this.state
 
-    // this.setState({failure: false})
+    // reset errors to give user feedback that something happened
+    this.setState({errors: {}})
 
     fetch(`/api/initial_signup`, {
       method: 'POST',
-      body: JSON.stringify({
-        username: username
-      }),
+      body: JSON.stringify({username}),
       headers: new Headers({
         'Content-Type': 'application/json'
       })
     })
+    .then(res => res.json())
     .then(res => {
-      if(res.ok) {
-        return res.json()
+      if(isNil(res.errors)) {
+        this.setState({finished: true})
       }
       else {
-        throw Error(res.statusText)
+        this.setState({errors: res.errors})
       }
     })
-    .then(res => {
-      // this.setState({failure: false})
-      alert('Success!')
-    })
     .catch(err => {
-      console.log(err)
-      // this.setState({failure: true})
+      console.errors(err)
     })
   }
 
+  _renderUsernameInput = () => {
+    const { username, errors } = this.state
+    return (
+      <TextField
+        floatingLabelText="STiL-ID"
+        errorText={errors.email ? errors.email[0] : null}
+        value={username}
+        autoFocus
+        onChange={(event, val) => this.setState({username: val})}
+        onKeyPress={event => event.key === 'Enter' ? this._signup() : null}
+      />
+    )
+  }
+
+  _renderSignupButton = () => {
+    return (
+      <RaisedButton
+        label="Sign up"
+        primary
+        onTouchTap={() => this._signup()}
+      />
+    )
+  }
+
   render() {
-    const { username, failure } = this.state
+    const { finished } = this.state
+
+    if(finished) {
+      return <SuccessMessage message="Please check your inbox"/>
+    }
     return (
       <div className="GatherEmail_Component">
-        <h1>Welcome</h1>
+        <h1>Sign up</h1>
         <h2>Please enter your STiL-ID</h2>
-        <TextField
-          floatingLabelText="STiL-ID"
-          errorText={failure ? 'That user already exists' : null}
-          value={username}
-          autoFocus
-          onChange={(event, val) => this.setState({username: val})}
-          onKeyPress={event => event.key === 'Enter' ? this._signup() : null}
-        />
+        {this._renderUsernameInput()}
         <br/>
         <br/>
-        <RaisedButton
-          label="Sign up"
-          primary
-          onTouchTap={() => this._signup()}
-        />
+        {this._renderSignupButton()}
+        <br/>
+        <br/>
+        <div>Already have an account?</div>
+        <br/>
+        <div className="links">
+          <Link to="/login">Log in</Link>
+        </div>
       </div>
     )
   }
 }
 
-export default GatherEmail
+export default InitialSignup

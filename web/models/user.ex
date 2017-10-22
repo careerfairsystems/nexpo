@@ -18,15 +18,29 @@ defmodule Nexpo.User do
   def initial_signup_changeset(%Nexpo.User{} = user, params \\ %{}) do
     user
     |> cast(params, [:email, :signup_key])
+    |> validate_change(:email, fn :email, email ->
+
+      cond do
+        # Validate username is not empty
+        email == global_email_domain() -> [email: "Cannot be empty"]
+
+        # Validate email does not contains whitespace
+        String.contains?(email, " ") -> [email: "Cannot contain blank spaces"]
+
+        # Return no errors if the above does not match
+        true -> []
+      end
+    end)
     |> update_change(:email, &String.downcase(&1) )
     |> generate_signup_key()
     |> validate_required([:email, :signup_key])
-    |> unique_constraint(:email)
+    |> unique_constraint(:email, message: "Has already been taken")
   end
 
   def final_signup_changeset(user, params \\ %{}) do
     user
     |> cast(params, [:password, :first_name, :last_name])
+    |> validate_required(:password)
     |> validate_length(:password, min: 6)
     |> validate_confirmation(:password)
     |> hash_password(params)
@@ -108,8 +122,12 @@ defmodule Nexpo.User do
     end
   end
 
+  def global_email_domain do
+    "@student.lu.se"
+  end
+
   def convert_username_to_email(username) do
-    String.downcase(username) <> "@student.lu.se"
+    username <> global_email_domain()
   end
 
   # Does the initial signup

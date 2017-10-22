@@ -5,6 +5,7 @@ import AlertWarning from 'material-ui/svg-icons/alert/warning';
 import {yellow500} from 'material-ui/styles/colors';
 import { Redirect } from 'react-router-dom'
 import './DevelopmentLogin.css'
+import HtmlTitle from '../../../Components/HtmlTitle'
 
 /**
  * Handles authorization in development
@@ -46,7 +47,7 @@ class DevelopLogin extends Component {
       `)
     })
     .catch(err => {
-      console.log(err)
+      console.error(err)
       this.setState({failure: true})
     })
   }
@@ -66,6 +67,7 @@ class DevelopLogin extends Component {
 
     return (
       <div className="DevelopmentLogin_Component">
+        <HtmlTitle title="Dev Login"/>
         <AlertWarning color={yellow500} style={styles.icon}/>
         <h1>Development Login</h1>
         <TextField

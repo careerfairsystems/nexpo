@@ -82,7 +82,7 @@ defmodule Nexpo.Factory do
   """
   def initial_signup_factory do
     %{
-      username: sequence("Generated username")
+      username: sequence("generated-username")
     }
   end
 

@@ -11,9 +11,18 @@ defmodule Nexpo.ErrorView do
   end
 
   # @apidoc """
-  # @apiDefine NotFoundError
-  # @apiErrorExample {json} Not Found
-  #   HTTP 404 Not Found
+  # @apiDefine BadRequestError
+  # @apiErrorExample {json} Bad Request
+  #   HTTP 400 Bad Request
+  # """
+  def render("400.json", _assigns) do
+    %{error: "Bad Request"}
+  end
+
+  # @apidoc """
+  # @apiDefine UnauthorizedError
+  # @apiErrorExample {json} Unauthorized
+  #   HTTP 401 Unauthorized
   # """
   def render("401.json", _assigns) do
     %{error: "Unauthorized"}

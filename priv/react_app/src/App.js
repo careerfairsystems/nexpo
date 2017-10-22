@@ -16,6 +16,7 @@ import Login from './Screens/Login'
 import Signup from './Screens/Signup'
 
 import InvisibleLink from './Components/InvisibleLink'
+import HtmlTitle from './Components/HtmlTitle'
 
 /**
  * The base of the application. Defines the basic layout
@@ -34,6 +35,9 @@ class App extends Component {
   render() {
     return (
       <div>
+        {/* Always fall back to default htmltitle if screen does not specify its own */}
+        <HtmlTitle />
+
         <AppBar
           title="Nexpo"
           onLeftIconButtonTouchTap={() => this.setState({drawerOpen: true})}
