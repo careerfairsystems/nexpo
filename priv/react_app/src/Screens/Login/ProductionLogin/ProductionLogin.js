@@ -5,6 +5,8 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Snackbar from 'material-ui/Snackbar';
 import { Redirect, Link } from 'react-router-dom'
 import HtmlTitle from '../../../Components/HtmlTitle'
+import API, {setJwt} from '../../../API'
+import {isNil} from 'ramda'
 
 /**
  * Handles login in production. Supports redirecting back to the route that redirected here
@@ -26,32 +28,15 @@ class ProductionLogin extends Component {
 
     this.setState({error: false})
 
-    fetch(`/api/login`, {
-      method: 'POST',
-      body: JSON.stringify({email, password}),
-      headers: new Headers({
-        'Content-Type': 'application/json'
-      })
-    })
+    API.session.login({email, password})
     .then(res => {
-      if(res.ok) {
-        return res.json()
+      if(isNil(res.error)) {
+        setJwt(res.data.jwt)
+        this.setState({error: false})
       }
       else {
-        throw Error(res.statusText)
+        this.setState({error: true})
       }
-    })
-    .then(res => {
-      this.setState({error: false})
-      // make isAuthenticated prop true
-      alert(`
-        Success!
-        JWT: ${res.data.jwt}
-      `)
-    })
-    .catch(err => {
-      console.error(err)
-      this.setState({error: true})
     })
   }
 

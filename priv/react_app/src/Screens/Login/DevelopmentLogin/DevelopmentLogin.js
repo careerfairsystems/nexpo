@@ -6,6 +6,7 @@ import {yellow500} from 'material-ui/styles/colors';
 import { Redirect } from 'react-router-dom'
 import './DevelopmentLogin.css'
 import HtmlTitle from '../../../Components/HtmlTitle'
+import {setJwt} from '../../../API'
 
 /**
  * Handles authorization in development
@@ -41,11 +42,8 @@ class DevelopLogin extends Component {
       }
     })
     .then(res => {
+      setJwt(res.data.jwt)
       this.setState({failure: false})
-      alert(`
-        Success!
-        JWT: ${res.data.jwt}
-      `)
     })
     .catch(err => {
       console.error(err)

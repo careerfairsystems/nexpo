@@ -7,7 +7,8 @@ import './FinalizeSignup.css'
 
 import ErrorMessage from '../../../Components/ErrorMessage'
 import SuccessMessage from '../../../Components/SuccessMessage'
-import {isNil} from 'ramda'
+import API from '../../../API'
+import {isNil, pick} from 'ramda'
 
 type Props = {
   signupKey: string
@@ -41,62 +42,30 @@ class FinalizeSignup extends Component<Props, State> {
   }
 
   componentDidMount() {
-    // Fetch current sign up process from backend
     this._fetchCurrentSignup()
   }
 
   _fetchCurrentSignup = () => {
     const { signupKey } = this.props
-    fetch(`/api/initial_signup/${signupKey}`)
+    API.signup.get_current_signup(signupKey)
     .then(res => {
-      if(res.ok) {
-        return res.json()
-      }
-      else {
-        throw Error("No such key exists")
-      }
-    })
-    .then(res => {
-      // Signup key is valid
-      const user = res.data
-      this.setState({email: user.email})
-    })
-    .catch(err => {
-      // Sign up key is invalid
-      this.setState({noSuchKey: true})
-      console.error(err)
+      isNil(res.error)
+        ? this.setState({email: res.data.email})
+        : this.setState({noSuchKey: true})
     })
   }
 
   _signup = () => {
     const {signupKey} = this.props
-    const {password,password_confirmation,first_name,last_name} = this.state
-    const params = {
-      password,
-      password_confirmation,
-      first_name,
-      last_name
-    }
-    fetch(`/api/final_signup/${signupKey}`, {
-      method: 'POST',
-      body: JSON.stringify(params),
-      headers: new Headers({
-        'Content-Type': 'application/json'
-      })
-    })
-    .then(res => res.json())
+    const params = pick(
+      ['password', 'password_confirmation', 'first_name', 'last_name'],
+      this.state
+    )
+    API.signup.finalize_signup(signupKey, params)
     .then(res => {
-      // Signup successful
-      if(isNil(res.errors)) {
-        this.setState({errors: {}, finished: true})
-      }
-      // There was errors
-      else {
-        this.setState({errors: res.errors})
-      }
-    })
-    .catch(err => {
-      console.error(err)
+      isNil(res.errors)
+        ? this.setState({errors: {}, finished: true})
+        : this.setState({errors: res.errors})
     })
   }
 

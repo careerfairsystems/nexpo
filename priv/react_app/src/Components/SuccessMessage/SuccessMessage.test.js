@@ -3,5 +3,5 @@ import { shallow } from 'enzyme'
 import SuccessMessage from './SuccessMessage'
 
 it("should render without crashing", () => {
-  shallow(<SuccessMessage />)
+  shallow(<SuccessMessage message='success' />)
 })

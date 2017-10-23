@@ -3,5 +3,5 @@ import { shallow } from 'enzyme'
 import ErrorMessage from './ErrorMessage'
 
 it("should render without crashing", () => {
-  shallow(<ErrorMessage />)
+  shallow(<ErrorMessage message='error'/>)
 })

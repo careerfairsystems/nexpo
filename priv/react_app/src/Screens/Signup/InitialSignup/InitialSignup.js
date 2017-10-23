@@ -4,6 +4,7 @@ import RaisedButton from 'material-ui/RaisedButton'
 import { Link } from 'react-router-dom'
 import './InitialSignup.css'
 import { isNil } from 'ramda'
+import API from '../../../API'
 
 import SuccessMessage from '../../../Components/SuccessMessage'
 
@@ -24,24 +25,11 @@ class InitialSignup extends Component {
     // reset errors to give user feedback that something happened
     this.setState({errors: {}})
 
-    fetch(`/api/initial_signup`, {
-      method: 'POST',
-      body: JSON.stringify({username}),
-      headers: new Headers({
-        'Content-Type': 'application/json'
-      })
-    })
-    .then(res => res.json())
+    API.signup.initial_signup(username)
     .then(res => {
-      if(isNil(res.errors)) {
-        this.setState({finished: true})
-      }
-      else {
-        this.setState({errors: res.errors})
-      }
-    })
-    .catch(err => {
-      console.errors(err)
+      isNil(res.errors)
+        ? this.setState({finished: true})
+        : this.setState({errors: res.errors})
     })
   }
 
@@ -71,6 +59,7 @@ class InitialSignup extends Component {
 
   render() {
     const { finished } = this.state
+
 
     if(finished) {
       return <SuccessMessage message="Please check your inbox"/>
