@@ -5,7 +5,6 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Snackbar from 'material-ui/Snackbar';
 import { Redirect, Link } from 'react-router-dom'
 import HtmlTitle from '../../../Components/HtmlTitle'
-import API, {setJwt} from '../../../API'
 
 /**
  * Handles login in production. Supports redirecting back to the route that redirected here
