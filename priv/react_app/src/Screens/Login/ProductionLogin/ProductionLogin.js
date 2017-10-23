@@ -6,7 +6,6 @@ import Snackbar from 'material-ui/Snackbar';
 import { Redirect, Link } from 'react-router-dom'
 import HtmlTitle from '../../../Components/HtmlTitle'
 import API, {setJwt} from '../../../API'
-import {isNil} from 'ramda'
 
 /**
  * Handles login in production. Supports redirecting back to the route that redirected here
@@ -19,33 +18,21 @@ class ProductionLogin extends Component {
 
   state = {
     email: '',
-    password: '',
-    error: false,
+    password: ''
   }
 
   _login() {
-    const { email, password } = this.state
-
     this.setState({error: false})
-
-    API.session.login({email, password})
-    .then(res => {
-      if(isNil(res.error)) {
-        setJwt(res.data.jwt)
-        this.setState({error: false})
-      }
-      else {
-        this.setState({error: true})
-      }
-    })
+    const { email, password } = this.state
+    this.props.login({email, password})
   }
 
   _renderEmailInput = () => {
-    const { email, error } = this.state
+    const { email } = this.state
     return (
       <TextField
         floatingLabelText="Email"
-        errorText={error ? 'Try something else' : null}
+        errorText={this.props.error ? 'Try something else' : null}
         value={email}
         autoFocus
         onChange={(event, val) => this.setState({email: val})}
@@ -55,11 +42,11 @@ class ProductionLogin extends Component {
   }
 
   _renderPasswordInput = () => {
-    const { password, error } = this.state
+    const { password } = this.state
     return (
       <TextField
         floatingLabelText="Password"
-        errorText={error ? 'Try something else' : null}
+        errorText={this.props.error ? 'Try something else' : null}
         value={password}
         type='password'
         onChange={(event, val) => this.setState({password: val})}
@@ -79,13 +66,12 @@ class ProductionLogin extends Component {
   }
 
   render() {
-    const { error } = this.state
-    const { isAuthenticated } = this.props
+    const { error, isLoggedIn } = this.props
 
     // Url that redirected here
     const { from } = this.props.location.state || { from: { pathname: '/' } }
 
-    if(isAuthenticated) {
+    if(isLoggedIn) {
       return (
         <Redirect to={from} />
       )

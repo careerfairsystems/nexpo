@@ -3,7 +3,6 @@ import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
 import { Link } from 'react-router-dom'
 import './InitialSignup.css'
-import { isNil } from 'ramda'
 import API from '../../../API'
 
 import SuccessMessage from '../../../Components/SuccessMessage'
@@ -27,9 +26,10 @@ class InitialSignup extends Component {
 
     API.signup.initial_signup(username)
     .then(res => {
-      isNil(res.errors)
-        ? this.setState({finished: true})
-        : this.setState({errors: res.errors})
+      console.log(res)
+      res.type === 'error'
+        ? this.setState({errors: res.errors})
+        : this.setState({finished: true})
     })
   }
 

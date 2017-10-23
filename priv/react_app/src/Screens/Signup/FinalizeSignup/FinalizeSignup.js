@@ -8,7 +8,7 @@ import './FinalizeSignup.css'
 import ErrorMessage from '../../../Components/ErrorMessage'
 import SuccessMessage from '../../../Components/SuccessMessage'
 import API from '../../../API'
-import {isNil, pick} from 'ramda'
+import {pick} from 'ramda'
 
 type Props = {
   signupKey: string
@@ -49,9 +49,9 @@ class FinalizeSignup extends Component<Props, State> {
     const { signupKey } = this.props
     API.signup.get_current_signup(signupKey)
     .then(res => {
-      isNil(res.error)
-        ? this.setState({email: res.data.email})
-        : this.setState({noSuchKey: true})
+      res.type === 'error'
+        ? this.setState({noSuchKey: true})
+        : this.setState({email: res.data.email})
     })
   }
 
@@ -63,9 +63,9 @@ class FinalizeSignup extends Component<Props, State> {
     )
     API.signup.finalize_signup(signupKey, params)
     .then(res => {
-      isNil(res.errors)
-        ? this.setState({errors: {}, finished: true})
-        : this.setState({errors: res.errors})
+      res.type === 'error'
+        ? this.setState({errors: res.errors})
+        : this.setState({errors: {}, finished: true})
     })
   }
 

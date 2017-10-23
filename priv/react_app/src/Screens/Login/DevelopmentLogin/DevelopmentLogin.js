@@ -6,7 +6,6 @@ import {yellow500} from 'material-ui/styles/colors';
 import { Redirect } from 'react-router-dom'
 import './DevelopmentLogin.css'
 import HtmlTitle from '../../../Components/HtmlTitle'
-import {setJwt} from '../../../API'
 
 /**
  * Handles authorization in development
@@ -15,50 +14,23 @@ import {setJwt} from '../../../API'
 class DevelopLogin extends Component {
 
   state = {
-    email: '',
-    failure: false,
+    email: ''
   }
 
   login() {
-    const { email } = this.state
-
     this.setState({failure: false})
-
-    fetch(`/api/development_login`, {
-      method: 'POST',
-      body: JSON.stringify({
-        email: email
-      }),
-      headers: new Headers({
-        'Content-Type': 'application/json'
-      })
-    })
-    .then(res => {
-      if(res.ok) {
-        return res.json()
-      }
-      else {
-        throw Error(res.statusText)
-      }
-    })
-    .then(res => {
-      setJwt(res.data.jwt)
-      this.setState({failure: false})
-    })
-    .catch(err => {
-      console.error(err)
-      this.setState({failure: true})
-    })
+    const { email } = this.state
+    this.props.login(email)
   }
 
   render() {
-    const { email, failure } = this.state
-    const { isAuthenticated } = this.props
+    const { email } = this.state
+    const { error, isLoggedIn } = this.props
 
     // Url that redirected here
     const { from } = this.props.location.state || { from: { pathname: '/' } }
 
-    if(isAuthenticated) {
+    if(isLoggedIn) {
       return (
         <Redirect to={from} />
       )
@@ -71,7 +43,7 @@ class DevelopLogin extends Component {
         <h1>Development Login</h1>
         <TextField
           floatingLabelText="Email"
-          errorText={failure ? 'User does not exist' : null}
+          errorText={error ? 'User does not exist' : null}
           value={email}
           autoFocus
           onChange={(event, val) => this.setState({email: val})}
