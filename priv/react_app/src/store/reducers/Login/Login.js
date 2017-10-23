@@ -1,5 +1,5 @@
-import actionTypes from '../ActionTypes.js';
-import {setJwt} from './../../API'
+import actionTypes from '../../ActionTypes.js';
+import {setJwt} from './../../../API'
 import { mergeDeepRight } from 'ramda'
 
 const initialState = {
@@ -7,7 +7,7 @@ const initialState = {
   isLoggedIn: false
 }
 
-const login = (state = initialState, action) => {
+const Login = (state = initialState, action) => {
   switch(action.type) {
 
     case actionTypes.LOGIN_SUCCESS:
@@ -22,4 +22,4 @@ const login = (state = initialState, action) => {
   }
 }
 
-export default login;
+export default Login;

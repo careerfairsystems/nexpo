@@ -3,7 +3,7 @@
  */
 
 import EntitiesReducer from './EntitiesReducer'
-import login from './LoginReducer'
+import login from './Login'
 
 const RootReducer = {
   entities: EntitiesReducer,
