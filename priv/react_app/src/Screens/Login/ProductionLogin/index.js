@@ -1,7 +1,7 @@
 import ProductionLogin from './ProductionLogin'
 import { connect } from 'react-redux'
 
-import {login} from '../../../store/ActionCreators'
+import Actions from '../../../store/actions'
 
 const mapStateToProps = (state, props) => {
   return {
@@ -12,7 +12,7 @@ const mapStateToProps = (state, props) => {
 
 const mapDispatchToProps = (dispatch, props) => {
   return {
-    login: ({email, password}) => dispatch(login({email, password}))
+    login: ({email, password}) => dispatch(Actions.login.login({email, password}))
   }
 }
 

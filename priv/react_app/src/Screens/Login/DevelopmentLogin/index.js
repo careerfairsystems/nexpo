@@ -1,6 +1,6 @@
 import DevelopmentLogin from './DevelopmentLogin'
 import { connect } from 'react-redux'
-import {development_login} from '../../../store/ActionCreators'
+import Actions from '../../../store/actions'
 
 const mapStateToProps = (state, props) => {
   return {
@@ -11,7 +11,7 @@ const mapStateToProps = (state, props) => {
 
 const mapDispatchToProps = (dispatch, props) => {
   return {
-    login: (email) => dispatch(development_login(email))
+    login: (email) => dispatch(Actions.login.development_login(email))
   }
 }
 

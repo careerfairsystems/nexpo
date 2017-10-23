@@ -1,6 +1,6 @@
 import reducer from './Login'
-import actionTypes from '../../ActionTypes'
-import {getJwt} from '../../../API'
+import actionTypes from './../../ActionTypes'
+import {getJwt} from './../../../API'
 
 it("should return initial state", () => {
   expect(reducer(undefined, {})).toEqual({error: false, isLoggedIn: false})

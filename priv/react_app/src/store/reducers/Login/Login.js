@@ -1,4 +1,4 @@
-import actionTypes from '../../ActionTypes.js';
+import actionTypes from './../../ActionTypes';
 import {setJwt} from './../../../API'
 import { mergeDeepRight } from 'ramda'
 
@@ -17,8 +17,8 @@ const Login = (state = initialState, action) => {
     case actionTypes.LOGIN_FAILURE:
       return mergeDeepRight(state, {error: true})
 
-  default:
-    return state
+    default:
+      return state
   }
 }
 
