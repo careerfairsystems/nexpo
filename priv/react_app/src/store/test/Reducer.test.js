@@ -3,115 +3,54 @@
 *   See http://redux.js.org/docs/recipes/WritingTests.html for writing action and reducer tests.
 */
 
-import reducer from '../reducers/CompaniesReducer'
+import reducer from '../reducers/EntitiesReducer'
 import actionTypes from '../ActionTypes'
+import testData from './reducer_test_data.js'
 
 describe('Companies reducer', () => {
 	it('should return the empty initial state', () => {
-		expect(reducer(undefined, {})).toEqual({companies: [], fetching: false})
+		expect(reducer(undefined, {})).toEqual({companies: {}, attributes: {}, categories: {}, entries: {}, fetching: false})
 	})
 
 	it('should handle FETCH_COMPANIES'), () => {
 		expect(
-			reducer({companies: [], fetching: false}, {
+			reducer({companies: {}, attributes: {}, categories: {}, entries: {}, fetching: false}, {
 				type: actionTypes.FETCH_COMPANIES
-			}).toEqual({ companies: [], fetching: true })
+			}).toEqual({ companies: {}, fetching: true })
 		)
 	}
 
 	it('should handle FETCH_COMPANIES_SUCCESS', () => {
-		expect(
-			reducer({companies: [], fetching: true}, {
-				type: actionTypes.FETCH_COMPANIES_SUCCESS,
-				companies: [
-					{
-						"name": "Spotify",
-						"id": 1,
-						"entries": [
-							{
-								"value": "55",
-								"id": 48,
-								"attribute": {
-									"value": null,
-									"type": null,
-									"title": "Trevligthetsskala",
-									"id": 11,
-									"category": {
-										"title": "Övrigt",
-										"id": 3
-									}
-								}
-							}
-						],
-						"email": "legend@spotify.com"
-					},
-					{
-						"name": "Google",
-						"id": 2,
-						"entries": [
-							{
-								"value": "54",
-								"id": 26,
-								"attribute": {
-									"value": null,
-									"type": null,
-									"title": "Pub",
-									"id": 14,
-									"category": {
-										"title": "Event",
-										"id": 4
-									}
-								}
-							},
-							{
-								"value": "68",
-								"id": 27,
-								"attribute": {
-									"value": null,
-									"type": null,
-									"title": "Lunchföreläsning",
-									"id": 13,
-									"category": {
-										"title": "Event",
-										"id": 4
-									}
-								}
-							},
-							{
-								"value": "96",
-								"id": 30,
-								"attribute": {
-									"value": null,
-									"type": null,
-									"title": "Trevligthetsskala",
-									"id": 11,
-									"category": {
-										"title": "Övrigt",
-										"id": 3
-									}
-								}
-							}
-						],
-						"email": "pro@gmail.com"
-					}
-				]
-			})
-		).toEqual(
-			{
-				companies: [
-					{
-						"name": 'Spotify',
-						"id": 1,
-						"email": "legend@spotify.com"
-					},
-					{
-						"name": 'Google',
-						"id": 2,
-						"email": "pro@gmail.com"
-					}
-				], 
-				fetching: false
-			}
-		)
+			let state = reducer({companies: {} , attributes: {}, categories: {}, entries: {}, fetching: true}, {
+														type: actionTypes.FETCH_COMPANIES_SUCCESS,
+														companies: testData.companies
+													})
+		expect(state).toHaveProperty('companies')
+		expect(state).toHaveProperty('attributes')
+		expect(state).toHaveProperty('categories')
+		expect(state).toHaveProperty('entries')
+		expect(Object.keys(state.companies).length).toBeGreaterThan(0)
+		expect(Object.keys(state.categories).length).toBeGreaterThan(0)
+		expect(Object.keys(state.attributes).length).toBeGreaterThan(0)
+		expect(Object.keys(state.entries).length).toBeGreaterThan(0)
+		// Check that each company's entry exists in entries
+		const companyKeys = Object.keys(state.companies);
+		companyKeys.forEach((companyKey) => {
+			expect(state.companies[companyKey].entries.forEach((entryNbr) => {
+				return Object.keys(state.entries).find((entryKey) => {
+					return entryNbr === entryKey;
+				})
+			}))
+		})
+		// Check that each entry's attribute exist
+		const entryKeys = Object.keys(state.entries);
+		entryKeys.forEach((entryKey) => {
+			expect(state.attributes).toHaveProperty(state.entries[entryKey].attribute.toString())
+		})
+		// Check that each attribute's category exist
+		const attributeKeys = Object.keys(state.attributes)
+		attributeKeys.forEach((attributeKey) => {
+			expect(state.categories).toHaveProperty(state.attributes[attributeKey].category.toString())
+		})
 	})
 })

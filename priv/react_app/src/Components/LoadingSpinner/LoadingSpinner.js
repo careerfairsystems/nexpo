@@ -5,7 +5,7 @@ const LoadingSpinner = (props) => {
   return (
     <div>
       <CircularProgress size={100} thickness={7} />
-      <h3> Loading </ h3>
+      <h3> Loading </h3>
     </div>
   )
 }

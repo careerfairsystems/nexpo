@@ -58,7 +58,7 @@ class Companies extends Component {
         <Table>
           {this._renderTableHeader()}
           <TableBody>
-            {this.props.companies.map(c => this._renderTableRow(c))}
+            {Object.keys(this.props.companies).map((key) => this._renderTableRow(this.props.companies[key])) }
           </TableBody>
         </Table>
       </div>
@@ -80,12 +80,12 @@ class Companies extends Component {
 }
 
 Companies.propTypes = {
-  companies: PropTypes.array,
+  companies: PropTypes.object,
   fetching: PropTypes.bool
 }
 
 Companies.defaultProps = {
-  companies: [],
+  companies: {},
   fetching: false
 }
 
