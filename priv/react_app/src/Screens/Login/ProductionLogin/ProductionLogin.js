@@ -90,7 +90,7 @@ class ProductionLogin extends Component {
         <br/>
         <br/>
 
-        <div>Can't login?</div>
+        <div>Hard time logging in?</div>
         <br/>
 
         <div className="links">
