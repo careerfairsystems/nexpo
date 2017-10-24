@@ -12,6 +12,9 @@ config :logger, level: :warn
 config :nexpo, Nexpo.Mailer,
   adapter: Bamboo.TestAdapter
 
+# Set less rounds in test for faster hashing
+config :bcrypt_elixir, :log_rounds, 4
+
 # Configure your database
 config :nexpo, Nexpo.Repo,
   adapter: Ecto.Adapters.Postgres,
