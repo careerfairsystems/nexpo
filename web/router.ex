@@ -19,9 +19,22 @@ defmodule Nexpo.Router do
     plug :accepts, ["json"]
   end
 
+  pipeline :api_auth do
+    plug Guardian.Plug.VerifyHeader, realm: "Bearer"
+    plug Guardian.Plug.LoadResource
+    plug Guardian.Plug.EnsureAuthenticated, handler: Nexpo.SessionController
+  end
+
   # Allows us to see mails sent in dev to /sent_emails
   if Mix.env == :dev do
     forward "/sent_emails", Bamboo.EmailPreviewPlug
+  end
+
+  # Protected endpoints
+  scope "/api", Nexpo do
+    pipe_through [:api, :api_auth]
+
+    get "/me", UserController, :me
   end
 
   # Other scopes may use custom stacks.

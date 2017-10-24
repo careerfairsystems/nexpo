@@ -3,6 +3,8 @@ defmodule Nexpo.SessionController do
 
   alias Nexpo.User
 
+  alias Nexpo.ErrorView
+
   @apidoc """
   @api {POST} /login Login
   @apiGroup Login
@@ -58,18 +60,18 @@ defmodule Nexpo.SessionController do
     end
   end
 
-  # # Called when Guardian identifies an invalid jwt
-  # def unauthenticated(conn, _params) do
-  #   conn
-  #   |> put_status(401)
-  #   |> render(Nexpo.ErrorView, "error.json", message: "Authentication required")
-  # end
+  # Called when Guardian identifies an invalid jwt
+  def unauthenticated(conn, _params) do
+    conn
+    |> put_status(401)
+    |> render(ErrorView, "401.json")
+  end
 
-  # # Called when Guardian fails to ensure that this user exists
-  # def no_resource(conn, _params) do
-  #   conn
-  #   |> put_status(401)
-  #   |> render(Nexpo.ErrorView, "error.json", message: "Authentication required")
-  # end
+  # Called when Guardian fails to ensure that this user exists
+  def no_resource(conn, _params) do
+    conn
+    |> put_status(401)
+    |> render(ErrorView, "401.json")
+  end
 
 end
