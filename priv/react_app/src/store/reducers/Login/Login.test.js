@@ -1,6 +1,8 @@
 import reducer from './Login'
 import actionTypes from './../../ActionTypes'
-import {getJwt} from './../../../API'
+import {getJwt, setJwt} from './../../../API'
+import {mockLocalStorage} from '../../../Test/Mocks'
+mockLocalStorage()
 
 it("should return initial state", () => {
   expect(reducer(undefined, {})).toEqual({error: false, isLoggedIn: false})
@@ -39,6 +41,13 @@ describe(actionTypes.LOGIN_FAILURE, () => {
   it("should not set isLoggedIn to true", () => {
     const testState = reducer(undefined, action)
     expect(testState).toMatchObject({isLoggedIn: false})
+  })
+
+  it("should remove global jwt", () => {
+    const jwt = 'random-string'
+    setJwt(jwt)
+    const testState = reducer(undefined, action)
+    expect(getJwt()).toBe('')
   })
 
 })
