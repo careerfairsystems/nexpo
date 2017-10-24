@@ -9,6 +9,8 @@ import {
   Switch,
   Redirect,
 } from 'react-router-dom'
+import PrivateRoute from './Components/PrivateRoute'
+
 import Companies from './Screens/Companies'
 import Company from './Screens/Company'
 import NotFound from './Screens/NotFound'
@@ -57,9 +59,8 @@ class App extends Component {
         <Switch>
           <Route exact path="/" render={() => <Redirect to="/companies" />} />
           <Route exact path="/companies" component={Companies} />
-          <Route path="/companies/:id" component={Company} />
+          <PrivateRoute path="/companies/:id" component={Company} />
           <Route path="/login" component={Login} />
-          {/* <Route path="/signup" component={PreSignup} /> */}
           <Route path="/signup" component={Signup} />
           <Route component={NotFound} />
         </Switch>
