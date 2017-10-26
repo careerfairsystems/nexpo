@@ -9,11 +9,16 @@ import {
   Switch,
   Redirect,
 } from 'react-router-dom'
+import PrivateRoute from './Components/PrivateRoute'
+
 import Companies from './Screens/Companies'
 import Company from './Screens/Company'
 import NotFound from './Screens/NotFound'
+import Login from './Screens/Login'
+import Signup from './Screens/Signup'
 
 import InvisibleLink from './Components/InvisibleLink'
+import HtmlTitle from './Components/HtmlTitle'
 
 /**
  * The base of the application. Defines the basic layout
@@ -32,6 +37,9 @@ class App extends Component {
   render() {
     return (
       <div>
+        {/* Always fall back to default htmltitle if screen does not specify its own */}
+        <HtmlTitle />
+
         <AppBar
           title="Nexpo"
           onLeftIconButtonTouchTap={() => this.setState({drawerOpen: true})}
@@ -51,7 +59,9 @@ class App extends Component {
         <Switch>
           <Route exact path="/" render={() => <Redirect to="/companies" />} />
           <Route exact path="/companies" component={Companies} />
-          <Route path="/companies/:id" component={Company} />
+          <PrivateRoute path="/companies/:id" component={Company} />
+          <Route path="/login" component={Login} />
+          <Route path="/signup" component={Signup} />
           <Route component={NotFound} />
         </Switch>
       </div>

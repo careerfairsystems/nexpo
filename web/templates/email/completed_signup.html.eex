@@ -1,0 +1,7 @@
+<h1>Welcome to Nexpo, <%= @user.first_name %>!</h1>
+
+<br/>
+<a href="<%= application_url() %>">
+  Start working in Nexpo by clicking here
+</a>
+

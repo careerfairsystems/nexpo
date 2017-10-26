@@ -33,6 +33,22 @@ config :sentry,
   },
   included_environments: [:prod]
 
+config :nexpo, Nexpo.Mailer,
+  adapter: Bamboo.SMTPAdapter,
+  server: System.get_env("SMTP_SERVER_NAME"),
+  hostname: System.get_env("SMTP_SERVER_NAME"),
+  port: System.get_env("SMTP_SERVER_PORT"),
+  username: System.get_env("SMTP_USERNAME"),
+  password: System.get_env("SMTP_PASSWORD"), # or {:system, "SMTP_PASSWORD"}
+  tls: :if_available, # can be `:always` or `:never`
+  allowed_tls_versions: [:"tlsv1", :"tlsv1.1", :"tlsv1.2"], # or {":system", ALLOWED_TLS_VERSIONS"} w/ comma seprated values (e.g. "tlsv1.1,tlsv1.2")
+  ssl: false, # can be `true`
+  retries: 1
+
+# Config prod specific settings for guardin
+config :guardian, Guardian,
+  secret_key: System.get_env("SECRET_KEY_BASE"),
+
 # ## SSL Support
 #
 # To get SSL working, you will need to add the `https` key

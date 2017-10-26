@@ -9,10 +9,10 @@ import {
   TableRow,
   TableRowColumn,
 } from 'material-ui/Table';
-import InvisibleLink from '../../Components/InvisibleLink';
+import InvisibleLink from '../../Components/InvisibleLink'
 import LoadingSpinner from '../../Components/LoadingSpinner';
+import HtmlTitle from '../../Components/HtmlTitle'
 import './Companies.css'
-import { Helmet } from "react-helmet";
 
 /**
  * Responsible for rendering a list of companies
@@ -52,9 +52,8 @@ class Companies extends Component {
   _renderCompanies() {
     return (
       <div>
-        <Helmet>
-          <title>Nexpo | Companies</title>
-        </Helmet>
+        <HtmlTitle title="Companies" />
+
         <Table>
           {this._renderTableHeader()}
           <TableBody>

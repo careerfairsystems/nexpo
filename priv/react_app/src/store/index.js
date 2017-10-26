@@ -8,11 +8,17 @@ import thunk from 'redux-thunk'
 
 let store = undefined
 
+const middlewares = [thunk]
+if(process.env.NODE_ENV === 'development') {
+  const { logger } = require(`redux-logger`);
+  middlewares.push(logger)
+}
+
 const createStoreIfNotExist = () => {
   if(!store) {
     store = createStore(
       combineReducers(reducers),
-      applyMiddleware(thunk)
+      applyMiddleware(...middlewares)
     )
   }
 }

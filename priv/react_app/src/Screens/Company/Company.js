@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Paper from 'material-ui/Paper'
 import MailLink from '../../Components/MailLink'
-import { Helmet } from "react-helmet";
+import HtmlTitle from '../../Components/HtmlTitle'
 import './Company.css'
 
 /**
@@ -21,9 +21,7 @@ class Company extends Component {
     return(
       <div className="Company_Component">
 
-        <Helmet>
-          <title>Nexpo | {name}</title>
-        </Helmet>
+        <HtmlTitle title={name} />
 
         <div className="left-col">
 

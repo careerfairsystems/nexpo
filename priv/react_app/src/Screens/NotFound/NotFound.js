@@ -1,13 +1,19 @@
 import React from 'react'
+import ErrorMessage from '../../Components/ErrorMessage'
+import HtmlTitle from '../../Components/HtmlTitle'
 
 /**
  * A Component that defines the 404 view
  */
-function NotFound() {
+const NotFound = () => {
   return (
     <div>
-      <h1>404 error</h1>
-      <h2>Could not be found</h2>
+      <HtmlTitle title="404" />
+      <ErrorMessage
+        message="HTTP 404 | This link does not exist"
+        linkUrl="/"
+        linkText="Click here to go home"
+      />
     </div>
   )
 }
