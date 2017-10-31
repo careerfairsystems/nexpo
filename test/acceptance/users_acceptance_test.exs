@@ -7,7 +7,7 @@ defmodule Nexpo.UserAcceptanceTest do
     assert json_response(conn, 401)
   end
 
-  @tag :login
+  @tag :logged_in
   test "GET /api/me returns 200 and current user on valid jwt", %{conn: conn, user: user} do
     conn = get(conn, "/api/me")
 

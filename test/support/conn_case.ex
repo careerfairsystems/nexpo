@@ -46,7 +46,7 @@ defmodule Nexpo.ConnCase do
     |> Plug.Conn.put_req_header("accept", "application/json")
 
     # Defines default parameters for tests
-    case tags[:login] do
+    case tags[:logged_in] do
       true ->
         user = create_user()
 

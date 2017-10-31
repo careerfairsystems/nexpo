@@ -16,6 +16,7 @@
     - [Windows](#windows)
   - [Develop](#develop)
     - [Testing](#testing)
+      - [Writing tests for backend](#writing-tests-for-backend)
     - [Start dev servers](#start-dev-servers)
     - [Helpful scripts](#helpful-scripts)
   - [Documentation](#documentation)
@@ -89,6 +90,22 @@ This project is developed with [TDD](https://en.wikipedia.org/wiki/Test-driven_d
 - Phoenix tests reside in [/test](/test)
 - React tests reside beside each component. A test file must be named <COMPONENT_NAME>.test.js
 
+#### Writing tests for backend
+You can define two different types of test cases
+- Unauthenticated tests
+```elixir
+test "name of the testcase", %{conn: conn} do
+  # Write the test here. All requests will by a non-logged in user
+end
+```
+- Authenticated tests
+```elixir
+@tag :logged_in
+test "name of the testcase", %{conn: conn, user: user} do
+  # Write the test here. All requests will by the logged in user
+end
+```
+
 ### Start dev servers
 | Command                | Description                |
 |------------------------|----------------------------|
@@ -102,6 +119,7 @@ This project is developed with [TDD](https://en.wikipedia.org/wiki/Test-driven_d
 | `npm run generate-docs`         | Generates documentation for HTTP API      |
 | `npm run validate-editorconfig` | Identifies breakage of editorconfig rules |
 | `npm run update-toc-readme`     | Updates Table of Contents in README       |
+| `npm run download-prod-db`      | Replace development DB with production DB |
 
 
 ## Documentation
