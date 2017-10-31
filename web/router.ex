@@ -21,8 +21,9 @@ defmodule Nexpo.Router do
 
   pipeline :api_auth do
     plug Guardian.Plug.VerifyHeader, realm: "Bearer"
-    plug Guardian.Plug.LoadResource
     plug Guardian.Plug.EnsureAuthenticated, handler: Nexpo.SessionController
+    plug Guardian.Plug.LoadResource
+    plug Guardian.Plug.EnsureResource, handler: Nexpo.SessionController
   end
 
   # Allows us to see mails sent in dev to /sent_emails
@@ -37,7 +38,7 @@ defmodule Nexpo.Router do
     get "/me", UserController, :me
   end
 
-  # Other scopes may use custom stacks.
+  # Not-protected endpoints
   scope "/api", Nexpo do
     pipe_through :api
 

@@ -1,11 +1,9 @@
 defmodule Nexpo.UserController do
   use Nexpo.Web, :controller
+  use Guardian.Phoenix.Controller
 
-  alias Nexpo.UserView
-
-  def me(conn, %{}) do
-    user = Guardian.Plug.current_resource(conn)
-    conn |> put_status(200) |> render(UserView, "show.json", user: user)
+  def me(conn, %{}, user, _claims) do
+    conn |> put_status(200) |> render("show.json", user: user)
   end
 
 end

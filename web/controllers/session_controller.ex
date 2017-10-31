@@ -26,10 +26,9 @@ defmodule Nexpo.SessionController do
   def create(conn, %{"email" => email, "password" => password}) do
     case User.authenticate(%{email: email, password: password}) do
       {:ok, user} ->
-        new_conn = Guardian.Plug.api_sign_in(conn, user)
-        jwt = Guardian.Plug.current_token(new_conn)
-        session = %{ jwt: jwt, user: user}
-        new_conn
+        {status, jwt, _decoded_jwt} = Guardian.encode_and_sign(user)
+        session = %{ jwt: jwt }
+        conn
         |> put_status(200)
         |> put_resp_header("authorization", "Bearer #{jwt}")
         |> render("login.json", session: session)
