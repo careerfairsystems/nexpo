@@ -47,7 +47,7 @@ config :nexpo, Nexpo.Mailer,
 
 # Config prod specific settings for guardin
 config :guardian, Guardian,
-  secret_key: System.get_env("SECRET_KEY_BASE"),
+  secret_key: System.get_env("SECRET_KEY_BASE")
 
 # ## SSL Support
 #
