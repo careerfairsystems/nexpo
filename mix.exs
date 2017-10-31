@@ -20,6 +20,8 @@ defmodule Nexpo.Mixfile do
     [
       mod: {Nexpo, []},
       applications: [
+        :bamboo,
+        :bamboo_smtp,
         :ex_machina,
         :phoenix,
         :phoenix_pubsub,
@@ -30,7 +32,6 @@ defmodule Nexpo.Mixfile do
         :gettext,
         :phoenix_ecto,
         :postgrex,
-
       ]
     ]
   end
@@ -58,7 +59,12 @@ defmodule Nexpo.Mixfile do
       {:cors_plug, "~> 1.3"},
       {:plug_static_index_html, "~> 0.1.2"},
       {:ex_json_schema, "~> 0.5.4"},
-      {:sentry, "~> 6.0.0"}
+      {:sentry, "~> 6.0.0"},
+      {:comeonin, "~> 4.0"},
+      {:bcrypt_elixir, "~> 0.12"},
+      {:guardian, "~> 0.14.5"},
+      {:bamboo, "~> 0.8"},
+      {:bamboo_smtp, "~> 1.4.0"}
     ]
   end
 

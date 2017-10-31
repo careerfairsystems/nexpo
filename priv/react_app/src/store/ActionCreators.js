@@ -3,8 +3,7 @@
 */
 
 import actions from './ActionTypes.js';
-import CompanyApi from '../api/CompanyApi.js';
-
+import API from '../API'
 
 export function companiesAreLoading() {
 	return {
@@ -29,7 +28,7 @@ export function getAllCompaniesFailure() {
 export function getAllCompanies() {
 	return (dispatch) => {
 		dispatch(companiesAreLoading());
-		CompanyApi.getCompanies().then((companies) => {
+		API.companies.getAll().then((companies) => {
 			return dispatch(getAllCompaniesSuccess(companies.data));
 		})
 			.catch(() => {

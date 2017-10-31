@@ -2,8 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Paper from 'material-ui/Paper'
 import MailLink from '../../Components/MailLink'
-import { Helmet } from "react-helmet";
-import { find } from 'ramda'
+import HtmlTitle from '../../Components/HtmlTitle'
 import './Company.css'
 
 /**
@@ -12,20 +11,17 @@ import './Company.css'
 class Company extends Component {
   render() {
     // Find the company
-    const company_id = this.props.match.params.id
-    let company = find(c => Number(c.id) === Number(company_id), this.props.companies)
-    company = company || {
+    const company_id_query = this.props.match.params.id
+    let company = this.props.companies[company_id_query] || {
       name: "Does not exist",
       email: "Does not exist"
     }
-
     const {name, email} = company
+
     return(
       <div className="Company_Component">
 
-        <Helmet>
-          <title>Nexpo | {name}</title>
-        </Helmet>
+        <HtmlTitle title={name} />
 
         <div className="left-col">
 
@@ -51,11 +47,11 @@ class Company extends Component {
 }
 
 Company.propTypes = {
-  companies: PropTypes.array.isRequired
+  companies: PropTypes.object.isRequired
 }
 
 Company.defaultProps = {
-  companies: []
+  companies: {}
 }
 
 export default Company

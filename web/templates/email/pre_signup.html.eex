@@ -1,0 +1,9 @@
+<h1>Hi!</h1>
+
+<div>Welcome to Nexpo!</div>
+
+<br/>
+<a href=<%= signup_url(@user) %>>
+  Please click this link to verify your email
+</a>
+

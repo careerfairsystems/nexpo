@@ -35,9 +35,15 @@ config :nexpo, Nexpo.Endpoint,
 # Do not include metadata nor timestamps in development logs
 config :logger, :console, format: "[$level] $message\n"
 
+# Set less rounds password hashing in test for faster testing
+config :bcrypt_elixir, :log_rounds, 4
+
 # Set a higher stacktrace during development. Avoid configuring such
 # in production as building large stacktraces may be expensive.
 config :phoenix, :stacktrace_depth, 20
+
+config :nexpo, Nexpo.Mailer,
+  adapter: Bamboo.LocalAdapter
 
 # Configure your database
 config :nexpo, Nexpo.Repo,

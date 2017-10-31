@@ -12,8 +12,10 @@ defmodule Nexpo do
     # for other strategies and supported options
     opts = [strategy: :one_for_one, name: Nexpo.Supervisor]
 
-    # Configure Sentry to catch all errors
-    :ok = :error_logger.add_report_handler(Sentry.Logger)
+    # Configure Sentry to catch all errors in prod
+    if Mix.env == :prod do
+      :ok = :error_logger.add_report_handler(Sentry.Logger)
+    end
 
     Supervisor.start_link(children, opts)
   end
@@ -25,9 +27,7 @@ defmodule Nexpo do
     :ok
   end
 
-  @doc """
-  Defines workers and child supervisors to be supervised
-  """
+  # Defines workers and child supervisors to be supervised
   defp get_children() do
     import Supervisor.Spec
     [

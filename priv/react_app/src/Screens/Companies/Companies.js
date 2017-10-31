@@ -10,7 +10,9 @@ import {
   TableRowColumn,
 } from 'material-ui/Table';
 import InvisibleLink from '../../Components/InvisibleLink'
-import { Helmet } from "react-helmet";
+import LoadingSpinner from '../../Components/LoadingSpinner';
+import HtmlTitle from '../../Components/HtmlTitle'
+import './Companies.css'
 
 /**
  * Responsible for rendering a list of companies
@@ -39,33 +41,51 @@ class Companies extends Component {
     )
   }
 
-  render() {
+  _renderLoading() {
     return (
-      <div>
-        <Helmet>
-          <title>Nexpo | Companies</title>
-        </Helmet>
-
-        <Table>
-
-          {this._renderTableHeader()}
-
-          <TableBody>
-            {this.props.companies.map(c => this._renderTableRow(c))}
-          </TableBody>
-
-        </Table>
+      <div className="loading-spinner">
+        <LoadingSpinner />
       </div>
     )
+  }
+
+  _renderCompanies() {
+    return (
+      <div>
+        <HtmlTitle title="Companies" />
+
+        <Table>
+          {this._renderTableHeader()}
+          <TableBody>
+            {Object.keys(this.props.companies).map((key) => this._renderTableRow(this.props.companies[key])) }
+          </TableBody>
+        </Table>
+      </div>
+      )
+  }
+
+
+  render() {
+    if(this.props.fetching) {
+      return (
+        this._renderLoading()
+      )
+    } else {
+      return (
+        this._renderCompanies()
+      )
+    }
   }
 }
 
 Companies.propTypes = {
-  companies: PropTypes.array
+  companies: PropTypes.object,
+  fetching: PropTypes.bool
 }
 
 Companies.defaultProps = {
-  companies: []
+  companies: {},
+  fetching: false
 }
 
 export default Companies

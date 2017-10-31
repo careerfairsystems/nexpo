@@ -2,10 +2,12 @@
  *  This file gathers all redux reducers and exports them as one global reducer
  */
 
-import CompaniesReducer from './CompaniesReducer'
+import EntitiesReducer from './EntitiesReducer'
+import login from './Login'
 
 const RootReducer = {
-  companies: CompaniesReducer
+  entities: EntitiesReducer,
+  login
 }
 
 export default RootReducer

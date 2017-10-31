@@ -4,15 +4,25 @@ defmodule Nexpo.CompanyCategoryController do
   alias Nexpo.CompanyCategory
 
   @apidoc """
-  @apiDefine CategoryParams
-
-  @apiParam {String} title    Title
-  """
-
-  @apidoc """
-  @api {GET} /categories/ List categories
-  @apiName List Categories
+  @api {GET} /categories List categories
   @apiGroup Category
+
+  @apiSuccessExample {json} Success
+  HTTP 200 Ok
+  {
+    "data": [
+      {
+        "id": 1,
+        "title": "Example category",
+        "attributes": []
+        },
+        {
+          "id": 2,
+          "title": "Other category",
+          "attributes": []
+        }
+      ]
+    }
 
   @apiUse NotFoundError
   @apiUse InternalServerError
@@ -27,7 +37,7 @@ defmodule Nexpo.CompanyCategoryController do
   @apiName Create Category
   @apiGroup Category
 
-  @apiUse CategoryParams
+  @apiParam {String} title    Title
 
   @apiSuccess (Created 201) {Number} id       Internal ID
   @apiSuccess (Created 201) {String} title    Title
@@ -52,11 +62,22 @@ defmodule Nexpo.CompanyCategoryController do
 
   @apidoc """
   @api {GET} /categories/:id Get category
-  @apiName Get Category
   @apiGroup Category
+
+  @apiParam {Number} id ID of the category
 
   @apiSuccess (OK 200) {Number} id       Internal ID
   @apiSuccess (OK 200) {String} title    Title
+
+  @apiSuccessExample {json} Success
+    HTTP 200 Ok
+    {
+      "data": {
+        "id": 1,
+        "title": "Example category",
+        "attributes": []
+      }
+    }
 
   @apiUse NotFoundError
   @apiUse InternalServerError
