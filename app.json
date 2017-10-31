@@ -1,0 +1,49 @@
+{
+    "name": "nexpo",
+    "scripts": {},
+    "env": {
+      "DB_POOL_SIZE": {
+        "required": true
+      },
+      "HOST_NAME": {
+        "required": true
+      },
+      "MIX_ENV": {
+        "required": true
+      },
+      "REACT_APP_SENTRY_DSN": {
+        "required": true
+      },
+      "SECRET_KEY_BASE": {
+        "required": true
+      },
+      "SENTRY_DSN": {
+        "required": true
+      },
+      "SMTP_PASSWORD": {
+        "required": true
+      },
+      "SMTP_SERVER_NAME": {
+        "required": true
+      },
+      "SMTP_SERVER_PORT": {
+        "required": true
+      },
+      "SMTP_USERNAME": {
+        "required": true
+      }
+    },
+    "formation": {},
+    "addons": [
+      "heroku-postgresql",
+      "sentry"
+    ],
+    "buildpacks": [
+      {
+        "url": "https://github.com/HashNuke/heroku-buildpack-elixir.git"
+      },
+      {
+        "url": "https://github.com/gjaldon/heroku-buildpack-phoenix-static.git"
+      }
+    ]
+  }
