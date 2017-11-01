@@ -1,6 +1,6 @@
 import reducer from './Login'
 import actionTypes from './../../ActionTypes'
-import {getJwt, setJwt} from './../../../API'
+import {getJwt, setJwt} from './../../../Util/JwtHelper'
 import {mockLocalStorage} from '../../../Test/Mocks'
 mockLocalStorage()
 

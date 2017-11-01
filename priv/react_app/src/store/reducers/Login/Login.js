@@ -1,5 +1,5 @@
 import actionTypes from './../../ActionTypes';
-import {setJwt, deleteJwt} from './../../../API'
+import {setJwt, deleteJwt} from './../../../Util/JwtHelper'
 import { mergeDeepRight } from 'ramda'
 
 const initialState = {
