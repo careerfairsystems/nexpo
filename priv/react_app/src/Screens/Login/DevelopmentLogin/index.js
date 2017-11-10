@@ -1,6 +1,6 @@
 import DevelopmentLogin from './DevelopmentLogin'
 import { connect } from 'react-redux'
-import Actions from '../../../store/actions'
+import {Actions} from './../../../Store'
 
 const mapStateToProps = (state, props) => {
   return {

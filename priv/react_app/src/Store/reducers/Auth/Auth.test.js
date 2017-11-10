@@ -1,4 +1,5 @@
-import reducer from './Login'
+import {Actions} from './../../../Store'
+import reducer from './Auth'
 import actionTypes from './../../ActionTypes'
 import {getJwt, setJwt} from './../../../Util/JwtHelper'
 import {mockLocalStorage} from '../../../Test/Mocks'
@@ -6,6 +7,22 @@ mockLocalStorage()
 
 it("should return initial state", () => {
   expect(reducer(undefined, {})).toEqual({error: false, isLoggedIn: false})
+})
+
+describe("get current user success", () => {
+  it("should change state so it is logged in", () => {
+    const action = Actions.users.getCurrentUserSuccess()
+    const state = reducer(undefined, action)
+    expect(state).toMatchObject({isLoggedIn: true})
+  })
+})
+
+describe("get current user failure", () => {
+  it("should change state so it is NOT logged in", () => {
+    const action = Actions.users.getCurrentUserFailure()
+    const state = reducer({isLoggedIn: true}, action)
+    expect(state).toMatchObject({isLoggedIn: false})
+  })
 })
 
 describe(actionTypes.LOGIN_SUCCESS, () => {

@@ -1,4 +1,5 @@
 import {getJwt} from './../Util/JwtHelper'
+import {handleHttpFailure} from './index'
 
 export default {
 
@@ -9,12 +10,9 @@ export default {
     return fetch('/api/me', {
       headers: new Headers({
         'Content-Type': 'application/json',
-        'Authentication': `Bearer ${getJwt()}`
+        'Authorization': `Bearer ${getJwt()}`
       })
     })
-    .then(res => {
-      console.log("WILL GET JSON")
-      return res.json()
-    })
+    .then(handleHttpFailure)
   }
 }

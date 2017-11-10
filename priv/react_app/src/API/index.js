@@ -9,3 +9,14 @@ export default {
   session,
   users
 }
+
+/**
+ * Default handler for fetch calls
+ * @param {Response} response
+ */
+export const handleHttpFailure = (response: Response) => {
+  if(!response.ok) {
+    throw Error(response.statusText)
+  }
+  return response.json()
+}

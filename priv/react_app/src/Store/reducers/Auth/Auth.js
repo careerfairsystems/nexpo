@@ -7,7 +7,7 @@ const initialState = {
   isLoggedIn: false
 }
 
-const Login = (state = initialState, action) => {
+const Auth = (state = initialState, action) => {
   switch(action.type) {
 
     case actionTypes.LOGIN_SUCCESS:
@@ -18,9 +18,15 @@ const Login = (state = initialState, action) => {
       deleteJwt()
       return mergeDeepRight(state, {error: true})
 
+    case actionTypes.FETCH_CURRENT_USER_SUCCESS:
+      return mergeDeepRight(state, {isLoggedIn: true})
+
+    case actionTypes.FETCH_CURRENT_USER_FAILURE:
+      return mergeDeepRight(state, {isLoggedIn: false})
+
     default:
       return state
   }
 }
 
-export default Login;
+export default Auth;

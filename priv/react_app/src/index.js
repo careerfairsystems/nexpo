@@ -6,7 +6,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
-import { getAllCompanies } from './store/ActionCreators.js'
+import { getAllCompanies } from './Store/ActionCreators.js'
 
 import { setupErrorTracking } from './Util/ErrorTracking'
 
@@ -18,7 +18,7 @@ import './index.css'
 
 import { BrowserRouter } from 'react-router-dom'
 
-import getStore from './store'
+import {getStore, Actions} from './Store'
 
 if(process.env.NODE_ENV === 'production') {
   setupErrorTracking()
@@ -26,6 +26,7 @@ if(process.env.NODE_ENV === 'production') {
 
 const store = getStore();
 
+store.dispatch(Actions.users.getCurrentUser())
 store.dispatch(getAllCompanies());
 
 injectTapEventPlugin();

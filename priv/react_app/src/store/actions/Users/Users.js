@@ -1,18 +1,33 @@
+import actionTypes from './../../ActionTypes'
 import API from './../../../API'
-import LoginActions from './../Login'
-import {getJwt} from './../../../Util/JwtHelper'
 
-export const get_me = () => {
+export const getCurrentUserStart = () => {
+  return {
+    type: actionTypes.FETCH_CURRENT_USER
+  }
+}
+
+export const getCurrentUserSuccess = () => {
+  return {
+    type: actionTypes.FETCH_CURRENT_USER_SUCCESS
+  }
+}
+
+export const getCurrentUserFailure = () => {
+  return {
+    type: actionTypes.FETCH_CURRENT_USER_FAILURE
+  }
+}
+
+export const getCurrentUser = () => {
   return dispatch => {
-    API.users.getMe()
+    dispatch(getCurrentUserStart())
+    return API.users.getMe()
     .then(res => {
-      if(res.type === 'error') {
-        dispatch(LoginActions.loginFailure())
-      }
-      else {
-        const jwt = getJwt()
-        dispatch(LoginActions.loginSuccess(jwt))
-      }
+      dispatch(getCurrentUserSuccess())
+    })
+    .catch(err => {
+      dispatch(getCurrentUserFailure())
     })
   }
 }

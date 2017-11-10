@@ -3,11 +3,11 @@
  */
 
 import EntitiesReducer from './EntitiesReducer'
-import login from './Login'
+import auth from './Auth'
 
 const RootReducer = {
   entities: EntitiesReducer,
-  login
+  auth
 }
 
 export default RootReducer

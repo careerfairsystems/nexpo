@@ -1,10 +1,16 @@
 /**
- *  This file exposes a method for retrieving the redux store
+ *  This is the center of state. It should expose all methods needed by other parts of application
  */
 
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 import reducers from './reducers'
 import thunk from 'redux-thunk'
+
+import Actions from './actions'
+
+/**
+ * Manage creation of store
+ */
 
 let store = undefined
 
@@ -28,4 +34,7 @@ const getStore = () => {
   return store
 }
 
-export default getStore
+export {
+  getStore,
+  Actions
+}

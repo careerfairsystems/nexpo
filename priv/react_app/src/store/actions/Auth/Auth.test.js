@@ -1,7 +1,7 @@
-import * as Actions from './Login'
+import {Actions} from './../../../Store'
 import actionTypes from './../../ActionTypes'
-import nock from 'nock'
 import {createMockStore} from '../../test/TestHelper'
+import {mockLocalStorage, mockHttpResponse} from './../../../Test/Mocks'
 
 describe("login success", () => {
 
@@ -11,7 +11,7 @@ describe("login success", () => {
       type: actionTypes.LOGIN_SUCCESS,
       jwt: jwt
     }
-    expect(Actions.loginSuccess(jwt)).toEqual(expectedAction)
+    expect(Actions.auth.loginSuccess(jwt)).toEqual(expectedAction)
   })
 
 })
@@ -20,7 +20,7 @@ describe("login failure", () => {
 
   it("should create an action without a payload", () => {
     const expectedAction = { type: actionTypes.LOGIN_FAILURE }
-    expect(Actions.loginFailure()).toEqual(expectedAction)
+    expect(Actions.auth.loginFailure()).toEqual(expectedAction)
   })
 
 })
