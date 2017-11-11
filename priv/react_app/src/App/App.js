@@ -57,7 +57,8 @@ class App extends Component {
   }
 
   loggedOutAppBar = () => {
-    return <FlatButton label='Login' />
+    const {history} = this.props
+    return <FlatButton label='Login' onClick={() => history.push('login')} />
   }
 
   closeDrawer = () => this.setState({drawerOpen: false})

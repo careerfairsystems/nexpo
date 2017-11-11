@@ -16,7 +16,7 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import App from './App'
 import './index.css'
 
-import { BrowserRouter } from 'react-router-dom'
+import { BrowserRouter, Route } from 'react-router-dom'
 
 import {getStore, Actions} from './Store'
 
@@ -35,7 +35,7 @@ ReactDOM.render(
   <Provider store={store}>
     <MuiThemeProvider>
       <BrowserRouter>
-        <App />
+        <Route component={App} />
       </BrowserRouter>
     </MuiThemeProvider>
   </Provider>,
