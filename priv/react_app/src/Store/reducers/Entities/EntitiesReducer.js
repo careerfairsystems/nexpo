@@ -10,41 +10,14 @@ let initialState = {
   companies: {},
   attributes: {},
   categories: {},
-  entries: {},
-  fetching: false
+  entries: {}
 }
 
 const entities = (state = initialState, action) => {
   switch(action.type) {
     case actionTypes.FETCH_COMPANIES_SUCCESS:
-      const normalizedData = Normalize.normalizeCompanies(action.companies, true).entities;
-
-      const newState = {
-        companies: normalizedData.companies,
-        attributes: normalizedData.attributes,
-        categories: normalizedData.categories,
-        entries: normalizedData.entries,
-        fetching: false
-      };
-      return newState;
-
-    case actionTypes.FETCH_COMPANIES_FAILURE:
-      return {
-        companies: state.companies,
-        attributes: state.attributes,
-        categories: state.categories,
-        entries: state.entries,
-        fetching: false
-      };
-
-    case actionTypes.FETCH_COMPANIES:
-      return {
-        companies: state.companies,
-        attributes: state.attributes,
-        categories: state.categories,
-        entries: state.entries,
-        fetching: true 
-      };
+      const normalized = Normalize.normalizeCompanies(action.companies, true)
+      return mergeDeepRight(state, normalized.entities)
 
     default:
       return state;

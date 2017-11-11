@@ -13,15 +13,9 @@ describe('Companies reducer', () => {
       companies: {},
       attributes: {},
       categories: {},
-      entries: {},
-      fetching: false
+      entries: {}
     }
 		expect(reducer(undefined, {})).toEqual(initialState)
-	})
-
-	it('should handle FETCH_COMPANIES', () => {
-    const state = reducer(undefined, Actions.companies.getAllCompaniesIsLoading())
-		expect(state).toMatchObject({ companies: {}, fetching: true })
 	})
 
 	it('should handle FETCH_COMPANIES_SUCCESS', () => {

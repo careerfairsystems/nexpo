@@ -4,10 +4,12 @@
 
 import EntitiesReducer from './Entities'
 import auth from './Auth'
+import FetchingReducer from './Fetching'
 
 const RootReducer = {
   entities: EntitiesReducer,
-  auth
+  auth,
+  fetching: FetchingReducer,
 }
 
 export default RootReducer
