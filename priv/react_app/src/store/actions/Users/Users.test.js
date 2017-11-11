@@ -30,10 +30,9 @@ describe("get current user failure", () => {
   })
 })
 
-describe("verify session", () => {
+describe("get current user", () => {
   it("should call start action", () => {
     mockHttpResponse({status: 200, body: {}})
-
     mockLocalStorage()
     const store = createMockStore()
 

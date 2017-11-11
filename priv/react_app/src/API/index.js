@@ -10,13 +10,29 @@ export default {
   users
 }
 
+type ServerResponse = {
+  type: string,
+  error: string,
+  errors: object
+}
+function ApiError(serverResponse: ServerResponse) {
+  this.message = `The server responded with ${serverResponse.error}`,
+  this.name = 'ApiError',
+  this.errors = serverResponse.errors
+}
+
 /**
  * Default handler for fetch calls
  * @param {Response} response
  */
-export const handleHttpFailure = (response: Response) => {
-  if(!response.ok) {
-    throw Error(response.statusText)
+export const handleHttpResponse = (response: Response) => {
+  if(response.ok) {
+    return response.json()
   }
-  return response.json()
+  else {
+    return response.json()
+    .then(res => {
+      throw new ApiError(res)
+    })
+  }
 }

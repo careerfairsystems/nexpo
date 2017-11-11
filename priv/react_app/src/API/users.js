@@ -1,5 +1,5 @@
 import {getJwt} from './../Util/JwtHelper'
-import {handleHttpFailure} from './index'
+import {handleHttpResponse} from './index'
 
 export default {
 
@@ -13,6 +13,6 @@ export default {
         'Authorization': `Bearer ${getJwt()}`
       })
     })
-    .then(handleHttpFailure)
+    .then(handleHttpResponse)
   }
 }
