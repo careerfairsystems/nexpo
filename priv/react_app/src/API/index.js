@@ -16,8 +16,8 @@ type ServerResponse = {
   errors: object
 }
 function ApiError(serverResponse: ServerResponse) {
-  this.message = `The server responded with ${serverResponse.error}`,
-  this.name = 'ApiError',
+  this.message = `The server responded with ${serverResponse.error}`
+  this.name = 'ApiError'
   this.errors = serverResponse.errors
 }
 

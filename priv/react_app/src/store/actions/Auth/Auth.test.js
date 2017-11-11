@@ -37,72 +37,84 @@ describe("logout", () => {
  * /Joel
  */
 
-// describe("login action", () => {
+describe("login action", () => {
 
-//   it("calls login success action on succes", () => {
-//     const params = {email: 'test', password: 'test'}
-//     nock('/api')
-//       .post('/login')
-//       .reply(200, { data: { jwt: 'string'} })
-//     const expectedActions = [ Actions.loginSuccess ]
+  it("should call success action and get the logged in user", () => {
+    const jwt = 'random-string'
+    const expectedActions = [
+      Actions.auth.loginSuccess(jwt),
+      Actions.users.getCurrentUserStart()
+    ]
 
-//     const store = createMockStore()
+    const httpResponse = {
+      data: { jwt: jwt }
+    }
+    mockHttpResponse({status: 200, body: httpResponse})
+    mockLocalStorage()
 
-//     return store.dispatch(Actions.login(params))
-//     .then(() => {
-//       const calledActions = store.getActions()
-//       expect(calledActions).toEqual(expectedActions)
-//     })
-//   })
+    const store = createMockStore()
+    const params = { email: 'test-user@student.lu.se', password: 'test-password' }
+    return store.dispatch(Actions.auth.login(params))
+    .then(() => {
+      const calledActions = store.getActions()
+      expect(calledActions).toEqual(expectedActions)
+    })
+  })
 
-//   it("calls login success action on succes", () => {
-//     const params = {email: 'test', password: 'test'}
-//     nock('/api')
-//       .post('/login')
-//       .reply(401, { type: 'error' })
-//     const expectedActions = [ Actions.loginFailure ]
+  it("calls login failure on failure", () => {
+    const expectedActions = [
+      Actions.auth.loginFailure()
+    ]
+    mockHttpResponse({status: 401, body: {}})
 
-//     const store = createMockStore()
+    const store = createMockStore()
+    const params = {email: 'test', password: 'test'}
+    return store.dispatch(Actions.auth.login(params))
+    .then(() => {
+      const calledActions = store.getActions()
+      expect(calledActions).toEqual(expectedActions)
+    })
+  })
 
-//     return store.dispatch(Actions.login(params))
-//     .then(() => {
-//       const calledActions = store.getActions()
-//       expect(calledActions).toEqual(expectedActions)
-//     })
-//   })
+})
 
-// })
+describe("development login action", () => {
 
-// describe("development login action", () => {
+  it("should call success action and get the logged in user", () => {
+    const jwt = 'random-string'
+    const expectedActions = [
+      Actions.auth.loginSuccess(jwt),
+      Actions.users.getCurrentUserStart()
+    ]
 
-//     it("calls login success action on succes", () => {
-//       nock('/api')
-//         .post('/login')
-//         .reply(200, { data: { jwt: 'string'} })
-//       const expectedActions = [ Actions.loginSuccess ]
+    const httpResponse = {
+      data: { jwt: jwt }
+    }
+    mockHttpResponse({status: 200, body: httpResponse})
+    mockLocalStorage()
 
-//       const store = createMockStore()
+    const store = createMockStore()
+    const params = { email: 'test-user@student.lu.se'}
+    return store.dispatch(Actions.auth.development_login(params))
+    .then(() => {
+      const calledActions = store.getActions()
+      expect(calledActions).toEqual(expectedActions)
+    })
+  })
 
-//       return store.dispatch(Actions.development_login('test@email.com'))
-//       .then(() => {
-//         const calledActions = store.getActions()
-//         expect(calledActions).toEqual(expectedActions)
-//       })
-//     })
+  it("calls login failure on failure", () => {
+    const expectedActions = [
+      Actions.auth.loginFailure()
+    ]
+    mockHttpResponse({status: 401, body: {}})
 
-//     it("calls login success action on succes", () => {
-//       nock('/api')
-//         .post('/login')
-//         .reply(401, { type: 'error' })
-//       const expectedActions = [ Actions.loginFailure ]
+    const store = createMockStore()
+    const params = {email: 'test'}
+    return store.dispatch(Actions.auth.development_login(params))
+    .then(() => {
+      const calledActions = store.getActions()
+      expect(calledActions).toEqual(expectedActions)
+    })
+  })
 
-//       const store = createMockStore()
-
-//       return store.dispatch(Actions.development_login('test@email.com'))
-//       .then(() => {
-//         const calledActions = store.getActions()
-//         expect(calledActions).toEqual(expectedActions)
-//       })
-//     })
-
-//   })
+})

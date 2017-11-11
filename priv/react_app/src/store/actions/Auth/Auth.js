@@ -1,3 +1,4 @@
+import {Actions} from './../../../Store'
 import actionTypes from './../../ActionTypes'
 import API from './../../../API'
 
@@ -22,30 +23,28 @@ export const loginSuccess = (jwt: string) => {
 
 export const login = ({email, password}) => {
   return dispatch => {
-    API.session.login({email, password})
+    return API.session.login({email, password})
     .then(res => {
-      if(res.type === 'error') {
-        dispatch(loginFailure())
-      }
-      else {
-        const jwt = res.data.jwt
-        dispatch(loginSuccess(jwt))
-      }
+      const jwt = res.data.jwt
+      dispatch(loginSuccess(jwt))
+      dispatch(Actions.users.getCurrentUser())
+    })
+    .catch(err => {
+      dispatch(loginFailure())
     })
   }
 }
 
 export const development_login = (email) => {
   return dispatch => {
-    API.session.development_login({email})
+    return API.session.development_login({email})
     .then(res => {
-      if(res.type === 'error') {
-        dispatch(loginFailure())
-      }
-      else {
-        const jwt = res.data.jwt
-        dispatch(loginSuccess(jwt))
-      }
+      const jwt = res.data.jwt
+      dispatch(loginSuccess(jwt))
+      dispatch(Actions.users.getCurrentUser())
+    })
+    .catch(err => {
+      dispatch(loginFailure())
     })
   }
 }

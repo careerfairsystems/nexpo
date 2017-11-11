@@ -2,7 +2,6 @@
  * Defines a reducer updates the state based on the action created after a call to the server.
  */
 
-import Normalize from '../../normalizr/normalize';
 import actionTypes from '../../ActionTypes';
 import {mergeDeepRight} from 'ramda'
 

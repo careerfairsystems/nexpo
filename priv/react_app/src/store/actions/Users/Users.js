@@ -20,7 +20,7 @@ export const getCurrentUserFailure = () => {
   }
 }
 
-export const getCurrentUser = () => {
+export function getCurrentUser() {
   return dispatch => {
     dispatch(getCurrentUserStart())
     return API.users.getMe()
