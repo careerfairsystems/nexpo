@@ -21,7 +21,9 @@ const Auth = (state = initialState, action) => {
     case actionTypes.FETCH_CURRENT_USER_SUCCESS:
       return mergeDeepRight(state, {isLoggedIn: true})
 
+    case actionTypes.LOGOUT:
     case actionTypes.FETCH_CURRENT_USER_FAILURE:
+      deleteJwt()
       return mergeDeepRight(state, {isLoggedIn: false})
 
     default:

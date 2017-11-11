@@ -1,24 +1,31 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
 import AppBar from 'material-ui/AppBar';
 import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
 import Subheader from 'material-ui/Subheader';
+import FlatButton from 'material-ui/FlatButton'
+import IconMenu from 'material-ui/IconMenu'
+import IconButton from 'material-ui/IconButton';
+import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
+import Divider from 'material-ui/Divider';
+
 import {
   Route,
   Switch,
   Redirect,
 } from 'react-router-dom'
-import PrivateRoute from './Components/PrivateRoute'
+import PrivateRoute from './../Components/PrivateRoute'
 
-import Companies from './Screens/Companies'
-import Company from './Screens/Company'
-import NotFound from './Screens/NotFound'
-import Login from './Screens/Login'
-import Signup from './Screens/Signup'
+import Companies from './../Screens/Companies'
+import Company from './../Screens/Company'
+import NotFound from './../Screens/NotFound'
+import Login from './../Screens/Login'
+import Signup from './../Screens/Signup'
 
-import InvisibleLink from './Components/InvisibleLink'
-import HtmlTitle from './Components/HtmlTitle'
+import InvisibleLink from './../Components/InvisibleLink'
+import HtmlTitle from './../Components/HtmlTitle'
 
 /**
  * The base of the application. Defines the basic layout
@@ -32,9 +39,31 @@ class App extends Component {
     }
   }
 
+  loggedInAppBar = () => {
+    const {currentUser, logout} = this.props
+    const nameOfUser = currentUser.first_name + ' ' + currentUser.last_name
+    return (
+      <IconMenu
+        iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+        targetOrigin={{ vertical: 'top', horizontal: 'right' }}
+      >
+        <MenuItem disabled primaryText={nameOfUser} />
+        <Divider />
+        <MenuItem primaryText='Logout' onClick={logout}/>
+      </IconMenu>
+
+    )
+  }
+
+  loggedOutAppBar = () => {
+    return <FlatButton label='Login' />
+  }
+
   closeDrawer = () => this.setState({drawerOpen: false})
 
   render() {
+    const {isLoggedIn} = this.props
     return (
       <div>
         {/* Always fall back to default htmltitle if screen does not specify its own */}
@@ -43,7 +72,9 @@ class App extends Component {
         <AppBar
           title="Nexpo"
           onLeftIconButtonTouchTap={() => this.setState({drawerOpen: true})}
-        />
+          iconElementRight={isLoggedIn ? this.loggedInAppBar() : this.loggedOutAppBar()}
+        >
+        </AppBar>
 
         <Drawer
           open={this.state.drawerOpen}
@@ -67,6 +98,12 @@ class App extends Component {
       </div>
     );
   }
+}
+
+App.propTypes = {
+  isLoggedIn: PropTypes.bool.isRequired,
+  currentUser: PropTypes.object.isRequired,
+  logout: PropTypes.func.isRequired
 }
 
 export default App

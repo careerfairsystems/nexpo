@@ -3,5 +3,5 @@ import { shallow } from 'enzyme'
 import App from './App';
 
 it('renders without crashing', () => {
-  shallow(<App />)
+  shallow(<App isLoggedIn={false} currentUser={{}}/>)
 });

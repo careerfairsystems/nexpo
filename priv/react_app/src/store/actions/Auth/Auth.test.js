@@ -25,6 +25,13 @@ describe("login failure", () => {
 
 })
 
+describe("logout", () => {
+  it("should create the correct action", () => {
+    const expectedAction = { type: actionTypes.LOGOUT }
+    expect(Actions.auth.logout()).toEqual(expectedAction)
+  })
+})
+
 /**
  * I get network failure. How do I use nock?
  * /Joel

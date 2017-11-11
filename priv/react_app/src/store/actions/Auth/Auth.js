@@ -1,6 +1,12 @@
 import actionTypes from './../../ActionTypes'
 import API from './../../../API'
 
+export function logout() {
+  return {
+    type: actionTypes.LOGOUT
+  }
+}
+
 export const loginFailure = () => {
   return {
     type: actionTypes.LOGIN_FAILURE

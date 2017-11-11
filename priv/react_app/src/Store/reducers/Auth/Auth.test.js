@@ -68,3 +68,13 @@ describe(actionTypes.LOGIN_FAILURE, () => {
   })
 
 })
+
+describe("logout", () => {
+  it("updates state and removes the JWT", () => {
+    const jwt = 'random-string'
+    setJwt(jwt)
+    const state = reducer({isLoggedIn: true}, Actions.auth.logout())
+    expect(state).toMatchObject({isLoggedIn: false})
+    expect(getJwt()).not.toBe(jwt)
+  })
+})
