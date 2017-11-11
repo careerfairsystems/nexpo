@@ -2,29 +2,31 @@
 *   This file tests the reducers handling incoming actions.
 *   See http://redux.js.org/docs/recipes/WritingTests.html for writing action and reducer tests.
 */
-
-import reducer from '../reducers/EntitiesReducer'
-import actionTypes from '../ActionTypes'
-import testData from './reducer_test_data.js'
+import {Actions} from './../../../Store'
+import reducer from './EntitiesReducer'
+import actionTypes from '../../ActionTypes'
+import testData from './entitiesTestData'
 
 describe('Companies reducer', () => {
 	it('should return the empty initial state', () => {
-		expect(reducer(undefined, {})).toEqual({companies: {}, attributes: {}, categories: {}, entries: {}, fetching: false})
+    const initialState = {
+      companies: {},
+      attributes: {},
+      categories: {},
+      entries: {},
+      fetching: false
+    }
+		expect(reducer(undefined, {})).toEqual(initialState)
 	})
 
-	it('should handle FETCH_COMPANIES'), () => {
-		expect(
-			reducer({companies: {}, attributes: {}, categories: {}, entries: {}, fetching: false}, {
-				type: actionTypes.FETCH_COMPANIES
-			}).toEqual({ companies: {}, fetching: true })
-		)
-	}
+	it('should handle FETCH_COMPANIES', () => {
+    const state = reducer(undefined, Actions.companies.getAllCompaniesIsLoading())
+		expect(state).toMatchObject({ companies: {}, fetching: true })
+	})
 
 	it('should handle FETCH_COMPANIES_SUCCESS', () => {
-			let state = reducer({companies: {} , attributes: {}, categories: {}, entries: {}, fetching: true}, {
-														type: actionTypes.FETCH_COMPANIES_SUCCESS,
-														companies: testData.companies
-													})
+    const state = reducer(undefined, Actions.companies.getAllCompaniesSuccess(testData.companies))
+
 		expect(state).toHaveProperty('companies')
 		expect(state).toHaveProperty('attributes')
 		expect(state).toHaveProperty('categories')

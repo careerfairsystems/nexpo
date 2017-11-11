@@ -2,22 +2,29 @@
  * Defines a reducer updates the state based on the action created after a call to the server.
  */
 
- import Normalize from '../normalizr/normalize.js';
- import actionTypes from '../ActionTypes.js';
+import Normalize from '../../normalizr/normalize';
+import actionTypes from '../../ActionTypes';
+import {mergeDeepRight} from 'ramda'
 
-let initialState = {companies: {}, attributes: {}, categories: {}, entries: {}, fetching: false}
-
+let initialState = {
+  companies: {},
+  attributes: {},
+  categories: {},
+  entries: {},
+  fetching: false
+}
 
 const entities = (state = initialState, action) => {
   switch(action.type) {
-    case actionTypes.FETCH_COMPANIES_SUCCESS: 
+    case actionTypes.FETCH_COMPANIES_SUCCESS:
       const normalizedData = Normalize.normalizeCompanies(action.companies, true).entities;
+
       const newState = {
         companies: normalizedData.companies,
         attributes: normalizedData.attributes,
         categories: normalizedData.categories,
         entries: normalizedData.entries,
-        fetching: false 
+        fetching: false
       };
       return newState;
 
@@ -29,7 +36,7 @@ const entities = (state = initialState, action) => {
         entries: state.entries,
         fetching: false
       };
-    
+
     case actionTypes.FETCH_COMPANIES:
       return {
         companies: state.companies,
