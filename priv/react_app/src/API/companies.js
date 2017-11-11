@@ -2,6 +2,8 @@
 *   This file contains methods to access the /companies reasource on the server.
 */
 
+import {handleHttpResponse} from './index'
+
 export default {
 
   /**
@@ -9,14 +11,6 @@ export default {
    */
   getAll: () => {
     return fetch('/api/companies')
-    .then((response) => {
-      if (!response.ok) {
-        throw Error(response.statusText);
-      }
-      return response.json();
-    })
-    .catch((error) => {
-      throw Error(error);
-    })
+    .then(handleHttpResponse)
   }
 }

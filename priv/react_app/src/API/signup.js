@@ -1,3 +1,5 @@
+import {handleHttpResponse} from './index'
+
 type final_signup_body = {
   password: string,
   password_confirmation: string,
@@ -18,8 +20,7 @@ export default {
         'Content-Type': 'application/json'
       })
     })
-    .then(res => res.json())
-    // It seems like fetch does not throw errors, so .catch will never be used
+    .then(handleHttpResponse)
   },
 
   /**
@@ -27,7 +28,7 @@ export default {
    */
   get_current_signup: (signup_key: string) => {
     return fetch(`/api/initial_signup/${signup_key}`)
-    .then(res => res.json())
+    .then(handleHttpResponse)
   },
 
   finalize_signup: (signup_key: string, body: final_signup_body) => {
@@ -38,7 +39,7 @@ export default {
         'Content-Type': 'application/json'
       })
     })
-    .then(res => res.json())
+    .then(handleHttpResponse)
   }
 
 }
