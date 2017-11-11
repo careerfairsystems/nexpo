@@ -7,13 +7,14 @@ import reducer from './EntitiesReducer'
 import actionTypes from '../../ActionTypes'
 import testData from './entitiesTestData'
 
-describe('Companies reducer', () => {
+describe('Entities reducer', () => {
 	it('should return the empty initial state', () => {
     const initialState = {
       companies: {},
       attributes: {},
       categories: {},
-      entries: {}
+      entries: {},
+      users: {}
     }
 		expect(reducer(undefined, {})).toEqual(initialState)
 	})
@@ -48,5 +49,17 @@ describe('Companies reducer', () => {
 		attributeKeys.forEach((attributeKey) => {
 			expect(state.categories).toHaveProperty(state.attributes[attributeKey].category.toString())
 		})
-	})
+  })
+
+  it("should handle fetch current user success", () => {
+    const testUser = { id: 1, name: 'Test User' }
+    const action = Actions.users.getCurrentUserSuccess(testUser)
+    const state = reducer(undefined, action)
+
+    expect(state).toMatchObject({
+      users: {
+        1: testUser
+      }
+    })
+  })
 })

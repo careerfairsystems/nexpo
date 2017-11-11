@@ -7,9 +7,10 @@ export const getCurrentUserStart = () => {
   }
 }
 
-export const getCurrentUserSuccess = () => {
+export const getCurrentUserSuccess = (user) => {
   return {
-    type: actionTypes.FETCH_CURRENT_USER_SUCCESS
+    type: actionTypes.FETCH_CURRENT_USER_SUCCESS,
+    user
   }
 }
 
@@ -24,7 +25,8 @@ export const getCurrentUser = () => {
     dispatch(getCurrentUserStart())
     return API.users.getMe()
     .then(res => {
-      dispatch(getCurrentUserSuccess())
+      const user = res.data
+      dispatch(getCurrentUserSuccess(user))
     })
     .catch(err => {
       dispatch(getCurrentUserFailure())

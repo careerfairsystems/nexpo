@@ -13,11 +13,13 @@ describe("get current user start", () => {
 })
 
 describe("get current user success", () => {
-  it("should create an empty action", () => {
+  it("should create the correct action", () => {
+    const testUser = { name: 'TestUser' }
     const expectedAction = {
-      type: actionTypes.FETCH_CURRENT_USER_SUCCESS
+      type: actionTypes.FETCH_CURRENT_USER_SUCCESS,
+      user: testUser
     }
-    expect(Actions.users.getCurrentUserSuccess()).toEqual(expectedAction)
+    expect(Actions.users.getCurrentUserSuccess(testUser)).toEqual(expectedAction)
   })
 })
 
@@ -44,12 +46,15 @@ describe("get current user", () => {
   })
 
   it("should call success action on success", () => {
-    const httpResponseBody = { data: { user: {}}}
+    const testUser = { id: 1, name: 'Test User' }
+    const httpResponseBody = {
+      data: testUser
+    }
     mockHttpResponse({status: 200, body: httpResponseBody})
 
     const expectedActions = [
       Actions.users.getCurrentUserStart(),
-      Actions.users.getCurrentUserSuccess()
+      Actions.users.getCurrentUserSuccess(testUser)
     ]
 
     mockLocalStorage()
