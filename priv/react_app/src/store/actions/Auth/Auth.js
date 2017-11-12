@@ -1,5 +1,4 @@
-import {Actions} from './../../../Store'
-import actionTypes from './../../ActionTypes'
+import {Actions, actionTypes} from './../../../Store'
 import API from './../../../API'
 
 export function logout() {

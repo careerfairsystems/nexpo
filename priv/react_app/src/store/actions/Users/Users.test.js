@@ -1,7 +1,5 @@
-import {Actions} from './../../../Store'
-import actionTypes from './../../ActionTypes'
-import {mockHttpResponse, mockLocalStorage} from './../../../Test/Mocks'
-import {createMockStore} from './../../test/TestHelper'
+import {Actions, actionTypes} from './../../../Store'
+import {mockHttpResponse, mockLocalStorage, createMockStore} from './../../../TestHelper'
 
 describe("get current user start", () => {
   it("should create an empty action", () => {

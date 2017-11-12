@@ -1,8 +1,7 @@
-import {Actions} from './../../../Store'
+import {Actions, actionTypes} from './../../../Store'
 import reducer from './Auth'
-import actionTypes from './../../ActionTypes'
 import {getJwt, setJwt} from './../../../Util/JwtHelper'
-import {mockLocalStorage} from '../../../Test/Mocks'
+import {mockLocalStorage} from '../../../TestHelper'
 mockLocalStorage()
 
 it("should return initial state", () => {

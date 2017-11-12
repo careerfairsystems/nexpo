@@ -2,9 +2,8 @@
 *   This file tests the reducers handling incoming actions.
 *   See http://redux.js.org/docs/recipes/WritingTests.html for writing action and reducer tests.
 */
-import {Actions} from './../../../Store'
+import {Actions, actionTypes} from './../../../Store'
 import reducer from './EntitiesReducer'
-import actionTypes from '../../ActionTypes'
 import testData from './entitiesTestData'
 
 describe('Entities reducer', () => {

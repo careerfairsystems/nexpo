@@ -1,4 +1,4 @@
-import actionTypes from './../../ActionTypes';
+import {actionTypes} from './../../../Store'
 import {setJwt, deleteJwt} from './../../../Util/JwtHelper'
 import { mergeDeepRight } from 'ramda'
 

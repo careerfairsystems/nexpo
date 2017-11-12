@@ -1,7 +1,5 @@
-import {Actions} from './../../../Store'
-import actionTypes from './../../ActionTypes'
-import {createMockStore} from '../../test/TestHelper'
-import {mockLocalStorage, mockHttpResponse} from './../../../Test/Mocks'
+import {Actions, actionTypes} from './../../../Store'
+import {mockLocalStorage, mockHttpResponse, createMockStore} from './../../../TestHelper'
 
 describe("login success", () => {
 

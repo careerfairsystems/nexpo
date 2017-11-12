@@ -7,6 +7,7 @@ import reducers from './reducers'
 import thunk from 'redux-thunk'
 
 import Actions from './actions'
+import actionTypes from './ActionTypes'
 
 /**
  * Manage creation of store
@@ -36,5 +37,6 @@ const getStore = () => {
 
 export {
   getStore,
-  Actions
+  Actions,
+  actionTypes
 }

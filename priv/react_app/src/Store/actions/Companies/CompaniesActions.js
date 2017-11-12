@@ -1,22 +1,22 @@
-import actions from './../../ActionTypes';
+import {actionTypes} from './../../../Store'
 import API from '../../../API'
 
 export function getAllCompaniesIsLoading() {
 	return {
-		type: actions.FETCH_COMPANIES
+		type: actionTypes.FETCH_COMPANIES
 	}
 }
 
 export function getAllCompaniesSuccess(companies) {
 	return {
-		type: actions.FETCH_COMPANIES_SUCCESS,
+		type: actionTypes.FETCH_COMPANIES_SUCCESS,
 		companies
 	}
 }
 
 export function getAllCompaniesFailure() {
 	return {
-		type: actions.FETCH_COMPANIES_FAILURE
+		type: actionTypes.FETCH_COMPANIES_FAILURE
 	}
 }
 

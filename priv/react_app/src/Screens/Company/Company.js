@@ -7,8 +7,6 @@ import HtmlTitle from '../../Components/HtmlTitle'
 import './Company.css'
 import {isEmpty, isNil} from 'ramda'
 
-import {Link} from 'react-router-dom'
-
 /**
  * Responsible for rendering a company. Company id is recieved via url
  */

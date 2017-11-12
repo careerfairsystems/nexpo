@@ -1,4 +1,4 @@
-import actionTypes from './../../ActionTypes'
+import {actionTypes} from './../../../Store'
 import API from './../../../API'
 
 export const getCurrentUserStart = () => {
