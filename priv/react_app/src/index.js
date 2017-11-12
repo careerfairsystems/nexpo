@@ -26,7 +26,6 @@ if(process.env.NODE_ENV === 'production') {
 const store = getStore();
 
 store.dispatch(Actions.users.getCurrentUser())
-store.dispatch(Actions.companies.getAllCompanies())
 
 injectTapEventPlugin();
 
