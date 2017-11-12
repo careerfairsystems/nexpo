@@ -1,57 +1,54 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import {Redirect} from 'react-router-dom'
 import Paper from 'material-ui/Paper'
 import MailLink from '../../Components/MailLink'
 import HtmlTitle from '../../Components/HtmlTitle'
 import './Company.css'
+import {isEmpty, isNil} from 'ramda'
 
 /**
  * Responsible for rendering a company. Company id is recieved via url
  */
 class Company extends Component {
   render() {
-    // Find the company
-    const company_id_query = this.props.match.params.id
-    let company = this.props.companies[company_id_query] || {
-      name: "Does not exist",
-      email: "Does not exist"
+    const {company} = this.props
+    if(isEmpty(company) || isNil(company)) {
+      return <Redirect to='/404' />
     }
-    const {name, email} = company
+    else {
+      const {name, email} = company
+      return(
+        <div className="Company_Component">
 
-    return(
-      <div className="Company_Component">
+          <HtmlTitle title={name} />
 
-        <HtmlTitle title={name} />
+          <div className="left-col">
 
-        <div className="left-col">
+            <Paper>
+              <div className="paper main-info">
+                <h1>{name}</h1>
+                <MailLink to={email}><div>{email}</div></MailLink>
+              </div>
+            </Paper>
 
-          <Paper>
-            <div className="paper main-info">
-              <h1>{name}</h1>
-              <MailLink to={email}><div>{email}</div></MailLink>
-            </div>
-          </Paper>
+            <Paper>
+              <div className="paper categories">
+                <h1>Information</h1>
+                <hr/>
+              </div>
+            </Paper>
 
-          <Paper>
-            <div className="paper categories">
-              <h1>Information</h1>
-              <hr/>
-            </div>
-          </Paper>
+          </div>
 
         </div>
-
-      </div>
-    )
+      )
+    }
   }
 }
 
 Company.propTypes = {
-  companies: PropTypes.object.isRequired
-}
-
-Company.defaultProps = {
-  companies: {}
+  company: PropTypes.object.isRequired
 }
 
 export default Company
