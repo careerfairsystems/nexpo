@@ -10,6 +10,7 @@ import IconMenu from 'material-ui/IconMenu'
 import IconButton from 'material-ui/IconButton';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import Divider from 'material-ui/Divider';
+import ActionAccountCircle from 'material-ui/svg-icons/action/account-circle'
 
 import {
   Route,
@@ -48,7 +49,7 @@ class App extends Component {
         anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
         targetOrigin={{ vertical: 'top', horizontal: 'right' }}
       >
-        <MenuItem disabled primaryText={nameOfUser} />
+        <MenuItem disabled primaryText={nameOfUser} rightIcon={<ActionAccountCircle />}/>
         <Divider />
         <MenuItem primaryText='Logout' onClick={logout}/>
       </IconMenu>
