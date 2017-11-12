@@ -7,6 +7,8 @@ import HtmlTitle from '../../Components/HtmlTitle'
 import './Company.css'
 import {isEmpty, isNil} from 'ramda'
 
+import {Link} from 'react-router-dom'
+
 /**
  * Responsible for rendering a company. Company id is recieved via url
  */
@@ -28,7 +30,7 @@ class Company extends Component {
             <Paper>
               <div className="paper main-info">
                 <h1>{name}</h1>
-                <MailLink to={email}><div>{email}</div></MailLink>
+                <MailLink to={email}>{email}</MailLink>
               </div>
             </Paper>
 
