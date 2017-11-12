@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import {Redirect} from 'react-router-dom'
+import NotFound from './../NotFound'
 import Paper from 'material-ui/Paper'
 import MailLink from '../../Components/MailLink'
 import HtmlTitle from '../../Components/HtmlTitle'
@@ -14,7 +14,7 @@ class Company extends Component {
   render() {
     const {company} = this.props
     if(isEmpty(company) || isNil(company)) {
-      return <Redirect to='/404' />
+      return <NotFound />
     }
     else {
       const {name, email} = company

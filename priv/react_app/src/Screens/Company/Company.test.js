@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import Company from './Company'
-import { Redirect } from 'react-router-dom'
+import NotFound from './../NotFound'
 import HtmlTitle from '../../Components/HtmlTitle'
 import MailLink from '../../Components/MailLink'
 
@@ -10,11 +10,11 @@ it('should render without crashing', () => {
   shallow(<Company company={company}/>)
 })
 
-it('should redirect if there is no company', () => {
+it('should render NotFound if there is no company', () => {
   const company = {}
   const wrapper = shallow(<Company company={company} />)
 
-  expect(wrapper.find(Redirect)).toHaveLength(1)
+  expect(wrapper.find(NotFound)).toHaveLength(1)
 })
 
 it('should set html title', () => {
