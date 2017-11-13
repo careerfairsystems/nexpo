@@ -13,8 +13,7 @@
 - [System Requirements](#system-requirements)
 - [Development](#development)
   - [Setup environment](#setup-environment)
-    - [Windows](#windows)
-  - [Develop](#develop)
+  - [Implement things](#implement-things)
     - [Development lifecycle](#development-lifecycle)
     - [Testing](#testing)
       - [Recap of TDD:](#recap-of-tdd)
@@ -55,22 +54,23 @@ We recommend installing ```node``` with nenv. [Installation instructions](https:
 2. Install the following programs
     - ```npm``` - version 5 or higher. [Installation instructions](https://www.npmjs.com/get-npm)
 3. ```cd``` to the base catalog, then copy paste the relevant code block in your terminal.
-### Mac or Linux
+
+- Mac or Linux
 ```sh
-# Install Phoenix
 mix local.hex &&
 mix archive.install https://github.com/phoenixframework/archives/raw/master/phoenix_new.ez
 
-# Bootstrap project
 npm run install-deps &&
 mix ecto.create &&
-mix ecto.migrate &&
+mix ecto.migrate
 ```
 
-### Windows
-You are on your own my friend.
+- Windows
+```sh
+# You are on your own my friend. Install Linux or macOS
+```
 
-## Develop
+## Implement things
 
 ### Development lifecycle
 1. Make a local branch
