@@ -1,5 +1,5 @@
 import {Actions, actionTypes} from './../../../Store'
-import {mockHttpResponse, mockLocalStorage, createMockStore} from './../../../TestHelper'
+import {mockHttpResponse, createMockStore} from './../../../TestHelper'
 
 describe("get current user start", () => {
   it("should create an empty action", () => {
@@ -33,7 +33,6 @@ describe("get current user failure", () => {
 describe("get current user", () => {
   it("should call start action", () => {
     mockHttpResponse({status: 200, body: {}})
-    mockLocalStorage()
     const store = createMockStore()
 
     return store.dispatch(Actions.users.getCurrentUser())
@@ -55,7 +54,6 @@ describe("get current user", () => {
       Actions.users.getCurrentUserSuccess(testUser)
     ]
 
-    mockLocalStorage()
     const store = createMockStore()
 
     return store.dispatch(Actions.users.getCurrentUser())
@@ -73,7 +71,6 @@ describe("get current user", () => {
       Actions.users.getCurrentUserFailure()
     ]
 
-    mockLocalStorage()
     const store = createMockStore()
 
     return store.dispatch(Actions.users.getCurrentUser())

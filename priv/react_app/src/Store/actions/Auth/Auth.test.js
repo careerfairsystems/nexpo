@@ -1,5 +1,5 @@
 import {Actions, actionTypes} from './../../../Store'
-import {mockLocalStorage, mockHttpResponse, createMockStore} from './../../../TestHelper'
+import {mockHttpResponse, createMockStore} from './../../../TestHelper'
 
 describe("login success", () => {
 
@@ -48,7 +48,6 @@ describe("login action", () => {
       data: { jwt: jwt }
     }
     mockHttpResponse({status: 200, body: httpResponse})
-    mockLocalStorage()
 
     const store = createMockStore()
     const params = { email: 'test-user@student.lu.se', password: 'test-password' }
@@ -89,7 +88,6 @@ describe("development login action", () => {
       data: { jwt: jwt }
     }
     mockHttpResponse({status: 200, body: httpResponse})
-    mockLocalStorage()
 
     const store = createMockStore()
     const params = { email: 'test-user@student.lu.se'}

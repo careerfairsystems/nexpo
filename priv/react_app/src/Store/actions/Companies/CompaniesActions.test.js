@@ -1,5 +1,5 @@
 import {Actions, actionTypes} from './../../../Store'
-import {mockLocalStorage, mockHttpResponse, createMockStore} from './../../../TestHelper'
+import {mockHttpResponse, createMockStore} from './../../../TestHelper'
 
 describe("getAllCompaniesIsLoading", () => {
   it("should create the correct action", () => {
@@ -41,7 +41,6 @@ describe("getAllCompaniesFailure", () => {
 describe("getAllCompanies", () => {
   it("should call start action", () => {
     mockHttpResponse({status: 200, body: {}})
-    mockLocalStorage()
     const store = createMockStore()
 
     return store.dispatch(Actions.companies.getAllCompanies())
@@ -64,7 +63,6 @@ describe("getAllCompanies", () => {
       Actions.companies.getAllCompaniesSuccess(companies)
     ]
 
-    mockLocalStorage()
     const store = createMockStore()
 
     return store.dispatch(Actions.companies.getAllCompanies())
@@ -82,7 +80,6 @@ describe("getAllCompanies", () => {
       Actions.companies.getAllCompaniesFailure()
     ]
 
-    mockLocalStorage()
     const store = createMockStore()
 
     return store.dispatch(Actions.companies.getAllCompanies())

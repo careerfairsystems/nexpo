@@ -1,8 +1,6 @@
 import {Actions, actionTypes} from './../../../Store'
 import reducer from './Auth'
 import {getJwt, setJwt} from './../../../Util/JwtHelper'
-import {mockLocalStorage} from '../../../TestHelper'
-mockLocalStorage()
 
 it("should return initial state", () => {
   expect(reducer(undefined, {})).toEqual({error: false, isLoggedIn: false})
