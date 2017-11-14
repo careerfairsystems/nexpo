@@ -1,5 +1,10 @@
 [![Build Status](https://travis-ci.org/careerfairsystems/nexpo.svg?branch=master)](https://travis-ci.org/careerfairsystems/nexpo)
 [![codebeat badge](https://codebeat.co/badges/144efba7-bfd8-47d6-807f-a5eda28a9590)](https://codebeat.co/projects/github-com-careerfairsystems-nexpo-master)
+# Welcome
+Welcome to Nexpo - Next generation Expo!
+
+This project aims to to supply [ARKAD](https://arkad.tlth.se) with an inhouse project management system
+
 # Table of Contents
 <!-- To update table of contents: npm run update-toc-readme -->
 
