@@ -26,6 +26,10 @@ This project aims to to supply [ARKAD](https://arkad.tlth.se) with an inhouse pr
       - [Recap of TDD:](#recap-of-tdd)
       - [Writing tests for frontend](#writing-tests-for-frontend)
       - [Writing tests for backend](#writing-tests-for-backend)
+  - [Helpful things](#helpful-things)
+    - [Installing a dependancy in frontend](#installing-a-dependancy-in-frontend)
+    - [Create a non-protected endpoint](#create-a-non-protected-endpoint)
+    - [Create a protected endpoint](#create-a-protected-endpoint)
   - [Dev servers](#dev-servers)
   - [Helpful scripts](#helpful-scripts)
   - [Documentation](#documentation)
@@ -292,6 +296,30 @@ test "name of the testcase", %{conn: conn, user: user} do
 end
 ```
 
+## Helpful things
+
+### Installing a dependancy in frontend
+The frontend has its own package.json, it is therefore important to install the dependency into the correct package.json. Make sure you working directory is [priv/react_app](priv/react_app) before installing dependency.
+
+### Create a non-protected endpoint
+1. Do not pipe it through api-auth in router
+```elixir
+def CONTROLLER_METHOD_NAME(conn, params) do
+  # params: http request parameters recieved
+end
+```
+
+### Create a protected endpoint
+1. Pipe it through api-auth in router
+```elixir
+use Guardian.Phoenix.Controller
+
+def CONTROLLER_METHOD_NAME(conn, params, user, claims) do
+  # params: http request parameters recieved
+  # user: logged-in user
+end
+```
+
 ## Dev servers
 | Command                | Description                |
 |------------------------|----------------------------|
@@ -322,6 +350,8 @@ Documentation can be found in docs/ directory
 
 # Deployment
 The system is hosted at [arkad-nexpo.herokuapp.com](https://arkad-nexpo.herokuapp.com)
+
+Deployment is automatic from master branch. To deploy, you need only merge code into master branch via github.
 ## Heroku
 - Authenticated users will find the Heroku app [here](https://dashboard.heroku.com/apps/arkad-nexpo)
 - It uses the following buildpacks
