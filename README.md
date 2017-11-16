@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/careerfairsystems/nexpo.svg?branch=master)](https://travis-ci.org/careerfairsystems/nexpo)
 [![codebeat badge](https://codebeat.co/badges/144efba7-bfd8-47d6-807f-a5eda28a9590)](https://codebeat.co/projects/github-com-careerfairsystems-nexpo-master)
-http://[![codecov](https://codecov.io/gh/careerfairsystems/nexpo/branch/master/graph/badge.svg)](https://codecov.io/gh/careerfairsystems/nexpo)
+[![codecov](https://codecov.io/gh/careerfairsystems/nexpo/branch/master/graph/badge.svg)](https://codecov.io/gh/careerfairsystems/nexpo)
 # Welcome
 Welcome to Nexpo - Next generation Expo!
 
