@@ -11,7 +11,6 @@ matrix:
         - cd priv/react_app && npm install
       script:
         - npm run build
-        - npm run test
         - npm run test-coverage
       after_success:
         - codecov
@@ -22,7 +21,6 @@ matrix:
         - mix local.hex --force
         - mix deps.get
       script:
-        - npm run test-backend
         - npm run test-coverage-backend
       after_success:
         - bash <(curl -s https://codecov.io/bash)
