@@ -12,10 +12,12 @@ This project aims to to supply [ARKAD](https://arkad.tlth.se) with an inhouse pr
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 
+- [System Requirements](#system-requirements)
 - [Technical Description](#technical-description)
   - [Backend](#backend)
+    - [Folder structure backend](#folder-structure-backend)
   - [Frontend](#frontend)
-- [System Requirements](#system-requirements)
+    - [Folder structure frontend](#folder-structure-frontend)
 - [Development](#development)
   - [Setup environment](#setup-environment)
   - [Implement things](#implement-things)
@@ -33,17 +35,6 @@ This project aims to to supply [ARKAD](https://arkad.tlth.se) with an inhouse pr
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-# Technical Description
-Nexpo consists of two parts
-- Phoenix backend
-- [React frontend](priv/react_app)
-
-## Backend
-Mailing is configured with [Bamboo](https://github.com/thoughtbot/bamboo).
-
-## Frontend
-The frontend is configured with [Create React App](https://github.com/facebookincubator/create-react-app). It handles all build configuration which makes our lifes much easier. Do not eject from the default configuration. Create React App has a fantastic [User Guide](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md).
-
 # System Requirements
 The system requires these programs to be installed. The project intends to always follow stable releases. The system is verified to work with the following setup
 - Elixir 1.4.4 [Installation instructions](https://elixir-lang.org/install.html)
@@ -52,6 +43,176 @@ The system requires these programs to be installed. The project intends to alway
 - PostgreSQL 9.6.2 [Installation instruction](https://wiki.postgresql.org/wiki/Detailed_installation_guides)
 
 We recommend installing ```node``` with nenv. [Installation instructions](https://github.com/ryuone/nenv)
+
+> When updating system requirements, make sure you update accordingly the following locations
+- Node
+  - [phoenix_static_buildpack.config](phoenix_static_buildpack.config)
+  - [package.json](package.json)
+  - [priv/react_app/package.json](priv/react_app/package.json)
+  - [.travis.yml](.travis.yml)
+- Elixir
+  - [mix.exs](mix.exs)
+  - [elixir_buildpack.config](elixir_buildpack.config)
+  - [.travis.yml](.travis.yml)
+
+
+# Technical Description
+Nexpo consists of two parts
+- Phoenix backend
+- [React frontend](priv/react_app)
+
+## Backend
+Mailing is configured with [Bamboo](https://github.com/thoughtbot/bamboo).
+
+### Folder structure backend
+The folder structure follows default Phoenix structure
+```
+.
+|-- config/                           # Config for all environments
+|   |-- config.exs                    # Shared config
+|   |-- dev.exs                       # Config for development
+|   |-- prod.exs                      # Config for production
+|   |-- test.exs                      # Config for test
+|
+|-- docs/                             # Auto generated docs for HTTP API
+|
+|-- documentation/                    # Requirements specifications etc
+|
+|-- lib/
+|   |-- nexpo/
+|   |   |-- NAME.ex
+|   |
+|   |-- nexpo.ex
+|
+|-- priv/
+|   |-- gettext/
+|   |-- react_app/                    # Frontend
+|   |-- repo/                         # Database structure
+|       |-- migrations                # Database migrations
+|       |   |-- MIGRATION_NAME.exs    # Database migration
+|       |
+|       |-- seeds.exs                 # Seeds defining initial data
+|
+|-- test/                             # Tests
+|   |-- acceptance/                   # Acceptance tests
+|   |   |-- TEST_NAME.exs
+|   |
+|   |-- models/                       # Model tests
+|   |   |-- TEST_NAME.exs
+|   |
+|   |-- support/                      # Support modules
+|   |   |-- SUPPORT_NAME.exs
+|   |
+|   |-- views/                        # Views
+|   |   |-- TEST_NAME.exs
+|   |
+|   |-- test_helper.exs               # Helper for tests
+|
+|-- web/                              # Defines business logic
+|   |-- channels/                     # Websockets
+|   |   |-- NAME.ex
+|   |
+|   |-- controllers/                  # Controllers
+|   |   |-- NAME.ex
+|   |
+|   |-- mailers/                      # Email stuff
+|   |   |-- mailer.ex                 # Responsible for sending emails
+|   |   |-- NAME.ex                   # Defines emails
+|   |
+|   |-- models/                       # Models
+|   |   |-- NAME.ex
+|   |
+|   |-- support/                      # Support modules
+|   |   |-- NAME.ex
+|   |
+|   |-- templates/                    # Renderable templates
+|   |   |-- VIEW_NAME                 # Templates for a view
+|   |   |   |-- NAME.html.eex
+|   |
+|   |-- views/                        # Views
+|   |   |-- NAME.ex
+|   |
+|   |-- gettext.ex
+|   |-- router.ex                     # Defines routes
+|   |-- web.ex                        # Defines models, controllers etc
+|
+|-- .codebeatignore                   # Things codebeat should ignore
+|-- .editorconfig                     # Defines editor rules
+|-- .gitignore                        # Things git should ignore
+|-- .travis.yml                       # Configs travis runs
+|-- apidoc.json                       # Configs apiDoc
+|-- app.json                          # Configs review apps on Heroku
+|-- elixir_buildpack.config           # Config for Heroku build
+|-- mix.exs                           # Config for Elixir project
+|-- mix.lock                          # Lockfile for Elixir deps
+|-- nexpo.iml
+|-- package-lock.json                 # Lockfile for npm
+|-- package.json                      # Configs npm project
+|-- phoenix_static_buildpack.compile  # Config for Heroku build
+|-- phoenix_static_buildpack.config   # Config for Heroku build
+|-- Procfile                          # Defines processes on Heroku
+|-- README.md                         # Project README (this file)
+```
+
+## Frontend
+The frontend is configured with [Create React App](https://github.com/facebookincubator/create-react-app). It handles all build configuration which makes our lifes much easier. Do not eject from the default configuration. Create React App has a fantastic [User Guide](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md).
+
+### Folder structure frontend
+```
+./priv/react_app/src/
+|-- API/                      # Contains everything related to API
+|   |-- index.js              # Exposes entire API as a module
+|   |
+|   |-- NAME.js               # Defines API for interacting with NAME
+|
+|-- Components/               # Composable React components
+|   |
+|   |-- NAME/                 # Defines a component called NAME
+|       |-- index.js          # Responsible for connecting component with state
+|       |-- NAME.js           # Defines React component
+|       |-- NAME.test.js      # Tests for component
+|
+|-- Screens/                  # React components that are screens
+|   |
+|   |-- NAME/                 # Defines a screen called NAME
+|       |-- index.js          # Responsible for connecting component with state
+|       |-- NAME.js           # Defines React component
+|       |-- NAME.test.js      # Tests for component
+|
+|-- Store/                    # Everything related to Store
+|   |-- index.js              # Exposes entire store as a module
+|   |
+|   |-- actions/              # Contains all action creators
+|   |   |-- index.js          # Exposes all action creators as module
+|   |   |
+|   |   |-- NAME/             # Contains action creators for NAME
+|   |       |-- index.js      # Exposes all actions creators as a module
+|   |       |-- NAME.js       # Defines all actions creators for NAME
+|   |       |-- NAME.test.js  # Tests for actions creators
+|   |
+|   |-- reducers/             # Contains all reducers
+|   |   |-- index.js          # Exposes a single combined reducer
+|   |   |
+|   |   |-- NAME/             # Contains one reducer
+|   |       |-- index.js      # Exposes reducer
+|   |       |-- NAME.js       # Defines the reducer
+|   |       |-- NAME.test.js  # Tests for reducer
+|   |
+|   |-- ActionTypes.js        # Defines all action types
+|
+|-- TestHelper/               # Defines helpers that are helpful in tests
+|   |-- index.js              # Exposes all helpers as a module
+|   |
+|   |-- NAME.js               # Defines a single helper
+|
+|-- Util/                     # Miscellaneous utility helpers
+|   |-- NAME.js               # Defines a single helper
+|
+|-- .gitignore
+|-- package-lock.json
+|-- package.json
+|-- README.md
+```
 
 # Development
 ## Setup environment
