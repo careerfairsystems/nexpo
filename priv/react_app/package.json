@@ -38,6 +38,7 @@
     "test-js": "react-scripts test --env=jsdom",
     "test-watch": "npm-run-all -p watch-css test-js",
     "test-ci": "npm run build-css && CI=true npm run test-js",
+    "test-coverage": "npm run test-js -- --coverage",
     "eject": "react-scripts eject"
   },
   "engines": {
