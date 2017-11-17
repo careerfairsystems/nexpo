@@ -25,12 +25,8 @@ class InitialSignup extends Component {
     this.setState({errors: {}})
 
     API.signup.initial_signup(username)
-    .then(res => {
-      console.log(res)
-      res.type === 'error'
-        ? this.setState({errors: res.errors})
-        : this.setState({finished: true})
-    })
+    .then(res => this.setState({finished: true}))
+    .catch(err => this.setState({errors: err.errors}))
   }
 
   _renderUsernameInput = () => {

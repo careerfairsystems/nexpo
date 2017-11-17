@@ -3,5 +3,13 @@ import { shallow } from 'enzyme'
 import Companies from './Companies'
 
 it("should render without crashing", () => {
-  shallow(<Companies/>)
+  const func = () => 'a'
+  shallow(<Companies getAllCompanies={func}/>)
+})
+
+it("calls fetch all companies prop on mount", () => {
+  const func = jest.fn()
+  const wrapper = shallow(<Companies getAllCompanies={func}/>)
+
+  expect(func).toHaveBeenCalledTimes(1)
 })

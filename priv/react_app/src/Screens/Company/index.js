@@ -1,9 +1,10 @@
 import Company from './Company'
 import { connect } from 'react-redux'
 
-const stateful = connect(state => {
+const stateful = connect((state, props) => {
+  const companyId = props.match.params.id
   return {
-    companies: state.entities.companies
+    company: state.entities.companies[companyId] || {}
   }
 })
 

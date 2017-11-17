@@ -6,7 +6,6 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
-import { getAllCompanies } from './store/ActionCreators.js'
 
 import { setupErrorTracking } from './Util/ErrorTracking'
 
@@ -16,9 +15,9 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import App from './App'
 import './index.css'
 
-import { BrowserRouter } from 'react-router-dom'
+import { BrowserRouter, Route } from 'react-router-dom'
 
-import getStore from './store'
+import {getStore, Actions} from './Store'
 
 if(process.env.NODE_ENV === 'production') {
   setupErrorTracking()
@@ -26,7 +25,7 @@ if(process.env.NODE_ENV === 'production') {
 
 const store = getStore();
 
-store.dispatch(getAllCompanies());
+store.dispatch(Actions.users.getCurrentUser())
 
 injectTapEventPlugin();
 
@@ -34,7 +33,7 @@ ReactDOM.render(
   <Provider store={store}>
     <MuiThemeProvider>
       <BrowserRouter>
-        <App />
+        <Route component={App} />
       </BrowserRouter>
     </MuiThemeProvider>
   </Provider>,
