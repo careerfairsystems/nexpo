@@ -14,4 +14,13 @@ defmodule Nexpo.EmailView do
     User.signup_url(user)
   end
 
+  def reset_password_url(user) do
+    application_url()
+    <> "/forgotten_password?key="
+    <> case user.forgot_password_key do
+      nil -> ""
+      key -> key
+    end
+  end
+
 end

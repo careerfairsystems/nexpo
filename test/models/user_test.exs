@@ -41,4 +41,35 @@ defmodule Nexpo.UserTest do
     assert result !== Repo.get!(User, user.id)
   end
 
+  test "A user have a field for forgotten_password_key" do
+    user = %User{}
+    assert Map.has_key?(user, :forgot_password_key)
+  end
+
+  test "method for when user forgot password works" do
+    user = Factory.create_user()
+    assert user.forgot_password_key == nil
+
+    user = User.forgot_password_changeset(user) |> Repo.update!
+
+    assert user.forgot_password_key != nil
+  end
+
+  test "reset_password_changeset works" do
+    user = Factory.create_user()
+    |> User.forgot_password_changeset()
+    |> Repo.update!
+
+    prev_hashed_password = user.hashed_password
+
+    password = "random-string"
+    changeset = user |> User.replace_forgotten_password_changeset(%{
+      password: password, password_confirmation: password
+    })
+
+    assert changeset.valid? == true
+    assert changeset.changes.hashed_password != prev_hashed_password
+    assert changeset.changes.forgot_password_key == nil
+  end
+
 end

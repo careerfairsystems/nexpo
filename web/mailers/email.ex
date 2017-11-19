@@ -16,6 +16,13 @@ defmodule Nexpo.Email do
     |> render("completed_signup.html", user: user)
   end
 
+  def reset_password(user) do
+    base_email()
+    |> to(user.email)
+    |> subject("Nexpo | Reset password")
+    |> render("reset_password.html", user: user)
+  end
+
   defp base_email do
     new_email()
     |> from("nexpo@arkad.se")
