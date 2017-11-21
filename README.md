@@ -226,11 +226,18 @@ The frontend is configured with [Create React App](https://github.com/facebookin
 2. Install the following programs
     - ```npm``` - version 5 or higher. [Installation instructions](https://www.npmjs.com/get-npm)
 3. Navigate yourself to the project root using the terminal.
-4. Execute ```make install``` to setup the environment
+4. Based on your running dist do one of the following:
+    - Mac: 
+      - Execute ```make install-mac```
+    - Linux:
+      - Open the following file: ```config/dev.exs```
+      - After ```poolsize: 10 ```, add ```username: "nexpo", password: "nexpo"```. Do not forget to add a ```,``` after poolsize.
+      - Do the same thing for ```config/test```
+      - Execute ```make install-linux``` 
 5. Grab a cup of coffee! 
 6. Start the stack with ```npm run dev``` 
 
-## Reset environment
+## Reset Linux environment
 
 If you at any time need to reset your environment do the following: (NOTE THAT THIS WILL DROP ALL YOUR LOCAL DATA!)
 1. Navigate to the project root using the terminal

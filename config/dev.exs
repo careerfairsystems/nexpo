@@ -49,6 +49,4 @@ config :nexpo, Nexpo.Mailer,
 config :nexpo, Nexpo.Repo,
   adapter: Ecto.Adapters.Postgres,
   database: "nexpo_dev",
-  pool_size: 10,
-  username: "nexpo",
-  password: "nexpo"
+  pool_size: 10

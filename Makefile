@@ -2,7 +2,7 @@
 
 .PHONY: install fresh-install
 
-install: 
+install-linux: 
 	sudo -u postgres psql -c "CREATE USER nexpo PASSWORD 'nexpo' CREATEDB;"
 	mix local.hex --force && \
 	mix archive.install --force https://github.com/phoenixframework/archives/raw/master/phoenix_new.ez && \
@@ -11,7 +11,15 @@ install:
 	mix ecto.migrate && \
 	npm test
 
-fresh-install: 
+install-osx:
+	mix local.hex --force && \
+	mix archive.install --force https://github.com/phoenixframework/archives/raw/master/phoenix_new.ez && \
+	npm run install-deps && \
+	mix ecto.create && \
+	mix ecto.migrate && \
+	npm test
+
+fresh-install-linux: 
 	sudo -u postgres psql -c "DROP DATABASE IF EXISTS nexpo_dev;"
 	sudo -u postgres psql -c "DROP DATABASE IF EXISTS nexpo_test;"
 	sudo -u postgres psql -c "DROP USER IF EXISTS nexpo;"
@@ -22,3 +30,8 @@ fresh-install:
 	mix ecto.create && \
 	mix ecto.migrate && \
 	npm test
+
+reset-linux-db:
+	sudo -u postgres psql -c "DROP DATABASE IF EXISTS nexpo_dev;"
+	sudo -u postgres psql -c "DROP DATABASE IF EXISTS nexpo_test;"
+	sudo -u postgres psql -c "DROP USER IF EXISTS nexpo;"
