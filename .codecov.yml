@@ -1,0 +1,30 @@
+# codecov:
+  # strict_yaml_branch: master  # only use the latest copy on master branch
+
+coverage:
+  status:
+
+    project:                   # measuring the overall project coverage
+      default:                 # context, you can create multiple ones with custom titles
+        enabled: yes           # must be yes|true to enable this status
+        target: auto           # specify the target coverage for each commit status
+                                #   option: "auto" (must increase from parent commit or pull request base)
+                                #   option: "X%" a static target percentage to hit
+
+    patch:                     # pull requests only: this commit status will measure the
+                                # entire pull requests Coverage Diff. Checking if the lines
+                                # adjusted are covered at least X%.
+      default:
+        enabled: yes             # must be yes|true to enable this status
+        target: 90%              # specify the target "X%" coverage to hit
+
+    changes:                   # if there are any unexpected changes in coverage
+      default:
+        enabled: yes             # must be yes|true to enable this status
+
+ignore: # files and folders that will be removed during processing
+  - "test/support"
+
+comment:
+  layout: "header, diff, suggestions"
+  behavior: default # post once then update, posts new if delete
