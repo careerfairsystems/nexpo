@@ -1,5 +1,8 @@
 use Mix.Config
 
+config :nexpo,
+  frontend_url: "https://" <> System.get_env("HOST_NAME")
+
 # For production, we configure the host to read the PORT
 # from the system environment. Therefore, you will need
 # to set PORT=80 before running your server.
