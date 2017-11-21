@@ -1,7 +1,7 @@
 {
     "name": "nexpo",
     "scripts": {
-      "postdeploy": "mix ecto.setup"
+      "postdeploy": "mix ecto.migrate && mix run priv/repo/seeds.exs"
     },
     "env": {
       "DB_POOL_SIZE": {
