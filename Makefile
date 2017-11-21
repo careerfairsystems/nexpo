@@ -11,7 +11,7 @@ install-linux:
 	mix ecto.migrate && \
 	npm test
 
-install-osx:
+install-mac:
 	mix local.hex --force && \
 	mix archive.install --force https://github.com/phoenixframework/archives/raw/master/phoenix_new.ez && \
 	npm run install-deps && \
