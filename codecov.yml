@@ -20,4 +20,4 @@ flags:
 
 comment:
   layout: "header, diff"
-  behavior: default # post once then update, posts new if delete
+  behavior: new # post once then update, posts new if delete

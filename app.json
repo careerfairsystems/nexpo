@@ -1,11 +1,11 @@
 {
     "name": "nexpo",
     "scripts": {
-      "postdeploy": "mix ecto.migrate && mix run priv/repo/seeds.exs"
+      "postdeploy": "DB_POOL_SIZE=2 && mix ecto.migrate && mix run priv/repo/seeds.exs"
     },
     "env": {
       "DB_POOL_SIZE": {
-        "required": true
+        "value": "15"
       },
       "HOST_NAME": {
         "required": true
