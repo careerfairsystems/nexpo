@@ -1,5 +1,8 @@
 use Mix.Config
 
+config :nexpo,
+  frontend_url: "https://" <> System.get_env("HOST_NAME")
+
 # For production, we configure the host to read the PORT
 # from the system environment. Therefore, you will need
 # to set PORT=80 before running your server.
@@ -15,7 +18,6 @@ config :nexpo, Nexpo.Endpoint,
   http: [port: {:system, "PORT"}],
   url: [scheme: "https", host: System.get_env("HOST_NAME"), port: 443],
   force_ssl: [rewrite_on: [:x_forwarded_proto]],
-  cache_static_manifest: "priv/static/manifest.json",
   secret_key_base: System.get_env("SECRET_KEY_BASE")
 
 # Do not print debug messages in production
@@ -97,3 +99,7 @@ config :nexpo, Nexpo.Repo,
   url: System.get_env("DATABASE_URL"),
   pool_size: String.to_integer(System.get_env("DB_POOL_SIZE") || "10"),
   ssl: true
+
+if System.get_env("STAGING") != nil do
+  import_config "staging.exs"
+end

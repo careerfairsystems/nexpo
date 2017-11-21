@@ -4,14 +4,11 @@ defmodule Nexpo.EmailView do
   alias Nexpo.User
 
   def application_url do
-    case Mix.env do
-      :prod -> "https://" <> System.get_env("HOST_NAME")
-      _ -> "http://localhost:3000"
-    end
+    Application.get_env(:nexpo, :frontend_url)
   end
 
   def signup_url(user) do
-    User.signup_url(user)
+    application_url() <> "/signup?key="<> user.signup_key
   end
 
 end
