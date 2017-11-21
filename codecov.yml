@@ -1,11 +1,22 @@
 coverage:
   status:
     project:
-      default:
-        target: auto  # never decrease project wide coverage
+      default: off
+      backend:
+        flags: backend
+      frontend:
+        target: 50%
+        flags: frontend
 
-ignore:
-  - "test/support/*"
+flags:
+  # filter the folder(s) you wish to measure by that flag
+  backend:
+    # only include files in the backend folder
+    paths:
+      - web/
+  frontend:
+    paths:
+      - priv/react_app/
 
 comment:
   layout: "header, diff"
