@@ -59,11 +59,8 @@ defmodule Nexpo.User do
   end
 
   def signup_url(struct) do
-    host_name = case Mix.env do
-      :prod -> "https://" <> System.get_env("HOST_NAME")
-      _ -> "http://localhost:3000"
-    end
-    host_name <> "/signup?key="<> struct.signup_key
+    Application.get_env(:nexpo, :frontend_url)
+    <> "/signup?key="<> struct.signup_key
   end
 
   def authenticate(%{:email => email, :password => password}) do
