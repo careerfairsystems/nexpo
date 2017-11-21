@@ -1,11 +1,15 @@
 {
     "name": "nexpo",
-    "scripts": {},
+    "scripts": {
+      "postdeploy": "DB_POOL_SIZE=2 && mix ecto.migrate && mix run priv/repo/seeds.exs"
+    },
     "env": {
-      "DB_POOL_SIZE": {
+      "DB_POOL_SIZE": "15",
+      "STAGING": "TRUE",
+      "HOST_NAME": {
         "required": true
       },
-      "HOST_NAME": {
+      "HEROKU_APP_NAME": {
         "required": true
       },
       "MIX_ENV": {
