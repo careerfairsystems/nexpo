@@ -23,8 +23,8 @@ coverage:
         enabled: yes             # must be yes|true to enable this status
 
 ignore: # files and folders that will be removed during processing
-  - "test/support"
+  - "test/support/"
 
 comment:
-  layout: "header, diff, suggestions"
+  layout: "header, diff"
   behavior: default # post once then update, posts new if delete
