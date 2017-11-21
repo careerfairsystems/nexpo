@@ -1,6 +1,8 @@
 {
     "name": "nexpo",
-    "scripts": {},
+    "scripts": {
+      "postdeploy": "mix ecto.setup"
+    },
     "env": {
       "DB_POOL_SIZE": {
         "required": true
