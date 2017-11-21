@@ -225,21 +225,18 @@ The frontend is configured with [Create React App](https://github.com/facebookin
 1. Make sure you have installed all [system requirements](#system-requirements). Then open a terminal and do the following steps
 2. Install the following programs
     - ```npm``` - version 5 or higher. [Installation instructions](https://www.npmjs.com/get-npm)
-3. Create a new database user in postgres:
-    - ```sudo su - postgres``` -- Become the postgres user
-    - ```psql -c "CREATE USER nexpo PASSWORD 'nexpo' CREATEDB"``` -- Create a new user called **nexpo** with password **nexpo** with rights to create a database
-    - ```exit``` -- Logout from the postgres user
-4. Setting up the database connections for development and test
-    - Navigate yourself into the root dir of this project with ```cd``` 
-    - Open the following file: ./config/dev.exs 
-    - At the bottom of the file add the username and password for your created database user in the following manner: ```username: "nexpo", password: "nexpo"```. Note that the user and password here is the same as in step 3 and might need to be changed to match your setup! Also do not forget the comma after ```poolsize: 10```
-    - Repeat the above step for the file: ./config/test.exs
-5. Install all dependencies
-    - ```cd``` To the root of the project
-    - ```make install``` - Install all dependencies
-6. Grab a cup of coffee! 
-7. Start the stack with ```npm run dev``` 
+3. Navigate yourself to the project root using the terminal.
+4. Execute ```make install``` to setup the environment
+5. Grab a cup of coffee! 
+6. Start the stack with ```npm run dev``` 
 
+## Reset environment
+
+If you at any time need to reset your environment do the following: (NOTE THAT THIS WILL DROP ALL YOUR LOCAL DATA!)
+1. Navigate to the project root using the terminal
+2. Execute ```make fresh-install``` 
+3. Grab a cup of coffee! 
+4. Start the stack with ```npm run dev```
 
 - Windows
 ```sh
