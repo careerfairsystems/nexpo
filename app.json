@@ -6,6 +6,9 @@
     "env": {
       "DB_POOL_SIZE": "15",
       "STAGING": "TRUE",
+      "HOST_NAME": {
+        "required": true
+      },
       "HEROKU_APP_NAME": {
         "required": true
       },
