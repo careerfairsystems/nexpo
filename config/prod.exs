@@ -100,3 +100,7 @@ config :nexpo, Nexpo.Repo,
   url: System.get_env("DATABASE_URL"),
   pool_size: String.to_integer(System.get_env("DB_POOL_SIZE") || "10"),
   ssl: true
+
+if System.get_env("STAGING") != nil do
+  import_config "staging.exs"
+end

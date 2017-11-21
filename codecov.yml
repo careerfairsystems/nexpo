@@ -1,8 +1,15 @@
 coverage:
   status:
+    project:
+      default:
+        target: auto  # never decrease project wide coverage
+
     patch:
       default:
-        target: 100%
+        target: 90%   # make sure atleast 90% of new code is covered
+
+ignore:
+  - "test/support/*"
 
 comment:
   layout: "header, diff"
