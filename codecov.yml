@@ -1,9 +1,12 @@
 coverage:
   status:
     project:
-      default: false  # disable the default status that measures entire project
-      frontend:  # declare a new status context "tests"
-        target: 100%  # we always want 100% coverage here
-        paths: "src/priv/react_app/"  # only include coverage in "tests/" folder
-      backend:  # declare a new status context "app"
-        paths: "!src/priv/react_app/"  # remove all files in "tests/"
+      default:
+        target: auto  # never decrease project wide coverage
+
+ignore:
+  - "test/support/*"
+
+comment:
+  layout: "header, diff"
+  behavior: default # post once then update, posts new if delete
