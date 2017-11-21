@@ -50,7 +50,7 @@ defmodule Nexpo.ConnCase do
       true ->
         user = Nexpo.Factory.create_user()
 
-        {status, jwt, _decoded_jwt} = Guardian.encode_and_sign(user)
+        {_status, jwt, _decoded_jwt} = Guardian.encode_and_sign(user)
         conn = Plug.Conn.put_req_header(conn, "authorization", "Bearer #{jwt}")
 
         {:ok, conn: conn, user: user}
