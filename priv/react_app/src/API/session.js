@@ -1,4 +1,6 @@
 import {handleHttpResponse} from './index'
+import UnreachableCodeReachedError from './../Errors/UnreachableCodeReachedError'
+import ApiError from './../Errors/ApiError'
 export default {
 
   /**
@@ -20,7 +22,7 @@ export default {
    */
   development_login: ({email}) => {
     if(process.env.NODE_ENV === 'production') {
-      throw Error('Development login reached in production')
+      throw new UnreachableCodeReachedError('Development login reached in production')
     }
     else {
       return fetch(`/api/development_login`, {
