@@ -1,37 +1,27 @@
 # This file contains all commands needed to start your dev environment!
 
-.PHONY: install fresh-install
+.PHONY: fresh-install-linux install-mac install-linux install-deps reset-db create-db-user
 
-install-linux: 
+create-db-user:
 	sudo -u postgres psql -c "CREATE USER nexpo PASSWORD 'nexpo' CREATEDB;"
-	mix local.hex --force && \
-	mix archive.install --force https://github.com/phoenixframework/archives/raw/master/phoenix_new.ez && \
-	npm run install-deps && \
-	mix ecto.create && \
-	mix ecto.migrate && \
-	npm test
 
-install-mac:
-	mix local.hex --force && \
-	mix archive.install --force https://github.com/phoenixframework/archives/raw/master/phoenix_new.ez && \
-	npm run install-deps && \
-	mix ecto.create && \
-	mix ecto.migrate && \
-	npm test
-
-fresh-install-linux: 
+reset-db:
 	sudo -u postgres psql -c "DROP DATABASE IF EXISTS nexpo_dev;"
 	sudo -u postgres psql -c "DROP DATABASE IF EXISTS nexpo_test;"
 	sudo -u postgres psql -c "DROP USER IF EXISTS nexpo;"
-	sudo -u postgres psql -c "CREATE USER nexpo PASSWORD 'nexpo' CREATEDB;"
+
+install-deps: 
 	mix local.hex --force && \
 	mix archive.install --force https://github.com/phoenixframework/archives/raw/master/phoenix_new.ez && \
 	npm run install-deps && \
 	mix ecto.create && \
-	mix ecto.migrate && \
+	mix ecto.migrate	
+
+install-linux: create-db-user install-deps
 	npm test
 
-reset-linux-db:
-	sudo -u postgres psql -c "DROP DATABASE IF EXISTS nexpo_dev;"
-	sudo -u postgres psql -c "DROP DATABASE IF EXISTS nexpo_test;"
-	sudo -u postgres psql -c "DROP USER IF EXISTS nexpo;"
+install-mac: install-deps
+	npm test
+
+fresh-install-linux: reset-db create-db-user install-deps
+	npm test
