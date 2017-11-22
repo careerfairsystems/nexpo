@@ -3,7 +3,14 @@ import reducer from './Auth'
 import {getJwt, setJwt} from './../../../Util/JwtHelper'
 
 it("should return initial state", () => {
-  expect(reducer(undefined, {})).toEqual({error: false, isLoggedIn: false})
+  const expected = {
+    error: false,
+    isLoggedIn: false,
+    forgotPassword: {
+      validKey: false
+    }
+  }
+  expect(reducer(undefined, {})).toEqual(expected)
 })
 
 describe("get current user success", () => {
@@ -73,5 +80,35 @@ describe("logout", () => {
     const state = reducer({isLoggedIn: true}, Actions.auth.logout())
     expect(state).toMatchObject({isLoggedIn: false})
     expect(getJwt()).not.toBe(jwt)
+  })
+})
+
+describe("verify forgot password key success", () => {
+  it("should set validKey to true", () => {
+    const init_state = {
+      forgotPassword: {validKey: false}
+    }
+    const action = Actions.accounts.verify_forgot_password_key_success()
+    const state = reducer(init_state, action)
+
+    const expected = {
+      forgotPassword: {validKey: true}
+    }
+    expect(state).toMatchObject(expected)
+  })
+})
+
+describe("verify forgot password key failure", () => {
+  it("should set validKey to false", () => {
+    const init_state = {
+      forgotPassword: {validKey: true}
+    }
+    const action = Actions.accounts.verify_forgot_password_key_failure()
+    const state = reducer(init_state, action)
+
+    const expected = {
+      forgotPassword: {validKey: false}
+    }
+    expect(state).toMatchObject(expected)
   })
 })

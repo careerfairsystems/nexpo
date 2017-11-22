@@ -5,6 +5,10 @@
 import {actionTypes} from './../../../Store'
 import {mergeDeepRight} from 'ramda'
 
+export type FetchingState = {
+  companies: boolean
+}
+
 let initialState = {
   companies: false
 }

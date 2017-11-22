@@ -5,11 +5,15 @@
 import {actionTypes} from './../../../Store'
 import {mergeDeepRight} from 'ramda'
 
+export type CurrentState = {
+  user: number
+}
+
 let initialState = {
   user: undefined
 }
 
-const current = (state = initialState, action) => {
+const current = (state = initialState, action): CurrentState => {
   switch(action.type) {
 
     case actionTypes.FETCH_CURRENT_USER_SUCCESS:

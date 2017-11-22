@@ -6,7 +6,7 @@ defmodule Nexpo.EmailViewTest do
 
   test "reset password url when user has no key" do
     user = Factory.create_user
-    expected = Application.get_env(:nexpo, :frontend_url) <> "/forgotten_password?key="
+    expected = Application.get_env(:nexpo, :frontend_url) <> "/forgot-password?key="
     result = reset_password_url(user)
     assert result == expected
   end
@@ -20,7 +20,7 @@ defmodule Nexpo.EmailViewTest do
     assert key != nil
 
     expected = Application.get_env(:nexpo, :frontend_url)
-    <> "/forgotten_password?key="
+    <> "/forgot-password?key="
     <> key
 
     assert result == expected
