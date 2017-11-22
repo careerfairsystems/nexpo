@@ -7,6 +7,7 @@ defmodule Nexpo.UserController do
   alias Nexpo.Mailer
   alias Nexpo.MessageView
   alias Nexpo.ErrorView
+  alias Nexpo.ChangesetView
 
   def me(conn, %{}, user, _claims) do
     conn |> put_status(200) |> render("show.json", user: user)
@@ -59,17 +60,24 @@ defmodule Nexpo.UserController do
   """
   def replace_forgotten_password(conn, %{"password" => password, "password_confirmation" => password_confirmation, "key" => key}, _user, _claims) do
     case Repo.get_by(User, forgot_password_key: key) do
-      nil -> replace_forgotten_password(conn, nil, nil, nil)
+      nil ->
+        replace_forgotten_password(conn, nil, nil, nil)
       user ->
         params = %{
           password: password,
           password_confirmation: password_confirmation
         }
-        User.replace_forgotten_password_changeset(user, params)
-        |> Repo.update!
 
-        conn |> put_status(200)
-        |> render(MessageView, "message.json", message: "Successfully changed password")
+        changeset = User.replace_forgotten_password_changeset(user, params)
+        case Repo.update(changeset) do
+          {:ok, user} ->
+            conn |> put_status(200)
+            |> render(MessageView, "message.json", message: "Successfully changed password")
+          {:error, changeset} ->
+            conn |> put_status(400)
+            |> render(ChangesetView, "error.json", %{changeset: changeset})
+        end
+
     end
   end
   def replace_forgotten_password(conn, _params, _user, _claims) do

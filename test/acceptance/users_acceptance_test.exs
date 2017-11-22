@@ -95,7 +95,31 @@ defmodule Nexpo.UserAcceptanceTest do
     assert json_response(conn, 200)
     assert user.forgot_password_key == nil
     assert user.hashed_password != prev_hashed_password
+  end
 
+  test "POST /password/new/:key returns errors given invalid password", %{conn: conn} do
+    user = Factory.create_user
+    |> User.forgot_password_changeset
+    |> Repo.update!
+
+    prev_hashed_password = user.hashed_password
+
+    params = %{
+      password: "any-password",
+      password_confirmation: "any-other-password"
+    }
+
+    conn = post(conn, "/api/password/new/"<>user.forgot_password_key, params)
+
+    user = Repo.get(User, user.id)
+    assert json_response(conn, 400)
+    response = Poison.decode!(conn.resp_body)
+
+    assert response["type"] == "error"
+    assert Map.has_key?(response, "errors")
+
+    assert user.forgot_password_key != nil
+    assert user.hashed_password == prev_hashed_password
   end
 
   test "GET /password/forgot/:key returns 200 given valid key", %{conn: conn} do
