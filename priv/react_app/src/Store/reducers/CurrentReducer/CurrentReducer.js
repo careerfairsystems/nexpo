@@ -13,7 +13,7 @@ let initialState = {
   user: undefined
 }
 
-const current = (state = initialState, action): CurrentState => {
+export const CurrentReducer = (state = initialState, action): CurrentState => {
   switch(action.type) {
 
     case actionTypes.FETCH_CURRENT_USER_SUCCESS:
@@ -23,5 +23,3 @@ const current = (state = initialState, action): CurrentState => {
       return state;
   }
 }
-
-export default current;

@@ -139,10 +139,14 @@ describe("replace_forgotten_password_success", () => {
 
 describe("replace_forgotten_password_failure", () => {
   it("should create the correct action", () => {
-    const expected = {
-      type: actionTypes.REPLACE_FORGOTTEN_PASSWORD_FAILURE
+    const errors = {
+      password: 'some-error'
     }
-    const action = Actions.accounts.replace_forgotten_password_failure()
+    const expected = {
+      type: actionTypes.REPLACE_FORGOTTEN_PASSWORD_FAILURE,
+      errors: errors
+    }
+    const action = Actions.accounts.replace_forgotten_password_failure(errors)
     expect(action).toEqual(expected)
   })
 })

@@ -1,5 +1,6 @@
 import {actionTypes} from './../../../Store'
 import API from './../../../API'
+import { ApiError } from '../../../Errors/ApiError';
 
 export function forgot_password_request() {
   return {
@@ -66,9 +67,14 @@ export function replace_forgotten_password_success() {
   }
 }
 
-export function replace_forgotten_password_failure() {
+export type ReplaceForgottenPasswordFailureAction = {
+  type: string,
+  errors: object
+}
+export function replace_forgotten_password_failure(errors): ReplaceForgottenPasswordFailureAction {
   return {
-    type: actionTypes.REPLACE_FORGOTTEN_PASSWORD_FAILURE
+    type: actionTypes.REPLACE_FORGOTTEN_PASSWORD_FAILURE,
+    errors
   }
 }
 
@@ -83,8 +89,8 @@ export function replace_forgotten_password({key, password, password_confirmation
     .then(res => {
       dispatch(replace_forgotten_password_success())
     })
-    .catch(err => {
-      dispatch(replace_forgotten_password_failure())
+    .catch((error: ApiError) => {
+      dispatch(replace_forgotten_password_failure(error.errors))
     })
   }
 }

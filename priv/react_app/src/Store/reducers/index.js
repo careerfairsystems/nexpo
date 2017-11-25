@@ -2,23 +2,23 @@
  *  This file gathers all redux reducers and exports them as one global reducer
  */
 
-import EntitiesReducer, {EntitiesState} from './Entities'
-import AuthReducer, {AuthState} from './Auth'
-import CurrentReducer, {CurrentState} from './CurrentReducer'
-import FetchingReducer, {FetchingState} from './Fetching'
+import { ApiState, ApiReducer } from './ApiReducer/ApiReducer';
+import { AuthReducer, AuthState } from './Auth/Auth';
+import { CurrentState, CurrentReducer } from './CurrentReducer/CurrentReducer';
+import { EntitiesState, EntitiesReducer } from './Entities/EntitiesReducer';
 
 export type State = {
   entities: EntitiesState,
+  api: ApiState,
   auth: AuthState,
-  fetching: FetchingState,
-  current: CurrentState,
+  current: CurrentState
 }
 
 const RootReducer: State = {
   entities: EntitiesReducer,
+  api: ApiReducer,
   auth: AuthReducer,
-  fetching: FetchingReducer,
-  current: CurrentReducer,
+  current: CurrentReducer
 }
 
 export default RootReducer

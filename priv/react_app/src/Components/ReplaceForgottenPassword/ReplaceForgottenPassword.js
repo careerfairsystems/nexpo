@@ -9,7 +9,11 @@ type Props = {
   sendNewPasswordToBackend: func,
   hashKey: string,
   verifyKey: func,
-  keyIsValid: bool
+  keyIsValid: bool,
+  errors: {
+    password: string[],
+    password_confirmation: string[]
+  }
 }
 
 class ReplaceForgottenPassword extends Component<Props> {
@@ -17,7 +21,12 @@ class ReplaceForgottenPassword extends Component<Props> {
     verifyKey: PropTypes.func.isRequired,
     sendNewPasswordToBackend: PropTypes.func.isRequired,
     hashKey: PropTypes.string.isRequired,
-    keyIsValid: PropTypes.bool.isRequired
+    keyIsValid: PropTypes.bool.isRequired,
+    errors: PropTypes.object.isRequired
+  }
+
+  static defaultProps = {
+    errors: {}
   }
 
   state = {
@@ -43,7 +52,11 @@ class ReplaceForgottenPassword extends Component<Props> {
   }
 
   render() {
-    const {keyIsValid} = this.props
+    let {keyIsValid, errors} = this.props
+    errors = {
+      password: errors.password || [],
+      password_confirmation: errors.password_confirmation || []
+    }
 
     if(!keyIsValid) {
       return (
@@ -61,12 +74,14 @@ class ReplaceForgottenPassword extends Component<Props> {
           type='password'
           value={this.state.password}
           onChange={(e, val) => this._setPassword(val)}
+          errorText={errors.password.length > 0 ? errors.password[0] : ''}
         />
         <TextField
           floatingLabelText="Confirm new password"
           type='password'
           value={this.state.password_confirmation}
           onChange={(e, val) => this._setPasswordConfirmation(val)}
+          errorText={errors.password_confirmation.length > 0 ? errors.password_confirmation[0] : ''}
         />
         <br/>
         <RaisedButton

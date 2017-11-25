@@ -22,7 +22,7 @@ let initialState = {
   users: {}
 }
 
-const entities = (state = initialState, action): EntitiesState => {
+export const EntitiesReducer = (state = initialState, action): EntitiesState => {
 
   let normalized, user
 
@@ -40,6 +40,3 @@ const entities = (state = initialState, action): EntitiesState => {
       return state;
   }
 }
-
-
-export default entities;

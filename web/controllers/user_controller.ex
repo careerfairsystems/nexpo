@@ -70,7 +70,7 @@ defmodule Nexpo.UserController do
 
         changeset = User.replace_forgotten_password_changeset(user, params)
         case Repo.update(changeset) do
-          {:ok, user} ->
+          {:ok, _user} ->
             conn |> put_status(200)
             |> render(MessageView, "message.json", message: "Successfully changed password")
           {:error, changeset} ->

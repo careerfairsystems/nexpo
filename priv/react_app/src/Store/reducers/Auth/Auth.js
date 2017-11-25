@@ -18,7 +18,7 @@ const initialState = {
   },
 }
 
-const Auth = (state = initialState, action): AuthState => {
+export const AuthReducer = (state = initialState, action): AuthState => {
   switch(action.type) {
 
     case actionTypes.LOGIN_SUCCESS:
@@ -51,5 +51,3 @@ const Auth = (state = initialState, action): AuthState => {
       return state
   }
 }
-
-export default Auth;

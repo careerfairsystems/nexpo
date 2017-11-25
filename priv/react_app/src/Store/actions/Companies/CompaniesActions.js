@@ -14,7 +14,10 @@ export function getAllCompaniesSuccess(companies) {
 	}
 }
 
-export function getAllCompaniesFailure() {
+export type GetAllCompaniesFailureAction = {
+  type: string
+}
+export function getAllCompaniesFailure(): GetAllCompaniesFailureAction {
 	return {
 		type: actionTypes.FETCH_COMPANIES_FAILURE
 	}

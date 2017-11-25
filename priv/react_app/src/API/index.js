@@ -2,8 +2,7 @@ import companies from './companies'
 import signup from './signup'
 import session from './session'
 import users from './users'
-
-import ApiError from './../Errors/ApiError'
+import { ApiError } from '../Errors/ApiError';
 
 export default {
   companies,

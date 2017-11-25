@@ -1,7 +1,7 @@
 /**
  * Defines an error to be used when Api returns an error
  */
-class ApiError extends Error {
+export class ApiError extends Error {
   constructor(response, ...params) {
     super(...params)
 
@@ -14,5 +14,3 @@ class ApiError extends Error {
     this.errors = response.errors
   }
 }
-
-export default ApiError
