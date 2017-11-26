@@ -3,13 +3,20 @@ import './ForgotPasswordEnterEmail.css'
 import PropTypes from 'prop-types'
 import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton';
+import { SuccessMessage } from '../SuccessMessage/SuccessMessage';
 
 type Props = {
-  callBackend: func
+  callBackend: boolean,
+  success: boolean
 }
 class ForgotPasswordEnterEmail extends Component<Props> {
   static propTypes = {
-    callBackend: PropTypes.func.isRequired
+    callBackend: PropTypes.func.isRequired,
+    success: PropTypes.bool
+  }
+
+  static defaultProps = {
+    success: false
   }
 
   state = {
@@ -26,6 +33,16 @@ class ForgotPasswordEnterEmail extends Component<Props> {
   }
 
   render() {
+    const {success} = this.props
+    if(success) {
+      return (
+        <SuccessMessage
+          message="An email has been sent to the address you specified!"
+          linkText="Click here to go home"
+          linkUrl="/"
+        />
+      )
+    }
     return (
       <div className="ForgotPasswordEnterEmail_Component">
 
