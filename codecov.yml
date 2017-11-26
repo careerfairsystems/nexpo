@@ -2,10 +2,12 @@ coverage:
   status:
     project:
       default:
+        enabled: yes
         target: auto  # never decrease project wide coverage
 
     patch:
       default:
+        enabled: yes
         target: 90%   # make sure atleast 90% of new code is covered
 
 ignore:
