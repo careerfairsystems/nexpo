@@ -1,9 +1,10 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import './ForgotPasswordEnterEmail.css'
 import PropTypes from 'prop-types'
 import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton';
 import { SuccessMessage } from '../SuccessMessage/SuccessMessage';
+import { Link } from 'react-router-dom'
 
 type Props = {
   callBackend: boolean,
@@ -24,17 +25,17 @@ class ForgotPasswordEnterEmail extends Component<Props> {
   }
 
   _updateEmail = val => {
-    this.setState({email: val})
+    this.setState({ email: val })
   }
 
   _queryBackend = () => {
-    const {email} = this.state
-    this.props.callBackend({email})
+    const { email } = this.state
+    this.props.callBackend({ email })
   }
 
   render() {
-    const {success} = this.props
-    if(success) {
+    const { success } = this.props
+    if (success) {
       return (
         <SuccessMessage
           message="An email has been sent to the address you specified!"
@@ -55,13 +56,21 @@ class ForgotPasswordEnterEmail extends Component<Props> {
           onChange={(e, val) => this._updateEmail(val)}
         />
 
-        <br/>
+        <br />
 
         <RaisedButton
           primary
           label="Send email"
           onTouchTap={this._queryBackend}
         />
+        <br/>
+        <br/>
+
+        <div>Already have an account?</div>
+        <br />
+        <div className="links">
+          <Link to="/login">Log in</Link>
+        </div>
       </div>
     )
   }
