@@ -2,15 +2,18 @@ defmodule Nexpo.Mixfile do
   use Mix.Project
 
   def project do
-    [app: :nexpo,
-     version: "0.0.1",
-     elixir: "~> 1.2",
-     elixirc_paths: elixirc_paths(Mix.env),
-     compilers: [:phoenix, :gettext] ++ Mix.compilers,
-     build_embedded: Mix.env == :prod,
-     start_permanent: Mix.env == :prod,
-     aliases: aliases(),
-     deps: deps()]
+    [
+      app: :nexpo,
+      version: "0.0.1",
+      elixir: "~> 1.2",
+      elixirc_paths: elixirc_paths(Mix.env),
+      compilers: [:phoenix, :gettext] ++ Mix.compilers,
+      build_embedded: Mix.env == :prod,
+      start_permanent: Mix.env == :prod,
+      aliases: aliases(),
+      deps: deps(),
+      test_coverage: [tool: ExCoveralls]
+    ]
   end
 
   # Configuration for the OTP application.
@@ -64,7 +67,8 @@ defmodule Nexpo.Mixfile do
       {:bcrypt_elixir, "~> 0.12"},
       {:guardian, "~> 0.14.5"},
       {:bamboo, "~> 0.8"},
-      {:bamboo_smtp, "~> 1.4.0"}
+      {:bamboo_smtp, "~> 1.4.0"},
+      {:excoveralls, "~> 0.7", only: :test}
     ]
   end
 

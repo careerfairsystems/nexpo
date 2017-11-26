@@ -26,6 +26,9 @@ erl_crash.dump
 #config due to new behavior on linux
 /config/
 
+# Ignore test coverage reports
+cover/
+
 # Editor stuff
 .idea
 .vscode

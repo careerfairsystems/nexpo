@@ -1,3 +1,4 @@
+import {handleHttpResponse} from './index'
 export default {
 
   /**
@@ -11,7 +12,7 @@ export default {
         'Content-Type': 'application/json'
       })
     })
-    .then(res => res.json())
+    .then(handleHttpResponse)
   },
 
   /**
@@ -29,7 +30,7 @@ export default {
           'Content-Type': 'application/json'
         })
       })
-      .then(res => res.json())
+      .then(handleHttpResponse)
     }
   }
 }

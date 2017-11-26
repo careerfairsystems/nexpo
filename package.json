@@ -1,17 +1,22 @@
 {
   "scripts": {
+    "install-deps": "mix deps.get && npm i && cd priv/react_app && npm i && cd ../..",
     "dev-backend": "mix phoenix.server",
     "dev-frontend": "cd priv/react_app && npm start",
     "dev": "npm-run-all -p dev-backend dev-frontend",
+
     "testwatch-backend": "mix test.watch",
     "testwatch-frontend": "cd priv/react_app && npm run test-watch",
     "test-backend": "mix test --trace",
     "test-frontend": "cd priv/react_app && npm run test && cd ../..",
     "test": "npm run test-backend && npm run test-frontend",
-    "install-deps": "mix deps.get && npm i && cd priv/react_app && npm i && cd ../..",
+    "test-coverage-backend": "MIX_ENV=test mix coveralls.json --trace",
+    "test-coverage-frontend": "cd priv/react_app && npm run test-coverage; cd ../..",
+
     "generate-docs": "apidoc -i web -o docs",
     "validate-editorconfig": "eclint check * 'web/**/*' 'test/**/*' 'priv/gettext/**/*' 'priv/repo/**/*' 'priv/react_app/src/**/*' 'priv/react_app/*' 'lib/**/*' 'config/**/*'",
-    "update-toc-readme": "doctoc README.md --github"
+    "update-toc-readme": "doctoc README.md --github",
+    "download-prod-db": "MIX_ENV=dev mix ecto.drop && heroku pg:pull -a arkad-nexpo DATABASE_URL nexpo_dev"
   },
   "devDependencies": {
     "apidoc": "^0.17.6",
@@ -22,6 +27,7 @@
     "npm-run-all": "^4.0.2"
   },
   "engines": {
-    "node": "6.11.4"
+    "node": "6.11.4",
+    "npm": ">5.0.0"
   }
 }

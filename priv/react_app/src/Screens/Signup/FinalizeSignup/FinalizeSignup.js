@@ -48,11 +48,8 @@ class FinalizeSignup extends Component<Props, State> {
   _fetchCurrentSignup = () => {
     const { signupKey } = this.props
     API.signup.get_current_signup(signupKey)
-    .then(res => {
-      res.type === 'error'
-        ? this.setState({noSuchKey: true})
-        : this.setState({email: res.data.email})
-    })
+    .then(res => this.setState({email: res.data.email}))
+    .catch(err => this.setState({noSuchKey: true}))
   }
 
   _signup = () => {
@@ -62,11 +59,8 @@ class FinalizeSignup extends Component<Props, State> {
       this.state
     )
     API.signup.finalize_signup(signupKey, params)
-    .then(res => {
-      res.type === 'error'
-        ? this.setState({errors: res.errors})
-        : this.setState({errors: {}, finished: true})
-    })
+    .then(res => this.setState({errors: {}, finished: true}))
+    .catch(err => this.setState({errors: err.errors}))
   }
 
   _renderEmailInput = () => {

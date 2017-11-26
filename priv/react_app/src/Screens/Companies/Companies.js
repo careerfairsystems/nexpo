@@ -19,6 +19,10 @@ import './Companies.css'
  */
 class Companies extends Component {
 
+  componentWillMount() {
+    this.props.getAllCompanies()
+  }
+
   _renderTableHeader() {
     return (
       <TableHeader>
@@ -79,8 +83,9 @@ class Companies extends Component {
 }
 
 Companies.propTypes = {
-  companies: PropTypes.object,
-  fetching: PropTypes.bool
+  companies: PropTypes.object.isRequired,
+  fetching: PropTypes.bool.isRequired,
+  getAllCompanies: PropTypes.func.isRequired
 }
 
 Companies.defaultProps = {

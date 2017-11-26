@@ -1,18 +1,18 @@
 import ProductionLogin from './ProductionLogin'
 import { connect } from 'react-redux'
 
-import Actions from '../../../store/actions'
+import {Actions} from './../../../Store'
 
 const mapStateToProps = (state, props) => {
   return {
-    error: state.login.error,
-    isLoggedIn: state.login.isLoggedIn
+    error: state.auth.error,
+    isLoggedIn: state.auth.isLoggedIn
   }
 }
 
 const mapDispatchToProps = (dispatch, props) => {
   return {
-    login: ({email, password}) => dispatch(Actions.login.login({email, password}))
+    login: ({email, password}) => dispatch(Actions.auth.login({email, password}))
   }
 }
 

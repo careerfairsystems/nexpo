@@ -6,6 +6,9 @@ if Mix.env == :dev do
     clear: true
 end
 
+config :nexpo,
+  frontend_url: "http://localhost:3000"
+
 # For development, we disable any cache and enable
 # debugging and code reloading.
 #

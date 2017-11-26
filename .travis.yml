@@ -6,11 +6,14 @@ matrix:
       before_install:
         - nvm install 6.11.4
         - npm i -g npm
+        - npm i -g codecov
       install:
         - cd priv/react_app && npm install
       script:
-        - npm run test
         - npm run build
+        - npm run test-coverage
+      after_success:
+        - codecov
     - elixir: 1.4.4
       otp_release: 19.3
       install:
@@ -18,4 +21,6 @@ matrix:
         - mix local.hex --force
         - mix deps.get
       script:
-        - npm run test-backend
+        - npm run test-coverage-backend
+      after_success:
+        - bash <(curl -s https://codecov.io/bash)

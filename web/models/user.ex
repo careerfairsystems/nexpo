@@ -49,38 +49,13 @@ defmodule Nexpo.User do
     |> unique_constraint(:email)
   end
 
-  def changeset(%Nexpo.User{} = user, params \\ %{}) do
-    # Check whether we are creating new user or not.
-    # Is there a better way to do this without check db?
-    case user.id do
-      nil -> new_changeset(%Nexpo.User{}, params)
-      _ -> alter_changeset(user, params)
-    end
-  end
-
-  defp new_changeset(%Nexpo.User{}, params) do
-    %Nexpo.User{}
-    |> cast(params, [:email, :password])
-    |> validate_required([:email, :password])
-    |> unique_constraint(:email)
-    |> validate_length(:password, min: 6)
-    |> hash_password(params)
-  end
-
-  defp alter_changeset(struct, params) do
+  def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:email, :password])
+    |> cast(params, [:email, :password, :first_name, :last_name])
     |> unique_constraint(:email)
     |> validate_length(:password, min: 6)
     |> hash_password(params)
-  end
-
-  def signup_url(struct) do
-    host_name = case Mix.env do
-      :prod -> "https://" <> System.get_env("HOST_NAME")
-      _ -> "http://localhost:3000"
-    end
-    host_name <> "/signup?key="<> struct.signup_key
+    |> validate_required([:email, :hashed_password])
   end
 
   def authenticate(%{:email => email, :password => password}) do

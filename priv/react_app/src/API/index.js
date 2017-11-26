@@ -1,40 +1,38 @@
 import companies from './companies'
 import signup from './signup'
 import session from './session'
+import users from './users'
 
 export default {
   companies,
   signup,
-  session
+  session,
+  users
+}
+
+type ServerResponse = {
+  type: string,
+  error: string,
+  errors: object
+}
+function ApiError(serverResponse: ServerResponse) {
+  this.message = `The server responded with ${serverResponse.error}`
+  this.name = 'ApiError'
+  this.errors = serverResponse.errors
 }
 
 /**
- * Holds the JWT of the currently signed in user
+ * Default handler for fetch calls
+ * @param {Response} response
  */
-let JWT_TOKEN: string = ''
-
-/**
- * Sets the current JWT
- */
-export const setJwt = (jwt: string) => {
-  try {
-    // Store token in localStorage so it can be retrieved later
-    localStorage.setItem('JWT_TOKEN', jwt)
-  } catch (error) {
-    // Incognito mode in safari seems to have issues with localStorage.
-    // Therefore, put the JWT in this temporary variable
-    JWT_TOKEN = jwt
+export const handleHttpResponse = (response: Response) => {
+  if(response.ok) {
+    return response.json()
   }
-}
-
-/**
- * Gets the current JWT
- */
-export const getJwt = (): string => {
-  return localStorage.getItem("JWT_TOKEN") || JWT_TOKEN
-}
-
-export const deleteJwt = () => {
-  localStorage.removeItem('JWT_TOKEN')
-  JWT_TOKEN = ''
+  else {
+    return response.json()
+    .then(res => {
+      throw new ApiError(res)
+    })
+  }
 }
