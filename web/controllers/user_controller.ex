@@ -63,19 +63,24 @@ defmodule Nexpo.UserController do
       nil ->
         replace_forgotten_password(conn, nil, nil, nil)
       user ->
-        params = %{
-          password: password,
-          password_confirmation: password_confirmation
-        }
+        case User.forgot_password_key_valid(user) do
+          true ->
+            params = %{
+              password: password,
+              password_confirmation: password_confirmation
+            }
 
-        changeset = User.replace_forgotten_password_changeset(user, params)
-        case Repo.update(changeset) do
-          {:ok, _user} ->
-            conn |> put_status(200)
-            |> render(MessageView, "message.json", message: "Successfully changed password")
-          {:error, changeset} ->
-            conn |> put_status(400)
-            |> render(ChangesetView, "error.json", %{changeset: changeset})
+            changeset = User.replace_forgotten_password_changeset(user, params)
+            case Repo.update(changeset) do
+              {:ok, _user} ->
+                conn |> put_status(200)
+                |> render(MessageView, "message.json", message: "Successfully changed password")
+              {:error, changeset} ->
+                conn |> put_status(400)
+                |> render(ChangesetView, "error.json", %{changeset: changeset})
+            end
+          false ->
+            replace_forgotten_password(conn, nil, nil, nil)
         end
 
     end
@@ -102,9 +107,19 @@ defmodule Nexpo.UserController do
   """
   def forgot_password_verification(conn, %{"key" => key}, _user, _claims) do
     case Repo.get_by(User, forgot_password_key: key) do
-      nil -> conn |> put_status(404) |> render(ErrorView, "404.json")
-      _ -> conn |> put_status(200) |> render(MessageView, "message.json", message: "Exists")
+      nil ->
+        forgot_password_verification(conn, nil, nil, nil)
+      user ->
+        case User.forgot_password_key_valid(user) do
+          true ->
+            conn |> put_status(200) |> render(MessageView, "message.json", message: "Exists")
+          false ->
+            forgot_password_verification(conn, nil, nil, nil)
+        end
     end
+  end
+  def forgot_password_verification(conn, _, _, _) do
+    conn |> put_status(404) |> render(ErrorView, "404.json")
   end
 
   @apidoc

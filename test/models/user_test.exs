@@ -46,13 +46,34 @@ defmodule Nexpo.UserTest do
     assert Map.has_key?(user, :forgot_password_key)
   end
 
-  test "method for when user forgot password works" do
+  test "method for when user forgot password sets key and time" do
     user = Factory.create_user()
     assert user.forgot_password_key == nil
+    assert user.forgot_password_time == nil
 
     user = User.forgot_password_changeset(user) |> Repo.update!
 
     assert user.forgot_password_key != nil
+    assert user.forgot_password_time != nil
+
+    time_now = DateTime.utc_now |> DateTime.to_unix
+    time_key = user.forgot_password_time |> DateTime.to_unix
+    time_diff = time_now - time_key
+    assert time_diff < 3
+  end
+
+  test "check validity of forgot password key" do
+    user = Factory.create_user |> User.forgot_password_changeset |> Repo.update!
+
+    assert User.forgot_password_key_valid(user) == true
+
+    {_, time} = user.forgot_password_time
+    |> DateTime.to_unix
+    |> Kernel.-(60 * 60)
+    |> DateTime.from_unix
+    user = Ecto.Changeset.change(user, forgot_password_time: time) |> Repo.update!
+
+    assert User.forgot_password_key_valid(user) == false
   end
 
   test "reset_password_changeset works" do

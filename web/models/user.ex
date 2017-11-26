@@ -10,6 +10,7 @@ defmodule Nexpo.User do
     field :password, :string, virtual: true
     field :signup_key, :string
     field :forgot_password_key, :string
+    field :forgot_password_time, :naive_datetime
     field :first_name, :string
     field :last_name, :string
 
@@ -90,7 +91,9 @@ defmodule Nexpo.User do
   end
 
   defp generate_forgot_password_key(changeset) do
-    changeset |> put_change(:forgot_password_key, random_hash(150))
+    changeset
+    |> put_change(:forgot_password_key, random_hash(150))
+    |> put_change(:forgot_password_time, DateTime.utc_now)
   end
 
   defp random_hash(length) do
@@ -148,4 +151,20 @@ defmodule Nexpo.User do
     end
   end
 
+  def forgot_password_key_valid(user) do
+    time_key = user.forgot_password_time
+    time_key = try do
+      time_key |> DateTime.to_unix
+    rescue
+      FunctionClauseError ->
+        DateTime.from_naive!(time_key, "Etc/UTC") |> DateTime.to_unix
+    end
+
+    time_now = DateTime.utc_now |> DateTime.to_unix
+    time_diff = time_now - time_key # in seconds
+    case time_diff do
+      x when x < 60 * 60 -> true # on hour
+      _ -> false
+    end
+  end
 end
