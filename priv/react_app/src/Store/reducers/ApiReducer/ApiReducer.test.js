@@ -22,7 +22,7 @@ it("should set the correct initial state", () => {
       fetching: false, errors: undefined
     },
     replace_password: {
-      fetching: false, errors: undefined
+      fetching: false, errors: undefined, success: false,
     },
     verify_forgot_password_key: {
       fetching: false, errors: undefined
@@ -102,10 +102,10 @@ describe("replace forgotten password action", () => {
 
   it("should handle success action", () => {
     const startState: ApiState = {
-      replace_password: {fetching: true, errors: {}}
+      replace_password: {fetching: true, errors: {}, success: false}
     }
     const expected: ApiState = {
-      replace_password: {fetching: false, errors: undefined}
+      replace_password: {fetching: false, errors: undefined, success: true}
     }
     const state = ApiReducer(startState, replace_forgotten_password_success())
     expect(state).toMatchObject(expected)

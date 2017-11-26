@@ -8,8 +8,7 @@ import { Action } from 'redux';
 import { ReplaceForgottenPasswordFailureAction } from '../../actions/Accounts/AccountsActions';
 
 type ApiStatus = {
-  fetching: boolean,
-  errors: array
+  fetching: boolean
 }
 
 export type ApiState = {
@@ -17,8 +16,14 @@ export type ApiState = {
   current_user: ApiStatus,
   forgot_password: ApiStatus,
   login: ApiStatus,
-  replace_password: ApiStatus,
-  verify_forgot_password_key: ApiStatus,
+  replace_password: ApiStatus & {
+    errors: {
+      password: string[],
+      password_confirmation: string[]
+    },
+    success: boolean
+  },
+  verify_forgot_password_key: ApiStatus
 }
 
 const initialState: ApiState = {
@@ -35,7 +40,7 @@ const initialState: ApiState = {
     fetching: false, errors: undefined
   },
   replace_password: {
-    fetching: false, errors: undefined
+    fetching: false, errors: undefined, success: false,
   },
   verify_forgot_password_key: {
     fetching: false, errors: undefined
@@ -90,7 +95,11 @@ export const ApiReducer = (state = initialState, act: Action): ApiState => {
 
     case actionTypes.REPLACE_FORGOTTEN_PASSWORD_SUCCESS: {
       const stateChange: ApiState = {
-        replace_password: { fetching: false, errors: undefined }
+        replace_password: {
+          fetching: false,
+          errors: undefined,
+          success: true
+        }
       }
       return mergeDeepRight(state, stateChange)
     }
@@ -109,3 +118,4 @@ export const ApiReducer = (state = initialState, act: Action): ApiState => {
 
   }
 }
+

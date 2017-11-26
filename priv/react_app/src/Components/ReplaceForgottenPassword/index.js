@@ -5,7 +5,8 @@ import {Actions, State} from '../../Store/index';
 const mapStateToProps = (state: State) => {
   return {
     keyIsValid: state.auth.forgotPassword.validKey,
-    errors: state.api.replace_password.errors || {}
+    errors: state.api.replace_password.errors || {},
+    success: state.api.replace_password.success
   }
 }
 

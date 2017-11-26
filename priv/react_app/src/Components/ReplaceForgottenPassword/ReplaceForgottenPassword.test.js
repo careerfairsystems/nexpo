@@ -3,7 +3,7 @@ import ReplaceForgottenPassword from './ReplaceForgottenPassword'
 import {shallow, mount} from 'enzyme'
 import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
-import ErrorMessage from './../../Components/ErrorMessage'
+import { NotFound } from '../../Screens/NotFound/NotFound';
 
 it("can render without crashing", () => {
   const props = {
@@ -53,7 +53,7 @@ it("calls verify key on load", () => {
   expect(props.verifyKey).toHaveBeenCalledTimes(0)
 })
 
-it("should render ErrorMessage if key is not valid", () => {
+it("should render NotFound if key is not valid", () => {
   const props = {
     verifyKey: jest.fn(),
     sendNewPasswordToBackend: jest.fn(),
@@ -61,5 +61,5 @@ it("should render ErrorMessage if key is not valid", () => {
     keyIsValid: false
   }
   const wrapper = shallow(<ReplaceForgottenPassword {...props}/>)
-  expect(wrapper.find(ErrorMessage)).toHaveLength(1)
+  expect(wrapper.find(NotFound)).toHaveLength(1)
 })

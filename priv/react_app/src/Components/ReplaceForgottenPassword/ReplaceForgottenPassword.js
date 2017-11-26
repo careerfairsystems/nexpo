@@ -3,7 +3,8 @@ import './ReplaceForgottenPassword.css'
 import PropTypes from 'prop-types'
 import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
-import ErrorMessage from './../ErrorMessage'
+import { SuccessMessage } from '../SuccessMessage/SuccessMessage';
+import { NotFound } from '../../Screens/NotFound/NotFound';
 
 type Props = {
   sendNewPasswordToBackend: func,
@@ -13,7 +14,8 @@ type Props = {
   errors: {
     password: string[],
     password_confirmation: string[]
-  }
+  },
+  success: boolean
 }
 
 class ReplaceForgottenPassword extends Component<Props> {
@@ -22,11 +24,13 @@ class ReplaceForgottenPassword extends Component<Props> {
     sendNewPasswordToBackend: PropTypes.func.isRequired,
     hashKey: PropTypes.string.isRequired,
     keyIsValid: PropTypes.bool.isRequired,
-    errors: PropTypes.object.isRequired
+    errors: PropTypes.object,
+    success: PropTypes.bool
   }
 
   static defaultProps = {
-    errors: {}
+    errors: {},
+    success: false
   }
 
   state = {
@@ -52,16 +56,21 @@ class ReplaceForgottenPassword extends Component<Props> {
   }
 
   render() {
-    let {keyIsValid, errors} = this.props
+    let {keyIsValid, errors, success} = this.props
     errors = {
       password: errors.password || [],
       password_confirmation: errors.password_confirmation || []
     }
 
     if(!keyIsValid) {
+      return <NotFound />
+    }
+    else if(success) {
       return (
-        <ErrorMessage
-          message="This link does not seem to exist"
+        <SuccessMessage
+          message="Successfully replaced password"
+          linkText="Click here to login"
+          linkUrl="/login"
         />
       )
     }

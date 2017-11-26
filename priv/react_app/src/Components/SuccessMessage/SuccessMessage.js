@@ -1,11 +1,15 @@
 import React from 'react'
 import Message from '../Message'
 
+type Props = {
+  message: string,
+  linkUrl: string,
+  linkText: string
+}
+
 /**
  * Higher order component for delivering a successful message
  */
-const SuccessMessage = (props) => {
+export const SuccessMessage = (props: Props) => {
   return <Message type='success' {...props} />
 }
-
-export default SuccessMessage

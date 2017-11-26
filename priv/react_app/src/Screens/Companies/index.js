@@ -1,11 +1,12 @@
 import Companies from './Companies'
 import { connect } from 'react-redux'
 import {Actions} from './../../Store'
+import { State } from '../../Store/reducers/index';
 
-const mapStateToProps = (state, props) => {
+const mapStateToProps = (state: State, props) => {
   return {
     companies: state.entities.companies,
-    fetching: state.fetching.companies,
+    fetching: state.api.companies.fetching
   }
 }
 
