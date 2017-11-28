@@ -16,4 +16,24 @@ defmodule Nexpo.ChangesetView do
     # as a JSON object. So we just pass it forward.
     %{type: "error", errors: translate_errors(changeset)}
   end
+
+  @apidoc """
+  @apiDefine UnprocessableEntity
+
+  @apiError (UnprocessableEntity 422) {Object} errors                        Object containing errors
+  @apiError (UnprocessableEntity 422) {String[]} errors.[unprocessable-key]  Array of String error messages
+
+  @apiErrorExample {json} UnprocessableEntity
+  HTTP 422 Unprocessable Entity
+  {
+    "errors": {
+      "title": [
+        "can't be blank"
+      ]
+    }
+  }
+  """
+
+  @apidoc
+
 end
