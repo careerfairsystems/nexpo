@@ -84,6 +84,7 @@ class ReplaceForgottenPassword extends Component<Props> {
           value={this.state.password}
           onChange={(e, val) => this._setPassword(val)}
           errorText={errors.password.length > 0 ? errors.password[0] : ''}
+          onKeyPress={event => event.key === 'Enter' ? this._sendQueryToBackend() : null}
         />
         <TextField
           floatingLabelText="Confirm new password"
@@ -91,6 +92,7 @@ class ReplaceForgottenPassword extends Component<Props> {
           value={this.state.password_confirmation}
           onChange={(e, val) => this._setPasswordConfirmation(val)}
           errorText={errors.password_confirmation.length > 0 ? errors.password_confirmation[0] : ''}
+          onKeyPress={event => event.key === 'Enter' ? this._sendQueryToBackend() : null}
         />
         <br/>
         <RaisedButton

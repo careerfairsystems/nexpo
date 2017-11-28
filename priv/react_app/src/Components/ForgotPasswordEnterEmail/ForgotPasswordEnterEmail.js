@@ -54,6 +54,7 @@ class ForgotPasswordEnterEmail extends Component<Props> {
           type='email'
           value={this.state.email}
           onChange={(e, val) => this._updateEmail(val)}
+          onKeyPress={event => event.key === 'Enter' ? this._queryBackend() : null}
         />
 
         <br />
