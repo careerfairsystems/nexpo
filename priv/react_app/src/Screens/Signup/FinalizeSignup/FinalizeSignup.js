@@ -46,7 +46,9 @@ class FinalizeSignup extends Component<Props, State> {
   }
 
   _handleKeyPressOnTextField = (event) => {
-    event.key === 'Enter' ? this._signup() : null
+    if(event.key === 'Enter') {
+      this._signup()
+    }
   }
 
   _fetchCurrentSignup = () => {
