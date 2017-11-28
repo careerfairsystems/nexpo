@@ -42,8 +42,8 @@ defmodule Nexpo.Router do
   scope "/api", Nexpo do
     pipe_through :api
 
-    resources "/companies", CompanyController, only: [:index, :show]
-    resources "/categories", CompanyCategoryController, only: [:index, :show]
+     resources "/companies", CompanyController, only: [:index, :show]
+     resources "/categories", CompanyCategoryController, only: [:index, :show, :create]
 
     post "/login", SessionController, :create
     if Mix.env != :prod do

@@ -8,13 +8,13 @@ defmodule Nexpo.CompanyCategoryController do
   @apiGroup Category
 
   @apiSuccessExample {json} Success
-    HTTP 200 Ok
-    {
-      "data": [
-        {
-          "id": 1,
-          "title": "Example category",
-          "attributes": []
+  HTTP 200 Ok
+  {
+    "data": [
+      {
+        "id": 1,
+        "title": "Example category",
+        "attributes": []
         },
         {
           "id": 2,
@@ -24,6 +24,7 @@ defmodule Nexpo.CompanyCategoryController do
       ]
     }
 
+  @apiUse NotFoundError
   @apiUse InternalServerError
   """
   def index(conn, _params) do
@@ -31,26 +32,42 @@ defmodule Nexpo.CompanyCategoryController do
     render(conn, "index.json", company_categories: company_categories)
   end
 
-  # def create(conn, company_category_params) do
-  #   changeset = CompanyCategory.changeset(%CompanyCategory{}, company_category_params)
-  #   case Repo.insert(changeset) do
-  #     {:ok, company_category} ->
-  #       conn
-  #       |> put_status(:created)
-  #       |> put_resp_header("location", company_category_path(conn, :show, company_category))
-  #       |> render("show.json", company_category: company_category)
-  #     {:error, changeset} ->
-  #       conn
-  #       |> put_status(:unprocessable_entity)
-  #       |> render(Nexpo.ChangesetView, "error.json", changeset: changeset)
-  #   end
-  # end
+  @apidoc """
+  @api {POST} /categories/ Create category
+  @apiName Create Category
+  @apiGroup Category
+
+  @apiParam {String} title    Title
+
+  @apiSuccess (Created 201) {Number} id       Internal ID
+  @apiSuccess (Created 201) {String} title    Title
+
+  @apiUse UnprocessableEntity
+  @apiUse InternalServerError
+  """
+  def create(conn, company_category_params) do
+    changeset = CompanyCategory.changeset(%CompanyCategory{}, company_category_params)
+    case Repo.insert(changeset) do
+      {:ok, company_category} ->
+        conn
+        |> put_status(:created)
+        |> put_resp_header("location", company_category_path(conn, :show, company_category))
+        |> render("show.json", company_category: company_category)
+      {:error, changeset} ->
+        conn
+        |> put_status(:unprocessable_entity)
+        |> render(Nexpo.ChangesetView, "error.json", changeset: changeset)
+    end
+  end
 
   @apidoc """
   @api {GET} /categories/:id Get category
   @apiGroup Category
 
   @apiParam {Number} id ID of the category
+
+  @apiSuccess (OK 200) {Number} id       Internal ID
+  @apiSuccess (OK 200) {String} title    Title
 
   @apiSuccessExample {json} Success
     HTTP 200 Ok
