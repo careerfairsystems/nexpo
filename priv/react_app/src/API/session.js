@@ -1,4 +1,5 @@
 import {handleHttpResponse} from './index'
+import UnreachableCodeReachedError from './../Errors/UnreachableCodeReachedError'
 export default {
 
   /**
@@ -20,7 +21,7 @@ export default {
    */
   development_login: ({email}) => {
     if(process.env.NODE_ENV === 'production') {
-      throw Error('Development login reached in production')
+      throw new UnreachableCodeReachedError('Development login reached in production')
     }
     else {
       return fetch(`/api/development_login`, {
@@ -32,5 +33,33 @@ export default {
       })
       .then(handleHttpResponse)
     }
+  },
+
+  /**
+   *
+   */
+  forgot_password: ({email}) => {
+    return fetch(`/api/password/forgot`, {
+      method: 'POST',
+      body: JSON.stringify({email}),
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      })
+    }).then(handleHttpResponse)
+  },
+
+  verify_forgot_password_key: ({key}) => {
+    return fetch(`/api/password/forgot/${key}`).then(handleHttpResponse)
+  },
+
+  replace_forgotten_password: ({key, password, password_confirmation}) => {
+    return fetch(`/api/password/new/${key}`, {
+      method: 'POST',
+      body: JSON.stringify({password, password_confirmation}),
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      })
+    })
+    .then(handleHttpResponse)
   }
 }

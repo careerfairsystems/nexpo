@@ -6,6 +6,14 @@ import Normalize from '../../normalizr/normalize';
 import { schema, normalize } from 'normalizr';
 import {mergeDeepRight} from 'ramda'
 
+export type EntitiesState = {
+  companies: {},
+  attributes: {},
+  categories: {},
+  entries: {},
+  users: {}
+}
+
 let initialState = {
   companies: {},
   attributes: {},
@@ -14,7 +22,7 @@ let initialState = {
   users: {}
 }
 
-const entities = (state = initialState, action) => {
+export const EntitiesReducer = (state = initialState, action): EntitiesState => {
 
   let normalized, user
 
@@ -32,5 +40,3 @@ const entities = (state = initialState, action) => {
       return state;
   }
 }
-
-export default entities;

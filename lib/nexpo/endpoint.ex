@@ -13,8 +13,9 @@ defmodule Nexpo.Endpoint do
 
   plug Plug.Static,
     at: "/",
-    from: "priv/react_app/build/",
-    only: ~w(index.html favicon.ico static)
+    from: "priv/static/",
+    gzip: true,
+    only: ~w(index.html favicon.ico static service-worker.js)
 
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.

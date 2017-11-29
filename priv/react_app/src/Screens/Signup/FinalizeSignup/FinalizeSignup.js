@@ -45,6 +45,12 @@ class FinalizeSignup extends Component<Props, State> {
     this._fetchCurrentSignup()
   }
 
+  _handleKeyPressOnTextField = (event) => {
+    if(event.key === 'Enter') {
+      this._signup()
+    }
+  }
+
   _fetchCurrentSignup = () => {
     const { signupKey } = this.props
     API.signup.get_current_signup(signupKey)
@@ -72,6 +78,7 @@ class FinalizeSignup extends Component<Props, State> {
         disabled
         type='text'
         onChange={(event, val) => this.setState({email: val})}
+        onKeyPress={this._handleKeyPressOnTextField}
       />
     )
   }
@@ -85,6 +92,7 @@ class FinalizeSignup extends Component<Props, State> {
         value={password || ''}
         type='password'
         onChange={(event, val) => this.setState({password: val})}
+        onKeyPress={this._handleKeyPressOnTextField}
       />
     )
   }
@@ -101,6 +109,7 @@ class FinalizeSignup extends Component<Props, State> {
         value={password_confirmation || ''}
         type='password'
         onChange={(event, val) => this.setState({password_confirmation: val})}
+        onKeyPress={this._handleKeyPressOnTextField}
       />
     )
   }
@@ -113,6 +122,7 @@ class FinalizeSignup extends Component<Props, State> {
         errorText={errors.first_name ? errors.first_name[0] : null}
         value={first_name || ''}
         onChange={(event, val) => this.setState({first_name: val})}
+        onKeyPress={this._handleKeyPressOnTextField}
       />
     )
   }
@@ -125,6 +135,7 @@ class FinalizeSignup extends Component<Props, State> {
         errorText={errors.last_name ? errors.last_name[0] : null}
         value={last_name || ''}
         onChange={(event, val) => this.setState({last_name: val})}
+        onKeyPress={this._handleKeyPressOnTextField}
       />
     )
   }

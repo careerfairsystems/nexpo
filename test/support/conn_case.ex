@@ -48,19 +48,14 @@ defmodule Nexpo.ConnCase do
     # Defines default parameters for tests
     case tags[:logged_in] do
       true ->
-        user = create_user()
+        user = Nexpo.Factory.create_user()
 
-        {status, jwt, _decoded_jwt} = Guardian.encode_and_sign(user)
+        {_status, jwt, _decoded_jwt} = Guardian.encode_and_sign(user)
         conn = Plug.Conn.put_req_header(conn, "authorization", "Bearer #{jwt}")
 
         {:ok, conn: conn, user: user}
       _ ->
         {:ok, conn: conn}
     end
-  end
-
-  defp create_user do
-    params = Nexpo.Factory.params_for(:user)
-    Nexpo.User.changeset(%Nexpo.User{}, params) |> Nexpo.Repo.insert!
   end
 end

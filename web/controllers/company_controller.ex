@@ -119,4 +119,6 @@ defmodule Nexpo.CompanyController do
   #   |> put_flash(:info, "Company deleted successfully.")
   #   |> redirect(to: company_path(conn, :index))
   # end
+
+  @apidoc
 end

@@ -85,7 +85,7 @@ defmodule Nexpo.SignupController do
   @apiParam {String}  last_name              Last name
 
   @apiSuccessExample {json} Success
-    HTTP 200 Created
+    HTTP 200 OK
     {
       "data": {
         "id": 1,
@@ -122,5 +122,7 @@ defmodule Nexpo.SignupController do
         |> render(ErrorView, "404.json")
     end
   end
+
+  @apidoc
 
 end

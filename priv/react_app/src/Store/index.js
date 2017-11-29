@@ -3,7 +3,7 @@
  */
 
 import { createStore, combineReducers, applyMiddleware } from 'redux'
-import reducers from './reducers'
+import reducers, {State} from './reducers'
 import thunk from 'redux-thunk'
 
 import Actions from './actions'
@@ -38,5 +38,6 @@ const getStore = () => {
 export {
   getStore,
   Actions,
-  actionTypes
+  actionTypes,
+  State
 }

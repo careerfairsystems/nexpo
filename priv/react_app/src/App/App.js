@@ -24,6 +24,7 @@ import Company from './../Screens/Company'
 import NotFound from './../Screens/NotFound'
 import Login from './../Screens/Login'
 import Signup from './../Screens/Signup'
+import ForgotPassword from './../Screens/ForgotPassword'
 
 import InvisibleLink from './../Components/InvisibleLink'
 import HtmlTitle from './../Components/HtmlTitle'
@@ -95,6 +96,7 @@ class App extends Component {
           <PrivateRoute path="/companies/:id" component={Company} />
           <Route path="/login" component={Login} />
           <Route path="/signup" component={Signup} />
+          <Route path="/forgot-password" component={ForgotPassword} />
           <Route component={NotFound} />
         </Switch>
       </div>

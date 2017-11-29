@@ -2,12 +2,23 @@ import {actionTypes} from './../../../Store'
 import {setJwt, deleteJwt} from './../../../Util/JwtHelper'
 import { mergeDeepRight } from 'ramda'
 
-const initialState = {
-  error: false,
-  isLoggedIn: false
+export type AuthState = {
+  error: boolean,
+  isLoggedIn: boolean,
+  forgotPassword: {
+    validKey: boolean
+  }
 }
 
-const Auth = (state = initialState, action) => {
+const initialState = {
+  error: false,
+  isLoggedIn: false,
+  forgotPassword: {
+    validKey: false
+  },
+}
+
+export const AuthReducer = (state = initialState, action): AuthState => {
   switch(action.type) {
 
     case actionTypes.LOGIN_SUCCESS:
@@ -26,9 +37,17 @@ const Auth = (state = initialState, action) => {
       deleteJwt()
       return mergeDeepRight(state, {isLoggedIn: false})
 
+    case actionTypes.VERIFY_FORGOT_PASSWORD_KEY_SUCCESS:
+      return mergeDeepRight(state, {
+        forgotPassword: {validKey: true}
+      })
+
+    case actionTypes.VERIFY_FORGOT_PASSWORD_KEY_FAILURE:
+      return mergeDeepRight(state, {
+        forgotPassword: {validKey: false}
+      })
+
     default:
       return state
   }
 }
-
-export default Auth;

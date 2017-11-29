@@ -49,4 +49,7 @@ defmodule Nexpo.ErrorView do
       error: message
     }
   end
+
+  @apidoc
+
 end

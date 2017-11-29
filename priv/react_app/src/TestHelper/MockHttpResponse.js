@@ -2,7 +2,9 @@
  * Mocks response for fetch calls
  */
 
-export const mockHttpResponse = ({status, body}) => {
+const defaultBody = {defaultBodyUsed: true}
+
+export const mockHttpResponse = ({status, body = defaultBody}) => {
   // Build the response we want
   const response = new window.Response(JSON.stringify(body), {
     status: status,

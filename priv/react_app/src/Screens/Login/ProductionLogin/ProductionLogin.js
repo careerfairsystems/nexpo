@@ -95,6 +95,7 @@ class ProductionLogin extends Component {
 
         <div className="links">
           <Link to="/signup">Sign up</Link>
+          <Link to="/forgot-password">Forgot password</Link>
         </div>
 
         <Snackbar

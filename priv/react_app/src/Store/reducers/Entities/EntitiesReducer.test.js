@@ -3,8 +3,8 @@
 *   See http://redux.js.org/docs/recipes/WritingTests.html for writing action and reducer tests.
 */
 import {Actions, actionTypes} from './../../../Store'
-import reducer from './EntitiesReducer'
 import testData from './entitiesTestData'
+import { EntitiesReducer } from './EntitiesReducer';
 
 describe('Entities reducer', () => {
 	it('should return the empty initial state', () => {
@@ -15,11 +15,11 @@ describe('Entities reducer', () => {
       entries: {},
       users: {}
     }
-		expect(reducer(undefined, {})).toEqual(initialState)
+		expect(EntitiesReducer(undefined, {})).toEqual(initialState)
 	})
 
 	it('should handle FETCH_COMPANIES_SUCCESS', () => {
-    const state = reducer(undefined, Actions.companies.getAllCompaniesSuccess(testData.companies))
+    const state = EntitiesReducer(undefined, Actions.companies.getAllCompaniesSuccess(testData.companies))
 
 		expect(state).toHaveProperty('companies')
 		expect(state).toHaveProperty('attributes')
@@ -53,7 +53,7 @@ describe('Entities reducer', () => {
   it("should handle fetch current user success", () => {
     const testUser = { id: 1, name: 'Test User' }
     const action = Actions.users.getCurrentUserSuccess(testUser)
-    const state = reducer(undefined, action)
+    const state = EntitiesReducer(undefined, action)
 
     expect(state).toMatchObject({
       users: {

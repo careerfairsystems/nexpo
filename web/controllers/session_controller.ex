@@ -26,7 +26,7 @@ defmodule Nexpo.SessionController do
   def create(conn, %{"email" => email, "password" => password}) do
     case User.authenticate(%{email: email, password: password}) do
       {:ok, user} ->
-        {status, jwt, _decoded_jwt} = Guardian.encode_and_sign(user)
+        {_status, jwt, _decoded_jwt} = Guardian.encode_and_sign(user)
         session = %{ jwt: jwt }
         conn
         |> put_status(200)
@@ -72,5 +72,7 @@ defmodule Nexpo.SessionController do
     |> put_status(401)
     |> render(ErrorView, "401.json")
   end
+
+  @apidoc
 
 end

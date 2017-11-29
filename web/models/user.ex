@@ -9,10 +9,22 @@ defmodule Nexpo.User do
     field :hashed_password, :string
     field :password, :string, virtual: true
     field :signup_key, :string
+    field :forgot_password_key, :string
+    field :forgot_password_time, :naive_datetime
     field :first_name, :string
     field :last_name, :string
 
     timestamps()
+  end
+
+  def replace_forgotten_password_changeset(user, params \\ %{}) do
+    user
+    |> cast(params, [:password])
+    |> validate_required(:password)
+    |> validate_length(:password, min: 6)
+    |> validate_confirmation(:password, required: true)
+    |> hash_password(params)
+    |> put_change(:forgot_password_key, nil)
   end
 
   def initial_signup_changeset(%Nexpo.User{} = user, params \\ %{}) do
@@ -42,11 +54,16 @@ defmodule Nexpo.User do
     |> cast(params, [:password, :first_name, :last_name])
     |> validate_required(:password)
     |> validate_length(:password, min: 6)
-    |> validate_confirmation(:password)
+    |> validate_confirmation(:password, required: true)
     |> hash_password(params)
     |> put_change(:signup_key, nil)
     |> validate_required([:email, :hashed_password, :first_name, :last_name])
     |> unique_constraint(:email)
+  end
+
+  def forgot_password_changeset(user, params \\ %{}) do
+    changeset(user, params)
+    |> generate_forgot_password_key()
   end
 
   def changeset(struct, params \\ %{}) do
@@ -71,6 +88,12 @@ defmodule Nexpo.User do
 
   defp generate_signup_key(changeset) do
     changeset |> put_change(:signup_key, random_hash(150))
+  end
+
+  defp generate_forgot_password_key(changeset) do
+    changeset
+    |> put_change(:forgot_password_key, random_hash(150))
+    |> put_change(:forgot_password_time, DateTime.utc_now)
   end
 
   defp random_hash(length) do
@@ -128,4 +151,20 @@ defmodule Nexpo.User do
     end
   end
 
+  def forgot_password_key_valid(user) do
+    time_key = user.forgot_password_time
+    time_key = try do
+      time_key |> DateTime.to_unix
+    rescue
+      FunctionClauseError ->
+        DateTime.from_naive!(time_key, "Etc/UTC") |> DateTime.to_unix
+    end
+
+    time_now = DateTime.utc_now |> DateTime.to_unix
+    time_diff = time_now - time_key # in seconds
+    case time_diff do
+      x when x < 60 * 60 -> true # on hour
+      _ -> false
+    end
+  end
 end
