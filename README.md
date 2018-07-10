@@ -241,7 +241,7 @@ The frontend is configured with [Create React App](https://github.com/facebookin
 
 If you at any time need to reset your environment do the following: (NOTE THAT THIS WILL DROP ALL YOUR LOCAL DATA!)
 1. Navigate to the project root using the terminal
-2. Execute ```make fresh-install``` 
+2. Execute ```make fresh-install-linux``` 
 3. Grab a cup of coffee! 
 4. Start the stack with ```npm run dev```
 
