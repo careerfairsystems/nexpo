@@ -19,7 +19,7 @@ import './Companies.css'
  */
 class Companies extends Component {
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.getAllCompanies()
   }
 
