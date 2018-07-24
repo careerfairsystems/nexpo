@@ -48,6 +48,7 @@
     "lint": "eslint src",
     "flow": "flow",
     "flow-typed": "flow-typed install",
+    "flow coverage": "flow coverage",
     "build": "npm run build-css && react-scripts build",
     "test": "npm run test-ci",
     "test-js": "react-scripts test --env=jsdom",
