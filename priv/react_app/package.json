@@ -4,7 +4,6 @@
   "private": true,
   "proxy": "http://localhost:4000",
   "dependencies": {
-    "enzyme": "^2.9.1",
     "material-ui": "^0.18.4",
     "node-sass-chokidar": "^0.0.3",
     "normalizr": "^3.2.4",
@@ -23,8 +22,21 @@
     "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
+    "babel-eslint": "^8.2.6",
+    "enzyme": "^2.9.1",
+    "eslint": "^5.2.0",
+    "eslint-config-airbnb": "^17.0.0",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-flowtype": "^2.50.0",
+    "eslint-plugin-import": "^2.13.0",
+    "eslint-plugin-jsx-a11y": "^6.1.1",
+    "eslint-plugin-react": "^7.10.0",
+    "flow-bin": "^0.77.0",
+    "flow-typed": "^2.5.1",
+    "jest": "^23.4.1",
     "jest-cli": "^21.2.1",
     "nock": "^9.4.2",
+    "prettier-eslint": "^8.8.2",
     "react-scripts": "1.0.7",
     "redux-mock-store": "^1.5.3"
   },
@@ -33,13 +45,17 @@
     "watch-css": "npm run build-css && node-sass-chokidar --include-path ./src src/ -o src/ --watch --recursive",
     "start-js": "react-scripts start",
     "start": "npm-run-all -p watch-css start-js",
+    "lint": "eslint src",
+    "flow": "flow",
+    "flow-typed": "flow-typed install",
     "build": "npm run build-css && react-scripts build",
     "test": "npm run test-ci",
     "test-js": "react-scripts test --env=jsdom",
     "test-watch": "npm-run-all -p watch-css test-js",
     "test-ci": "npm run build-css && CI=true npm run test-js",
     "test-coverage": "npm run test-js -- --coverage",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "postinstall": "flow-typed install"
   },
   "engines": {
     "node": "6.11.4",
