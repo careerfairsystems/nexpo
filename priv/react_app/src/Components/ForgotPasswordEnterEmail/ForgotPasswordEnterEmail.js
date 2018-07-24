@@ -3,8 +3,8 @@ import './ForgotPasswordEnterEmail.css'
 import PropTypes from 'prop-types'
 import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton';
-import { SuccessMessage } from '../SuccessMessage/SuccessMessage';
 import { Link } from 'react-router-dom'
+import { SuccessMessage } from '../SuccessMessage/SuccessMessage';
 
 type Props = {
   callBackend: boolean,

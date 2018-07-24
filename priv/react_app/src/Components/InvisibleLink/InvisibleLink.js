@@ -9,7 +9,7 @@ import PropTypes from 'prop-types'
 
 function InvisibleLink({to, children}) {
   const style = {
-    textDecoration: "none"
+    textDecoration: 'none'
   }
   return <Link style={style} to={to}>{children}</Link>
 }

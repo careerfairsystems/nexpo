@@ -54,15 +54,13 @@ class ProductionLogin extends Component {
     )
   }
 
-  _renderLoginButton = () => {
-    return (
+  _renderLoginButton = () => (
       <RaisedButton
         label="Login"
         primary
         onTouchTap={() => this._login()}
       />
     )
-  }
 
   render() {
     const { error, isLoggedIn } = this.props

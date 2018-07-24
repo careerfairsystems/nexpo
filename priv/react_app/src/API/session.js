@@ -1,20 +1,19 @@
 import {handleHttpResponse} from './index'
-import UnreachableCodeReachedError from './../Errors/UnreachableCodeReachedError'
+import UnreachableCodeReachedError from '../Errors/UnreachableCodeReachedError'
+
 export default {
 
   /**
    * Tries to login
    */
-  login: ({email, password}) => {
-    return fetch(`/api/login`, {
+  login: ({email, password}) => fetch('/api/login', {
       method: 'POST',
       body: JSON.stringify({email, password}),
       headers: new Headers({
         'Content-Type': 'application/json'
       })
     })
-    .then(handleHttpResponse)
-  },
+    .then(handleHttpResponse),
 
   /**
    * Allows development login, only while not in production
@@ -24,7 +23,7 @@ export default {
       throw new UnreachableCodeReachedError('Development login reached in production')
     }
     else {
-      return fetch(`/api/development_login`, {
+      return fetch('/api/development_login', {
         method: 'POST',
         body: JSON.stringify({email}),
         headers: new Headers({
@@ -38,22 +37,17 @@ export default {
   /**
    *
    */
-  forgot_password: ({email}) => {
-    return fetch(`/api/password/forgot`, {
+  forgot_password: ({email}) => fetch('/api/password/forgot', {
       method: 'POST',
       body: JSON.stringify({email}),
       headers: new Headers({
         'Content-Type': 'application/json'
       })
-    }).then(handleHttpResponse)
-  },
+    }).then(handleHttpResponse),
 
-  verify_forgot_password_key: ({key}) => {
-    return fetch(`/api/password/forgot/${key}`).then(handleHttpResponse)
-  },
+  verify_forgot_password_key: ({key}) => fetch(`/api/password/forgot/${key}`).then(handleHttpResponse),
 
-  replace_forgotten_password: ({key, password, password_confirmation}) => {
-    return fetch(`/api/password/new/${key}`, {
+  replace_forgotten_password: ({key, password, password_confirmation}) => fetch(`/api/password/new/${key}`, {
       method: 'POST',
       body: JSON.stringify({password, password_confirmation}),
       headers: new Headers({
@@ -61,5 +55,4 @@ export default {
       })
     })
     .then(handleHttpResponse)
-  }
 }

@@ -1,5 +1,5 @@
-import {Actions, actionTypes} from './../../../Store'
-import API from './../../../API'
+import {Actions, actionTypes} from '../..'
+import API from '../../../API'
 
 export function logout() {
   return {
@@ -7,22 +7,16 @@ export function logout() {
   }
 }
 
-export const loginFailure = () => {
-  return {
+export const loginFailure = () => ({
     type: actionTypes.LOGIN_FAILURE
-  }
-}
+  })
 
-export const loginSuccess = (jwt: string) => {
-  return {
+export const loginSuccess = (jwt: string) => ({
     type: actionTypes.LOGIN_SUCCESS,
     jwt
-  }
-}
+  })
 
-export const login = ({email, password}) => {
-  return dispatch => {
-    return API.session.login({email, password})
+export const login = ({email, password}) => dispatch => API.session.login({email, password})
     .then(res => {
       const jwt = res.data.jwt
       dispatch(loginSuccess(jwt))
@@ -31,12 +25,8 @@ export const login = ({email, password}) => {
     .catch(err => {
       dispatch(loginFailure())
     })
-  }
-}
 
-export const development_login = (email) => {
-  return dispatch => {
-    return API.session.development_login({email})
+export const development_login = (email) => dispatch => API.session.development_login({email})
     .then(res => {
       const jwt = res.data.jwt
       dispatch(loginSuccess(jwt))
@@ -45,5 +35,3 @@ export const development_login = (email) => {
     .catch(err => {
       dispatch(loginFailure())
     })
-  }
-}

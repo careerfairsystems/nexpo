@@ -3,8 +3,8 @@
  */
 
 import { createStore, combineReducers, applyMiddleware } from 'redux'
-import reducers, {State} from './reducers'
 import thunk from 'redux-thunk'
+import reducers, {State} from './reducers'
 
 import Actions from './actions'
 import actionTypes from './ActionTypes'
@@ -13,11 +13,11 @@ import actionTypes from './ActionTypes'
  * Manage creation of store
  */
 
-let store = undefined
+let store
 
 const middlewares = [thunk]
 if(process.env.NODE_ENV === 'development') {
-  const { logger } = require(`redux-logger`);
+  const { logger } = require('redux-logger');
   middlewares.push(logger)
 }
 

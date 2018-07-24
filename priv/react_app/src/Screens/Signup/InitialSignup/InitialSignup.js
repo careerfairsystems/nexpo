@@ -43,15 +43,13 @@ class InitialSignup extends Component {
     )
   }
 
-  _renderSignupButton = () => {
-    return (
+  _renderSignupButton = () => (
       <RaisedButton
         label="Sign up"
         primary
         onTouchTap={() => this._signup()}
       />
     )
-  }
 
   render() {
     const { finished } = this.state

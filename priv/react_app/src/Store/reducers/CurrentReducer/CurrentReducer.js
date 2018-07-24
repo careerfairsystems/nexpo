@@ -2,14 +2,14 @@
  * Defines a reducer updates the state based on the action created after a call to the server.
  */
 
-import {actionTypes} from './../../../Store'
 import {mergeDeepRight} from 'ramda'
+import {actionTypes} from '../..'
 
 export type CurrentState = {
   user: number
 }
 
-let initialState = {
+const initialState = {
   user: undefined
 }
 

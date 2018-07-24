@@ -10,7 +10,7 @@ type Props = {
   sendNewPasswordToBackend: func,
   hashKey: string,
   verifyKey: func,
-  keyIsValid: bool,
+  keyIsValid: boolean,
   errors: {
     password: string[],
     password_confirmation: string[]
@@ -65,7 +65,7 @@ class ReplaceForgottenPassword extends Component<Props> {
     if(!keyIsValid) {
       return <NotFound />
     }
-    else if(success) {
+    if(success) {
       return (
         <SuccessMessage
           message="Successfully replaced password"

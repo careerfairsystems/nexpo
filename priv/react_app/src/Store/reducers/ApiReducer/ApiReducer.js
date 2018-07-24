@@ -2,9 +2,9 @@
  * Defines a reducer updates the state based on the action created after a call to the server.
  */
 
-import { actionTypes } from './../../../Store'
 import { mergeDeepRight } from 'ramda'
 import { Action } from 'redux';
+import { actionTypes } from '../..'
 import { ReplaceForgottenPasswordFailureAction } from '../../actions/Accounts/AccountsActions';
 
 type ApiStatus = {

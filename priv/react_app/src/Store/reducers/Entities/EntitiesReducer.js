@@ -1,10 +1,10 @@
 /**
  * Defines a reducer updates the state based on the action created after a call to the server.
  */
-import {actionTypes} from './../../../Store'
-import Normalize from '../../normalizr/normalize';
 import { schema, normalize } from 'normalizr';
 import {mergeDeepRight} from 'ramda'
+import {actionTypes} from '../..'
+import Normalize from '../../normalizr/normalize';
 
 export type EntitiesState = {
   companies: {},
@@ -14,7 +14,7 @@ export type EntitiesState = {
   users: {}
 }
 
-let initialState = {
+const initialState = {
   companies: {},
   attributes: {},
   categories: {},
@@ -24,7 +24,7 @@ let initialState = {
 
 export const EntitiesReducer = (state = initialState, action): EntitiesState => {
 
-  let normalized, user
+  let normalized; let user
 
   switch(action.type) {
     case actionTypes.FETCH_COMPANIES_SUCCESS:

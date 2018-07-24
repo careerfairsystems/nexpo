@@ -10,6 +10,4 @@ type Props = {
 /**
  * Higher order component for delivering a successful message
  */
-export const SuccessMessage = (props: Props) => {
-  return <Message type='success' {...props} />
-}
+export const SuccessMessage = (props: Props) => <Message type='success' {...props} />

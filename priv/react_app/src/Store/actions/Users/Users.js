@@ -1,24 +1,18 @@
-import {actionTypes} from './../../../Store'
-import API from './../../../API'
+import {actionTypes} from '../..'
+import API from '../../../API'
 
-export const getCurrentUserStart = () => {
-  return {
+export const getCurrentUserStart = () => ({
     type: actionTypes.FETCH_CURRENT_USER
-  }
-}
+  })
 
-export const getCurrentUserSuccess = (user) => {
-  return {
+export const getCurrentUserSuccess = (user) => ({
     type: actionTypes.FETCH_CURRENT_USER_SUCCESS,
     user
-  }
-}
+  })
 
-export const getCurrentUserFailure = () => {
-  return {
+export const getCurrentUserFailure = () => ({
     type: actionTypes.FETCH_CURRENT_USER_FAILURE
-  }
-}
+  })
 
 export function getCurrentUser() {
   return dispatch => {

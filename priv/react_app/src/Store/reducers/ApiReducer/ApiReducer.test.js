@@ -2,12 +2,12 @@
 *   This file tests the reducers handling incoming actions.
 *   See http://redux.js.org/docs/recipes/WritingTests.html for writing action and reducer tests.
 */
-import { Actions, actionTypes } from './../../../Store'
+import { Actions, actionTypes } from '../..'
 import { ApiReducer, ApiState } from './ApiReducer';
 import { forgot_password_request, forgot_password_success, replace_forgotten_password_request, replace_forgotten_password_success, replace_forgotten_password_failure } from '../../actions/Accounts/AccountsActions';
 
 
-it("should set the correct initial state", () => {
+it('should set the correct initial state', () => {
   const initialState: ApiState = {
     companies: {
       fetching: false, errors: undefined, success: false,
@@ -32,8 +32,8 @@ it("should set the correct initial state", () => {
   expect(state).toEqual(initialState)
 })
 
-describe("fetch companies", () => {
-  it("should handle request start", () => {
+describe('fetch companies', () => {
+  it('should handle request start', () => {
     const startState: ApiState = {
       companies: {
         fetching: false,
@@ -52,7 +52,7 @@ describe("fetch companies", () => {
     expect(state).toMatchObject(expected)
   })
 
-  it("should handle success", () => {
+  it('should handle success', () => {
     const startState: ApiState = {
       companies: {
         fetching: true,
@@ -71,7 +71,7 @@ describe("fetch companies", () => {
     expect(state).toMatchObject(expected)
   })
 
-  it("should handle failure", () => {
+  it('should handle failure', () => {
     const startState: ApiState = {
       companies: {
         fetching: true,
@@ -91,8 +91,8 @@ describe("fetch companies", () => {
   })
 })
 
-describe("forgot_password action", () => {
-  it("should handle request action", () => {
+describe('forgot_password action', () => {
+  it('should handle request action', () => {
     const startState: ApiState = {
       forgot_password: {fetching: false, errors: undefined, success: true}
     }
@@ -103,7 +103,7 @@ describe("forgot_password action", () => {
     expect(state).toMatchObject(expected)
   })
 
-  it("should handle success action", () => {
+  it('should handle success action', () => {
     const startState: ApiState = {
       forgot_password: {fetching: true, errors: {}, success: false}
     }
@@ -115,8 +115,8 @@ describe("forgot_password action", () => {
   })
 })
 
-describe("replace forgotten password action", () => {
-  it("should handle request action", () => {
+describe('replace forgotten password action', () => {
+  it('should handle request action', () => {
     const startState: ApiState = {
       replace_password: {
         fetching: false,
@@ -135,7 +135,7 @@ describe("replace forgotten password action", () => {
     expect(state).toMatchObject(expected)
   })
 
-  it("should handle success action", () => {
+  it('should handle success action', () => {
     const startState: ApiState = {
       replace_password: {
         fetching: true,
@@ -154,7 +154,7 @@ describe("replace forgotten password action", () => {
     expect(state).toMatchObject(expected)
   })
 
-  it("should handle failure action", () => {
+  it('should handle failure action', () => {
     const startState: ApiState = {
       replace_password: {
         fetching: true,
@@ -169,7 +169,7 @@ describe("replace forgotten password action", () => {
     const expected: ApiState = {
       replace_password: {
         fetching: false,
-        errors: errors,
+        errors,
         success: false
       }
     }

@@ -1,30 +1,30 @@
-import {Actions, actionTypes} from './../../../Store'
-import {mockHttpResponse, createMockStore} from './../../../TestHelper'
+import {Actions, actionTypes} from '../..'
+import {mockHttpResponse, createMockStore} from '../../../TestHelper'
 
-describe("login success", () => {
+describe('login success', () => {
 
-  it("should create an action with a jwt", () => {
-    const jwt = "random string"
+  it('should create an action with a jwt', () => {
+    const jwt = 'random string'
     const expectedAction = {
       type: actionTypes.LOGIN_SUCCESS,
-      jwt: jwt
+      jwt
     }
     expect(Actions.auth.loginSuccess(jwt)).toEqual(expectedAction)
   })
 
 })
 
-describe("login failure", () => {
+describe('login failure', () => {
 
-  it("should create an action without a payload", () => {
+  it('should create an action without a payload', () => {
     const expectedAction = { type: actionTypes.LOGIN_FAILURE }
     expect(Actions.auth.loginFailure()).toEqual(expectedAction)
   })
 
 })
 
-describe("logout", () => {
-  it("should create the correct action", () => {
+describe('logout', () => {
+  it('should create the correct action', () => {
     const expectedAction = { type: actionTypes.LOGOUT }
     expect(Actions.auth.logout()).toEqual(expectedAction)
   })
@@ -35,9 +35,9 @@ describe("logout", () => {
  * /Joel
  */
 
-describe("login action", () => {
+describe('login action', () => {
 
-  it("should call success action and get the logged in user", () => {
+  it('should call success action and get the logged in user', () => {
     const jwt = 'random-string'
     const expectedActions = [
       Actions.auth.loginSuccess(jwt),
@@ -45,7 +45,7 @@ describe("login action", () => {
     ]
 
     const httpResponse = {
-      data: { jwt: jwt }
+      data: { jwt }
     }
     mockHttpResponse({status: 200, body: httpResponse})
 
@@ -58,7 +58,7 @@ describe("login action", () => {
     })
   })
 
-  it("calls login failure on failure", () => {
+  it('calls login failure on failure', () => {
     const expectedActions = [
       Actions.auth.loginFailure()
     ]
@@ -75,9 +75,9 @@ describe("login action", () => {
 
 })
 
-describe("development login action", () => {
+describe('development login action', () => {
 
-  it("should call success action and get the logged in user", () => {
+  it('should call success action and get the logged in user', () => {
     const jwt = 'random-string'
     const expectedActions = [
       Actions.auth.loginSuccess(jwt),
@@ -85,7 +85,7 @@ describe("development login action", () => {
     ]
 
     const httpResponse = {
-      data: { jwt: jwt }
+      data: { jwt }
     }
     mockHttpResponse({status: 200, body: httpResponse})
 
@@ -98,7 +98,7 @@ describe("development login action", () => {
     })
   })
 
-  it("calls login failure on failure", () => {
+  it('calls login failure on failure', () => {
     const expectedActions = [
       Actions.auth.loginFailure()
     ]

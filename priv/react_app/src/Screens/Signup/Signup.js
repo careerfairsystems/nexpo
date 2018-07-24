@@ -11,7 +11,7 @@ import HtmlTitle from '../../Components/HtmlTitle'
  */
 class Signup extends Component {
   render() {
-    const key = URLHelper.getParameterByName("key")
+    const key = URLHelper.getParameterByName('key')
 
     return (
       <div>

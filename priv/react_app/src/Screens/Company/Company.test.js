@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import Company from './Company'
-import NotFound from './../NotFound'
+import NotFound from '../NotFound'
 import HtmlTitle from '../../Components/HtmlTitle'
 import MailLink from '../../Components/MailLink'
 

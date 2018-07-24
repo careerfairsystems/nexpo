@@ -1,6 +1,6 @@
 import RootReducer from './index'
 
-it("should have all keys", () => {
+it('should have all keys', () => {
   const keys = Object.keys(RootReducer)
 
   expect(keys).toHaveLength(4)

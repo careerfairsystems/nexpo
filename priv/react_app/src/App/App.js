@@ -17,17 +17,17 @@ import {
   Switch,
   Redirect,
 } from 'react-router-dom'
-import PrivateRoute from './../Components/PrivateRoute'
+import PrivateRoute from '../Components/PrivateRoute'
 
-import Companies from './../Screens/Companies'
-import Company from './../Screens/Company'
-import NotFound from './../Screens/NotFound'
-import Login from './../Screens/Login'
-import Signup from './../Screens/Signup'
-import ForgotPassword from './../Screens/ForgotPassword'
+import Companies from '../Screens/Companies'
+import Company from '../Screens/Company'
+import NotFound from '../Screens/NotFound'
+import Login from '../Screens/Login'
+import Signup from '../Screens/Signup'
+import ForgotPassword from '../Screens/ForgotPassword'
 
-import InvisibleLink from './../Components/InvisibleLink'
-import HtmlTitle from './../Components/HtmlTitle'
+import InvisibleLink from '../Components/InvisibleLink'
+import HtmlTitle from '../Components/HtmlTitle'
 
 /**
  * The base of the application. Defines the basic layout
@@ -43,7 +43,7 @@ class App extends Component {
 
   loggedInAppBar = () => {
     const {currentUser, logout} = this.props
-    const nameOfUser = currentUser.first_name + ' ' + currentUser.last_name
+    const nameOfUser = `${currentUser.first_name  } ${  currentUser.last_name}`
     return (
       <IconMenu
         iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
@@ -76,8 +76,7 @@ class App extends Component {
           title="Nexpo"
           onLeftIconButtonTouchTap={() => this.setState({drawerOpen: true})}
           iconElementRight={isLoggedIn ? this.loggedInAppBar() : this.loggedOutAppBar()}
-        >
-        </AppBar>
+         />
 
         <Drawer
           open={this.state.drawerOpen}

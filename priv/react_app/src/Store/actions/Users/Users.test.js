@@ -1,8 +1,8 @@
-import {Actions, actionTypes} from './../../../Store'
-import {mockHttpResponse, createMockStore} from './../../../TestHelper'
+import {Actions, actionTypes} from '../..'
+import {mockHttpResponse, createMockStore} from '../../../TestHelper'
 
-describe("get current user start", () => {
-  it("should create an empty action", () => {
+describe('get current user start', () => {
+  it('should create an empty action', () => {
     const expectedAction = {
       type: actionTypes.FETCH_CURRENT_USER
     }
@@ -10,8 +10,8 @@ describe("get current user start", () => {
   })
 })
 
-describe("get current user success", () => {
-  it("should create the correct action", () => {
+describe('get current user success', () => {
+  it('should create the correct action', () => {
     const testUser = { name: 'TestUser' }
     const expectedAction = {
       type: actionTypes.FETCH_CURRENT_USER_SUCCESS,
@@ -21,8 +21,8 @@ describe("get current user success", () => {
   })
 })
 
-describe("get current user failure", () => {
-  it("should create an empty action", () => {
+describe('get current user failure', () => {
+  it('should create an empty action', () => {
     const expectedAction = {
       type: actionTypes.FETCH_CURRENT_USER_FAILURE
     }
@@ -30,8 +30,8 @@ describe("get current user failure", () => {
   })
 })
 
-describe("get current user", () => {
-  it("should call start action", () => {
+describe('get current user', () => {
+  it('should call start action', () => {
     mockHttpResponse({status: 200, body: {}})
     const store = createMockStore()
 
@@ -42,7 +42,7 @@ describe("get current user", () => {
     })
   })
 
-  it("should call success action on success", () => {
+  it('should call success action on success', () => {
     const testUser = { id: 1, name: 'Test User' }
     const httpResponseBody = {
       data: testUser
@@ -63,7 +63,7 @@ describe("get current user", () => {
     })
   })
 
-  it("should call failure action on failure", () => {
+  it('should call failure action on failure', () => {
     mockHttpResponse({status: 401, body: {}})
 
     const expectedActions = [

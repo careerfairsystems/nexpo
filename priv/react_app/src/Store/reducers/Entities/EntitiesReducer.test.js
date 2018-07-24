@@ -2,7 +2,7 @@
 *   This file tests the reducers handling incoming actions.
 *   See http://redux.js.org/docs/recipes/WritingTests.html for writing action and reducer tests.
 */
-import {Actions, actionTypes} from './../../../Store'
+import {Actions, actionTypes} from '../..'
 import testData from './entitiesTestData'
 import { EntitiesReducer } from './EntitiesReducer';
 
@@ -32,11 +32,7 @@ describe('Entities reducer', () => {
 		// Check that each company's entry exists in entries
 		const companyKeys = Object.keys(state.companies);
 		companyKeys.forEach((companyKey) => {
-			expect(state.companies[companyKey].entries.forEach((entryNbr) => {
-				return Object.keys(state.entries).find((entryKey) => {
-					return entryNbr === entryKey;
-				})
-			}))
+			expect(state.companies[companyKey].entries.forEach((entryNbr) => Object.keys(state.entries).find((entryKey) => entryNbr === entryKey)))
 		})
 		// Check that each entry's attribute exist
 		const entryKeys = Object.keys(state.entries);
@@ -50,7 +46,7 @@ describe('Entities reducer', () => {
 		})
   })
 
-  it("should handle fetch current user success", () => {
+  it('should handle fetch current user success', () => {
     const testUser = { id: 1, name: 'Test User' }
     const action = Actions.users.getCurrentUserSuccess(testUser)
     const state = EntitiesReducer(undefined, action)

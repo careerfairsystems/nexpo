@@ -1,14 +1,12 @@
-import ReplaceForgottenPassword from './ReplaceForgottenPassword'
 import {connect} from 'react-redux'
+import ReplaceForgottenPassword from './ReplaceForgottenPassword'
 import {Actions, State} from '../../Store/index';
 
-const mapStateToProps = (state: State) => {
-  return {
+const mapStateToProps = (state: State) => ({
     keyIsValid: state.auth.forgotPassword.validKey,
     errors: state.api.replace_password.errors || {},
     success: state.api.replace_password.success
-  }
-}
+  })
 
 const mapDispatchToprops = (dispatch, props) => {
   const {hashKey} = props

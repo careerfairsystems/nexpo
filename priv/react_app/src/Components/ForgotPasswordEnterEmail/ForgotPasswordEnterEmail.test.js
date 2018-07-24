@@ -1,17 +1,17 @@
 import React from 'react'
 import {shallow} from 'enzyme'
-import ForgotPasswordEnterEmail from './ForgotPasswordEnterEmail'
 import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
+import ForgotPasswordEnterEmail from './ForgotPasswordEnterEmail'
 
-it("can render without crashing", () => {
+it('can render without crashing', () => {
   const props = {
     callBackend: jest.fn()
   }
   shallow(<ForgotPasswordEnterEmail {...props}/>)
 })
 
-it("renders an input field", () => {
+it('renders an input field', () => {
   const props = {
     callBackend: jest.fn()
   }
@@ -19,7 +19,7 @@ it("renders an input field", () => {
   expect(wrapper.find(TextField)).toHaveLength(1)
 })
 
-it("renders a button", () => {
+it('renders a button', () => {
   const props = {
     callBackend: jest.fn()
   }

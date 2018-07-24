@@ -24,9 +24,7 @@ export const setJwt = (jwt: string) => {
 /**
  * Gets the current JWT
  */
-export const getJwt = (): string => {
-  return localStorage.getItem("JWT_TOKEN") || JWT_TOKEN
-}
+export const getJwt = (): string => localStorage.getItem('JWT_TOKEN') || JWT_TOKEN
 
 export const deleteJwt = () => {
   localStorage.removeItem('JWT_TOKEN')

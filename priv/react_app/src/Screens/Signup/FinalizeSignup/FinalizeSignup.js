@@ -5,10 +5,10 @@ import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
 import './FinalizeSignup.css'
 
+import {pick} from 'ramda'
 import ErrorMessage from '../../../Components/ErrorMessage'
 import SuccessMessage from '../../../Components/SuccessMessage'
 import API from '../../../API'
-import {pick} from 'ramda'
 
 type Props = {
   signupKey: string
@@ -140,15 +140,13 @@ class FinalizeSignup extends Component<Props, State> {
     )
   }
 
-  _renderSignupButton = () => {
-    return (
+  _renderSignupButton = () => (
       <RaisedButton
         label="Sign up"
         primary
         onTouchTap={() => this._signup()}
       />
     )
-  }
 
   render() {
     const { noSuchKey, finished } = this.state
@@ -163,7 +161,7 @@ class FinalizeSignup extends Component<Props, State> {
         />
       )
     }
-    else if(finished) {
+    if(finished) {
       return (
         <SuccessMessage
           message="You have signed up!"

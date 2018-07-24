@@ -10,8 +10,6 @@ type Props = {
 /**
  * Higher order component for delivering an error message
  */
-const ErrorMessage = (props: Props) => {
-  return <Message type='error' {...props} />
-}
+const ErrorMessage = (props: Props) => <Message type='error' {...props} />
 
 export default ErrorMessage

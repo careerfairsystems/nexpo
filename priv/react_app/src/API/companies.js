@@ -9,8 +9,6 @@ export default {
   /**
    * Fetches all companies
    */
-  getAll: () => {
-    return fetch('/api/companies')
+  getAll: () => fetch('/api/companies')
     .then(handleHttpResponse)
-  }
 }

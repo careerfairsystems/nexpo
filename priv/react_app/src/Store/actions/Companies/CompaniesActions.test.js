@@ -1,8 +1,8 @@
-import {Actions, actionTypes} from './../../../Store'
-import {mockHttpResponse, createMockStore} from './../../../TestHelper'
+import {Actions, actionTypes} from '../..'
+import {mockHttpResponse, createMockStore} from '../../../TestHelper'
 
-describe("getAllCompaniesIsLoading", () => {
-  it("should create the correct action", () => {
+describe('getAllCompaniesIsLoading', () => {
+  it('should create the correct action', () => {
     const expectecAction = {
       type: actionTypes.FETCH_COMPANIES
     }
@@ -11,8 +11,8 @@ describe("getAllCompaniesIsLoading", () => {
   })
 })
 
-describe("getAllCompaniesSuccess", () => {
-  it("should create the correct action", () => {
+describe('getAllCompaniesSuccess', () => {
+  it('should create the correct action', () => {
     const testCompanies = [
       {
         name: 'Company1'
@@ -28,8 +28,8 @@ describe("getAllCompaniesSuccess", () => {
   })
 })
 
-describe("getAllCompaniesFailure", () => {
-  it("should create the correct action", () => {
+describe('getAllCompaniesFailure', () => {
+  it('should create the correct action', () => {
     const expectecAction = {
       type: actionTypes.FETCH_COMPANIES_FAILURE
     }
@@ -38,8 +38,8 @@ describe("getAllCompaniesFailure", () => {
   })
 })
 
-describe("getAllCompanies", () => {
-  it("should call start action", () => {
+describe('getAllCompanies', () => {
+  it('should call start action', () => {
     mockHttpResponse({status: 200, body: {}})
     const store = createMockStore()
 
@@ -50,7 +50,7 @@ describe("getAllCompanies", () => {
     })
   })
 
-  it("should call success action on success", () => {
+  it('should call success action on success', () => {
     const companies = [
       {
         name: 'Company1'
@@ -72,7 +72,7 @@ describe("getAllCompanies", () => {
     })
   })
 
-  it("should call failure action on failure", () => {
+  it('should call failure action on failure', () => {
     mockHttpResponse({status: 401, body: {}})
 
     const expectedActions = [

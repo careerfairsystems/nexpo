@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import NotFound from './../NotFound'
 import Paper from 'material-ui/Paper'
+import NotFound from '../NotFound'
 import MailLink from '../../Components/MailLink'
 import HtmlTitle from '../../Components/HtmlTitle'
 import './Company.css'
@@ -16,7 +16,7 @@ class Company extends Component {
     if(isEmpty(company) || isNil(company)) {
       return <NotFound />
     }
-    else {
+    
       const {name, email} = company
       return(
         <div className="Company_Component">
@@ -43,7 +43,7 @@ class Company extends Component {
 
         </div>
       )
-    }
+    
   }
 }
 

@@ -25,10 +25,10 @@ export const handleHttpResponse = (response: Response): Promise => {
   if(response.ok) {
     return response.json()
   }
-  else {
+  
     return response.json()
     .then(res => {
       throw new ApiError(res)
     })
-  }
+  
 }

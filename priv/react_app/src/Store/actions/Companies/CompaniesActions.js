@@ -1,4 +1,4 @@
-import {actionTypes} from './../../../Store'
+import {actionTypes} from '../..'
 import API from '../../../API'
 
 export function getAllCompaniesIsLoading() {

@@ -5,8 +5,7 @@ import HtmlTitle from '../../Components/HtmlTitle'
 /**
  * A Component that defines the 404 view
  */
-export const NotFound = () => {
-  return (
+export const NotFound = () => (
     <div>
       <HtmlTitle title="404" />
       <ErrorMessage
@@ -16,4 +15,3 @@ export const NotFound = () => {
       />
     </div>
   )
-}

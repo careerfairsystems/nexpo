@@ -1,8 +1,8 @@
-import {Actions, actionTypes} from './../../../Store'
-import {mockHttpResponse, createMockStore} from './../../../TestHelper'
+import {Actions, actionTypes} from '../..'
+import {mockHttpResponse, createMockStore} from '../../../TestHelper'
 
-describe("forgot_password_request", () => {
-  it("should create the correct action", () => {
+describe('forgot_password_request', () => {
+  it('should create the correct action', () => {
     const expected = {
       type: actionTypes.FORGOT_PASSWORD_REQUEST
     }
@@ -11,8 +11,8 @@ describe("forgot_password_request", () => {
   })
 })
 
-describe("forgot_password_success", () => {
-  it("should create the correct action", () => {
+describe('forgot_password_success', () => {
+  it('should create the correct action', () => {
     const expected = {
       type: actionTypes.FORGOT_PASSWORD_SUCCESS
     }
@@ -21,8 +21,8 @@ describe("forgot_password_success", () => {
   })
 })
 
-describe("forgot_password", () => {
-  it("should call request and success", () => {
+describe('forgot_password', () => {
+  it('should call request and success', () => {
     const expectedActions = [
       Actions.accounts.forgot_password_request(),
       Actions.accounts.forgot_password_success()
@@ -42,8 +42,8 @@ describe("forgot_password", () => {
   })
 })
 
-describe("verify_forgot_password_key_request", () => {
-  it("should create the correct action", () => {
+describe('verify_forgot_password_key_request', () => {
+  it('should create the correct action', () => {
     const expected = {
       type: actionTypes.VERIFY_FORGOT_PASSWORD_KEY_REQUEST
     }
@@ -52,8 +52,8 @@ describe("verify_forgot_password_key_request", () => {
   })
 })
 
-describe("verify_forgot_password_key_success", () => {
-  it("should create the correct action", () => {
+describe('verify_forgot_password_key_success', () => {
+  it('should create the correct action', () => {
     const expected = {
       type: actionTypes.VERIFY_FORGOT_PASSWORD_KEY_SUCCESS
     }
@@ -62,8 +62,8 @@ describe("verify_forgot_password_key_success", () => {
   })
 })
 
-describe("verify_forgot_password_key_failure", () => {
-  it("should create the correct action", () => {
+describe('verify_forgot_password_key_failure', () => {
+  it('should create the correct action', () => {
     const expected = {
       type: actionTypes.VERIFY_FORGOT_PASSWORD_KEY_FAILURE
     }
@@ -72,8 +72,8 @@ describe("verify_forgot_password_key_failure", () => {
   })
 })
 
-describe("verify_forgot_password_key", () => {
-  it("should call request and success on success", () => {
+describe('verify_forgot_password_key', () => {
+  it('should call request and success on success', () => {
     const expectedActions = [
       Actions.accounts.verify_forgot_password_key_request(),
       Actions.accounts.verify_forgot_password_key_success()
@@ -94,7 +94,7 @@ describe("verify_forgot_password_key", () => {
     })
   })
 
-  it("should call request and failure on failure", () => {
+  it('should call request and failure on failure', () => {
     const expectedActions = [
       Actions.accounts.verify_forgot_password_key_request(),
       Actions.accounts.verify_forgot_password_key_failure()
@@ -117,8 +117,8 @@ describe("verify_forgot_password_key", () => {
 
 })
 
-describe("replace_forgotten_password_request", () => {
-  it("should create the correct action", () => {
+describe('replace_forgotten_password_request', () => {
+  it('should create the correct action', () => {
     const expected = {
       type: actionTypes.REPLACE_FORGOTTEN_PASSWORD_REQUEST
     }
@@ -127,8 +127,8 @@ describe("replace_forgotten_password_request", () => {
   })
 })
 
-describe("replace_forgotten_password_success", () => {
-  it("should create the correct action", () => {
+describe('replace_forgotten_password_success', () => {
+  it('should create the correct action', () => {
     const expected = {
       type: actionTypes.REPLACE_FORGOTTEN_PASSWORD_SUCCESS
     }
@@ -137,22 +137,22 @@ describe("replace_forgotten_password_success", () => {
   })
 })
 
-describe("replace_forgotten_password_failure", () => {
-  it("should create the correct action", () => {
+describe('replace_forgotten_password_failure', () => {
+  it('should create the correct action', () => {
     const errors = {
       password: 'some-error'
     }
     const expected = {
       type: actionTypes.REPLACE_FORGOTTEN_PASSWORD_FAILURE,
-      errors: errors
+      errors
     }
     const action = Actions.accounts.replace_forgotten_password_failure(errors)
     expect(action).toEqual(expected)
   })
 })
 
-describe("replace_forgotten_password", () => {
-  it("should call request and success on http success", () => {
+describe('replace_forgotten_password', () => {
+  it('should call request and success on http success', () => {
     mockHttpResponse({
       status: 200
     })
@@ -175,7 +175,7 @@ describe("replace_forgotten_password", () => {
     })
   })
 
-  it("should call request and failure on http failure", () => {
+  it('should call request and failure on http failure', () => {
     mockHttpResponse({
       status: 400
     })

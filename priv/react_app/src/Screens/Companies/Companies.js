@@ -74,11 +74,11 @@ class Companies extends Component {
       return (
         this._renderLoading()
       )
-    } else {
+    } 
       return (
         this._renderCompanies()
       )
-    }
+    
   }
 }
 

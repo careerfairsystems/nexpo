@@ -1,5 +1,5 @@
-import {actionTypes} from './../../../Store'
-import API from './../../../API'
+import {actionTypes} from '../..'
+import API from '../../../API'
 import { ApiError } from '../../../Errors/ApiError';
 
 export function forgot_password_request() {

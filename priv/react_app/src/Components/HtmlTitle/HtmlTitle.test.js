@@ -1,11 +1,11 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import HtmlTitle from './HtmlTitle'
 import {Helmet} from 'react-helmet'
+import HtmlTitle from './HtmlTitle'
 
 const appName = 'Nexpo'
 
-it("should render without crashing", () => {
+it('should render without crashing', () => {
   shallow(<HtmlTitle />)
 })
 
