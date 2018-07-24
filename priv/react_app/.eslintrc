@@ -24,7 +24,11 @@
       {"extensions": [".js", ".jsx"]}
     ],
     "quotes": ["error", "single", { "avoidEscape": true }],
-    "flowtype/no-types-missing-file-annotation": 0
+    "flowtype/no-types-missing-file-annotation": 0,
+    "jsx-a11y/anchor-is-valid": [ "error", {
+      "components": [ "Link" ],
+      "specialLink": [ "to" ]
+    }]
   },
   "settings": {
     "import/resolver": {
