@@ -5,37 +5,33 @@
 import { schema, normalize } from 'normalizr';
 
 class Normalize {
+  static _doNormalize(originalCompany, array = false) {
+    const category = new schema.Entity('categories');
 
-	static _doNormalize(originalCompany, array = false) {
-		const category = new schema.Entity('categories');
+    const attribute = new schema.Entity('attributes', {
+      category
+    });
 
-		const attribute = new schema.Entity('attributes', {
-			category
-		});
+    const entry = new schema.Entity('entries', {
+      attribute
+    });
 
-		const entry = new schema.Entity('entries', {
-			attribute,
-		});
+    const company = new schema.Entity('companies', {
+      entries: [entry]
+    });
+    if (array) {
+      return normalize(originalCompany, [company]);
+    }
+    return normalize(originalCompany, company);
+  }
 
-		const company = new schema.Entity('companies', {
-			entries: [entry]
-		});
-		if (array) {
-			return normalize(originalCompany, [company]);
-		} 
-			return normalize(originalCompany, company);
-		
-	}
+  static normalizeCompanies(originalCompanies) {
+    return this._doNormalize(originalCompanies, true);
+  }
 
-	static normalizeCompanies(originalCompanies) {
-		return this._doNormalize(originalCompanies, true)
-	}
-
-	static normalizeCompany(originalCompany) {
-		return this._doNormalize(originalCompany);
-	}
-
-
+  static normalizeCompany(originalCompany) {
+    return this._doNormalize(originalCompany);
+  }
 }
 
 export default Normalize;

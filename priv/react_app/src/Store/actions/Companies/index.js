@@ -1,3 +1,3 @@
-import * as CompanyActions from './CompaniesActions'
+import * as CompanyActions from './CompaniesActions';
 
-export default CompanyActions
+export default CompanyActions;

@@ -3,14 +3,14 @@
  */
 export class ApiError extends Error {
   constructor(response, ...params) {
-    super(...params)
+    super(...params);
 
-    if(Error.captureStackTrace) {
-      Error.captureStackTrace(this, ApiError)
+    if (Error.captureStackTrace) {
+      Error.captureStackTrace(this, ApiError);
     }
 
-    this.name = 'ApiError'
-    this.message = response.error
-    this.errors = response.errors
+    this.name = 'ApiError';
+    this.message = response.error;
+    this.errors = response.errors;
   }
 }

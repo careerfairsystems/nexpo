@@ -1,3 +1,3 @@
-import MailLink from './MailLink'
+import MailLink from './MailLink';
 
-export default MailLink
+export default MailLink;

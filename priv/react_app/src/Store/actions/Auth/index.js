@@ -1,3 +1,3 @@
-import * as Auth from './Auth'
+import * as Auth from './Auth';
 
-export default Auth
+export default Auth;

@@ -1,16 +1,19 @@
-import { connect } from 'react-redux'
-import DevelopmentLogin from './DevelopmentLogin'
-import {Actions} from '../../../Store'
+import { connect } from 'react-redux';
+import DevelopmentLogin from './DevelopmentLogin';
+import { Actions } from '../../../Store';
 
 const mapStateToProps = (state, props) => ({
-    error: state.auth.error,
-    isLoggedIn: state.auth.isLoggedIn
-  })
+  error: state.auth.error,
+  isLoggedIn: state.auth.isLoggedIn
+});
 
 const mapDispatchToProps = (dispatch, props) => ({
-    login: (email) => dispatch(Actions.auth.development_login(email))
-  })
+  login: email => dispatch(Actions.auth.development_login(email))
+});
 
-const stateful = connect(mapStateToProps, mapDispatchToProps)
+const stateful = connect(
+  mapStateToProps,
+  mapDispatchToProps
+);
 
-export default stateful(DevelopmentLogin)
+export default stateful(DevelopmentLogin);

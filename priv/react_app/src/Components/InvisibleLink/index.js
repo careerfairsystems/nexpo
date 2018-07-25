@@ -1,3 +1,3 @@
-import InvisibleLink from './InvisibleLink'
+import InvisibleLink from './InvisibleLink';
 
-export default InvisibleLink
+export default InvisibleLink;

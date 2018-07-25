@@ -1,28 +1,35 @@
-import {connect} from 'react-redux'
-import ReplaceForgottenPassword from './ReplaceForgottenPassword'
-import {Actions, State} from '../../Store/index';
+import { connect } from 'react-redux';
+import ReplaceForgottenPassword from './ReplaceForgottenPassword';
+import { Actions, State } from '../../Store/index';
 
 const mapStateToProps = (state: State) => ({
-    keyIsValid: state.auth.forgotPassword.validKey,
-    errors: state.api.replace_password.errors || {},
-    success: state.api.replace_password.success
-  })
+  keyIsValid: state.auth.forgotPassword.validKey,
+  errors: state.api.replace_password.errors || {},
+  success: state.api.replace_password.success
+});
 
 const mapDispatchToprops = (dispatch, props) => {
-  const {hashKey} = props
-  const key = hashKey
+  const { hashKey } = props;
+  const key = hashKey;
   return {
-    sendNewPasswordToBackend: ({password, password_confirmation}) => {
-      dispatch(Actions.accounts.replace_forgotten_password({
-        key, password, password_confirmation
-      }))
+    sendNewPasswordToBackend: ({ password, password_confirmation }) => {
+      dispatch(
+        Actions.accounts.replace_forgotten_password({
+          key,
+          password,
+          password_confirmation
+        })
+      );
     },
     verifyKey: () => {
-      dispatch(Actions.accounts.verify_forgot_password_key({key}))
+      dispatch(Actions.accounts.verify_forgot_password_key({ key }));
     }
-  }
-}
+  };
+};
 
-const stateful = connect(mapStateToProps, mapDispatchToprops)
+const stateful = connect(
+  mapStateToProps,
+  mapDispatchToprops
+);
 
-export default stateful(ReplaceForgottenPassword)
+export default stateful(ReplaceForgottenPassword);

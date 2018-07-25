@@ -1,6 +1,6 @@
 /**
  * This file is run when test environment is set up
  */
-import {mockLocalStorage} from './TestHelper'
+import { mockLocalStorage } from './TestHelper';
 
-mockLocalStorage()
+mockLocalStorage();

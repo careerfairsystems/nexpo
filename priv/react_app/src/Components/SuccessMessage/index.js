@@ -1,3 +1,3 @@
-import {SuccessMessage} from './SuccessMessage'
+import { SuccessMessage } from './SuccessMessage';
 
-export default SuccessMessage
+export default SuccessMessage;

@@ -1,4 +1,3 @@
-
 /**
  * Mocks localStorage so we can use it in testing
  */
@@ -22,10 +21,8 @@ class LocalStorageMock {
   removeItem(key) {
     delete this.store[key];
   }
-};
-
-export const mockLocalStorage = () => {
-  global.localStorage = new LocalStorageMock;
 }
 
-
+export const mockLocalStorage = () => {
+  global.localStorage = new LocalStorageMock();
+};

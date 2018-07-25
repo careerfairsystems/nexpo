@@ -1,3 +1,3 @@
-import FinalizeSignup from './FinalizeSignup'
+import FinalizeSignup from './FinalizeSignup';
 
-export default FinalizeSignup
+export default FinalizeSignup;

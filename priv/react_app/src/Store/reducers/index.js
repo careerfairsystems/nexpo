@@ -12,13 +12,13 @@ export type State = {
   api: ApiState,
   auth: AuthState,
   current: CurrentState
-}
+};
 
 const RootReducer: State = {
   entities: EntitiesReducer,
   api: ApiReducer,
   auth: AuthReducer,
   current: CurrentReducer
-}
+};
 
-export default RootReducer
+export default RootReducer;

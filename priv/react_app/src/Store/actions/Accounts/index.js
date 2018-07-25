@@ -1,3 +1,3 @@
-import * as AccountActions from './AccountsActions'
+import * as AccountActions from './AccountsActions';
 
-export default AccountActions
+export default AccountActions;

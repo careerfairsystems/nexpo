@@ -1,6 +1,4 @@
-import CurrentReducer, {CurrentState} from './CurrentReducer'
+import CurrentReducer, { CurrentState } from './CurrentReducer';
 
-export {
-  CurrentState
-}
-export default CurrentReducer
+export { CurrentState };
+export default CurrentReducer;
