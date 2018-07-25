@@ -44,13 +44,8 @@ it('calls verify key on load', () => {
     hashKey: 'random-string',
     keyIsValid: true
   };
-  /**
-   * The method is not called with shallow rendering,
-   * cause componentDidMount is not run with shallow()
-   */
   const wrapper = shallow(<ReplaceForgottenPassword {...props} />);
-  // expect(props.verifyKey).toHaveBeenCalledTimes(1)
-  expect(props.verifyKey).toHaveBeenCalledTimes(0);
+  expect(props.verifyKey).toHaveBeenCalledTimes(1);
 });
 
 it('should render NotFound if key is not valid', () => {
