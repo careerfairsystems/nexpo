@@ -1,6 +1,10 @@
+/* eslint-disable */
 /**
  * This file is run when test environment is set up
  */
-import {mockLocalStorage} from './TestHelper'
+import { configure } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+import { mockLocalStorage } from './TestHelper';
 
-mockLocalStorage()
+configure({ adapter: new Adapter() });
+mockLocalStorage();

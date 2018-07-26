@@ -1,3 +1,3 @@
-import HtmlTitle from './HtmlTitle'
+import HtmlTitle from './HtmlTitle';
 
-export default HtmlTitle
+export default HtmlTitle;

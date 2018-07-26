@@ -1,10 +1,10 @@
-import React, { Component } from 'react'
-import './ProductionLogin.css'
+import React, { Component } from 'react';
+import './ProductionLogin.css';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import Snackbar from 'material-ui/Snackbar';
-import { Redirect, Link } from 'react-router-dom'
-import HtmlTitle from '../../../Components/HtmlTitle'
+import { Redirect, Link } from 'react-router-dom';
+import HtmlTitle from '../../../Components/HtmlTitle';
 
 /**
  * Handles login in production. Supports redirecting back to the route that redirected here
@@ -14,66 +14,57 @@ import HtmlTitle from '../../../Components/HtmlTitle'
  * - By passing isAuthenticated prop, this component will redirect back to where user came from
  */
 class ProductionLogin extends Component {
-
   state = {
     email: '',
     password: ''
-  }
+  };
 
   _login() {
-    this.setState({error: false})
-    const { email, password } = this.state
-    this.props.login({email, password})
+    this.setState({ error: false });
+    const { email, password } = this.state;
+    this.props.login({ email, password });
   }
 
   _renderEmailInput = () => {
-    const { email } = this.state
+    const { email } = this.state;
     return (
       <TextField
         floatingLabelText="Email"
         errorText={this.props.error ? 'Try something else' : null}
         value={email}
         autoFocus
-        onChange={(event, val) => this.setState({email: val})}
-        onKeyPress={event => event.key === 'Enter' ? this._login() : null}
+        onChange={(event, val) => this.setState({ email: val })}
+        onKeyPress={event => (event.key === 'Enter' ? this._login() : null)}
       />
-    )
-  }
+    );
+  };
 
   _renderPasswordInput = () => {
-    const { password } = this.state
+    const { password } = this.state;
     return (
       <TextField
         floatingLabelText="Password"
         errorText={this.props.error ? 'Try something else' : null}
         value={password}
-        type='password'
-        onChange={(event, val) => this.setState({password: val})}
-        onKeyPress={event => event.key === 'Enter' ? this._login() : null}
+        type="password"
+        onChange={(event, val) => this.setState({ password: val })}
+        onKeyPress={event => (event.key === 'Enter' ? this._login() : null)}
       />
-    )
-  }
+    );
+  };
 
-  _renderLoginButton = () => {
-    return (
-      <RaisedButton
-        label="Login"
-        primary
-        onTouchTap={() => this._login()}
-      />
-    )
-  }
+  _renderLoginButton = () => (
+    <RaisedButton label="Login" primary onTouchTap={() => this._login()} />
+  );
 
   render() {
-    const { error, isLoggedIn } = this.props
+    const { error, isLoggedIn } = this.props;
 
     // Url that redirected here
-    const { from } = this.props.location.state || { from: { pathname: '/' } }
+    const { from } = this.props.location.state || { from: { pathname: '/' } };
 
-    if(isLoggedIn) {
-      return (
-        <Redirect to={from} />
-      )
+    if (isLoggedIn) {
+      return <Redirect to={from} />;
     }
 
     return (
@@ -82,16 +73,16 @@ class ProductionLogin extends Component {
 
         <h1>Login</h1>
         {this._renderEmailInput()}
-        <br/>
+        <br />
         {this._renderPasswordInput()}
-        <br/>
+        <br />
         {this._renderLoginButton()}
 
-        <br/>
-        <br/>
+        <br />
+        <br />
 
         <div>Hard time logging in?</div>
-        <br/>
+        <br />
 
         <div className="links">
           <Link to="/signup">Sign up</Link>
@@ -104,9 +95,8 @@ class ProductionLogin extends Component {
           autoHideDuration={4000}
         />
       </div>
-    )
+    );
   }
 }
 
-export default ProductionLogin
-
+export default ProductionLogin;

@@ -1,3 +1,40 @@
 {
-  "extends": "react-app"
+  "parser": "babel-eslint",
+  "env": {
+    "browser": true,
+    "jest": true,
+    "es6": true,
+    "node" :true
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:flowtype/recommended",
+    "airbnb",
+    "prettier",
+    "prettier/flowtype",
+    "prettier/react",
+    "prettier/standard"
+  ],
+  "plugins": ["react","flowtype" ],
+  "rules": {
+    "import/no-named-as-default": 0,
+    "react/jsx-filename-extension": [
+      "error",
+      {"extensions": [".js", ".jsx"]}
+    ],
+    "quotes": ["error", "single", { "avoidEscape": true }],
+    "flowtype/no-types-missing-file-annotation": 0,
+    "jsx-a11y/anchor-is-valid": [ "error", {
+      "components": [ "Link" ],
+      "specialLink": [ "to" ]
+    }]
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "moduleDirectory": ["node_modules", "./"]
+      }
+    }
+  }
 }

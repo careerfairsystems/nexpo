@@ -1,3 +1,3 @@
-import InitialSignup from './InitialSignup'
+import InitialSignup from './InitialSignup';
 
-export default InitialSignup
+export default InitialSignup;

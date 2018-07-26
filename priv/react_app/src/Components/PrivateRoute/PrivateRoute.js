@@ -1,6 +1,6 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import { Route, Redirect } from 'react-router-dom'
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { Route, Redirect } from 'react-router-dom';
 
 /**
  * This components extends Router from react-router.
@@ -9,36 +9,35 @@ import { Route, Redirect } from 'react-router-dom'
  */
 class PrivateRoute extends Component {
   render() {
-    const { component: Component, isLoggedIn, ...rest} = this.props
+    const { component: Component, isLoggedIn, ...rest } = this.props;
 
     return (
-      <Route {...rest}
+      <Route
+        {...rest}
         render={props => {
-          switch(isLoggedIn) {
+          switch (isLoggedIn) {
             case true:
-              return (
-                <Component {...props} />
-              )
+              return <Component {...props} />;
             case false:
               return (
                 <Redirect
                   to={{
                     pathname: '/login',
-                    state: { from: props.location}
+                    state: { from: props.location }
                   }}
                 />
-              )
+              );
             default:
               break;
           }
         }}
       />
-    )
+    );
   }
 }
 
 PrivateRoute.propTypes = {
   isLoggedIn: PropTypes.bool.isRequired
-}
+};
 
-export default PrivateRoute
+export default PrivateRoute;

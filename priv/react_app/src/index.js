@@ -2,30 +2,30 @@
 *   This is the main entrypoint for the application
 */
 
-import React from 'react'
-import ReactDOM from 'react-dom'
-import { Provider } from 'react-redux'
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
-import { setupErrorTracking } from './Util/ErrorTracking'
+import injectTapEventPlugin from 'react-tap-event-plugin';
+import { setupErrorTracking } from './Util/ErrorTracking';
 
 // Required by material-ui
-import injectTapEventPlugin from 'react-tap-event-plugin';
 
-import App from './App'
-import './index.css'
+import App from './App';
+import './index.css';
 
-import { BrowserRouter, Route } from 'react-router-dom'
+import { BrowserRouter, Route } from 'react-router-dom';
 
-import {getStore, Actions} from './Store'
+import { getStore, Actions } from './Store';
 
-if(process.env.NODE_ENV === 'production') {
-  setupErrorTracking()
+if (process.env.NODE_ENV === 'production') {
+  setupErrorTracking();
 }
 
 const store = getStore();
 
-store.dispatch(Actions.users.getCurrentUser())
+store.dispatch(Actions.users.getCurrentUser());
 
 injectTapEventPlugin();
 

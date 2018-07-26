@@ -1,0 +1,17 @@
+[ignore]
+.*/node_modules/.*
+.*/build/.*
+.*/coverage/.*
+[include]
+[libs]
+# Flow-typed installs flow types from third party packages
+flow-typed
+[lints]
+[options]
+# To avoid @flow annotation in every file
+all=true
+# Tells flow to look in node_modules for non-relative imports
+module.system.node.resolve_dirname=node_modules
+
+
+[strict]

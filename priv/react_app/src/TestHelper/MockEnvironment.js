@@ -5,14 +5,14 @@
 /**
  * Holds the environment that program was launched in
  */
-const INITIAL_ENVIRONMENT = process.env.NODE_ENV
+const INITIAL_ENVIRONMENT = process.env.NODE_ENV;
 
 /**
  * Sets the environment
  * @param {string} env
  */
 function setEnvironment(env) {
-  process.env.NODE_ENV = env
+  process.env.NODE_ENV = env;
 }
 
 /**
@@ -21,16 +21,16 @@ function setEnvironment(env) {
  * @param {function} func
  */
 function runInEnvironment(env, func) {
-  setEnvironment(env)
-  func()
-  setEnvironment(INITIAL_ENVIRONMENT)
+  setEnvironment(env);
+  func();
+  setEnvironment(INITIAL_ENVIRONMENT);
 }
 
 /**
  * Build the mocks
  */
 export const mockEnvironment = {
-  runInProduction: (func) => runInEnvironment('production', func),
-  runInDevelopment: (func) => runInEnvironment('development', func),
-  runInTest: (func) => runInEnvironment('test', func)
-}
+  runInProduction: func => runInEnvironment('production', func),
+  runInDevelopment: func => runInEnvironment('development', func),
+  runInTest: func => runInEnvironment('test', func)
+};

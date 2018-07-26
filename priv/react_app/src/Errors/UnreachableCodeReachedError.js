@@ -4,15 +4,14 @@
  */
 class UnreachableCodeReachedError extends Error {
   constructor(...params) {
-    super(...params)
+    super(...params);
 
-    if(Error.captureStackTrace) {
-      Error.captureStackTrace(this, UnreachableCodeReachedError)
+    if (Error.captureStackTrace) {
+      Error.captureStackTrace(this, UnreachableCodeReachedError);
     }
 
-    this.name = 'UnreachableCodeReachedError'
+    this.name = 'UnreachableCodeReachedError';
   }
-
 }
 
-export default UnreachableCodeReachedError
+export default UnreachableCodeReachedError;
