@@ -35,6 +35,7 @@ defmodule Nexpo.Mixfile do
         :gettext,
         :phoenix_ecto,
         :postgrex,
+        :arc_ecto
       ]
     ]
   end
@@ -68,7 +69,14 @@ defmodule Nexpo.Mixfile do
       {:guardian, "~> 0.14.5"},
       {:bamboo, "~> 0.8"},
       {:bamboo_smtp, "~> 1.4.0"},
-      {:excoveralls, "~> 0.7", only: :test}
+      {:excoveralls, "~> 0.7", only: :test},
+      {:arc, "~> 0.10.0"},
+      {:arc_ecto, "~> 0.10.0"},
+      {:ex_aws, "~> 2.0"},
+      {:ex_aws_s3, "~> 2.0"},
+      {:hackney, "~> 1.6"},
+      {:httpoison, "~> 0.13"},
+      {:sweet_xml, "~> 0.6"}
     ]
   end
 
