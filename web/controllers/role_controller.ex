@@ -25,7 +25,10 @@ defmodule Nexpo.RoleController do
   end
 
   def show(conn, %{"id" => id}) do
-    role = Repo.get!(Role, id)
+    role = Role
+        |> Repo.get!(id)
+        |> Repo.preload(:users)
+
     render(conn, "show.json", role: role)
   end
 

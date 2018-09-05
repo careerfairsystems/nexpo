@@ -10,7 +10,14 @@ defmodule Nexpo.RoleView do
   end
 
   def render("role.json", %{role: role}) do
-    %{id: role.id,
+    data = %{id: role.id,
       type: role.type}
+
+    if Ecto.assoc_loaded?(role.users) do
+      users = render_many(role.users, Nexpo.User, "user.json")
+      Map.put(data, :users, users)
+    else
+      data
+    end
   end
 end
