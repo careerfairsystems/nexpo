@@ -17,5 +17,6 @@ defmodule Nexpo.Company do
     struct
     |> cast(params, [:name, :logoUrl, :description, :website])
     |> validate_required([:name, :logoUrl, :description, :website])
+    |> unique_constraint(:name)
   end
 end

@@ -3,6 +3,27 @@ defmodule Nexpo.CompanyController do
 
   alias Nexpo.Company
 
+  @apidoc """
+  @api {GET} /companies List companies
+  @apiGroup Company
+  @apiSuccessExample {json} Success
+    HTTP 200 Ok
+    {
+      "data": [
+        {
+          "id": 1,
+          "name": "CodeComp",
+          "description": "We do code!"
+        },
+        {
+          "id": 2,
+          "name": "Other Comp",
+          "description": "We do other things!"
+        }
+      ]
+    }
+  @apiUse InternalServerError
+  """
   def index(conn, _params) do
     companies = Repo.all(Company)
     render(conn, "index.json", companies: companies)
@@ -24,6 +45,22 @@ defmodule Nexpo.CompanyController do
     end
   end
 
+  @apidoc """
+  @api {GET} /companies/:id Get company
+  @apiGroup Company
+  @apiParam {Number} id ID of the company
+  @apiSuccessExample {json} Success
+    HTTP 200 Ok
+    {
+      "data": {
+        "id": 1,
+        "name": "CodeComp"
+      }
+    }
+
+  @apiUse NotFoundError
+  @apiUse InternalServerError
+  """
   def show(conn, %{"id" => id}) do
     company = Repo.get!(Company, id)
     render(conn, "show.json", company: company)
@@ -52,4 +89,6 @@ defmodule Nexpo.CompanyController do
 
     send_resp(conn, :no_content, "")
   end
+
+  @apidoc
 end

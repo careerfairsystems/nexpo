@@ -1,4 +1,4 @@
-defmodule Nexpo.Repo.Migrations.CreateCompany do
+defmodule Nexpo.Repo.Migrations.AddLogoDescWebsiteToCompany do
   use Ecto.Migration
 
   def change do
@@ -6,7 +6,6 @@ defmodule Nexpo.Repo.Migrations.CreateCompany do
       add :logoUrl, :string
       add :description, :string
       add :website, :string
-
     end
 
   end
