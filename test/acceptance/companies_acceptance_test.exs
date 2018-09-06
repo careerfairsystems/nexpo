@@ -38,7 +38,9 @@ defmodule Nexpo.CompaniesAcceptanceTest do
         "properties" => %{
           "id" => %{"type" => "integer"},
           "name" => %{"type" => "string"},
-          "email" => %{"type" => "string"},
+          "logoUrl" => %{"type" => "string"},
+          "description" => %{"type" => "string"},
+          "website" => %{"type" => "string"},
           "entries" => %{
             "type" => "array",
             "minItems" => 2
@@ -62,7 +64,9 @@ defmodule Nexpo.CompaniesAcceptanceTest do
       "properties" => %{
         "id" => %{"type" => "integer"},
         "name" => %{"type" => "string"},
-        "email" => %{"type" => "string"},
+        "logoUrl" => %{"type" => "string"},
+        "description" => %{"type" => "string"},
+        "website" => %{"type" => "string"},
         "entries" => %{
           "type" => "array",
           "minItems" => 2
