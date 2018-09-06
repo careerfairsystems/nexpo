@@ -3,7 +3,7 @@ defmodule Nexpo.CompanyTest do
 
   alias Nexpo.Company
 
-  @valid_attrs %{name: "some content"}
+  @valid_attrs %{description: "some content", logoUrl: "some content", name: "some content", website: "some content"}
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do
