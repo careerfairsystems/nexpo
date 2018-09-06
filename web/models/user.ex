@@ -14,6 +14,8 @@ defmodule Nexpo.User do
     field :first_name, :string
     field :last_name, :string
 
+    many_to_many :roles, Nexpo.Role, join_through: "users_roles"
+
     timestamps()
   end
 
