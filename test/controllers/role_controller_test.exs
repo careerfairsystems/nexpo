@@ -18,7 +18,7 @@ defmodule Nexpo.RoleControllerTest do
     role = Repo.insert! %Role{}
     conn = get conn, role_path(conn, :show, role)
     assert json_response(conn, 200)["data"] == %{"id" => role.id,
-      "type" => role.type}
+      "type" => role.type, "users" => []}
   end
 
   test "renders page not found when id is nonexistent", %{conn: conn} do
