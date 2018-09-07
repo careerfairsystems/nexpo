@@ -3,9 +3,9 @@ defmodule Nexpo.Company do
 
   schema "companies" do
     field :name, :string
-    field :email, :string
-
-    has_many :entries, Nexpo.CompanyEntry
+    field :logoUrl, :string
+    field :description, :string
+    field :website, :string
 
     timestamps()
   end
@@ -15,9 +15,8 @@ defmodule Nexpo.Company do
   """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:name])
-    |> validate_required([:name])
+    |> cast(params, [:name, :logoUrl, :description, :website])
+    |> validate_required([:name, :logoUrl, :description, :website])
     |> unique_constraint(:name)
-    |> unique_constraint(:email)
   end
 end
