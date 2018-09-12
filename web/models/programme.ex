@@ -5,6 +5,8 @@ defmodule Nexpo.Programme do
     field :code, :string
     field :name, :string
 
+    has_many :desired_programmes, Nexpo.DesiredProgramme
+
     timestamps()
   end
 

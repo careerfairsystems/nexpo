@@ -62,7 +62,9 @@ defmodule Nexpo.CompanyController do
   @apiUse InternalServerError
   """
   def show(conn, %{"id" => id}) do
-    company = Repo.get!(Company, id)
+    company = Company
+        |> Repo.get(id)
+        |> Repo.preload(:desired_programmes)
     render(conn, "show.json", company: company)
   end
 
