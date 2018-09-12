@@ -1,7 +1,7 @@
-defmodule Nexpo.CompanyAttributeController do
+defmodule Nexpo.CategoryAttributeController do
   use Nexpo.Web, :controller
 
-  # alias Nexpo.CompanyAttribute
+  # alias Nexpo.CategoryAttribute
 
 #  def index(conn, _params) do
 #    company_categories = Repo.all(CompanyCategory)
@@ -9,7 +9,7 @@ defmodule Nexpo.CompanyAttributeController do
 #  end
 
   # def create(conn, company_attribute_params) do
-  #   changeset = CompanyAttribute.changeset(%CompanyAttribute{}, company_attribute_params)
+  #   changeset = CategoryAttribute.changeset(%CategoryAttribute{}, company_attribute_params)
   #   case Repo.insert(changeset) do
   #     {:ok, _company_attribute} ->
   #       conn

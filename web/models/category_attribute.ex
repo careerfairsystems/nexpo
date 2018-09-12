@@ -1,4 +1,4 @@
-defmodule Nexpo.CompanyAttribute do
+defmodule Nexpo.CategoryAttribute do
   use Nexpo.Web, :model
 
   schema "company_attributes" do

@@ -6,7 +6,7 @@ defmodule Nexpo.CompanyCategory do
    schema "company_categories" do
      field :title, :string
 
-     has_many :attributes, Nexpo.CompanyAttribute
+     has_many :attributes, Nexpo.CategoryAttribute
 
      timestamps()
    end

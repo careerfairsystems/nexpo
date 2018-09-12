@@ -1,11 +1,11 @@
-defmodule Nexpo.CompanyAttributeTest do
+defmodule Nexpo.CategoryAttributeTest do
   use Nexpo.ModelCase
 
-  alias Nexpo.CompanyAttribute
+  alias Nexpo.CategoryAttribute
 
   test "changeset can change all valid params" do
     params = Factory.params_with_assocs(:company_attribute)
-    changeset = CompanyAttribute.changeset(%CompanyAttribute{}, params)
+    changeset = CategoryAttribute.changeset(%CategoryAttribute{}, params)
 
     # Assert no errors
     assert length(changeset.errors) == 0
@@ -17,7 +17,7 @@ defmodule Nexpo.CompanyAttributeTest do
 
   test "compulsory parameters must exist" do
     errors =
-    CompanyAttribute.changeset(%CompanyAttribute{}, %{})
+    CategoryAttribute.changeset(%CategoryAttribute{}, %{})
     |> Map.get(:errors)
     |> Enum.map(&Tuple.to_list(&1))
 
@@ -32,7 +32,7 @@ defmodule Nexpo.CompanyAttributeTest do
     # Delete the corresponding company
     Repo.get(Nexpo.CompanyCategory, params.company_category_id) |> Repo.delete!
 
-    changeset = CompanyAttribute.changeset(%CompanyAttribute{}, params)
+    changeset = CategoryAttribute.changeset(%CategoryAttribute{}, params)
 
     assert_raise Ecto.InvalidChangesetError, fn ->
       Repo.insert!(changeset)
@@ -45,7 +45,7 @@ defmodule Nexpo.CompanyAttributeTest do
     |> Map.drop([:company_category_id])
 
     assert_raise Postgrex.Error, fn ->
-      %CompanyAttribute{} |> Map.merge(params) |> Repo.insert
+      %CategoryAttribute{} |> Map.merge(params) |> Repo.insert
     end
   end
 

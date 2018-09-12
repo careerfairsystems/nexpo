@@ -45,10 +45,10 @@ defmodule Nexpo.Factory do
   end
 
   @doc """
-  Create a CompanyAttribute
+  Create a CategoryAttribute
   """
   def company_attribute_factory do
-    %Nexpo.CompanyAttribute{
+    %Nexpo.CategoryAttribute{
       title: sequence("Generated Attribute"),
       type: sequence("Generated type"),
       value: sequence("Generated value"),
