@@ -2,12 +2,7 @@ defmodule Nexpo.CompanyControllerTest do
   use Nexpo.ConnCase
 
   alias Nexpo.Company
-  @valid_attrs %{
-    description: "some content",
-    logoUrl: nil,
-    name: "some content",
-    website: "some content"
-  }
+  @valid_attrs %{description: "some content", logo_url: nil, name: "some content", website: "some content"}
   @invalid_attrs %{}
 
   setup %{conn: conn} do
@@ -25,7 +20,7 @@ defmodule Nexpo.CompanyControllerTest do
     assert json_response(conn, 200)["data"] == %{
       "id" => company.id,
       "name" => company.name,
-      "logoUrl" => company.logoUrl,
+      "logo_url" => company.logo_url,
       "description" => company.description,
       "website" => company.website,
       "student_session_days" => company.student_session_days}
@@ -69,8 +64,8 @@ defmodule Nexpo.CompanyControllerTest do
   end
 
   test "create company with logoUrl and upload image", %{conn: conn}do
-    logoUrl = %Plug.Upload{path: "test/assets/Placeholder.png", filename: "Placeholder.png"}
-    conn = post conn, company_path(conn, :create), company: Map.put(@valid_attrs, :logoUrl, logoUrl)
+    logo_url = %Plug.Upload{path: "test/assets/Placeholder.png", filename: "Placeholder.png"}
+    conn = post conn, company_path(conn, :create), company: Map.put(@valid_attrs, :logo_url, logo_url)
     assert json_response(conn, 201)["data"]["id"]
     assert Repo.get_by(Company, %{name: @valid_attrs.name})
   end

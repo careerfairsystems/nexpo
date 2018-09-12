@@ -14,8 +14,8 @@ defmodule Nexpo.Support.View do
     # Build base object
     base = Map.take(object, base_params)
     base =
-    if Map.get(base, :logoUrl) do
-      Map.put(base, :logoUrl, render_image_url(base))
+    if Map.get(base, :logo_url) do
+      Map.put(base, :logo_url, render_image_url(base))
     else base
     end
 
@@ -73,8 +73,6 @@ defmodule Nexpo.Support.View do
         %{:attributes => render_many(object.attributes, Nexpo.CompanyAttributeView, "company_attribute.json")}
       :category ->
         %{:category => render_one(object.category, Nexpo.CompanyCategoryView, "company_category.json")}
-      :logoUrl ->
-        %{:logoUrl => "Kalle"}
         _ ->
         %{}
     end
@@ -89,8 +87,8 @@ defmodule Nexpo.Support.View do
   end
 
   defp render_image_url(entry) do
-    if entry.logoUrl != nil do
-      Nexpo.ProfileImage.url({entry.logoUrl.file_name, entry}, :original)
+    if entry.logo_url != nil do
+      Nexpo.ProfileImage.url({entry.logo_url.file_name, entry}, :original)
     else
       nil
     end

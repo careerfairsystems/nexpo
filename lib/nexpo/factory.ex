@@ -15,7 +15,7 @@ defmodule Nexpo.Factory do
     {:ok, image} = Nexpo.ProfileImage.Type.load("x.jpg?1234567")
     %Nexpo.Company{
       name: sequence("Generated Company"),
-      logoUrl: image,
+      logo_url: image,
       description: sequence("Generated description"),
       website: sequence("Generated website")
     }
