@@ -5,13 +5,11 @@ defmodule Nexpo.User do
   alias Nexpo.User
 
   schema "users" do
-    field :username, :string
     field :firstName, :string
     field :lastName, :string
     field :email, :string
     field :foodPreference, :string
     field :phoneNumber, :string
-
     field :hashed_password, :string
     field :password, :string, virtual: true
     field :signup_key, :string
