@@ -101,6 +101,24 @@ config :nexpo, Nexpo.Repo,
   pool_size: String.to_integer(System.get_env("DB_POOL_SIZE") || "10"),
   ssl: true
 
+config :arc,
+  storage: Arc.Storage.S3, # or Arc.Storage.Local
+  bucket: "nexpo-test",
+  virtual_host: true # if using Amazon S3
+
+config :ex_aws,
+  access_key_id: System.get_env("S3_ACCESS_KEY_ID"),
+  secret_access_key: System.get_env("S3_SECRET_ACCESS_KEY_ID"),
+  region: "eu-central-1",
+  host: "s3.eu-central-1.amazonaws.com",
+  s3: [
+    scheme: "https://",
+    host: "s3.eu-central-1.amazonaws.com",
+    region: "eu-central-1"
+    ]
+
 if System.get_env("STAGING") != nil do
   import_config "staging.exs"
 end
+
+

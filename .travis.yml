@@ -16,6 +16,9 @@ matrix:
         - codecov
     - elixir: 1.4.4
       otp_release: 19.3
+      before_install:
+        - gem install fakes3
+        - fakes3 -r $HOME/.s3bucket -p 4567 --license 9806002125 &
       install:
         - mix local.rebar --force
         - mix local.hex --force
@@ -24,3 +27,5 @@ matrix:
         - npm run test-coverage-backend
       after_success:
         - bash <(curl -s https://codecov.io/bash)
+      after_script:
+        - kill $(pgrep -f fakes3)
