@@ -16,7 +16,8 @@ defmodule Nexpo.Support.View do
     base =
     if Map.get(base, :logo_url) do
       Map.put(base, :logo_url, render_image_url(base))
-    else base
+    else
+      base
     end
 
     # Construct an array with all relations that should get rendered
@@ -73,7 +74,7 @@ defmodule Nexpo.Support.View do
         %{:attributes => render_many(object.attributes, Nexpo.CompanyAttributeView, "company_attribute.json")}
       :category ->
         %{:category => render_one(object.category, Nexpo.CompanyCategoryView, "company_category.json")}
-        _ ->
+      _ ->
         %{}
     end
   end

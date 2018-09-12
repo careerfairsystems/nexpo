@@ -29,19 +29,14 @@ defmodule Nexpo.CompanyController do
     render(conn, "index.json", companies: companies)
   end
 
-  def new(conn, _params) do
-    changeset = Company.changeset(%Company{})
-    render(conn, "new.html", changeset: changeset)
-  end
-
   def create(conn, %{"company" => company_params}) do
-   Company.changeset(%Company{}, company_params)
-   |> create_company(conn)
+    Company.changeset(%Company{}, company_params)
+    |> create_company(conn)
   end
 
   def create(conn, company_params) do
-   Company.changeset(%Company{}, company_params)
-   |> create_company(conn)
+    Company.changeset(%Company{}, company_params)
+    |> create_company(conn)
   end
 
   defp create_company(changeset, conn) do
