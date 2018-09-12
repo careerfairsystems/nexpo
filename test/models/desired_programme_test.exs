@@ -3,7 +3,7 @@ defmodule Nexpo.DesiredProgrammeTest do
 
   alias Nexpo.DesiredProgramme
 
-  @valid_attrs %{score: 42}
+  @valid_attrs %{score: 42, programme_id: 2, company_id: 1}
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do

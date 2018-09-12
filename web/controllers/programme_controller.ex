@@ -26,7 +26,7 @@ defmodule Nexpo.ProgrammeController do
 
   def show(conn, %{"id" => id}) do
     programme = Programme
-        |> Repo.get(id)
+        |> Repo.get!(id)
         |> Repo.preload(:desired_programmes)
     render(conn, "show.json", programme: programme)
   end
