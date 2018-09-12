@@ -59,7 +59,7 @@
     "test-ci": "npm run build-css && CI=true npm run test-js",
     "test-coverage": "npm run test-js -- --coverage",
     "eject": "react-scripts eject",
-    "postinstall": "flow-typed install"
+    "postinstall": "npx flow-typed install"
   },
   "engines": {
     "node": "6.11.4",
