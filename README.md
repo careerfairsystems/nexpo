@@ -375,3 +375,6 @@ Deployment is automatic from master branch. To deploy, you need only merge code 
 # Who do I contact?
 - [Joel Klint](mailto:joel.klint@gmail.com) (Developer 2017)
 - [Oscar Rydh](mailto:oscar.rydh.93@gmail.com) (Developer 2017)
+- [Victor Winberg](mailto:victor.m.winberg@gmail.com) (Scrum Master 2018)
+- [Anton Göransson](mailto:anton.goransson95@gmail.com) (Developer 2018)
+- [Emma Asklund](mailto:emma.asklund@gmail.com) (Developer 2018)
