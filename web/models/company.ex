@@ -6,6 +6,7 @@ defmodule Nexpo.Company do
     field :logoUrl, :string
     field :description, :string
     field :website, :string
+    field :student_session_days, :integer, default: 0
 
     has_many :desired_programmes, Nexpo.DesiredProgramme
 

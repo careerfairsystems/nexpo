@@ -11,7 +11,7 @@ defmodule Nexpo.CompanyView do
 
   def render("company.json", %{company: company}) do
     # Define own parameters to keep
-    base = [:id, :name, :logoUrl, :description, :website]
+    base = [:id, :name, :logoUrl, :description, :website, :student_session_days]
 
     Nexpo.Support.View.render_object(company, base)
   end

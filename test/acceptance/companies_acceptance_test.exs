@@ -41,6 +41,7 @@ defmodule Nexpo.CompaniesAcceptanceTest do
           "logoUrl" => %{"type" => "string"},
           "description" => %{"type" => "string"},
           "website" => %{"type" => "string"},
+          "student_session_days" => %{"type" => "integer"},
           "entries" => %{
             "type" => "array",
             "minItems" => 2
@@ -67,6 +68,7 @@ defmodule Nexpo.CompaniesAcceptanceTest do
         "logoUrl" => %{"type" => "string"},
         "description" => %{"type" => "string"},
         "website" => %{"type" => "string"},
+        "student_session_days" => %{"type" => "integer"},
         "entries" => %{
           "type" => "array",
           "minItems" => 2

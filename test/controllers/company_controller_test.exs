@@ -21,7 +21,8 @@ defmodule Nexpo.CompanyControllerTest do
       "name" => company.name,
       "logoUrl" => company.logoUrl,
       "description" => company.description,
-      "website" => company.website}
+      "website" => company.website,
+      "student_session_days" => company.student_session_days}
   end
 
   test "renders page not found when id is nonexistent", %{conn: conn} do
