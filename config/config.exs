@@ -34,7 +34,21 @@ config :guardian, Guardian,
   secret_key: "vbk9Zrn5w1D7U2zUPey37NX9DZygy1lFXMSyLCYu/VorzxFzal7dcwsqp9UU6JZC",
   serializer: Nexpo.GuardianSerializer
 
+config :arc,
+  storage: Arc.Storage.S3, # or Arc.Storage.Local
+  bucket: "nexpo-test",
+  virtual_host: true # if using Amazon S3
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
+config :ex_aws,
+  access_key_id: "AKIAIASSETVLJMRIIXGA",
+  secret_access_key: "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",
+  region: "eu-central-1",
+  host: "s3.eu-central-1.amazonaws.com",
+  s3: [
+    scheme: "https://",
+    host: "s3.eu-central-1.amazonaws.com",
+    region: "eu-central-1"
+   ]
 import_config "#{Mix.env}.exs"
 

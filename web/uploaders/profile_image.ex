@@ -21,14 +21,16 @@ defmodule Nexpo.ProfileImage do
   #   {:convert, "-strip -thumbnail 250x250^ -gravity center -extent 250x250 -format png", :png}
   # end
 
-  # Override the persisted filenames:
-  # def filename(version, _) do
-  #   version
-  # end
+  # We use this so other file name can't be gueesed
+  def filename(version, {_file, scope}) do
+    :crypto.hash(:sha256, "a_very_long_string_#{scope.name}_#{version}")
+    |> Base.encode16
+    |> String.downcase
+  end
 
   # Override the storage directory:
   def storage_dir(version, {file, scope}) do
-    "uploads/user/profile_images/#{scope.id}"
+    "uploads/companies/#{scope.name}/images"
   end
 
   # Provide a default URL if there hasn't been a file uploaded

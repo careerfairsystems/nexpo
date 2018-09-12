@@ -17,6 +17,8 @@ defmodule Nexpo.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug :fetch_session
+    plug :fetch_flash
   end
 
   pipeline :api_auth do

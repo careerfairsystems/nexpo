@@ -29,6 +29,11 @@ defmodule Nexpo.CompanyController do
     render(conn, "index.json", companies: companies)
   end
 
+  def new(conn, _params) do
+    changeset = Company.changeset(%Company{})
+    render(conn, "new.html", changeset: changeset)
+  end
+
   def create(conn, %{"company" => company_params}) do
     changeset = Company.changeset(%Company{}, company_params)
 
@@ -69,7 +74,6 @@ defmodule Nexpo.CompanyController do
   def update(conn, %{"id" => id, "company" => company_params}) do
     company = Repo.get!(Company, id)
     changeset = Company.changeset(company, company_params)
-
     case Repo.update(changeset) do
       {:ok, company} ->
         render(conn, "show.json", company: company)

@@ -1,0 +1,4 @@
+<li>
+  <strong>Avatar:</strong>
+  <img src="<%= Nexpo.ProfileImage.url({@company.logoUrl, @company}) %>"/>
+</li>

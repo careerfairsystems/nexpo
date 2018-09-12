@@ -13,6 +13,11 @@ defmodule Nexpo.Support.View do
   def render_object(object, base_params) do
     # Build base object
     base = Map.take(object, base_params)
+    base =
+    if Map.get(base, :logoUrl) do
+      Map.put(base, :logoUrl, render_image_url(base))
+    else base
+    end
 
     # Construct an array with all relations that should get rendered
     # TODO: Redo how relations array are created
@@ -68,7 +73,9 @@ defmodule Nexpo.Support.View do
         %{:attributes => render_many(object.attributes, Nexpo.CompanyAttributeView, "company_attribute.json")}
       :category ->
         %{:category => render_one(object.category, Nexpo.CompanyCategoryView, "company_category.json")}
-      _ ->
+      :logoUrl ->
+        %{:logoUrl => "Kalle"}
+        _ ->
         %{}
     end
   end
@@ -78,6 +85,14 @@ defmodule Nexpo.Support.View do
     case object do
       %Ecto.Association.NotLoaded{} -> false
       _ -> true
+    end
+  end
+
+  defp render_image_url(entry) do
+    if entry.logoUrl != nil do
+      Nexpo.ProfileImage.url({entry.logoUrl.file_name, entry}, :original)
+    else
+      nil
     end
   end
 
