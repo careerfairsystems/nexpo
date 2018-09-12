@@ -55,16 +55,4 @@ config :nexpo, Nexpo.Repo,
   pool_size: 10
 
 config :arc,
-  storage: Arc.Storage.S3, # or Arc.Storage.Local
-  bucket: "nexpo-test",
-  virtual_host: true # if using Amazon S3
-
-config :ex_aws,
-  access_key_id: "dev",
-  secret_access_key: "dev",
-  region: "fakes3"
-
-config :ex_aws, :s3,
-  scheme: "http://",
-  host: "localhost",
-  port: 4567
+  storage: Arc.Storage.Local # or Arc.Storage.Local
