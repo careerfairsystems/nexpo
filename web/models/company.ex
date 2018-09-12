@@ -7,6 +7,8 @@ defmodule Nexpo.Company do
     field :description, :string
     field :website, :string
 
+    has_many :desired_programmes, Nexpo.DesiredProgramme
+
     timestamps()
   end
 

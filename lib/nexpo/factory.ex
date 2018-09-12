@@ -70,7 +70,7 @@ defmodule Nexpo.Factory do
   end
 
   @doc """
-  Create a Company
+  Create a User
   """
   def user_factory do
     %Nexpo.User{
@@ -78,6 +78,7 @@ defmodule Nexpo.Factory do
       password: sequence("63n3r4t3dP4ssw0rd")
     }
   end
+
   # Allows us to easly create a user with hashed password etc
   def create_user do
     params = Nexpo.Factory.params_for(:user)
