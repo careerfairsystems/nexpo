@@ -7,6 +7,8 @@ matrix:
         - nvm install 6.11.4
         - npm i -g npm
         - npm i -g codecov
+        - gem install fakes3
+        - fakes3 -r $HOME/.s3bucket -p 4567 --license 9806002125
       install:
         - cd priv/react_app && npm install
       script:
@@ -24,3 +26,5 @@ matrix:
         - npm run test-coverage-backend
       after_success:
         - bash <(curl -s https://codecov.io/bash)
+      after_script:
+        - kill $(pgrep -f fakes3)

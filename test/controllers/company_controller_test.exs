@@ -68,4 +68,11 @@ defmodule Nexpo.CompanyControllerTest do
     refute Repo.get(Company, company.id)
   end
 
+  test "create company with logoUrl and upload image", %{conn: conn}do
+    logoUrl = %Plug.Upload{path: "test/assets/Placeholder.png", filename: "Placeholder.png"}
+    conn = post conn, company_path(conn, :create), company: Map.put(@valid_attrs, :logoUrl, logoUrl)
+    assert json_response(conn, 201)["data"]["id"]
+    assert Repo.get_by(Company, %{name: @valid_attrs.name})
+  end
+
 end

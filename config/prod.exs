@@ -104,3 +104,15 @@ config :nexpo, Nexpo.Repo,
 if System.get_env("STAGING") != nil do
   import_config "staging.exs"
 end
+
+
+config :ex_aws,
+  access_key_id: System.get_env("S3_ACCESS_KEY_ID"),
+  secret_access_key: System.get_env("S3_SECRET_ACCESS_KEY_ID"),
+  region: "eu-central-1",
+  host: "s3.eu-central-1.amazonaws.com",
+  s3: [
+    scheme: "https://",
+    host: "s3.eu-central-1.amazonaws.com",
+    region: "eu-central-1"
+   ]
