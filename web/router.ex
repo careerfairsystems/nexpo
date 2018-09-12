@@ -47,9 +47,7 @@ defmodule Nexpo.Router do
      end
      resources "/categories", CompanyCategoryController, only: [:index, :show, :create]
      resources "/roles", RoleController
-     resources "/programmes", ProgrammeController do
-       resources "/desired_programmes", DesiredProgrammeController
-     end
+     resources "/programmes", ProgrammeController
 
     post "/login", SessionController, :create
     if Mix.env != :prod do
