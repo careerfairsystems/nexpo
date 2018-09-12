@@ -22,14 +22,14 @@ defmodule Nexpo.ProfileImage do
   # end
 
   # We use this so other file name can't be gueesed
-  def filename(version, {_file, scope}) do
+  def filename(version, {_, scope}) do
     :crypto.hash(:sha256, "a_very_long_string_#{scope.name}_#{version}")
     |> Base.encode16
     |> String.downcase
   end
 
   # Override the storage directory:
-  def storage_dir(version, {file, scope}) do
+  def storage_dir(_, {_, scope}) do
     "uploads/companies/#{scope.name}/images"
   end
 

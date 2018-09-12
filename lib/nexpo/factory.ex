@@ -6,14 +6,16 @@ defmodule Nexpo.Factory do
   create helper methods for easily creating relations on models that do not own the foreign key
   """
   use ExMachina.Ecto, repo: Nexpo.Repo
-
+  use Arc.Definition
+  use Arc.Ecto.Definition
   @doc """
   Create a Company
   """
   def company_factory do
+    {:ok, image} = Nexpo.ProfileImage.Type.load("x.jpg?1234567")
     %Nexpo.Company{
       name: sequence("Generated Company"),
-      logoUrl: sequence("Generated logoUrl"),
+      logoUrl: image,
       description: sequence("Generated description"),
       website: sequence("Generated website")
     }
