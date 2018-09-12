@@ -13,7 +13,7 @@ defmodule Nexpo.Factory do
   def company_factory do
     %Nexpo.Company{
       name: sequence("Generated Company"),
-      logoUrl: sequence("Generated logoUrl"),
+      logo_url: sequence("Generated logo_url"),
       description: sequence("Generated description"),
       website: sequence("Generated website")
     }

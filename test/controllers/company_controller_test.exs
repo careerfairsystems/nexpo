@@ -2,7 +2,7 @@ defmodule Nexpo.CompanyControllerTest do
   use Nexpo.ConnCase
 
   alias Nexpo.Company
-  @valid_attrs %{description: "some content", logoUrl: "some content", name: "some content", website: "some content"}
+  @valid_attrs %{description: "some content", logo_url: "some content", name: "some content", website: "some content"}
   @invalid_attrs %{}
 
   setup %{conn: conn} do
@@ -19,7 +19,7 @@ defmodule Nexpo.CompanyControllerTest do
     conn = get conn, company_path(conn, :show, company)
     assert json_response(conn, 200)["data"] == %{"id" => company.id,
       "name" => company.name,
-      "logoUrl" => company.logoUrl,
+      "logo_url" => company.logo_url,
       "description" => company.description,
       "website" => company.website,
       "student_session_days" => company.student_session_days}

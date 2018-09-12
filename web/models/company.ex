@@ -3,7 +3,7 @@ defmodule Nexpo.Company do
 
   schema "companies" do
     field :name, :string
-    field :logoUrl, :string
+    field :logo_url, :string
     field :description, :string
     field :website, :string
     field :student_session_days, :integer, default: 0
@@ -18,8 +18,8 @@ defmodule Nexpo.Company do
   """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:name, :logoUrl, :description, :website])
-    |> validate_required([:name, :logoUrl, :description, :website])
+    |> cast(params, [:name, :logo_url, :description, :website])
+    |> validate_required([:name, :logo_url, :description, :website])
     |> unique_constraint(:name)
   end
 end
