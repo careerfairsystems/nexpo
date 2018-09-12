@@ -45,6 +45,7 @@ defmodule Nexpo.Router do
      resources "/companies", CompanyController
      resources "/categories", CompanyCategoryController, only: [:index, :show, :create]
      resources "/roles", RoleController
+     resources "/students", StudentController
 
     post "/login", SessionController, :create
     if Mix.env != :prod do
