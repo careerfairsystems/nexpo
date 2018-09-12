@@ -18,7 +18,7 @@ matrix:
       otp_release: 19.3
       before_install:
         - gem install fakes3
-        - fakes3 -r $HOME/.s3bucket -p 4567 --license 9806002125
+        - fakes3 -r $HOME/.s3bucket -p 4567 --license 9806002125 &
       install:
         - mix local.rebar --force
         - mix local.hex --force
