@@ -57,13 +57,13 @@ defmodule Nexpo.User do
 
   def final_signup_changeset(user, params \\ %{}) do
     user
-    |> cast(params, [:password, :first_name, :last_name])
+    |> cast(params, [:password, :firstName, :lastName])
     |> validate_required(:password)
     |> validate_length(:password, min: 6)
     |> validate_confirmation(:password, required: true)
     |> hash_password(params)
     |> put_change(:signup_key, nil)
-    |> validate_required([:email, :hashed_password, :first_name, :last_name])
+    |> validate_required([:email, :hashed_password, :firstName, :lastName])
     |> unique_constraint(:email)
   end
 
@@ -74,7 +74,7 @@ defmodule Nexpo.User do
 
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:email, :password, :first_name, :last_name])
+    |> cast(params, [:email, :password, :firstName, :lastName])
     |> unique_constraint(:email)
     |> validate_length(:password, min: 6)
     |> hash_password(params)
