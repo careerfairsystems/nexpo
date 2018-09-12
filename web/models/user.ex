@@ -5,14 +5,16 @@ defmodule Nexpo.User do
   alias Nexpo.User
 
   schema "users" do
+    field :firstName, :string
+    field :lastName, :string
     field :email, :string
+    field :foodPreference, :string
+    field :phoneNumber, :string
     field :hashed_password, :string
     field :password, :string, virtual: true
     field :signup_key, :string
     field :forgot_password_key, :string
     field :forgot_password_time, :naive_datetime
-    field :first_name, :string
-    field :last_name, :string
 
     many_to_many :roles, Nexpo.Role, join_through: "users_roles"
     has_one :student, Nexpo.Student 
@@ -54,13 +56,13 @@ defmodule Nexpo.User do
 
   def final_signup_changeset(user, params \\ %{}) do
     user
-    |> cast(params, [:password, :first_name, :last_name])
+    |> cast(params, [:password, :firstName, :lastName])
     |> validate_required(:password)
     |> validate_length(:password, min: 6)
     |> validate_confirmation(:password, required: true)
     |> hash_password(params)
     |> put_change(:signup_key, nil)
-    |> validate_required([:email, :hashed_password, :first_name, :last_name])
+    |> validate_required([:email, :hashed_password, :firstName, :lastName])
     |> unique_constraint(:email)
   end
 
@@ -71,7 +73,7 @@ defmodule Nexpo.User do
 
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:email, :password, :first_name, :last_name])
+    |> cast(params, [:email, :password, :firstName, :lastName])
     |> unique_constraint(:email)
     |> validate_length(:password, min: 6)
     |> hash_password(params)
