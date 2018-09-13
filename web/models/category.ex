@@ -1,12 +1,10 @@
-defmodule Nexpo.CompanyCategory do
+defmodule Nexpo.Category do
   use Nexpo.Web, :model
-   # This model represents a company:
-   # title: company title
-   # id: company id
-   schema "company_categories" do
+
+   schema "categories" do
      field :title, :string
 
-     has_many :attributes, Nexpo.CompanyAttribute
+     has_many :attributes, Nexpo.CategoryAttribute, foreign_key: :category_id
 
      timestamps()
    end

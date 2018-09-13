@@ -1,4 +1,4 @@
-defmodule Nexpo.Repo.Migrations.CreateCompanyAttribute do
+defmodule Nexpo.Repo.Migrations.CreateCategoryAttribute do
   use Ecto.Migration
 
   def change do

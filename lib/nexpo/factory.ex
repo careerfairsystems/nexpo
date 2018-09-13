@@ -30,32 +30,32 @@ defmodule Nexpo.Factory do
   end
 
   @doc """
-  Create a CompanyCategory
+  Create a Category
   """
-  def company_category_factory do
-    %Nexpo.CompanyCategory{
+  def category_factory do
+    %Nexpo.Category{
       title: sequence("Generated Category"),
     }
   end
 
   @doc """
-  Give a CompanyCategory attributes
+  Give a Category attributes
   """
-  def with_attributes(%Nexpo.CompanyCategory{} = category, amount \\ 3) do
-    insert_list(amount, :company_attribute, %{category: category})
+  def with_attributes(%Nexpo.Category{} = category, amount \\ 3) do
+    insert_list(amount, :category_attribute, %{category: category})
     category
   end
 
   @doc """
-  Create a CompanyAttribute
+  Create a CategoryAttribute
   """
-  def company_attribute_factory do
-    %Nexpo.CompanyAttribute{
+  def category_attribute_factory do
+    %Nexpo.CategoryAttribute{
       title: sequence("Generated Attribute"),
       type: sequence("Generated type"),
       value: sequence("Generated value"),
 
-      category: build(:company_category),
+      category: build(:category),
     }
   end
 
@@ -67,7 +67,7 @@ defmodule Nexpo.Factory do
       value: sequence("Generated value"),
 
       company: build(:company),
-      attribute: build(:company_attribute)
+      attribute: build(:category_attribute)
     }
   end
 
