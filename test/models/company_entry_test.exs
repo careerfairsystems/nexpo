@@ -13,7 +13,7 @@ defmodule Nexpo.CompanyEntryTest do
     changes = changeset.changes
     assert Map.get(params, :value) == Map.get(changes, :value)
     assert Map.get(params, :company_id) == Map.get(changes, :company_id)
-    assert Map.get(params, :company_attribute_id) == Map.get(changes, :company_attribute_id)
+    assert Map.get(params, :category_attribute_id) == Map.get(changes, :category_attribute_id)
   end
 
   test "compulsory parameters must exist" do
@@ -25,7 +25,7 @@ defmodule Nexpo.CompanyEntryTest do
     # Test that all errors exists
     assert Enum.any?(errors, &(List.first(&1) == :value))
     assert Enum.any?(errors, &(List.first(&1) == :company_id))
-    assert Enum.any?(errors, &(List.first(&1) == :company_attribute_id))
+    assert Enum.any?(errors, &(List.first(&1) == :category_attribute_id))
   end
 
   test "changeset forces company to exist in other table" do
@@ -41,11 +41,11 @@ defmodule Nexpo.CompanyEntryTest do
     end
   end
 
-  test "changeset forces company_attribute to exist in other table" do
+  test "changeset forces category_attribute to exist in other table" do
     # Create params
     params = Factory.params_with_assocs(:company_entry)
     # Delete corresponding company attribute
-    Repo.get(Nexpo.CategoryAttribute, params.company_attribute_id) |> Repo.delete!
+    Repo.get(Nexpo.CategoryAttribute, params.category_attribute_id) |> Repo.delete!
 
     changeset = CompanyEntry.changeset(%CompanyEntry{}, params)
 
@@ -64,10 +64,10 @@ defmodule Nexpo.CompanyEntryTest do
     end
   end
 
-  test "company_attribute foreign_key can not be null on db level" do
+  test "category_attribute foreign_key can not be null on db level" do
     params =
     Factory.params_with_assocs(:company_entry)
-    |> Map.drop([:company_attribute_id])
+    |> Map.drop([:category_attribute_id])
 
     assert_raise Postgrex.Error, fn ->
       %CompanyEntry{} |> Map.merge(params) |> Repo.insert

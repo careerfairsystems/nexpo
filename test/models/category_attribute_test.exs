@@ -4,7 +4,7 @@ defmodule Nexpo.CategoryAttributeTest do
   alias Nexpo.CategoryAttribute
 
   test "changeset can change all valid params" do
-    params = Factory.params_with_assocs(:company_attribute)
+    params = Factory.params_with_assocs(:category_attribute)
     changeset = CategoryAttribute.changeset(%CategoryAttribute{}, params)
 
     # Assert no errors
@@ -12,7 +12,7 @@ defmodule Nexpo.CategoryAttributeTest do
     # Assert all params were changed
     changes = changeset.changes
     assert Map.get(params, :title) == Map.get(changes, :title)
-    assert Map.get(params, :company_category_id) == Map.get(changes, :company_category_id)
+    assert Map.get(params, :category_id) == Map.get(changes, :category_id)
   end
 
   test "compulsory parameters must exist" do
@@ -23,14 +23,14 @@ defmodule Nexpo.CategoryAttributeTest do
 
     # Test that all errors exists
     assert Enum.any?(errors, &(List.first(&1) == :title))
-    assert Enum.any?(errors, &(List.first(&1) == :company_category_id))
+    assert Enum.any?(errors, &(List.first(&1) == :category_id))
   end
 
-  test "changeset forces company_category to exist in other table" do
+  test "changeset forces category to exist in other table" do
     # Create params
-    params = Factory.params_with_assocs(:company_attribute)
+    params = Factory.params_with_assocs(:category_attribute)
     # Delete the corresponding company
-    Repo.get(Nexpo.Category, params.company_category_id) |> Repo.delete!
+    Repo.get(Nexpo.Category, params.category_id) |> Repo.delete!
 
     changeset = CategoryAttribute.changeset(%CategoryAttribute{}, params)
 
@@ -41,8 +41,8 @@ defmodule Nexpo.CategoryAttributeTest do
 
   test "foreign keys can not be null on db level" do
     params =
-    Factory.params_with_assocs(:company_attribute)
-    |> Map.drop([:company_category_id])
+    Factory.params_with_assocs(:category_attribute)
+    |> Map.drop([:category_id])
 
     assert_raise Postgrex.Error, fn ->
       %CategoryAttribute{} |> Map.merge(params) |> Repo.insert

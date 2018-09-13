@@ -8,13 +8,13 @@ defmodule Nexpo.CategoryAttributeController do
 #    render(conn, "index.json", categories: categories)
 #  end
 
-  # def create(conn, company_attribute_params) do
-  #   changeset = CategoryAttribute.changeset(%CategoryAttribute{}, company_attribute_params)
+  # def create(conn, category_attribute_params) do
+  #   changeset = CategoryAttribute.changeset(%CategoryAttribute{}, category_attribute_params)
   #   case Repo.insert(changeset) do
-  #     {:ok, _company_attribute} ->
+  #     {:ok, _category_attribute} ->
   #       conn
   #       |> put_status(:created)
-  #       |> json(company_attribute_params)
+  #       |> json(category_attribute_params)
   #     {:error, changeset} ->
   #       conn
   #       |> put_status(:unprocessable_entity)

@@ -1,10 +1,10 @@
 defmodule Nexpo.Category do
   use Nexpo.Web, :model
 
-   schema "company_categories" do
+   schema "categories" do
      field :title, :string
 
-     has_many :attributes, Nexpo.CategoryAttribute, foreign_key: :company_category_id
+     has_many :attributes, Nexpo.CategoryAttribute, foreign_key: :category_id
 
      timestamps()
    end

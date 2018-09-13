@@ -5,7 +5,7 @@ defmodule Nexpo.CompanyEntry do
     field :value, :string
 
     belongs_to :company, Nexpo.Company
-    belongs_to :attribute, Nexpo.CategoryAttribute, foreign_key: :company_attribute_id
+    belongs_to :attribute, Nexpo.CategoryAttribute, foreign_key: :category_attribute_id
 
     timestamps()
   end
@@ -15,9 +15,9 @@ defmodule Nexpo.CompanyEntry do
   """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:value, :company_id, :company_attribute_id])
-    |> validate_required([:value, :company_id, :company_attribute_id])
+    |> cast(params, [:value, :company_id, :category_attribute_id])
+    |> validate_required([:value, :company_id, :category_attribute_id])
     |> foreign_key_constraint(:company_id)
-    |> foreign_key_constraint(:company_attribute_id)
+    |> foreign_key_constraint(:category_attribute_id)
   end
 end
