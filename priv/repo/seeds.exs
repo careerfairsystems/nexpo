@@ -15,7 +15,7 @@ defmodule SeedEntries do
   def seed(repo, entry_type, n) do
       alias Nexpo.CompanyEntry
       alias Nexpo.Repo
-      Repo.insert!(%CompanyEntry{value: "#{:rand.uniform(100)}", company_id: :rand.uniform(5), company_attribute_id: :rand.uniform(16)})
+      Repo.insert!(%CompanyEntry{value: "#{:rand.uniform(100)}", company_id: :rand.uniform(5), category_attribute_id: :rand.uniform(16)})
       seed(repo, entry_type, n-1)
   end
 end
@@ -41,25 +41,25 @@ Repo.insert!(%Category{title: "Event"})
 #Create some Category attributes
 alias Nexpo.CategoryAttribute
 
-Repo.insert!(%CategoryAttribute{title: "Eluttag", company_category_id: 1})
-Repo.insert!(%CategoryAttribute{title: "Internetkoder", company_category_id: 1})
-Repo.insert!(%CategoryAttribute{title: "Ståbord", company_category_id: 1})
-Repo.insert!(%CategoryAttribute{title: "Koli", company_category_id: 1})
+Repo.insert!(%CategoryAttribute{title: "Eluttag", category_id: 1})
+Repo.insert!(%CategoryAttribute{title: "Internetkoder", category_id: 1})
+Repo.insert!(%CategoryAttribute{title: "Ståbord", category_id: 1})
+Repo.insert!(%CategoryAttribute{title: "Koli", category_id: 1})
 
-Repo.insert!(%CategoryAttribute{title: "Beskrivning", company_category_id: 2})
-Repo.insert!(%CategoryAttribute{title: "Länk till document", company_category_id: 2})
-Repo.insert!(%CategoryAttribute{title: "Ansvarig", company_category_id: 2})
-Repo.insert!(%CategoryAttribute{title: "Kontakt Uppgifter", company_category_id: 2})
+Repo.insert!(%CategoryAttribute{title: "Beskrivning", category_id: 2})
+Repo.insert!(%CategoryAttribute{title: "Länk till document", category_id: 2})
+Repo.insert!(%CategoryAttribute{title: "Ansvarig", category_id: 2})
+Repo.insert!(%CategoryAttribute{title: "Kontakt Uppgifter", category_id: 2})
 
-Repo.insert!(%CategoryAttribute{title: "Udda beställning", company_category_id: 3})
-Repo.insert!(%CategoryAttribute{title: "Extra ketchup", company_category_id: 3})
-Repo.insert!(%CategoryAttribute{title: "Trevligthetsskala", company_category_id: 3})
-Repo.insert!(%CategoryAttribute{title: "Länk till podio", company_category_id: 3})
+Repo.insert!(%CategoryAttribute{title: "Udda beställning", category_id: 3})
+Repo.insert!(%CategoryAttribute{title: "Extra ketchup", category_id: 3})
+Repo.insert!(%CategoryAttribute{title: "Trevligthetsskala", category_id: 3})
+Repo.insert!(%CategoryAttribute{title: "Länk till podio", category_id: 3})
 
-Repo.insert!(%CategoryAttribute{title: "Lunchföreläsning", company_category_id: 4})
-Repo.insert!(%CategoryAttribute{title: "Pub", company_category_id: 4})
-Repo.insert!(%CategoryAttribute{title: "Yrkesvaskning", company_category_id: 4})
-Repo.insert!(%CategoryAttribute{title: "Sabrering för nybörjare", company_category_id: 4})
+Repo.insert!(%CategoryAttribute{title: "Lunchföreläsning", category_id: 4})
+Repo.insert!(%CategoryAttribute{title: "Pub", category_id: 4})
+Repo.insert!(%CategoryAttribute{title: "Yrkesvaskning", category_id: 4})
+Repo.insert!(%CategoryAttribute{title: "Sabrering för nybörjare", category_id: 4})
 
 
 #Create some random company entries
