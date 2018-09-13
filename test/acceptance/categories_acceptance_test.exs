@@ -6,12 +6,12 @@ defmodule Nexpo.CategoriesAcceptanceTest do
   end
 
   test "GET /categories returns all categories that exist", %{conn: conn} do
-    company_categories = Factory.insert_list(3, :company_category)
+    categories = Factory.insert_list(3, :company_category)
     conn = conn |> get("/api/categories")
 
     assert json_response(conn, 200)
     response = Poison.decode!(conn.resp_body)["data"]
-    assert length(response) == length(company_categories)
+    assert length(response) == length(categories)
   end
 
   test "GET /categories is empty if no categories exist", %{conn: conn} do

@@ -5,8 +5,6 @@ defmodule Nexpo.CompanyEntry do
     field :value, :string
 
     belongs_to :company, Nexpo.Company
-
-    #field :company_category_attribute_id, :integer
     belongs_to :attribute, Nexpo.CategoryAttribute, foreign_key: :company_attribute_id
 
     timestamps()

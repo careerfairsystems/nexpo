@@ -67,7 +67,7 @@ defmodule Nexpo.Support.View do
       :attributes ->
         %{:attributes => render_many(object.attributes, Nexpo.CategoryAttributeView, "category_attribute.json")}
       :category ->
-        %{:category => render_one(object.category, Nexpo.CategoryView, "company_category.json")}
+        %{:category => render_one(object.category, Nexpo.CategoryView, "category.json")}
       _ ->
         %{}
     end
