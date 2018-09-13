@@ -18,7 +18,7 @@ defmodule Nexpo.Repo.Migrations.DoNotAcceptNilAsForeignKeys do
     end
 
     from(
-      a in Nexpo.CompanyAttribute,
+      a in Nexpo.CategoryAttribute,
       where: is_nil(a.company_category_id)
     )
     |> Repo.delete_all
