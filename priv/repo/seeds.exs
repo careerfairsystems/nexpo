@@ -31,39 +31,38 @@ Repo.insert!(%Company{name: "Intel"})
 Repo.insert!(%Company{name: "Jesus wine makers"})
 
 #Create some Categories
-alias Nexpo.CompanyCategory
+alias Nexpo.Category
 
-Repo.insert!(%CompanyCategory{title: "Logistik"})
-Repo.insert!(%CompanyCategory{title: "Avtal"})
-Repo.insert!(%CompanyCategory{title: "Övrigt"})
-Repo.insert!(%CompanyCategory{title: "Event"})
+Repo.insert!(%Category{title: "Logistik"})
+Repo.insert!(%Category{title: "Avtal"})
+Repo.insert!(%Category{title: "Övrigt"})
+Repo.insert!(%Category{title: "Event"})
 
 #Create some Category attributes
-alias Nexpo.CompanyAttribute
+alias Nexpo.CategoryAttribute
 
-Repo.insert!(%CompanyAttribute{title: "Eluttag", company_category_id: 1})
-Repo.insert!(%CompanyAttribute{title: "Internetkoder", company_category_id: 1})
-Repo.insert!(%CompanyAttribute{title: "Ståbord", company_category_id: 1})
-Repo.insert!(%CompanyAttribute{title: "Koli", company_category_id: 1})
+Repo.insert!(%CategoryAttribute{title: "Eluttag", company_category_id: 1})
+Repo.insert!(%CategoryAttribute{title: "Internetkoder", company_category_id: 1})
+Repo.insert!(%CategoryAttribute{title: "Ståbord", company_category_id: 1})
+Repo.insert!(%CategoryAttribute{title: "Koli", company_category_id: 1})
 
-Repo.insert!(%CompanyAttribute{title: "Beskrivning", company_category_id: 2})
-Repo.insert!(%CompanyAttribute{title: "Länk till document", company_category_id: 2})
-Repo.insert!(%CompanyAttribute{title: "Ansvarig", company_category_id: 2})
-Repo.insert!(%CompanyAttribute{title: "Kontakt Uppgifter", company_category_id: 2})
+Repo.insert!(%CategoryAttribute{title: "Beskrivning", company_category_id: 2})
+Repo.insert!(%CategoryAttribute{title: "Länk till document", company_category_id: 2})
+Repo.insert!(%CategoryAttribute{title: "Ansvarig", company_category_id: 2})
+Repo.insert!(%CategoryAttribute{title: "Kontakt Uppgifter", company_category_id: 2})
 
-Repo.insert!(%CompanyAttribute{title: "Udda beställning", company_category_id: 3})
-Repo.insert!(%CompanyAttribute{title: "Extra ketchup", company_category_id: 3})
-Repo.insert!(%CompanyAttribute{title: "Trevligthetsskala", company_category_id: 3})
-Repo.insert!(%CompanyAttribute{title: "Länk till podio", company_category_id: 3})
+Repo.insert!(%CategoryAttribute{title: "Udda beställning", company_category_id: 3})
+Repo.insert!(%CategoryAttribute{title: "Extra ketchup", company_category_id: 3})
+Repo.insert!(%CategoryAttribute{title: "Trevligthetsskala", company_category_id: 3})
+Repo.insert!(%CategoryAttribute{title: "Länk till podio", company_category_id: 3})
 
-Repo.insert!(%CompanyAttribute{title: "Lunchföreläsning", company_category_id: 4})
-Repo.insert!(%CompanyAttribute{title: "Pub", company_category_id: 4})
-Repo.insert!(%CompanyAttribute{title: "Yrkesvaskning", company_category_id: 4})
-Repo.insert!(%CompanyAttribute{title: "Sabrering för nybörjare", company_category_id: 4})
+Repo.insert!(%CategoryAttribute{title: "Lunchföreläsning", company_category_id: 4})
+Repo.insert!(%CategoryAttribute{title: "Pub", company_category_id: 4})
+Repo.insert!(%CategoryAttribute{title: "Yrkesvaskning", company_category_id: 4})
+Repo.insert!(%CategoryAttribute{title: "Sabrering för nybörjare", company_category_id: 4})
 
 
 #Create some random company entries
 alias Nexpo.CompanyEntry
 
 SeedEntries.seed(Repo, CompanyEntry, 100)
-

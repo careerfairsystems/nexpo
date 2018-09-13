@@ -101,7 +101,7 @@ defmodule Nexpo.CategoriesAcceptanceTest do
 
     assert json_response(conn, 201)
 
-    new_company = Nexpo.Repo.get_by(Nexpo.CompanyCategory, params)
+    new_company = Nexpo.Repo.get_by(Nexpo.Category, params)
     assert new_company != nil
 
   end

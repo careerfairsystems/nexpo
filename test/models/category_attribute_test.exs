@@ -30,7 +30,7 @@ defmodule Nexpo.CategoryAttributeTest do
     # Create params
     params = Factory.params_with_assocs(:company_attribute)
     # Delete the corresponding company
-    Repo.get(Nexpo.CompanyCategory, params.company_category_id) |> Repo.delete!
+    Repo.get(Nexpo.Category, params.company_category_id) |> Repo.delete!
 
     changeset = CategoryAttribute.changeset(%CategoryAttribute{}, params)
 

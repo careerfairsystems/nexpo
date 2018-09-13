@@ -4,7 +4,7 @@ defmodule Nexpo.CategoryAttributeController do
   # alias Nexpo.CategoryAttribute
 
 #  def index(conn, _params) do
-#    company_categories = Repo.all(CompanyCategory)
+#    company_categories = Repo.all(Category)
 #    render(conn, "index.json", company_categories: company_categories)
 #  end
 
@@ -23,13 +23,13 @@ defmodule Nexpo.CategoryAttributeController do
   # end
 #
 #  def show(conn, %{"id" => id}) do
-#    company_category = Repo.get!(CompanyCategory, id)
+#    company_category = Repo.get!(Category, id)
 #    render(conn, "show.json", company_category: company_category)
 #  end
 #
 #  def update(conn, %{"id" => id, "company_category" => company_category_params}) do
-#    company_category = Repo.get!(CompanyCategory, id)
-#    changeset = CompanyCategory.changeset(company_category, company_category_params)
+#    company_category = Repo.get!(Category, id)
+#    changeset = Category.changeset(company_category, company_category_params)
 #
 #    case Repo.update(changeset) do
 #      {:ok, company_category} ->
@@ -42,7 +42,7 @@ defmodule Nexpo.CategoryAttributeController do
 #  end
 #
 #  def delete(conn, %{"id" => id}) do
-#    company_category = Repo.get!(CompanyCategory, id)
+#    company_category = Repo.get!(Category, id)
 #
 #    # Here we use delete! (with a bang) because we expect
 #    # it to always work (and if it does not, it will raise).
