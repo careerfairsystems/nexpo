@@ -28,5 +28,3 @@ defmodule Nexpo.Repo.Migrations.FixCategory do
     end
   end
 end
-
-# bigserial

@@ -53,3 +53,6 @@ config :nexpo, Nexpo.Repo,
   adapter: Ecto.Adapters.Postgres,
   database: "nexpo_dev",
   pool_size: 10
+
+config :arc,
+  storage: Arc.Storage.Local # or Arc.Storage.Local

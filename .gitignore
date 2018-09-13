@@ -33,4 +33,7 @@ cover/
 .idea
 .vscode
 
+# Files uploaded locally in dev
+uploads/
+
 

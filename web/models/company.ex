@@ -1,9 +1,9 @@
 defmodule Nexpo.Company do
   use Nexpo.Web, :model
-
+  use Arc.Ecto.Schema
   schema "companies" do
     field :name, :string
-    field :logo_url, :string
+    field :logo_url, Nexpo.ProfileImage.Type
     field :description, :string
     field :website, :string
     field :student_session_days, :integer, default: 0
@@ -18,8 +18,9 @@ defmodule Nexpo.Company do
   """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:name, :logo_url, :description, :website])
-    |> validate_required([:name, :logo_url, :description, :website])
+    |> cast(params, [:name, :description, :website])
+    |> cast_attachments(params, [:logo_url])
+    |> validate_required([:name, :description, :website])
     |> unique_constraint(:name)
   end
 end
