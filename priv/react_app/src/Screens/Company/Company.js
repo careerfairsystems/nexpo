@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Paper from 'material-ui/Paper';
 import NotFound from '../NotFound';
 import MailLink from '../../Components/MailLink';
 import HtmlTitle from '../../Components/HtmlTitle';
@@ -17,25 +16,21 @@ class Company extends Component {
       return <NotFound />;
     }
 
-    const { name, email } = company;
+    const { name, website, description } = company;
     return (
       <div className="Company_Component">
         <HtmlTitle title={name} />
 
         <div className="left-col">
-          <Paper>
-            <div className="paper main-info">
-              <h1>{name}</h1>
-              <MailLink to={email}>{email}</MailLink>
-            </div>
-          </Paper>
+          <div className="paper main-info">
+            <h1>{name}</h1>
+            <MailLink to={website}>{website}</MailLink>
+          </div>
 
-          <Paper>
-            <div className="paper categories">
-              <h1>Information</h1>
-              <hr />
-            </div>
-          </Paper>
+          <div className="paper categories">
+            <h2>Information</h2>
+            {description}
+          </div>
         </div>
       </div>
     );

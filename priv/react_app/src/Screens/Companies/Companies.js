@@ -1,14 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import {
-  Table,
-  TableBody,
-  TableHeader,
-  TableHeaderColumn,
-  TableRow,
-  TableRowColumn
-} from 'material-ui/Table';
+import Table from 'antd/lib/table';
+import Button from 'antd/lib/button';
+import Divider from 'antd/lib/divider';
 import InvisibleLink from '../../Components/InvisibleLink';
 import LoadingSpinner from '../../Components/LoadingSpinner';
 import HtmlTitle from '../../Components/HtmlTitle';
@@ -22,30 +17,6 @@ class Companies extends Component {
     this.props.getAllCompanies();
   }
 
-  _renderTableHeader() {
-    return (
-      <TableHeader>
-        <TableRow>
-          <TableHeaderColumn>Name</TableHeaderColumn>
-          <TableHeaderColumn>Email</TableHeaderColumn>
-        </TableRow>
-      </TableHeader>
-    );
-  }
-
-  _renderTableRow(company) {
-    return (
-      <TableRow key={company.id}>
-        <TableRowColumn>
-          <InvisibleLink to={`/companies/${company.id}`}>
-            {company.name}
-          </InvisibleLink>
-        </TableRowColumn>
-        <TableRowColumn>{company.email}</TableRowColumn>
-      </TableRow>
-    );
-  }
-
   _renderLoading() {
     return (
       <div className="loading-spinner">
@@ -55,18 +26,54 @@ class Companies extends Component {
   }
 
   _renderCompanies() {
+    const { companies } = this.props;
+
+    const columns = [
+      {
+        title: 'Name',
+        dataIndex: 'name',
+        key: 'name',
+        render: (name, { id }) => (
+          <InvisibleLink to={`/companies/${id}`}>{name}</InvisibleLink>
+        )
+      },
+      {
+        title: 'Website',
+        dataIndex: 'website',
+        key: 'website'
+      },
+      {
+        title: 'Description',
+        dataIndex: 'description',
+        key: 'description'
+      },
+      {
+        title: 'Action',
+        key: 'action',
+        render: ({ id }) => (
+          <span>
+            <InvisibleLink to={`/companies/${id}`}>Show</InvisibleLink>
+            <Divider type="vertical" />
+            <InvisibleLink to="#">Edit</InvisibleLink>
+            <Divider type="vertical" />
+            <InvisibleLink to="#">Delete</InvisibleLink>
+          </span>
+        )
+      }
+    ];
+
     return (
       <div>
         <HtmlTitle title="Companies" />
 
-        <Table>
-          {this._renderTableHeader()}
-          <TableBody>
-            {Object.keys(this.props.companies).map(key =>
-              this._renderTableRow(this.props.companies[key])
-            )}
-          </TableBody>
-        </Table>
+        <Table
+          dataSource={Object.values(companies).map(i => ({ ...i, key: i.id }))}
+          columns={columns}
+        />
+
+        <Button onClick={() => console.log('New company')} type="primary">
+          New company
+        </Button>
       </div>
     );
   }
