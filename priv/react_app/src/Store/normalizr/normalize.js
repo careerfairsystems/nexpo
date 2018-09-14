@@ -19,6 +19,7 @@ class Normalize {
     const company = new schema.Entity('companies', {
       entries: [entry]
     });
+
     if (array) {
       return normalize(originalCompany, [company]);
     }
@@ -34,7 +35,12 @@ class Normalize {
   }
 
   static _doNormalizeCategory(originalCategory, array = false) {
-    const category = new schema.Entity('categories');
+    const attribute = new schema.Entity('attributes');
+
+    const category = new schema.Entity('categories', {
+      attributes: [attribute]
+    });
+
     if (array) {
       return normalize(originalCategory, [category]);
     }

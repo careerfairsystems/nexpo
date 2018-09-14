@@ -25,7 +25,7 @@ defmodule Nexpo.CompanyController do
   @apiUse InternalServerError
   """
   def index(conn, _params) do
-    companies = Repo.all(Company)
+    companies = Repo.all(Company) |> Repo.preload(:entries)
     render(conn, "index.json", companies: companies)
   end
 

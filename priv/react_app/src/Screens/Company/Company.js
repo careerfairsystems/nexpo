@@ -11,7 +11,7 @@ import { isEmpty, isNil } from 'ramda';
  */
 class Company extends Component {
   render() {
-    const { company } = this.props;
+    const { company, entries } = this.props;
     if (isEmpty(company) || isNil(company)) {
       return <NotFound />;
     }
