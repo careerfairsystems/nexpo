@@ -27,6 +27,11 @@ export type ApiState = {
 };
 
 const initialState: ApiState = {
+  categories: {
+    fetching: false,
+    errors: undefined,
+    success: false
+  },
   companies: {
     fetching: false,
     errors: undefined,
@@ -86,6 +91,39 @@ export const ApiReducer = (state = initialState, act: Action): ApiState => {
     case actionTypes.FETCH_COMPANIES_FAILURE: {
       const stateChange: ApiState = {
         companies: {
+          fetching: false,
+          errors: ['There was an error'],
+          success: false
+        }
+      };
+      return mergeDeepRight(state, stateChange);
+    }
+
+    case actionTypes.FETCH_CATEGORIES: {
+      const stateChange: ApiState = {
+        categories: {
+          fetching: true,
+          errors: undefined,
+          success: false
+        }
+      };
+      return mergeDeepRight(state, stateChange);
+    }
+
+    case actionTypes.FETCH_CATEGORIES_SUCCESS: {
+      const stateChange: ApiState = {
+        categories: {
+          fetching: false,
+          errors: undefined,
+          success: true
+        }
+      };
+      return mergeDeepRight(state, stateChange);
+    }
+
+    case actionTypes.FETCH_CATEGORIES_FAILURE: {
+      const stateChange: ApiState = {
+        categories: {
           fetching: false,
           errors: ['There was an error'],
           success: false

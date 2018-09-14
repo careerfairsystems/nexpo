@@ -34,6 +34,10 @@ export const EntitiesReducer = (
       normalized = Normalize.normalizeCompanies(action.companies, true);
       return mergeDeepRight(state, normalized.entities);
 
+    case actionTypes.FETCH_CATEGORIES_SUCCESS:
+      normalized = Normalize.normalizeCategories(action.categories, true);
+      return mergeDeepRight(state, normalized.entities);
+
     case actionTypes.FETCH_CURRENT_USER_SUCCESS:
       user = new schema.Entity('users');
       normalized = normalize(action.user, user);

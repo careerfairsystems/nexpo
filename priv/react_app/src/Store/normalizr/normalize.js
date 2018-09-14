@@ -5,7 +5,7 @@
 import { schema, normalize } from 'normalizr';
 
 class Normalize {
-  static _doNormalize(originalCompany, array = false) {
+  static _doNormalizeCompany(originalCompany, array = false) {
     const category = new schema.Entity('categories');
 
     const attribute = new schema.Entity('attributes', {
@@ -26,11 +26,27 @@ class Normalize {
   }
 
   static normalizeCompanies(originalCompanies) {
-    return this._doNormalize(originalCompanies, true);
+    return this._doNormalizeCompany(originalCompanies, true);
   }
 
   static normalizeCompany(originalCompany) {
-    return this._doNormalize(originalCompany);
+    return this._doNormalizeCompany(originalCompany);
+  }
+
+  static _doNormalizeCategory(originalCategory, array = false) {
+    const category = new schema.Entity('categories');
+    if (array) {
+      return normalize(originalCategory, [category]);
+    }
+    return normalize(originalCategory, category);
+  }
+
+  static normalizeCategories(originalCategories) {
+    return this._doNormalizeCategory(originalCategories, true);
+  }
+
+  static normalizeCategory(originalCategory) {
+    return this._doNormalizeCategory(originalCategory);
   }
 }
 

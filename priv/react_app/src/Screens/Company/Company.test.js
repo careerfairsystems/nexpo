@@ -20,7 +20,8 @@ it('should render NotFound if there is no company', () => {
 it('should set html title', () => {
   const company = {
     name: 'Test Company',
-    email: 'test@email.com'
+    website: 'testcompany.com',
+    describe: 'We do testing!'
   };
   const wrapper = shallow(<Company company={company} />);
 

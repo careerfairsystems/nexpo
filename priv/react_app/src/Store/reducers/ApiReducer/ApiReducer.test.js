@@ -14,6 +14,11 @@ import {
 
 it('should set the correct initial state', () => {
   const initialState: ApiState = {
+    categories: {
+      fetching: false,
+      errors: undefined,
+      success: false
+    },
     companies: {
       fetching: false,
       errors: undefined,

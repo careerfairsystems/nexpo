@@ -15,6 +15,8 @@ import ActionAccountCircle from 'material-ui/svg-icons/action/account-circle';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import PrivateRoute from '../Components/PrivateRoute';
 
+import Categories from '../Screens/Categories';
+import Category from '../Screens/Category';
 import Companies from '../Screens/Companies';
 import Company from '../Screens/Company';
 import NotFound from '../Screens/NotFound';
@@ -101,6 +103,9 @@ class App extends Component {
           onRequestChange={open => this.setState({ drawerOpen: open })}
         >
           <Subheader>Navigation</Subheader>
+          <InvisibleLink to="/categories">
+            <MenuItem onClick={this.closeDrawer}>Categories</MenuItem>
+          </InvisibleLink>
           <InvisibleLink to="/companies">
             <MenuItem onClick={this.closeDrawer}>Companies</MenuItem>
           </InvisibleLink>
@@ -108,6 +113,8 @@ class App extends Component {
 
         <Switch>
           <Route exact path="/" render={() => <Redirect to="/companies" />} />
+          <Route exact path="/categories" component={Categories} />
+          <PrivateRoute path="/categories/:id" component={Category} />
           <Route exact path="/companies" component={Companies} />
           <PrivateRoute path="/companies/:id" component={Company} />
           <Route path="/login" component={Login} />

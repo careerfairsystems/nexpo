@@ -7,14 +7,13 @@ import Divider from 'antd/lib/divider';
 import InvisibleLink from '../../Components/InvisibleLink';
 import LoadingSpinner from '../../Components/LoadingSpinner';
 import HtmlTitle from '../../Components/HtmlTitle';
-import './Companies.css';
 
 /**
- * Responsible for rendering a list of companies
+ * Responsible for rendering a list of categories
  */
-class Companies extends Component {
+class Categories extends Component {
   componentWillMount() {
-    this.props.getAllCompanies();
+    this.props.getAllCategories();
   }
 
   _renderLoading() {
@@ -25,34 +24,24 @@ class Companies extends Component {
     );
   }
 
-  _renderCompanies() {
-    const { companies } = this.props;
+  _renderCategories() {
+    const { categories } = this.props;
 
     const columns = [
       {
-        title: 'Name',
-        dataIndex: 'name',
-        key: 'name',
-        render: (name, { id }) => (
-          <InvisibleLink to={`/companies/${id}`}>{name}</InvisibleLink>
+        title: 'Title',
+        dataIndex: 'title',
+        key: 'title',
+        render: (title, { id }) => (
+          <InvisibleLink to={`/categories/${id}`}>{title}</InvisibleLink>
         )
-      },
-      {
-        title: 'Website',
-        dataIndex: 'website',
-        key: 'website'
-      },
-      {
-        title: 'Description',
-        dataIndex: 'description',
-        key: 'description'
       },
       {
         title: 'Action',
         key: 'action',
         render: ({ id }) => (
           <span>
-            <InvisibleLink to={`/companies/${id}`}>Show</InvisibleLink>
+            <InvisibleLink to={`/categories/${id}`}>Show</InvisibleLink>
             <Divider type="vertical" />
             <InvisibleLink to="#">Edit</InvisibleLink>
             <Divider type="vertical" />
@@ -64,18 +53,18 @@ class Companies extends Component {
 
     return (
       <div>
-        <HtmlTitle title="Companies" />
+        <HtmlTitle title="Categories" />
 
         <Table
-          dataSource={Object.keys(companies).map(i => ({
-            ...companies[i],
+          dataSource={Object.keys(categories).map(i => ({
+            ...categories[i],
             key: i
           }))}
           columns={columns}
         />
 
-        <Button onClick={() => console.log('New company')} type="primary">
-          New company
+        <Button onClick={() => console.log('New category')} type="primary">
+          New category
         </Button>
       </div>
     );
@@ -85,19 +74,19 @@ class Companies extends Component {
     if (this.props.fetching) {
       return this._renderLoading();
     }
-    return this._renderCompanies();
+    return this._renderCategories();
   }
 }
 
-Companies.propTypes = {
-  companies: PropTypes.object.isRequired,
+Categories.propTypes = {
+  categories: PropTypes.object.isRequired,
   fetching: PropTypes.bool.isRequired,
-  getAllCompanies: PropTypes.func.isRequired
+  getAllCategories: PropTypes.func.isRequired
 };
 
-Companies.defaultProps = {
-  companies: {},
+Categories.defaultProps = {
+  categories: {},
   fetching: false
 };
 
-export default Companies;
+export default Categories;
