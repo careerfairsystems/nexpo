@@ -29,8 +29,6 @@ describe('Entities reducer', () => {
     expect(state).toHaveProperty('categories');
     expect(state).toHaveProperty('entries');
     expect(Object.keys(state.companies).length).toBeGreaterThan(0);
-    expect(Object.keys(state.categories).length).toBeGreaterThan(0);
-    expect(Object.keys(state.attributes).length).toBeGreaterThan(0);
     expect(Object.keys(state.entries).length).toBeGreaterThan(0);
     // Check that each company's entry exists in entries
     const companyKeys = Object.keys(state.companies);
@@ -41,18 +39,27 @@ describe('Entities reducer', () => {
         )
       );
     });
-    // Check that each entry's attribute exist
-    const entryKeys = Object.keys(state.entries);
-    entryKeys.forEach(entryKey => {
-      expect(state.attributes).toHaveProperty(
-        state.entries[entryKey].attribute.toString()
-      );
-    });
-    // Check that each attribute's category exist
-    const attributeKeys = Object.keys(state.attributes);
-    attributeKeys.forEach(attributeKey => {
-      expect(state.categories).toHaveProperty(
-        state.attributes[attributeKey].category.toString()
+  });
+
+  it('should handle FETCH_CATEGORIES_SUCCESS', () => {
+    const state = EntitiesReducer(
+      undefined,
+      Actions.categories.getAllCategoriesSuccess(testData.categories)
+    );
+
+    expect(state).toHaveProperty('categories');
+    expect(state).toHaveProperty('attributes');
+    expect(state).toHaveProperty('categories');
+    expect(state).toHaveProperty('entries');
+    expect(Object.keys(state.categories).length).toBeGreaterThan(0);
+    expect(Object.keys(state.attributes).length).toBeGreaterThan(0);
+    // Check that each category's attribute exists in attributes
+    const categoryKeys = Object.keys(state.categories);
+    categoryKeys.forEach(categoryKey => {
+      expect(
+        state.categories[categoryKey].attributes.forEach(entryNbr =>
+          Object.keys(state.attributes).find(entryKey => entryNbr === entryKey)
+        )
       );
     });
   });

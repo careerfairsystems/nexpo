@@ -66,12 +66,14 @@ class Companies extends Component {
       <div>
         <HtmlTitle title="Companies" />
 
+        <h1>Companies</h1>
+
         <Table
+          columns={columns}
           dataSource={Object.keys(companies).map(i => ({
             ...companies[i],
             key: i
           }))}
-          columns={columns}
         />
 
         <Button onClick={() => console.log('New company')} type="primary">

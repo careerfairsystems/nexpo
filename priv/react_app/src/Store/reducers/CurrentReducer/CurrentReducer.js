@@ -21,3 +21,5 @@ export const CurrentReducer = (state = initialState, action): CurrentState => {
       return state;
   }
 };
+
+export default CurrentReducer;

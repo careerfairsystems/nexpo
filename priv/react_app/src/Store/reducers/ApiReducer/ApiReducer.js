@@ -175,3 +175,5 @@ export const ApiReducer = (state = initialState, act: Action): ApiState => {
     }
   }
 };
+
+export default ApiReducer;

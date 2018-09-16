@@ -27,23 +27,33 @@ export const EntitiesReducer = (
   action
 ): EntitiesState => {
   let normalized;
-  let user;
 
   switch (action.type) {
-    case actionTypes.FETCH_COMPANIES_SUCCESS:
-      normalized = Normalize.normalizeCompanies(action.companies, true);
-      return mergeDeepRight(state, normalized.entities);
+    case actionTypes.FETCH_COMPANIES_SUCCESS: {
+      const entry = new schema.Entity('entries');
+      const company = new schema.Entity('companies', { entries: [entry] });
 
-    case actionTypes.FETCH_CATEGORIES_SUCCESS:
-      normalized = Normalize.normalizeCategories(action.categories, true);
+      normalized = normalize(action.companies, [company]);
       return mergeDeepRight(state, normalized.entities);
+    }
+    case actionTypes.FETCH_CATEGORIES_SUCCESS: {
+      const attribute = new schema.Entity('attributes');
+      const category = new schema.Entity('categories', {
+        attributes: [attribute]
+      });
 
-    case actionTypes.FETCH_CURRENT_USER_SUCCESS:
-      user = new schema.Entity('users');
+      normalized = normalize(action.categories, [category]);
+      return mergeDeepRight(state, normalized.entities);
+    }
+    case actionTypes.FETCH_CURRENT_USER_SUCCESS: {
+      const user = new schema.Entity('users');
+
       normalized = normalize(action.user, user);
       return mergeDeepRight(state, normalized.entities);
-
+    }
     default:
       return state;
   }
 };
+
+export default EntitiesReducer;

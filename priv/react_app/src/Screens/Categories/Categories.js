@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-
+import { denormalize, schema } from 'normalizr';
 import Table from 'antd/lib/table';
 import Button from 'antd/lib/button';
 import Divider from 'antd/lib/divider';
@@ -8,24 +8,37 @@ import InvisibleLink from '../../Components/InvisibleLink';
 import LoadingSpinner from '../../Components/LoadingSpinner';
 import HtmlTitle from '../../Components/HtmlTitle';
 
+const getSchema = () => {
+  const attribute = new schema.Entity('attributes');
+  const category = new schema.Entity('categories', {
+    attributes: [attribute]
+  });
+  return category;
+};
+
+const setKeys = entries =>
+  Object.keys(entries).map(i => ({
+    ...entries[i],
+    key: i
+  }));
+
+const renderLoading = () => (
+  <div className="loading-spinner">
+    <LoadingSpinner />
+  </div>
+);
+
 /**
  * Responsible for rendering a list of categories
  */
 class Categories extends Component {
   componentWillMount() {
-    this.props.getAllCategories();
+    const { getAllCategories } = this.props;
+    getAllCategories();
   }
 
-  _renderLoading() {
-    return (
-      <div className="loading-spinner">
-        <LoadingSpinner />
-      </div>
-    );
-  }
-
-  _renderCategories() {
-    const { categories } = this.props;
+  renderCategories() {
+    const { categories, attributes } = this.props;
 
     const columns = [
       {
@@ -51,18 +64,46 @@ class Categories extends Component {
       }
     ];
 
+    const expandedRowRender = category => (
+      <Table
+        columns={[
+          { title: 'Title', dataIndex: 'title', key: 'title' },
+          {
+            title: 'Action',
+            key: 'action',
+            render: () => (
+              <span>
+                <InvisibleLink to="#">Show</InvisibleLink>
+                <Divider type="vertical" />
+                <InvisibleLink to="#">Edit</InvisibleLink>
+                <Divider type="vertical" />
+                <InvisibleLink to="#">Delete</InvisibleLink>
+              </span>
+            )
+          }
+        ]}
+        dataSource={setKeys(
+          denormalize({ attributes: category.attributes }, getSchema(), {
+            attributes
+          }).attributes
+        )}
+        showHeader={false}
+        pagination={false}
+      />
+    );
+
     return (
       <div>
         <HtmlTitle title="Categories" />
 
-        <Table
-          dataSource={Object.keys(categories).map(i => ({
-            ...categories[i],
-            key: i
-          }))}
-          columns={columns}
-        />
+        <h1>Categories</h1>
 
+        <Table
+          columns={columns}
+          dataSource={setKeys(categories)}
+          expandedRowRender={expandedRowRender}
+          expandRowByClick
+        />
         <Button onClick={() => console.log('New category')} type="primary">
           New category
         </Button>
@@ -72,14 +113,19 @@ class Categories extends Component {
 
   render() {
     if (this.props.fetching) {
-      return this._renderLoading();
+      return renderLoading();
     }
-    return this._renderCategories();
+    return this.renderCategories();
   }
 }
 
+Categories.defaultProps = {
+  attributes: []
+};
+
 Categories.propTypes = {
   categories: PropTypes.object.isRequired,
+  attributes: PropTypes.object,
   fetching: PropTypes.bool.isRequired,
   getAllCategories: PropTypes.func.isRequired
 };
