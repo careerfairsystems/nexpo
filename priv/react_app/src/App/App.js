@@ -91,7 +91,7 @@ class App extends Component {
 
         <AppBar
           title="Nexpo"
-          onLeftIconButtonTouchTap={() => this.setState({ drawerOpen: true })}
+          onLeftIconButtonClick={() => this.setState({ drawerOpen: true })}
           iconElementRight={
             isLoggedIn ? this.loggedInAppBar() : this.loggedOutAppBar()
           }
