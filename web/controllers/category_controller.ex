@@ -83,7 +83,8 @@ defmodule Nexpo.CategoryController do
   @apiUse InternalServerError
   """
   def show(conn, %{"id" => id}) do
-    category = Repo.get!(Category, id) |> Repo.preload(:attributes)
+    category = Repo.get!(Category, id) 
+               |> Repo.preload([attributes: [entries: :company]])
     render(conn, "show.json", category: category)
   end
 #
