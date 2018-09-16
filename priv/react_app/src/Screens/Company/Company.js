@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { isEmpty, isNil } from 'lodash/fp';
 import NotFound from '../NotFound';
 import MailLink from '../../Components/MailLink';
 import HtmlTitle from '../../Components/HtmlTitle';
 import './Company.css';
-import { isEmpty, isNil } from 'ramda';
 
 /**
  * Responsible for rendering a company. Company id is recieved via url
  */
 class Company extends Component {
   render() {
-    const { company, entries } = this.props;
+    const { company } = this.props;
     if (isEmpty(company) || isNil(company)) {
       return <NotFound />;
     }

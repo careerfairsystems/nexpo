@@ -3,7 +3,6 @@
  */
 import { schema, normalize } from 'normalizr';
 import { actionTypes } from '../..';
-import Normalize from '../../normalizr/normalize';
 
 export type EntitiesState = {
   companies: {},
