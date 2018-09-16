@@ -7,6 +7,11 @@ defmodule Nexpo.Router do
     use Sentry.Plug
   end
 
+  pipeline :admin do
+    plug Guardian.Plug.EnsureAuthenticated, [handler: Nexpo.SessionController]
+    # TODO: plug Nexpo.Plug.EnsureAdmin  //follow the example from https://medium.com/@alves.lcs/lets-build-phoenix-admin-routes-8c0e065ac33f
+  end
+
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
@@ -38,6 +43,16 @@ defmodule Nexpo.Router do
     pipe_through [:api, :api_auth]
 
     get "/me", UserController, :me
+  end
+
+  # Admin protected endpoints
+  scope "/admin", Nexpo, as: :admin, alias: Admin do
+    pipe_through [:api, :api_auth, :admin]
+
+    post "/companies:id", CompanyController, :create
+    post "/companies:id", CompanyController, :delete
+    post "/companies:id", CompanyController, :update
+    resources "/users", UserController, only: [:show]
   end
 
   # Not-protected endpoints
