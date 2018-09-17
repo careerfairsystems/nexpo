@@ -15,12 +15,6 @@ const setKeys = entries =>
     key: i
   }));
 
-const renderLoading = () => (
-  <div className="loading-spinner">
-    <LoadingSpinner />
-  </div>
-);
-
 /**
  * Responsible for rendering a list of categories
  */
@@ -110,7 +104,7 @@ class Categories extends Component {
 
   render() {
     if (this.props.fetching) {
-      return renderLoading();
+      return <LoadingSpinner />;
     }
     return this.renderCategories();
   }

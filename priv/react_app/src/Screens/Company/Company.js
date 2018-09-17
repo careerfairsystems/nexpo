@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { isEmpty, isNil } from 'lodash/fp';
 import NotFound from '../NotFound';
-import MailLink from '../../Components/MailLink';
+// import MailLink from '../../Components/MailLink';
 import HtmlTitle from '../../Components/HtmlTitle';
 import './Company.css';
 
@@ -29,12 +29,12 @@ class Company extends Component {
         <div className="left-col">
           <div className="paper main-info">
             <h1>{name}</h1>
-            <MailLink to={website}>{website}</MailLink>
+            <a href={website}>{website}</a>
+            <p>{description}</p>
           </div>
 
-          <div className="paper categories">
-            <h2>Information</h2>
-            {description}
+          <div className="paper entries">
+            <h2>Entries</h2>
           </div>
         </div>
       </div>

@@ -14,18 +14,11 @@ import './Companies.css';
  */
 class Companies extends Component {
   componentWillMount() {
-    this.props.getAllCompanies();
+    const { getAllCompanies } = this.props;
+    getAllCompanies();
   }
 
-  _renderLoading() {
-    return (
-      <div className="loading-spinner">
-        <LoadingSpinner />
-      </div>
-    );
-  }
-
-  _renderCompanies() {
+  renderCompanies() {
     const { companies } = this.props;
 
     const columns = [
@@ -85,9 +78,9 @@ class Companies extends Component {
 
   render() {
     if (this.props.fetching) {
-      return this._renderLoading();
+      return <LoadingSpinner />;
     }
-    return this._renderCompanies();
+    return this.renderCompanies();
   }
 }
 
