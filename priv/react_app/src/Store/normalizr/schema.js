@@ -20,64 +20,43 @@ const hasMany = key => (value, parent) => ({
   [key]: [parent.id]
 });
 
+const entity = (key, definition = {}, options = {}) =>
+  new schema.Entity(key, definition, {
+    mergeStrategy: options.merge,
+    processStrategy: options.model
+  });
+
 const categorySchema = () => {
-  const company = new schema.Entity(
+  const company = entity(
     'companies',
     {},
-    {
-      mergeStrategy: merge('entries'),
-      processStrategy: hasMany('entries')
-    }
+    { merge: merge('entries'), model: hasMany('entries') }
   );
-
-  const entry = new schema.Entity(
+  const entry = entity(
     'entries',
     { company },
-    {
-      processStrategy: belongsTo('attribute')
-    }
+    { model: belongsTo('attribute') }
   );
-
-  const attribute = new schema.Entity(
+  const attribute = entity(
     'attributes',
     { entries: [entry] },
-    {
-      processStrategy: belongsTo('category')
-    }
+    { model: belongsTo('category') }
   );
-
-  const category = new schema.Entity('categories', {
-    attributes: [attribute]
-  });
+  const category = entity('categories', { attributes: [attribute] });
 
   return category;
 };
 
 const categoriesSchema = () => {
-  const attribute = new schema.Entity(
-    'attributes',
-    {},
-    {
-      processStrategy: belongsTo('category')
-    }
-  );
-
-  const category = new schema.Entity('categories', {
-    attributes: [attribute]
-  });
+  const attribute = entity('attributes', {}, { model: belongsTo('category') });
+  const category = entity('categories', { attributes: [attribute] });
 
   return [category];
 };
 
 const companySchema = () => {
-  const entry = new schema.Entity(
-    'entries',
-    {},
-    {
-      processStrategy: belongsTo('company')
-    }
-  );
-  const company = new schema.Entity('companies', { entries: [entry] });
+  const entry = entity('entries', {}, { model: belongsTo('company') });
+  const company = entity('companies', { entries: [entry] });
 
   return company;
 };
@@ -85,7 +64,7 @@ const companySchema = () => {
 const companiesSchema = () => [companySchema()];
 
 const userSchema = () => {
-  const user = new schema.Entity('users');
+  const user = entity('users');
 
   return user;
 };

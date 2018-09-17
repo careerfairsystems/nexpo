@@ -27,6 +27,20 @@ import ForgotPassword from '../Screens/ForgotPassword';
 import InvisibleLink from '../Components/InvisibleLink';
 import HtmlTitle from '../Components/HtmlTitle';
 
+const routes = (
+  <Switch>
+    <Route exact path="/" render={() => <Redirect to="/companies" />} />
+    <Route exact path="/categories" component={Categories} />
+    <PrivateRoute path="/categories/:id" component={Category} />
+    <Route exact path="/companies" component={Companies} />
+    <PrivateRoute path="/companies/:id" component={Company} />
+    <Route path="/login" component={Login} />
+    <Route path="/signup" component={Signup} />
+    <Route path="/forgot-password" component={ForgotPassword} />
+    <Route component={NotFound} />
+  </Switch>
+);
+
 /**
  * The base of the application. Defines the basic layout
  */
@@ -82,6 +96,24 @@ class App extends Component {
 
   closeDrawer = () => this.setState({ drawerOpen: false });
 
+  renderDrawer() {
+    return (
+      <Drawer
+        open={this.state.drawerOpen}
+        docked={false}
+        onRequestChange={open => this.setState({ drawerOpen: open })}
+      >
+        <Subheader>Navigation</Subheader>
+        <InvisibleLink to="/categories">
+          <MenuItem onClick={this.closeDrawer}>Categories</MenuItem>
+        </InvisibleLink>
+        <InvisibleLink to="/companies">
+          <MenuItem onClick={this.closeDrawer}>Companies</MenuItem>
+        </InvisibleLink>
+      </Drawer>
+    );
+  }
+
   render() {
     const { isLoggedIn } = this.props;
     return (
@@ -97,31 +129,8 @@ class App extends Component {
           }
         />
 
-        <Drawer
-          open={this.state.drawerOpen}
-          docked={false}
-          onRequestChange={open => this.setState({ drawerOpen: open })}
-        >
-          <Subheader>Navigation</Subheader>
-          <InvisibleLink to="/categories">
-            <MenuItem onClick={this.closeDrawer}>Categories</MenuItem>
-          </InvisibleLink>
-          <InvisibleLink to="/companies">
-            <MenuItem onClick={this.closeDrawer}>Companies</MenuItem>
-          </InvisibleLink>
-        </Drawer>
-
-        <Switch>
-          <Route exact path="/" render={() => <Redirect to="/companies" />} />
-          <Route exact path="/categories" component={Categories} />
-          <PrivateRoute path="/categories/:id" component={Category} />
-          <Route exact path="/companies" component={Companies} />
-          <PrivateRoute path="/companies/:id" component={Company} />
-          <Route path="/login" component={Login} />
-          <Route path="/signup" component={Signup} />
-          <Route path="/forgot-password" component={ForgotPassword} />
-          <Route component={NotFound} />
-        </Switch>
+        {this.renderDrawer()}
+        {routes}
       </div>
     );
   }

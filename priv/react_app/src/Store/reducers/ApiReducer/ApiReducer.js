@@ -46,126 +46,80 @@ const initialState: ApiState = [
   {}
 );
 
+const fetching = {
+  fetching: true,
+  errors: undefined,
+  success: false
+};
+
+const retrieving = {
+  fetching: false,
+  errors: undefined,
+  success: true
+};
+
+const failure = error => ({
+  fetching: false,
+  errors: error || ['There was an error'],
+  success: false
+});
+
 export const ApiReducer = (state = initialState, act: Action): ApiState => {
   switch (act.type) {
     case actionTypes.FETCH_COMPANIES: {
-      const stateChange: ApiState = {
-        companies: {
-          fetching: true,
-          errors: undefined,
-          success: false
-        }
-      };
+      const stateChange: ApiState = { companies: fetching };
       return { ...state, ...stateChange };
     }
 
     case actionTypes.FETCH_COMPANIES_SUCCESS: {
-      const stateChange: ApiState = {
-        companies: {
-          fetching: false,
-          errors: undefined,
-          success: true
-        }
-      };
+      const stateChange: ApiState = { companies: retrieving };
       return { ...state, ...stateChange };
     }
 
     case actionTypes.FETCH_COMPANIES_FAILURE: {
-      const stateChange: ApiState = {
-        companies: {
-          fetching: false,
-          errors: ['There was an error'],
-          success: false
-        }
-      };
+      const stateChange: ApiState = { companies: failure() };
       return { ...state, ...stateChange };
     }
 
     case actionTypes.FETCH_CATEGORIES: {
-      const stateChange: ApiState = {
-        categories: {
-          fetching: true,
-          errors: undefined,
-          success: false
-        }
-      };
+      const stateChange: ApiState = { categories: fetching };
       return { ...state, ...stateChange };
     }
 
     case actionTypes.FETCH_CATEGORIES_SUCCESS: {
-      const stateChange: ApiState = {
-        categories: {
-          fetching: false,
-          errors: undefined,
-          success: true
-        }
-      };
+      const stateChange: ApiState = { categories: retrieving };
       return { ...state, ...stateChange };
     }
 
     case actionTypes.FETCH_CATEGORIES_FAILURE: {
-      const stateChange: ApiState = {
-        categories: {
-          fetching: false,
-          errors: ['There was an error'],
-          success: false
-        }
-      };
+      const stateChange: ApiState = { categories: failure() };
       return { ...state, ...stateChange };
     }
 
     case actionTypes.FORGOT_PASSWORD_REQUEST: {
-      const stateChange: ApiState = {
-        forgot_password: {
-          fetching: true,
-          errors: undefined,
-          success: false
-        }
-      };
+      const stateChange: ApiState = { forgot_password: fetching };
       return { ...state, ...stateChange };
     }
 
     case actionTypes.FORGOT_PASSWORD_SUCCESS: {
-      const stateChange: ApiState = {
-        forgot_password: {
-          fetching: false,
-          errors: undefined,
-          success: true
-        }
-      };
+      const stateChange: ApiState = { forgot_password: retrieving };
       return { ...state, ...stateChange };
     }
 
     case actionTypes.REPLACE_FORGOTTEN_PASSWORD_REQUEST: {
-      const stateChange: ApiState = {
-        replace_password: {
-          fetching: true,
-          errors: undefined,
-          success: false
-        }
-      };
+      const stateChange: ApiState = { replace_password: fetching };
       return { ...state, ...stateChange };
     }
 
     case actionTypes.REPLACE_FORGOTTEN_PASSWORD_SUCCESS: {
-      const stateChange: ApiState = {
-        replace_password: {
-          fetching: false,
-          errors: undefined,
-          success: true
-        }
-      };
+      const stateChange: ApiState = { replace_password: retrieving };
       return { ...state, ...stateChange };
     }
 
     case actionTypes.REPLACE_FORGOTTEN_PASSWORD_FAILURE: {
       const action: ReplaceForgottenPasswordFailureAction = act;
       const stateChange: ApiState = {
-        replace_password: {
-          fetching: false,
-          errors: action.errors,
-          success: false
-        }
+        replace_password: failure(action.errors)
       };
       return { ...state, ...stateChange };
     }
