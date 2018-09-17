@@ -87,7 +87,33 @@ const testData = {
         { title: 'Sabrering för nybörjare', id: 16 }
       ]
     }
-  ]
+  ],
+  category: {
+    title: 'Logistik',
+    id: 1,
+    attributes: [
+      {
+        title: 'Eluttag',
+        id: 1,
+        entries: [{ id: 1, value: '1', company: { id: 1, name: 'Spotify' } }]
+      },
+      {
+        title: 'Internetkoder',
+        id: 2,
+        entries: [{ id: 2, value: '1', company: { id: 2, name: 'Google' } }]
+      },
+      {
+        title: 'Ståbord',
+        id: 3,
+        entries: [{ id: 3, value: '1', company: { id: 3, name: 'IBM' } }]
+      },
+      {
+        title: 'Koli',
+        id: 4,
+        entries: [{ id: 4, value: '1', company: { id: 2, name: 'Google' } }]
+      }
+    ]
+  }
 };
 
 export default testData;

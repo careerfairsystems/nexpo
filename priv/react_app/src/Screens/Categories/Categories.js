@@ -1,20 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { denormalize, schema } from 'normalizr';
+import { denormalize } from 'normalizr';
 import Table from 'antd/lib/table';
 import Button from 'antd/lib/button';
 import Divider from 'antd/lib/divider';
+import Schema from '../../Store/normalizr/schema';
 import InvisibleLink from '../../Components/InvisibleLink';
 import LoadingSpinner from '../../Components/LoadingSpinner';
 import HtmlTitle from '../../Components/HtmlTitle';
-
-const getSchema = () => {
-  const attribute = new schema.Entity('attributes');
-  const category = new schema.Entity('categories', {
-    attributes: [attribute]
-  });
-  return category;
-};
 
 const setKeys = entries =>
   Object.keys(entries).map(i => ({
@@ -83,9 +76,13 @@ class Categories extends Component {
           }
         ]}
         dataSource={setKeys(
-          denormalize({ attributes: category.attributes }, getSchema(), {
-            attributes
-          }).attributes
+          denormalize(
+            { attributes: category.attributes },
+            Schema.categorySchema(),
+            {
+              attributes
+            }
+          ).attributes
         )}
         showHeader={false}
         pagination={false}

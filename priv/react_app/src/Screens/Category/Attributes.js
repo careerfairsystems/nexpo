@@ -43,20 +43,17 @@ const stateful = connect((state: State, props) => {
     state.entities.attributes
   );
 
-  const entries = attributes
-    .reduce(
-      (acc, attribute) =>
-        acc.concat(attribute.entries.map(id => ({ id, attribute }))),
-      []
-    )
-    .map(entry => ({ ...entry, ...state.entities.entries[entry.id] }))
+  const entries = filter(
+    ({ attribute }) => attributeIds.includes(attribute),
+    state.entities.entries
+  )
     .map(entry => ({
       ...entry,
-      company: state.entities.companies[entry.company]
+      company: state.entities.companies[entry.company],
+      attribute: state.entities.attributes[entry.attribute]
     }))
     .map(entry => ({
       ...entry,
-      key: entry.id,
       companyName: entry.company.name,
       [entry.attribute.title.toLowerCase()]: entry.value
     }));

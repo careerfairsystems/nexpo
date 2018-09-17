@@ -7,12 +7,14 @@ import MailLink from '../../Components/MailLink';
 
 it('should render without crashing', () => {
   const company = {};
-  shallow(<Company company={company} />);
+  const func = jest.fn();
+  shallow(<Company company={company} getCompany={func} />);
 });
 
 it('should render NotFound if there is no company', () => {
   const company = {};
-  const wrapper = shallow(<Company company={company} />);
+  const func = jest.fn();
+  const wrapper = shallow(<Company company={company} getCompany={func} />);
 
   expect(wrapper.find(NotFound)).toHaveLength(1);
 });
@@ -23,7 +25,8 @@ it('should set html title', () => {
     website: 'testcompany.com',
     describe: 'We do testing!'
   };
-  const wrapper = shallow(<Company company={company} />);
+  const func = jest.fn();
+  const wrapper = shallow(<Company company={company} getCompany={func} />);
 
   expect(wrapper.contains(<HtmlTitle title={company.name} />)).toBeTruthy();
 });
@@ -33,7 +36,8 @@ it('should render company information', () => {
     name: 'Test Company',
     email: 'test@email.com'
   };
-  const wrapper = shallow(<Company company={company} />);
+  const func = jest.fn();
+  const wrapper = shallow(<Company company={company} getCompany={func} />);
 
   expect(wrapper.contains(<h1>{company.name}</h1>)).toBeTruthy();
   expect(wrapper.find(MailLink)).toHaveLength(1);

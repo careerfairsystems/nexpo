@@ -10,6 +10,11 @@ import './Company.css';
  * Responsible for rendering a company. Company id is recieved via url
  */
 class Company extends Component {
+  componentWillMount() {
+    const { id, getCompany } = this.props;
+    getCompany(id);
+  }
+
   render() {
     const { company } = this.props;
     if (isEmpty(company) || isNil(company)) {
@@ -38,7 +43,9 @@ class Company extends Component {
 }
 
 Company.propTypes = {
-  company: PropTypes.object.isRequired
+  id: PropTypes.string.isRequired,
+  company: PropTypes.object.isRequired,
+  getCompany: PropTypes.func.isRequired
 };
 
 export default Company;

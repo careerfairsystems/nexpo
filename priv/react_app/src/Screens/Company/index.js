@@ -1,28 +1,29 @@
 import { connect } from 'react-redux';
-import { denormalize, schema } from 'normalizr';
+import { denormalize } from 'normalizr';
+import { Actions } from '../../Store';
+import Schema from '../../Store/normalizr/schema';
 import Company from './Company';
 
-const getSchema = () => {
-  const entry = new schema.Entity('entries');
-
-  const company = new schema.Entity('companies', {
-    entries: [entry]
-  });
-
-  return company;
-};
-
-const stateful = connect((state, props) => {
+const mapStateToProps = (state, props) => {
   const companyId = props.match.params.id;
   const company = state.entities.companies[companyId] || {};
 
   const entries = denormalize(
     { entries: company.entries },
-    getSchema(),
+    Schema.companySchema(),
     state.entities
   );
 
-  return { company, entries };
+  return { id: companyId, company, entries };
+};
+
+const mapDispatchToProps = dispatch => ({
+  getCompany: id => dispatch(Actions.companies.getCompany(id))
 });
+
+const stateful = connect(
+  mapStateToProps,
+  mapDispatchToProps
+);
 
 export default stateful(Company);

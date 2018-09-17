@@ -47,7 +47,7 @@ describe('Entities reducer', () => {
       Actions.categories.getAllCategoriesSuccess(testData.categories)
     );
 
-    expect(state).toHaveProperty('categories');
+    expect(state).toHaveProperty('companies');
     expect(state).toHaveProperty('attributes');
     expect(state).toHaveProperty('categories');
     expect(state).toHaveProperty('entries');
@@ -59,6 +59,56 @@ describe('Entities reducer', () => {
       expect(
         state.categories[categoryKey].attributes.forEach(entryNbr =>
           Object.keys(state.attributes).find(entryKey => entryNbr === entryKey)
+        )
+      );
+    });
+  });
+
+  it('should handle FETCH_CATEGORY_SUCCESS', () => {
+    const state = EntitiesReducer(
+      undefined,
+      Actions.categories.getCategorySuccess(testData.category)
+    );
+
+    expect(state).toHaveProperty('companies');
+    expect(state).toHaveProperty('attributes');
+    expect(state).toHaveProperty('categories');
+    expect(state).toHaveProperty('entries');
+    expect(Object.keys(state.categories).length).toBeGreaterThan(0);
+    expect(Object.keys(state.attributes).length).toBeGreaterThan(0);
+    expect(Object.keys(state.entries).length).toBeGreaterThan(0);
+    expect(Object.keys(state.companies).length).toBeGreaterThan(0);
+    // Check that each category's attributes exists in attributes
+    const categoryKeys = Object.keys(state.categories);
+    categoryKeys.forEach(categoryKey => {
+      expect(
+        state.categories[categoryKey].attributes.forEach(attrNbr =>
+          Object.keys(state.attributes).find(attrKey => attrNbr === attrKey)
+        )
+      );
+    });
+    // Check that each attribute's entries exists in entries
+    const attributeKeys = Object.keys(state.attributes);
+    attributeKeys.forEach(attributeKey => {
+      expect(
+        state.attributes[attributeKey].entries.forEach(entryNbr =>
+          Object.keys(state.entries).find(entryKey => entryNbr === entryKey)
+        )
+      );
+    });
+    // Check that each entry's company exist
+    const entryKeys = Object.keys(state.entries);
+    entryKeys.forEach(entryKey => {
+      expect(state.companies).toHaveProperty(
+        state.entries[entryKey].company.toString()
+      );
+    });
+    // Check that each company's entry exists in entries
+    const companyKeys = Object.keys(state.companies);
+    companyKeys.forEach(companyKey => {
+      expect(
+        state.companies[companyKey].entries.forEach(entryNbr =>
+          Object.keys(state.entries).find(entryKey => entryNbr === entryKey)
         )
       );
     });
