@@ -1,72 +1,72 @@
 import { Actions, actionTypes } from '../..';
 import { mockHttpResponse, createMockStore } from '../../../TestHelper';
 
-describe('getAllCompaniesIsLoading', () => {
+describe('getAllCategoriesIsLoading', () => {
   it('should create the correct action', () => {
     const expectedAction = {
-      type: actionTypes.FETCH_COMPANIES
+      type: actionTypes.FETCH_CATEGORIES
     };
-    const action = Actions.companies.getAllCompaniesIsLoading();
+    const action = Actions.categories.getAllCategoriesIsLoading();
     expect(action).toEqual(expectedAction);
   });
 });
 
-describe('getAllCompaniesSuccess', () => {
+describe('getAllCategoriesSuccess', () => {
   it('should create the correct action', () => {
-    const testCompanies = [
+    const testCategories = [
       {
-        name: 'Company1'
+        name: 'Category1'
       }
     ];
 
     const expectedAction = {
-      type: actionTypes.FETCH_COMPANIES_SUCCESS,
-      companies: testCompanies
+      type: actionTypes.FETCH_CATEGORIES_SUCCESS,
+      categories: testCategories
     };
-    const action = Actions.companies.getAllCompaniesSuccess(testCompanies);
+    const action = Actions.categories.getAllCategoriesSuccess(testCategories);
     expect(action).toEqual(expectedAction);
   });
 });
 
-describe('getAllCompaniesFailure', () => {
+describe('getAllCategoriesFailure', () => {
   it('should create the correct action', () => {
     const expectedAction = {
-      type: actionTypes.FETCH_COMPANIES_FAILURE
+      type: actionTypes.FETCH_CATEGORIES_FAILURE
     };
-    const action = Actions.companies.getAllCompaniesFailure();
+    const action = Actions.categories.getAllCategoriesFailure();
     expect(action).toEqual(expectedAction);
   });
 });
 
-describe('getAllCompanies', () => {
+describe('getAllCategories', () => {
   it('should call start action', () => {
     mockHttpResponse({ status: 200, body: {} });
     const store = createMockStore();
 
-    return store.dispatch(Actions.companies.getAllCompanies()).then(() => {
+    return store.dispatch(Actions.categories.getAllCategories()).then(() => {
       const calledActions = store.getActions();
       expect(calledActions[0]).toEqual(
-        Actions.companies.getAllCompaniesIsLoading()
+        Actions.categories.getAllCategoriesIsLoading()
       );
     });
   });
 
   it('should call success action on success', () => {
-    const companies = [
+    const categories = [
       {
-        name: 'Company1'
+        name: 'Category1'
       }
     ];
-    mockHttpResponse({ status: 200, body: { data: companies } });
+    mockHttpResponse({ status: 200, body: { data: categories } });
 
     const expectedActions = [
-      Actions.companies.getAllCompaniesIsLoading(),
-      Actions.companies.getAllCompaniesSuccess(companies)
+      Actions.categories.getAllCategoriesIsLoading(),
+      Actions.categories.getAllCategoriesSuccess(categories)
     ];
 
     const store = createMockStore();
 
-    return store.dispatch(Actions.companies.getAllCompanies()).then(() => {
+    return store.dispatch(Actions.categories.getAllCategories()).then(() => {
       const calledActions = store.getActions();
       expect(calledActions).toEqual(expectedActions);
     });
@@ -76,79 +76,83 @@ describe('getAllCompanies', () => {
     mockHttpResponse({ status: 401, body: {} });
 
     const expectedActions = [
-      Actions.companies.getAllCompaniesIsLoading(),
-      Actions.companies.getAllCompaniesFailure()
+      Actions.categories.getAllCategoriesIsLoading(),
+      Actions.categories.getAllCategoriesFailure()
     ];
 
     const store = createMockStore();
 
-    return store.dispatch(Actions.companies.getAllCompanies()).then(() => {
+    return store.dispatch(Actions.categories.getAllCategories()).then(() => {
       const calledActions = store.getActions();
       expect(calledActions).toEqual(expectedActions);
     });
   });
 });
 
-describe('getCompanyIsLoading', () => {
+describe('getCategoryIsLoading', () => {
   it('should create the correct action', () => {
     const expectedAction = {
-      type: actionTypes.FETCH_COMPANY
+      type: actionTypes.FETCH_CATEGORY
     };
-    const action = Actions.companies.getCompanyIsLoading();
+    const action = Actions.categories.getCategoryIsLoading();
     expect(action).toEqual(expectedAction);
   });
 });
 
-describe('getCompanySuccess', () => {
+describe('getCategorySuccess', () => {
   it('should create the correct action', () => {
-    const testCompany = {
-      name: 'Company1'
+    const testCategory = {
+      name: 'Category1'
     };
 
     const expectedAction = {
-      type: actionTypes.FETCH_COMPANY_SUCCESS,
-      company: testCompany
+      type: actionTypes.FETCH_CATEGORY_SUCCESS,
+      category: testCategory
     };
-    const action = Actions.companies.getCompanySuccess(testCompany);
+    const action = Actions.categories.getCategorySuccess(testCategory);
     expect(action).toEqual(expectedAction);
   });
 });
 
-describe('getCompanyFailure', () => {
+describe('getCategoryFailure', () => {
   it('should create the correct action', () => {
     const expectedAction = {
-      type: actionTypes.FETCH_COMPANY_FAILURE
+      type: actionTypes.FETCH_CATEGORY_FAILURE
     };
-    const action = Actions.companies.getCompanyFailure();
+    const action = Actions.categories.getCategoryFailure();
     expect(action).toEqual(expectedAction);
   });
 });
 
-describe('getCompany', () => {
+describe('getCategory', () => {
   it('should call start action', () => {
     mockHttpResponse({ status: 200, body: {} });
     const store = createMockStore();
 
-    return store.dispatch(Actions.companies.getCompany()).then(() => {
+    return store.dispatch(Actions.categories.getCategory()).then(() => {
       const calledActions = store.getActions();
-      expect(calledActions[0]).toEqual(Actions.companies.getCompanyIsLoading());
+      expect(calledActions[0]).toEqual(
+        Actions.categories.getCategoryIsLoading()
+      );
     });
   });
 
   it('should call success action on success', () => {
-    const company = {
-      name: 'Company1'
-    };
-    mockHttpResponse({ status: 200, body: { data: company } });
+    const category = [
+      {
+        name: 'Category1'
+      }
+    ];
+    mockHttpResponse({ status: 200, body: { data: category } });
 
     const expectedActions = [
-      Actions.companies.getCompanyIsLoading(),
-      Actions.companies.getCompanySuccess(company)
+      Actions.categories.getCategoryIsLoading(),
+      Actions.categories.getCategorySuccess(category)
     ];
 
     const store = createMockStore();
 
-    return store.dispatch(Actions.companies.getCompany()).then(() => {
+    return store.dispatch(Actions.categories.getCategory()).then(() => {
       const calledActions = store.getActions();
       expect(calledActions).toEqual(expectedActions);
     });
@@ -158,13 +162,13 @@ describe('getCompany', () => {
     mockHttpResponse({ status: 401, body: {} });
 
     const expectedActions = [
-      Actions.companies.getCompanyIsLoading(),
-      Actions.companies.getCompanyFailure()
+      Actions.categories.getCategoryIsLoading(),
+      Actions.categories.getCategoryFailure()
     ];
 
     const store = createMockStore();
 
-    return store.dispatch(Actions.companies.getCompany()).then(() => {
+    return store.dispatch(Actions.categories.getCategory()).then(() => {
       const calledActions = store.getActions();
       expect(calledActions).toEqual(expectedActions);
     });

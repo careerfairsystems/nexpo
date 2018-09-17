@@ -5,7 +5,7 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import './FinalizeSignup.css';
 
-import { pick } from 'ramda';
+import { pick } from 'lodash/fp';
 import ErrorMessage from '../../../Components/ErrorMessage';
 import SuccessMessage from '../../../Components/SuccessMessage';
 import API from '../../../API';

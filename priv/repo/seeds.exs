@@ -22,13 +22,17 @@ end
 
 alias Nexpo.Repo
 
+#Create some users
+alias Nexpo.User
+Repo.insert!(%User{email: "dev"})
+
 #Create some companies
 alias Nexpo.Company
-Repo.insert!(%Company{name: "Spotify"})
-Repo.insert!(%Company{name: "Google"})
-Repo.insert!(%Company{name: "IBM"})
-Repo.insert!(%Company{name: "Intel"})
-Repo.insert!(%Company{name: "Jesus wine makers"})
+Repo.insert!(%Company{name: "Spotify", description: "We do music!", website: "www.spotify.com"})
+Repo.insert!(%Company{name: "Google", description: "We code!", website: "www.google.com"})
+Repo.insert!(%Company{name: "IBM", description: "We make things!", website: "www.ibm.com"})
+Repo.insert!(%Company{name: "Intel", description: "We do stuff!", website: "www.intel.com"})
+Repo.insert!(%Company{name: "Jesus wine makers", description: "We do wine!", website: "www.jesus.com"})
 
 #Create some Categories
 alias Nexpo.Category
