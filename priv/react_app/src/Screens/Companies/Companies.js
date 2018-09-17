@@ -69,7 +69,7 @@ class Companies extends Component {
           }))}
         />
 
-        <Button onClick={() => console.log('New company')} type="primary">
+        <Button onClick={() => null} type="primary">
           New company
         </Button>
       </div>

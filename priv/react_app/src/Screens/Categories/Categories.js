@@ -95,7 +95,7 @@ class Categories extends Component {
           expandedRowRender={expandedRowRender}
           expandRowByClick
         />
-        <Button onClick={() => console.log('New category')} type="primary">
+        <Button onClick={() => null} type="primary">
           New category
         </Button>
       </div>

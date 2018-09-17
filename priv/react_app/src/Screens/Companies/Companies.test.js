@@ -1,11 +1,19 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import Table from 'antd/lib/table';
+import Button from 'antd/lib/button';
 import Companies from './Companies';
+import LoadingSpinner from '../../Components/LoadingSpinner';
 
 it('should render without crashing', () => {
   const func = () => 'a';
   shallow(<Companies getAllCompanies={func} />);
+});
+
+it('should render loading', () => {
+  const func = () => 'a';
+  const wrapper = shallow(<Companies fetching getAllCompanies={func} />);
+  expect(wrapper.find(LoadingSpinner)).toHaveLength(1);
 });
 
 it('calls fetch all companies prop on mount', () => {
@@ -13,6 +21,13 @@ it('calls fetch all companies prop on mount', () => {
   const wrapper = shallow(<Companies getAllCompanies={func} />);
 
   expect(func).toHaveBeenCalledTimes(1);
+});
+
+it('calls fetch all companies prop on mount', () => {
+  const func = jest.fn();
+  const wrapper = shallow(<Companies getAllCompanies={func} />);
+
+  wrapper.find(Button).simulate('click');
 });
 
 it('should render companies', () => {
