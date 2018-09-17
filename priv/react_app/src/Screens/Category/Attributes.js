@@ -9,23 +9,23 @@ import { State } from '../../Store/reducers/index';
 /**
  * Responsible for rendering a table of attributes and entries
  */
-const Attribute = ({ fetching, columns, dataSource }) => (
+export const Attributes = ({ fetching, attributes, entries }) => (
   <div>
     {fetching && <LoadingSpinner />}
-    {!fetching && <Table columns={columns} dataSource={dataSource} />}
+    {!fetching && <Table columns={attributes} dataSource={entries} />}
   </div>
 );
 
-Attribute.defaultProps = {
+Attributes.defaultProps = {
   fetching: false,
-  columns: [],
-  dataSource: []
+  attributes: [],
+  entries: []
 };
 
-Attribute.propTypes = {
+Attributes.propTypes = {
   fetching: PropTypes.bool,
-  columns: PropTypes.array,
-  dataSource: PropTypes.array
+  attributes: PropTypes.array,
+  entries: PropTypes.array
 };
 
 const stateful = connect((state: State, props) => {
@@ -61,20 +61,20 @@ const stateful = connect((state: State, props) => {
   const companyColumn = {
     title: 'Company',
     dataIndex: 'companyName',
-    key: 'companyName',
+    key: 'company',
     fixed: 'left'
   };
 
   return {
-    columns: [companyColumn].concat(
+    attributes: [companyColumn].concat(
       attributes.map(({ title }) => ({
         title,
         dataIndex: title.toLowerCase(),
         key: title.toLowerCase()
       }))
     ),
-    dataSource: entries
+    entries
   };
 });
 
-export default stateful(Attribute);
+export default stateful(Attributes);

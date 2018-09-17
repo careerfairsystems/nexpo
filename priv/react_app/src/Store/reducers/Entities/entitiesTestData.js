@@ -46,6 +46,15 @@ const testData = {
       entries: [{ id: 9, value: 'JA' }, { id: 10, value: '100' }]
     }
   ],
+  company: {
+    website: 'www.spotify.com',
+    student_session_days: 0,
+    name: 'Spotify',
+    logo_url: null,
+    id: 1,
+    description: 'We do music!',
+    entries: [{ id: 1, value: 'JA' }, { id: 2, value: '20' }]
+  },
   categories: [
     {
       title: 'Logistik',
