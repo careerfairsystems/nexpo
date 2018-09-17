@@ -11,6 +11,7 @@ defmodule Nexpo.Company do
 
     has_many :entries, Nexpo.CompanyEntry
     has_many :desired_programmes, Nexpo.DesiredProgramme
+    has_many :student_session_time_slots, Nexpo.StudentSessionTimeSlots
 
     timestamps()
   end
