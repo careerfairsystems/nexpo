@@ -27,6 +27,20 @@ import ForgotPassword from '../Screens/ForgotPassword';
 import InvisibleLink from '../Components/InvisibleLink';
 import HtmlTitle from '../Components/HtmlTitle';
 
+const routes = (
+  <Switch>
+    <Route exact path="/" render={() => <Redirect to="/companies" />} />
+    <Route exact path="/categories" component={Categories} />
+    <PrivateRoute path="/categories/:id" component={Category} />
+    <Route exact path="/companies" component={Companies} />
+    <PrivateRoute path="/companies/:id" component={Company} />
+    <Route path="/login" component={Login} />
+    <Route path="/signup" component={Signup} />
+    <Route path="/forgot-password" component={ForgotPassword} />
+    <Route component={NotFound} />
+  </Switch>
+);
+
 /**
  * The base of the application. Defines the basic layout
  */
@@ -111,17 +125,7 @@ class App extends Component {
           </InvisibleLink>
         </Drawer>
 
-        <Switch>
-          <Route exact path="/" render={() => <Redirect to="/companies" />} />
-          <Route exact path="/categories" component={Categories} />
-          <PrivateRoute path="/categories/:id" component={Category} />
-          <Route exact path="/companies" component={Companies} />
-          <PrivateRoute path="/companies/:id" component={Company} />
-          <Route path="/login" component={Login} />
-          <Route path="/signup" component={Signup} />
-          <Route path="/forgot-password" component={ForgotPassword} />
-          <Route component={NotFound} />
-        </Switch>
+        {routes}
       </div>
     );
   }

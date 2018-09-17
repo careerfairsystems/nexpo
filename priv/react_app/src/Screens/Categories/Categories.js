@@ -15,6 +15,62 @@ const setKeys = entries =>
     key: i
   }));
 
+const categoryColumns = [
+  {
+    title: 'Title',
+    dataIndex: 'title',
+    key: 'title',
+    render: (title, { id }) => (
+      <InvisibleLink to={`/categories/${id}`}>{title}</InvisibleLink>
+    )
+  },
+  {
+    title: 'Action',
+    key: 'action',
+    render: category => (
+      <span>
+        <InvisibleLink to={`/categories/${category.id}`}>Show</InvisibleLink>
+        <Divider type="vertical" />
+        <InvisibleLink to="#">Edit</InvisibleLink>
+        <Divider type="vertical" />
+        <InvisibleLink to="#">Delete</InvisibleLink>
+      </span>
+    )
+  }
+];
+
+const expandedRowRender = attributes => category => (
+  <Table
+    columns={[
+      { title: 'Title', dataIndex: 'title', key: 'title' },
+      {
+        title: 'Action',
+        key: 'action',
+        render: () => (
+          <span>
+            <InvisibleLink to="#">Show</InvisibleLink>
+            <Divider type="vertical" />
+            <InvisibleLink to="#category-edit">Edit</InvisibleLink>
+            <Divider type="vertical" />
+            <InvisibleLink to="#category-delete">Delete</InvisibleLink>
+          </span>
+        )
+      }
+    ]}
+    dataSource={setKeys(
+      denormalize(
+        { attributes: category.attributes },
+        Schema.categorySchema(),
+        {
+          attributes
+        }
+      ).attributes
+    )}
+    showHeader={false}
+    pagination={false}
+  />
+);
+
 /**
  * Responsible for rendering a list of categories
  */
@@ -27,62 +83,6 @@ class Categories extends Component {
   renderCategories() {
     const { categories, attributes } = this.props;
 
-    const columns = [
-      {
-        title: 'Title',
-        dataIndex: 'title',
-        key: 'title',
-        render: (title, { id }) => (
-          <InvisibleLink to={`/categories/${id}`}>{title}</InvisibleLink>
-        )
-      },
-      {
-        title: 'Action',
-        key: 'action',
-        render: ({ id }) => (
-          <span>
-            <InvisibleLink to={`/categories/${id}`}>Show</InvisibleLink>
-            <Divider type="vertical" />
-            <InvisibleLink to="#">Edit</InvisibleLink>
-            <Divider type="vertical" />
-            <InvisibleLink to="#">Delete</InvisibleLink>
-          </span>
-        )
-      }
-    ];
-
-    const expandedRowRender = category => (
-      <Table
-        columns={[
-          { title: 'Title', dataIndex: 'title', key: 'title' },
-          {
-            title: 'Action',
-            key: 'action',
-            render: () => (
-              <span>
-                <InvisibleLink to="#">Show</InvisibleLink>
-                <Divider type="vertical" />
-                <InvisibleLink to="#">Edit</InvisibleLink>
-                <Divider type="vertical" />
-                <InvisibleLink to="#">Delete</InvisibleLink>
-              </span>
-            )
-          }
-        ]}
-        dataSource={setKeys(
-          denormalize(
-            { attributes: category.attributes },
-            Schema.categorySchema(),
-            {
-              attributes
-            }
-          ).attributes
-        )}
-        showHeader={false}
-        pagination={false}
-      />
-    );
-
     return (
       <div>
         <HtmlTitle title="Categories" />
@@ -90,9 +90,9 @@ class Categories extends Component {
         <h1>Categories</h1>
 
         <Table
-          columns={columns}
+          columns={categoryColumns}
           dataSource={setKeys(categories)}
-          expandedRowRender={expandedRowRender}
+          expandedRowRender={expandedRowRender(attributes)}
           expandRowByClick
         />
         <Button onClick={() => null} type="primary">

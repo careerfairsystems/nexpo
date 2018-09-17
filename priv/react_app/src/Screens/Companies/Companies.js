@@ -9,6 +9,40 @@ import LoadingSpinner from '../../Components/LoadingSpinner';
 import HtmlTitle from '../../Components/HtmlTitle';
 import './Companies.css';
 
+const companyColumns = [
+  {
+    title: 'Name',
+    dataIndex: 'name',
+    key: 'name',
+    render: (name, { id }) => (
+      <InvisibleLink to={`/companies/${id}`}>{name}</InvisibleLink>
+    )
+  },
+  {
+    title: 'Website',
+    dataIndex: 'website',
+    key: 'website'
+  },
+  {
+    title: 'Description',
+    dataIndex: 'description',
+    key: 'description'
+  },
+  {
+    title: 'Action',
+    key: 'action',
+    render: company => (
+      <span>
+        <InvisibleLink to={`/companies/${company.id}`}>Show</InvisibleLink>
+        <Divider type="vertical" />
+        <InvisibleLink to="#company-edit">Edit</InvisibleLink>
+        <Divider type="vertical" />
+        <InvisibleLink to="#company-delete">Delete</InvisibleLink>
+      </span>
+    )
+  }
+];
+
 /**
  * Responsible for rendering a list of companies
  */
@@ -21,40 +55,6 @@ class Companies extends Component {
   renderCompanies() {
     const { companies } = this.props;
 
-    const columns = [
-      {
-        title: 'Name',
-        dataIndex: 'name',
-        key: 'name',
-        render: (name, { id }) => (
-          <InvisibleLink to={`/companies/${id}`}>{name}</InvisibleLink>
-        )
-      },
-      {
-        title: 'Website',
-        dataIndex: 'website',
-        key: 'website'
-      },
-      {
-        title: 'Description',
-        dataIndex: 'description',
-        key: 'description'
-      },
-      {
-        title: 'Action',
-        key: 'action',
-        render: ({ id }) => (
-          <span>
-            <InvisibleLink to={`/companies/${id}`}>Show</InvisibleLink>
-            <Divider type="vertical" />
-            <InvisibleLink to="#">Edit</InvisibleLink>
-            <Divider type="vertical" />
-            <InvisibleLink to="#">Delete</InvisibleLink>
-          </span>
-        )
-      }
-    ];
-
     return (
       <div>
         <HtmlTitle title="Companies" />
@@ -62,7 +62,7 @@ class Companies extends Component {
         <h1>Companies</h1>
 
         <Table
-          columns={columns}
+          columns={companyColumns}
           dataSource={Object.keys(companies).map(i => ({
             ...companies[i],
             key: i
