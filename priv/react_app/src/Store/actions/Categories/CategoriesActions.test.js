@@ -3,11 +3,11 @@ import { mockHttpResponse, createMockStore } from '../../../TestHelper';
 
 describe('getAllCategoriesIsLoading', () => {
   it('should create the correct action', () => {
-    const expectecAction = {
+    const expectedAction = {
       type: actionTypes.FETCH_CATEGORIES
     };
     const action = Actions.categories.getAllCategoriesIsLoading();
-    expect(action).toEqual(expectecAction);
+    expect(action).toEqual(expectedAction);
   });
 });
 
@@ -19,22 +19,22 @@ describe('getAllCategoriesSuccess', () => {
       }
     ];
 
-    const expectecAction = {
+    const expectedAction = {
       type: actionTypes.FETCH_CATEGORIES_SUCCESS,
       categories: testCategories
     };
     const action = Actions.categories.getAllCategoriesSuccess(testCategories);
-    expect(action).toEqual(expectecAction);
+    expect(action).toEqual(expectedAction);
   });
 });
 
 describe('getAllCategoriesFailure', () => {
   it('should create the correct action', () => {
-    const expectecAction = {
+    const expectedAction = {
       type: actionTypes.FETCH_CATEGORIES_FAILURE
     };
     const action = Actions.categories.getAllCategoriesFailure();
-    expect(action).toEqual(expectecAction);
+    expect(action).toEqual(expectedAction);
   });
 });
 
@@ -91,11 +91,11 @@ describe('getAllCategories', () => {
 
 describe('getCategoryIsLoading', () => {
   it('should create the correct action', () => {
-    const expectecAction = {
+    const expectedAction = {
       type: actionTypes.FETCH_CATEGORY
     };
     const action = Actions.categories.getCategoryIsLoading();
-    expect(action).toEqual(expectecAction);
+    expect(action).toEqual(expectedAction);
   });
 });
 
@@ -105,22 +105,22 @@ describe('getCategorySuccess', () => {
       name: 'Category1'
     };
 
-    const expectecAction = {
+    const expectedAction = {
       type: actionTypes.FETCH_CATEGORY_SUCCESS,
       category: testCategory
     };
     const action = Actions.categories.getCategorySuccess(testCategory);
-    expect(action).toEqual(expectecAction);
+    expect(action).toEqual(expectedAction);
   });
 });
 
 describe('getCategoryFailure', () => {
   it('should create the correct action', () => {
-    const expectecAction = {
+    const expectedAction = {
       type: actionTypes.FETCH_CATEGORY_FAILURE
     };
     const action = Actions.categories.getCategoryFailure();
-    expect(action).toEqual(expectecAction);
+    expect(action).toEqual(expectedAction);
   });
 });
 

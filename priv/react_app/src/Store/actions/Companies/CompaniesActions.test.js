@@ -3,11 +3,11 @@ import { mockHttpResponse, createMockStore } from '../../../TestHelper';
 
 describe('getAllCompaniesIsLoading', () => {
   it('should create the correct action', () => {
-    const expectecAction = {
+    const expectedAction = {
       type: actionTypes.FETCH_COMPANIES
     };
     const action = Actions.companies.getAllCompaniesIsLoading();
-    expect(action).toEqual(expectecAction);
+    expect(action).toEqual(expectedAction);
   });
 });
 
@@ -19,22 +19,22 @@ describe('getAllCompaniesSuccess', () => {
       }
     ];
 
-    const expectecAction = {
+    const expectedAction = {
       type: actionTypes.FETCH_COMPANIES_SUCCESS,
       companies: testCompanies
     };
     const action = Actions.companies.getAllCompaniesSuccess(testCompanies);
-    expect(action).toEqual(expectecAction);
+    expect(action).toEqual(expectedAction);
   });
 });
 
 describe('getAllCompaniesFailure', () => {
   it('should create the correct action', () => {
-    const expectecAction = {
+    const expectedAction = {
       type: actionTypes.FETCH_COMPANIES_FAILURE
     };
     const action = Actions.companies.getAllCompaniesFailure();
-    expect(action).toEqual(expectecAction);
+    expect(action).toEqual(expectedAction);
   });
 });
 
@@ -91,11 +91,11 @@ describe('getAllCompanies', () => {
 
 describe('getCompanyIsLoading', () => {
   it('should create the correct action', () => {
-    const expectecAction = {
+    const expectedAction = {
       type: actionTypes.FETCH_COMPANY
     };
     const action = Actions.companies.getCompanyIsLoading();
-    expect(action).toEqual(expectecAction);
+    expect(action).toEqual(expectedAction);
   });
 });
 
@@ -105,22 +105,22 @@ describe('getCompanySuccess', () => {
       name: 'Company1'
     };
 
-    const expectecAction = {
+    const expectedAction = {
       type: actionTypes.FETCH_COMPANY_SUCCESS,
       company: testCompany
     };
     const action = Actions.companies.getCompanySuccess(testCompany);
-    expect(action).toEqual(expectecAction);
+    expect(action).toEqual(expectedAction);
   });
 });
 
 describe('getCompanyFailure', () => {
   it('should create the correct action', () => {
-    const expectecAction = {
+    const expectedAction = {
       type: actionTypes.FETCH_COMPANY_FAILURE
     };
     const action = Actions.companies.getCompanyFailure();
-    expect(action).toEqual(expectecAction);
+    expect(action).toEqual(expectedAction);
   });
 });
 
