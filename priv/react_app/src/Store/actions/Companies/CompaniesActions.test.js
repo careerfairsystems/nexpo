@@ -88,3 +88,85 @@ describe('getAllCompanies', () => {
     });
   });
 });
+
+describe('getCompanyIsLoading', () => {
+  it('should create the correct action', () => {
+    const expectecAction = {
+      type: actionTypes.FETCH_COMPANY
+    };
+    const action = Actions.companies.getCompanyIsLoading();
+    expect(action).toEqual(expectecAction);
+  });
+});
+
+describe('getCompanySuccess', () => {
+  it('should create the correct action', () => {
+    const testCompany = {
+      name: 'Company1'
+    };
+
+    const expectecAction = {
+      type: actionTypes.FETCH_COMPANY_SUCCESS,
+      company: testCompany
+    };
+    const action = Actions.companies.getCompanySuccess(testCompany);
+    expect(action).toEqual(expectecAction);
+  });
+});
+
+describe('getCompanyFailure', () => {
+  it('should create the correct action', () => {
+    const expectecAction = {
+      type: actionTypes.FETCH_COMPANY_FAILURE
+    };
+    const action = Actions.companies.getCompanyFailure();
+    expect(action).toEqual(expectecAction);
+  });
+});
+
+describe('getCompany', () => {
+  it('should call start action', () => {
+    mockHttpResponse({ status: 200, body: {} });
+    const store = createMockStore();
+
+    return store.dispatch(Actions.companies.getCompany()).then(() => {
+      const calledActions = store.getActions();
+      expect(calledActions[0]).toEqual(Actions.companies.getCompanyIsLoading());
+    });
+  });
+
+  it('should call success action on success', () => {
+    const company = {
+      name: 'Company1'
+    };
+    mockHttpResponse({ status: 200, body: { data: company } });
+
+    const expectedActions = [
+      Actions.companies.getCompanyIsLoading(),
+      Actions.companies.getCompanySuccess(company)
+    ];
+
+    const store = createMockStore();
+
+    return store.dispatch(Actions.companies.getCompany()).then(() => {
+      const calledActions = store.getActions();
+      expect(calledActions).toEqual(expectedActions);
+    });
+  });
+
+  it('should call failure action on failure', () => {
+    mockHttpResponse({ status: 401, body: {} });
+
+    const expectedActions = [
+      Actions.companies.getCompanyIsLoading(),
+      Actions.companies.getCompanyFailure()
+    ];
+
+    const store = createMockStore();
+
+    return store.dispatch(Actions.companies.getCompany()).then(() => {
+      const calledActions = store.getActions();
+      expect(calledActions).toEqual(expectedActions);
+    });
+  });
+});
