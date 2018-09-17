@@ -15,21 +15,12 @@ class PrivateRoute extends Component {
       <Route
         {...rest}
         render={props => {
-          switch (isLoggedIn) {
-            case true:
-              return <Component {...props} />;
-            case false:
-              return (
-                <Redirect
-                  to={{
-                    pathname: '/login',
-                    state: { from: props.location }
-                  }}
-                />
-              );
-            default:
-              break;
-          }
+          if (isLoggedIn) return <Component {...props} />;
+          return (
+            <Redirect
+              to={{ pathname: '/login', state: { from: props.location } }}
+            />
+          );
         }}
       />
     );

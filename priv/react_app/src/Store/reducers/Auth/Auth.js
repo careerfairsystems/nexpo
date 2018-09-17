@@ -1,4 +1,3 @@
-import { mergeDeepRight } from 'ramda';
 import { actionTypes } from '../..';
 import { setJwt, deleteJwt } from '../../../Util/JwtHelper';
 
@@ -22,31 +21,35 @@ export const AuthReducer = (state = initialState, action): AuthState => {
   switch (action.type) {
     case actionTypes.LOGIN_SUCCESS:
       setJwt(action.jwt);
-      return mergeDeepRight(state, { error: false, isLoggedIn: true });
+      return { ...state, error: false, isLoggedIn: true };
 
     case actionTypes.LOGIN_FAILURE:
       deleteJwt();
-      return mergeDeepRight(state, { error: true });
+      return { ...state, error: true };
 
     case actionTypes.FETCH_CURRENT_USER_SUCCESS:
-      return mergeDeepRight(state, { isLoggedIn: true });
+      return { ...state, isLoggedIn: true };
 
     case actionTypes.LOGOUT:
     case actionTypes.FETCH_CURRENT_USER_FAILURE:
       deleteJwt();
-      return mergeDeepRight(state, { isLoggedIn: false });
+      return { ...state, isLoggedIn: false };
 
     case actionTypes.VERIFY_FORGOT_PASSWORD_KEY_SUCCESS:
-      return mergeDeepRight(state, {
+      return {
+        ...state,
         forgotPassword: { validKey: true }
-      });
+      };
 
     case actionTypes.VERIFY_FORGOT_PASSWORD_KEY_FAILURE:
-      return mergeDeepRight(state, {
+      return {
+        ...state,
         forgotPassword: { validKey: false }
-      });
+      };
 
     default:
       return state;
   }
 };
+
+export default AuthReducer;
