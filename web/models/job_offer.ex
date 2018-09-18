@@ -1,11 +1,10 @@
-defmodule Nexpo.StudentSessionTimeSlots do
+defmodule Nexpo.JobOffer do
   use Nexpo.Web, :model
 
-  schema "student_session_time_slots" do
-    field :start, :naive_datetime
-    field :end, :naive_datetime
-    field :used, :boolean
+  schema "job_offers" do
+    field :type, :string
 
+    many_to_many :company, EctoAssoc.Company, join_through: "company_job_offer"
     timestamps()
   end
 
