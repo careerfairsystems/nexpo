@@ -3,7 +3,7 @@ defmodule Nexpo.StudentSessionApplicationTest do
 
   alias Nexpo.StudentSessionApplication
 
-  @valid_attrs %{companyApproved: true, motivation: "some content", score: 42, studentConfirmed: true}
+  @valid_attrs %{companyApproved: true, motivation: "some content", score: 42, studentConfirmed: true, student_id: 1, company_id: 1}
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do
