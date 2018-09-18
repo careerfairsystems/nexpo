@@ -25,7 +25,10 @@ defmodule Nexpo.StudentController do
   end
 
   def show(conn, %{"id" => id}) do
-    student = Repo.get!(Student, id)
+    student = Student
+        |> Repo.get!(id)
+        |> Repo.preload(:student_sessions)
+        |> Repo.preload(:student_session_applications)
     render(conn, "show.json", student: student)
   end
 

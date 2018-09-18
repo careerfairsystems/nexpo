@@ -74,6 +74,8 @@ defmodule Nexpo.CompanyController do
         |> Repo.get!(id)
         |> Repo.preload(:entries)
         |> Repo.preload(:desired_programmes)
+        |> Repo.preload(:student_sessions)
+        |> Repo.preload(:student_session_applications)
     render(conn, "show.json", company: company)
   end
 
