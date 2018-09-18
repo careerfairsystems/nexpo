@@ -7,6 +7,9 @@ defmodule Nexpo.Student do
     field :resumeSvUrl, :string
     belongs_to :user, Nexpo.User
 
+    has_many :student_sessions, Nexpo.StudentSession
+    has_many :student_session_applications, Nexpo.StudentSessionApplication
+
     timestamps()
   end
 
@@ -17,6 +20,6 @@ defmodule Nexpo.Student do
     struct
     |> cast(params, [:year, :resumeEnUrl, :resumeSvUrl, :user_id])
     |> validate_required([:year, :resumeEnUrl, :resumeSvUrl, :user_id])
-    |> foreign_key_constraint(:user_id) 
+    |> foreign_key_constraint(:user_id)
   end
 end
