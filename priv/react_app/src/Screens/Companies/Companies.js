@@ -35,7 +35,7 @@ const companyColumns = [
       <span>
         <InvisibleLink to={`/companies/${company.id}`}>Show</InvisibleLink>
         <Divider type="vertical" />
-        <InvisibleLink to="#company-edit">Edit</InvisibleLink>
+        <InvisibleLink to={`/companies/${company.id}`}>Edit</InvisibleLink>
         <Divider type="vertical" />
         <InvisibleLink to="#company-delete">Delete</InvisibleLink>
       </span>
