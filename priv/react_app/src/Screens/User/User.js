@@ -13,13 +13,13 @@ const headers = {
   email: 'Email',
   food_preferences: 'Food Preferences'
 };
-const renderStaticFields = currentUser => (
+const renderStaticFields = ({ first_name, last_name, email, roles }) => (
   <div>
-    <h1>{`${currentUser.first_name} ${currentUser.last_name}`}</h1>
-    <h2>{`Email: ${currentUser.email}`}</h2>
-    <h2>{`Roles: ${
-      currentUser.roles ? currentUser.roles.toString() : 'None'
-    }`}</h2>
+    <h1>
+      {first_name} {last_name}
+    </h1>
+    <h2>Email: {email}</h2>
+    <h2>Roles: {roles ? roles.toString() : 'None'}</h2>
   </div>
 );
 
