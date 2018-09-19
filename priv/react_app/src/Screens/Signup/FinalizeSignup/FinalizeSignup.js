@@ -141,7 +141,7 @@ class FinalizeSignup extends Component<Props, State> {
   };
 
   _renderSignupButton = () => (
-    <RaisedButton label="Sign up" primary onTouchTap={() => this._signup()} />
+    <RaisedButton label="Sign up" primary onClick={() => this._signup()} />
   );
 
   render() {
