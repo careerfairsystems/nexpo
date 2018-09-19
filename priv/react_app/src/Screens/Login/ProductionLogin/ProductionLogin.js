@@ -54,7 +54,7 @@ class ProductionLogin extends Component {
   };
 
   _renderLoginButton = () => (
-    <RaisedButton label="Login" primary onTouchTap={() => this._login()} />
+    <RaisedButton label="Login" primary onClick={() => this._login()} />
   );
 
   render() {
