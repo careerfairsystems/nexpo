@@ -23,6 +23,7 @@ import NotFound from '../Screens/NotFound';
 import Login from '../Screens/Login';
 import Signup from '../Screens/Signup';
 import ForgotPassword from '../Screens/ForgotPassword';
+import Sessions from '../Screens/Sessions/SessionApplication';
 
 import InvisibleLink from '../Components/InvisibleLink';
 import HtmlTitle from '../Components/HtmlTitle';
@@ -34,6 +35,7 @@ const routes = (
     <PrivateRoute path="/categories/:id" component={Category} />
     <Route exact path="/companies" component={Companies} />
     <PrivateRoute path="/companies/:id" component={Company} />
+    <PrivateRoute path="/student_sessions/application" component={Sessions} />
     <Route path="/login" component={Login} />
     <Route path="/signup" component={Signup} />
     <Route path="/forgot-password" component={ForgotPassword} />
