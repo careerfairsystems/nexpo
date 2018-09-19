@@ -4,7 +4,8 @@ import { Actions } from '../../Store';
 import { State } from '../../Store/reducers/index';
 
 const mapStateToProps = (state: State) => ({
-  currentUser: state.entities.users[state.current.user] || {}
+  currentUser: state.entities.users[state.current.user] || {},
+  fetching: state.api.current_user.fetching
 });
 
 const mapDispatchToProps = dispatch => ({});

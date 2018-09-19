@@ -10,6 +10,8 @@ defmodule Nexpo.UserController do
   alias Nexpo.ChangesetView
 
   def me(conn, %{}, user, _claims) do
+    user = Repo.preload(user, :roles)
+    |> Repo.preload(:student)
     conn |> put_status(200) |> render("show.json", user: user)
   end
 
@@ -85,7 +87,7 @@ defmodule Nexpo.UserController do
 
     end
   end
-  
+
   def replace_forgotten_password(conn, _params, _user, _claims) do
     conn |> put_status(404) |> render(ErrorView, "404.json")
   end

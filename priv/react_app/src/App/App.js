@@ -38,7 +38,7 @@ const routes = (
     <Route path="/login" component={Login} />
     <Route path="/signup" component={Signup} />
     <Route path="/forgot-password" component={ForgotPassword} />
-    <PrivateRoute path="/users/:id/profile" component={User} />
+    <PrivateRoute path="/user/profile" component={User} />
     <Route component={NotFound} />
   </Switch>
 );
@@ -67,7 +67,7 @@ class App extends Component {
         anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
         targetOrigin={{ vertical: 'top', horizontal: 'right' }}
       >
-        <InvisibleLink to={`/users/${currentUser.id}/profile`}>
+        <InvisibleLink to="/user/profile">
           <MenuItem
             primaryText={nameOfUser}
             rightIcon={<ActionAccountCircle />}
