@@ -13,6 +13,7 @@ import PrivateRoute from '../Components/PrivateRoute';
 
 import Categories from '../Screens/Categories';
 import Category from '../Screens/Category';
+import User from '../Screens/User';
 import Companies from '../Screens/Companies';
 import Company from '../Screens/Company';
 import NotFound from '../Screens/NotFound';
@@ -38,6 +39,7 @@ const routes = (
     <Route path="/logout" component={Logout} />
     <Route path="/signup" component={Signup} />
     <Route path="/forgot-password" component={ForgotPassword} />
+    <PrivateRoute path="/user/profile" component={User} />
     <Route component={NotFound} />
   </Switch>
 );
