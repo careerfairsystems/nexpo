@@ -17,6 +17,7 @@ import PrivateRoute from '../Components/PrivateRoute';
 
 import Categories from '../Screens/Categories';
 import Category from '../Screens/Category';
+import User from '../Screens/User';
 import Companies from '../Screens/Companies';
 import Company from '../Screens/Company';
 import NotFound from '../Screens/NotFound';
@@ -39,6 +40,7 @@ const routes = (
     <Route path="/login" component={Login} />
     <Route path="/signup" component={Signup} />
     <Route path="/forgot-password" component={ForgotPassword} />
+    <PrivateRoute path="/user/profile" component={User} />
     <Route component={NotFound} />
   </Switch>
 );
@@ -67,11 +69,12 @@ class App extends Component {
         anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
         targetOrigin={{ vertical: 'top', horizontal: 'right' }}
       >
-        <MenuItem
-          disabled
-          primaryText={nameOfUser}
-          rightIcon={<ActionAccountCircle />}
-        />
+        <InvisibleLink to="/user/profile">
+          <MenuItem
+            primaryText={nameOfUser}
+            rightIcon={<ActionAccountCircle />}
+          />
+        </InvisibleLink>
         <Divider />
         <MenuItem primaryText="Logout" onClick={logout} />
       </IconMenu>
