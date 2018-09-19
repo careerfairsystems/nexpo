@@ -20,6 +20,7 @@ import Login from '../Screens/Login';
 import Logout from '../Screens/Logout';
 import Signup from '../Screens/Signup';
 import ForgotPassword from '../Screens/ForgotPassword';
+import Startscreen from '../Screens/Startscreen';
 
 import HtmlTitle from '../Components/HtmlTitle';
 
@@ -27,7 +28,8 @@ const { Header, Content, Footer } = Layout;
 
 const routes = (
   <Switch>
-    <Route exact path="/" render={() => <Redirect to="/companies" />} />
+    <Route exact path="/" render={() => <Redirect to="/start" />} />
+    <Route exact path="/start" component={Startscreen} />
     <Route exact path="/categories" component={Categories} />
     <PrivateRoute path="/categories/:id" component={Category} />
     <Route exact path="/companies" component={Companies} />
