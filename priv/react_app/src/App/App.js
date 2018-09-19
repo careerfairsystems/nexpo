@@ -23,13 +23,15 @@ import NotFound from '../Screens/NotFound';
 import Login from '../Screens/Login';
 import Signup from '../Screens/Signup';
 import ForgotPassword from '../Screens/ForgotPassword';
+import Startscreen from '../Screens/Startscreen';
 
 import InvisibleLink from '../Components/InvisibleLink';
 import HtmlTitle from '../Components/HtmlTitle';
 
 const routes = (
   <Switch>
-    <Route exact path="/" render={() => <Redirect to="/companies" />} />
+    <Route exact path="/" render={() => <Redirect to="/start" />} />
+    <Route exact path="/start" component={Startscreen} />
     <Route exact path="/categories" component={Categories} />
     <PrivateRoute path="/categories/:id" component={Category} />
     <Route exact path="/companies" component={Companies} />
