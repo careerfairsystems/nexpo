@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Button, Input, Form } from 'antd';
-import { isFinite } from 'lodash/fp';
+import { isEmpty, isFinite } from 'lodash/fp';
 import LoadingSpinner from '../../Components/LoadingSpinner';
 
 const FormItem = Form.Item;
@@ -13,6 +13,15 @@ const headers = {
   email: 'Email',
   food_preferences: 'Food Preferences'
 };
+const renderStaticFields = currentUser => (
+  <div>
+    <h1>{`${currentUser.first_name} ${currentUser.last_name}`}</h1>
+    <h2>{`Email: ${currentUser.email}`}</h2>
+    <h2>{`Roles: ${
+      currentUser.roles ? currentUser.roles.toString() : 'None'
+    }`}</h2>
+  </div>
+);
 
 class User extends Component {
   constructor(props) {
@@ -21,7 +30,10 @@ class User extends Component {
       currentUser: { ...props.currentUser },
       disabled: true
     };
-    console.log(props.currentUser);
+  }
+
+  componentWillReceiveProps(props) {
+    this.setState({ currentUser: props.currentUser });
   }
 
   getInput(field) {
@@ -65,17 +77,14 @@ class User extends Component {
 
   render() {
     const { currentUser, disabled } = this.state;
-    console.log(currentUser);
-    if (this.props.fetching) {
+    const { fetching } = this.props;
+    if (fetching || isEmpty(currentUser)) {
       return <LoadingSpinner />;
     }
 
     return (
       <div>
-        <h1>{`${currentUser.first_name} ${currentUser.last_name}`}</h1>
-        <h2>{`Roles: ${
-          currentUser.roles ? currentUser.roles.toString() : 'None'
-        }`}</h2>
+        {renderStaticFields(currentUser)}
         <Form layout="vertical">
           {userFields.map(k => (
             <FormItem key={k} label={headers[k] || k}>
@@ -91,7 +100,8 @@ class User extends Component {
   }
 }
 User.propTypes = {
-  currentUser: PropTypes.shape(PropTypes.string).isRequired
+  currentUser: PropTypes.shape(PropTypes.string).isRequired,
+  fetching: PropTypes.bool.isRequired
 };
 
 export default User;
