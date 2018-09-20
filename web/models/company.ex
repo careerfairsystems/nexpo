@@ -12,7 +12,9 @@ defmodule Nexpo.Company do
     has_many :entries, Nexpo.CompanyEntry
     has_many :desired_programmes, Nexpo.DesiredProgramme
     has_many :student_session_time_slots, Nexpo.StudentSessionTimeSlots
-    
+    has_many :student_sessions, Nexpo.StudentSession
+    has_many :student_session_applications, Nexpo.StudentSessionApplication
+
     many_to_many :industry, EctoAssoc.Industry, join_through: "company_industry"
     many_to_many :job_offer, EctoAssoc.JobOffer, join_through: "company_job_offer"
 
