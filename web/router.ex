@@ -65,7 +65,10 @@ defmodule Nexpo.Router do
     resources "/categories", CategoryController, only: [:index, :show, :create]
 
     resources "/roles", RoleController
-    resources "/students", StudentController
+    resources "/students", StudentController do
+      resources "/student_sessions", StudentSessionController
+      resources "/student_session_applications", StudentSessionApplicationController
+    end
     resources "/programmes", ProgrammeController
 
     post "/login", SessionController, :create

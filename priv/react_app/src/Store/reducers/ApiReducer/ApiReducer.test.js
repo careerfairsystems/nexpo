@@ -14,6 +14,11 @@ import {
 
 it('should set the correct initial state', () => {
   const initialState: ApiState = {
+    categories: {
+      fetching: false,
+      errors: undefined,
+      success: false
+    },
     companies: {
       fetching: false,
       errors: undefined,
@@ -112,6 +117,74 @@ describe('fetch companies', () => {
     const state = ApiReducer(
       startState,
       Actions.companies.getAllCompaniesFailure()
+    );
+    expect(state).toMatchObject(expected);
+  });
+});
+
+describe('fetch categories', () => {
+  it('should handle request start', () => {
+    const startState: ApiState = {
+      categories: {
+        fetching: false,
+        errors: {},
+        success: true
+      }
+    };
+    const expected: ApiState = {
+      categories: {
+        fetching: true,
+        errors: undefined,
+        success: false
+      }
+    };
+    const state = ApiReducer(
+      startState,
+      Actions.categories.getAllCategoriesIsLoading()
+    );
+    expect(state).toMatchObject(expected);
+  });
+
+  it('should handle success', () => {
+    const startState: ApiState = {
+      categories: {
+        fetching: true,
+        errors: undefined,
+        success: false
+      }
+    };
+    const expected: ApiState = {
+      categories: {
+        fetching: false,
+        errors: undefined,
+        success: true
+      }
+    };
+    const state = ApiReducer(
+      startState,
+      Actions.categories.getAllCategoriesSuccess()
+    );
+    expect(state).toMatchObject(expected);
+  });
+
+  it('should handle failure', () => {
+    const startState: ApiState = {
+      categories: {
+        fetching: true,
+        errors: undefined,
+        success: true
+      }
+    };
+    const expected: ApiState = {
+      categories: {
+        fetching: false,
+        errors: ['There was an error'],
+        success: false
+      }
+    };
+    const state = ApiReducer(
+      startState,
+      Actions.categories.getAllCategoriesFailure()
     );
     expect(state).toMatchObject(expected);
   });

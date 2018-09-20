@@ -15,7 +15,7 @@ defmodule Nexpo.Endpoint do
     at: "/",
     from: "priv/static/",
     gzip: true,
-    only: ~w(index.html favicon.ico static service-worker.js)
+    only: ~w(index.html images favicon.ico static service-worker.js)
 
   plug Plug.Static,
     at: "/uploads", from: Path.expand("./uploads"), gzip: false

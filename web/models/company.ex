@@ -1,6 +1,7 @@
 defmodule Nexpo.Company do
   use Nexpo.Web, :model
   use Arc.Ecto.Schema
+
   schema "companies" do
     field :name, :string
     field :logo_url, Nexpo.ProfileImage.Type
@@ -8,7 +9,10 @@ defmodule Nexpo.Company do
     field :website, :string
     field :student_session_days, :integer, default: 0
 
+    has_many :entries, Nexpo.CompanyEntry
     has_many :desired_programmes, Nexpo.DesiredProgramme
+    has_many :student_sessions, Nexpo.StudentSession
+    has_many :student_session_applications, Nexpo.StudentSessionApplication
 
     timestamps()
   end

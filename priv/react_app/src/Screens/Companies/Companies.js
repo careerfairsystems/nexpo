@@ -1,81 +1,86 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import {
-  Table,
-  TableBody,
-  TableHeader,
-  TableHeaderColumn,
-  TableRow,
-  TableRowColumn
-} from 'material-ui/Table';
+import Table from 'antd/lib/table';
+import Button from 'antd/lib/button';
+import Divider from 'antd/lib/divider';
 import InvisibleLink from '../../Components/InvisibleLink';
 import LoadingSpinner from '../../Components/LoadingSpinner';
 import HtmlTitle from '../../Components/HtmlTitle';
 import './Companies.css';
+
+const companyColumns = [
+  {
+    title: 'Name',
+    dataIndex: 'name',
+    key: 'name',
+    render: (name, { id }) => (
+      <InvisibleLink to={`/companies/${id}`}>{name}</InvisibleLink>
+    )
+  },
+  {
+    title: 'Website',
+    dataIndex: 'website',
+    key: 'website'
+  },
+  {
+    title: 'Description',
+    dataIndex: 'description',
+    key: 'description'
+  },
+  {
+    title: 'Action',
+    key: 'action',
+    render: company => (
+      <span>
+        <InvisibleLink to={`/companies/${company.id}`}>Show</InvisibleLink>
+        <Divider type="vertical" />
+        <InvisibleLink to="#company-edit">Edit</InvisibleLink>
+        <Divider type="vertical" />
+        <InvisibleLink to="#company-delete">Delete</InvisibleLink>
+      </span>
+    )
+  }
+];
 
 /**
  * Responsible for rendering a list of companies
  */
 class Companies extends Component {
   componentWillMount() {
-    this.props.getAllCompanies();
+    const { getAllCompanies } = this.props;
+    getAllCompanies();
   }
 
-  _renderTableHeader() {
-    return (
-      <TableHeader>
-        <TableRow>
-          <TableHeaderColumn>Name</TableHeaderColumn>
-          <TableHeaderColumn>Email</TableHeaderColumn>
-        </TableRow>
-      </TableHeader>
-    );
-  }
+  renderCompanies() {
+    const { companies } = this.props;
 
-  _renderTableRow(company) {
-    return (
-      <TableRow key={company.id}>
-        <TableRowColumn>
-          <InvisibleLink to={`/companies/${company.id}`}>
-            {company.name}
-          </InvisibleLink>
-        </TableRowColumn>
-        <TableRowColumn>{company.email}</TableRowColumn>
-      </TableRow>
-    );
-  }
-
-  _renderLoading() {
-    return (
-      <div className="loading-spinner">
-        <LoadingSpinner />
-      </div>
-    );
-  }
-
-  _renderCompanies() {
     return (
       <div>
         <HtmlTitle title="Companies" />
 
-        <Table>
-          {this._renderTableHeader()}
-          <TableBody>
-            {Object.keys(this.props.companies).map(key =>
-              this._renderTableRow(this.props.companies[key])
-            )}
-          </TableBody>
-        </Table>
+        <h1>Companies</h1>
+
+        <Table
+          columns={companyColumns}
+          dataSource={Object.keys(companies).map(i => ({
+            ...companies[i],
+            key: i
+          }))}
+        />
+
+        <Button onClick={() => null} type="primary">
+          New company
+        </Button>
       </div>
     );
   }
 
   render() {
     if (this.props.fetching) {
-      return this._renderLoading();
+      return <LoadingSpinner />;
     }
-    return this._renderCompanies();
+    return this.renderCompanies();
   }
 }
 

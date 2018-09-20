@@ -2,7 +2,6 @@
  * Defines a reducer updates the state based on the action created after a call to the server.
  */
 
-import { mergeDeepRight } from 'ramda';
 import { Action } from 'redux';
 import { actionTypes } from '../..';
 import { ReplaceForgottenPasswordFailureAction } from '../../actions/Accounts/AccountsActions';
@@ -13,6 +12,7 @@ type ApiStatus = {
 };
 
 export type ApiState = {
+  categories: ApiStatus,
   companies: ApiStatus,
   current_user: ApiStatus,
   forgot_password: ApiStatus,
@@ -26,128 +26,102 @@ export type ApiState = {
   verify_forgot_password_key: ApiStatus
 };
 
-const initialState: ApiState = {
-  companies: {
-    fetching: false,
-    errors: undefined,
-    success: false
-  },
-  current_user: {
-    fetching: false,
-    errors: undefined,
-    success: false
-  },
-  forgot_password: {
-    fetching: false,
-    errors: undefined,
-    success: false
-  },
-  login: {
-    fetching: false,
-    errors: undefined,
-    success: false
-  },
-  replace_password: {
-    fetching: false,
-    errors: undefined,
-    success: false
-  },
-  verify_forgot_password_key: {
-    fetching: false,
-    errors: undefined,
-    success: false
-  }
+const initialState: ApiState = [
+  'categories',
+  'companies',
+  'current_user',
+  'forgot_password',
+  'login',
+  'replace_password',
+  'verify_forgot_password_key'
+].reduce(
+  (acc, curr) => ({
+    ...acc,
+    [curr]: {
+      fetching: false,
+      errors: undefined,
+      success: false
+    }
+  }),
+  {}
+);
+
+const fetching = {
+  fetching: true,
+  errors: undefined,
+  success: false
 };
+
+const retrieving = {
+  fetching: false,
+  errors: undefined,
+  success: true
+};
+
+const failure = error => ({
+  fetching: false,
+  errors: error || ['There was an error'],
+  success: false
+});
 
 export const ApiReducer = (state = initialState, act: Action): ApiState => {
   switch (act.type) {
     case actionTypes.FETCH_COMPANIES: {
-      const stateChange: ApiState = {
-        companies: {
-          fetching: true,
-          errors: undefined,
-          success: false
-        }
-      };
-      return mergeDeepRight(state, stateChange);
+      const stateChange: ApiState = { companies: fetching };
+      return { ...state, ...stateChange };
     }
 
     case actionTypes.FETCH_COMPANIES_SUCCESS: {
-      const stateChange: ApiState = {
-        companies: {
-          fetching: false,
-          errors: undefined,
-          success: true
-        }
-      };
-      return mergeDeepRight(state, stateChange);
+      const stateChange: ApiState = { companies: retrieving };
+      return { ...state, ...stateChange };
     }
 
     case actionTypes.FETCH_COMPANIES_FAILURE: {
-      const stateChange: ApiState = {
-        companies: {
-          fetching: false,
-          errors: ['There was an error'],
-          success: false
-        }
-      };
-      return mergeDeepRight(state, stateChange);
+      const stateChange: ApiState = { companies: failure() };
+      return { ...state, ...stateChange };
+    }
+
+    case actionTypes.FETCH_CATEGORIES: {
+      const stateChange: ApiState = { categories: fetching };
+      return { ...state, ...stateChange };
+    }
+
+    case actionTypes.FETCH_CATEGORIES_SUCCESS: {
+      const stateChange: ApiState = { categories: retrieving };
+      return { ...state, ...stateChange };
+    }
+
+    case actionTypes.FETCH_CATEGORIES_FAILURE: {
+      const stateChange: ApiState = { categories: failure() };
+      return { ...state, ...stateChange };
     }
 
     case actionTypes.FORGOT_PASSWORD_REQUEST: {
-      const stateChange: ApiState = {
-        forgot_password: {
-          fetching: true,
-          errors: undefined,
-          success: false
-        }
-      };
-      return mergeDeepRight(state, stateChange);
+      const stateChange: ApiState = { forgot_password: fetching };
+      return { ...state, ...stateChange };
     }
 
     case actionTypes.FORGOT_PASSWORD_SUCCESS: {
-      const stateChange: ApiState = {
-        forgot_password: {
-          fetching: false,
-          errors: undefined,
-          success: true
-        }
-      };
-      return mergeDeepRight(state, stateChange);
+      const stateChange: ApiState = { forgot_password: retrieving };
+      return { ...state, ...stateChange };
     }
 
     case actionTypes.REPLACE_FORGOTTEN_PASSWORD_REQUEST: {
-      const stateChange: ApiState = {
-        replace_password: {
-          fetching: true,
-          errors: undefined,
-          success: false
-        }
-      };
-      return mergeDeepRight(state, stateChange);
+      const stateChange: ApiState = { replace_password: fetching };
+      return { ...state, ...stateChange };
     }
 
     case actionTypes.REPLACE_FORGOTTEN_PASSWORD_SUCCESS: {
-      const stateChange: ApiState = {
-        replace_password: {
-          fetching: false,
-          errors: undefined,
-          success: true
-        }
-      };
-      return mergeDeepRight(state, stateChange);
+      const stateChange: ApiState = { replace_password: retrieving };
+      return { ...state, ...stateChange };
     }
 
     case actionTypes.REPLACE_FORGOTTEN_PASSWORD_FAILURE: {
       const action: ReplaceForgottenPasswordFailureAction = act;
       const stateChange: ApiState = {
-        replace_password: {
-          fetching: false,
-          errors: action.errors,
-          success: false
-        }
+        replace_password: failure(action.errors)
       };
-      return mergeDeepRight(state, stateChange);
+      return { ...state, ...stateChange };
     }
 
     default: {
@@ -155,3 +129,5 @@ export const ApiReducer = (state = initialState, act: Action): ApiState => {
     }
   }
 };
+
+export default ApiReducer;
