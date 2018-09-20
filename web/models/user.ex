@@ -22,6 +22,14 @@ defmodule Nexpo.User do
     timestamps()
   end
 
+  def get_permissions(user) do
+    Repo.all(from(
+      role in Ecto.assoc(user, :roles),
+      select: role.permissions)
+    )
+    |> List.flatten
+  end
+
   def replace_forgotten_password_changeset(user, params \\ %{}) do
     user
     |> cast(params, [:password])
