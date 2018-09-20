@@ -49,9 +49,7 @@ defmodule Nexpo.Router do
   scope "/admin", Nexpo, as: :admin, alias: Admin do
     pipe_through [:api, :api_auth, :admin]
 
-    post "/companies:id", CompanyController, :create
-    post "/companies:id", CompanyController, :delete
-    post "/companies:id", CompanyController, :update
+    # resources "/companies:id", CompanyController, only: [:create, :update, :delete]
     resources "/users", UserController, only: [:show]
   end
 

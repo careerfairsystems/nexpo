@@ -3,6 +3,7 @@ defmodule Nexpo.Role do
 
   schema "roles" do
     field :type, :string
+    field :permissions, {:array, :string}, default: []
 
     many_to_many :users, Nexpo.User, join_through: "users_roles"
 
@@ -14,7 +15,7 @@ defmodule Nexpo.Role do
   """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:type])
-    |> validate_required([:type])
+    |> cast(params, [:type, :permissions])
+    |> validate_required([:type, :permissions])
   end
 end
