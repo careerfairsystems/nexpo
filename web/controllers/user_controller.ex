@@ -9,10 +9,31 @@ defmodule Nexpo.UserController do
   alias Nexpo.ErrorView
   alias Nexpo.ChangesetView
 
-  def me(conn, %{}, user, _claims) do
+  def show_me(conn, %{}, user, _claims) do
     user = Repo.preload(user, :roles)
     |> Repo.preload(:student)
     conn |> put_status(200) |> render("show.json", user: user)
+  end
+
+  def update_me(conn, %{"user" => user_params}, user, _claims) do
+    changeset = User.changeset(user, user_params)
+
+    case Repo.update(changeset) do
+      {:ok, user} ->
+        render(conn, "show.json", user: user)
+      {:error, changeset} ->
+        conn
+        |> put_status(:unprocessable_entity)
+        |> render(Nexpo.ChangesetView, "error.json", changeset: changeset)
+    end
+  end
+
+  def delete_me(conn, %{}, user, _claims) do
+    # Here we use delete! (with a bang) because we expect
+    # it to always work (and if it does not, it will raise).
+    Repo.delete!(user)
+
+    send_resp(conn, :no_content, "")
   end
 
   @apidoc """

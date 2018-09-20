@@ -42,11 +42,13 @@ defmodule Nexpo.Router do
   scope "/api", Nexpo do
     pipe_through [:api, :api_auth]
 
-    get "/me", UserController, :me
+    get "/me", UserController, :show_me
+    put "/me", UserController, :show_update
+    delete "/me", UserController, :show_delete
   end
 
   # Admin protected endpoints
-  scope "/admin", Nexpo, as: :admin, alias: Admin do
+  scope "/api", Nexpo do
     pipe_through [:api, :api_auth, :admin]
 
     # resources "/companies:id", CompanyController, only: [:create, :update, :delete]
