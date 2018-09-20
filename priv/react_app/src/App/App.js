@@ -34,6 +34,7 @@ const routes = (
     <PrivateRoute path="/categories/:id" component={Category} />
     <Route exact path="/companies" component={Companies} />
     <PrivateRoute path="/companies/:id" component={Company} />
+    <PrivateRoute path="/companies/new" component={Company} />
     <Route path="/login" component={Login} />
     <Route path="/signup" component={Signup} />
     <Route path="/forgot-password" component={ForgotPassword} />

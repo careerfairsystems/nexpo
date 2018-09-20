@@ -49,6 +49,12 @@ export function getCompanySuccess(company) {
     company
   };
 }
+export function postCompanySuccess(company) {
+  return {
+    type: actionTypes.POST_COMPANY_SUCCESS,
+    company
+  };
+}
 
 export type GetCompanyFailureAction = {
   type: string
@@ -69,6 +75,32 @@ export function getCompany(id) {
       })
       .catch(() => {
         dispatch(getCompanyFailure());
+      });
+  };
+}
+
+export function postCompanyIsLoading() {
+  return {
+    type: actionTypes.POST_COMPANY
+  };
+}
+
+export function postCompanyFailure() {
+  return {
+    type: actionTypes.POST_COMPANY_FAILURE
+  };
+}
+
+export function postCompany(company) {
+  return dispatch => {
+    dispatch(postCompanyIsLoading());
+    API.companies
+      .post(company)
+      .then(c => {
+        dispatch(postCompanySuccess(c.data));
+      })
+      .catch(() => {
+        dispatch(postCompanyFailure());
       });
   };
 }

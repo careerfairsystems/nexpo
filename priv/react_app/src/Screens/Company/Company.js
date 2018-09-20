@@ -15,9 +15,7 @@ class Company extends Component {
     super(props);
     this.state = {
       edit: false,
-      name: props.company.name,
-      website: props.company.website,
-      description: props.company.description
+      company: { ...props.company }
     };
   }
 
@@ -28,14 +26,24 @@ class Company extends Component {
 
   changeState = () => {
     const { edit } = this.state;
+    if (edit) this.updateCompany();
     this.setState({ edit: !edit });
   };
 
+  updateCompany() {
+    const { company } = this.state;
+    // If this.props.company is empty we are creating a new company
+    if (isEmpty(this.props.company)) {
+      this.props.postCompany(company);
+    }
+  }
+
+  updateCompanyState(field, value) {
+    this.setState({ company: { ...this.state.company, [field]: value } });
+  }
+
   renderEditView() {
     const { company } = this.props;
-    if (isEmpty(company) || isNil(company)) {
-      return <NotFound />;
-    }
     const { TextArea } = Input;
 
     const { name, website, description } = company;
@@ -47,15 +55,31 @@ class Company extends Component {
           <div className="paper main-info">
             Name:
             <div>
-              <Input style={{ width: '50%' }} defaultValue={name} />
+              <Input
+                style={{ width: '50%' }}
+                onChange={e => this.updateCompanyState('name', e.target.value)}
+                defaultValue={name}
+              />
             </div>
             Website:
             <div>
-              <Input style={{ width: '50%' }} defaultValue={website} />
+              <Input
+                style={{ width: '50%' }}
+                onChange={e =>
+                  this.updateCompanyState('website', e.target.value)
+                }
+                defaultValue={website}
+              />
             </div>
             Description:
             <div>
-              <TextArea defaultValue={description} autosize />
+              <TextArea
+                defaultValue={description}
+                onChange={e =>
+                  this.updateCompanyState('description', e.target.value)
+                }
+                autosize
+              />
             </div>
           </div>
           <Button type="primary" onClick={this.changeState}>
@@ -69,7 +93,7 @@ class Company extends Component {
   renderShowView() {
     const { company } = this.props;
     if (isEmpty(company) || isNil(company)) {
-      return <NotFound />;
+      this.changeState();
     }
 
     const { name, website, description } = company;

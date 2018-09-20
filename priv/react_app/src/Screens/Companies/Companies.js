@@ -68,10 +68,11 @@ class Companies extends Component {
             key: i
           }))}
         />
-
-        <Button onClick={() => null} type="primary">
-          New company
-        </Button>
+        <InvisibleLink to="/companies/new">
+          <Button onClick={() => null} type="primary">
+            New company
+          </Button>
+        </InvisibleLink>
       </div>
     );
   }
