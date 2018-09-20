@@ -6,7 +6,7 @@ import Menu from 'antd/lib/menu';
 import Breadcrumb from 'antd/lib/breadcrumb';
 import Icon from 'antd/lib/icon';
 
-import { capitalize } from 'lodash/fp';
+import { startCase } from 'lodash/fp';
 
 import { Route, Switch, Redirect, Link } from 'react-router-dom';
 import PrivateRoute from '../Components/PrivateRoute';
@@ -82,7 +82,7 @@ class App extends Component {
       const url = `/${paths.slice(0, index + 1).join('/')}`;
       return (
         <Breadcrumb.Item key={url}>
-          <Link to={url}>{capitalize(item)}</Link>
+          <Link to={url}>{startCase(item)}</Link>
         </Breadcrumb.Item>
       );
     });
@@ -104,6 +104,11 @@ class App extends Component {
             >
               <Menu.Item key="/companies">Companies</Menu.Item>
               <Menu.Item key="/categories">Categories</Menu.Item>
+              <Menu.SubMenu title="Student Sessions">
+                <Menu.Item key="/student_sessions/application">
+                  Application
+                </Menu.Item>
+              </Menu.SubMenu>
               {isLoggedIn ? this.loggedInMenuItem() : this.loggedOutMenuItem()}
             </Menu>
           </Header>

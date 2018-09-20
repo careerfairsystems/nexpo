@@ -29,7 +29,7 @@ class SessionApplication extends Component {
   render() {
     return (
       <div style={{ padding: 24 }}>
-        <HtmlTitle title="Student session application" />
+        <HtmlTitle title="Student Session Application" />
         <h1>Apply for student sessions</h1>
         <h3>Company</h3>
         <body> Choose the company you would like to meet</body>
