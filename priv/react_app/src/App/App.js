@@ -55,22 +55,16 @@ class App extends Component {
     const displayName = firstName ? [firstName, lastName].join(' ') : email;
 
     return [
-      <Menu.Item key="/logout" style={{ float: 'right' }}>
-        Logout
-      </Menu.Item>,
-      <Menu.Item key="/user/profile" style={{ float: 'right' }}>
+      <Menu.Item key="/user/profile">
         {displayName} <Icon type="user" />
-      </Menu.Item>
+      </Menu.Item>,
+      <Menu.Item key="/logout">Logout</Menu.Item>
     ];
   };
 
   loggedOutMenuItem = () => [
-    <Menu.Item key="/signup" style={{ float: 'right' }}>
-      Sign Up
-    </Menu.Item>,
-    <Menu.Item key="/login" style={{ float: 'right' }}>
-      Login
-    </Menu.Item>
+    <Menu.Item key="/login">Login</Menu.Item>,
+    <Menu.Item key="/signup">Sign Up</Menu.Item>
   ];
 
   render() {
@@ -91,17 +85,25 @@ class App extends Component {
         <HtmlTitle />
 
         <Layout>
-          <Header className="header" style={{ background: '#fff' }}>
+          <Header
+            className="header"
+            style={{ background: '#fff', overflow: 'hidden' }}
+          >
             <Link to="/" className="logo" />
 
             <Menu
               theme="light"
               mode="horizontal"
               onClick={({ key }) => redirect(key)}
-              style={{ lineHeight: '64px' }}
+              style={{
+                display: 'flex',
+                lineHeight: '64px'
+              }}
             >
               <Menu.Item key="/companies">Companies</Menu.Item>
-              <Menu.Item key="/categories">Categories</Menu.Item>
+              <Menu.Item key="/categories" style={{ flex: 1 }}>
+                Categories
+              </Menu.Item>
               {isLoggedIn ? this.loggedInMenuItem() : this.loggedOutMenuItem()}
             </Menu>
           </Header>

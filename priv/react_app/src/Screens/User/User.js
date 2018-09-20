@@ -100,7 +100,7 @@ class User extends Component {
   }
 }
 User.propTypes = {
-  currentUser: PropTypes.shape(PropTypes.string).isRequired,
+  currentUser: PropTypes.shape({ email: PropTypes.string }).isRequired,
   fetching: PropTypes.bool.isRequired
 };
 
