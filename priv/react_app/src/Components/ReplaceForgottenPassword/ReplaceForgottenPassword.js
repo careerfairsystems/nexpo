@@ -106,7 +106,7 @@ class ReplaceForgottenPassword extends Component<Props> {
         <RaisedButton
           label="Update password"
           primary
-          onTouchTap={this._sendQueryToBackend}
+          onClick={this._sendQueryToBackend}
         />
       </div>
     );
