@@ -39,4 +39,3 @@ uploads/
 # Logs, we dont want debug logs in the repository.
 *.log
 
-

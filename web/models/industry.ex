@@ -4,7 +4,6 @@ defmodule Nexpo.Industry do
   schema "industries" do
     field :name, :string
 
-    many_to_many :company, EctoAssoc.Company, join_through: "company_industry"
     timestamps()
   end
 
@@ -13,7 +12,7 @@ defmodule Nexpo.Industry do
   """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:start, :end, :used])
-    |> validate_required([:start, :end, :used])
+    |> cast(params, [:name])
+    |> validate_required([:name])
   end
 end

@@ -4,7 +4,6 @@ defmodule Nexpo.JobOffer do
   schema "job_offers" do
     field :type, :string
 
-    many_to_many :company, EctoAssoc.Company, join_through: "company_job_offer"
     timestamps()
   end
 
@@ -13,7 +12,7 @@ defmodule Nexpo.JobOffer do
   """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:start, :end, :used])
-    |> validate_required([:start, :end, :used])
+    |> cast(params, [:type])
+    |> validate_required([:type])
   end
 end
