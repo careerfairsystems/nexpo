@@ -4,6 +4,8 @@ defmodule Nexpo.Industry do
   schema "industries" do
     field :name, :string
 
+    many_to_many :company, EctoAssoc.Company, join_through: "company_industry"
+
     timestamps()
   end
 

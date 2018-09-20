@@ -6,7 +6,10 @@ defmodule Nexpo.StudentSessionTimeSlot do
     field :end, Ecto.DateTime
     field :used, :boolean, default: false
 
+    belongs_to :company, Nexpo.Company
+
     timestamps()
+    
   end
 
   @doc """

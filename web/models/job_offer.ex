@@ -4,6 +4,8 @@ defmodule Nexpo.JobOffer do
   schema "job_offers" do
     field :type, :string
 
+    many_to_many :company, EctoAssoc.Company, join_through: "company_job_offer"
+
     timestamps()
   end
 
