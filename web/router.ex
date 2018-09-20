@@ -7,11 +7,6 @@ defmodule Nexpo.Router do
     use Sentry.Plug
   end
 
-  pipeline :admin do
-    plug Guardian.Plug.EnsureAuthenticated, [handler: Nexpo.SessionController]
-    # TODO: plug Nexpo.Plug.EnsureAdmin  //follow the example from https://medium.com/@alves.lcs/lets-build-phoenix-admin-routes-8c0e065ac33f
-  end
-
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
@@ -33,6 +28,11 @@ defmodule Nexpo.Router do
     plug Guardian.Plug.EnsureResource, handler: Nexpo.SessionController
   end
 
+  pipeline :has_permission do
+    plug Guardian.Plug.EnsureAuthenticated, [handler: Nexpo.SessionController]
+    # TODO: plug Nexpo.Plug.EnsureAdmin  //follow the example from https://medium.com/@alves.lcs/lets-build-phoenix-admin-routes-8c0e065ac33f
+  end
+
   # Allows us to see mails sent in dev to /sent_emails
   if Mix.env == :dev do
     forward "/sent_emails", Bamboo.EmailPreviewPlug
@@ -47,12 +47,12 @@ defmodule Nexpo.Router do
     delete "/me", UserController, :show_delete
   end
 
-  # Admin protected endpoints
+  # Permission protected endpoints
   scope "/api", Nexpo do
-    pipe_through [:api, :api_auth, :admin]
+    pipe_through [:api, :api_auth, :has_permission]
 
     # resources "/companies:id", CompanyController, only: [:create, :update, :delete]
-    resources "/users", UserController, only: [:show]
+    resources "/users", UserController, only: [:index, :show, :create, :delete]
   end
 
   # Not-protected endpoints

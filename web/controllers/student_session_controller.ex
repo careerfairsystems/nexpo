@@ -11,7 +11,7 @@ defmodule Nexpo.StudentSessionController do
                 |> StudentSession.changeset(data)
 
     case Repo.insert(changeset) do
-      {:ok} ->
+      {:ok, _student_session} ->
         conn
         |> redirect(to: student_path(conn, :show, student))
       {:error, changeset} ->

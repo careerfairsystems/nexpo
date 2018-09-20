@@ -11,7 +11,7 @@ defmodule Nexpo.DesiredProgrammeController do
                 |> DesiredProgramme.changeset(data)
 
     case Repo.insert(changeset) do
-      {:ok} ->
+      {:ok, _programme} ->
         conn
         |> redirect(to: company_path(conn, :show, company))
       {:error, changeset} ->
