@@ -51,7 +51,7 @@ class DevelopLogin extends Component {
         <RaisedButton
           label="Login as user"
           primary
-          onTouchTap={() => this.login()}
+          onClick={() => this.login()}
         />
       </div>
     );

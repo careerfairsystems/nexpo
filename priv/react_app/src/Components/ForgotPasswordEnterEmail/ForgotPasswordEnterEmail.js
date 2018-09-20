@@ -63,7 +63,7 @@ class ForgotPasswordEnterEmail extends Component<Props> {
         <RaisedButton
           primary
           label="Send email"
-          onTouchTap={this._queryBackend}
+          onClick={this._queryBackend}
         />
         <br />
         <br />
