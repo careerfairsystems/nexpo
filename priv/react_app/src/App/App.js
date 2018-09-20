@@ -74,8 +74,8 @@ class App extends Component {
   ];
 
   render() {
-    const { isLoggedIn, history, location } = this.props;
-    const paths = location.pathname.split('/').filter(i => i);
+    const { isLoggedIn, redirect, pathname } = this.props;
+    const paths = pathname.split('/').filter(i => i);
     const breadcrumbItems = paths.map((item, index) => {
       const url = `/${paths.slice(0, index + 1).join('/')}`;
       return (
@@ -97,7 +97,7 @@ class App extends Component {
             <Menu
               theme="light"
               mode="horizontal"
-              onClick={({ key }) => history.push(key)}
+              onClick={({ key }) => redirect(key)}
               style={{ lineHeight: '64px' }}
             >
               <Menu.Item key="/companies">Companies</Menu.Item>
@@ -128,8 +128,8 @@ class App extends Component {
 App.propTypes = {
   isLoggedIn: PropTypes.bool.isRequired,
   currentUser: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired,
-  history: PropTypes.object.isRequired,
+  pathname: PropTypes.string.isRequired,
+  redirect: PropTypes.func.isRequired,
   logout: PropTypes.func.isRequired
 };
 

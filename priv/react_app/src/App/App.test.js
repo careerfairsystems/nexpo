@@ -1,10 +1,11 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { MemoryRouter } from 'react-router-dom';
+import { MemoryRouter, Route } from 'react-router-dom';
 import { shallow, mount } from 'enzyme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import App from './App';
+import ConnectedApp from './index';
 import { createMockStore } from '../TestHelper';
 
 it('renders without crashing', () => {
@@ -12,7 +13,21 @@ it('renders without crashing', () => {
     <App
       isLoggedIn={false}
       currentUser={{}}
-      logout={() => console.log('logout')}
+      pathname="/"
+      logout={() => 'a'}
+      redirect={() => 'a'}
+    />
+  );
+});
+
+it('renders isLoggedIn without crashing', () => {
+  shallow(
+    <App
+      isLoggedIn
+      currentUser={{ email: 'test@it', first_name: 'Tester', last_name: 'AB' }}
+      pathname="/"
+      logout={() => 'a'}
+      redirect={() => 'a'}
     />
   );
 });
@@ -28,6 +43,9 @@ const state = {
     verify_forgot_password_key: { fetching: false, success: false }
   },
   entities: {
+    users: {
+      '1': { id: 1, email: 'dev@it', first_name: 'Dev', last_name: 'X' }
+    },
     companies: {
       '1': { id: 1, name: 'Spotify', entries: [1, 2, 3] },
       '2': { id: 2, name: 'Google', entries: [4, 5] }
@@ -50,27 +68,33 @@ const state = {
   },
   auth: {
     error: false,
-    isLoggedIn: false,
+    isLoggedIn: true,
     forgotPassword: { validKey: false }
   },
-  current: {}
+  current: { user: 1 }
 };
 
 const route = path => (
   <Provider store={createMockStore(state)}>
     <MuiThemeProvider>
       <MemoryRouter initialEntries={[path]}>
-        <App isLoggedIn={false} currentUser={{}} logout={() => null} />
+        <Route component={ConnectedApp} />
       </MemoryRouter>
     </MuiThemeProvider>
   </Provider>
 );
 
 it('renders routes without crashing', () => {
+  mount(route('/'));
+  mount(route('/start'));
   mount(route('/categories'));
+  mount(route('/categories/1'));
   mount(route('/companies'));
+  mount(route('/companies/1'));
   mount(route('/login'));
+  mount(route('/logout'));
   mount(route('/signup'));
   mount(route('/forgot-password'));
+  mount(route('/user/profile'));
   mount(route('/invalid-path'));
 });
