@@ -54,6 +54,7 @@ const stateful = connect((state: State, props) => {
     }))
     .map(entry => ({
       ...entry,
+      key: entry.id,
       companyName: entry.company.name,
       [entry.attribute.title.toLowerCase()]: entry.value
     }));
