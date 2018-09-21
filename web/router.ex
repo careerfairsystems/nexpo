@@ -37,7 +37,11 @@ defmodule Nexpo.Router do
   scope "/api", Nexpo do
     pipe_through [:api, :api_auth]
 
-    get "/me", UserController, :me
+    get "/me", UserController, :show_me
+    put "/me", UserController, :update_me
+    delete "/me", UserController, :delete_me
+
+    resources "/users", UserController, only: [:index, :show, :update, :delete]
   end
 
   # Not-protected endpoints

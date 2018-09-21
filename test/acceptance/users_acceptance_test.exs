@@ -25,6 +25,44 @@ defmodule Nexpo.UserAcceptanceTest do
 
   end
 
+  describe "PUT /api/me" do
+
+    test "PUT /api/me return 401 on invalid jwt", %{conn: conn} do
+      conn = put(conn, "/api/me", %{})
+
+      assert json_response(conn, 401)
+    end
+
+    @tag :logged_in
+    test "PUT /api/me returns 200 and current user on valid jwt", %{conn: conn, user: user} do
+      conn = put(conn, "/api/me", %{user: %{}})
+
+      assert json_response(conn, 200)
+      response = Poison.decode!(conn.resp_body)["data"]
+
+      assert response["id"] == user.id
+    end
+
+  end
+
+  describe "DELETE /api/me" do
+
+    test "DELETE /api/me return 401 on invalid jwt", %{conn: conn} do
+      conn = delete(conn, "/api/me")
+
+      assert json_response(conn, 401)
+    end
+
+    @tag :logged_in
+    test "DELETE /api/me returns 200 and current user on valid jwt", %{conn: conn, user: user} do
+      conn = delete(conn, "/api/me")
+
+      assert response(conn, 204)
+      refute Repo.get(User, user.id)
+    end
+
+  end
+
   describe "POST /api/password/forgot" do
 
     test "returns 200 if user exists", %{conn: conn} do
