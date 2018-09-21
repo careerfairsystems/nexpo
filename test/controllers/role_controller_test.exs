@@ -2,7 +2,7 @@ defmodule Nexpo.RoleControllerTest do
   use Nexpo.ConnCase
 
   alias Nexpo.Role
-  @valid_attrs %{type: "some content"}
+  @valid_attrs %{type: "some content", permissions: ["read_all", "write_all"]}
   @invalid_attrs %{}
 
   setup %{conn: conn} do
@@ -43,6 +43,17 @@ defmodule Nexpo.RoleControllerTest do
     conn = put conn, role_path(conn, :update, role), role: @valid_attrs
     assert json_response(conn, 200)["data"]["id"]
     assert Repo.get_by(Role, @valid_attrs)
+  end
+
+  test "updates and renders chosen resource with user ids", %{conn: conn} do
+    role = Repo.insert! %Role{}
+    user = Factory.create_user()
+    attrs = %{type: "type", user_ids: [user.id]}
+    conn = put conn, role_path(conn, :update, role), role: attrs
+    assert json_response(conn, 200)["data"]["id"]
+    role = Role |> Repo.get_by(%{type: "type"})
+    assert role
+    assert length(Map.get(role |> Repo.preload(:users), :users)) == 1
   end
 
   test "does not update chosen resource and renders errors when data is invalid", %{conn: conn} do
