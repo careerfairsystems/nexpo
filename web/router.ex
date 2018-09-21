@@ -38,8 +38,8 @@ defmodule Nexpo.Router do
     pipe_through [:api, :api_auth]
 
     get "/me", UserController, :show_me
-    put "/me", UserController, :show_update
-    delete "/me", UserController, :show_delete
+    put "/me", UserController, :update_me
+    delete "/me", UserController, :delete_me
 
     resources "/users", UserController, only: [:index, :show, :update, :delete]
   end
