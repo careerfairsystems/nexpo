@@ -1,7 +1,7 @@
 defmodule Nexpo.RoleController do
   use Nexpo.Web, :controller
 
-  alias Nexpo.Role
+  alias Nexpo.{Role, User}
 
   def index(conn, _params) do
     roles = Repo.all(Role)
@@ -25,16 +25,18 @@ defmodule Nexpo.RoleController do
   end
 
   def show(conn, %{"id" => id}) do
-    role = Role
-        |> Repo.get!(id)
-        |> Repo.preload(:users)
+    role = Repo.get!(Role, id)
+           |> Repo.preload(:users)
 
     render(conn, "show.json", role: role)
   end
 
   def update(conn, %{"id" => id, "role" => role_params}) do
     role = Repo.get!(Role, id)
+           |> Repo.preload(:users)
+
     changeset = Role.changeset(role, role_params)
+                |> User.put_assoc(role_params)
 
     case Repo.update(changeset) do
       {:ok, role} ->

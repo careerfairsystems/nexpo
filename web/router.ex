@@ -41,7 +41,7 @@ defmodule Nexpo.Router do
     put "/me", UserController, :show_update
     delete "/me", UserController, :show_delete
 
-    resources "/users", UserController, only: [:index, :show, :create, :delete]
+    resources "/users", UserController, only: [:index, :create, :show, :update, :delete]
   end
 
   # Not-protected endpoints
