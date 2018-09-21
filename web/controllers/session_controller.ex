@@ -61,14 +61,14 @@ defmodule Nexpo.SessionController do
     end
   end
 
-  # Called when Guardian identifies an invalid jwt
+  # Called when Guardian identifies an unauthenticated jwt
   def unauthenticated(conn, _params) do
     conn
     |> put_status(401)
     |> render(Nexpo.ErrorView, "401.json")
   end
 
-  # Called when Guardian identifies an invalid jwt
+  # Called when Guardian identifies an unauthorized jwt
   def unauthorized(conn, _params) do
     conn
     |> put_status(401)
