@@ -28,14 +28,6 @@ defmodule Nexpo.Router do
     plug Guardian.Plug.EnsureResource, handler: Nexpo.SessionController
   end
 
-  pipeline :has_permission do
-    plug Guardian.Plug.EnsureAuthenticated, [handler: Nexpo.SessionController]
-    plug Guardian.Plug.EnsurePermissions, default: ["write"], handler: Nexpo.SessionController
-    # plug Nexpo.Plug.EnsurePermissions
-    # plug Guardian.Plug.Permissions.Bitwise, ensure: %{default: [:create_users]}
-    # TODO: plug Nexpo.Plug.EnsureAdmin  //follow the example from https://medium.com/@alves.lcs/lets-build-phoenix-admin-routes-8c0e065ac33f
-  end
-
   # Allows us to see mails sent in dev to /sent_emails
   if Mix.env == :dev do
     forward "/sent_emails", Bamboo.EmailPreviewPlug
@@ -48,13 +40,7 @@ defmodule Nexpo.Router do
     get "/me", UserController, :show_me
     put "/me", UserController, :show_update
     delete "/me", UserController, :show_delete
-  end
 
-  # Permission protected endpoints
-  scope "/api", Nexpo do
-    pipe_through [:api, :api_auth, :has_permission]
-
-    # resources "/companies:id", CompanyController, only: [:create, :update, :delete]
     resources "/users", UserController, only: [:index, :show, :create, :delete]
   end
 

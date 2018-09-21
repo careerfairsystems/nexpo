@@ -2,12 +2,17 @@ defmodule Nexpo.UserController do
   use Nexpo.Web, :controller
   use Guardian.Phoenix.Controller
 
-  alias Nexpo.User
-  alias Nexpo.Email
-  alias Nexpo.Mailer
-  alias Nexpo.MessageView
-  alias Nexpo.ErrorView
-  alias Nexpo.ChangesetView
+  alias Nexpo.{User, Email, Mailer}
+  alias Guardian.Plug.{EnsurePermissions}
+
+  plug EnsurePermissions, [handler: Nexpo.SessionController,
+                           one_of: [%{default: ["read"]},
+                                    %{default: ["read_users"]}]
+                          ] when action in [:index, :show]
+  plug EnsurePermissions, [handler: Nexpo.SessionController,
+                           one_of: [%{default: ["write"]},
+                                    %{default: ["write_users"]}]
+                          ] when action in [:create, :update, :delete]
 
   def index(conn, %{}, _user, _claims) do
     users = Repo.all(User)
@@ -61,8 +66,7 @@ defmodule Nexpo.UserController do
   end
 
   def show_me(conn, %{}, user, _claims) do
-    user = Repo.preload(user, :roles)
-    |> Repo.preload(:student)
+    user = Repo.preload(user, [:roles, :student])
     conn |> put_status(200) |> render("show.json", user: user)
   end
 
@@ -148,10 +152,10 @@ defmodule Nexpo.UserController do
             case Repo.update(changeset) do
               {:ok, _user} ->
                 conn |> put_status(200)
-                |> render(MessageView, "message.json", message: "Successfully changed password")
+                |> render(Nexpo.MessageView, "message.json", message: "Successfully changed password")
               {:error, changeset} ->
                 conn |> put_status(400)
-                |> render(ChangesetView, "error.json", %{changeset: changeset})
+                |> render(Nexpo.ChangesetView, "error.json", %{changeset: changeset})
             end
           false ->
             replace_forgotten_password(conn, nil, nil, nil)
@@ -161,7 +165,7 @@ defmodule Nexpo.UserController do
   end
 
   def replace_forgotten_password(conn, _params, _user, _claims) do
-    conn |> put_status(404) |> render(ErrorView, "404.json")
+    conn |> put_status(404) |> render(Nexpo.ErrorView, "404.json")
   end
 
   @apidoc """
@@ -187,14 +191,15 @@ defmodule Nexpo.UserController do
       user ->
         case User.forgot_password_key_valid(user) do
           true ->
-            conn |> put_status(200) |> render(MessageView, "message.json", message: "Exists")
+            conn |> put_status(200) |> render(Nexpo.MessageView, "message.json", message: "Exists")
           false ->
             forgot_password_verification(conn, nil, nil, nil)
         end
     end
   end
+
   def forgot_password_verification(conn, _, _, _) do
-    conn |> put_status(404) |> render(ErrorView, "404.json")
+    conn |> put_status(404) |> render(Nexpo.ErrorView, "404.json")
   end
 
   @apidoc
