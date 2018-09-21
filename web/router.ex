@@ -30,6 +30,9 @@ defmodule Nexpo.Router do
 
   pipeline :has_permission do
     plug Guardian.Plug.EnsureAuthenticated, [handler: Nexpo.SessionController]
+    plug Guardian.Plug.EnsurePermissions, default: ["write"], handler: Nexpo.SessionController
+    # plug Nexpo.Plug.EnsurePermissions
+    # plug Guardian.Plug.Permissions.Bitwise, ensure: %{default: [:create_users]}
     # TODO: plug Nexpo.Plug.EnsureAdmin  //follow the example from https://medium.com/@alves.lcs/lets-build-phoenix-admin-routes-8c0e065ac33f
   end
 
