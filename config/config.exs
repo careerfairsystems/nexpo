@@ -35,14 +35,22 @@ config :guardian, Guardian,
   serializer: Nexpo.GuardianSerializer,
   permissions: %{
     default: [
-      "read",
-      "write",
+      "read_all",
+      "write_all",
       "read_users",
       "write_users",
       "read_roles",
       "write_roles",
+      "read_events",
+      "write_events",
+      "read_companies",
       "write_companies",
-      "write_categories"
+      "read_categories",
+      "write_categories",
+      "read_student_sessions",
+      "write_student_sessions",
+      "read_host_applications",
+      "write_host_applications",
     ]
   }
 

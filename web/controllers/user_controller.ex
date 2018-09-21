@@ -6,11 +6,11 @@ defmodule Nexpo.UserController do
   alias Guardian.Plug.{EnsurePermissions}
 
   plug EnsurePermissions, [handler: Nexpo.SessionController,
-                           one_of: [%{default: ["read"]},
+                           one_of: [%{default: ["read_all"]},
                                     %{default: ["read_users"]}]
                           ] when action in [:index, :show]
   plug EnsurePermissions, [handler: Nexpo.SessionController,
-                           one_of: [%{default: ["write"]},
+                           one_of: [%{default: ["write_all"]},
                                     %{default: ["write_users"]}]
                           ] when action in [:create, :update, :delete]
 
