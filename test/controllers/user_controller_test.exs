@@ -25,7 +25,15 @@ defmodule Nexpo.UserControllerTest do
       "email" => user.email,
       "food_preferences" => user.food_preferences,
       "phone_number" => user.phone_number,
-      "roles" => []}
+      "roles" => [],
+      "student" => %{
+          "id" => user.student.id,
+          "resumeEnUrl" => user.student.resumeEnUrl,
+          "resumeSvUrl" => user.student.resumeSvUrl,
+          "year" => nil,
+          "user_id" => user.id
+        }
+      }
   end
 
   @tag :logged_in
@@ -42,7 +50,7 @@ defmodule Nexpo.UserControllerTest do
     assert json_response(conn, 200)["data"]["id"]
     assert Repo.get_by(User, @valid_attrs)
   end
-  
+
   @tag :logged_in
   test "updates and renders chosen resource with role_ids", %{conn: conn} do
     user = Factory.create_user()

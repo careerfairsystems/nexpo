@@ -21,6 +21,7 @@ defmodule Nexpo.UserAcceptanceTest do
       response = Poison.decode!(conn.resp_body)["data"]
 
       assert response["id"] == user.id
+      assert response["student"]["id"] == user.student.id
     end
 
   end

@@ -180,8 +180,21 @@ defmodule Nexpo.User do
       user ->
         user
         |> User.final_signup_changeset(params)
-        |> Nexpo.Student.build_assoc()
+        |> Nexpo.Student.build_assoc
         |> Repo.update
+    end
+  end
+
+  def final_signup!(params) do
+    case User
+         |> Repo.get_by(signup_key: params.signup_key)
+         |> Repo.preload(:student) do
+      nil -> :no_such_user
+      user ->
+        user
+        |> User.final_signup_changeset(params)
+        |> Nexpo.Student.build_assoc
+        |> Repo.update!
     end
   end
 

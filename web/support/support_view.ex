@@ -51,6 +51,10 @@ defmodule Nexpo.Support.View do
       %Ecto.Association.NotLoaded{} -> []
       _ -> [:users]
     end
+    relations = relations ++ case Map.get(object, :student) do
+      %Ecto.Association.NotLoaded{} -> []
+      _ -> [:student]
+    end
 
     # Render all relations
     relations = relations
@@ -86,6 +90,8 @@ defmodule Nexpo.Support.View do
         %{:roles => render_many(object.roles, Nexpo.RoleView, "role.json")}
       :users ->
         %{:users => render_many(object.users, Nexpo.UserView, "user.json")}
+      :student ->
+        %{:student => render_one(object.student, Nexpo.StudentView, "student.json")}
       _ ->
         %{}
     end
