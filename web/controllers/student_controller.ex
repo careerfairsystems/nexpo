@@ -2,6 +2,16 @@ defmodule Nexpo.StudentController do
   use Nexpo.Web, :controller
 
   alias Nexpo.Student
+  alias Guardian.Plug.{EnsurePermissions}
+
+  plug EnsurePermissions, [handler: Nexpo.SessionController,
+                           one_of: [%{default: ["read_all"]},
+                                    %{default: ["read_users"]}]
+                          ] when action in [:index, :show]
+  plug EnsurePermissions, [handler: Nexpo.SessionController,
+                           one_of: [%{default: ["write_all"]},
+                                    %{default: ["write_users"]}]
+                          ] when action in [:create, :update, :delete]
 
   def index(conn, _params) do
     students = Repo.all(Student)

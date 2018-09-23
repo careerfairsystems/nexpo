@@ -3,6 +3,13 @@ defmodule Nexpo.ProgrammeController do
 
   alias Nexpo.Programme
 
+  alias Guardian.Plug.{EnsurePermissions}
+
+  plug EnsurePermissions, [handler: Nexpo.SessionController,
+                           one_of: [%{default: ["write_all"]},
+                                    %{default: ["write_users"]}]
+                          ] when action in [:create, :update, :delete]
+
   def index(conn, _params) do
     programmes = Repo.all(Programme)
     render(conn, "index.json", programmes: programmes)

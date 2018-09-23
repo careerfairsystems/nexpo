@@ -52,7 +52,7 @@ defmodule Nexpo.Router do
     resources "/companies", CompanyController do
       resources "/desired_programmes", DesiredProgrammeController
     end
-    resources "/categories", CategoryController, only: [:index, :show, :create]
+    resources "/categories", CategoryController
     resources "/programmes", ProgrammeController
   end
 
