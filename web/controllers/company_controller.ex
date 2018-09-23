@@ -2,6 +2,16 @@ defmodule Nexpo.CompanyController do
   use Nexpo.Web, :controller
 
   alias Nexpo.Company
+  alias Guardian.Plug.{EnsurePermissions}
+
+  plug EnsurePermissions, [handler: Nexpo.SessionController,
+                           one_of: [%{default: ["read_all"]},
+                                    %{default: ["read_companies"]}]
+                          ] when action in [:index, :show]
+  plug EnsurePermissions, [handler: Nexpo.SessionController,
+                           one_of: [%{default: ["write_all"]},
+                                    %{default: ["write_companies"]}]
+                          ] when action in [:create, :update, :delete]
 
   @apidoc """
   @api {GET} /companies List companies
