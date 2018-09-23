@@ -42,23 +42,23 @@ defmodule Nexpo.Router do
     delete "/me", UserController, :delete_me
 
     resources "/users", UserController, only: [:index, :show, :update, :delete]
-  end
+    resources "/roles", RoleController
 
-  # Not-protected endpoints
-  scope "/api", Nexpo do
-    pipe_through :api
+    resources "/students", StudentController do
+      resources "/student_sessions", StudentSessionController
+      resources "/student_session_applications", StudentSessionApplicationController
+    end
 
     resources "/companies", CompanyController do
       resources "/desired_programmes", DesiredProgrammeController
     end
     resources "/categories", CategoryController, only: [:index, :show, :create]
-
-    resources "/roles", RoleController
-    resources "/students", StudentController do
-      resources "/student_sessions", StudentSessionController
-      resources "/student_session_applications", StudentSessionApplicationController
-    end
     resources "/programmes", ProgrammeController
+  end
+
+  # Not-protected endpoints
+  scope "/api", Nexpo do
+    pipe_through :api
 
     post "/login", SessionController, :create
     if Mix.env != :prod do

@@ -5,6 +5,7 @@ defmodule Nexpo.CompaniesAcceptanceTest do
     {:ok, conn: put_req_header(conn, "accept", "application/json")}
   end
 
+  @tag :logged_in
   test "GET /companies returns all companies", %{conn: conn} do
     companies = Factory.insert_list(3, :company)
     conn = conn |> get("/api/companies")
@@ -14,6 +15,7 @@ defmodule Nexpo.CompaniesAcceptanceTest do
     assert length(response) == length(companies)
   end
 
+  @tag :logged_in
   test "GET /companies returns empty list if there are no companies", %{conn: conn} do
     conn = conn |> get("/api/companies")
 
@@ -22,6 +24,7 @@ defmodule Nexpo.CompaniesAcceptanceTest do
     assert length(response) == 0
   end
 
+  @tag :logged_in
   test "GET /companies returns data in the correct format", %{conn: conn} do
     Factory.insert(:company) |> Factory.with_entries(2)
     Factory.insert(:company) |> Factory.with_entries(3)
@@ -53,6 +56,7 @@ defmodule Nexpo.CompaniesAcceptanceTest do
     assert ExJsonSchema.Validator.validate(schema, response) == :ok
   end
 
+  @tag :logged_in
   test "GET /companies/:id returns data in the correct format", %{conn: conn} do
     company = Factory.insert(:company, %{id: 3}) |> Factory.with_entries(2)
     conn = conn |> get("/api/companies/#{company.id}")

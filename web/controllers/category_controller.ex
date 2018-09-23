@@ -45,7 +45,7 @@ defmodule Nexpo.CategoryController do
   @apiUse UnprocessableEntity
   @apiUse InternalServerError
   """
-  def create(conn, category_params) do
+  def create(conn, %{"category" => category_params}) do
     changeset = Category.changeset(%Category{}, category_params)
     case Repo.insert(changeset) do
       {:ok, category} ->
@@ -83,7 +83,7 @@ defmodule Nexpo.CategoryController do
   @apiUse InternalServerError
   """
   def show(conn, %{"id" => id}) do
-    category = Repo.get!(Category, id) 
+    category = Repo.get!(Category, id)
                |> Repo.preload([attributes: [entries: :company]])
     render(conn, "show.json", category: category)
   end
