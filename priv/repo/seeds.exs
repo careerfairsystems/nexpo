@@ -28,7 +28,9 @@ Repo.insert!(%User{email: "dev@it", first_name: "Dev", last_name: "Dev", phone_n
 
 #Create some roles
 alias Nexpo.Role
-Repo.insert!(%Role{type: "admin", permissions: ["create_user"]})
+Repo.insert!(%Role{type: "admin", permissions: ["read_all", "write_all"]})
+
+#Associate role with user
 
 #Create some companies
 alias Nexpo.Company
