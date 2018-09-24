@@ -15,6 +15,7 @@ import Categories from '../Screens/Categories';
 import Category from '../Screens/Category';
 import Roles from '../Screens/Roles';
 import Role from '../Screens/Role';
+import Users from '../Screens/Users';
 import User from '../Screens/User';
 import Companies from '../Screens/Companies';
 import Company from '../Screens/Company';
@@ -37,6 +38,10 @@ const routes = (
     <PrivateRoute path="/categories/:id" component={Category} />
     <Route exact path="/companies" component={Companies} />
     <PrivateRoute path="/companies/:id" component={Company} />
+    <Route exact path="/users" component={Users} />
+    <PrivateRoute path="/users/:id" component={User} />
+    <Route exact path="/roles" component={Roles} />
+    <PrivateRoute path="/roles/:id" component={Role} />
     <Route path="/login" component={Login} />
     <Route path="/logout" component={Logout} />
     <Route path="/signup" component={Signup} />
@@ -103,8 +108,10 @@ class App extends Component {
               }}
             >
               <Menu.Item key="/companies">Companies</Menu.Item>
-              <Menu.Item key="/categories" style={{ flex: 1 }}>
-                Categories
+              <Menu.Item key="/categories">Categories</Menu.Item>
+              <Menu.Item key="/roles">Roles</Menu.Item>
+              <Menu.Item key="/users" style={{ flex: 1 }}>
+                Users
               </Menu.Item>
               {isLoggedIn ? this.loggedInMenuItem() : this.loggedOutMenuItem()}
             </Menu>

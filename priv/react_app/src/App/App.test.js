@@ -36,6 +36,8 @@ const state = {
   api: {
     categories: { fetching: false, success: false },
     companies: { fetching: false, success: false },
+    roles: { fetching: false, success: false },
+    users: { fetching: false, success: false },
     current_user: { fetching: false, success: false },
     forgot_password: { fetching: false, success: false },
     login: { fetching: false, success: false },
@@ -44,7 +46,12 @@ const state = {
   },
   entities: {
     users: {
-      '1': { id: 1, email: 'dev@it', first_name: 'Dev', last_name: 'X' }
+      '1': { id: 1, email: 'dev@it', first_name: 'X', roles: [1, 2] },
+      '2': { id: 2, email: 't@it', first_name: 'T', last_name: 'Y', roles: [] }
+    },
+    roles: {
+      '1': { id: 1, type: 'admin', permissions: ['read_all'], users: [1] },
+      '2': { id: 2, type: 'zzz', permissions: ['read_users'], users: [1] }
     },
     companies: {
       '1': { id: 1, name: 'Spotify', entries: [1, 2, 3] },
@@ -91,6 +98,10 @@ it('renders routes without crashing', () => {
   mount(route('/categories/1'));
   mount(route('/companies'));
   mount(route('/companies/1'));
+  mount(route('/users'));
+  mount(route('/users/1'));
+  mount(route('/roles'));
+  mount(route('/roles/1'));
   mount(route('/login'));
   mount(route('/logout'));
   mount(route('/signup'));

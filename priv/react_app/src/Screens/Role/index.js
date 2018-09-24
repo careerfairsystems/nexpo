@@ -8,13 +8,13 @@ const mapStateToProps = (state, props) => {
   const roleId = props.match.params.id;
   const role = state.entities.roles[roleId] || {};
 
-  const entries = denormalize(
-    { entries: role.entries },
+  const users = denormalize(
+    { users: role.users },
     Schema.roleSchema(),
     state.entities
   );
 
-  return { id: roleId, role, entries };
+  return { id: roleId, role, users };
 };
 
 const mapDispatchToProps = dispatch => ({
