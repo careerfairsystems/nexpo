@@ -9,7 +9,7 @@ defmodule Nexpo.Student do
     field :year, :integer
     field :resume_en_url, Nexpo.CvEn.Type
     field :resume_sv_url, Nexpo.CvSv.Type
-    belongs_to :user, Nexpo.User
+    belongs_to :user, Nexpo.User, foreign_key: :user_id
 
     has_many :student_sessions, Nexpo.StudentSession
     has_many :student_session_applications, Nexpo.StudentSessionApplication
@@ -25,7 +25,7 @@ defmodule Nexpo.Student do
     |> cast(params, [:year, :user_id])
     |> cast_attachments(params, [:resume_en_url, :resume_sv_url])
     |> validate_required([:user_id])
-    |> unique_constraint(:user_id)
+    |> unique_constraint(:user_id, message: "User already has a Student")
     |> foreign_key_constraint(:user_id)
   end
 

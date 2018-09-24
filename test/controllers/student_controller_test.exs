@@ -36,7 +36,7 @@ defmodule Nexpo.StudentControllerTest do
 
   @tag :logged_in
   test "creates and renders resource when data is valid", %{conn: conn} do
-    user = Factory.create_user()
+    user = Repo.insert! %User{email: "dev@it"}
     attrs = %{@valid_attrs | user_id: user.id}
     conn = post conn, student_path(conn, :create), student: attrs
     assert json_response(conn, 201)["data"]["id"]
@@ -51,7 +51,7 @@ defmodule Nexpo.StudentControllerTest do
 
   @tag :logged_in
   test "updates and renders chosen resource when data is valid", %{conn: conn} do
-    user = Factory.create_user()
+    user = Repo.insert! %User{email: "dev@it"}
     student = Repo.insert! %Student{}
     attrs = %{@valid_attrs | user_id: user.id}
     conn = put conn, student_path(conn, :update, student), student: attrs
