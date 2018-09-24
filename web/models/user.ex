@@ -16,10 +16,36 @@ defmodule Nexpo.User do
     field :forgot_password_key, :string
     field :forgot_password_time, :naive_datetime
 
-    many_to_many :roles, Nexpo.Role, join_through: "users_roles"
-    has_one :student, Nexpo.Student
+    many_to_many :roles, Nexpo.Role, join_through: "users_roles", on_replace: :delete
+    has_one :student, Nexpo.Student, on_delete: :delete_all
 
     timestamps()
+  end
+
+  def get_permissions(user) do
+    Repo.all(from(
+      role in Ecto.assoc(user, :roles),
+      select: role.permissions)
+    )
+    |> List.flatten
+  end
+
+  def put_assoc(changeset, params) do
+    case Map.get(params, "user_ids") do
+      nil ->
+        changeset
+      user_ids ->
+        users = get_assoc(user_ids)
+        changeset
+        |> Ecto.Changeset.put_assoc(:users, users)
+    end
+  end
+
+  defp get_assoc(user_ids) do
+    Repo.all(from(
+      user in User,
+      where: user.id in ^user_ids)
+    )
   end
 
   def replace_forgotten_password_changeset(user, params \\ %{}) do
@@ -147,12 +173,28 @@ defmodule Nexpo.User do
   end
 
   def final_signup(params) do
-    case Repo.get_by(User, signup_key: params.signup_key) do
+    case User
+         |> Repo.get_by(signup_key: params.signup_key)
+         |> Repo.preload(:student) do
       nil -> :no_such_user
       user ->
         user
         |> User.final_signup_changeset(params)
+        |> Nexpo.Student.build_assoc
         |> Repo.update
+    end
+  end
+
+  def final_signup!(params) do
+    case User
+         |> Repo.get_by(signup_key: params.signup_key)
+         |> Repo.preload(:student) do
+      nil -> :no_such_user
+      user ->
+        user
+        |> User.final_signup_changeset(params)
+        |> Nexpo.Student.build_assoc
+        |> Repo.update!
     end
   end
 

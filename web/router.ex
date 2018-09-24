@@ -37,24 +37,28 @@ defmodule Nexpo.Router do
   scope "/api", Nexpo do
     pipe_through [:api, :api_auth]
 
-    get "/me", UserController, :me
+    get "/me", UserController, :show_me
+    put "/me", UserController, :update_me
+    delete "/me", UserController, :delete_me
+
+    resources "/users", UserController, only: [:index, :show, :update, :delete]
+    resources "/roles", RoleController
+
+    resources "/students", StudentController do
+      resources "/student_sessions", StudentSessionController
+      resources "/student_session_applications", StudentSessionApplicationController
+    end
+
+    resources "/companies", CompanyController do
+      resources "/desired_programmes", DesiredProgrammeController
+    end
+    resources "/categories", CategoryController
+    resources "/programmes", ProgrammeController
   end
 
   # Not-protected endpoints
   scope "/api", Nexpo do
     pipe_through :api
-
-    resources "/companies", CompanyController do
-      resources "/desired_programmes", DesiredProgrammeController
-    end
-    resources "/categories", CategoryController, only: [:index, :show, :create]
-
-    resources "/roles", RoleController
-    resources "/students", StudentController do
-      resources "/student_sessions", StudentSessionController
-      resources "/student_session_applications", StudentSessionApplicationController
-    end
-    resources "/programmes", ProgrammeController
 
     post "/login", SessionController, :create
     if Mix.env != :prod do
@@ -70,7 +74,7 @@ defmodule Nexpo.Router do
 
   end
 
-   scope "/", Nexpo do
+  scope "/", Nexpo do
     pipe_through :browser # Use the default browser stack
 
     # Catch all other routes, and serve frontend from them

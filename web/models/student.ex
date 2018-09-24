@@ -1,6 +1,9 @@
 defmodule Nexpo.Student do
   use Nexpo.Web, :model
 
+  alias Nexpo.Repo
+  alias Nexpo.Student
+
   schema "students" do
     field :year, :integer
     field :resumeEnUrl, :string
@@ -21,5 +24,10 @@ defmodule Nexpo.Student do
     |> cast(params, [:year, :resumeEnUrl, :resumeSvUrl, :user_id])
     |> validate_required([:year, :resumeEnUrl, :resumeSvUrl, :user_id])
     |> foreign_key_constraint(:user_id)
+  end
+
+  def build_assoc(changeset) do
+    student = Repo.insert!(%Student{})
+    Ecto.Changeset.put_assoc(changeset, :student, student)
   end
 end

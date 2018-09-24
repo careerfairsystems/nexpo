@@ -10,10 +10,9 @@ defmodule Nexpo.StudentView do
   end
 
   def render("student.json", %{student: student}) do
-    %{id: student.id,
-      user_id: student.user_id,
-      year: student.year,
-      resumeEnUrl: student.resumeEnUrl,
-      resumeSvUrl: student.resumeSvUrl}
+    # Define own parameters to keep
+    base = [:id, :user_id, :year, :resumeEnUrl, :resumeSvUrl]
+
+    Nexpo.Support.View.render_object(student, base)
   end
 end

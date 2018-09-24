@@ -43,6 +43,18 @@ defmodule Nexpo.Support.View do
       %Ecto.Association.NotLoaded{} -> []
       _ -> [:category]
     end
+    relations = relations ++ case Map.get(object, :roles) do
+      %Ecto.Association.NotLoaded{} -> []
+      _ -> [:roles]
+    end
+    relations = relations ++ case Map.get(object, :users) do
+      %Ecto.Association.NotLoaded{} -> []
+      _ -> [:users]
+    end
+    relations = relations ++ case Map.get(object, :student) do
+      %Ecto.Association.NotLoaded{} -> []
+      _ -> [:student]
+    end
 
     # Render all relations
     relations = relations
@@ -74,6 +86,12 @@ defmodule Nexpo.Support.View do
         %{:attributes => render_many(object.attributes, Nexpo.CategoryAttributeView, "category_attribute.json")}
       :category ->
         %{:category => render_one(object.category, Nexpo.CategoryView, "category.json")}
+      :roles ->
+        %{:roles => render_many(object.roles, Nexpo.RoleView, "role.json")}
+      :users ->
+        %{:users => render_many(object.users, Nexpo.UserView, "user.json")}
+      :student ->
+        %{:student => render_one(object.student, Nexpo.StudentView, "student.json")}
       _ ->
         %{}
     end

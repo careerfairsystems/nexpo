@@ -24,7 +24,11 @@ alias Nexpo.Repo
 
 #Create some users
 alias Nexpo.User
-Repo.insert!(%User{email: "dev", first_name: "Dev", last_name: "Dev", phone_number: "1111111", food_preferences: "Cake"})
+Repo.insert!(%User{email: "dev@it", first_name: "Dev", last_name: "Dev", phone_number: "0707112233", food_preferences: "cake", hashed_password: "legit_hash_123"})
+
+#Create some roles
+alias Nexpo.Role
+Repo.insert!(%Role{type: "admin", permissions: ["create_user"]})
 
 #Create some companies
 alias Nexpo.Company
