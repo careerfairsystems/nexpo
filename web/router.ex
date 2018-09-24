@@ -74,7 +74,7 @@ defmodule Nexpo.Router do
 
   end
 
-   scope "/", Nexpo do
+  scope "/", Nexpo do
     pipe_through :browser # Use the default browser stack
 
     # Catch all other routes, and serve frontend from them
