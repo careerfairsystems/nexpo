@@ -24,6 +24,16 @@ it('should set the correct initial state', () => {
       errors: undefined,
       success: false
     },
+    users: {
+      fetching: false,
+      errors: undefined,
+      success: false
+    },
+    roles: {
+      fetching: false,
+      errors: undefined,
+      success: false
+    },
     current_user: {
       fetching: false,
       errors: undefined,
@@ -118,6 +128,124 @@ describe('fetch companies', () => {
       startState,
       Actions.companies.getAllCompaniesFailure()
     );
+    expect(state).toMatchObject(expected);
+  });
+});
+
+describe('fetch users', () => {
+  it('should handle request start', () => {
+    const startState: ApiState = {
+      users: {
+        fetching: false,
+        errors: {},
+        success: true
+      }
+    };
+    const expected: ApiState = {
+      users: {
+        fetching: true,
+        errors: undefined,
+        success: false
+      }
+    };
+    const state = ApiReducer(startState, Actions.users.getAllUsersIsLoading());
+    expect(state).toMatchObject(expected);
+  });
+
+  it('should handle success', () => {
+    const startState: ApiState = {
+      users: {
+        fetching: true,
+        errors: undefined,
+        success: false
+      }
+    };
+    const expected: ApiState = {
+      users: {
+        fetching: false,
+        errors: undefined,
+        success: true
+      }
+    };
+    const state = ApiReducer(startState, Actions.users.getAllUsersSuccess());
+    expect(state).toMatchObject(expected);
+  });
+
+  it('should handle failure', () => {
+    const startState: ApiState = {
+      users: {
+        fetching: true,
+        errors: undefined,
+        success: true
+      }
+    };
+    const expected: ApiState = {
+      users: {
+        fetching: false,
+        errors: ['There was an error'],
+        success: false
+      }
+    };
+    const state = ApiReducer(startState, Actions.users.getAllUsersFailure());
+    expect(state).toMatchObject(expected);
+  });
+});
+
+describe('fetch roles', () => {
+  it('should handle request start', () => {
+    const startState: ApiState = {
+      roles: {
+        fetching: false,
+        errors: {},
+        success: true
+      }
+    };
+    const expected: ApiState = {
+      roles: {
+        fetching: true,
+        errors: undefined,
+        success: false
+      }
+    };
+    const state = ApiReducer(startState, Actions.roles.getAllRolesIsLoading());
+    expect(state).toMatchObject(expected);
+  });
+
+  it('should handle success', () => {
+    const startState: ApiState = {
+      roles: {
+        fetching: true,
+        errors: undefined,
+        success: false
+      }
+    };
+    const expected: ApiState = {
+      roles: {
+        fetching: false,
+        errors: undefined,
+        success: true
+      }
+    };
+    const state = ApiReducer(startState, Actions.roles.getAllRolesSuccess());
+    expect(state).toMatchObject(expected);
+  });
+
+  it('should handle failure', () => {
+    const startState: ApiState = {
+      roles: {
+        fetching: true,
+        errors: undefined,
+        success: true
+      }
+    };
+    const expected: ApiState = {
+      roles: {
+        fetching: false,
+        errors: ['There was an error'],
+        success: false
+      }
+    };
+    const state = ApiReducer(startState, Actions.roles.getAllRolesFailure());
     expect(state).toMatchObject(expected);
   });
 });

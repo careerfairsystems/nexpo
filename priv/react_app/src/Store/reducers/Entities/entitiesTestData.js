@@ -55,6 +55,58 @@ const testData = {
     description: 'We do music!',
     entries: [{ id: 1, value: 'JA' }, { id: 2, value: '20' }]
   },
+  users: [
+    {
+      id: 1,
+      email: 'dev@it.now',
+      first_name: 'Dev',
+      last_name: 'User'
+    },
+    {
+      id: 2,
+      email: 'test@it.later',
+      first_name: 'Test',
+      last_name: 'User'
+    }
+  ],
+  user: {
+    id: 1,
+    email: 'dev@it.now',
+    first_name: 'Dev',
+    last_name: 'User',
+    roles: [
+      {
+        id: 1,
+        type: 'admin',
+        permissions: ['read_all', 'write_all']
+      }
+    ]
+  },
+  roles: [
+    {
+      id: 1,
+      type: 'admin',
+      permissions: ['read_all', 'write_all']
+    },
+    {
+      id: 2,
+      type: 'manager',
+      permissions: ['read_users', 'write_users']
+    }
+  ],
+  role: {
+    id: 1,
+    type: 'admin',
+    permissions: ['read_all', 'write_all'],
+    users: [
+      {
+        id: 1,
+        email: 'dev@it.now',
+        first_name: 'Dev',
+        last_name: 'User'
+      }
+    ]
+  },
   categories: [
     {
       title: 'Logistik',

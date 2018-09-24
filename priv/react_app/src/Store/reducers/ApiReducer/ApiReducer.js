@@ -14,6 +14,8 @@ type ApiStatus = {
 export type ApiState = {
   categories: ApiStatus,
   companies: ApiStatus,
+  roles: ApiStatus,
+  users: ApiStatus,
   current_user: ApiStatus,
   forgot_password: ApiStatus,
   login: ApiStatus,
@@ -29,6 +31,8 @@ export type ApiState = {
 const initialState: ApiState = [
   'categories',
   'companies',
+  'roles',
+  'users',
   'current_user',
   'forgot_password',
   'login',
@@ -78,6 +82,36 @@ export const ApiReducer = (state = initialState, act: Action): ApiState => {
 
     case actionTypes.FETCH_COMPANIES_FAILURE: {
       const stateChange: ApiState = { companies: failure() };
+      return { ...state, ...stateChange };
+    }
+
+    case actionTypes.FETCH_ROLES: {
+      const stateChange: ApiState = { roles: fetching };
+      return { ...state, ...stateChange };
+    }
+
+    case actionTypes.FETCH_ROLES_SUCCESS: {
+      const stateChange: ApiState = { roles: retrieving };
+      return { ...state, ...stateChange };
+    }
+
+    case actionTypes.FETCH_ROLES_FAILURE: {
+      const stateChange: ApiState = { roles: failure() };
+      return { ...state, ...stateChange };
+    }
+
+    case actionTypes.FETCH_USERS: {
+      const stateChange: ApiState = { users: fetching };
+      return { ...state, ...stateChange };
+    }
+
+    case actionTypes.FETCH_USERS_SUCCESS: {
+      const stateChange: ApiState = { users: retrieving };
+      return { ...state, ...stateChange };
+    }
+
+    case actionTypes.FETCH_USERS_FAILURE: {
+      const stateChange: ApiState = { users: failure() };
       return { ...state, ...stateChange };
     }
 

@@ -2,16 +2,16 @@
 *   This file contains methods to access the /categories reasource on the server.
 */
 
-import { handleHttpResponse } from './index';
+import { authFetch, handleHttpResponse } from './utils';
 
 export default {
   /**
    * Fetches all categories
    */
-  getAll: () => fetch('/api/categories').then(handleHttpResponse),
+  getAll: () => authFetch('/api/categories').then(handleHttpResponse),
 
   /**
    * Fetches a category
    */
-  get: id => fetch(`/api/categories/${id}`).then(handleHttpResponse)
+  get: id => authFetch(`/api/categories/${id}`).then(handleHttpResponse)
 };

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Button, Input, Form } from 'antd';
-import { isEmpty, isFinite } from 'lodash/fp';
+import { isEmpty, isFinite, map } from 'lodash/fp';
 import LoadingSpinner from '../../Components/LoadingSpinner';
 
 const FormItem = Form.Item;
@@ -19,7 +19,7 @@ const renderStaticFields = ({ first_name, last_name, email, roles }) => (
       {first_name} {last_name}
     </h1>
     <h2>Email: {email}</h2>
-    <h2>Roles: {roles ? roles.toString() : 'None'}</h2>
+    <h2>Roles: {isEmpty(roles) ? 'None' : map('type', roles).join(', ')}</h2>
   </div>
 );
 
