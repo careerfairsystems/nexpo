@@ -13,6 +13,8 @@ import PrivateRoute from '../Components/PrivateRoute';
 
 import Categories from '../Screens/Categories';
 import Category from '../Screens/Category';
+import Roles from '../Screens/Roles';
+import Role from '../Screens/Role';
 import User from '../Screens/User';
 import Companies from '../Screens/Companies';
 import Company from '../Screens/Company';
