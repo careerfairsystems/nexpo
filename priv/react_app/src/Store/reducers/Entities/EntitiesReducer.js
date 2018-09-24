@@ -10,6 +10,7 @@ export type EntitiesState = {
   attributes: {},
   categories: {},
   entries: {},
+  roles: {},
   users: {}
 };
 
@@ -18,6 +19,7 @@ const initialState = {
   attributes: {},
   categories: {},
   entries: {},
+  roles: {},
   users: {}
 };
 
@@ -34,6 +36,22 @@ export const EntitiesReducer = (
     }
     case actionTypes.FETCH_COMPANIES_SUCCESS: {
       normalized = normalize(action.companies, Schema.companiesSchema());
+      return { ...state, ...normalized.entities };
+    }
+    case actionTypes.FETCH_ROLE_SUCCESS: {
+      normalized = normalize(action.role, Schema.roleSchema());
+      return { ...state, ...normalized.entities };
+    }
+    case actionTypes.FETCH_ROLES_SUCCESS: {
+      normalized = normalize(action.roles, Schema.rolesSchema());
+      return { ...state, ...normalized.entities };
+    }
+    case actionTypes.FETCH_USER_SUCCESS: {
+      normalized = normalize(action.user, Schema.userSchema());
+      return { ...state, ...normalized.entities };
+    }
+    case actionTypes.FETCH_USERS_SUCCESS: {
+      normalized = normalize(action.users, Schema.usersSchema());
       return { ...state, ...normalized.entities };
     }
     case actionTypes.FETCH_CATEGORIES_SUCCESS: {

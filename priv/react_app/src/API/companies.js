@@ -2,16 +2,16 @@
 *   This file contains methods to access the /companies reasource on the server.
 */
 
-import { handleHttpResponse } from './index';
+import { authFetch, handleHttpResponse } from './utils';
 
 export default {
   /**
    * Fetches all companies
    */
-  getAll: () => fetch('/api/companies').then(handleHttpResponse),
+  getAll: () => authFetch('/api/companies').then(handleHttpResponse),
 
   /**
    * Fetches a company
    */
-  get: id => fetch(`/api/companies/${id}`).then(handleHttpResponse)
+  get: id => authFetch(`/api/companies/${id}`).then(handleHttpResponse)
 };

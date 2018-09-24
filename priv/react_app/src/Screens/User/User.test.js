@@ -8,7 +8,7 @@ it('should render without crashing', () => {
     first_name: 'John',
     last_name: 'Smith',
     phone_number: '11111',
-    roles: ['Host']
+    roles: [{ type: 'host', permissions: ['read_companies'] }]
   };
   shallow(<User currentUser={currentUser} fetching={false} />);
 });
@@ -47,11 +47,6 @@ it('updates state when receiving new props', () => {
 
 it('updatefield correctly updates user', () => {
   const currentUser = { first_name: 'John', last_name: 'Smith' };
-  const updatedUser = {
-    first_name: 'John',
-    last_name: 'Smith',
-    email: 'john_cool@smith.com'
-  };
   const wrapper = shallow(<User currentUser={currentUser} fetching={false} />);
   expect(wrapper.state().currentUser).toEqual(currentUser);
   const key = 'food_preferences';
