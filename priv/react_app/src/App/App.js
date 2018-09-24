@@ -46,7 +46,7 @@ const routes = (
     <Route path="/logout" component={Logout} />
     <Route path="/signup" component={Signup} />
     <Route path="/forgot-password" component={ForgotPassword} />
-    <PrivateRoute path="/user/profile" component={User} />
+    <PrivateRoute path="/user" component={User} />
     <Route component={NotFound} />
   </Switch>
 );
@@ -62,7 +62,7 @@ class App extends Component {
     const displayName = firstName ? [firstName, lastName].join(' ') : email;
 
     return [
-      <Menu.Item key="/user/profile">
+      <Menu.Item key="/user">
         {displayName} <Icon type="user" />
       </Menu.Item>,
       <Menu.Item key="/logout">Logout</Menu.Item>

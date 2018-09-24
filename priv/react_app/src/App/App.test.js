@@ -106,6 +106,6 @@ it('renders routes without crashing', () => {
   mount(route('/logout'));
   mount(route('/signup'));
   mount(route('/forgot-password'));
-  mount(route('/user/profile'));
+  mount(route('/user'));
   mount(route('/invalid-path'));
 });
