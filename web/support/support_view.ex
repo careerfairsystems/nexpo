@@ -13,11 +13,18 @@ defmodule Nexpo.Support.View do
   def render_object(object, base_params) do
     # Build base object
     base = Map.take(object, base_params)
-    base =
-    if Map.get(base, :logo_url) do
-      Map.put(base, :logo_url, render_image_url(base))
-    else
-      base
+
+    base = case Map.get(object, :logo_url) do
+      nil -> base
+      _ -> Map.put(base, :logo_url, render_url(base, :logo_url))
+    end
+    base = case Map.get(object, :resume_sv_url) do
+      nil -> base
+      _ -> Map.put(base, :resume_sv_url, render_url(base, :resume_sv_url))
+    end
+    base = case Map.get(object, :resume_en_url) do
+      nil -> base
+      _ -> Map.put(base, :resume_en_url, render_url(base, :resume_en_url))
     end
 
     # Construct an array with all relations that should get rendered
@@ -105,11 +112,13 @@ defmodule Nexpo.Support.View do
     end
   end
 
-  defp render_image_url(entry) do
-    if entry.logo_url != nil do
-      Nexpo.ProfileImage.url({entry.logo_url.file_name, entry}, :original)
-    else
-      nil
+  defp render_url(entry, attribute) do
+    file_name = entry[attribute].file_name
+    case attribute do
+      :logo_url ->  Nexpo.ProfileImage.url({file_name, entry}, :original)
+      :resume_en_url ->  Nexpo.CvEn.url({file_name, entry}, :original)
+      :resume_sv_url ->  Nexpo.CvSv.url({file_name, entry}, :original)
+      _ -> nil
     end
   end
 
