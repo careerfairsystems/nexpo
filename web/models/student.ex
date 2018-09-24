@@ -24,12 +24,13 @@ defmodule Nexpo.Student do
     struct
     |> cast(params, [:year, :user_id])
     |> cast_attachments(params, [:resume_en_url, :resume_sv_url])
-    |> validate_required([:year, :user_id])
+    |> validate_required([:user_id])
+    |> unique_constraint(:user_id)
     |> foreign_key_constraint(:user_id)
   end
 
-  def build_assoc(changeset) do
-    student = Repo.insert!(%Student{})
+  def build_assoc(changeset, user) do
+    student = Repo.insert!(Student.changeset(%Student{user_id: user.id}))
     Ecto.Changeset.put_assoc(changeset, :student, student)
   end
 end

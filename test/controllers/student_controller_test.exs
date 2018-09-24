@@ -2,7 +2,7 @@ defmodule Nexpo.StudentControllerTest do
   use Nexpo.ConnCase
 
   alias Nexpo.{Student, User}
-  @valid_attrs %{resume_en_url: "some content", resume_sv_url: "some content", year: 42, user_id: -1 }
+  @valid_attrs %{resume_en_url: nil, resume_sv_url: nil, year: 42, user_id: -1 }
   @invalid_attrs %{}
 
   setup %{conn: conn} do
@@ -40,7 +40,7 @@ defmodule Nexpo.StudentControllerTest do
     attrs = %{@valid_attrs | user_id: user.id}
     conn = post conn, student_path(conn, :create), student: attrs
     assert json_response(conn, 201)["data"]["id"]
-    assert Repo.get_by(Student, attrs)
+    assert Repo.get_by(Student, %{user_id: user.id})
   end
 
   @tag :logged_in
@@ -56,7 +56,7 @@ defmodule Nexpo.StudentControllerTest do
     attrs = %{@valid_attrs | user_id: user.id}
     conn = put conn, student_path(conn, :update, student), student: attrs
     assert json_response(conn, 200)["data"]["id"]
-    assert Repo.get_by(Student, attrs)
+    assert Repo.get_by(Student, %{user_id: user.id})
   end
 
   @tag :logged_in

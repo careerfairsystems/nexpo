@@ -180,7 +180,7 @@ defmodule Nexpo.User do
       user ->
         user
         |> User.final_signup_changeset(params)
-        |> Nexpo.Student.build_assoc
+        |> Nexpo.Student.build_assoc(user)
         |> Repo.update
     end
   end
@@ -193,7 +193,7 @@ defmodule Nexpo.User do
       user ->
         user
         |> User.final_signup_changeset(params)
-        |> Nexpo.Student.build_assoc
+        |> Nexpo.Student.build_assoc(user)
         |> Repo.update!
     end
   end
