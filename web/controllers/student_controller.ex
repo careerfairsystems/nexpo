@@ -20,7 +20,7 @@ defmodule Nexpo.StudentController do
 
   def create(conn, %{"student" => student_params}) do
     changeset = Student.changeset(%Student{}, student_params)
-
+  
     case Repo.insert(changeset) do
       {:ok, student} ->
         conn

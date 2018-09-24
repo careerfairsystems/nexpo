@@ -28,8 +28,8 @@ defmodule Nexpo.UserControllerTest do
       "roles" => [],
       "student" => %{
           "id" => user.student.id,
-          "resumeEnUrl" => user.student.resumeEnUrl,
-          "resumeSvUrl" => user.student.resumeSvUrl,
+          "resume_en_url" => user.student.resume_en_url,
+          "resume_sv_url" => user.student.resume_sv_url,
           "year" => nil,
           "user_id" => user.id
         }
