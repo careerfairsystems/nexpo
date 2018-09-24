@@ -13,60 +13,18 @@ defmodule Nexpo.Support.View do
   def render_object(object, base_params) do
     # Build base object
     base = Map.take(object, base_params)
+          |> append_url(object, :logo_url)
+          |> append_url(object, :resume_sv_url)
+          |> append_url(object, :resume_en_url)
 
-    base = case Map.get(object, :logo_url) do
-      nil -> base
-      _ -> Map.put(base, :logo_url, render_url(base, :logo_url))
-    end
-    base = case Map.get(object, :resume_sv_url) do
-      nil -> base
-      _ -> Map.put(base, :resume_sv_url, render_url(base, :resume_sv_url))
-    end
-    base = case Map.get(object, :resume_en_url) do
-      nil -> base
-      _ -> Map.put(base, :resume_en_url, render_url(base, :resume_en_url))
-    end
-
-    # Construct an array with all relations that should get rendered
-    # TODO: Redo how relations array are created
-    relations = []
-    relations = relations ++ case Map.get(object, :entries) do
-      %Ecto.Association.NotLoaded{} -> []
-      _ -> [:entries]
-    end
-    relations = relations ++ case Map.get(object, :company) do
-      %Ecto.Association.NotLoaded{} -> []
-      _ -> [:company]
-    end
-    relations = relations ++ case Map.get(object, :attribute) do
-      %Ecto.Association.NotLoaded{} -> []
-      _ -> [:attribute]
-    end
-    relations = relations ++ case Map.get(object, :attributes) do
-      %Ecto.Association.NotLoaded{} -> []
-      _ -> [:attributes]
-    end
-    relations = relations ++ case Map.get(object, :category) do
-      %Ecto.Association.NotLoaded{} -> []
-      _ -> [:category]
-    end
-    relations = relations ++ case Map.get(object, :roles) do
-      %Ecto.Association.NotLoaded{} -> []
-      _ -> [:roles]
-    end
-    relations = relations ++ case Map.get(object, :users) do
-      %Ecto.Association.NotLoaded{} -> []
-      _ -> [:users]
-    end
-    relations = relations ++ case Map.get(object, :student) do
-      %Ecto.Association.NotLoaded{} -> []
-      _ -> [:student]
-    end
-
-    # Render all relations
-    relations = relations
-    |> Enum.filter(fn r -> Map.has_key?(object, r) && is_loaded(Map.get(object, r)) end)
-    |> Enum.map(fn r -> render_relation(r, object) end)
+    # Construct an array with all the rendered relations
+    relations = Map.keys(object)
+      |> List.delete(:__meta__)
+      |> List.delete(:inserted_at)
+      |> List.delete(:updated_at)
+      |> Enum.filter(fn r -> is_struct?(Map.get(object, r)) end)
+      |> Enum.filter(fn r -> Ecto.assoc_loaded?(Map.get(object, r)) end)
+      |> Enum.map(fn r -> render_relation(r, object) end)
 
     # Return base if there are no relations
     if(Enum.empty?(relations)) do
@@ -78,6 +36,14 @@ defmodule Nexpo.Support.View do
       |> Map.merge(base)
     end
   end
+  
+  defp is_struct?(%_{}) do true end
+
+  defp is_struct?(list) when is_list(list) do
+    is_struct?(List.first(list))
+  end
+  
+  defp is_struct?(_not_struct) do false end
 
   # Defines how to render all possible relations in database
   # Both in plural and singular
@@ -104,11 +70,10 @@ defmodule Nexpo.Support.View do
     end
   end
 
-  # Checks wheter association has been loaded
-  defp is_loaded(object) do
-    case object do
-      %Ecto.Association.NotLoaded{} -> false
-      _ -> true
+  defp append_url(base, object, url) do
+    case Map.get(object, url) do
+      nil -> base
+      _ -> Map.put(base, url, render_url(base, url))
     end
   end
 
