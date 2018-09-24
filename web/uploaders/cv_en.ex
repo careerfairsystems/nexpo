@@ -1,5 +1,7 @@
-defmodule Nexpo.ProfileImage do
+defmodule Nexpo.CvEn do
   use Arc.Definition
+
+  # Include ecto support (requires package arc_ecto installed):
   use Arc.Ecto.Definition
 
   @versions [:original]
@@ -11,9 +13,10 @@ defmodule Nexpo.ProfileImage do
   # def bucket do
   #   :custom_bucket_name
   # end
+
   # Whitelist file extensions:
   def validate({file, _}) do
-    ~w(.jpg .jpeg .gif .png) |> Enum.member?(Path.extname(file.file_name))
+    ~w(.pdf) |> Enum.member?(Path.extname(file.file_name))
   end
 
   # Define a thumbnail transformation:
@@ -21,16 +24,17 @@ defmodule Nexpo.ProfileImage do
   #   {:convert, "-strip -thumbnail 250x250^ -gravity center -extent 250x250 -format png", :png}
   # end
 
-  # We use this so other file name can't be guessed
-  def filename(version, {_, scope}) do
-    :crypto.hash(:sha256, "a_very_long_string_#{scope.name}_#{version}")
+  # Override the persisted filenames:
+   # We use this so other file name can't be guessed
+   def filename(version, {_, scope}) do
+    :crypto.hash(:sha256, "a_very_long_string_#{scope.id}_#{version}")
     |> Base.encode16
     |> String.downcase
   end
 
   # Override the storage directory:
   def storage_dir(_, {_, scope}) do
-    "uploads/companies/#{scope.name}/images"
+    "uploads/students/#{scope.id}/cv/en"
   end
 
   # Provide a default URL if there hasn't been a file uploaded

@@ -1,4 +1,4 @@
-defmodule Nexpo.Cv do
+defmodule Nexpo.CvSv do
   use Arc.Definition
 
   # Include ecto support (requires package arc_ecto installed):
@@ -27,14 +27,14 @@ defmodule Nexpo.Cv do
   # Override the persisted filenames:
    # We use this so other file name can't be guessed
    def filename(version, {_, scope}) do
-    :crypto.hash(:sha256, "a_very_long_string_#{scope.name}_#{version}")
+    :crypto.hash(:sha256, "a_very_long_string_#{scope.id}_#{version}")
     |> Base.encode16
     |> String.downcase
   end
 
   # Override the storage directory:
   def storage_dir(_, {_, scope}) do
-    "uploads/users/#{scope.name}/files"
+    "uploads/students/#{scope.id}/cv/sv"
   end
 
   # Provide a default URL if there hasn't been a file uploaded
