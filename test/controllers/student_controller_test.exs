@@ -2,7 +2,7 @@ defmodule Nexpo.StudentControllerTest do
   use Nexpo.ConnCase
 
   alias Nexpo.{Student, User}
-  @valid_attrs %{resumeEnUrl: "some content", resumeSvUrl: "some content", year: 42, user_id: -1 }
+  @valid_attrs %{resume_en_url: "some content", resume_sv_url: "some content", year: 42, user_id: -1 }
   @invalid_attrs %{}
 
   setup %{conn: conn} do
@@ -23,8 +23,8 @@ defmodule Nexpo.StudentControllerTest do
     assert json_response(conn, 200)["data"] == %{"id" => student.id,
       "user_id" => student.user_id,
       "year" => student.year,
-      "resumeEnUrl" => student.resumeEnUrl,
-      "resumeSvUrl" => student.resumeSvUrl}
+      "resume_en_url" => student.resume_en_url,
+      "resume_sv_url" => student.resume_sv_url}
   end
 
   @tag :logged_in
