@@ -15,12 +15,12 @@ defmodule Nexpo.StudentController do
                                     %{default: ["write_users"]}]
                           ] when action in [:create, :update, :delete]
 
-  def index(conn, _params) do
+  def index(conn, _params, _user, _claims) do
     students = Repo.all(Student)
     render(conn, "index.json", students: students)
   end
 
-  def create(conn, %{"student" => student_params}) do
+  def create(conn, %{"student" => student_params}, _user, _claims) do
     changeset = Student.changeset(%Student{}, student_params)
 
     case Repo.insert(changeset) do
@@ -36,7 +36,7 @@ defmodule Nexpo.StudentController do
     end
   end
 
-  def show(conn, %{"id" => id}) do
+  def show(conn, %{"id" => id}, _user, _claims) do
     student = Student
         |> Repo.get!(id)
         |> Repo.preload(:student_sessions)
@@ -44,7 +44,7 @@ defmodule Nexpo.StudentController do
     render(conn, "show.json", student: student)
   end
 
-  def update(conn, %{"id" => id, "student" => student_params}) do
+  def update(conn, %{"id" => id, "student" => student_params}, _user, _claims ) do
     student = Repo.get!(Student, id)
     changeset = Student.changeset(student, student_params)
 
@@ -72,7 +72,7 @@ defmodule Nexpo.StudentController do
     end
   end
 
-  def delete(conn, %{"id" => id}) do
+  def delete(conn, %{"id" => id}, _user, _claims) do
     student = Repo.get!(Student, id)
 
     # Here we use delete! (with a bang) because we expect
