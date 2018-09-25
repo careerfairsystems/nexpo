@@ -13,14 +13,11 @@ defmodule Nexpo.Support.View do
   def render_object(object, base_params) do
     # Build base object
     base = Map.take(object, base_params)
-          |> append_url(object, :logo_url)
-          |> append_url(object, :resume_sv_url)
-          |> append_url(object, :resume_en_url)
 
     # Construct an array with all the rendered relations
     relations = Map.keys(object)
       |> Enum.filter(fn r -> Ecto.assoc_loaded?(Map.get(object, r)) end)
-      |> Enum.map(fn r -> render_relation(r, object) end)
+      |> Enum.map(fn r -> render_relation(object, r) end)
 
     # Return base if there are no relations
     if(Enum.empty?(relations)) do
@@ -35,7 +32,7 @@ defmodule Nexpo.Support.View do
 
   # Defines how to render all possible relations in database
   # Both in plural and singular
-  defp render_relation(relation, object) do
+  defp render_relation(object, relation) do
     case relation do
       :entries ->
         %{:entries => render_many(object.entries, Nexpo.CompanyEntryView, "company_entry.json")}
@@ -53,26 +50,20 @@ defmodule Nexpo.Support.View do
         %{:users => render_many(object.users, Nexpo.UserView, "user.json")}
       :student ->
         %{:student => render_one(object.student, Nexpo.StudentView, "student.json")}
+      :logo_url ->
+        %{:logo_url => Nexpo.ProfileImage.url(get_url(object, relation), :original)}
+      :resume_en_url ->
+        %{:resume_en_url => Nexpo.CvEn.url(get_url(object, relation), :original)}
+      :resume_sv_url ->
+        %{:resume_sv_url => Nexpo.CvSv.url(get_url(object, relation), :original)}
       _ ->
         %{}
     end
   end
 
-  defp append_url(base, object, url) do
-    case Map.get(object, url) do
-      nil -> base
-      _ -> Map.put(base, url, render_url(base, url))
-    end
-  end
-
-  defp render_url(entry, attribute) do
-    file_name = entry[attribute].file_name
-    case attribute do
-      :logo_url ->  Nexpo.ProfileImage.url({file_name, entry}, :original)
-      :resume_en_url ->  Nexpo.CvEn.url({file_name, entry}, :original)
-      :resume_sv_url ->  Nexpo.CvSv.url({file_name, entry}, :original)
-      _ -> nil
-    end
+  defp get_url(object, attribute) do
+    file_name = Map.from_struct(object) |> get_in([attribute, :file_name])
+    {file_name, object}
   end
 
 end
