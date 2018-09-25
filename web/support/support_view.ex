@@ -19,10 +19,6 @@ defmodule Nexpo.Support.View do
 
     # Construct an array with all the rendered relations
     relations = Map.keys(object)
-      |> List.delete(:__meta__)
-      |> List.delete(:inserted_at)
-      |> List.delete(:updated_at)
-      |> Enum.filter(fn r -> is_struct?(Map.get(object, r)) end)
       |> Enum.filter(fn r -> Ecto.assoc_loaded?(Map.get(object, r)) end)
       |> Enum.map(fn r -> render_relation(r, object) end)
 
@@ -36,14 +32,6 @@ defmodule Nexpo.Support.View do
       |> Map.merge(base)
     end
   end
-  
-  defp is_struct?(%_{}) do true end
-
-  defp is_struct?(list) when is_list(list) do
-    is_struct?(List.first(list))
-  end
-  
-  defp is_struct?(_not_struct) do false end
 
   # Defines how to render all possible relations in database
   # Both in plural and singular
