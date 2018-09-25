@@ -36,7 +36,7 @@ describe('login action', () => {
     const jwt = 'random-string';
     const expectedActions = [
       Actions.auth.loginSuccess(jwt),
-      Actions.users.getCurrentUserStart()
+      Actions.users.getCurrentUserIsLoading()
     ];
 
     const httpResponse = {
@@ -73,7 +73,7 @@ describe('development login action', () => {
     const jwt = 'random-string';
     const expectedActions = [
       Actions.auth.loginSuccess(jwt),
-      Actions.users.getCurrentUserStart()
+      Actions.users.getCurrentUserIsLoading()
     ];
 
     const httpResponse = {

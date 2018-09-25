@@ -89,6 +89,95 @@ describe('getAllCategories', () => {
   });
 });
 
+describe('createCategoryIsLoading', () => {
+  it('should create the correct action', () => {
+    const expectedAction = {
+      type: actionTypes.POST_CATEGORY
+    };
+    const action = Actions.categories.createCategoryIsLoading();
+    expect(action).toEqual(expectedAction);
+  });
+});
+
+describe('createCategorySuccess', () => {
+  it('should create the correct action', () => {
+    const testCategory = {
+      name: 'Category1'
+    };
+
+    const expectedAction = {
+      type: actionTypes.POST_CATEGORY_SUCCESS,
+      category: testCategory
+    };
+    const action = Actions.categories.createCategorySuccess(testCategory);
+    expect(action).toEqual(expectedAction);
+  });
+});
+
+describe('createCategoryFailure', () => {
+  it('should create the correct action', () => {
+    const expectedAction = {
+      type: actionTypes.POST_CATEGORY_FAILURE
+    };
+    const action = Actions.categories.createCategoryFailure();
+    expect(action).toEqual(expectedAction);
+  });
+});
+
+describe('createCategory', () => {
+  it('should call start action', () => {
+    mockHttpResponse({ status: 200, body: {} });
+    const store = createMockStore();
+    const data = { category: { name: 'Test Category' } };
+
+    return store.dispatch(Actions.categories.createCategory(data)).then(() => {
+      const calledActions = store.getActions();
+      expect(calledActions[0]).toEqual(
+        Actions.categories.createCategoryIsLoading()
+      );
+    });
+  });
+
+  it('should call success action on success', () => {
+    const category = [
+      {
+        name: 'Category1'
+      }
+    ];
+    mockHttpResponse({ status: 200, body: { data: category } });
+
+    const expectedActions = [
+      Actions.categories.createCategoryIsLoading(),
+      Actions.categories.createCategorySuccess(category)
+    ];
+
+    const store = createMockStore();
+    const data = { category };
+
+    return store.dispatch(Actions.categories.createCategory(data)).then(() => {
+      const calledActions = store.getActions();
+      expect(calledActions).toEqual(expectedActions);
+    });
+  });
+
+  it('should call failure action on failure', () => {
+    mockHttpResponse({ status: 401, body: {} });
+    const data = { category: { name: 'Test Category' } };
+
+    const expectedActions = [
+      Actions.categories.createCategoryIsLoading(),
+      Actions.categories.createCategoryFailure()
+    ];
+
+    const store = createMockStore();
+
+    return store.dispatch(Actions.categories.createCategory(data)).then(() => {
+      const calledActions = store.getActions();
+      expect(calledActions).toEqual(expectedActions);
+    });
+  });
+});
+
 describe('getCategoryIsLoading', () => {
   it('should create the correct action', () => {
     const expectedAction = {
@@ -169,6 +258,186 @@ describe('getCategory', () => {
     const store = createMockStore();
 
     return store.dispatch(Actions.categories.getCategory()).then(() => {
+      const calledActions = store.getActions();
+      expect(calledActions).toEqual(expectedActions);
+    });
+  });
+});
+
+describe('updateCategoryIsLoading', () => {
+  it('should create the correct action', () => {
+    const expectedAction = {
+      type: actionTypes.PUT_CATEGORY
+    };
+    const action = Actions.categories.updateCategoryIsLoading();
+    expect(action).toEqual(expectedAction);
+  });
+});
+
+describe('updateCategorySuccess', () => {
+  it('should create the correct action', () => {
+    const testCategory = {
+      name: 'Category1'
+    };
+
+    const expectedAction = {
+      type: actionTypes.PUT_CATEGORY_SUCCESS,
+      category: testCategory
+    };
+    const action = Actions.categories.updateCategorySuccess(testCategory);
+    expect(action).toEqual(expectedAction);
+  });
+});
+
+describe('updateCategoryFailure', () => {
+  it('should update the correct action', () => {
+    const expectedAction = {
+      type: actionTypes.PUT_CATEGORY_FAILURE
+    };
+    const action = Actions.categories.updateCategoryFailure();
+    expect(action).toEqual(expectedAction);
+  });
+});
+
+describe('updateCategory', () => {
+  it('should call start action', () => {
+    mockHttpResponse({ status: 200, body: {} });
+    const store = createMockStore();
+    const data = { category: { name: 'Test Category' } };
+
+    return store
+      .dispatch(Actions.categories.updateCategory(1, data))
+      .then(() => {
+        const calledActions = store.getActions();
+        expect(calledActions[0]).toEqual(
+          Actions.categories.updateCategoryIsLoading()
+        );
+      });
+  });
+
+  it('should call success action on success', () => {
+    const category = [
+      {
+        name: 'Category1'
+      }
+    ];
+    mockHttpResponse({ status: 200, body: { data: category } });
+
+    const expectedActions = [
+      Actions.categories.updateCategoryIsLoading(),
+      Actions.categories.updateCategorySuccess(category)
+    ];
+
+    const store = createMockStore();
+    const data = { category };
+
+    return store
+      .dispatch(Actions.categories.updateCategory(1, data))
+      .then(() => {
+        const calledActions = store.getActions();
+        expect(calledActions).toEqual(expectedActions);
+      });
+  });
+
+  it('should call failure action on failure', () => {
+    mockHttpResponse({ status: 401, body: {} });
+    const data = { category: { name: 'Test Category' } };
+
+    const expectedActions = [
+      Actions.categories.updateCategoryIsLoading(),
+      Actions.categories.updateCategoryFailure()
+    ];
+
+    const store = createMockStore();
+
+    return store
+      .dispatch(Actions.categories.updateCategory(1, data))
+      .then(() => {
+        const calledActions = store.getActions();
+        expect(calledActions).toEqual(expectedActions);
+      });
+  });
+});
+
+describe('destroyCategoryIsLoading', () => {
+  it('should create the correct action', () => {
+    const expectedAction = {
+      type: actionTypes.DELETE_CATEGORY
+    };
+    const action = Actions.categories.destroyCategoryIsLoading();
+    expect(action).toEqual(expectedAction);
+  });
+});
+
+describe('destroyCategorySuccess', () => {
+  it('should create the correct action', () => {
+    const testCategory = {
+      name: 'Category1'
+    };
+
+    const expectedAction = {
+      type: actionTypes.DELETE_CATEGORY_SUCCESS,
+      category: testCategory
+    };
+    const action = Actions.categories.destroyCategorySuccess(testCategory);
+    expect(action).toEqual(expectedAction);
+  });
+});
+
+describe('destroyCategoryFailure', () => {
+  it('should destroy the correct action', () => {
+    const expectedAction = {
+      type: actionTypes.DELETE_CATEGORY_FAILURE
+    };
+    const action = Actions.categories.destroyCategoryFailure();
+    expect(action).toEqual(expectedAction);
+  });
+});
+
+describe('destroyCategory', () => {
+  it('should call start action', () => {
+    mockHttpResponse({ status: 200, body: {} });
+    const store = createMockStore();
+
+    return store.dispatch(Actions.categories.destroyCategory(1)).then(() => {
+      const calledActions = store.getActions();
+      expect(calledActions[0]).toEqual(
+        Actions.categories.destroyCategoryIsLoading()
+      );
+    });
+  });
+
+  it('should call success action on success', () => {
+    const category = [
+      {
+        name: 'Category1'
+      }
+    ];
+    mockHttpResponse({ status: 200, body: { data: category } });
+
+    const expectedActions = [
+      Actions.categories.destroyCategoryIsLoading(),
+      Actions.categories.destroyCategorySuccess(category)
+    ];
+
+    const store = createMockStore();
+
+    return store.dispatch(Actions.categories.destroyCategory(1)).then(() => {
+      const calledActions = store.getActions();
+      expect(calledActions).toEqual(expectedActions);
+    });
+  });
+
+  it('should call failure action on failure', () => {
+    mockHttpResponse({ status: 401, body: {} });
+    const expectedActions = [
+      Actions.categories.destroyCategoryIsLoading(),
+      Actions.categories.destroyCategoryFailure()
+    ];
+
+    const store = createMockStore();
+
+    return store.dispatch(Actions.categories.destroyCategory(1)).then(() => {
       const calledActions = store.getActions();
       expect(calledActions).toEqual(expectedActions);
     });

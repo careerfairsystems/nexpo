@@ -1,22 +1,22 @@
 import { Actions, actionTypes } from '../..';
 import { mockHttpResponse, createMockStore } from '../../../TestHelper';
 
-describe('forgot_password_request', () => {
+describe('forgotPasswordRequest', () => {
   it('should create the correct action', () => {
     const expected = {
       type: actionTypes.FORGOT_PASSWORD_REQUEST
     };
-    const action = Actions.accounts.forgot_password_request();
+    const action = Actions.accounts.forgotPasswordRequest();
     expect(action).toEqual(expected);
   });
 });
 
-describe('forgot_password_success', () => {
+describe('forgotPasswordSuccess', () => {
   it('should create the correct action', () => {
     const expected = {
       type: actionTypes.FORGOT_PASSWORD_SUCCESS
     };
-    const action = Actions.accounts.forgot_password_success();
+    const action = Actions.accounts.forgotPasswordSuccess();
     expect(action).toEqual(expected);
   });
 });
@@ -24,8 +24,8 @@ describe('forgot_password_success', () => {
 describe('forgot_password', () => {
   it('should call request and success', () => {
     const expectedActions = [
-      Actions.accounts.forgot_password_request(),
-      Actions.accounts.forgot_password_success()
+      Actions.accounts.forgotPasswordRequest(),
+      Actions.accounts.forgotPasswordSuccess()
     ];
     mockHttpResponse({
       status: 200
@@ -117,27 +117,27 @@ describe('verify_forgot_password_key', () => {
   });
 });
 
-describe('replace_forgotten_password_request', () => {
+describe('replaceForgottenPasswordRequest', () => {
   it('should create the correct action', () => {
     const expected = {
       type: actionTypes.REPLACE_FORGOTTEN_PASSWORD_REQUEST
     };
-    const action = Actions.accounts.replace_forgotten_password_request();
+    const action = Actions.accounts.replaceForgottenPasswordRequest();
     expect(action).toEqual(expected);
   });
 });
 
-describe('replace_forgotten_password_success', () => {
+describe('replaceForgottenPasswordSuccess', () => {
   it('should create the correct action', () => {
     const expected = {
       type: actionTypes.REPLACE_FORGOTTEN_PASSWORD_SUCCESS
     };
-    const action = Actions.accounts.replace_forgotten_password_success();
+    const action = Actions.accounts.replaceForgottenPasswordSuccess();
     expect(action).toEqual(expected);
   });
 });
 
-describe('replace_forgotten_password_failure', () => {
+describe('replaceForgottenPasswordFailure', () => {
   it('should create the correct action', () => {
     const errors = {
       password: 'some-error'
@@ -146,7 +146,7 @@ describe('replace_forgotten_password_failure', () => {
       type: actionTypes.REPLACE_FORGOTTEN_PASSWORD_FAILURE,
       errors
     };
-    const action = Actions.accounts.replace_forgotten_password_failure(errors);
+    const action = Actions.accounts.replaceForgottenPasswordFailure(errors);
     expect(action).toEqual(expected);
   });
 });
@@ -160,8 +160,8 @@ describe('replace_forgotten_password', () => {
     expect.assertions(1);
 
     const expected = [
-      Actions.accounts.replace_forgotten_password_request(),
-      Actions.accounts.replace_forgotten_password_success()
+      Actions.accounts.replaceForgottenPasswordRequest(),
+      Actions.accounts.replaceForgottenPasswordSuccess()
     ];
     const params = {
       key: 'random-string',
@@ -184,8 +184,8 @@ describe('replace_forgotten_password', () => {
     expect.assertions(1);
 
     const expected = [
-      Actions.accounts.replace_forgotten_password_request(),
-      Actions.accounts.replace_forgotten_password_failure()
+      Actions.accounts.replaceForgottenPasswordRequest(),
+      Actions.accounts.replaceForgottenPasswordFailure()
     ];
     const params = {
       key: 'random-string',

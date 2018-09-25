@@ -45,7 +45,9 @@ describe('getAllRoles', () => {
 
     return store.dispatch(Actions.roles.getAllRoles()).then(() => {
       const calledActions = store.getActions();
-      expect(calledActions[0]).toEqual(Actions.roles.getAllRolesIsLoading());
+      expect(calledActions[0]).toEqual(
+        Actions.roles.getAllRolesIsLoading()
+      );
     });
   });
 
@@ -81,6 +83,95 @@ describe('getAllRoles', () => {
     const store = createMockStore();
 
     return store.dispatch(Actions.roles.getAllRoles()).then(() => {
+      const calledActions = store.getActions();
+      expect(calledActions).toEqual(expectedActions);
+    });
+  });
+});
+
+describe('createRoleIsLoading', () => {
+  it('should create the correct action', () => {
+    const expectedAction = {
+      type: actionTypes.POST_ROLE
+    };
+    const action = Actions.roles.createRoleIsLoading();
+    expect(action).toEqual(expectedAction);
+  });
+});
+
+describe('createRoleSuccess', () => {
+  it('should create the correct action', () => {
+    const testRole = {
+      name: 'Role1'
+    };
+
+    const expectedAction = {
+      type: actionTypes.POST_ROLE_SUCCESS,
+      role: testRole
+    };
+    const action = Actions.roles.createRoleSuccess(testRole);
+    expect(action).toEqual(expectedAction);
+  });
+});
+
+describe('createRoleFailure', () => {
+  it('should create the correct action', () => {
+    const expectedAction = {
+      type: actionTypes.POST_ROLE_FAILURE
+    };
+    const action = Actions.roles.createRoleFailure();
+    expect(action).toEqual(expectedAction);
+  });
+});
+
+describe('createRole', () => {
+  it('should call start action', () => {
+    mockHttpResponse({ status: 200, body: {} });
+    const store = createMockStore();
+    const data = { role: { name: 'Test Role' } };
+
+    return store.dispatch(Actions.roles.createRole(data)).then(() => {
+      const calledActions = store.getActions();
+      expect(calledActions[0]).toEqual(
+        Actions.roles.createRoleIsLoading()
+      );
+    });
+  });
+
+  it('should call success action on success', () => {
+    const role = [
+      {
+        name: 'Role1'
+      }
+    ];
+    mockHttpResponse({ status: 200, body: { data: role } });
+
+    const expectedActions = [
+      Actions.roles.createRoleIsLoading(),
+      Actions.roles.createRoleSuccess(role)
+    ];
+
+    const store = createMockStore();
+    const data = { role };
+
+    return store.dispatch(Actions.roles.createRole(data)).then(() => {
+      const calledActions = store.getActions();
+      expect(calledActions).toEqual(expectedActions);
+    });
+  });
+
+  it('should call failure action on failure', () => {
+    mockHttpResponse({ status: 401, body: {} });
+    const data = { role: { name: 'Test Role' } };
+
+    const expectedActions = [
+      Actions.roles.createRoleIsLoading(),
+      Actions.roles.createRoleFailure()
+    ];
+
+    const store = createMockStore();
+
+    return store.dispatch(Actions.roles.createRole(data)).then(() => {
       const calledActions = store.getActions();
       expect(calledActions).toEqual(expectedActions);
     });
@@ -129,7 +220,9 @@ describe('getRole', () => {
 
     return store.dispatch(Actions.roles.getRole()).then(() => {
       const calledActions = store.getActions();
-      expect(calledActions[0]).toEqual(Actions.roles.getRoleIsLoading());
+      expect(calledActions[0]).toEqual(
+        Actions.roles.getRoleIsLoading()
+      );
     });
   });
 
@@ -165,6 +258,186 @@ describe('getRole', () => {
     const store = createMockStore();
 
     return store.dispatch(Actions.roles.getRole()).then(() => {
+      const calledActions = store.getActions();
+      expect(calledActions).toEqual(expectedActions);
+    });
+  });
+});
+
+describe('updateRoleIsLoading', () => {
+  it('should create the correct action', () => {
+    const expectedAction = {
+      type: actionTypes.PUT_ROLE
+    };
+    const action = Actions.roles.updateRoleIsLoading();
+    expect(action).toEqual(expectedAction);
+  });
+});
+
+describe('updateRoleSuccess', () => {
+  it('should create the correct action', () => {
+    const testRole = {
+      name: 'Role1'
+    };
+
+    const expectedAction = {
+      type: actionTypes.PUT_ROLE_SUCCESS,
+      role: testRole
+    };
+    const action = Actions.roles.updateRoleSuccess(testRole);
+    expect(action).toEqual(expectedAction);
+  });
+});
+
+describe('updateRoleFailure', () => {
+  it('should update the correct action', () => {
+    const expectedAction = {
+      type: actionTypes.PUT_ROLE_FAILURE
+    };
+    const action = Actions.roles.updateRoleFailure();
+    expect(action).toEqual(expectedAction);
+  });
+});
+
+describe('updateRole', () => {
+  it('should call start action', () => {
+    mockHttpResponse({ status: 200, body: {} });
+    const store = createMockStore();
+    const data = { role: { name: 'Test Role' } };
+
+    return store
+      .dispatch(Actions.roles.updateRole(1, data))
+      .then(() => {
+        const calledActions = store.getActions();
+        expect(calledActions[0]).toEqual(
+          Actions.roles.updateRoleIsLoading()
+        );
+      });
+  });
+
+  it('should call success action on success', () => {
+    const role = [
+      {
+        name: 'Role1'
+      }
+    ];
+    mockHttpResponse({ status: 200, body: { data: role } });
+
+    const expectedActions = [
+      Actions.roles.updateRoleIsLoading(),
+      Actions.roles.updateRoleSuccess(role)
+    ];
+
+    const store = createMockStore();
+    const data = { role };
+
+    return store
+      .dispatch(Actions.roles.updateRole(1, data))
+      .then(() => {
+        const calledActions = store.getActions();
+        expect(calledActions).toEqual(expectedActions);
+      });
+  });
+
+  it('should call failure action on failure', () => {
+    mockHttpResponse({ status: 401, body: {} });
+    const data = { role: { name: 'Test Role' } };
+
+    const expectedActions = [
+      Actions.roles.updateRoleIsLoading(),
+      Actions.roles.updateRoleFailure()
+    ];
+
+    const store = createMockStore();
+
+    return store
+      .dispatch(Actions.roles.updateRole(1, data))
+      .then(() => {
+        const calledActions = store.getActions();
+        expect(calledActions).toEqual(expectedActions);
+      });
+  });
+});
+
+describe('destroyRoleIsLoading', () => {
+  it('should create the correct action', () => {
+    const expectedAction = {
+      type: actionTypes.DELETE_ROLE
+    };
+    const action = Actions.roles.destroyRoleIsLoading();
+    expect(action).toEqual(expectedAction);
+  });
+});
+
+describe('destroyRoleSuccess', () => {
+  it('should create the correct action', () => {
+    const testRole = {
+      name: 'Role1'
+    };
+
+    const expectedAction = {
+      type: actionTypes.DELETE_ROLE_SUCCESS,
+      role: testRole
+    };
+    const action = Actions.roles.destroyRoleSuccess(testRole);
+    expect(action).toEqual(expectedAction);
+  });
+});
+
+describe('destroyRoleFailure', () => {
+  it('should destroy the correct action', () => {
+    const expectedAction = {
+      type: actionTypes.DELETE_ROLE_FAILURE
+    };
+    const action = Actions.roles.destroyRoleFailure();
+    expect(action).toEqual(expectedAction);
+  });
+});
+
+describe('destroyRole', () => {
+  it('should call start action', () => {
+    mockHttpResponse({ status: 200, body: {} });
+    const store = createMockStore();
+
+    return store.dispatch(Actions.roles.destroyRole(1)).then(() => {
+      const calledActions = store.getActions();
+      expect(calledActions[0]).toEqual(
+        Actions.roles.destroyRoleIsLoading()
+      );
+    });
+  });
+
+  it('should call success action on success', () => {
+    const role = [
+      {
+        name: 'Role1'
+      }
+    ];
+    mockHttpResponse({ status: 200, body: { data: role } });
+
+    const expectedActions = [
+      Actions.roles.destroyRoleIsLoading(),
+      Actions.roles.destroyRoleSuccess(role)
+    ];
+
+    const store = createMockStore();
+
+    return store.dispatch(Actions.roles.destroyRole(1)).then(() => {
+      const calledActions = store.getActions();
+      expect(calledActions).toEqual(expectedActions);
+    });
+  });
+
+  it('should call failure action on failure', () => {
+    mockHttpResponse({ status: 401, body: {} });
+    const expectedActions = [
+      Actions.roles.destroyRoleIsLoading(),
+      Actions.roles.destroyRoleFailure()
+    ];
+
+    const store = createMockStore();
+
+    return store.dispatch(Actions.roles.destroyRole(1)).then(() => {
       const calledActions = store.getActions();
       expect(calledActions).toEqual(expectedActions);
     });

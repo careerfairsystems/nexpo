@@ -2,14 +2,14 @@
 *   This file tests the reducers handling incoming actions.
 *   See http://redux.js.org/docs/recipes/WritingTests.html for writing action and reducer tests.
 */
-import { Actions, actionTypes } from '../..';
+import { Actions } from '../..';
 import { ApiReducer, ApiState } from './ApiReducer';
 import {
-  forgot_password_request,
-  forgot_password_success,
-  replace_forgotten_password_request,
-  replace_forgotten_password_success,
-  replace_forgotten_password_failure
+  forgotPasswordRequest,
+  forgotPasswordSuccess,
+  replaceForgottenPasswordRequest,
+  replaceForgottenPasswordSuccess,
+  replaceForgottenPasswordFailure
 } from '../../actions/Accounts/AccountsActions';
 
 it('should set the correct initial state', () => {
@@ -326,7 +326,7 @@ describe('forgot_password action', () => {
     const expected: ApiState = {
       forgot_password: { fetching: true, errors: undefined, success: false }
     };
-    const state = ApiReducer(startState, forgot_password_request());
+    const state = ApiReducer(startState, forgotPasswordRequest());
     expect(state).toMatchObject(expected);
   });
 
@@ -337,7 +337,7 @@ describe('forgot_password action', () => {
     const expected: ApiState = {
       forgot_password: { fetching: false, errors: undefined, success: true }
     };
-    const state = ApiReducer(startState, forgot_password_success());
+    const state = ApiReducer(startState, forgotPasswordSuccess());
     expect(state).toMatchObject(expected);
   });
 });
@@ -358,7 +358,7 @@ describe('replace forgotten password action', () => {
         success: false
       }
     };
-    const state = ApiReducer(startState, replace_forgotten_password_request());
+    const state = ApiReducer(startState, replaceForgottenPasswordRequest());
     expect(state).toMatchObject(expected);
   });
 
@@ -377,7 +377,7 @@ describe('replace forgotten password action', () => {
         success: true
       }
     };
-    const state = ApiReducer(startState, replace_forgotten_password_success());
+    const state = ApiReducer(startState, replaceForgottenPasswordSuccess());
     expect(state).toMatchObject(expected);
   });
 
@@ -402,7 +402,7 @@ describe('replace forgotten password action', () => {
     };
     const state = ApiReducer(
       startState,
-      replace_forgotten_password_failure(errors)
+      replaceForgottenPasswordFailure(errors)
     );
     expect(state).toMatchObject(expected);
   });

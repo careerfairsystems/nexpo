@@ -21,15 +21,48 @@ export const handleHttpResponse = (response: Response): Promise => {
   });
 };
 
+export const authPost = (url, data) =>
+  fetch(url, {
+    method: 'POST',
+    body: data instanceof FormData ? data : JSON.stringify(data),
+    headers: new Headers({
+      Authorization: `Bearer ${getJwt()}`,
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
+    })
+  });
+
 export const authFetch = url =>
   fetch(url, {
     headers: new Headers({
-      'Content-Type': 'application/json',
+      Authorization: `Bearer ${getJwt()}`,
+      Accept: 'application/json'
+    })
+  });
+
+export const authPut = (url, data) =>
+  fetch(url, {
+    method: 'PUT',
+    body: data instanceof FormData ? data : JSON.stringify(data),
+    headers: new Headers({
+      Authorization: `Bearer ${getJwt()}`,
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
+    })
+  });
+
+export const authDelete = url =>
+  fetch(url, {
+    method: 'DELETE',
+    headers: new Headers({
       Authorization: `Bearer ${getJwt()}`
     })
   });
 
 export default {
+  authPost,
   authFetch,
+  authPut,
+  authDelete,
   handleHttpResponse
 };
