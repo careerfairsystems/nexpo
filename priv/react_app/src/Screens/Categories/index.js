@@ -10,7 +10,8 @@ const mapStateToProps = (state: State) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  getAllCategories: () => dispatch(Actions.categories.getAllCategories())
+  getAllCategories: () => dispatch(Actions.categories.getAllCategories()),
+  createCategory: () => dispatch(Actions.categories.createCategory())
 });
 
 const stateful = connect(

@@ -1,10 +1,21 @@
 /*
-*   This file contains methods to access the /categories reasource on the server.
+*   This file contains methods to access the /categories resource on the server.
 */
 
-import { authFetch, handleHttpResponse } from './utils';
+import {
+  authPost,
+  authFetch,
+  authPut,
+  authDelete,
+  handleHttpResponse
+} from './utils';
 
 export default {
+  /**
+   * Create a category
+   */
+  create: data => authPost('/api/categories', data).then(handleHttpResponse),
+
   /**
    * Fetches all categories
    */
@@ -13,5 +24,16 @@ export default {
   /**
    * Fetches a category
    */
-  get: id => authFetch(`/api/categories/${id}`).then(handleHttpResponse)
+  get: id => authFetch(`/api/categories/${id}`).then(handleHttpResponse),
+
+  /**
+   * Updates a category
+   */
+  update: (id, data) =>
+    authPut(`/api/categories/${id}`, data).then(handleHttpResponse),
+
+  /**
+   * Delete a category
+   */
+  destroy: id => authDelete(`/api/categories/${id}`).then(handleHttpResponse)
 };

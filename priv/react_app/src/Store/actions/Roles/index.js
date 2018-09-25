@@ -1,3 +1,3 @@
-import * as RolesActions from './RolesActions';
+import RoleActions from './RolesActions';
 
-export default RolesActions;
+export default RoleActions;

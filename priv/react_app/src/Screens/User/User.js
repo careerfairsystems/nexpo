@@ -24,7 +24,7 @@ class User extends Component {
   };
 
   update = values => {
-    const { user, updateUser } = this.props;
+    const { id, user, updateUser } = this.props;
     const { disabled } = this.state;
 
     const data = Object.keys(values).reduce((modified, key) => {
@@ -35,7 +35,7 @@ class User extends Component {
     }, {});
 
     this.setState({ disabled: !disabled });
-    updateUser({ user: data });
+    updateUser(id, { user: data });
   };
 
   render() {

@@ -20,11 +20,11 @@ export const login = ({ email, password }) => dispatch =>
   API.session
     .login({ email, password })
     .then(res => {
-      const jwt = res.data.jwt;
+      const { jwt } = res.data;
       dispatch(loginSuccess(jwt));
       dispatch(Actions.users.getCurrentUser());
     })
-    .catch(err => {
+    .catch(() => {
       dispatch(loginFailure());
     });
 
@@ -32,10 +32,10 @@ export const development_login = email => dispatch =>
   API.session
     .development_login({ email })
     .then(res => {
-      const jwt = res.data.jwt;
+      const { jwt } = res.data;
       dispatch(loginSuccess(jwt));
       dispatch(Actions.users.getCurrentUser());
     })
-    .catch(err => {
+    .catch(() => {
       dispatch(loginFailure());
     });
