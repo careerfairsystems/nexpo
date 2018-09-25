@@ -40,16 +40,8 @@ defmodule Nexpo.CompanyController do
   end
 
   def create(conn, %{"company" => company_params}) do
-    Company.changeset(%Company{}, company_params)
-    |> create_company(conn)
-  end
+    changeset = Company.changeset(%Company{}, company_params)
 
-  def create(conn, company_params) do
-    Company.changeset(%Company{}, company_params)
-    |> create_company(conn)
-  end
-
-  defp create_company(changeset, conn) do
     case Repo.insert(changeset) do
       {:ok, company} ->
         conn
