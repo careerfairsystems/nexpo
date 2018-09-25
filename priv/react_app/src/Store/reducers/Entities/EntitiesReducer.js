@@ -54,12 +54,12 @@ export const EntitiesReducer = (
       normalized = normalize(action.users, Schema.usersSchema());
       return { ...state, ...normalized.entities };
     }
-    case actionTypes.FETCH_CATEGORIES_SUCCESS: {
-      normalized = normalize(action.categories, Schema.categoriesSchema());
-      return { ...state, ...normalized.entities };
-    }
     case actionTypes.FETCH_CATEGORY_SUCCESS: {
       normalized = normalize(action.category, Schema.categorySchema());
+      return { ...state, ...normalized.entities };
+    }
+    case actionTypes.FETCH_CATEGORIES_SUCCESS: {
+      normalized = normalize(action.categories, Schema.categoriesSchema());
       return { ...state, ...normalized.entities };
     }
     case actionTypes.FETCH_CURRENT_USER_SUCCESS: {
