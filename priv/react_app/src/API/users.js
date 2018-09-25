@@ -26,5 +26,5 @@ export default {
   putMe: data => authPut('/api/me', data).then(handleHttpResponse),
 
   putStudent: (id, data) =>
-    authPutFormData(`/api/students/${id}`, data).then(handleHttpResponse)
+    authPutFormData('/api/me/student', data).then(handleHttpResponse)
 };

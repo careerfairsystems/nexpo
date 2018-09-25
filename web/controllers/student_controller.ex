@@ -1,5 +1,7 @@
 defmodule Nexpo.StudentController do
   use Nexpo.Web, :controller
+  use Guardian.Phoenix.Controller
+
 
   alias Nexpo.Student
   alias Guardian.Plug.{EnsurePermissions}
@@ -20,7 +22,7 @@ defmodule Nexpo.StudentController do
 
   def create(conn, %{"student" => student_params}) do
     changeset = Student.changeset(%Student{}, student_params)
-  
+
     case Repo.insert(changeset) do
       {:ok, student} ->
         conn
@@ -44,6 +46,20 @@ defmodule Nexpo.StudentController do
 
   def update(conn, %{"id" => id, "student" => student_params}) do
     student = Repo.get!(Student, id)
+    changeset = Student.changeset(student, student_params)
+
+    case Repo.update(changeset) do
+      {:ok, student} ->
+        render(conn, "show.json", student: student)
+      {:error, changeset} ->
+        conn
+        |> put_status(:unprocessable_entity)
+        |> render(Nexpo.ChangesetView, "error.json", changeset: changeset)
+    end
+  end
+
+  def update_student(conn, %{"student" => student_params}, user, _claims) do
+    student = Repo.get_by!(Student, %{user_id: user.id})
     changeset = Student.changeset(student, student_params)
 
     case Repo.update(changeset) do
