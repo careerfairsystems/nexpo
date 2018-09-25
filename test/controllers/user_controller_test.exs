@@ -31,7 +31,8 @@ defmodule Nexpo.UserControllerTest do
           "resume_sv_url" => user.student.resume_sv_url,
           "year" => nil,
           "user_id" => user.id
-        }
+        },
+      "roles" => []
       }
   end
 

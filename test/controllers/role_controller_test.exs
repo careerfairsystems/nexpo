@@ -20,7 +20,7 @@ defmodule Nexpo.RoleControllerTest do
     role = Repo.insert! %Role{}
     conn = get conn, role_path(conn, :show, role)
     assert json_response(conn, 200)["data"] == %{"id" => role.id,
-      "type" => role.type, "permissions" => []}
+      "type" => role.type, "permissions" => [], "users" => []}
   end
 
   @tag :logged_in
