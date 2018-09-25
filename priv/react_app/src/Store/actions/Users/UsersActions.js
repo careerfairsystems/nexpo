@@ -100,3 +100,13 @@ export function getUser(id) {
       });
   };
 }
+export function putUser(id, data) {
+  return dispatch => API.users
+      .put(id, data)
+      .then(user => {
+        dispatch(getUserSuccess(user.data));
+      })
+      .catch(() => {
+        dispatch(getUserFailure());
+      });
+}
