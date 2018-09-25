@@ -63,14 +63,12 @@ class User extends Component {
 
   toggleEdit = () => {
     const { disabled } = this.state;
-    if (!disabled) {
-      this.handleEditDone();
-    }
     this.setState({ disabled: !disabled });
   };
 
   updateUser = values => {
     const { currentUser } = this.props;
+    const { disabled } = this.state;
     const modifiedFields = Object.keys(currentUser).filter(
       k => currentUser[k] !== values[k]
     );
@@ -78,6 +76,7 @@ class User extends Component {
       d[key] = values[key];
       return d;
     }, {});
+    this.setState({ disabled: !disabled });
     this.props.putMe({ user: data });
   };
 
