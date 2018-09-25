@@ -2,38 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
-import { isEmpty } from 'lodash/fp';
-import { Button, Form, Icon, Upload } from 'antd';
-import makeField from './helper';
+import { Button, Form } from 'antd';
+import UploadButton from './UploadButton';
 
-const UploadButton = ({
-  beforeUpload,
-  action,
-  currentStudent,
-  name,
-  onRemove,
-  fileList
-}) => (
-  <Upload
-    action={action}
-    beforeUpload={file => beforeUpload(file, name)}
-    onRemove={() => onRemove(name)}
-    fileList={fileList}
-  >
-    <Button>
-      <Icon type="upload" /> Upload
-    </Button>
-    {!isEmpty(currentStudent[name]) && (
-      <Icon
-        style={{ color: 'green', fontSize: 20 }}
-        type="check"
-        theme="outlined"
-      />
-    )}
-  </Upload>
-);
-const Uploader = makeField(UploadButton);
-let StudentForm = ({
+const StudentForm = ({
   handleSubmit,
   toggleEdit,
   disabled,
@@ -53,7 +25,7 @@ let StudentForm = ({
       action={action}
       currentStudent={currentStudent}
       beforeUpload={beforeUpload}
-      component={Uploader}
+      component={UploadButton}
       onRemove={onRemove}
     />
     <Field
@@ -62,7 +34,7 @@ let StudentForm = ({
       fileList={fileList.resume_en_url}
       currentStudent={currentStudent}
       beforeUpload={beforeUpload}
-      component={Uploader}
+      component={UploadButton}
       onRemove={onRemove}
     />
 
@@ -83,13 +55,10 @@ StudentForm.propTypes = {
   toggleEdit: PropTypes.func.isRequired
 };
 
-StudentForm = reduxForm({
-  // a unique name for the form
-  form: 'student'
-})(StudentForm);
-
-StudentForm = connect(state => ({
+const mapStateToProps = state => ({
   formState: state.form.StudentForm
-}))(StudentForm);
+});
 
-export default StudentForm;
+const stateful = connect(mapStateToProps);
+
+export default stateful(reduxForm({ form: 'student' })(StudentForm));

@@ -31,17 +31,22 @@ renderStaticFields.propTypes = {
 class User extends Component {
   constructor(props) {
     super(props);
-    const { user } = props;
+    const { currentUser } = props;
     this.state = {
-      student: user ? user.student : {},
+      student: currentUser ? currentUser.student : {},
       currentStudent: { resume_en_url: [], resume_sv_url: [] },
       disabled: true
     };
   }
 
   componentWillMount() {
-    const { id, getUser } = this.props;
-    getUser(id);
+    const { getCurrentUser } = this.props;
+    getCurrentUser();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { student = {} } = nextProps.currentUser;
+    this.setState({ student });
   }
 
   onRemove = name => {
@@ -65,10 +70,10 @@ class User extends Component {
 
   updateStudent = () => {
     const { currentStudent, student } = this.state;
-    const { user, putStudent } = this.props;
+    const { currentUser, putStudent } = this.props;
     const formData = new FormData();
     const modifiedKeys = Object.keys(currentStudent).filter(
-      k => currentStudent[k][0] !== user.student[k]
+      k => currentStudent[k][0] !== currentUser.student[k]
     );
     modifiedKeys.forEach(key => {
       formData.append(`student[${key}]`, currentStudent[key][0]);
@@ -79,9 +84,11 @@ class User extends Component {
   };
 
   updateUser = values => {
-    const { user, putMe } = this.props;
+    const { currentUser, putMe } = this.props;
     const { disabled } = this.state;
-    const modifiedFields = Object.keys(user).filter(k => user[k] !== values[k]);
+    const modifiedFields = Object.keys(currentUser).filter(
+      k => currentUser[k] !== values[k]
+    );
     const data = modifiedFields.reduce((d, key) => {
       d[key] = values[key];
       return d;
@@ -91,22 +98,20 @@ class User extends Component {
   };
 
   render() {
-    const { user, roles, fetching } = this.props;
+    const { currentUser, roles, fetching } = this.props;
     const { currentStudent, disabled, student } = this.state;
-
-    if (fetching || isEmpty(user)) {
+    if (fetching || isEmpty(currentUser)) {
       return <LoadingSpinner />;
     }
-
     const { resume_en_url, resume_sv_url } = currentStudent;
     return (
       <div>
-        {renderStaticFields({ ...user, ...roles })}
+        {renderStaticFields({ ...currentUser, ...roles })}
         <UserForm
           onSubmit={this.updateUser}
           disabled={disabled}
           toggleEdit={this.toggleEdit}
-          initialValues={user}
+          initialValues={currentUser}
         />
         <StudentForm
           action="//jsonplaceholder.typicode.com/posts/"
@@ -123,12 +128,14 @@ class User extends Component {
   }
 }
 User.propTypes = {
-  id: PropTypes.string.isRequired,
-  user: PropTypes.shape({
+  currentUser: PropTypes.shape({
     email: PropTypes.string,
     student: PropTypes.shape()
   }).isRequired,
-  getUser: PropTypes.func.isRequired
+  fetching: PropTypes.bool.isRequired,
+  getCurrentUser: PropTypes.func.isRequired,
+  putMe: PropTypes.func.isRequired,
+  putStudent: PropTypes.func.isRequired
 };
 
 export default User;

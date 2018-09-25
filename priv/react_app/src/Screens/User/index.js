@@ -1,17 +1,24 @@
 import { connect } from 'react-redux';
+import { denormalize } from 'normalizr';
 import { Actions } from '../../Store';
+import Schema from '../../Store/normalizr/schema';
 import User from './User';
-import { State } from '../../Store/reducers/index';
 
-const mapStateToProps = (state: State) => ({
-  currentUser: state.entities.users[state.current.user] || {},
-  fetching: state.api.current_user.fetching
-});
+const mapStateToProps = (state, props) => {
+  const userId = props.match.params.id;
+  const user = state.entities.users[userId] || {};
+
+  const roles = denormalize(
+    { roles: user.roles },
+    Schema.userSchema(),
+    state.entities
+  );
+
+  return { id: userId, user, roles };
+};
 
 const mapDispatchToProps = dispatch => ({
-  getCurrentUser: () => dispatch(Actions.users.getCurrentUser()),
-  putMe: data => dispatch(Actions.users.putMe(data)),
-  putStudent: (id, data) => dispatch(Actions.users.putStudent(id, data))
+  getUser: id => dispatch(Actions.users.getUser(id))
 });
 
 const stateful = connect(

@@ -17,6 +17,7 @@ import Roles from '../Screens/Roles';
 import Role from '../Screens/Role';
 import Users from '../Screens/Users';
 import User from '../Screens/User';
+import CurrentUser from '../Screens/CurrentUser';
 import Companies from '../Screens/Companies';
 import Company from '../Screens/Company';
 import NotFound from '../Screens/NotFound';
@@ -46,7 +47,7 @@ const routes = (
     <Route path="/logout" component={Logout} />
     <Route path="/signup" component={Signup} />
     <Route path="/forgot-password" component={ForgotPassword} />
-    <PrivateRoute path="/user" component={User} />
+    <PrivateRoute path="/user" component={CurrentUser} />
     <Route component={NotFound} />
   </Switch>
 );

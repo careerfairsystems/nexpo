@@ -1,30 +1,42 @@
 import React from 'react';
 import { shallow } from 'enzyme';
+import { capitalize } from 'lodash/fp';
 import User from './User';
 import LoadingSpinner from '../../Components/LoadingSpinner';
+// import HtmlTitle from '../../Components/HtmlTitle';
 
 it('should render without crashing', () => {
-  const props = {
-    currentUser: {
-      first_name: 'John',
-      last_name: 'Smith',
-      phone_number: '11111',
-      roles: [{ type: 'host', permissions: ['read_companies'] }]
-    },
-    fetching: false,
-    putMe: jest.fn(),
-    putStudent: jest.fn()
-  };
-  shallow(<User {...props} />);
+  const user = {};
+  const func = jest.fn();
+  shallow(<User id="1" user={user} getUser={func} />);
 });
 
-it('should render loading when currentUser is empty', () => {
-  const props = {
-    currentUser: {},
-    fetching: false,
-    putMe: jest.fn(),
-    putStudent: jest.fn()
+it('should render LoadingSpinner if there is no user', () => {
+  const user = {};
+  const func = jest.fn();
+  const wrapper = shallow(<User id="1" user={user} getUser={func} />);
+
+  expect(wrapper.find(LoadingSpinner)).toHaveLength(1);
+});
+
+// it('should set html title', () => {
+//   const user = {
+//     name: 'Dev'
+//   };
+//   const func = jest.fn();
+//   const wrapper = shallow(<User id="1" user={user} getUser={func} />);
+//
+//   expect(
+//     wrapper.contains(<HtmlTitle title={capitalize(user.name)} />)
+//   ).toBeTruthy();
+// });
+
+it('should render user information', () => {
+  const user = {
+    name: 'test'
   };
-  const wrapper = shallow(<User {...props} />);
-  expect(wrapper.find(LoadingSpinner).length).toBe(1);
+  const func = jest.fn();
+  const wrapper = shallow(<User id="1" user={user} getUser={func} />);
+
+  expect(wrapper.contains(<h1>{capitalize(user.name)}</h1>)).toBeTruthy();
 });

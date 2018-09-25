@@ -6,8 +6,8 @@ import { Button, Input, Form } from 'antd';
 import makeField from './helper';
 
 const TextInput = makeField(Input);
-// eslint disable-next-line
-let UserForm = ({ handleSubmit, toggleEdit, disabled, reset }) => (
+
+const UserForm = ({ handleSubmit, toggleEdit, disabled, reset }) => (
   <Form onSubmit={handleSubmit}>
     <Field
       name="phone_number"
@@ -47,13 +47,10 @@ UserForm.propTypes = {
   toggleEdit: PropTypes.func.isRequired
 };
 
-UserForm = reduxForm({
-  // a unique name for the form
-  form: 'user'
-})(UserForm);
-
-UserForm = connect(state => ({
+const mapStateToProps = state => ({
   formState: state.form.UserForm
-}))(UserForm);
+});
 
-export default UserForm;
+const stateful = connect(mapStateToProps);
+
+export default stateful(reduxForm({ form: 'user' })(UserForm));
