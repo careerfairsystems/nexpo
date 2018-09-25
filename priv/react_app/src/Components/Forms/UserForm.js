@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
-import { Button, Input, Form, Icon, Upload } from 'antd';
+import { Button, Input, Form } from 'antd';
 import makeField from './helper';
 
 const TextInput = makeField(Input);

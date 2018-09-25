@@ -36,30 +36,35 @@ renderStaticFields.propTypes = {
 class User extends Component {
   constructor(props) {
     super(props);
-    const currentStudent = props.currentUser
-      ? props.currentUser.student || {}
-      : {};
+    const { currentUser } = props;
     this.state = {
-      currentStudent,
+      student: currentUser ? currentUser.student : {},
+      currentStudent: { resume_en_url: [], resume_sv_url: [] },
       disabled: true
     };
   }
 
-  onRemove = file => {
-    this.setState(({ fileList }) => {
-      const index = fileList.indexOf(file);
-      const newFileList = fileList.slice();
-      newFileList.splice(index, 1);
-      return {
-        fileList: newFileList
-      };
-    });
+  componentWillMount() {
+    const { getCurrentUser } = this.props;
+    getCurrentUser();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { student = {} } = nextProps.currentUser;
+    this.setState({ student });
+  }
+
+  onRemove = name => {
+    const { currentStudent } = this.state;
+    delete currentStudent[name];
+    this.setState({ currentStudent: { ...currentStudent, [name]: [] } });
   };
 
-  beforeUpload = file => {
-    this.setState(({ currentStudent }) => ({
-      currentStudent: { ...currentStudent, resume_sv_url: file }
-    }));
+  beforeUpload = (file, name) => {
+    const { currentStudent } = this.state;
+    this.setState({
+      currentStudent: { ...currentStudent, [name]: [file] }
+    });
     return false;
   };
 
@@ -69,16 +74,18 @@ class User extends Component {
   };
 
   updateStudent = () => {
-    const { currentStudent } = this.state;
+    const { currentStudent, student } = this.state;
     const { currentUser, putStudent } = this.props;
     const formData = new FormData();
     const modifiedKeys = Object.keys(currentStudent).filter(
-      k => currentStudent[k] !== currentUser.student[k]
+      k => currentStudent[k][0] !== currentUser.student[k]
     );
     modifiedKeys.forEach(key => {
-      formData.append(`student[${key}]`, currentStudent[key]);
+      formData.append(`student[${key}]`, currentStudent[key][0]);
     });
-    putStudent(currentStudent.id, formData);
+
+    this.setState({ currentStudent: { resume_en_url: [], resume_sv_url: [] } });
+    putStudent(student.id, formData);
   };
 
   updateUser = values => {
@@ -97,10 +104,11 @@ class User extends Component {
 
   render() {
     const { currentUser, fetching } = this.props;
-    const { currentStudent, disabled } = this.state;
+    const { currentStudent, disabled, student } = this.state;
     if (fetching || isEmpty(currentUser)) {
       return <LoadingSpinner />;
     }
+    const { resume_en_url, resume_sv_url } = currentStudent;
     return (
       <div>
         {renderStaticFields(currentUser)}
@@ -114,9 +122,10 @@ class User extends Component {
           action="//jsonplaceholder.typicode.com/posts/"
           beforeUpload={this.beforeUpload}
           onRemove={this.onRemove}
+          fileList={{ resume_en_url, resume_sv_url }}
           onSubmit={this.updateStudent}
-          disabled={disabled}
-          currentStudent={currentStudent || {}}
+          disabled={isEmpty(resume_sv_url) && isEmpty(resume_en_url)}
+          currentStudent={student || {}}
           toggleEdit={this.toggleEdit}
         />
       </div>
@@ -129,6 +138,7 @@ User.propTypes = {
     student: PropTypes.shape()
   }).isRequired,
   fetching: PropTypes.bool.isRequired,
+  getCurrentUser: PropTypes.func.isRequired,
   putMe: PropTypes.func.isRequired,
   putStudent: PropTypes.func.isRequired
 };

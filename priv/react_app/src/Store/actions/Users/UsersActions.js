@@ -106,11 +106,9 @@ export function putStudent(id, data) {
     API.users
       .putStudent(id, data)
       .then(user => {
-        dispatch(getUserSuccess(user.data));
+        dispatch(getCurrentUser());
       })
-      .catch(() => {
-        dispatch(getUserFailure());
-      });
+      .catch(() => {});
 }
 
 export const putCurrentUserStart = () => ({

@@ -9,6 +9,7 @@ const mapStateToProps = (state: State) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+  getCurrentUser: () => dispatch(Actions.users.getCurrentUser()),
   putMe: data => dispatch(Actions.users.putMe(data)),
   putStudent: (id, data) => dispatch(Actions.users.putStudent(id, data))
 });
