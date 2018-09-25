@@ -69,8 +69,8 @@ class User extends Component {
   };
 
   updateStudent = () => {
-    const { currentStudent, student } = this.state;
-    const { currentUser, putStudent } = this.props;
+    const { currentStudent } = this.state;
+    const { currentUser, updateCurrentStudent } = this.props;
     const formData = new FormData();
     const modifiedKeys = Object.keys(currentStudent).filter(
       k => currentStudent[k][0] !== currentUser.student[k]
@@ -80,11 +80,11 @@ class User extends Component {
     });
 
     this.setState({ currentStudent: { resume_en_url: [], resume_sv_url: [] } });
-    putStudent(student.id, formData);
+    updateCurrentStudent(formData);
   };
 
   updateUser = values => {
-    const { currentUser, putMe } = this.props;
+    const { currentUser, updateCurrentUser } = this.props;
     const { disabled } = this.state;
     const modifiedFields = Object.keys(currentUser).filter(
       k => currentUser[k] !== values[k]
@@ -94,7 +94,7 @@ class User extends Component {
       return d;
     }, {});
     this.setState({ disabled: !disabled });
-    putMe({ user: data });
+    updateCurrentUser({ user: data });
   };
 
   render() {
@@ -134,8 +134,8 @@ User.propTypes = {
   }).isRequired,
   fetching: PropTypes.bool.isRequired,
   getCurrentUser: PropTypes.func.isRequired,
-  putMe: PropTypes.func.isRequired,
-  putStudent: PropTypes.func.isRequired
+  updateCurrentUser: PropTypes.func.isRequired,
+  updateCurrentStudent: PropTypes.func.isRequired
 };
 
 export default User;

@@ -29,7 +29,7 @@ export default {
   /**
    * Updates the current user's student
    */
-  updateStudent: data =>
+  updateMyStudent: data =>
     authPut('/api/me/student', data).then(handleHttpResponse),
 
   /**

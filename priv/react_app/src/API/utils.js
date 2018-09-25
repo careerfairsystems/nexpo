@@ -21,6 +21,9 @@ export const handleHttpResponse = (response: Response): Promise => {
   });
 };
 
+const contentType = data =>
+  data instanceof FormData ? {} : { 'Content-Type': 'application/json' };
+
 export const authPost = (url, data) =>
   fetch(url, {
     method: 'POST',
@@ -28,7 +31,7 @@ export const authPost = (url, data) =>
     headers: new Headers({
       Authorization: `Bearer ${getJwt()}`,
       Accept: 'application/json',
-      'Content-Type': 'application/json'
+      ...contentType(data)
     })
   });
 
@@ -47,7 +50,7 @@ export const authPut = (url, data) =>
     headers: new Headers({
       Authorization: `Bearer ${getJwt()}`,
       Accept: 'application/json',
-      'Content-Type': 'application/json'
+      ...contentType(data)
     })
   });
 

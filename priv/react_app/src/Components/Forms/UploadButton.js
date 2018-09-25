@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import { isEmpty } from 'lodash/fp';
 import { Button, Icon, Upload } from 'antd';
 import makeField from './helper';
