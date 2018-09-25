@@ -26,16 +26,17 @@ export const authPost = (url, data) =>
     method: 'POST',
     body: data instanceof FormData ? data : JSON.stringify(data),
     headers: new Headers({
+      Authorization: `Bearer ${getJwt()}`,
       Accept: 'application/json',
-      Authorization: `Bearer ${getJwt()}`
+      'Content-Type': 'application/json'
     })
   });
 
 export const authFetch = url =>
   fetch(url, {
     headers: new Headers({
-      Accept: 'application/json',
-      Authorization: `Bearer ${getJwt()}`
+      Authorization: `Bearer ${getJwt()}`,
+      Accept: 'application/json'
     })
   });
 
@@ -44,8 +45,9 @@ export const authPut = (url, data) =>
     method: 'PUT',
     body: data instanceof FormData ? data : JSON.stringify(data),
     headers: new Headers({
+      Authorization: `Bearer ${getJwt()}`,
       Accept: 'application/json',
-      Authorization: `Bearer ${getJwt()}`
+      'Content-Type': 'application/json'
     })
   });
 
@@ -53,7 +55,6 @@ export const authDelete = url =>
   fetch(url, {
     method: 'DELETE',
     headers: new Headers({
-      Accept: 'application/json',
       Authorization: `Bearer ${getJwt()}`
     })
   });
