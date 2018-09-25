@@ -38,6 +38,16 @@ export const authPutFormData = (url, data) =>
       Authorization: `Bearer ${getJwt()}`
     })
   });
+export const authPut = (url, data) =>
+  fetch(url, {
+    method: 'PUT',
+    body: JSON.stringify(data),
+    headers: new Headers({
+      Accept: 'application/json',
+      Authorization: `Bearer ${getJwt()}`,
+      'Content-type': 'application/json'
+    })
+  });
 
 export default {
   authFetch,

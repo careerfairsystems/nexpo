@@ -1,4 +1,9 @@
-import { authFetch, authPutFormData, handleHttpResponse } from './utils';
+import {
+  authFetch,
+  authPut,
+  authPutFormData,
+  handleHttpResponse
+} from './utils';
 
 export default {
   /**
@@ -16,8 +21,10 @@ export default {
    */
   get: id => authFetch(`/api/users/${id}`).then(handleHttpResponse),
   /**
-   * Updates a user
+   * Updates current user
    */
-  put: (id, data) =>
-    authPutFormData(`/api/students/${id}`, data).then(handleHttpResponse)
+  putMe: data => authPut('/api/me', data).then(handleHttpResponse),
+
+  put1: (id, data) =>
+    authPutFormData(`/api/users/${id}`, data).then(handleHttpResponse)
 };

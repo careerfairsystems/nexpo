@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Button, Input, Form, Icon, Upload } from 'antd';
 import { isEmpty, isFinite, map } from 'lodash/fp';
 import LoadingSpinner from '../../Components/LoadingSpinner';
+import UserForm from '../../Components/Forms/UserForm';
 
 const FormItem = Form.Item;
 const userFields = ['phone_number', 'food_preferences'];
@@ -37,43 +38,9 @@ class User extends Component {
       ? props.currentUser.student || {}
       : {};
     this.state = {
-      currentUser: { ...props.currentUser },
       currentStudent,
       disabled: true
     };
-  }
-
-  componentWillReceiveProps(props) {
-    this.setState({ currentUser: props.currentUser });
-  }
-
-  getInput(field) {
-    const { currentUser, disabled } = this.state;
-    switch (field) {
-      case 'phone_number':
-        return (
-          <Input
-            value={currentUser[field]}
-            disabled={disabled}
-            onChange={e => {
-              const val = e.target.value;
-              if ((val && isFinite(Number(val))) || val === '') {
-                this.updateUser(field, val);
-              }
-            }}
-            style={{ width: 200 }}
-          />
-        );
-      default:
-        return (
-          <Input
-            disabled={disabled}
-            onChange={e => this.updateUser(field, e.target.value)}
-            value={currentUser[field]}
-            style={{ width: 200 }}
-          />
-        );
-    }
   }
 
   handleEditDone = () => {
@@ -82,6 +49,7 @@ class User extends Component {
     const modifiedKeys = Object.keys(currentStudent).filter(
       k => currentStudent[k] !== this.props.currentUser.student[k]
     );
+
     modifiedKeys.forEach(key => {
       formData.append(`student[${key}]`, currentStudent[key]);
     });
@@ -90,7 +58,7 @@ class User extends Component {
     this.setState({
       uploading: true
     });
-    this.props.putUser(currentStudent.id, formData);
+    // this.props.putUser(currentStudent.id, formData);
   };
 
   toggleEdit = () => {
@@ -101,10 +69,17 @@ class User extends Component {
     this.setState({ disabled: !disabled });
   };
 
-  updateUser(field, value) {
-    const { currentUser } = this.state;
-    this.setState({ currentUser: { ...currentUser, [field]: value } });
-  }
+  updateUser = values => {
+    const { currentUser } = this.props;
+    const modifiedFields = Object.keys(currentUser).filter(
+      k => currentUser[k] !== values[k]
+    );
+    const data = modifiedFields.reduce((d, key) => {
+      d[key] = values[key];
+      return d;
+    }, {});
+    this.props.putMe({ user: data });
+  };
 
   renderUpload() {
     const { uploading } = this.state;
@@ -138,8 +113,8 @@ class User extends Component {
   }
 
   render() {
-    const { currentUser, disabled } = this.state;
-    const { fetching } = this.props;
+    const { currentUser, fetching } = this.props;
+    const { disabled } = this.state;
     if (fetching || isEmpty(currentUser)) {
       return <LoadingSpinner />;
     }
@@ -147,27 +122,20 @@ class User extends Component {
     return (
       <div>
         {renderStaticFields(currentUser)}
-        <Form layout="vertical">
-          {userFields.map(k => (
-            <FormItem key={k} label={headers[k] || k}>
-              {this.getInput(k)}
-            </FormItem>
-          ))}
-        </Form>
-        <Button type="primary" onClick={this.toggleEdit}>
-          {disabled ? 'Edit Profile' : 'Done'}
-        </Button>
-        <Form layout="vertical">
+        <UserForm
+          onSubmit={values => this.updateUser(values)}
+          disabled={disabled}
+          toggleEdit={this.toggleEdit}
+          initialValues={currentUser}
+        />
+        {/* <Form layout="vertical">
           {studentFields.map(k => (
             <FormItem key={k} label={headers[k] || k}>
               {this.getInput(k)}
             </FormItem>
           ))}
           {this.renderUpload()}
-        </Form>
-        <Button type="primary" onClick={this.toggleEdit}>
-          {disabled ? 'Edit Profile' : 'Done'}
-        </Button>
+        </Form> */}
       </div>
     );
   }
