@@ -30,7 +30,10 @@ export const EntitiesReducer = (
   let normalized;
 
   switch (action.type) {
-    case actionTypes.FETCH_COMPANY_SUCCESS: {
+    case actionTypes.FETCH_COMPANY_SUCCESS:
+    case actionTypes.POST_COMPANY_SUCCESS:
+    case actionTypes.PUT_COMPANY_SUCCESS:
+    case actionTypes.DELETE_COMPANY_SUCCESS: {
       normalized = normalize(action.company, Schema.companySchema());
       return { ...state, ...normalized.entities };
     }
@@ -38,7 +41,10 @@ export const EntitiesReducer = (
       normalized = normalize(action.companies, Schema.companiesSchema());
       return { ...state, ...normalized.entities };
     }
-    case actionTypes.FETCH_ROLE_SUCCESS: {
+    case actionTypes.FETCH_ROLE_SUCCESS:
+    case actionTypes.POST_ROLE_SUCCESS:
+    case actionTypes.PUT_ROLE_SUCCESS:
+    case actionTypes.DELETE_ROLE_SUCCESS: {
       normalized = normalize(action.role, Schema.roleSchema());
       return { ...state, ...normalized.entities };
     }
@@ -46,7 +52,10 @@ export const EntitiesReducer = (
       normalized = normalize(action.roles, Schema.rolesSchema());
       return { ...state, ...normalized.entities };
     }
-    case actionTypes.FETCH_USER_SUCCESS: {
+    case actionTypes.FETCH_USER_SUCCESS:
+    case actionTypes.POST_USER_SUCCESS:
+    case actionTypes.PUT_USER_SUCCESS:
+    case actionTypes.DELETE_USER_SUCCESS: {
       normalized = normalize(action.user, Schema.userSchema());
       return { ...state, ...normalized.entities };
     }
@@ -54,7 +63,10 @@ export const EntitiesReducer = (
       normalized = normalize(action.users, Schema.usersSchema());
       return { ...state, ...normalized.entities };
     }
-    case actionTypes.FETCH_CATEGORY_SUCCESS: {
+    case actionTypes.FETCH_CATEGORY_SUCCESS:
+    case actionTypes.POST_CATEGORY_SUCCESS:
+    case actionTypes.PUT_CATEGORY_SUCCESS:
+    case actionTypes.DELETE_CATEGORY_SUCCESS: {
       normalized = normalize(action.category, Schema.categorySchema());
       return { ...state, ...normalized.entities };
     }
@@ -62,7 +74,9 @@ export const EntitiesReducer = (
       normalized = normalize(action.categories, Schema.categoriesSchema());
       return { ...state, ...normalized.entities };
     }
-    case actionTypes.FETCH_CURRENT_USER_SUCCESS: {
+    case actionTypes.FETCH_CURRENT_USER_SUCCESS:
+    case actionTypes.PUT_CURRENT_USER_SUCCESS:
+    case actionTypes.DELETE_CURRENT_USER_SUCCESS: {
       normalized = normalize(action.user, Schema.userSchema());
       return { ...state, ...normalized.entities };
     }

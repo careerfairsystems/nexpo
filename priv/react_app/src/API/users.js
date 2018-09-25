@@ -14,7 +14,17 @@ export default {
   /**
    * Fetches the current user
    */
-  getMe: () => authPost('/api/users').then(handleHttpResponse),
+  getMe: () => authPost('/api/me').then(handleHttpResponse),
+
+  /**
+   * Updates the current user
+   */
+  updateMe: data => authPut('/api/me', data).then(handleHttpResponse),
+
+  /**
+   * Delete the current user
+   */
+  destroyMe: () => authDelete('/api/me').then(handleHttpResponse),
 
   /**
    * Create a user
