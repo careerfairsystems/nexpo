@@ -23,7 +23,7 @@ export function getCurrentUser() {
         const user = res.data;
         dispatch(getCurrentUserSuccess(user));
       })
-      .catch(err => {
+      .catch(() => {
         dispatch(getCurrentUserFailure());
       });
   };
@@ -100,6 +100,7 @@ export function getUser(id) {
       });
   };
 }
+
 export function putStudent(id, data) {
   return dispatch =>
     API.users
@@ -111,14 +112,35 @@ export function putStudent(id, data) {
         dispatch(getUserFailure());
       });
 }
+
+export function putCurrentUserStart() {
+  return {
+    type: actionTypes.PUT_CURRENT_USER_START
+  };
+}
+export function putCurrentUserFailure() {
+  return {
+    type: actionTypes.PUT_CURRENT_USER_FAILURE
+  };
+}
+
+export function putCurrentUserSuccess(user) {
+  return {
+    type: actionTypes.PUT_CURRENT_USER_SUCCESS,
+    user
+  };
+}
+
 export function putMe(data) {
-  return dispatch =>
+  return dispatch => {
+    dispatch(putCurrentUserStart());
     API.users
       .putMe(data)
       .then(user => {
-        dispatch(getUserSuccess(user.data));
+        dispatch(putCurrentUserSuccess(user.data));
       })
       .catch(() => {
-        dispatch(getUserFailure());
+        dispatch(putCurrentUserFailure());
       });
+  };
 }

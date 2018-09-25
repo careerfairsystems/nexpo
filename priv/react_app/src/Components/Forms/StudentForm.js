@@ -37,20 +37,11 @@ let StudentForm = ({
     />
     <Field
       name="resume_en_url"
-      label="Enlgish Cv"
+      label="English Cv"
       beforeUpload={beforeUpload}
       component={Uploader}
       disabled={disabled}
     />
-    <Button
-      type="primary"
-      onClick={() => {
-        toggleEdit();
-        if (!disabled) reset();
-      }}
-    >
-      {disabled ? 'Edit' : 'Cancel'}
-    </Button>
     <Button htmlType="submit">Submit</Button>
   </Form>
 );
