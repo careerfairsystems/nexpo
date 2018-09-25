@@ -18,16 +18,10 @@ defmodule Nexpo.Support.View do
     relations = Map.keys(object)
       |> Enum.filter(fn r -> Ecto.assoc_loaded?(Map.get(object, r)) end)
       |> Enum.map(fn r -> render_relation(object, r) end)
-
-    # Return base if there are no relations
-    if(Enum.empty?(relations)) do
-      base
-    # Return base with relations if there are relations
-    else
-      relations
       |> Enum.reduce(fn (x, acc) -> Map.merge(acc, x) end)
-      |> Map.merge(base)
-    end
+
+    # Return base with relations
+    Map.merge(base, relations)
   end
 
   # Defines how to render all possible relations in database
