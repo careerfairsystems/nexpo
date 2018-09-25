@@ -113,11 +113,10 @@ export function putStudent(id, data) {
       });
 }
 
-export function putCurrentUserStart() {
-  return {
-    type: actionTypes.PUT_CURRENT_USER_START
-  };
-}
+export const putCurrentUserStart = () => ({
+  type: actionTypes.PUT_CURRENT_USER_START
+});
+
 export function putCurrentUserFailure() {
   return {
     type: actionTypes.PUT_CURRENT_USER_FAILURE
@@ -134,7 +133,7 @@ export function putCurrentUserSuccess(user) {
 export function putMe(data) {
   return dispatch => {
     dispatch(putCurrentUserStart());
-    API.users
+    return API.users
       .putMe(data)
       .then(user => {
         dispatch(putCurrentUserSuccess(user.data));

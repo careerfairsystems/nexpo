@@ -249,3 +249,48 @@ describe('getUser', () => {
     });
   });
 });
+
+describe('getUser', () => {
+  it('should call start action', () => {
+    mockHttpResponse({ status: 200, body: {} });
+    const store = createMockStore();
+
+    return store.dispatch(Actions.users.putMe()).then(() => {
+      const calledActions = store.getActions();
+      expect(calledActions[0]).toEqual(Actions.users.putCurrentUserStart());
+    });
+  });
+
+  it('should call success action on success', () => {
+    const user = {
+      food_preferences: 'Cakes'
+    };
+    mockHttpResponse({ status: 200, body: { data: user } });
+
+    const expectedActions = [
+      Actions.users.putCurrentUserStart(),
+      Actions.users.putCurrentUserSuccess(user)
+    ];
+    const store = createMockStore();
+    return store.dispatch(Actions.users.putMe()).then(() => {
+      const calledActions = store.getActions();
+      expect(calledActions).toEqual(expectedActions);
+    });
+  });
+
+  it('should call failure action on failure', () => {
+    mockHttpResponse({ status: 401, body: {} });
+
+    const expectedActions = [
+      Actions.users.putCurrentUserStart(),
+      Actions.users.putCurrentUserFailure()
+    ];
+
+    const store = createMockStore();
+
+    return store.dispatch(Actions.users.putMe()).then(() => {
+      const calledActions = store.getActions();
+      expect(calledActions).toEqual(expectedActions);
+    });
+  });
+});
