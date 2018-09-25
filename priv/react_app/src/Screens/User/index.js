@@ -9,8 +9,8 @@ const mapStateToProps = (state: State) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  putMe: (data) => dispatch(Actions.users.putMe(data)),
-  putUser: (id, data) => dispatch(Actions.users.putUser(id, data))
+  putMe: data => dispatch(Actions.users.putMe(data)),
+  putStudent: (id, data) => dispatch(Actions.users.putStudent(id, data))
 });
 
 const stateful = connect(

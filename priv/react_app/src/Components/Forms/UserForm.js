@@ -3,41 +3,7 @@ import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import { Button, Input, Form, Icon, Upload } from 'antd';
-
-const FormItem = Form.Item;
-const formItemLayout = {
-  labelCol: {
-    xs: { span: 1 },
-    sm: { span: 3 }
-  },
-  wrapperCol: {
-    xs: { span: 26 },
-    sm: { span: 6 }
-  }
-};
-const makeField = Component => ({
-  input,
-  meta,
-  children,
-  hasFeedback,
-  label,
-  ...rest
-}) => {
-  const hasError = meta.touched && meta.invalid;
-  return (
-    <FormItem
-      label={label}
-      {...formItemLayout}
-      validateStatus={hasError ? 'error' : 'success'}
-      hasFeedback={hasFeedback && hasError}
-      help={hasError && meta.error}
-    >
-      <Component {...input} {...rest}>
-        {children}
-      </Component>
-    </FormItem>
-  );
-};
+import makeField from './helper';
 
 const TextInput = makeField(Input);
 // eslint disable-next-line

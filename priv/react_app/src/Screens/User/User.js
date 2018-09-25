@@ -1,35 +1,24 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Input, Form, Icon, Upload } from 'antd';
-import { isEmpty, isFinite, map } from 'lodash/fp';
+import { Button, Icon, Upload } from 'antd';
+import { isEmpty } from 'lodash/fp';
 import LoadingSpinner from '../../Components/LoadingSpinner';
 import UserForm from '../../Components/Forms/UserForm';
+import StudentForm from '../../Components/Forms/StudentForm';
 
-const FormItem = Form.Item;
-const userFields = ['phone_number', 'food_preferences'];
-const studentFields = ['year'];
-const headers = {
-  first_name: 'First Name',
-  last_name: 'Last Name',
-  phone_number: 'Phone Number',
-  email: 'Email',
-  food_preferences: 'Food Preferences',
-  year: 'Year'
-};
 const roles = {
   1: 'admin'
 };
 const getRole = role => roles[role] || role;
-const renderStaticFields = ({ first_name, last_name, email, roles }) =>
-  console.log(roles) || (
-    <div>
-      <h1>
-        {first_name} {last_name}
-      </h1>
-      <h2>Email: {email}</h2>
-      <h2>Roles: {isEmpty(roles) ? 'None' : roles.map(getRole).join(', ')}</h2>
-    </div>
-  );
+const renderStaticFields = ({ first_name, last_name, email, roles }) => (
+  <div>
+    <h1>
+      {first_name} {last_name}
+    </h1>
+    <h2>Email: {email}</h2>
+    <h2>Roles: {isEmpty(roles) ? 'None' : roles.map(getRole).join(', ')}</h2>
+  </div>
+);
 
 class User extends Component {
   constructor(props) {
@@ -43,7 +32,7 @@ class User extends Component {
     };
   }
 
-  handleEditDone = () => {
+  updateStudent = () => {
     const { currentUser, currentStudent } = this.state;
     const formData = new FormData();
     const modifiedKeys = Object.keys(currentStudent).filter(
@@ -58,7 +47,7 @@ class User extends Component {
     this.setState({
       uploading: true
     });
-    // this.props.putUser(currentStudent.id, formData);
+    this.props.putStudent(currentStudent.id, formData);
   };
 
   toggleEdit = () => {
@@ -80,36 +69,23 @@ class User extends Component {
     this.props.putMe({ user: data });
   };
 
-  renderUpload() {
-    const { uploading } = this.state;
-    const props = {
-      action: '//jsonplaceholder.typicode.com/posts/',
-      onRemove: file => {
-        this.setState(({ fileList }) => {
-          const index = fileList.indexOf(file);
-          const newFileList = fileList.slice();
-          newFileList.splice(index, 1);
-          return {
-            fileList: newFileList
-          };
-        });
-      },
-      beforeUpload: file => {
-        this.setState(({ currentStudent }) => ({
-          currentStudent: { ...currentStudent, resume_sv_url: file }
-        }));
-        return false;
-      },
-      currentStudent: this.state.currentStudent
-    };
-    return (
-      <Upload {...props}>
-        <Button>
-          <Icon type="upload" /> Upload Swedish CV
-        </Button>
-      </Upload>
-    );
-  }
+  beforeUpload = file => {
+    this.setState(({ currentStudent }) => ({
+      currentStudent: { ...currentStudent, resume_sv_url: file }
+    }));
+    return false;
+  };
+
+  onRemove = file => {
+    this.setState(({ fileList }) => {
+      const index = fileList.indexOf(file);
+      const newFileList = fileList.slice();
+      newFileList.splice(index, 1);
+      return {
+        fileList: newFileList
+      };
+    });
+  };
 
   render() {
     const { currentUser, fetching } = this.props;
@@ -127,14 +103,15 @@ class User extends Component {
           toggleEdit={this.toggleEdit}
           initialValues={currentUser}
         />
-        {/* <Form layout="vertical">
-          {studentFields.map(k => (
-            <FormItem key={k} label={headers[k] || k}>
-              {this.getInput(k)}
-            </FormItem>
-          ))}
-          {this.renderUpload()}
-        </Form> */}
+        <StudentForm
+          action="//jsonplaceholder.typicode.com/posts/"
+          beforeUpload={this.beforeUpload}
+          onRemove={this.onRemove}
+          onSubmit={this.updateStudent}
+          disabled={disabled}
+          currentStudent={this.state.currentStudent || {}}
+          toggleEdit={this.toggleEdit}
+        />
       </div>
     );
   }

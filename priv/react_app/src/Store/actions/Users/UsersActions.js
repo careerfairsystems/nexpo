@@ -100,10 +100,10 @@ export function getUser(id) {
       });
   };
 }
-export function putUser(id, data) {
+export function putStudent(id, data) {
   return dispatch =>
     API.users
-      .put(id, data)
+      .putStudent(id, data)
       .then(user => {
         dispatch(getUserSuccess(user.data));
       })
