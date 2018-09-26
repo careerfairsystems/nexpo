@@ -76,7 +76,7 @@ defmodule Nexpo.Factory do
   """
   def user_factory do
     %Nexpo.User{
-      email: sequence(:username, &"username-#{&1}@student.lu.se"),
+      email: sequence(:id, &"generated_email-#{&1}@domain.com"),
       password: sequence("63n3r4t3dP4ssw0rd")
     }
   end
@@ -97,7 +97,7 @@ defmodule Nexpo.Factory do
   """
   def initial_signup_factory do
     %{
-      username: sequence("generated-username")
+      email: sequence(:id, &"generated_user-#{&1}@domain.se")
     }
   end
 
