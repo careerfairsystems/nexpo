@@ -10,8 +10,9 @@ defmodule Nexpo.ProgrammeView do
   end
 
   def render("programme.json", %{programme: programme}) do
-    %{id: programme.id,
-      code: programme.code,
-      name: programme.name}
+    # Define own parameters to keep
+    base = [:id, :code, :name]
+
+    Nexpo.Support.View.render_object(programme, base)
   end
 end

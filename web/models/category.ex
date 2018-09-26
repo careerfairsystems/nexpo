@@ -1,13 +1,13 @@
 defmodule Nexpo.Category do
   use Nexpo.Web, :model
 
-   schema "categories" do
-     field :title, :string
+  schema "categories" do
+    field :title, :string
 
-     has_many :attributes, Nexpo.CategoryAttribute, foreign_key: :category_id
+    has_many :attributes, Nexpo.CategoryAttribute, foreign_key: :category_id
 
-     timestamps()
-   end
+    timestamps()
+  end
 
   @doc """
   Builds a changeset based on the `struct` and `params`.

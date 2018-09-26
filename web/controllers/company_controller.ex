@@ -2,6 +2,16 @@ defmodule Nexpo.CompanyController do
   use Nexpo.Web, :controller
 
   alias Nexpo.Company
+  alias Guardian.Plug.{EnsurePermissions}
+
+  plug EnsurePermissions, [handler: Nexpo.SessionController,
+                           one_of: [%{default: ["read_all"]},
+                                    %{default: ["read_companies"]}]
+                          ] when action in [:show]
+  plug EnsurePermissions, [handler: Nexpo.SessionController,
+                           one_of: [%{default: ["write_all"]},
+                                    %{default: ["write_companies"]}]
+                          ] when action in [:create, :update, :delete]
 
   @apidoc """
   @api {GET} /companies List companies
@@ -30,16 +40,8 @@ defmodule Nexpo.CompanyController do
   end
 
   def create(conn, %{"company" => company_params}) do
-    Company.changeset(%Company{}, company_params)
-    |> create_company(conn)
-  end
+    changeset = Company.changeset(%Company{}, company_params)
 
-  def create(conn, company_params) do
-    Company.changeset(%Company{}, company_params)
-    |> create_company(conn)
-  end
-
-  defp create_company(changeset, conn) do
     case Repo.insert(changeset) do
       {:ok, company} ->
         conn
