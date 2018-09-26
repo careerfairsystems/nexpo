@@ -8,9 +8,9 @@ const mapStateToProps = (state: State) => ({
   fetching: state.api.roles.fetching
 });
 
-const mapDispatchToProps = dispatch => ({
-  getAllRoles: () => dispatch(Actions.roles.getAllRoles())
-});
+const mapDispatchToProps = {
+  getAllRoles: Actions.roles.getAllRoles
+};
 
 const stateful = connect(
   mapStateToProps,

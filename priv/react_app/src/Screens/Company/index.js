@@ -17,9 +17,9 @@ const mapStateToProps = (state, props) => {
   return { id: companyId, company, entries };
 };
 
-const mapDispatchToProps = dispatch => ({
-  getCompany: id => dispatch(Actions.companies.getCompany(id))
-});
+const mapDispatchToProps = {
+  getCompany: Actions.companies.getCompany
+};
 
 const stateful = connect(
   mapStateToProps,
