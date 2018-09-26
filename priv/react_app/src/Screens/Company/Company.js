@@ -4,6 +4,7 @@ import { isEmpty, isNil } from 'lodash/fp';
 import { Button } from 'antd';
 import CompanyForm from '../../Components/Forms/CompanyForm';
 import HtmlTitle from '../../Components/HtmlTitle';
+import NotFound from '../NotFound';
 import LoadingSpinner from '../../Components/LoadingSpinner';
 import './Company.css';
 
@@ -20,7 +21,7 @@ class Company extends Component {
 
   componentWillMount() {
     const { id, getCompany, location } = this.props;
-    if (location.hash === '#edit') {
+    if (location && location.hash === '#edit') {
       this.setState({ edit: true });
     }
     getCompany(id);
@@ -106,8 +107,12 @@ class Company extends Component {
 
   render() {
     const { edit } = this.state;
-    const { company, fetching } = this.props;
+    const { company, fetching, match } = this.props;
+    const isCreatingNew = match && match.path === '/companies/new';
     if (fetching) return <LoadingSpinner />;
+    if ((isEmpty(company) || isNil(company)) && !isCreatingNew)
+      return <NotFound />;
+
     if (!edit && !isEmpty(company) && !isNil(company)) {
       return this.renderShowView();
     }
@@ -116,7 +121,10 @@ class Company extends Component {
 }
 
 Company.defaultProps = {
-  id: null
+  id: null,
+  match: {
+    path: ''
+  }
 };
 Company.propTypes = {
   id: PropTypes.string,
@@ -124,6 +132,9 @@ Company.propTypes = {
   createCompany: PropTypes.func.isRequired,
   fetching: PropTypes.bool.isRequired,
   getCompany: PropTypes.func.isRequired,
+  match: PropTypes.shape({
+    path: PropTypes.string
+  }),
   resetForm: PropTypes.func.isRequired,
   updateCompany: PropTypes.func.isRequired
 };

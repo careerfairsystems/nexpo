@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Route, Redirect } from 'react-router-dom';
 import { hasPermission } from '../../Util/PermissionsHelper';
+import LoadingSpinner from '../LoadingSpinner';
 
 /**
  * This components extends Router from react-router.
@@ -20,6 +21,7 @@ class PrivateRoute extends Component {
       <Route
         {...rest}
         render={props => {
+          if (this.props.fetching) return <LoadingSpinner />;
           if (isLoggedIn && hasPermission(currentUser, props.location.pathname))
             return <Component {...props} />;
           return (
