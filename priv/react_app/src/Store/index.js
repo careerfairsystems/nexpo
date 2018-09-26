@@ -8,6 +8,7 @@ import reducers, { State } from './reducers';
 
 import Actions from './actions';
 import actionTypes from './ActionTypes';
+import Selectors from './selectors';
 
 /**
  * Manage creation of store
@@ -35,4 +36,4 @@ const getStore = () => {
   return store;
 };
 
-export { getStore, Actions, actionTypes, State };
+export { getStore, Actions, actionTypes, State, Selectors };
