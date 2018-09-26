@@ -21,7 +21,7 @@ import User from '../Screens/User';
 import CurrentUser from '../Screens/CurrentUser';
 import Companies from '../Screens/Companies';
 import Company from '../Screens/Company';
-import Sessions from '../Screens/Sessions/SessionApplication';
+import Sessions from '../Screens/Sessions';
 import Login from '../Screens/Login';
 import Logout from '../Screens/Logout';
 import Signup from '../Screens/Signup';

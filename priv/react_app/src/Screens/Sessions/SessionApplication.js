@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Button, Icon, Upload, message, Select, Input } from 'antd';
 import HtmlTitle from '../../Components/HtmlTitle';
+import StudentForm from '../../Components/Forms/StudentForm';
+import { isEmpty, map } from 'lodash/fp';
 
 const { TextArea } = Input;
 const props = {
@@ -23,10 +25,54 @@ const { Option } = Select;
 class SessionApplication extends Component {
   constructor() {
     super(props);
-    this.state = {};
+    this.state = {
+      student: props.currentUser ? props.currentUser.student : {},
+      currentStudent: { resume_en_url: [], resume_sv_url: [] }
+    };
   }
 
+  componentWillMount() {
+    const { getCurrentUser } = this.props;
+    getCurrentUser();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { student = {} } = nextProps.currentUser;
+    this.setState({ student });
+  }
+
+  onRemove = name => {
+    const { currentStudent } = this.state;
+    delete currentStudent[name];
+    this.setState({ currentStudent: { ...currentStudent, [name]: [] } });
+  };
+
+  beforeUpload = (file, name) => {
+    const { currentStudent } = this.state;
+    this.setState({
+      currentStudent: { ...currentStudent, [name]: [file] }
+    });
+    return false;
+  };
+
+  updateStudent = () => {
+    const { currentStudent } = this.state;
+    const { currentUser, updateCurrentStudent } = this.props;
+    const formData = new FormData();
+    const modifiedKeys = Object.keys(currentStudent).filter(
+      k => currentStudent[k][0] !== currentUser.student[k]
+    );
+    modifiedKeys.forEach(key => {
+      formData.append(`student[${key}]`, currentStudent[key][0]);
+    });
+
+    this.setState({ currentStudent: { resume_en_url: [], resume_sv_url: [] } });
+    updateCurrentStudent(formData);
+  };
+
   render() {
+    const { currentStudent, disabled, student } = this.state;
+    const { resume_en_url, resume_sv_url } = currentStudent;
     return (
       <div style={{ padding: 24 }}>
         <HtmlTitle title="Student Session Application" />
@@ -40,21 +86,23 @@ class SessionApplication extends Component {
             Facebook
           </Option>
         </Select>
-        <h3>Motivation</h3>
+        <h3 style={{ marginTop: 24 }}>Motivation</h3>
         <body>
           Write a short motivation to why you want to get in contact with the
           company
         </body>
         <TextArea rows={4} />
-        <h3> Upload your CV </h3>
-        <Upload {...props}>
-          <Button>
-            <Icon type="upload" /> Click to Upload
-          </Button>
-        </Upload>
-        <Button type="primary" disabled>
-          Submit
-        </Button>
+        <h3 style={{ marginTop: 24 }}> Upload your CV </h3>
+        <StudentForm
+          action="//jsonplaceholder.typicode.com/posts/"
+          beforeUpload={this.beforeUpload}
+          onRemove={this.onRemove}
+          fileList={{ resume_en_url, resume_sv_url }}
+          onSubmit={this.updateStudent}
+          disabled={isEmpty(resume_sv_url) && isEmpty(resume_en_url)}
+          currentStudent={student || {}}
+          //toggleEdit={this.toggleEdit}
+        />
       </div>
     );
   }
