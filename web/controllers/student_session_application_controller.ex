@@ -1,11 +1,13 @@
 defmodule Nexpo.StudentSessionApplicationController do
   use Nexpo.Web, :controller
+  use Guardian.Phoenix.Controller
 
   alias Nexpo.{Student, StudentSessionApplication}
 
   def create(conn, %{"student_session_application" => student_session_applications_params}, user, _claims) do
-    user = user | Repo.preload(:student)
-    student = user.student
+    student = Repo.preload(user, :student)
+              |> Ecto.assoc(:student)
+              |> Repo.one
 
     data = Map.put(student_session_applications_params, "student_id", student.id)
     student = Repo.get(Student, student.id)
