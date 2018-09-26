@@ -15,11 +15,11 @@ defmodule Nexpo.StudentView do
     
     data = Nexpo.Support.View.render_object(student, base)
     
-    session_application = student.student_session_applications
-    if Ecto.assoc_loaded?(session_application) do
-      session_application = session_application
+    session_applications = student.student_session_applications
+    if Ecto.assoc_loaded?(session_applications) do
+      session_applications = session_applications
         |> render_many(Nexpo.StudentView, "session_application.json", as: :application)
-      Map.put(data, :session_application, session_application)
+      Map.put(data, :session_applications, session_applications)
     else
       data
     end
