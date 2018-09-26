@@ -24,7 +24,7 @@ it('renders isLoggedIn without crashing', () => {
   shallow(
     <App
       isLoggedIn
-      currentUser={{ email: 'test@it', first_name: 'Tester', last_name: 'AB' }}
+      currentUser={{ email: 'test@it', firstName: 'Tester', lastName: 'AB' }}
       pathname="/"
       logout={() => 'a'}
       redirect={() => 'a'}
@@ -46,8 +46,8 @@ const state = {
   },
   entities: {
     users: {
-      '1': { id: 1, email: 'dev@it', first_name: 'X', roles: [1, 2] },
-      '2': { id: 2, email: 't@it', first_name: 'T', last_name: 'Y', roles: [] }
+      '1': { id: 1, email: 'dev@it', firstName: 'X', roles: [1, 2] },
+      '2': { id: 2, email: 't@it', firstName: 'T', lastName: 'Y', roles: [] }
     },
     roles: {
       '1': { id: 1, type: 'admin', permissions: ['read_all'], users: [1] },

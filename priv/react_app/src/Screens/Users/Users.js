@@ -19,13 +19,13 @@ const userColumns = [
   },
   {
     title: 'First Name',
-    dataIndex: 'first_name',
-    key: 'first_name'
+    dataIndex: 'firstName',
+    key: 'firstName'
   },
   {
     title: 'Last Name',
-    dataIndex: 'last_name',
-    key: 'last_name'
+    dataIndex: 'lastName',
+    key: 'lastName'
   },
   {
     title: 'Action',

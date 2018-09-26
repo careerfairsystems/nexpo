@@ -7,9 +7,9 @@ import NotFound from '../NotFound';
 it('should render without crashing', () => {
   const props = {
     currentUser: {
-      first_name: 'John',
-      last_name: 'Smith',
-      phone_number: '11111',
+      firstName: 'John',
+      lastName: 'Smith',
+      phoneNumber: '11111',
       roles: [{ type: 'host', permissions: ['read_companies'] }]
     },
     fetching: false,

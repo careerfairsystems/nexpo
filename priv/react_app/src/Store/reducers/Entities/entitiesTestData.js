@@ -2,45 +2,45 @@ const testData = {
   companies: [
     {
       website: 'www.spotify.com',
-      student_session_days: 0,
+      studentSessionDays: 0,
       name: 'Spotify',
-      logo_url: null,
+      logoUrl: null,
       id: 1,
       description: 'We do music!',
       entries: [{ id: 1, value: 'JA' }, { id: 2, value: '20' }]
     },
     {
       website: 'www.google.com',
-      student_session_days: 0,
+      studentSessionDays: 0,
       name: 'Google',
-      logo_url: null,
+      logoUrl: null,
       id: 2,
       description: 'We code!',
       entries: [{ id: 3, value: 'JA' }, { id: 4, value: '40' }]
     },
     {
       website: 'www.ibm.com',
-      student_session_days: 0,
+      studentSessionDays: 0,
       name: 'IBM',
-      logo_url: null,
+      logoUrl: null,
       id: 3,
       description: 'We make things!',
       entries: [{ id: 5, value: 'NEJ' }, { id: 6, value: '60' }]
     },
     {
       website: 'www.intel.com',
-      student_session_days: 0,
+      studentSessionDays: 0,
       name: 'Intel',
-      logo_url: null,
+      logoUrl: null,
       id: 4,
       description: 'We do stuff!',
       entries: [{ id: 7, value: 'NEJ' }, { id: 8, value: '80' }]
     },
     {
       website: 'www.jesus.com',
-      student_session_days: 0,
+      studentSessionDays: 0,
       name: 'Jesus wine makers',
-      logo_url: null,
+      logoUrl: null,
       id: 5,
       description: 'We do wine!',
       entries: [{ id: 9, value: 'JA' }, { id: 10, value: '100' }]
@@ -48,9 +48,9 @@ const testData = {
   ],
   company: {
     website: 'www.spotify.com',
-    student_session_days: 0,
+    studentSessionDays: 0,
     name: 'Spotify',
-    logo_url: null,
+    logoUrl: null,
     id: 1,
     description: 'We do music!',
     entries: [{ id: 1, value: 'JA' }, { id: 2, value: '20' }]
@@ -59,21 +59,21 @@ const testData = {
     {
       id: 1,
       email: 'dev@it.now',
-      first_name: 'Dev',
-      last_name: 'User'
+      firstName: 'Dev',
+      lastName: 'User'
     },
     {
       id: 2,
       email: 'test@it.later',
-      first_name: 'Test',
-      last_name: 'User'
+      firstName: 'Test',
+      lastName: 'User'
     }
   ],
   user: {
     id: 1,
     email: 'dev@it.now',
-    first_name: 'Dev',
-    last_name: 'User',
+    firstName: 'Dev',
+    lastName: 'User',
     roles: [
       {
         id: 1,
@@ -102,8 +102,8 @@ const testData = {
       {
         id: 1,
         email: 'dev@it.now',
-        first_name: 'Dev',
-        last_name: 'User'
+        firstName: 'Dev',
+        lastName: 'User'
       }
     ]
   },
