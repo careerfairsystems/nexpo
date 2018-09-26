@@ -1,44 +1,41 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Button, message, Select, Input } from 'antd';
-import { isEmpty, map } from 'lodash/fp';
+// import { message } from 'antd';
+import { isEmpty } from 'lodash/fp';
+import NotFound from '../NotFound';
+import LoadingSpinner from '../../Components/LoadingSpinner';
 import HtmlTitle from '../../Components/HtmlTitle';
 import StudentForm from '../../Components/Forms/StudentForm';
 import StudentSessionForm from '../../Components/Forms/StudentSessionForm';
 
-const { TextArea } = Input;
-const props = {
-  name: 'file',
-  action: '//jsonplaceholder.typicode.com/posts/',
-  headers: {
-    authorization: 'authorization-text'
-  },
-  onChange(info) {
-    if (info.file.status === 'done') {
-      message.success(`${info.file.name} file uploaded successfully`);
-    } else if (info.file.status === 'error') {
-      message.error(`${info.file.name} file upload failed.`);
-    }
-  }
-};
+// const props = {
+//   name: 'file',
+//   action: '//jsonplaceholder.typicode.com/posts/',
+//   headers: {
+//     authorization: 'authorization-text'
+//   },
+//   onChange(info) {
+//     if (info.file.status === 'done') {
+//       message.success(`${info.file.name} file uploaded successfully`);
+//     } else if (info.file.status === 'error') {
+//       message.error(`${info.file.name} file upload failed.`);
+//     }
+//   }
+// };
 
 class SessionApplication extends Component {
-  constructor() {
+  constructor(props) {
     super(props);
+    const { currentUser } = props;
     this.state = {
-      student: props.currentUser ? props.currentUser.student : {},
+      student: currentUser ? currentUser.student : {},
       currentStudent: { resumeEnUrl: [], resumeSvUrl: [] },
       disabled: true
     };
   }
 
   componentWillMount() {
-    const {
-      getCurrentUser,
-      getAllCompanies,
-      createStudentSessionAppl
-    } = this.props;
-    getCurrentUser();
+    const { getAllCompanies } = this.props;
     getAllCompanies();
   }
 
@@ -89,9 +86,16 @@ class SessionApplication extends Component {
   };
 
   render() {
-    const { companies } = this.props;
+    const { currentUser, companies, fetching } = this.props;
     const { currentStudent, student } = this.state;
     const { resumeEnUrl, resumeSvUrl } = currentStudent;
+
+    if (fetching) {
+      return <LoadingSpinner />;
+    }
+    if (isEmpty(currentUser)) {
+      return <NotFound />;
+    }
 
     return (
       <div style={{ padding: 24 }}>
@@ -99,10 +103,8 @@ class SessionApplication extends Component {
         <h1>Apply for student sessions</h1>
         <StudentSessionForm
           action="//jsonplaceholder.typicode.com/posts/"
-          onRemove={this.onRemove}
-          onSubmit={this.createStudentSessionApplication}
-          currentStudent={student || {}}
-          companies={companies || []}
+          onSubmit={this.createStudentSessionAppl}
+          companies={companies || {}}
         />
 
         <h2 style={{ marginTop: 24 }}>Make sure your CVs are uploaded!</h2>
@@ -120,13 +122,14 @@ class SessionApplication extends Component {
   }
 }
 
-SessionApplication.propTypes = {
-  companies: PropTypes.object.isRequired,
-  getAllCompanies: PropTypes.func.isRequired
-};
-
 SessionApplication.defaultProps = {
   companies: {}
+};
+
+SessionApplication.propTypes = {
+  companies: PropTypes.object.isRequired,
+  getAllCompanies: PropTypes.func.isRequired,
+  getCurrentUser: PropTypes.func.isRequired
 };
 
 export default SessionApplication;

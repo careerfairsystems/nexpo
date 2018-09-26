@@ -10,7 +10,6 @@ defmodule Nexpo.StudentSessionApplicationController do
               |> Repo.one
 
     data = Map.put(student_session_applications_params, "student_id", student.id)
-    student = Repo.get(Student, student.id)
     changeset = student
                 |> Ecto.build_assoc(:student_session_applications)
                 |> StudentSessionApplication.changeset(data)
@@ -18,7 +17,7 @@ defmodule Nexpo.StudentSessionApplicationController do
     case Repo.insert(changeset) do
       {:ok, _application} ->
         conn
-        |> redirect(to: student_path(conn, :show, student))
+        |> redirect(to: user_path(conn, :show_me, %{}))
       {:error, changeset} ->
         conn
         |> put_status(:unprocessable_entity)

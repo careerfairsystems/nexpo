@@ -110,7 +110,6 @@ class User extends Component {
           onSubmit={this.updateStudent}
           disabled={isEmpty(resumeSvUrl) && isEmpty(resumeEnUrl)}
           currentStudent={student || {}}
-          toggleEdit={this.toggleEdit}
         />
       </div>
     );
