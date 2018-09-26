@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { isEmpty, map } from 'lodash/fp';
 import LoadingSpinner from '../../Components/LoadingSpinner';
+import NotFound from '../NotFound';
 import UserForm from '../../Components/Forms/UserForm';
 import StudentForm from '../../Components/Forms/StudentForm';
 
@@ -11,7 +12,7 @@ class User extends Component {
     const { currentUser } = props;
     this.state = {
       student: currentUser ? currentUser.student : {},
-      currentStudent: { resume_en_url: [], resume_sv_url: [] },
+      currentStudent: { resumeEnUrl: [], resumeSvUrl: [] },
       disabled: true
     };
   }
@@ -28,7 +29,6 @@ class User extends Component {
 
   onRemove = name => {
     const { currentStudent } = this.state;
-    delete currentStudent[name];
     this.setState({ currentStudent: { ...currentStudent, [name]: [] } });
   };
 
@@ -56,7 +56,7 @@ class User extends Component {
       formData.append(`student[${key}]`, currentStudent[key][0]);
     });
 
-    this.setState({ currentStudent: { resume_en_url: [], resume_sv_url: [] } });
+    this.setState({ currentStudent: { resumeEnUrl: [], resumeSvUrl: [] } });
     updateCurrentStudent(formData);
   };
 
@@ -78,15 +78,19 @@ class User extends Component {
   render() {
     const { currentUser, fetching } = this.props;
     const { currentStudent, disabled, student } = this.state;
-    if (fetching || isEmpty(currentUser)) {
+    if (fetching) {
       return <LoadingSpinner />;
     }
-    const { email, first_name, last_name, roles } = currentUser;
-    const { resume_en_url, resume_sv_url } = currentStudent;
+    if (isEmpty(currentUser)) {
+      return <NotFound />;
+    }
+
+    const { email, firstName, lastName, roles } = currentUser;
+    const { resumeEnUrl, resumeSvUrl } = currentStudent;
     return (
       <div>
         <h1>
-          {first_name} {last_name}
+          {firstName} {lastName}
         </h1>
         <h2>Email: {email}</h2>
         <h2>
@@ -102,9 +106,9 @@ class User extends Component {
           action="//jsonplaceholder.typicode.com/posts/"
           beforeUpload={this.beforeUpload}
           onRemove={this.onRemove}
-          fileList={{ resume_en_url, resume_sv_url }}
+          fileList={{ resumeEnUrl, resumeSvUrl }}
           onSubmit={this.updateStudent}
-          disabled={isEmpty(resume_sv_url) && isEmpty(resume_en_url)}
+          disabled={isEmpty(resumeSvUrl) && isEmpty(resumeEnUrl)}
           currentStudent={student || {}}
           toggleEdit={this.toggleEdit}
         />

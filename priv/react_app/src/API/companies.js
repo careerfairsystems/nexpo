@@ -14,7 +14,7 @@ export default {
   /**
    * Create a company
    */
-  create: () => authPost('/api/companies').then(handleHttpResponse),
+  create: data => authPost('/api/companies', data).then(handleHttpResponse),
 
   /**
    * Fetches all companies
@@ -29,7 +29,8 @@ export default {
   /**
    * Updates a company
    */
-  update: id => authPut(`/api/companies/${id}`).then(handleHttpResponse),
+  update: (id, data) =>
+    authPut(`/api/companies/${id}`, data).then(handleHttpResponse),
 
   /**
    * Delete a company
