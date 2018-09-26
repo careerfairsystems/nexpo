@@ -18,7 +18,7 @@ const RadioGroup = makeField(Radio.Group);
 
 const CompanyForm = ({ handleSubmit }) => (
   <Form onSubmit={handleSubmit}>
-    <Field name="company_name" label="Name:" component={TextInput} />
+    <Field name="name" label="Name:" component={TextInput} />
     <Field name="website" label="Website:" component={TextInput} />
     <Field name="description" label="Description:" component={TextArea} />
     <Field

@@ -34,8 +34,7 @@ class Company extends Component {
 
   updateCompany = values => {
     const newCompany = {
-      ...values,
-      name: values.company_name
+      ...values
     };
     const { id, company, createCompany, resetForm, updateCompany } = this.props;
     // If this.props.company is empty we are creating a new company
@@ -64,7 +63,6 @@ class Company extends Component {
   renderEditView() {
     const { company } = this.props;
     const { name } = company;
-    const initialValue = { ...company, company_name: name };
     return (
       <div className="Company_Component">
         <HtmlTitle title={name} />
@@ -72,7 +70,7 @@ class Company extends Component {
           <CompanyForm
             disabled={false}
             onSubmit={this.updateCompany}
-            initialValues={initialValue}
+            initialValues={company}
           />
         </div>
       </div>
