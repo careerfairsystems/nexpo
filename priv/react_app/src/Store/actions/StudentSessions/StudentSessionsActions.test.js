@@ -6,7 +6,7 @@ describe('createStudentSessionApplIsLoading', () => {
     const expectedAction = {
       type: actionTypes.POST_STUDENT_SESSION_APPL
     };
-    const action = Actions.studentSession.createStudentSessionApplIsLoading();
+    const action = Actions.studentSessions.createStudentSessionApplIsLoading();
     expect(action).toEqual(expectedAction);
   });
 });
@@ -19,9 +19,9 @@ describe('createStudentSessionApplSuccess', () => {
 
     const expectedAction = {
       type: actionTypes.POST_STUDENT_SESSION_APPL_SUCCESS,
-      role: testStudentSessionAppl
+      application: testStudentSessionAppl
     };
-    const action = Actions.studentSession.createStudentSessionApplSuccess(
+    const action = Actions.studentSessions.createStudentSessionApplSuccess(
       testStudentSessionAppl
     );
     expect(action).toEqual(expectedAction);
@@ -33,7 +33,7 @@ describe('createStudentSessionApplFailure', () => {
     const expectedAction = {
       type: actionTypes.POST_STUDENT_SESSION_APPL_FAILURE
     };
-    const action = Actions.studentSession.createStudentSessionApplFailure();
+    const action = Actions.studentSessions.createStudentSessionApplFailure();
     expect(action).toEqual(expectedAction);
   });
 });
@@ -42,36 +42,36 @@ describe('createStudentSessionAppl', () => {
   it('should call start action', () => {
     mockHttpResponse({ status: 200, body: {} });
     const store = createMockStore();
-    const data = { role: { name: 'Test StudentSessionAppl' } };
+    const data = { application: { name: 'Test StudentSessionAppl' } };
 
     return store
-      .dispatch(Actions.studentSession.createStudentSessionAppl(data))
+      .dispatch(Actions.studentSessions.createStudentSessionAppl(data))
       .then(() => {
         const calledActions = store.getActions();
         expect(calledActions[0]).toEqual(
-          Actions.studentSession.createStudentSessionApplIsLoading()
+          Actions.studentSessions.createStudentSessionApplIsLoading()
         );
       });
   });
 
   it('should call success action on success', () => {
-    const role = [
+    const application = [
       {
         name: 'StudentSessionAppl1'
       }
     ];
-    mockHttpResponse({ status: 200, body: { data: role } });
+    mockHttpResponse({ status: 200, body: { data: application } });
 
     const expectedActions = [
-      Actions.studentSession.createStudentSessionApplIsLoading(),
-      Actions.studentSession.createStudentSessionApplSuccess(role)
+      Actions.studentSessions.createStudentSessionApplIsLoading(),
+      Actions.studentSessions.createStudentSessionApplSuccess(application)
     ];
 
     const store = createMockStore();
-    const data = { role };
+    const data = { application };
 
     return store
-      .dispatch(Actions.studentSession.createStudentSessionAppl(data))
+      .dispatch(Actions.studentSessions.createStudentSessionAppl(data))
       .then(() => {
         const calledActions = store.getActions();
         expect(calledActions).toEqual(expectedActions);
@@ -80,17 +80,17 @@ describe('createStudentSessionAppl', () => {
 
   it('should call failure action on failure', () => {
     mockHttpResponse({ status: 401, body: {} });
-    const data = { role: { name: 'Test StudentSessionAppl' } };
+    const data = { application: { name: 'Test StudentSessionAppl' } };
 
     const expectedActions = [
-      Actions.studentSession.createStudentSessionApplIsLoading(),
-      Actions.studentSession.createStudentSessionApplFailure()
+      Actions.studentSessions.createStudentSessionApplIsLoading(),
+      Actions.studentSessions.createStudentSessionApplFailure()
     ];
 
     const store = createMockStore();
 
     return store
-      .dispatch(Actions.studentSession.createStudentSessionAppl(data))
+      .dispatch(Actions.studentSessions.createStudentSessionAppl(data))
       .then(() => {
         const calledActions = store.getActions();
         expect(calledActions).toEqual(expectedActions);
