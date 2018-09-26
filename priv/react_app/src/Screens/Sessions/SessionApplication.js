@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { map } from 'lodash/fp';
 import { Button, Icon, Upload, message, Select, Input } from 'antd';
 import HtmlTitle from '../../Components/HtmlTitle';
 
@@ -21,9 +23,14 @@ const props = {
 const { Option } = Select;
 
 class SessionApplication extends Component {
-  constructor() {
+  /* constructor() {
     super(props);
     this.state = {};
+  } */
+
+  componentWillMount() {
+    const { getAllCompanies } = this.props;
+    getAllCompanies();
   }
 
   render() {
@@ -59,4 +66,14 @@ class SessionApplication extends Component {
     );
   }
 }
+
+SessionApplication.propTypes = {
+  companies: PropTypes.object.isRequired,
+  getAllCompanies: PropTypes.func.isRequired
+};
+
+SessionApplication.defaultProps = {
+  companies: {}
+};
+
 export default SessionApplication;
