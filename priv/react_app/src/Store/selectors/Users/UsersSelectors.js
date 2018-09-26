@@ -1,5 +1,7 @@
 import * as UserGetCurrentSelector from './UserGetCurrentSelector';
+import * as UsersGetSelector from './UsersGetSelector';
 
 export default {
-  ...UserGetCurrentSelector
+  ...UserGetCurrentSelector,
+  ...UsersGetSelector
 };

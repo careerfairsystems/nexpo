@@ -28,7 +28,6 @@ class User extends Component {
 
   onRemove = name => {
     const { currentStudent } = this.state;
-    delete currentStudent[name];
     this.setState({ currentStudent: { ...currentStudent, [name]: [] } });
   };
 

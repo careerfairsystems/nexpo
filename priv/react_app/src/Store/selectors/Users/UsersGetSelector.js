@@ -1,8 +1,11 @@
 import { denormalize } from 'normalizr';
 import Schema from '../../normalizr/schema';
 
-export const getCurrentUser = state => {
-  const user = state.entities.users[state.current.user] || {};
+export const getUserId = (state, props) => props.match.params.id;
+
+export const getUser = (state, props) => {
+  const userID = getUserId(state, props);
+  const user = state.entities.users[userID] || {};
 
   const { roles } = denormalize(
     { roles: user.roles },

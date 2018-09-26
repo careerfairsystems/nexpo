@@ -31,6 +31,13 @@ import HtmlTitle from '../Components/HtmlTitle';
 
 const { Header, Content, Footer } = Layout;
 
+const routePermissions = {
+  categories: ['read_all', 'read_categories'],
+  companies: ['read_all', 'read_companies'],
+  roles: ['read_all', 'read_roles'],
+  users: ['read_all', 'read_users']
+};
+
 const routes = (
   <Switch>
     <Route exact path="/" render={() => <Redirect to="/start" />} />
@@ -68,6 +75,19 @@ class App extends Component {
       </Menu.Item>,
       <Menu.Item key="/logout">Logout</Menu.Item>
     ];
+  };
+
+  restrictedMenuItem = ({ route, title }) => {
+    const { currentUser, isLoggedIn } = this.props;
+    if (isLoggedIn && currentUser && currentUser.roles) {
+      const { roles } = currentUser;
+      const allowed = roles.some(role => {
+        const permissionsNeeded = routePermissions[route];
+        return role.permissions.some(p => permissionsNeeded.includes(p));
+      });
+      if (allowed) return <Menu.Item key={`/${route}`}>{title}</Menu.Item>;
+    }
+    return null;
   };
 
   loggedOutMenuItem = () => [
@@ -108,12 +128,16 @@ class App extends Component {
                 lineHeight: '64px'
               }}
             >
-              <Menu.Item key="/companies">Companies</Menu.Item>
-              <Menu.Item key="/categories">Categories</Menu.Item>
-              <Menu.Item key="/roles">Roles</Menu.Item>
-              <Menu.Item key="/users" style={{ flex: 1 }}>
-                Users
-              </Menu.Item>
+              {this.restrictedMenuItem({
+                route: 'companies',
+                title: 'Companies'
+              })}
+              {this.restrictedMenuItem({
+                route: 'categories',
+                title: 'Categories'
+              })}
+              {this.restrictedMenuItem({ route: 'roles', title: 'Roles' })}
+              {this.restrictedMenuItem({ route: 'users', title: 'Users' })}
               {isLoggedIn ? this.loggedInMenuItem() : this.loggedOutMenuItem()}
             </Menu>
           </Header>
