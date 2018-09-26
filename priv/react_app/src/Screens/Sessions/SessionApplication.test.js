@@ -4,5 +4,6 @@ import { shallow } from 'enzyme';
 import SessionApplication from './SessionApplication';
 
 it('renders without crashing', () => {
-  shallow(<SessionApplication />);
+  const func = () => 'a';
+  shallow(<SessionApplication getAllCompanies={func} getCurrentUser={func} />);
 });

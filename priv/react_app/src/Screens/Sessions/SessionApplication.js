@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { message, Select, Input } from 'antd';
-import { isEmpty } from 'lodash/fp';
+import { isEmpty, map } from 'lodash/fp';
 import HtmlTitle from '../../Components/HtmlTitle';
 import StudentForm from '../../Components/Forms/StudentForm';
 
@@ -33,8 +33,9 @@ class SessionApplication extends Component {
   }
 
   componentWillMount() {
-    const { getCurrentUser } = this.props;
+    const { getCurrentUser, getAllCompanies } = this.props;
     getCurrentUser();
+    getAllCompanies();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -72,8 +73,10 @@ class SessionApplication extends Component {
   };
 
   render() {
+    const { companies } = this.props;
     const { currentStudent, disabled, student } = this.state;
     const { resume_en_url, resume_sv_url } = currentStudent;
+    const companyNames = map('name', companies);
     return (
       <div style={{ padding: 24 }}>
         <HtmlTitle title="Student Session Application" />
@@ -81,11 +84,7 @@ class SessionApplication extends Component {
         <h3>Company</h3>
         <body> Choose the company you would like to meet</body>
         <Select defaultValue="Select company" style={{ width: 150 }}>
-          <Option value="Google">Google</Option>
-          <Option value="Spotify">Spotify</Option>
-          <Option value="Facebook" disabled>
-            Facebook
-          </Option>
+          {companyNames.map(name => <Option value={name}>{name}</Option>)}
         </Select>
         <h3 style={{ marginTop: 24 }}>Motivation</h3>
         <body>
