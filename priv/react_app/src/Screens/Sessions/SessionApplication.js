@@ -102,7 +102,6 @@ class SessionApplication extends Component {
         <HtmlTitle title="Student Session Application" />
         <h1>Apply for student sessions</h1>
         <StudentSessionForm
-          action="//jsonplaceholder.typicode.com/posts/"
           onSubmit={this.createStudentSessionAppl}
           companies={companies || {}}
         />
