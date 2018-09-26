@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { isEmpty, isNil } from 'lodash/fp';
-import { Input, Button } from 'antd';
+import { Input, Button, Radio } from 'antd';
 import NotFound from '../NotFound';
 // import MailLink from '../../Components/MailLink';
 import HtmlTitle from '../../Components/HtmlTitle';
@@ -15,7 +15,8 @@ class Company extends Component {
     super(props);
     this.state = {
       edit: false,
-      company: { ...props.company }
+      company: { ...props.company },
+      days: { ...props.company.student_session_days }
     };
   }
 
@@ -27,6 +28,23 @@ class Company extends Component {
     getCompany(id);
   }
 
+  onChange1(field, value) {
+    const { days } = this.state;
+    // console.log('radio1 checked', value);
+    this.setState({
+      days: value
+    });
+    if (days === 'First Day') {
+      this.updateCompanyState(field, 1);
+    } else if (days === 'Second day') {
+      this.updateCompanyState(field, 2);
+    } else if (days === 'Both day') {
+      this.updateCompanyState(field, 3);
+    } else {
+      this.updateCompanyState(field, 0);
+    }
+  }
+
   changeState = () => {
     const { edit } = this.state;
     if (edit) this.updateCompany();
@@ -35,12 +53,12 @@ class Company extends Component {
 
   updateCompany() {
     const { company } = this.state;
-    const { id } = this.props;
+    const { id, createCompany, updateCompany } = this.props;
     // If this.props.company is empty we are creating a new company
     if (isEmpty(this.props.company)) {
-      this.props.createCompany({ company });
+      createCompany({ company });
     } else {
-      this.props.updateCompany(id, { company });
+      updateCompany(id, { company });
     }
   }
 
@@ -48,9 +66,25 @@ class Company extends Component {
     this.setState({ company: { ...this.state.company, [field]: value } });
   }
 
+  showStudentSession() {
+    const { student_session_days } = this.props.company;
+    if (student_session_days === 1) {
+      return 'First days';
+    }
+    if (student_session_days === 2) {
+      return 'Second days';
+    }
+    if (student_session_days === 3) {
+      return 'Both days';
+    }
+    return 'No days';
+  }
+
   renderEditView() {
     const { company } = this.props;
     const { TextArea } = Input;
+    const RadioGroup = Radio.Group;
+    const plainOptions = ['No days', 'First Day', 'Second day', 'Both day'];
 
     const { name, website, description } = company;
     return (
@@ -87,6 +121,16 @@ class Company extends Component {
                 autosize
               />
             </div>
+            Student Session Days:
+            <div>
+              <RadioGroup
+                options={plainOptions}
+                onChange={e =>
+                  this.onChange1('student_session_days', e.target.value)
+                }
+                value={this.state.days}
+              />
+            </div>
           </div>
           <Button type="primary" onClick={this.changeState}>
             Save
@@ -98,6 +142,8 @@ class Company extends Component {
 
   renderShowView() {
     const { company } = this.props;
+    const { days } = this.state;
+
     if (isEmpty(company) || isNil(company)) {
       this.changeState();
     }
@@ -111,9 +157,12 @@ class Company extends Component {
           <div className="paper main-info">
             <h1>{name}</h1>
             <a href={website}>{website}</a>
+            <p>
+              {' '}
+              {name} has student sessions: {this.showStudentSession()}
+            </p>
             <p>{description}</p>
           </div>
-
           <div className="paper entries">
             <h2>Entries</h2>
           </div>
