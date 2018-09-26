@@ -35,8 +35,8 @@ it('should render NotFound if there is no user', () => {
 it('should render user information', () => {
   const user = {
     email: 'dev@it',
-    first_name: 'Dev',
-    last_name: 'X'
+    firstName: 'Dev',
+    lastName: 'X'
   };
   const func = jest.fn();
   const wrapper = shallow(
