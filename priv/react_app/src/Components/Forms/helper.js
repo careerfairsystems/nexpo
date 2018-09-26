@@ -9,12 +9,14 @@ const makeField = Component => ({
   children,
   hasFeedback,
   label,
+  required,
   ...rest
 }) => {
   const hasError = meta.touched && meta.invalid;
   return (
     <FormItem
       label={label}
+      required={required}
       validateStatus={hasError ? 'error' : 'success'}
       hasFeedback={hasFeedback && hasError}
       help={hasError && meta.error}

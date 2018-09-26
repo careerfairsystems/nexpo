@@ -16,27 +16,32 @@ const companyOption = company => (
     {company.name}
   </Option>
 );
+const requiredCompany = value =>
+  value ? undefined : 'Please provide a company';
+const requiredMotivation = value =>
+  value ? undefined : 'Please provide a motivation';
 
-const StudentSessionForm = ({ handleSubmit, disabled, companies }) => (
+const StudentSessionForm = ({ handleSubmit, companies }) => (
   <Form onSubmit={handleSubmit}>
-    <Form.Item
+    <Field
       label="Choose the company you would like to meet"
       required
-      message="Please provide a company"
+      name="companyId"
+      validate={requiredCompany}
+      component={InputSelect}
+      style={{ width: 150 }}
     >
-      <Field name="companyId" component={InputSelect} style={{ width: 150 }}>
-        {map(companyOption, companies)}
-      </Field>
-    </Form.Item>
-    <Form.Item
+      {map(companyOption, companies)}
+    </Field>
+    <Field
+      name="motivation"
       label="Write a short motivation to why you want to get in contact with the company"
       required
-    >
-      <Field name="motivation" component={TextArea} rows={6} />
-    </Form.Item>
-    <Button disabled={disabled} htmlType="submit">
-      Submit Student Session
-    </Button>
+      validate={requiredMotivation}
+      component={TextArea}
+      rows={6}
+    />
+    <Button htmlType="submit">Submit Student Session</Button>
   </Form>
 );
 
@@ -56,4 +61,6 @@ const mapStateToProps = state => ({
 
 const stateful = connect(mapStateToProps);
 
-export default stateful(reduxForm({ form: 'student' })(StudentSessionForm));
+export default stateful(
+  reduxForm({ form: 'studentSession' })(StudentSessionForm)
+);
