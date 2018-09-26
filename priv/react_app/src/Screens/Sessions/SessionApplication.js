@@ -33,7 +33,11 @@ class SessionApplication extends Component {
   }
 
   componentWillMount() {
-    const { getCurrentUser, getAllCompanies } = this.props;
+    const {
+      getCurrentUser,
+      getAllCompanies,
+      createStudentSessionApplication
+    } = this.props;
     getCurrentUser();
     getAllCompanies();
   }
@@ -72,6 +76,10 @@ class SessionApplication extends Component {
     updateCurrentStudent(formData);
   };
 
+  createStudentSessionApplication = () => {
+    // TODO: send application data via createStudentSessionApplication in index
+  };
+
   render() {
     const { companies } = this.props;
     const { currentStudent, disabled, student } = this.state;
@@ -98,7 +106,7 @@ class SessionApplication extends Component {
           beforeUpload={this.beforeUpload}
           onRemove={this.onRemove}
           fileList={{ resume_en_url, resume_sv_url }}
-          onSubmit={this.updateStudent}
+          onSubmit={(this.updateStudent, this.createStudentSessionApplication)}
           disabled={isEmpty(resume_sv_url) && isEmpty(resume_en_url)}
           currentStudent={student || {}}
           // toggleEdit={this.toggleEdit}

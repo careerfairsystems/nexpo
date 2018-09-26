@@ -47,7 +47,7 @@ defmodule Nexpo.Router do
 
     resources "/students", StudentController do
       resources "/student_sessions", StudentSessionController
-      resources "/student_session_applications", StudentSessionApplicationController
+      # resources "/student_session_applications", StudentSessionApplicationController
     end
 
     resources "/companies", CompanyController do
@@ -55,6 +55,8 @@ defmodule Nexpo.Router do
     end
     resources "/categories", CategoryController
     resources "/programmes", ProgrammeController
+
+    resources "/student_session_applications", StudentSessionApplicationController, only: [:create]
   end
 
   # Not-protected endpoints
