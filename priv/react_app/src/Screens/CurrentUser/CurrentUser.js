@@ -5,29 +5,6 @@ import LoadingSpinner from '../../Components/LoadingSpinner';
 import UserForm from '../../Components/Forms/UserForm';
 import StudentForm from '../../Components/Forms/StudentForm';
 
-const renderStaticFields = ({ first_name, last_name, email, roles }) => (
-  <div>
-    <h1>
-      {first_name} {last_name}
-    </h1>
-    <h2>Email: {email}</h2>
-    <h2>Roles: {isEmpty(roles) ? 'None' : map('type', roles).join(', ')}</h2>
-  </div>
-);
-renderStaticFields.defaultProps = {
-  first_name: '',
-  last_name: '',
-  email: '',
-  roles: []
-};
-
-renderStaticFields.propTypes = {
-  first_name: PropTypes.string,
-  last_name: PropTypes.string,
-  email: PropTypes.string,
-  roles: PropTypes.arrayOf(PropTypes.Number)
-};
-
 class User extends Component {
   constructor(props) {
     super(props);
@@ -98,15 +75,22 @@ class User extends Component {
   };
 
   render() {
-    const { currentUser, roles, fetching } = this.props;
+    const { currentUser, fetching } = this.props;
     const { currentStudent, disabled, student } = this.state;
     if (fetching || isEmpty(currentUser)) {
       return <LoadingSpinner />;
     }
+    const { email, first_name, last_name, roles } = currentUser;
     const { resume_en_url, resume_sv_url } = currentStudent;
     return (
       <div>
-        {renderStaticFields({ ...currentUser, ...roles })}
+        <h1>
+          {first_name} {last_name}
+        </h1>
+        <h2>Email: {email}</h2>
+        <h2>
+          Roles: {isEmpty(roles) ? 'None' : map('type', roles).join(', ')}
+        </h2>
         <UserForm
           onSubmit={this.updateUser}
           disabled={disabled}

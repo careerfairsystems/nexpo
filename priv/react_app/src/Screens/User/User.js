@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { isEmpty } from 'lodash/fp';
+import { isEmpty, map } from 'lodash/fp';
 import LoadingSpinner from '../../Components/LoadingSpinner';
 import UserForm from '../../Components/Forms/UserForm';
 
@@ -53,7 +53,9 @@ class User extends Component {
           {first_name} {last_name}
         </h1>
         <h2>Email: {email}</h2>
-        <h2>Roles: {isEmpty(roles) ? 'None' : roles.join(', ')}</h2>
+        <h2>
+          Roles: {isEmpty(roles) ? 'None' : map('type', roles).join(', ')}
+        </h2>
         <UserForm
           onSubmit={this.update}
           disabled={disabled}

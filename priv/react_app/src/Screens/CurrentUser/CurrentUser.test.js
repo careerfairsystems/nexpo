@@ -13,8 +13,8 @@ it('should render without crashing', () => {
     },
     fetching: false,
     getCurrentUser: jest.fn(),
-    putMe: jest.fn(),
-    putStudent: jest.fn()
+    updateCurrentUser: jest.fn(),
+    updateCurrentStudent: jest.fn()
   };
   shallow(<CurrentUser {...props} />);
 });
@@ -24,8 +24,8 @@ it('should render loading when currentUser is empty', () => {
     currentUser: {},
     fetching: false,
     getCurrentUser: jest.fn(),
-    putMe: jest.fn(),
-    putStudent: jest.fn()
+    updateCurrentUser: jest.fn(),
+    updateCurrentStudent: jest.fn()
   };
   const wrapper = shallow(<CurrentUser {...props} />);
   expect(wrapper.find(LoadingSpinner).length).toBe(1);

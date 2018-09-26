@@ -2,7 +2,6 @@ defmodule Nexpo.StudentController do
   use Nexpo.Web, :controller
   use Guardian.Phoenix.Controller
 
-
   alias Nexpo.Student
   alias Guardian.Plug.{EnsurePermissions}
 
@@ -15,7 +14,7 @@ defmodule Nexpo.StudentController do
                                     %{default: ["write_users"]}]
                           ] when action in [:create, :update, :delete]
 
-  def index(conn, _params, _user, _claims) do
+  def index(conn, %{}, _user, _claims) do
     students = Repo.all(Student)
     render(conn, "index.json", students: students)
   end

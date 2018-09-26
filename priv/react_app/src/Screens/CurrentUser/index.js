@@ -7,15 +7,14 @@ import { State } from '../../Store/reducers/index';
 
 const mapStateToProps = (state: State) => {
   const currentUser = state.entities.users[state.current.user] || {};
-  const roles = denormalize(
+  const { roles } = denormalize(
     { roles: currentUser.roles },
     Schema.userSchema(),
     state.entities
   );
 
   return {
-    currentUser,
-    roles,
+    currentUser: { ...currentUser, roles },
     fetching: state.api.current_user.fetching
   };
 };

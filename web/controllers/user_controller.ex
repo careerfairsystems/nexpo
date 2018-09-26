@@ -58,6 +58,7 @@ defmodule Nexpo.UserController do
   end
 
   def update_me(conn, %{"user" => user_params}, user, _claims) do
+    user = Repo.preload(user, [:roles, :student])
     changeset = User.changeset(user, user_params)
 
     case Repo.update(changeset) do
