@@ -147,11 +147,6 @@ describe('replace_forgotten_password', () => {
     });
     expect.assertions(1);
 
-    const params = {
-      key: 'random-string',
-      password: 'random-password',
-      password_confirmation: 'random-password'
-    };
     return API.session
       .replace_forgotten_password({})
       .catch(err => expect(err).toBeInstanceOf(ApiError));

@@ -7,7 +7,7 @@ defmodule Nexpo.CompanyController do
   plug EnsurePermissions, [handler: Nexpo.SessionController,
                            one_of: [%{default: ["read_all"]},
                                     %{default: ["read_companies"]}]
-                          ] when action in [:index, :show]
+                          ] when action in [:show]
   plug EnsurePermissions, [handler: Nexpo.SessionController,
                            one_of: [%{default: ["write_all"]},
                                     %{default: ["write_companies"]}]
@@ -40,16 +40,8 @@ defmodule Nexpo.CompanyController do
   end
 
   def create(conn, %{"company" => company_params}) do
-    Company.changeset(%Company{}, company_params)
-    |> create_company(conn)
-  end
+    changeset = Company.changeset(%Company{}, company_params)
 
-  def create(conn, company_params) do
-    Company.changeset(%Company{}, company_params)
-    |> create_company(conn)
-  end
-
-  defp create_company(changeset, conn) do
     case Repo.insert(changeset) do
       {:ok, company} ->
         conn

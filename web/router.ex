@@ -40,6 +40,7 @@ defmodule Nexpo.Router do
     get "/me", UserController, :show_me
     put "/me", UserController, :update_me
     delete "/me", UserController, :delete_me
+    put "/me/student", StudentController, :update_student
 
     resources "/users", UserController, only: [:index, :show, :update, :delete]
     resources "/roles", RoleController

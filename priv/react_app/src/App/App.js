@@ -13,7 +13,11 @@ import PrivateRoute from '../Components/PrivateRoute';
 
 import Categories from '../Screens/Categories';
 import Category from '../Screens/Category';
+import Roles from '../Screens/Roles';
+import Role from '../Screens/Role';
+import Users from '../Screens/Users';
 import User from '../Screens/User';
+import CurrentUser from '../Screens/CurrentUser';
 import Companies from '../Screens/Companies';
 import Company from '../Screens/Company';
 import NotFound from '../Screens/NotFound';
@@ -36,11 +40,15 @@ const routes = (
     <Route exact path="/companies" component={Companies} />
     <PrivateRoute path="/companies/:id" component={Company} />
     <PrivateRoute path="/companies/new" component={Company} />
+    <Route exact path="/users" component={Users} />
+    <PrivateRoute path="/users/:id" component={User} />
+    <Route exact path="/roles" component={Roles} />
+    <PrivateRoute path="/roles/:id" component={Role} />
     <Route path="/login" component={Login} />
     <Route path="/logout" component={Logout} />
     <Route path="/signup" component={Signup} />
     <Route path="/forgot-password" component={ForgotPassword} />
-    <PrivateRoute path="/user/profile" component={User} />
+    <PrivateRoute path="/user" component={CurrentUser} />
     <Route component={NotFound} />
   </Switch>
 );
@@ -56,7 +64,7 @@ class App extends Component {
     const displayName = firstName ? [firstName, lastName].join(' ') : email;
 
     return [
-      <Menu.Item key="/user/profile">
+      <Menu.Item key="/user">
         {displayName} <Icon type="user" />
       </Menu.Item>,
       <Menu.Item key="/logout">Logout</Menu.Item>
@@ -102,8 +110,10 @@ class App extends Component {
               }}
             >
               <Menu.Item key="/companies">Companies</Menu.Item>
-              <Menu.Item key="/categories" style={{ flex: 1 }}>
-                Categories
+              <Menu.Item key="/categories">Categories</Menu.Item>
+              <Menu.Item key="/roles">Roles</Menu.Item>
+              <Menu.Item key="/users" style={{ flex: 1 }}>
+                Users
               </Menu.Item>
               {isLoggedIn ? this.loggedInMenuItem() : this.loggedOutMenuItem()}
             </Menu>

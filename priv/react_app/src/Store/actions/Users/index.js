@@ -1,3 +1,3 @@
-import * as Users from './Users';
+import UsersActions from './UsersActions';
 
-export default Users;
+export default UsersActions;

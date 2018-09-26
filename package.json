@@ -6,9 +6,9 @@
     "dev": "npm-run-all -p dev-backend dev-frontend",
     "testwatch-backend": "mix test.watch",
     "testwatch-frontend": "cd priv/react_app && npm run test-watch",
-    "startFakeS3": "fakes3 -r $HOME/.s3bucket -p 4567 --license 9806002125 &",
-    "stopFakeS3": "kill $(pgrep -f fakes3)",
-    "test-backend": "npm run startFakeS3 && MIX_ENV=test mix do compile --warnings-as-errors, test --trace && npm run stopFakeS3",
+    "startS3": "s3rver -p 4567 -d $HOME/.s3bucket &",
+    "stopS3": "kill $(pgrep -f s3rver)",
+    "test-backend": "npm run startS3 && MIX_ENV=test mix do compile --warnings-as-errors, test --trace && npm run stopS3",
     "test-frontend": "cd priv/react_app && npm run test && cd ../..",
     "test": "npm run test-backend && npm run test-frontend",
     "test-coverage-backend": "MIX_ENV=test mix do compile --warnings-as-errors, coveralls.json --trace",
@@ -29,5 +29,8 @@
   "engines": {
     "node": "6.11.4",
     "npm": ">5.0.0"
+  },
+  "dependencies": {
+    "s3rver": "^2.2.6"
   }
 }

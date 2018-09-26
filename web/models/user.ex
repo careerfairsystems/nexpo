@@ -22,6 +22,16 @@ defmodule Nexpo.User do
     timestamps()
   end
 
+  def changeset(struct, params \\ %{}) do
+    struct
+    |> cast(params, [:email, :password, :first_name, :last_name])
+    |> cast(params, [:food_preferences, :phone_number])
+    |> unique_constraint(:email)
+    |> validate_length(:password, min: 6)
+    |> hash_password(params)
+    |> validate_required([:email, :hashed_password])
+  end
+
   def get_permissions(user) do
     Repo.all(from(
       role in Ecto.assoc(user, :roles),
@@ -97,15 +107,6 @@ defmodule Nexpo.User do
     |> generate_forgot_password_key()
   end
 
-  def changeset(struct, params \\ %{}) do
-    struct
-    |> cast(params, [:email, :password, :first_name, :last_name])
-    |> unique_constraint(:email)
-    |> validate_length(:password, min: 6)
-    |> hash_password(params)
-    |> validate_required([:email, :hashed_password])
-  end
-
   def authenticate(%{:email => email, :password => password}) do
     case Repo.get_by(User, email: email) do
       nil -> {:error, "No such user"}
@@ -173,27 +174,23 @@ defmodule Nexpo.User do
   end
 
   def final_signup(params) do
-    case User
-         |> Repo.get_by(signup_key: params.signup_key)
-         |> Repo.preload(:student) do
+    case Repo.get_by(User, signup_key: params.signup_key) do
       nil -> :no_such_user
       user ->
-        user
+        Repo.preload(user, :student)
         |> User.final_signup_changeset(params)
-        |> Nexpo.Student.build_assoc
+        |> Nexpo.Student.build_assoc(user)
         |> Repo.update
     end
   end
 
   def final_signup!(params) do
-    case User
-         |> Repo.get_by(signup_key: params.signup_key)
-         |> Repo.preload(:student) do
+    case Repo.get_by(User, signup_key: params.signup_key) do
       nil -> :no_such_user
       user ->
-        user
+        Repo.preload(user, :student)
         |> User.final_signup_changeset(params)
-        |> Nexpo.Student.build_assoc
+        |> Nexpo.Student.build_assoc(user)
         |> Repo.update!
     end
   end

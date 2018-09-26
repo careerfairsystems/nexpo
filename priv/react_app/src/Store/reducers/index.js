@@ -2,6 +2,7 @@
  *  This file gathers all redux reducers and exports them as one global reducer
  */
 
+import { reducer as formReducer } from 'redux-form';
 import { ApiState, ApiReducer } from './ApiReducer/ApiReducer';
 import { AuthReducer, AuthState } from './Auth/Auth';
 import { CurrentState, CurrentReducer } from './CurrentReducer/CurrentReducer';
@@ -18,7 +19,8 @@ const RootReducer: State = {
   entities: EntitiesReducer,
   api: ApiReducer,
   auth: AuthReducer,
-  current: CurrentReducer
+  current: CurrentReducer,
+  form: formReducer
 };
 
 export default RootReducer;

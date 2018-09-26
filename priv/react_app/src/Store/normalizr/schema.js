@@ -63,8 +63,20 @@ const companySchema = () => {
 
 const companiesSchema = () => [companySchema()];
 
+const roleSchema = () => {
+  const user = entity('users', {}, { model: belongsTo('role') });
+
+  const role = entity('roles', { users: [user] });
+
+  return role;
+};
+
+const rolesSchema = () => [roleSchema()];
+
 const userSchema = () => {
-  const user = entity('users');
+  const role = entity('roles', {}, { model: belongsTo('user') });
+
+  const user = entity('users', { roles: [role] });
 
   return user;
 };
@@ -76,6 +88,8 @@ export default {
   categoriesSchema,
   companySchema,
   companiesSchema,
+  roleSchema,
+  rolesSchema,
   userSchema,
   usersSchema
 };

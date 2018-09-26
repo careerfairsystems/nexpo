@@ -1,4 +1,4 @@
-import { handleHttpResponse } from './index';
+import { handleHttpResponse } from './utils';
 
 type final_signup_body = {
   password: string,
