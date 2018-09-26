@@ -74,6 +74,9 @@ defmodule Nexpo.User do
     |> validate_change(:email, fn :email, email ->
 
       cond do
+        # Email canot be empty
+        email == "" -> [email: "Email cannot be empty"]
+
         # Validate username is not empty
         !String.contains?(email, "@") -> [email: "Has to include @"]
 
