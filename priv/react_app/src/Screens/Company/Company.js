@@ -80,7 +80,7 @@ class Company extends Component {
   }
 
   renderShowView() {
-    const { company, fetching } = this.props;
+    const { company } = this.props;
 
     const { name, website, description } = company;
     return (
