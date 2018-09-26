@@ -6,10 +6,9 @@ const mapStateToProps = (state: State) => ({
   success: state.api.forgot_password.success
 });
 
-const mapDispatchToProps = dispatch => ({
-  callBackend: ({ email }) =>
-    dispatch(Actions.accounts.forgot_password({ email }))
-});
+const mapDispatchToProps = {
+  callBackend: Actions.accounts.forgot_password
+};
 
 const stateful = connect(
   mapStateToProps,

@@ -2,16 +2,6 @@ import React from 'react';
 import { Form } from 'antd';
 
 const FormItem = Form.Item;
-const formItemLayout = {
-  labelCol: {
-    xs: { span: 1 },
-    sm: { span: 3 }
-  },
-  wrapperCol: {
-    xs: { span: 26 },
-    sm: { span: 6 }
-  }
-};
 
 const makeField = Component => ({
   input,
@@ -19,13 +9,14 @@ const makeField = Component => ({
   children,
   hasFeedback,
   label,
+  required,
   ...rest
 }) => {
   const hasError = meta.touched && meta.invalid;
   return (
     <FormItem
       label={label}
-      {...formItemLayout}
+      required={required}
       validateStatus={hasError ? 'error' : 'success'}
       hasFeedback={hasFeedback && hasError}
       help={hasError && meta.error}

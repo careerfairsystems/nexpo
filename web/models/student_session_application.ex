@@ -5,7 +5,7 @@ defmodule Nexpo.StudentSessionApplication do
     field :motivation, :string
     field :companyApproved, :boolean, default: false
     field :studentConfirmed, :boolean, default: false
-    field :score, :integer
+    field :score, :integer, default: 0
     belongs_to :company, Nexpo.Company
     belongs_to :student, Nexpo.Student
 

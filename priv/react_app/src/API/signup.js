@@ -1,6 +1,6 @@
 import { handleHttpResponse } from './utils';
 
-type final_signup_body = {
+type finalSignupBody = {
   password: string,
   password_confirmation: string,
   first_name: string,
@@ -23,11 +23,11 @@ export default {
   /**
    * Gets an ongoing signup process
    */
-  get_current_signup: (signup_key: string) =>
-    fetch(`/api/initial_signup/${signup_key}`).then(handleHttpResponse),
+  get_current_signup: (signupKey: string) =>
+    fetch(`/api/initial_signup/${signupKey}`).then(handleHttpResponse),
 
-  finalize_signup: (signup_key: string, body: final_signup_body) =>
-    fetch(`/api/final_signup/${signup_key}`, {
+  finalize_signup: (signupKey: string, body: finalSignupBody) =>
+    fetch(`/api/final_signup/${signupKey}`, {
       method: 'POST',
       body: JSON.stringify(body),
       headers: new Headers({

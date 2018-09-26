@@ -6,11 +6,12 @@ import Menu from 'antd/lib/menu';
 import Breadcrumb from 'antd/lib/breadcrumb';
 import Icon from 'antd/lib/icon';
 
-import { capitalize } from 'lodash/fp';
+import { startCase } from 'lodash/fp';
 
 import { Route, Switch, Redirect, Link } from 'react-router-dom';
 import PrivateRoute from '../Components/PrivateRoute';
 
+import Startscreen from '../Screens/Startscreen';
 import Categories from '../Screens/Categories';
 import Category from '../Screens/Category';
 import Roles from '../Screens/Roles';
@@ -20,12 +21,12 @@ import User from '../Screens/User';
 import CurrentUser from '../Screens/CurrentUser';
 import Companies from '../Screens/Companies';
 import Company from '../Screens/Company';
-import NotFound from '../Screens/NotFound';
+import Sessions from '../Screens/Sessions';
 import Login from '../Screens/Login';
 import Logout from '../Screens/Logout';
 import Signup from '../Screens/Signup';
 import ForgotPassword from '../Screens/ForgotPassword';
-import Startscreen from '../Screens/Startscreen';
+import NotFound from '../Screens/NotFound';
 
 import HtmlTitle from '../Components/HtmlTitle';
 import { hasPermission } from '../Util/PermissionsHelper';
@@ -45,6 +46,7 @@ const routes = (
     <PrivateRoute path="/users/:id" component={User} />
     <PrivateRoute exact path="/roles" component={Roles} />
     <PrivateRoute path="/roles/:id" component={Role} />
+    <PrivateRoute path="/student_sessions/application" component={Sessions} />
     <Route path="/login" component={Login} />
     <Route path="/logout" component={Logout} />
     <Route path="/signup" component={Signup} />
@@ -92,7 +94,7 @@ class App extends Component {
       const url = `/${paths.slice(0, index + 1).join('/')}`;
       return (
         <Breadcrumb.Item key={url}>
-          <Link to={url}>{capitalize(item)}</Link>
+          <Link to={url}>{startCase(item)}</Link>
         </Breadcrumb.Item>
       );
     });
@@ -128,6 +130,10 @@ class App extends Component {
               })}
               {this.restrictedMenuItem({ route: 'roles', title: 'Roles' })}
               {this.restrictedMenuItem({ route: 'users', title: 'Users' })}
+              {this.restrictedMenuItem({
+                route: 'student_sessions/application',
+                title: 'Apply Student Session'
+              })}
               {isLoggedIn ? this.loggedInMenuItem() : this.loggedOutMenuItem()}
             </Menu>
           </Header>

@@ -10,13 +10,13 @@ const TextInput = makeField(Input);
 const UserForm = ({ handleSubmit, toggleEdit, disabled, reset }) => (
   <Form onSubmit={handleSubmit}>
     <Field
-      name="phone_number"
+      name="phoneNumber"
       label="Phone Number"
       component={TextInput}
       disabled={disabled}
     />
     <Field
-      name="food_preferences"
+      name="foodPreferences"
       label="Food Preferences"
       component={TextInput}
       disabled={disabled}

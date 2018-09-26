@@ -1,12 +1,29 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { isEmpty, map } from 'lodash/fp';
-import LoadingSpinner from '../../Components/LoadingSpinner';
+// import { message } from 'antd';
+import { isEmpty } from 'lodash/fp';
 import NotFound from '../NotFound';
-import UserForm from '../../Components/Forms/UserForm';
+import LoadingSpinner from '../../Components/LoadingSpinner';
+import HtmlTitle from '../../Components/HtmlTitle';
 import StudentForm from '../../Components/Forms/StudentForm';
+import StudentSessionForm from '../../Components/Forms/StudentSessionForm';
 
-class User extends Component {
+// const props = {
+//   name: 'file',
+//   action: '//jsonplaceholder.typicode.com/posts/',
+//   headers: {
+//     authorization: 'authorization-text'
+//   },
+//   onChange(info) {
+//     if (info.file.status === 'done') {
+//       message.success(`${info.file.name} file uploaded successfully`);
+//     } else if (info.file.status === 'error') {
+//       message.error(`${info.file.name} file upload failed.`);
+//     }
+//   }
+// };
+
+class SessionApplication extends Component {
   constructor(props) {
     super(props);
     const { currentUser } = props;
@@ -18,8 +35,8 @@ class User extends Component {
   }
 
   componentWillMount() {
-    const { getCurrentUser } = this.props;
-    getCurrentUser();
+    const { getAllCompanies } = this.props;
+    getAllCompanies();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -29,7 +46,13 @@ class User extends Component {
 
   onRemove = name => {
     const { currentStudent } = this.state;
+    delete currentStudent[name];
     this.setState({ currentStudent: { ...currentStudent, [name]: [] } });
+  };
+
+  toggleEdit = () => {
+    const { disabled } = this.state;
+    this.setState({ disabled: !disabled });
   };
 
   beforeUpload = (file, name) => {
@@ -38,11 +61,6 @@ class User extends Component {
       currentStudent: { ...currentStudent, [name]: [file] }
     });
     return false;
-  };
-
-  toggleEdit = () => {
-    const { disabled } = this.state;
-    this.setState({ disabled: !disabled });
   };
 
   updateStudent = () => {
@@ -60,24 +78,18 @@ class User extends Component {
     updateCurrentStudent(formData);
   };
 
-  updateUser = values => {
-    const { currentUser, updateCurrentUser } = this.props;
-    const { disabled } = this.state;
-
-    const data = Object.keys(values).reduce((modified, key) => {
-      if (currentUser[key] !== values[key]) {
-        modified[key] = values[key];
-      }
-      return modified;
-    }, {});
-
-    this.setState({ disabled: !disabled });
-    updateCurrentUser({ user: data });
+  createStudentSessionAppl = data => {
+    const { createStudentSessionAppl } = this.props;
+    createStudentSessionAppl({
+      student_session_application: data
+    });
   };
 
   render() {
-    const { currentUser, fetching } = this.props;
-    const { currentStudent, disabled, student } = this.state;
+    const { currentUser, companies, fetching } = this.props;
+    const { currentStudent, student } = this.state;
+    const { resumeEnUrl, resumeSvUrl } = currentStudent;
+
     if (fetching) {
       return <LoadingSpinner />;
     }
@@ -85,23 +97,16 @@ class User extends Component {
       return <NotFound />;
     }
 
-    const { email, firstName, lastName, roles } = currentUser;
-    const { resumeEnUrl, resumeSvUrl } = currentStudent;
     return (
-      <div>
-        <h1>
-          {firstName} {lastName}
-        </h1>
-        <h2>Email: {email}</h2>
-        <h2>
-          Roles: {isEmpty(roles) ? 'None' : map('type', roles).join(', ')}
-        </h2>
-        <UserForm
-          onSubmit={this.updateUser}
-          disabled={disabled}
-          toggleEdit={this.toggleEdit}
-          initialValues={currentUser}
+      <div style={{ padding: 24 }}>
+        <HtmlTitle title="Student Session Application" />
+        <h1>Apply for student sessions</h1>
+        <StudentSessionForm
+          onSubmit={this.createStudentSessionAppl}
+          companies={companies || {}}
         />
+
+        <h2 style={{ marginTop: 24 }}>Make sure your CVs are uploaded!</h2>
         <StudentForm
           action="//jsonplaceholder.typicode.com/posts/"
           beforeUpload={this.beforeUpload}
@@ -115,15 +120,15 @@ class User extends Component {
     );
   }
 }
-User.propTypes = {
-  currentUser: PropTypes.shape({
-    email: PropTypes.string,
-    student: PropTypes.shape()
-  }).isRequired,
-  fetching: PropTypes.bool.isRequired,
-  getCurrentUser: PropTypes.func.isRequired,
-  updateCurrentUser: PropTypes.func.isRequired,
-  updateCurrentStudent: PropTypes.func.isRequired
+
+SessionApplication.defaultProps = {
+  companies: {}
 };
 
-export default User;
+SessionApplication.propTypes = {
+  companies: PropTypes.object.isRequired,
+  getAllCompanies: PropTypes.func.isRequired,
+  getCurrentUser: PropTypes.func.isRequired
+};
+
+export default SessionApplication;

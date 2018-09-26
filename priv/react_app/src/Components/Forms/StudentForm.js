@@ -7,10 +7,7 @@ import UploadButton from './UploadButton';
 
 const StudentForm = ({
   handleSubmit,
-  toggleEdit,
   disabled,
-  reset,
-  beforeUploadEn,
   beforeUpload,
   action,
   currentStudent,
@@ -39,7 +36,7 @@ const StudentForm = ({
     />
 
     <Button disabled={disabled} htmlType="submit">
-      Submit
+      Save CV
     </Button>
   </Form>
 );
@@ -51,8 +48,7 @@ StudentForm.defaultProps = {
 StudentForm.propTypes = {
   disabled: PropTypes.bool,
   handleSubmit: PropTypes.func.isRequired,
-  reset: PropTypes.func.isRequired,
-  toggleEdit: PropTypes.func.isRequired
+  reset: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
