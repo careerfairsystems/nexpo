@@ -23,7 +23,7 @@ const UploadButton = ({
     </Button>
     {!isEmpty(currentStudent[name]) && (
       <Icon
-        style={{ color: 'green', fontSize: 20 }}
+        style={{ color: 'green', fontSize: 20, marginLeft: 10 }}
         type="check"
         theme="outlined"
       />

@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { message, Select, Input } from 'antd';
+import { Button, message, Select, Input } from 'antd';
 import { isEmpty, map } from 'lodash/fp';
 import HtmlTitle from '../../Components/HtmlTitle';
 import StudentForm from '../../Components/Forms/StudentForm';
+import StudentSessionForm from '../../Components/Forms/StudentSessionForm';
 
 const { TextArea } = Input;
 const props = {
@@ -28,7 +29,8 @@ class SessionApplication extends Component {
     super(props);
     this.state = {
       student: props.currentUser ? props.currentUser.student : {},
-      currentStudent: { resume_en_url: [], resume_sv_url: [] }
+      currentStudent: { resume_en_url: [], resume_sv_url: [] },
+      disabled: true
     };
   }
 
@@ -51,6 +53,11 @@ class SessionApplication extends Component {
     const { currentStudent } = this.state;
     delete currentStudent[name];
     this.setState({ currentStudent: { ...currentStudent, [name]: [] } });
+  };
+
+  toggleEdit = () => {
+    const { disabled } = this.state;
+    this.setState({ disabled: !disabled });
   };
 
   beforeUpload = (file, name) => {
@@ -76,40 +83,35 @@ class SessionApplication extends Component {
     updateCurrentStudent(formData);
   };
 
-  createStudentSessionApplication = () => {
-    // TODO: send application data via createStudentSessionApplication in index
+  createStudentSessionApplication = (data) => {
+    this.props.createStudentSessionApplication({"student_session_application": data})
   };
 
   render() {
     const { companies } = this.props;
     const { currentStudent, disabled, student } = this.state;
     const { resume_en_url, resume_sv_url } = currentStudent;
-    const companyNames = map('name', companies);
     return (
       <div style={{ padding: 24 }}>
         <HtmlTitle title="Student Session Application" />
         <h1>Apply for student sessions</h1>
-        <h3>Company</h3>
-        <body> Choose the company you would like to meet</body>
-        <Select defaultValue="Select company" style={{ width: 150 }}>
-          {companyNames.map(name => <Option value={name}>{name}</Option>)}
-        </Select>
-        <h3 style={{ marginTop: 24 }}>Motivation</h3>
-        <body>
-          Write a short motivation to why you want to get in contact with the
-          company
-        </body>
-        <TextArea rows={4} />
-        <h3 style={{ marginTop: 24 }}> Upload your CV </h3>
+        <StudentSessionForm
+          action="//jsonplaceholder.typicode.com/posts/"
+          onRemove={this.onRemove}
+          onSubmit={this.createStudentSessionApplication}
+          currentStudent={student || {}}
+          companies={companies || []}
+        />
+
+        <h2 style={{ marginTop: 24 }}>Make sure your CVs are uploaded!</h2>
         <StudentForm
           action="//jsonplaceholder.typicode.com/posts/"
           beforeUpload={this.beforeUpload}
           onRemove={this.onRemove}
           fileList={{ resume_en_url, resume_sv_url }}
-          onSubmit={(this.updateStudent, this.createStudentSessionApplication)}
+          onSubmit={(this.updateStudent)}
           disabled={isEmpty(resume_sv_url) && isEmpty(resume_en_url)}
           currentStudent={student || {}}
-          // toggleEdit={this.toggleEdit}
         />
       </div>
     );
