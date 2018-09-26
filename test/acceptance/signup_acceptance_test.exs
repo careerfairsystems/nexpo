@@ -161,7 +161,7 @@ defmodule Nexpo.SignupAcceptanceTest do
     assert json_response(conn, 200)
     response = Poison.decode!(conn.resp_body)["data"]
 
-    user = Repo.get!(User, user.id)
+    user = Repo.get!(User, user.id) |> Repo.preload(:student)
 
     # Assert id and email in response
     assert response["id"] != nil
@@ -175,6 +175,9 @@ defmodule Nexpo.SignupAcceptanceTest do
 
     # Assert sign_up key has been destroyed
     assert user.signup_key == nil
+
+    # Assert student has been created
+    assert user.student.id
 
     assert_delivered_email Nexpo.Email.completed_sign_up_mail(user)
   end

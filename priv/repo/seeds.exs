@@ -24,7 +24,19 @@ alias Nexpo.Repo
 
 #Create some users
 alias Nexpo.User
-Repo.insert!(%User{email: "dev", first_name: "Dev", last_name: "Dev", phone_number: "1111111", food_preferences: "Cake"})
+Repo.insert!(%User{email: "dev@it", first_name: "Dev", last_name: "Dev", phone_number: "0707112233", food_preferences: "cake", hashed_password: "legit_hash_123"})
+
+#Create some roles
+alias Nexpo.Role
+role = Repo.insert!(%Role{type: "admin", permissions: ["read_all", "write_all"]})
+
+#Associate role with user
+alias Nexpo.Student
+user = Repo.get_by(User, %{email: "dev@it"}) |> Repo.preload([:roles, :student])
+User.changeset(user)
+|> Ecto.Changeset.put_assoc(:roles, [role])
+|> Student.build_assoc(user)
+|> Nexpo.Repo.update!
 
 #Create some companies
 alias Nexpo.Company

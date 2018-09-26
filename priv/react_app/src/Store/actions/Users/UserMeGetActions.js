@@ -1,7 +1,7 @@
 import { actionTypes } from '../..';
 import API from '../../../API';
 
-export const getCurrentUserStart = () => ({
+export const getCurrentUserIsLoading = () => ({
   type: actionTypes.FETCH_CURRENT_USER
 });
 
@@ -16,14 +16,13 @@ export const getCurrentUserFailure = () => ({
 
 export function getCurrentUser() {
   return dispatch => {
-    dispatch(getCurrentUserStart());
+    dispatch(getCurrentUserIsLoading());
     return API.users
       .getMe()
-      .then(res => {
-        const user = res.data;
-        dispatch(getCurrentUserSuccess(user));
+      .then(user => {
+        dispatch(getCurrentUserSuccess(user.data));
       })
-      .catch(err => {
+      .catch(() => {
         dispatch(getCurrentUserFailure());
       });
   };

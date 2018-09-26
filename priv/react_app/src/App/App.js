@@ -14,6 +14,11 @@ import PrivateRoute from '../Components/PrivateRoute';
 import Startscreen from '../Screens/Startscreen';
 import Categories from '../Screens/Categories';
 import Category from '../Screens/Category';
+import Roles from '../Screens/Roles';
+import Role from '../Screens/Role';
+import Users from '../Screens/Users';
+import User from '../Screens/User';
+import CurrentUser from '../Screens/CurrentUser';
 import Companies from '../Screens/Companies';
 import Company from '../Screens/Company';
 import Sessions from '../Screens/Sessions/SessionApplication';
@@ -21,7 +26,6 @@ import Login from '../Screens/Login';
 import Logout from '../Screens/Logout';
 import Signup from '../Screens/Signup';
 import ForgotPassword from '../Screens/ForgotPassword';
-import User from '../Screens/User';
 import NotFound from '../Screens/NotFound';
 
 import HtmlTitle from '../Components/HtmlTitle';
@@ -36,12 +40,16 @@ const routes = (
     <PrivateRoute path="/categories/:id" component={Category} />
     <Route exact path="/companies" component={Companies} />
     <PrivateRoute path="/companies/:id" component={Company} />
+    <Route exact path="/users" component={Users} />
+    <PrivateRoute path="/users/:id" component={User} />
+    <Route exact path="/roles" component={Roles} />
+    <PrivateRoute path="/roles/:id" component={Role} />
     <PrivateRoute path="/student_sessions/application" component={Sessions} />
     <Route path="/login" component={Login} />
     <Route path="/logout" component={Logout} />
     <Route path="/signup" component={Signup} />
     <Route path="/forgot-password" component={ForgotPassword} />
-    <PrivateRoute path="/user/profile" component={User} />
+    <PrivateRoute path="/user" component={CurrentUser} />
     <Route component={NotFound} />
   </Switch>
 );
@@ -57,22 +65,16 @@ class App extends Component {
     const displayName = firstName ? [firstName, lastName].join(' ') : email;
 
     return [
-      <Menu.Item key="/logout" style={{ float: 'right' }}>
-        Logout
-      </Menu.Item>,
-      <Menu.Item key="/user/profile" style={{ float: 'right' }}>
+      <Menu.Item key="/user">
         {displayName} <Icon type="user" />
-      </Menu.Item>
+      </Menu.Item>,
+      <Menu.Item key="/logout">Logout</Menu.Item>
     ];
   };
 
   loggedOutMenuItem = () => [
-    <Menu.Item key="/signup" style={{ float: 'right' }}>
-      Sign Up
-    </Menu.Item>,
-    <Menu.Item key="/login" style={{ float: 'right' }}>
-      Login
-    </Menu.Item>
+    <Menu.Item key="/login">Login</Menu.Item>,
+    <Menu.Item key="/signup">Sign Up</Menu.Item>
   ];
 
   render() {
@@ -93,17 +95,27 @@ class App extends Component {
         <HtmlTitle />
 
         <Layout>
-          <Header className="header" style={{ background: '#fff' }}>
+          <Header
+            className="header"
+            style={{ background: '#fff', overflow: 'hidden' }}
+          >
             <Link to="/" className="logo" />
 
             <Menu
               theme="light"
               mode="horizontal"
               onClick={({ key }) => redirect(key)}
-              style={{ lineHeight: '64px' }}
+              style={{
+                display: 'flex',
+                lineHeight: '64px'
+              }}
             >
               <Menu.Item key="/companies">Companies</Menu.Item>
               <Menu.Item key="/categories">Categories</Menu.Item>
+              <Menu.Item key="/roles">Roles</Menu.Item>
+              <Menu.Item key="/users" style={{ flex: 1 }}>
+                Users
+              </Menu.Item>
               <Menu.SubMenu title="Student Sessions">
                 <Menu.Item key="/student_sessions/application">
                   Application
