@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import User from './User';
-import LoadingSpinner from '../../Components/LoadingSpinner';
+import NotFound from '../NotFound';
 // import HtmlTitle from '../../Components/HtmlTitle';
 
 it('should render without crashing', () => {
@@ -10,14 +10,14 @@ it('should render without crashing', () => {
   shallow(<User id="1" user={user} getUser={func} updateUser={func} />);
 });
 
-it('should render LoadingSpinner if there is no user', () => {
+it('should render NotFound if there is no user', () => {
   const user = {};
   const func = jest.fn();
   const wrapper = shallow(
     <User id="1" user={user} getUser={func} updateUser={func} />
   );
 
-  expect(wrapper.find(LoadingSpinner)).toHaveLength(1);
+  expect(wrapper.find(NotFound)).toHaveLength(1);
 });
 
 // it('should set html title', () => {
@@ -34,12 +34,14 @@ it('should render LoadingSpinner if there is no user', () => {
 
 it('should render user information', () => {
   const user = {
-    email: 'dev@it'
+    email: 'dev@it',
+    first_name: 'Dev',
+    last_name: 'X'
   };
   const func = jest.fn();
   const wrapper = shallow(
     <User id="1" user={user} getUser={func} updateUser={func} />
   );
 
-  expect(wrapper.contains(<h2>Email: {user.email}</h2>)).toBeTruthy();
+  expect(wrapper.contains(<h1>Dev X</h1>)).toBeTruthy();
 });

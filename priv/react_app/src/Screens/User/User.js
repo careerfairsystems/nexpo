@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { isEmpty, map } from 'lodash/fp';
-import LoadingSpinner from '../../Components/LoadingSpinner';
+import { isEmpty, isNil, map } from 'lodash/fp';
+import NotFound from '../NotFound';
 import UserForm from '../../Components/Forms/UserForm';
 
 class User extends Component {
@@ -43,8 +43,8 @@ class User extends Component {
     const { email, first_name, last_name, roles } = user;
     const { disabled } = this.state;
 
-    if (fetching || isEmpty(user)) {
-      return <LoadingSpinner />;
+    if (isEmpty(user) || isNil(user)) {
+      return <NotFound />;
     }
 
     return (
