@@ -12,7 +12,7 @@ class User extends Component {
     const { currentUser } = props;
     this.state = {
       student: currentUser ? currentUser.student : {},
-      currentStudent: { resume_en_url: [], resume_sv_url: [] },
+      currentStudent: { resumeEnUrl: [], resumeSvUrl: [] },
       disabled: true
     };
   }
@@ -56,7 +56,7 @@ class User extends Component {
       formData.append(`student[${key}]`, currentStudent[key][0]);
     });
 
-    this.setState({ currentStudent: { resume_en_url: [], resume_sv_url: [] } });
+    this.setState({ currentStudent: { resumeEnUrl: [], resumeSvUrl: [] } });
     updateCurrentStudent(formData);
   };
 
@@ -85,12 +85,12 @@ class User extends Component {
       return <NotFound />;
     }
 
-    const { email, first_name, last_name, roles } = currentUser;
-    const { resume_en_url, resume_sv_url } = currentStudent;
+    const { email, firstName, lastName, roles } = currentUser;
+    const { resumeEnUrl, resumeSvUrl } = currentStudent;
     return (
       <div>
         <h1>
-          {first_name} {last_name}
+          {firstName} {lastName}
         </h1>
         <h2>Email: {email}</h2>
         <h2>
@@ -106,9 +106,9 @@ class User extends Component {
           action="//jsonplaceholder.typicode.com/posts/"
           beforeUpload={this.beforeUpload}
           onRemove={this.onRemove}
-          fileList={{ resume_en_url, resume_sv_url }}
+          fileList={{ resumeEnUrl, resumeSvUrl }}
           onSubmit={this.updateStudent}
-          disabled={isEmpty(resume_sv_url) && isEmpty(resume_en_url)}
+          disabled={isEmpty(resumeSvUrl) && isEmpty(resumeEnUrl)}
           currentStudent={student || {}}
           toggleEdit={this.toggleEdit}
         />

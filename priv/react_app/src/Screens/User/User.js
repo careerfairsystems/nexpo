@@ -40,7 +40,7 @@ class User extends Component {
 
   render() {
     const { user } = this.props;
-    const { email, first_name, last_name, roles } = user;
+    const { email, firstName, lastName, roles } = user;
     const { disabled } = this.state;
 
     if (isEmpty(user) || isNil(user)) {
@@ -50,7 +50,7 @@ class User extends Component {
     return (
       <div>
         <h1>
-          {first_name} {last_name}
+          {firstName} {lastName}
         </h1>
         <h2>Email: {email}</h2>
         <h2>

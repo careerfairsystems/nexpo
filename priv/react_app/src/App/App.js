@@ -61,7 +61,7 @@ const routes = (
 class App extends Component {
   loggedInMenuItem = () => {
     const { currentUser } = this.props;
-    const { email, first_name: firstName, last_name: lastName } = currentUser;
+    const { email, firstName, lastName } = currentUser;
 
     const displayName = firstName ? [firstName, lastName].join(' ') : email;
 
