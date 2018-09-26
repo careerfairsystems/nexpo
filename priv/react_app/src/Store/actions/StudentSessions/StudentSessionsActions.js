@@ -1,5 +1,5 @@
-import * as StudentSessionApplicationsPostActions from './StudentSessionApplicationsPostActions';
+import * as StudentSessionApplPostActions from './StudentSessionApplPostActions';
 
 export default {
-  ...StudentSessionApplicationsPostActions
+  ...StudentSessionApplPostActions
 };

@@ -26,8 +26,8 @@ const mapDispatchToProps = dispatch => ({
   updateCurrentStudent: data =>
     dispatch(Actions.users.updateCurrentStudent(data)),
   getAllCompanies: () => dispatch(Actions.companies.getAllCompanies()),
-  createStudentSessionApplication: data =>
-    dispatch(Actions.studentSessions.createStudentSessionApplication(data))
+  createStudentSessionAppl: data =>
+    dispatch(Actions.studentSessions.createStudentSessionAppl(data))
 });
 
 const stateful = connect(

@@ -28,7 +28,7 @@ class SessionApplication extends Component {
     super(props);
     this.state = {
       student: props.currentUser ? props.currentUser.student : {},
-      currentStudent: { resume_en_url: [], resume_sv_url: [] }
+      currentStudent: { resumeEnUrl: [], resumeSvUrl: [] }
     };
   }
 
@@ -36,7 +36,7 @@ class SessionApplication extends Component {
     const {
       getCurrentUser,
       getAllCompanies,
-      createStudentSessionApplication
+      createStudentSessionAppl
     } = this.props;
     getCurrentUser();
     getAllCompanies();
@@ -72,18 +72,18 @@ class SessionApplication extends Component {
       formData.append(`student[${key}]`, currentStudent[key][0]);
     });
 
-    this.setState({ currentStudent: { resume_en_url: [], resume_sv_url: [] } });
+    this.setState({ currentStudent: { resumeEnUrl: [], resumeSvUrl: [] } });
     updateCurrentStudent(formData);
   };
 
-  createStudentSessionApplication = () => {
-    // TODO: send application data via createStudentSessionApplication in index
+  createStudentSessionAppl = () => {
+    // TODO: send application data via createStudentSessionAppl in index
   };
 
   render() {
     const { companies } = this.props;
     const { currentStudent, disabled, student } = this.state;
-    const { resume_en_url, resume_sv_url } = currentStudent;
+    const { resumeEnUrl, resumeSvUrl } = currentStudent;
     const companyNames = map('name', companies);
     return (
       <div style={{ padding: 24 }}>
@@ -105,9 +105,9 @@ class SessionApplication extends Component {
           action="//jsonplaceholder.typicode.com/posts/"
           beforeUpload={this.beforeUpload}
           onRemove={this.onRemove}
-          fileList={{ resume_en_url, resume_sv_url }}
-          onSubmit={(this.updateStudent, this.createStudentSessionApplication)}
-          disabled={isEmpty(resume_sv_url) && isEmpty(resume_en_url)}
+          fileList={{ resumeEnUrl, resumeSvUrl }}
+          onSubmit={(this.updateStudent, this.createStudentSessionAppl)}
+          disabled={isEmpty(resumeSvUrl) && isEmpty(resumeEnUrl)}
           currentStudent={student || {}}
           // toggleEdit={this.toggleEdit}
         />
