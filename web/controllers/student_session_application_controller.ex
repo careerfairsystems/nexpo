@@ -2,7 +2,7 @@ defmodule Nexpo.StudentSessionApplicationController do
   use Nexpo.Web, :controller
   use Guardian.Phoenix.Controller
 
-  alias Nexpo.{Student, StudentSessionApplication}
+  alias Nexpo.StudentSessionApplication
 
   def create(conn, %{"student_session_application" => student_session_applications_params}, user, _claims) do
     student = Repo.preload(user, :student)
