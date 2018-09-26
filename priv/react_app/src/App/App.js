@@ -28,6 +28,7 @@ import ForgotPassword from '../Screens/ForgotPassword';
 import Startscreen from '../Screens/Startscreen';
 
 import HtmlTitle from '../Components/HtmlTitle';
+import { hasPermission } from '../Util/PermissionsHelper';
 
 const { Header, Content, Footer } = Layout;
 
@@ -35,20 +36,20 @@ const routes = (
   <Switch>
     <Route exact path="/" render={() => <Redirect to="/start" />} />
     <Route exact path="/start" component={Startscreen} />
-    <Route exact path="/categories" component={Categories} />
+    <PrivateRoute exact path="/categories" component={Categories} />
     <PrivateRoute path="/categories/:id" component={Category} />
-    <Route exact path="/companies" component={Companies} />
+    <PrivateRoute exact path="/companies" component={Companies} />
     <PrivateRoute exact path="/companies/new" component={Company} />
     <PrivateRoute path="/companies/:id" component={Company} />
-    <Route exact path="/users" component={Users} />
+    <PrivateRoute exact path="/users" component={Users} />
     <PrivateRoute path="/users/:id" component={User} />
-    <Route exact path="/roles" component={Roles} />
+    <PrivateRoute exact path="/roles" component={Roles} />
     <PrivateRoute path="/roles/:id" component={Role} />
     <Route path="/login" component={Login} />
     <Route path="/logout" component={Logout} />
     <Route path="/signup" component={Signup} />
     <Route path="/forgot-password" component={ForgotPassword} />
-    <PrivateRoute path="/user" component={CurrentUser} />
+    <Route path="/user" component={CurrentUser} />
     <Route component={NotFound} />
   </Switch>
 );
@@ -59,7 +60,7 @@ const routes = (
 class App extends Component {
   loggedInMenuItem = () => {
     const { currentUser } = this.props;
-    const { email, first_name: firstName, last_name: lastName } = currentUser;
+    const { email, firstName, lastName } = currentUser;
 
     const displayName = firstName ? [firstName, lastName].join(' ') : email;
 
@@ -69,6 +70,14 @@ class App extends Component {
       </Menu.Item>,
       <Menu.Item key="/logout">Logout</Menu.Item>
     ];
+  };
+
+  restrictedMenuItem = ({ route, title }) => {
+    const { currentUser, isLoggedIn } = this.props;
+    if (isLoggedIn && hasPermission(currentUser, route)) {
+      return <Menu.Item key={`/${route}`}>{title}</Menu.Item>;
+    }
+    return null;
   };
 
   loggedOutMenuItem = () => [
@@ -109,12 +118,16 @@ class App extends Component {
                 lineHeight: '64px'
               }}
             >
-              <Menu.Item key="/companies">Companies</Menu.Item>
-              <Menu.Item key="/categories">Categories</Menu.Item>
-              <Menu.Item key="/roles">Roles</Menu.Item>
-              <Menu.Item key="/users" style={{ flex: 1 }}>
-                Users
-              </Menu.Item>
+              {this.restrictedMenuItem({
+                route: 'companies',
+                title: 'Companies'
+              })}
+              {this.restrictedMenuItem({
+                route: 'categories',
+                title: 'Categories'
+              })}
+              {this.restrictedMenuItem({ route: 'roles', title: 'Roles' })}
+              {this.restrictedMenuItem({ route: 'users', title: 'Users' })}
               {isLoggedIn ? this.loggedInMenuItem() : this.loggedOutMenuItem()}
             </Menu>
           </Header>

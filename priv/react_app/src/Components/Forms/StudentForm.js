@@ -19,9 +19,9 @@ const StudentForm = ({
 }) => (
   <Form onSubmit={handleSubmit}>
     <Field
-      name="resume_sv_url"
+      name="resumeSvUrl"
       label="Swedish CV"
-      fileList={fileList.resume_sv_url}
+      fileList={fileList.resumeSvUrl}
       action={action}
       currentStudent={currentStudent}
       beforeUpload={beforeUpload}
@@ -29,9 +29,9 @@ const StudentForm = ({
       onRemove={onRemove}
     />
     <Field
-      name="resume_en_url"
+      name="resumeEnUrl"
       label="English CV"
-      fileList={fileList.resume_en_url}
+      fileList={fileList.resumeEnUrl}
       currentStudent={currentStudent}
       beforeUpload={beforeUpload}
       component={UploadButton}

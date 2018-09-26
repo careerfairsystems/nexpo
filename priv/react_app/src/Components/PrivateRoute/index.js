@@ -1,7 +1,9 @@
 import { connect } from 'react-redux';
 import PrivateRoute from './PrivateRoute';
+import { Selectors } from '../../Store';
 
-const mapStateToProps = (state, props) => ({
+const mapStateToProps = state => ({
+  currentUser: Selectors.users.getCurrentUser(state),
   isLoggedIn: state.auth.isLoggedIn
 });
 

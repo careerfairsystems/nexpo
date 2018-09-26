@@ -13,14 +13,14 @@ defmodule Nexpo.SignupController do
   @api {POST} /initial_signup Initiate sign up
   @apiGroup Sign up
 
-  @apiParam {String} username Prefix of email on global domain
+  @apiParam {String} email
 
   @apiSuccessExample {json} Success
     HTTP 201 Created
     {
       "data": {
         "id": 1,
-        "email": "username@student.lu.se"
+        "email": "username@domain"
         "first_name": null,
         "last_name": null,
       }
@@ -28,8 +28,8 @@ defmodule Nexpo.SignupController do
 
   @apiUse BadRequestError
   """
-  def create(conn, %{"username" => username}) do
-    case User.initial_signup(%{username: username}) do
+  def create(conn, %{"email" => email}) do
+    case User.initial_signup(%{email: email}) do
       {:ok, user} ->
         Email.pre_signup_email(user) |> Mailer.deliver_later
         conn
@@ -53,7 +53,7 @@ defmodule Nexpo.SignupController do
     {
       "data": {
         "id": 1,
-        "email": "username@student.lu.se"
+        "email": "username@domain"
         "first_name": "Benjamin",
         "last_name": "Franklin",
       }
