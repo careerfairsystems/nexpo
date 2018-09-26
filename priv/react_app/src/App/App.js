@@ -39,6 +39,7 @@ const routes = (
     <PrivateRoute exact path="/categories" component={Categories} />
     <PrivateRoute path="/categories/:id" component={Category} />
     <PrivateRoute exact path="/companies" component={Companies} />
+    <PrivateRoute exact path="/companies/new" component={Company} />
     <PrivateRoute path="/companies/:id" component={Company} />
     <PrivateRoute exact path="/users" component={Users} />
     <PrivateRoute path="/users/:id" component={User} />

@@ -13,11 +13,20 @@ type Response = {
  * @param {Response} response
  */
 export const handleHttpResponse = (response: Response): Promise => {
-  if (response.ok) {
+  const contentType = response.headers.get('content-type');
+  const isJson = contentType && contentType.includes('application/json');
+  if (response.ok && isJson) {
     return response.json();
   }
-
-  return response.json().then(res => {
+  if (response.ok) {
+    return response.text();
+  }
+  if (isJson) {
+    return response.json().then(res => {
+      throw new ApiError(res);
+    });
+  }
+  return response.text().then(res => {
     throw new ApiError(res);
   });
 };
