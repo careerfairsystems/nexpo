@@ -31,9 +31,7 @@ export function destroyCompany(id) {
       .then(() => {
         dispatch(destroyCompanySuccess(id));
       })
-      .catch(erro => {
-        console.log(erro);
-
+      .catch(() => {
         dispatch(destroyCompanyFailure());
       });
   };
