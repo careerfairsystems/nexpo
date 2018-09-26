@@ -22,6 +22,16 @@ defmodule Nexpo.User do
     timestamps()
   end
 
+  def changeset(struct, params \\ %{}) do
+    struct
+    |> cast(params, [:email, :password, :first_name, :last_name])
+    |> cast(params, [:food_preferences, :phone_number])
+    |> unique_constraint(:email)
+    |> validate_length(:password, min: 6)
+    |> hash_password(params)
+    |> validate_required([:email, :hashed_password])
+  end
+
   def get_permissions(user) do
     Repo.all(from(
       role in Ecto.assoc(user, :roles),
@@ -95,15 +105,6 @@ defmodule Nexpo.User do
   def forgot_password_changeset(user, params \\ %{}) do
     changeset(user, params)
     |> generate_forgot_password_key()
-  end
-
-  def changeset(struct, params \\ %{}) do
-    struct
-    |> cast(params, [:email, :password, :first_name, :last_name])
-    |> unique_constraint(:email)
-    |> validate_length(:password, min: 6)
-    |> hash_password(params)
-    |> validate_required([:email, :hashed_password])
   end
 
   def authenticate(%{:email => email, :password => password}) do

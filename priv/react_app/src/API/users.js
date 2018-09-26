@@ -14,7 +14,7 @@ export default {
   /**
    * Fetches the current user
    */
-  getMe: () => authPost('/api/me').then(handleHttpResponse),
+  getMe: () => authFetch('/api/me').then(handleHttpResponse),
 
   /**
    * Updates the current user
@@ -27,9 +27,15 @@ export default {
   destroyMe: () => authDelete('/api/me').then(handleHttpResponse),
 
   /**
+   * Updates the current user's student
+   */
+  updateMyStudent: data =>
+    authPut('/api/me/student', data).then(handleHttpResponse),
+
+  /**
    * Create a user
    */
-  create: () => authPost('/api/users').then(handleHttpResponse),
+  create: data => authPost('/api/users', data).then(handleHttpResponse),
 
   /**
    * Fetches all users
@@ -44,7 +50,8 @@ export default {
   /**
    * Updates a user
    */
-  update: id => authPut(`/api/users/${id}`).then(handleHttpResponse),
+  update: (id, data) =>
+    authPut(`/api/users/${id}`, data).then(handleHttpResponse),
 
   /**
    * Delete a user

@@ -78,6 +78,7 @@ const state = {
     isLoggedIn: true,
     forgotPassword: { validKey: false }
   },
+  form: {},
   current: { user: 1 }
 };
 
