@@ -35,7 +35,7 @@ alias Nexpo.Student
 user = Repo.get_by(User, %{email: "dev@it"}) |> Repo.preload([:roles, :student])
 User.changeset(user)
 |> Ecto.Changeset.put_assoc(:roles, [role])
-|> Student.build_assoc
+|> Student.build_assoc(user)
 |> Nexpo.Repo.update!
 
 #Create some companies
