@@ -11,10 +11,10 @@ export default {
   /**
    * Initiates a signup
    */
-  initial_signup: (username: string) =>
+  initial_signup: (email: string) =>
     fetch('/api/initial_signup', {
       method: 'POST',
-      body: JSON.stringify({ username }),
+      body: JSON.stringify({ email }),
       headers: new Headers({
         'Content-Type': 'application/json'
       })

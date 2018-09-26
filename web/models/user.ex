@@ -39,7 +39,7 @@ defmodule Nexpo.User do
 
       cond do
         # Validate username is not empty
-        email == global_email_domain() -> [email: "Cannot be empty"]
+        !String.contains?(email, "@") -> [email: "Has to include @"]
 
         # Validate email does not contains whitespace
         String.contains?(email, " ") -> [email: "Cannot contain blank spaces"]
@@ -125,23 +125,13 @@ defmodule Nexpo.User do
     end
   end
 
-  def global_email_domain do
-    "@student.lu.se"
-  end
-
-  def convert_username_to_email(username) do
-    username <> global_email_domain()
-  end
-
   # Does the initial signup
-  def initial_signup(%{:username => username}) do
-    email = convert_username_to_email(username)
+  def initial_signup(%{:email => email}) do
     User.initial_signup_changeset(%User{}, %{email: email})
     |> Repo.insert
   end
 
-  def initial_signup!(%{:username => username}) do
-    email = convert_username_to_email(username)
+  def initial_signup!(%{:email => email}) do
     User.initial_signup_changeset(%User{}, %{email: email})
     |> Repo.insert!
   end
