@@ -53,7 +53,7 @@ class User extends Component {
       k => currentStudent[k][0] !== currentUser.student[k]
     );
     modifiedKeys.forEach(key => {
-      formData.append(`student[${snakeCase(key)}]`, currentStudent[key][0]);
+      formData.append(`student[${key}]`, currentStudent[key][0]);
     });
 
     this.setState({ currentStudent: { resumeEnUrl: [], resumeSvUrl: [] } });

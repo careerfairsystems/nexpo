@@ -19,4 +19,19 @@ const convertKeys = (obj, convert) => {
 export const camelCaseKeys = obj => convertKeys(obj, camelCase);
 export const snakeCaseKeys = obj => convertKeys(obj, snakeCase);
 
-export default { camelCaseKeys, snakeCaseKeys };
+const convertForm = (obj, convert) => {
+  const formData = new FormData();
+
+  Array.from(obj.entries()).forEach(([key, value]) =>
+    formData.append(convert(key), value)
+  );
+
+  return formData;
+};
+
+export const camelCaseForm = obj =>
+  convertForm(obj, key => key.replace(/_([a-z])/g, g => g[1].toUpperCase()));
+export const snakeCaseForm = obj =>
+  convertForm(obj, key => key.replace(/([A-Z])/g, '_$1').toLowerCase());
+
+export default { camelCaseKeys, snakeCaseKeys, camelCaseForm, snakeCaseForm };

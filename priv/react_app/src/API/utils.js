@@ -1,6 +1,6 @@
 import { ApiError } from '../Errors/ApiError';
 import { getJwt } from '../Util/JwtHelper';
-import { snakeCaseKeys } from '../Util/FormatHelper';
+import { snakeCaseKeys, snakeCaseForm } from '../Util/FormatHelper';
 
 type Response = {
   type: string,
@@ -25,10 +25,17 @@ export const handleHttpResponse = (response: Response): Promise => {
 const contentType = data =>
   data instanceof FormData ? {} : { 'Content-Type': 'application/json' };
 
+const snakeCase = data => {
+  if (data instanceof FormData) {
+    return snakeCaseForm(data);
+  }
+  return JSON.stringify(snakeCaseKeys(data));
+};
+
 export const authPost = (url, data) =>
   fetch(url, {
     method: 'POST',
-    body: data instanceof FormData ? data : JSON.stringify(snakeCaseKeys(data)),
+    body: snakeCase(data),
     headers: new Headers({
       Authorization: `Bearer ${getJwt()}`,
       Accept: 'application/json',
@@ -47,7 +54,7 @@ export const authFetch = url =>
 export const authPut = (url, data) =>
   fetch(url, {
     method: 'PUT',
-    body: data instanceof FormData ? data : JSON.stringify(snakeCaseKeys(data)),
+    body: snakeCase(data),
     headers: new Headers({
       Authorization: `Bearer ${getJwt()}`,
       Accept: 'application/json',
