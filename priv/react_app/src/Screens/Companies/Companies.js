@@ -3,45 +3,12 @@ import PropTypes from 'prop-types';
 
 import Table from 'antd/lib/table';
 import Button from 'antd/lib/button';
+import Popconfirm from 'antd/lib/popconfirm';
 import Divider from 'antd/lib/divider';
 import InvisibleLink from '../../Components/InvisibleLink';
 import LoadingSpinner from '../../Components/LoadingSpinner';
 import HtmlTitle from '../../Components/HtmlTitle';
 import './Companies.css';
-
-const companyColumns = [
-  {
-    title: 'Name',
-    dataIndex: 'name',
-    key: 'name',
-    render: (name, { id }) => (
-      <InvisibleLink to={`/companies/${id}`}>{name}</InvisibleLink>
-    )
-  },
-  {
-    title: 'Website',
-    dataIndex: 'website',
-    key: 'website'
-  },
-  {
-    title: 'Description',
-    dataIndex: 'description',
-    key: 'description'
-  },
-  {
-    title: 'Action',
-    key: 'action',
-    render: company => (
-      <span>
-        <InvisibleLink to={`/companies/${company.id}`}>Show</InvisibleLink>
-        <Divider type="vertical" />
-        <InvisibleLink to={`/companies/${company.id}#edit`}>Edit</InvisibleLink>
-        <Divider type="vertical" />
-        <InvisibleLink to="#company-delete">Delete</InvisibleLink>
-      </span>
-    )
-  }
-];
 
 /**
  * Responsible for rendering a list of companies
@@ -51,6 +18,47 @@ class Companies extends Component {
     const { getAllCompanies } = this.props;
     getAllCompanies();
   }
+
+  companyColumns = () => [
+    {
+      title: 'Name',
+      dataIndex: 'name',
+      key: 'name',
+      render: (name, { id }) => (
+        <InvisibleLink to={`/companies/${id}`}>{name}</InvisibleLink>
+      )
+    },
+    {
+      title: 'Website',
+      dataIndex: 'website',
+      key: 'website'
+    },
+    {
+      title: 'Description',
+      dataIndex: 'description',
+      key: 'description'
+    },
+    {
+      title: 'Action',
+      key: 'action',
+      render: company => (
+        <span>
+          <InvisibleLink to={`/companies/${company.id}`}>Show</InvisibleLink>
+          <Divider type="vertical" />
+          <InvisibleLink to={`/companies/${company.id}#edit`}>
+            Edit
+          </InvisibleLink>
+          <Divider type="vertical" />
+          <Popconfirm
+            title="Sure to delete?"
+            onConfirm={() => this.props.deleteCompany(company.id)}
+          >
+            <a href={null}>Delete</a>
+          </Popconfirm>
+        </span>
+      )
+    }
+  ];
 
   renderCompanies() {
     const { companies } = this.props;
@@ -62,7 +70,7 @@ class Companies extends Component {
         <h1>Companies</h1>
 
         <Table
-          columns={companyColumns}
+          columns={this.companyColumns()}
           dataSource={Object.keys(companies).map(i => ({
             ...companies[i],
             key: i

@@ -7,10 +7,10 @@ export function destroyCompanyIsLoading() {
   };
 }
 
-export function destroyCompanySuccess(company) {
+export function destroyCompanySuccess(id) {
   return {
     type: actionTypes.DELETE_COMPANY_SUCCESS,
-    company
+    id
   };
 }
 
@@ -28,10 +28,12 @@ export function destroyCompany(id) {
     dispatch(destroyCompanyIsLoading());
     return API.companies
       .destroy(id)
-      .then(company => {
-        dispatch(destroyCompanySuccess(company.data));
+      .then(() => {
+        dispatch(destroyCompanySuccess(id));
       })
-      .catch(() => {
+      .catch(erro => {
+        console.log(erro);
+
         dispatch(destroyCompanyFailure());
       });
   };
