@@ -3,14 +3,14 @@ import { Form } from 'antd';
 
 const FormItem = Form.Item;
 const formItemLayout = {
-  // labelCol: {
-  //   xs: { span: 1 },
-  //   sm: { span: 3 }
-  // },
-  // wrapperCol: {
-  //   xs: { span: 26 },
-  //   sm: { span: 6 }
-  // }
+  labelCol: {
+    xs: { span: 1 },
+    sm: { span: 3 }
+  },
+  wrapperCol: {
+    xs: { span: 26 },
+    sm: { span: 6 }
+  }
 };
 
 const makeField = Component => ({

@@ -80,10 +80,6 @@ export const EntitiesReducer = (
       normalized = normalize(action.user, Schema.userSchema());
       return { ...state, ...normalized.entities };
     }
-    case actionTypes.POST_COMPANY_SUCCESS: {
-      normalized = normalize(action.company, Schema.companySchema());
-      return { ...state, ...normalized.entities };
-    }
     default:
       return state;
   }
