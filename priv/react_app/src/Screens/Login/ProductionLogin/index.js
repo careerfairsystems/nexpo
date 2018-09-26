@@ -3,15 +3,14 @@ import ProductionLogin from './ProductionLogin';
 
 import { Actions } from '../../../Store';
 
-const mapStateToProps = (state, props) => ({
+const mapStateToProps = state => ({
   error: state.auth.error,
   isLoggedIn: state.auth.isLoggedIn
 });
 
-const mapDispatchToProps = (dispatch, props) => ({
-  login: ({ email, password }) =>
-    dispatch(Actions.auth.login({ email, password }))
-});
+const mapDispatchToProps = {
+  login: Actions.auth.login
+};
 
 const stateful = connect(
   mapStateToProps,

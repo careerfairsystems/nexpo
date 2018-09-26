@@ -8,9 +8,9 @@ const mapStateToProps = (state: State) => ({
   fetching: state.api.users.fetching
 });
 
-const mapDispatchToProps = dispatch => ({
-  getAllUsers: () => dispatch(Actions.users.getAllUsers())
-});
+const mapDispatchToProps = {
+  getAllUsers: Actions.users.getAllUsers
+};
 
 const stateful = connect(
   mapStateToProps,

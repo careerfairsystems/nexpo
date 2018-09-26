@@ -8,12 +8,11 @@ const mapStateToProps = (state: State) => ({
   fetching: state.api.current_user.fetching
 });
 
-const mapDispatchToProps = dispatch => ({
-  getCurrentUser: () => dispatch(Actions.users.getCurrentUser()),
-  updateCurrentUser: data => dispatch(Actions.users.updateCurrentUser(data)),
-  updateCurrentStudent: data =>
-    dispatch(Actions.users.updateCurrentStudent(data))
-});
+const mapDispatchToProps = {
+  getCurrentUser: Actions.users.getCurrentUser,
+  updateCurrentUser: Actions.users.updateCurrentUser,
+  updateCurrentStudent: Actions.users.updateCurrentStudent
+};
 
 const stateful = connect(
   mapStateToProps,

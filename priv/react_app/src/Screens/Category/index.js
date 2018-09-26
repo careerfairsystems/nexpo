@@ -12,9 +12,9 @@ const mapStateToProps = (state: State, props) => {
   };
 };
 
-const mapDispatchToProps = dispatch => ({
-  getCategory: id => dispatch(Actions.categories.getCategory(id))
-});
+const mapDispatchToProps = {
+  getCategory: Actions.categories.getCategory
+};
 
 const stateful = connect(
   mapStateToProps,

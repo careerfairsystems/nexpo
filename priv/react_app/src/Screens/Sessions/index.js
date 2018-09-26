@@ -20,15 +20,13 @@ const mapStateToProps = (state: State) => {
   };
 };
 
-const mapDispatchToProps = dispatch => ({
-  getCurrentUser: () => dispatch(Actions.users.getCurrentUser()),
-  updateCurrentUser: data => dispatch(Actions.users.updateCurrentUser(data)),
-  updateCurrentStudent: data =>
-    dispatch(Actions.users.updateCurrentStudent(data)),
-  getAllCompanies: () => dispatch(Actions.companies.getAllCompanies()),
-  createStudentSessionAppl: data =>
-    dispatch(Actions.studentSessions.createStudentSessionAppl(data))
-});
+const mapDispatchToProps = {
+  getCurrentUser: Actions.users.getCurrentUser,
+  updateCurrentUser: Actions.users.updateCurrentUser,
+  updateCurrentStudent: Actions.users.updateCurrentStudent,
+  getAllCompanies: Actions.companies.getAllCompanies,
+  createStudentSessionAppl: Actions.studentSessions.createStudentSessionAppl
+};
 
 const stateful = connect(
   mapStateToProps,
