@@ -20,7 +20,10 @@ class Company extends Component {
   }
 
   componentWillMount() {
-    const { id, getCompany } = this.props;
+    const { id, getCompany, location } = this.props;
+    if (location.hash === '#edit') {
+      this.setState({ edit: true });
+    }
     getCompany(id);
   }
 
@@ -32,9 +35,12 @@ class Company extends Component {
 
   updateCompany() {
     const { company } = this.state;
+    const { id } = this.props;
     // If this.props.company is empty we are creating a new company
     if (isEmpty(this.props.company)) {
       this.props.createCompany({ company });
+    } else {
+      this.props.updateCompany(id, { company });
     }
   }
 
