@@ -9,6 +9,6 @@ export const getCurrentUser = state => {
     Schema.userSchema(),
     state.entities
   );
-
-  return { ...user, roles };
+  if (roles) return { ...user, roles };
+  return { ...user };
 };

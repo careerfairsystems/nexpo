@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { isEmpty, map } from 'lodash/fp';
 import LoadingSpinner from '../../Components/LoadingSpinner';
+import NotFound from '../NotFound';
 import UserForm from '../../Components/Forms/UserForm';
 import StudentForm from '../../Components/Forms/StudentForm';
 
@@ -77,9 +78,13 @@ class User extends Component {
   render() {
     const { currentUser, fetching } = this.props;
     const { currentStudent, disabled, student } = this.state;
-    if (fetching || isEmpty(currentUser)) {
+    if (fetching) {
       return <LoadingSpinner />;
     }
+    if (isEmpty(currentUser)) {
+      return <NotFound />;
+    }
+
     const { email, first_name, last_name, roles } = currentUser;
     const { resume_en_url, resume_sv_url } = currentStudent;
     return (

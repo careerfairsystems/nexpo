@@ -28,33 +28,27 @@ import ForgotPassword from '../Screens/ForgotPassword';
 import Startscreen from '../Screens/Startscreen';
 
 import HtmlTitle from '../Components/HtmlTitle';
+import { hasPermission } from '../Util/PermissionsHelper';
 
 const { Header, Content, Footer } = Layout;
-
-const routePermissions = {
-  categories: ['read_all', 'read_categories'],
-  companies: ['read_all', 'read_companies'],
-  roles: ['read_all', 'read_roles'],
-  users: ['read_all', 'read_users']
-};
 
 const routes = (
   <Switch>
     <Route exact path="/" render={() => <Redirect to="/start" />} />
     <Route exact path="/start" component={Startscreen} />
-    <Route exact path="/categories" component={Categories} />
+    <PrivateRoute exact path="/categories" component={Categories} />
     <PrivateRoute path="/categories/:id" component={Category} />
-    <Route exact path="/companies" component={Companies} />
+    <PrivateRoute exact path="/companies" component={Companies} />
     <PrivateRoute path="/companies/:id" component={Company} />
-    <Route exact path="/users" component={Users} />
+    <PrivateRoute exact path="/users" component={Users} />
     <PrivateRoute path="/users/:id" component={User} />
-    <Route exact path="/roles" component={Roles} />
+    <PrivateRoute exact path="/roles" component={Roles} />
     <PrivateRoute path="/roles/:id" component={Role} />
     <Route path="/login" component={Login} />
     <Route path="/logout" component={Logout} />
     <Route path="/signup" component={Signup} />
     <Route path="/forgot-password" component={ForgotPassword} />
-    <PrivateRoute path="/user" component={CurrentUser} />
+    <Route path="/user" component={CurrentUser} />
     <Route component={NotFound} />
   </Switch>
 );
@@ -79,13 +73,8 @@ class App extends Component {
 
   restrictedMenuItem = ({ route, title }) => {
     const { currentUser, isLoggedIn } = this.props;
-    if (isLoggedIn && currentUser && currentUser.roles) {
-      const { roles } = currentUser;
-      const allowed = roles.some(role => {
-        const permissionsNeeded = routePermissions[route];
-        return role.permissions.some(p => permissionsNeeded.includes(p));
-      });
-      if (allowed) return <Menu.Item key={`/${route}`}>{title}</Menu.Item>;
+    if (isLoggedIn && hasPermission(currentUser, route)) {
+      return <Menu.Item key={`/${route}`}>{title}</Menu.Item>;
     }
     return null;
   };
