@@ -21,7 +21,7 @@ const mapStateToProps = (state, props) => {
 const mapDispatchToProps = {
   getCompany: Actions.companies.getCompany,
   createCompany: Actions.companies.createCompany,
-  resetForm: reset('company'),
+  resetForm: reset,
   updateCompany: Actions.companies.updateCompany
 };
 

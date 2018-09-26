@@ -43,21 +43,23 @@ class Company extends Component {
     } else {
       updateCompany(id, { company: newCompany });
     }
-    resetForm();
+    resetForm('company');
   };
 
   showStudentSession() {
-    const { student_session_days } = this.props.company;
-    if (student_session_days === 1) {
-      return 'First days';
+    const { company } = this.props;
+    switch (company.studentSessionDays) {
+      case 0:
+        return 'No days';
+      case 1:
+        return 'First day';
+      case 2:
+        return 'Second day';
+      case 3:
+        return 'Both days';
+      default:
+        return 'Invalid days';
     }
-    if (student_session_days === 2) {
-      return 'Second days';
-    }
-    if (student_session_days === 3) {
-      return 'Both days';
-    }
-    return 'No days';
   }
 
   renderEditView() {
