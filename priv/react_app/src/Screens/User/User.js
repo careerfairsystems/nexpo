@@ -39,7 +39,7 @@ class User extends Component {
   };
 
   render() {
-    const { user, fetching } = this.props;
+    const { user } = this.props;
     const { email, first_name, last_name, roles } = user;
     const { disabled } = this.state;
 

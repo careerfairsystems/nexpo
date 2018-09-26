@@ -63,13 +63,14 @@ class User extends Component {
   updateUser = values => {
     const { currentUser, updateCurrentUser } = this.props;
     const { disabled } = this.state;
-    const modifiedFields = Object.keys(currentUser).filter(
-      k => currentUser[k] !== values[k]
-    );
-    const data = modifiedFields.reduce((d, key) => {
-      d[key] = values[key];
-      return d;
+
+    const data = Object.keys(values).reduce((modified, key) => {
+      if (currentUser[key] !== values[key]) {
+        modified[key] = values[key];
+      }
+      return modified;
     }, {});
+
     this.setState({ disabled: !disabled });
     updateCurrentUser({ user: data });
   };
