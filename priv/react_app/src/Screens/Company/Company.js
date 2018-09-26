@@ -34,7 +34,7 @@ class Company extends Component {
     const { company } = this.state;
     // If this.props.company is empty we are creating a new company
     if (isEmpty(this.props.company)) {
-      this.props.postCompany(company);
+      this.props.createCompany({ company });
     }
   }
 
