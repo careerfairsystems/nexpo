@@ -18,13 +18,12 @@ const mapStateToProps = (state, props) => {
   return { id: companyId, company, entries, fetching };
 };
 
-const mapDispatchToProps = dispatch => ({
-  getCompany: id => dispatch(Actions.companies.getCompany(id)),
-  createCompany: company => dispatch(Actions.companies.createCompany(company)),
-  resetForm: () => dispatch(reset('company')),
-  updateCompany: (id, company) =>
-    dispatch(Actions.companies.updateCompany(id, company))
-});
+const mapDispatchToProps = {
+  getCompany: Actions.companies.getCompany,
+  createCompany: Actions.companies.createCompany,
+  resetForm: reset('company'),
+  updateCompany: Actions.companies.updateCompany
+};
 
 const stateful = connect(
   mapStateToProps,

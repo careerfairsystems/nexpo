@@ -1,89 +1,99 @@
 import { Actions, actionTypes } from '../..';
 import { mockHttpResponse, createMockStore } from '../../../TestHelper';
 
-describe('createRoleIsLoading', () => {
+describe('createStudentSessionApplIsLoading', () => {
   it('should create the correct action', () => {
     const expectedAction = {
-      type: actionTypes.POST_ROLE
+      type: actionTypes.POST_STUDENT_SESSION_APPL
     };
-    const action = Actions.roles.createRoleIsLoading();
+    const action = Actions.studentSessions.createStudentSessionApplIsLoading();
     expect(action).toEqual(expectedAction);
   });
 });
 
-describe('createRoleSuccess', () => {
+describe('createStudentSessionApplSuccess', () => {
   it('should create the correct action', () => {
-    const testRole = {
-      name: 'Role1'
+    const testStudentSessionAppl = {
+      name: 'StudentSessionAppl1'
     };
 
     const expectedAction = {
-      type: actionTypes.POST_ROLE_SUCCESS,
-      role: testRole
+      type: actionTypes.POST_STUDENT_SESSION_APPL_SUCCESS,
+      application: testStudentSessionAppl
     };
-    const action = Actions.roles.createRoleSuccess(testRole);
+    const action = Actions.studentSessions.createStudentSessionApplSuccess(
+      testStudentSessionAppl
+    );
     expect(action).toEqual(expectedAction);
   });
 });
 
-describe('createRoleFailure', () => {
+describe('createStudentSessionApplFailure', () => {
   it('should create the correct action', () => {
     const expectedAction = {
-      type: actionTypes.POST_ROLE_FAILURE
+      type: actionTypes.POST_STUDENT_SESSION_APPL_FAILURE
     };
-    const action = Actions.roles.createRoleFailure();
+    const action = Actions.studentSessions.createStudentSessionApplFailure();
     expect(action).toEqual(expectedAction);
   });
 });
 
-describe('createRole', () => {
+describe('createStudentSessionAppl', () => {
   it('should call start action', () => {
     mockHttpResponse({ status: 200, body: {} });
     const store = createMockStore();
-    const data = { role: { name: 'Test Role' } };
+    const data = { application: { name: 'Test StudentSessionAppl' } };
 
-    return store.dispatch(Actions.roles.createRole(data)).then(() => {
-      const calledActions = store.getActions();
-      expect(calledActions[0]).toEqual(Actions.roles.createRoleIsLoading());
-    });
+    return store
+      .dispatch(Actions.studentSessions.createStudentSessionAppl(data))
+      .then(() => {
+        const calledActions = store.getActions();
+        expect(calledActions[0]).toEqual(
+          Actions.studentSessions.createStudentSessionApplIsLoading()
+        );
+      });
   });
 
   it('should call success action on success', () => {
-    const role = [
+    const application = [
       {
-        name: 'Role1'
+        name: 'StudentSessionAppl1'
       }
     ];
-    mockHttpResponse({ status: 200, body: { data: role } });
+    mockHttpResponse({ status: 200, body: { data: application } });
 
     const expectedActions = [
-      Actions.roles.createRoleIsLoading(),
-      Actions.roles.createRoleSuccess(role)
+      Actions.studentSessions.createStudentSessionApplIsLoading(),
+      Actions.studentSessions.createStudentSessionApplSuccess(application)
     ];
 
     const store = createMockStore();
-    const data = { role };
+    const data = { application };
 
-    return store.dispatch(Actions.roles.createRole(data)).then(() => {
-      const calledActions = store.getActions();
-      expect(calledActions).toEqual(expectedActions);
-    });
+    return store
+      .dispatch(Actions.studentSessions.createStudentSessionAppl(data))
+      .then(() => {
+        const calledActions = store.getActions();
+        expect(calledActions).toEqual(expectedActions);
+      });
   });
 
   it('should call failure action on failure', () => {
     mockHttpResponse({ status: 401, body: {} });
-    const data = { role: { name: 'Test Role' } };
+    const data = { application: { name: 'Test StudentSessionAppl' } };
 
     const expectedActions = [
-      Actions.roles.createRoleIsLoading(),
-      Actions.roles.createRoleFailure()
+      Actions.studentSessions.createStudentSessionApplIsLoading(),
+      Actions.studentSessions.createStudentSessionApplFailure()
     ];
 
     const store = createMockStore();
 
-    return store.dispatch(Actions.roles.createRole(data)).then(() => {
-      const calledActions = store.getActions();
-      expect(calledActions).toEqual(expectedActions);
-    });
+    return store
+      .dispatch(Actions.studentSessions.createStudentSessionAppl(data))
+      .then(() => {
+        const calledActions = store.getActions();
+        expect(calledActions).toEqual(expectedActions);
+      });
   });
 });

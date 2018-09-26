@@ -9,9 +9,9 @@ const mapStateToProps = (state, { location, history }) => ({
   redirect: history.push
 });
 
-const mapDispatchToProps = (dispatch, props) => ({
-  logout: () => dispatch(Actions.auth.logout())
-});
+const mapDispatchToProps = {
+  logout: Actions.auth.logout
+};
 
 const stateful = connect(
   mapStateToProps,

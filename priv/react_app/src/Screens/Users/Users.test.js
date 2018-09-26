@@ -35,14 +35,14 @@ it('should render users', () => {
   const users = {
     '1': {
       id: 1,
-      first_name: 'First',
-      last_name: 'Last',
+      firstName: 'First',
+      lastName: 'Last',
       email: 'first.name@domain.com'
     },
     '2': {
       id: 2,
-      first_name: 'Dev',
-      last_name: 'Dev',
+      firstName: 'Dev',
+      lastName: 'Dev',
       email: 'dev@it.now'
     }
   };

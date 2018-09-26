@@ -17,10 +17,10 @@ const mapStateToProps = (state, props) => {
   return { id: userId, user: { ...user, roles } };
 };
 
-const mapDispatchToProps = dispatch => ({
-  getUser: id => dispatch(Actions.users.getUser(id)),
-  updateUser: (id, data) => dispatch(Actions.users.updateUser(id, data))
-});
+const mapDispatchToProps = {
+  getUser: Actions.users.getUser,
+  updateUser: Actions.users.updateUser
+};
 
 const stateful = connect(
   mapStateToProps,
