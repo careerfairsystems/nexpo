@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { isEmpty, map, snakeCase } from 'lodash/fp';
+import { isEmpty, map } from 'lodash/fp';
 import LoadingSpinner from '../../Components/LoadingSpinner';
+import NotFound from '../NotFound';
 import UserForm from '../../Components/Forms/UserForm';
 import StudentForm from '../../Components/Forms/StudentForm';
 
@@ -28,7 +29,6 @@ class User extends Component {
 
   onRemove = name => {
     const { currentStudent } = this.state;
-    delete currentStudent[name];
     this.setState({ currentStudent: { ...currentStudent, [name]: [] } });
   };
 
@@ -78,9 +78,13 @@ class User extends Component {
   render() {
     const { currentUser, fetching } = this.props;
     const { currentStudent, disabled, student } = this.state;
-    if (fetching || isEmpty(currentUser)) {
+    if (fetching) {
       return <LoadingSpinner />;
     }
+    if (isEmpty(currentUser)) {
+      return <NotFound />;
+    }
+
     const { email, firstName, lastName, roles } = currentUser;
     const { resumeEnUrl, resumeSvUrl } = currentStudent;
     return (

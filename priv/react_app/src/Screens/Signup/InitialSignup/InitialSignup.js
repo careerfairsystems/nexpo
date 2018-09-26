@@ -12,32 +12,32 @@ import SuccessMessage from '../../../Components/SuccessMessage';
  */
 class InitialSignup extends Component {
   state = {
-    username: '',
+    email: '',
     errors: {},
     finished: false
   };
 
   _signup = () => {
-    const { username } = this.state;
+    const { email } = this.state;
 
     // reset errors to give user feedback that something happened
     this.setState({ errors: {} });
 
     API.signup
-      .initial_signup(username)
+      .initial_signup(email)
       .then(res => this.setState({ finished: true }))
       .catch(err => this.setState({ errors: err.errors }));
   };
 
   _renderUsernameInput = () => {
-    const { username, errors } = this.state;
+    const { email, errors } = this.state;
     return (
       <TextField
-        floatingLabelText="STiL-ID"
+        floatingLabelText="Email"
         errorText={errors.email ? errors.email[0] : null}
-        value={username}
+        value={email}
         autoFocus
-        onChange={(event, val) => this.setState({ username: val })}
+        onChange={(event, val) => this.setState({ email: val })}
         onKeyPress={event => (event.key === 'Enter' ? this._signup() : null)}
       />
     );
@@ -56,7 +56,7 @@ class InitialSignup extends Component {
     return (
       <div className="GatherEmail_Component">
         <h1>Sign up</h1>
-        <h2>Please enter your STiL-ID</h2>
+        <h2>Please enter your email</h2>
         {this._renderUsernameInput()}
         <br />
         <br />
