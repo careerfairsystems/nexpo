@@ -28,7 +28,7 @@ defmodule Nexpo.SignupAcceptanceTest do
     assert json_response(conn, 404)
   end
 
-  test "POST /initial_signup accepts usernames that are not already signed up", %{conn: conn} do
+  test "POST /initial_signup accepts emails that are not already signed up", %{conn: conn} do
     params = Factory.params_for(:initial_signup)
     conn = post(conn, "/api/initial_signup", params)
 
@@ -38,12 +38,12 @@ defmodule Nexpo.SignupAcceptanceTest do
   test "POST /initial_signup lower cases email", %{conn: conn} do
     params = Factory.params_for(:initial_signup)
 
-    incorrect_username = String.upcase(params.username)
+    incorrect_email = String.upcase(params.email)
 
-    correct_username = params.username |> String.trim |> String.downcase
-    email = correct_username <> User.global_email_domain()
+    correct_email = params.email |> String.trim |> String.downcase
+    email = correct_email
 
-    params = Map.put(params, :username, incorrect_username)
+    params = Map.put(params, :email, incorrect_email)
 
     conn = post(conn, "/api/initial_signup", params)
 
@@ -55,15 +55,15 @@ defmodule Nexpo.SignupAcceptanceTest do
     assert user.email == email
   end
 
-  test "POST /initial_signup does not allow usernames with blankspace", %{conn: conn} do
+  test "POST /initial_signup does not allow emails with blankspace", %{conn: conn} do
     params = Factory.params_for(:initial_signup)
 
-    incorrect_username = "  " <> params.username <> "  "
+    incorrect_emails = "  " <> params.email <> "  "
 
-    correct_username = params.username |> String.trim |> String.downcase
-    email = correct_username <> User.global_email_domain()
+    correct_emails = params.email |> String.trim |> String.downcase
+    email = correct_emails
 
-    params = Map.put(params, :username, incorrect_username)
+    params = Map.put(params, :email, incorrect_emails)
 
     conn = post(conn, "/api/initial_signup", params)
 
@@ -74,15 +74,15 @@ defmodule Nexpo.SignupAcceptanceTest do
     assert user == nil
   end
 
-  test "POST /initial_signup rejects empty usernames", %{conn: conn} do
-    params = Factory.params_for(:initial_signup, username: "")
+  test "POST /initial_signup rejects empty emails", %{conn: conn} do
+    params = Factory.params_for(:initial_signup, email: "")
 
     conn = post(conn, "/api/initial_signup", params)
 
     assert json_response(conn, 400)
   end
 
-  test "POST /initial_signup rejects usernames that are already signed up", %{conn: conn} do
+  test "POST /initial_signup rejects emails that are already signed up", %{conn: conn} do
     params = Factory.params_for(:initial_signup)
     User.initial_signup!(params)
 
@@ -97,7 +97,7 @@ defmodule Nexpo.SignupAcceptanceTest do
 
     assert json_response(conn, 201)
 
-    email = User.convert_username_to_email(params.username)
+    email = params.email
     user = Repo.get_by!(User, email: email)
 
     assert_delivered_email Nexpo.Email.pre_signup_email(user)
