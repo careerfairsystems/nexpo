@@ -7,9 +7,9 @@ import makeField from './helper';
 
 const plainOptions = [
   { value: 0, label: 'No days' },
-  { value: 1, label: 'First Day' },
+  { value: 1, label: 'First day' },
   { value: 2, label: 'Second day' },
-  { value: 3, label: 'Both day' }
+  { value: 3, label: 'Both days' }
 ];
 
 const TextInput = makeField(Input);
