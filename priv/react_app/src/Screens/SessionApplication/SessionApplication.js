@@ -6,7 +6,7 @@ import NotFound from '../NotFound';
 import LoadingSpinner from '../../Components/LoadingSpinner';
 import HtmlTitle from '../../Components/HtmlTitle';
 import StudentForm from '../../Components/Forms/StudentForm';
-import StudentSessionForm from '../../Components/Forms/StudentSessionForm';
+import SessionForm from '../../Components/Forms/SessionForm';
 
 // const props = {
 //   name: 'file',
@@ -26,10 +26,9 @@ import StudentSessionForm from '../../Components/Forms/StudentSessionForm';
 class SessionApplication extends Component {
   constructor(props) {
     super(props);
-    const { currentUser } = props;
+
     this.state = {
-      student: currentUser ? currentUser.student : {},
-      currentStudent: { resumeEnUrl: [], resumeSvUrl: [] },
+      student: { resumeEnUrl: [], resumeSvUrl: [] },
       disabled: true
     };
   }
@@ -39,15 +38,10 @@ class SessionApplication extends Component {
     getAllCompanies();
   }
 
-  componentWillReceiveProps(nextProps) {
-    const { student = {} } = nextProps.currentUser;
-    this.setState({ student });
-  }
-
   onRemove = name => {
-    const { currentStudent } = this.state;
-    delete currentStudent[name];
-    this.setState({ currentStudent: { ...currentStudent, [name]: [] } });
+    const { student } = this.state;
+    delete student[name];
+    this.setState({ student: { ...student, [name]: [] } });
   };
 
   toggleEdit = () => {
@@ -56,25 +50,25 @@ class SessionApplication extends Component {
   };
 
   beforeUpload = (file, name) => {
-    const { currentStudent } = this.state;
+    const { student } = this.state;
     this.setState({
-      currentStudent: { ...currentStudent, [name]: [file] }
+      student: { ...student, [name]: [file] }
     });
     return false;
   };
 
   updateStudent = () => {
-    const { currentStudent } = this.state;
+    const { student } = this.state;
     const { currentUser, updateCurrentStudent } = this.props;
     const formData = new FormData();
-    const modifiedKeys = Object.keys(currentStudent).filter(
-      k => currentStudent[k][0] !== currentUser.student[k]
+    const modifiedKeys = Object.keys(student).filter(
+      k => student[k][0] !== currentUser.student[k]
     );
     modifiedKeys.forEach(key => {
-      formData.append(`student[${key}]`, currentStudent[key][0]);
+      formData.append(`student[${key}]`, student[key][0]);
     });
 
-    this.setState({ currentStudent: { resumeEnUrl: [], resumeSvUrl: [] } });
+    this.setState({ student: { resumeEnUrl: [], resumeSvUrl: [] } });
     updateCurrentStudent(formData);
   };
 
@@ -86,9 +80,9 @@ class SessionApplication extends Component {
   };
 
   render() {
-    const { currentUser, companies, fetching } = this.props;
-    const { currentStudent, student } = this.state;
-    const { resumeEnUrl, resumeSvUrl } = currentStudent;
+    const { currentUser, currentStudent, companies, fetching } = this.props;
+    const { student } = this.state;
+    const { resumeEnUrl, resumeSvUrl } = student;
 
     if (fetching) {
       return <LoadingSpinner />;
@@ -101,7 +95,7 @@ class SessionApplication extends Component {
       <div style={{ padding: 24 }}>
         <HtmlTitle title="Student Session Application" />
         <h1>Apply for student sessions</h1>
-        <StudentSessionForm
+        <SessionForm
           onSubmit={this.createStudentSessionAppl}
           companies={companies || {}}
         />
@@ -114,7 +108,7 @@ class SessionApplication extends Component {
           fileList={{ resumeEnUrl, resumeSvUrl }}
           onSubmit={this.updateStudent}
           disabled={isEmpty(resumeSvUrl) && isEmpty(resumeEnUrl)}
-          currentStudent={student || {}}
+          currentStudent={currentStudent || {}}
         />
       </div>
     );

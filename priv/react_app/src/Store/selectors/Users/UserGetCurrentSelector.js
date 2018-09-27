@@ -12,3 +12,5 @@ export const getCurrentUser = state => {
   if (roles) return { ...user, roles };
   return { ...user };
 };
+
+export default { getCurrentUser };

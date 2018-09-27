@@ -74,9 +74,22 @@ const roleSchema = () => {
 const rolesSchema = () => [roleSchema()];
 
 const userSchema = () => {
+  const company = entity('companies');
+  const sessionApplication = entity(
+    'session_applications',
+    { company },
+    { model: belongsTo('student') }
+  );
+  const student = entity(
+    'students',
+    {
+      session_applications: [sessionApplication]
+    },
+    { model: belongsTo('user') }
+  );
   const role = entity('roles', {}, { model: belongsTo('user') });
 
-  const user = entity('users', { roles: [role] });
+  const user = entity('users', { roles: [role], student });
 
   return user;
 };

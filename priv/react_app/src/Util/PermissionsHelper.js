@@ -7,8 +7,8 @@ const routePermissions = {
   roles: ['read_all', 'read_roles'],
   users: ['read_all', 'read_users'],
   events: ['read_all', 'read_events'],
-  student_sessions: ['read_all', 'read_student_sessions'],
-  host_applications: ['read_all', 'read_host_applications']
+  sessions: ['read_all', 'read_sessions'],
+  hosts: ['read_all', 'read_hosts']
 };
 
 const getBasePath = route => route.split('/').filter(i => i)[0];
@@ -19,9 +19,14 @@ export const hasPermission = (currentUser, route) => {
     const { roles } = currentUser;
     const allowed = roles.some(role => {
       const permissionsNeeded = routePermissions[basePath];
-      return role.permissions.some(p => permissionsNeeded.includes(p));
+      if (permissionsNeeded) {
+        return role.permissions.some(p => permissionsNeeded.includes(p));
+      }
+      return true;
     });
     return allowed;
   }
   return false;
 };
+
+export default { hasPermission };
