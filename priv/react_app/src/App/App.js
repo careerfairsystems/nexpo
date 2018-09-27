@@ -79,6 +79,18 @@ class App extends Component {
     ];
   };
 
+  restrictedSubMenu = ({ route, title, menus }) => {
+    const { currentUser, isLoggedIn } = this.props;
+    if (isLoggedIn && hasPermission(currentUser, route)) {
+      return (
+        <Menu.SubMenu title={title} key={`/${route}`}>
+          {menus}
+        </Menu.SubMenu>
+      );
+    }
+    return null;
+  };
+
   restrictedMenuItem = ({ route, title }) => {
     const { currentUser, isLoggedIn } = this.props;
     if (isLoggedIn && hasPermission(currentUser, route)) {
@@ -133,18 +145,28 @@ class App extends Component {
                 route: 'categories',
                 title: 'Categories'
               })}
-              {this.restrictedMenuItem({ route: 'roles', title: 'Roles' })}
-              {this.restrictedMenuItem({ route: 'users', title: 'Users' })}
-              <Menu.SubMenu title="Student Session">
-                {this.restrictedMenuItem({
-                  route: 'session/application',
-                  title: 'Apply Application'
-                })}
-                {this.restrictedMenuItem({
-                  route: 'session/applications',
-                  title: 'View Applications'
-                })}
-              </Menu.SubMenu>
+              {this.restrictedMenuItem({
+                route: 'roles',
+                title: 'Roles'
+              })}
+              {this.restrictedMenuItem({
+                route: 'users',
+                title: 'Users'
+              })}
+              {this.restrictedSubMenu({
+                route: 'session',
+                title: 'Student Session',
+                menus: [
+                  this.restrictedMenuItem({
+                    route: 'session/application',
+                    title: 'Apply Application'
+                  }),
+                  this.restrictedMenuItem({
+                    route: 'session/applications',
+                    title: 'View Applications'
+                  })
+                ]
+              })}
               {isLoggedIn ? this.loggedInMenuItem() : this.loggedOutMenuItem()}
             </Menu>
           </Header>
