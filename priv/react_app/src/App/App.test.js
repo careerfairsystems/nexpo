@@ -112,4 +112,5 @@ it('renders routes without crashing', () => {
   mount(route('/invalid-path'));
   mount(route('/session/application'));
   mount(route('/session/applications'));
+  mount(route('/session/companies'));
 });

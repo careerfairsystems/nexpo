@@ -6,7 +6,7 @@ import NotFound from '../NotFound';
 import LoadingSpinner from '../../Components/LoadingSpinner';
 import HtmlTitle from '../../Components/HtmlTitle';
 
-class SessionApplication extends Component {
+class SessionApplications extends Component {
   componentWillMount() {
     const { getAllCompanies } = this.props;
     getAllCompanies();
@@ -53,8 +53,8 @@ class SessionApplication extends Component {
   }
 }
 
-SessionApplication.propTypes = {
+SessionApplications.propTypes = {
   applications: PropTypes.array.isRequired
 };
 
-export default SessionApplication;
+export default SessionApplications;

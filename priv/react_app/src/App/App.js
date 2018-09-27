@@ -23,6 +23,7 @@ import Companies from '../Screens/Companies';
 import Company from '../Screens/Company';
 import SessionApplication from '../Screens/SessionApplication';
 import SessionApplications from '../Screens/SessionApplications';
+import SessionCompanies from '../Screens/SessionCompanies';
 import Login from '../Screens/Login';
 import Logout from '../Screens/Logout';
 import Signup from '../Screens/Signup';
@@ -57,6 +58,7 @@ const routes = (
       path="/session/applications"
       component={SessionApplications}
     />
+    <PrivateRoute path="/session/companies" component={SessionCompanies} />
     <Route component={NotFound} />
   </Switch>
 );
@@ -159,11 +161,15 @@ class App extends Component {
                 menus: [
                   this.restrictedMenuItem({
                     route: 'session/application',
-                    title: 'Apply Application'
+                    title: 'Apply'
                   }),
                   this.restrictedMenuItem({
                     route: 'session/applications',
                     title: 'View Applications'
+                  }),
+                  this.restrictedMenuItem({
+                    route: 'session/companies',
+                    title: 'View Companies'
                   })
                 ]
               })}
