@@ -82,7 +82,11 @@ class App extends Component {
   restrictedSubMenu = ({ route, title, menus }) => {
     const { currentUser, isLoggedIn } = this.props;
     if (isLoggedIn && hasPermission(currentUser, route)) {
-      return <Menu.SubMenu title={title} key={`/${route}`}>{menus}</Menu.SubMenu>;
+      return (
+        <Menu.SubMenu title={title} key={`/${route}`}>
+          {menus}
+        </Menu.SubMenu>
+      );
     }
     return null;
   };
@@ -141,17 +145,28 @@ class App extends Component {
                 route: 'categories',
                 title: 'Categories'
               })}
-              {this.restrictedMenuItem({ route: 'roles', title: 'Roles' })}
-              {this.restrictedMenuItem({ route: 'users', title: 'Users' })}
-              {this.restrictedSubMenu({route: 'session', title: 'Student Session', menus: [
-                this.restrictedMenuItem({
-                  route: 'session/application',
-                  title: 'Apply Application'
-                }),
-                this.restrictedMenuItem({
-                  route: 'session/applications',
-                  title: 'View Applications'
-                })]})}
+              {this.restrictedMenuItem({
+                route: 'roles',
+                title: 'Roles'
+              })}
+              {this.restrictedMenuItem({
+                route: 'users',
+                title: 'Users'
+              })}
+              {this.restrictedSubMenu({
+                route: 'session',
+                title: 'Student Session',
+                menus: [
+                  this.restrictedMenuItem({
+                    route: 'session/application',
+                    title: 'Apply Application'
+                  }),
+                  this.restrictedMenuItem({
+                    route: 'session/applications',
+                    title: 'View Applications'
+                  })
+                ]
+              })}
               {isLoggedIn ? this.loggedInMenuItem() : this.loggedOutMenuItem()}
             </Menu>
           </Header>
