@@ -35,20 +35,20 @@ const FinalizeSignupForm = ({ handleSubmit }) => (
       validate={required}
     />
     <Field
-      name="password_confirmation"
-      label="Password confirmation"
+      name="passwordConfirmation"
+      label="Password Confirmation"
       type="password"
       component={TextInput}
       validate={required}
     />
     <Field
-      name="first_name"
+      name="firstName"
       label="First Name"
       component={TextInput}
       validate={required}
     />
     <Field
-      name="last_name"
+      name="lastName"
       label="Last Name"
       component={TextInput}
       validate={required}

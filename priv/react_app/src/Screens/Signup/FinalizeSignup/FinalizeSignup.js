@@ -35,27 +35,27 @@ class FinalizeSignup extends Component<Props, State> {
   };
 
   componentDidMount() {
-    this._fetchCurrentSignup();
+    this.fetchCurrentSignup();
   }
 
-  _fetchCurrentSignup = () => {
+  fetchCurrentSignup = () => {
     const { signupKey } = this.props;
     API.signup
-      .get_current_signup(signupKey)
+      .getCurrentSignup(signupKey)
       .then(res => this.setState({ email: res.data.email }))
       .catch(err => this.setState({ noSuchKey: true }));
   };
 
-  _signup = values => {
+  signup = values => {
     const { signupKey } = this.props;
     const params = pick(
-      ['password', 'password_confirmation', 'first_name', 'last_name'],
+      ['password', 'passwordConfirmation', 'firstName', 'lastName'],
       values
     );
 
     return API.signup
-      .finalize_signup(signupKey, params)
-      .then(res => this.setState({ finished: true }))
+      .finalizeSignup(signupKey, params)
+      .then(() => this.setState({ finished: true }))
       .catch(err => {
         // This error will be shown in the form
         throw new SubmissionError({ ...err.errors });
@@ -88,7 +88,7 @@ class FinalizeSignup extends Component<Props, State> {
       <div className="GatherDetails_Component">
         <h1>Sign up</h1>
         <FinalizeSignupForm
-          onSubmit={this._signup}
+          onSubmit={this.signup}
           initialValues={{ email: this.state.email }}
         />
       </div>
