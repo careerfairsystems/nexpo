@@ -21,7 +21,8 @@ import User from '../Screens/User';
 import CurrentUser from '../Screens/CurrentUser';
 import Companies from '../Screens/Companies';
 import Company from '../Screens/Company';
-import Sessions from '../Screens/Sessions';
+import SessionApplication from '../Screens/SessionApplication';
+import SessionApplications from '../Screens/SessionApplications';
 import Login from '../Screens/Login';
 import Logout from '../Screens/Logout';
 import Signup from '../Screens/Signup';
@@ -46,12 +47,16 @@ const routes = (
     <PrivateRoute path="/users/:id" component={User} />
     <PrivateRoute exact path="/roles" component={Roles} />
     <PrivateRoute path="/roles/:id" component={Role} />
-    <PrivateRoute path="/student_sessions/application" component={Sessions} />
     <Route path="/login" component={Login} />
     <Route path="/logout" component={Logout} />
     <Route path="/signup" component={Signup} />
     <Route path="/forgot-password" component={ForgotPassword} />
     <Route path="/user" component={CurrentUser} />
+    <PrivateRoute path="/session/application" component={SessionApplication} />
+    <PrivateRoute
+      path="/session/applications"
+      component={SessionApplications}
+    />
     <Route component={NotFound} />
   </Switch>
 );
@@ -130,10 +135,16 @@ class App extends Component {
               })}
               {this.restrictedMenuItem({ route: 'roles', title: 'Roles' })}
               {this.restrictedMenuItem({ route: 'users', title: 'Users' })}
-              {this.restrictedMenuItem({
-                route: 'student_sessions/application',
-                title: 'Apply Student Session'
-              })}
+              <Menu.SubMenu title="Student Session">
+                {this.restrictedMenuItem({
+                  route: 'session/application',
+                  title: 'Apply Application'
+                })}
+                {this.restrictedMenuItem({
+                  route: 'session/applications',
+                  title: 'View Applications'
+                })}
+              </Menu.SubMenu>
               {isLoggedIn ? this.loggedInMenuItem() : this.loggedOutMenuItem()}
             </Menu>
           </Header>

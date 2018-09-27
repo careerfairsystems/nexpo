@@ -47,10 +47,10 @@ config :guardian, Guardian,
       "write_companies",
       "read_categories",
       "write_categories",
-      "read_student_sessions",
-      "write_student_sessions",
-      "read_host_applications",
-      "write_host_applications",
+      "read_sessions",
+      "write_sessions",
+      "read_hosts",
+      "write_hosts",
     ]
   }
 

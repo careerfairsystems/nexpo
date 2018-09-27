@@ -25,7 +25,7 @@ defmodule Nexpo.Student do
     |> cast(params, [:year, :user_id])
     |> cast_attachments(params, [:resume_en_url, :resume_sv_url])
     |> validate_required([:user_id])
-    |> unique_constraint(:user_id, message: "User already has a Student")
+    |> unique_constraint(:user_id, message: "Student already has a User")
     |> foreign_key_constraint(:user_id)
   end
 

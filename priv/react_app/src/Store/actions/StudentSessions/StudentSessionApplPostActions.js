@@ -7,10 +7,10 @@ export function createStudentSessionApplIsLoading() {
   };
 }
 
-export function createStudentSessionApplSuccess(application) {
+export function createStudentSessionApplSuccess(user) {
   return {
     type: actionTypes.POST_STUDENT_SESSION_APPL_SUCCESS,
-    application
+    user
   };
 }
 
@@ -28,8 +28,8 @@ export function createStudentSessionAppl(data) {
     dispatch(createStudentSessionApplIsLoading());
     return API.studentSessions
       .create(data)
-      .then(application => {
-        dispatch(createStudentSessionApplSuccess(application.data));
+      .then(user => {
+        dispatch(createStudentSessionApplSuccess(user.data));
       })
       .catch(() => {
         dispatch(createStudentSessionApplFailure());
