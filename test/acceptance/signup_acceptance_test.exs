@@ -176,9 +176,6 @@ defmodule Nexpo.SignupAcceptanceTest do
     # Assert sign_up key has been destroyed
     assert user.signup_key == nil
 
-    # Assert student has been created
-    assert user.student.id
-
     assert_delivered_email Nexpo.Email.completed_sign_up_mail(user)
   end
 

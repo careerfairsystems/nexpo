@@ -52,7 +52,7 @@ StudentSessionForm.defaultProps = {
 StudentSessionForm.propTypes = {
   disabled: PropTypes.bool,
   handleSubmit: PropTypes.func.isRequired,
-  companies: PropTypes.object.isRequired
+  companies: PropTypes.array.isRequired
 };
 
 const mapStateToProps = state => ({
