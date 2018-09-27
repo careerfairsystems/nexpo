@@ -25,16 +25,12 @@ defmodule Nexpo.Student do
     |> cast(params, [:year, :user_id])
     |> cast_attachments(params, [:resume_en_url, :resume_sv_url])
     |> validate_required([:user_id])
-    |> unique_constraint(:user_id, message: "User already has a Student")
+    |> unique_constraint(:user_id, message: "Student already has a User")
     |> foreign_key_constraint(:user_id)
   end
 
   def build_assoc(changeset, user) do
-    case Repo.get_by(Student, user_id: user.id) do
-      nil  ->
-        student = Repo.insert!(Student.changeset(%Student{user_id: user.id}))
-        Ecto.Changeset.put_assoc(changeset, :student, student)
-      _ -> changeset
-    end
+    student = Repo.insert!(Student.changeset(%Student{user_id: user.id}))
+    Ecto.Changeset.put_assoc(changeset, :student, student)
   end
 end

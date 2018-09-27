@@ -19,5 +19,6 @@ defmodule Nexpo.StudentSessionApplication do
     struct
     |> cast(params, [:motivation, :companyApproved, :studentConfirmed, :score, :company_id, :student_id])
     |> validate_required([:motivation, :companyApproved, :studentConfirmed, :score, :company_id, :student_id])
+    |> unique_constraint(:unique, message: "Student has already applied to that company", name: :unique_session_appl_id)
   end
 end
