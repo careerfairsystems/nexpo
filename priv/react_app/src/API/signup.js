@@ -1,4 +1,5 @@
 import { handleHttpResponse } from './utils';
+import { snakeCaseKeys } from '../Util/FormatHelper';
 
 type finalSignupBody = {
   password: string,
@@ -11,7 +12,7 @@ export default {
   /**
    * Initiates a signup
    */
-  initial_signup: (email: string) =>
+  initialSignup: (email: string) =>
     fetch('/api/initial_signup', {
       method: 'POST',
       body: JSON.stringify({ email }),
@@ -23,13 +24,13 @@ export default {
   /**
    * Gets an ongoing signup process
    */
-  get_current_signup: (signupKey: string) =>
+  getCurrentSignup: (signupKey: string) =>
     fetch(`/api/initial_signup/${signupKey}`).then(handleHttpResponse),
 
-  finalize_signup: (signupKey: string, body: finalSignupBody) =>
+  finalizeSignup: (signupKey: string, body: finalSignupBody) =>
     fetch(`/api/final_signup/${signupKey}`, {
       method: 'POST',
-      body: JSON.stringify(body),
+      body: JSON.stringify(snakeCaseKeys(body)),
       headers: new Headers({
         'Content-Type': 'application/json'
       })

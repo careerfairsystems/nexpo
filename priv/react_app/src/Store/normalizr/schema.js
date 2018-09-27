@@ -73,6 +73,14 @@ const roleSchema = () => {
 
 const rolesSchema = () => [roleSchema()];
 
+const studentSchema = () => {
+  const student = entity('students', {}, { model: belongsTo('user') });
+
+  return student;
+};
+
+const studentsSchema = () => [studentSchema()];
+
 const userSchema = () => {
   const company = entity('companies');
   const sessionApplication = entity(
@@ -104,5 +112,7 @@ export default {
   roleSchema,
   rolesSchema,
   userSchema,
-  usersSchema
+  usersSchema,
+  studentSchema,
+  studentsSchema
 };

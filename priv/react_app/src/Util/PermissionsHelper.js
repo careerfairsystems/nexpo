@@ -15,18 +15,17 @@ const getBasePath = route => route.split('/').filter(i => i)[0];
 
 export const hasPermission = (currentUser, route) => {
   const basePath = getBasePath(route);
-  if (currentUser && currentUser.roles) {
-    const { roles } = currentUser;
-    const allowed = roles.some(role => {
-      const permissionsNeeded = routePermissions[basePath];
-      if (permissionsNeeded) {
-        return role.permissions.some(p => permissionsNeeded.includes(p));
-      }
-      return true;
-    });
-    return allowed;
+  const permissionsNeeded = routePermissions[basePath];
+  if (!currentUser) {
+    return false;
   }
-  return false;
+  if (permissionsNeeded) {
+    const { roles = [] } = currentUser;
+    return roles.some(role => {
+      return role.permissions.some(p => permissionsNeeded.includes(p));
+    });
+  }
+  return true;
 };
 
 export default { hasPermission };

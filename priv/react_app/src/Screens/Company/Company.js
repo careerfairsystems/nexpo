@@ -40,10 +40,10 @@ class Company extends Component {
     // If this.props.company is empty we are creating a new company
     if (isEmpty(company)) {
       createCompany({ company: newCompany });
+      resetForm('company');
     } else {
       updateCompany(id, { company: newCompany });
     }
-    resetForm('company');
   };
 
   showStudentSession() {

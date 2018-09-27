@@ -29,8 +29,12 @@ defmodule Nexpo.Student do
     |> foreign_key_constraint(:user_id)
   end
 
-  def build_assoc(changeset, user) do
-    student = Repo.insert!(Student.changeset(%Student{user_id: user.id}))
-    Ecto.Changeset.put_assoc(changeset, :student, student)
+  def build_assoc!(user) do
+    student = Student.changeset(%Student{user_id: user.id}) |> Repo.insert!
+
+    Repo.preload(user, :student)
+    |> Ecto.Changeset.change
+    |> Ecto.Changeset.put_assoc(:student, student)
+    |> Repo.update!
   end
 end

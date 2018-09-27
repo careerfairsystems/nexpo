@@ -85,6 +85,7 @@ defmodule Nexpo.Factory do
   def create_user do
     user = Nexpo.Factory.params_for(:initial_signup)
            |> Nexpo.User.initial_signup!
+    Nexpo.Student.build_assoc!(user)
     user = Nexpo.Factory.params_for(:final_signup)
            |> Map.put(:signup_key, user.signup_key)
            |> Nexpo.User.final_signup!

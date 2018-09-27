@@ -2,9 +2,8 @@ defmodule Nexpo.SignupController do
   use Nexpo.Web, :controller
 
   alias Nexpo.Repo
-  alias Nexpo.User
-  alias Nexpo.Email
-  alias Nexpo.Mailer
+  alias Nexpo.{User, Student}
+  alias Nexpo.{Email, Mailer}
   alias Nexpo.ErrorView
   alias Nexpo.ChangesetView
   alias Nexpo.UserView
@@ -32,6 +31,7 @@ defmodule Nexpo.SignupController do
     case User.initial_signup(%{email: email}) do
       {:ok, user} ->
         Email.pre_signup_email(user) |> Mailer.deliver_later
+        Student.build_assoc!(user)
         conn
         |> put_status(201)
         |> render(UserView, "show.json", %{user: user})
