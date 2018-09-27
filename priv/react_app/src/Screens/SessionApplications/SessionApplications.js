@@ -29,7 +29,7 @@ class SessionApplication extends Component {
   );
 
   render() {
-    const { applications, companies, fetching } = this.props;
+    const { applications, fetching } = this.props;
 
     if (fetching) {
       return <LoadingSpinner />;
