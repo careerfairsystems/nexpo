@@ -13,16 +13,16 @@ describe('createStudentSessionApplIsLoading', () => {
 
 describe('createStudentSessionApplSuccess', () => {
   it('should create the correct action', () => {
-    const testStudentSessionAppl = {
-      name: 'StudentSessionAppl1'
+    const user = {
+      name: 'Test User'
     };
 
     const expectedAction = {
       type: actionTypes.POST_STUDENT_SESSION_APPL_SUCCESS,
-      application: testStudentSessionAppl
+      user
     };
     const action = Actions.studentSessions.createStudentSessionApplSuccess(
-      testStudentSessionAppl
+      user
     );
     expect(action).toEqual(expectedAction);
   });

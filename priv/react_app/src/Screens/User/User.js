@@ -71,7 +71,7 @@ User.propTypes = {
   id: PropTypes.string.isRequired,
   user: PropTypes.shape({
     email: PropTypes.string,
-    student: PropTypes.shape()
+    student: PropTypes.number
   }).isRequired,
   getUser: PropTypes.func.isRequired,
   updateUser: PropTypes.func.isRequired

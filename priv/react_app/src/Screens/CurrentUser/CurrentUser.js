@@ -9,10 +9,9 @@ import StudentForm from '../../Components/Forms/StudentForm';
 class User extends Component {
   constructor(props) {
     super(props);
-    const { currentUser } = props;
+
     this.state = {
-      student: currentUser ? currentUser.student : {},
-      currentStudent: { resumeEnUrl: [], resumeSvUrl: [] },
+      student: { resumeEnUrl: [], resumeSvUrl: [] },
       disabled: true
     };
   }
@@ -22,20 +21,15 @@ class User extends Component {
     getCurrentUser();
   }
 
-  componentWillReceiveProps(nextProps) {
-    const { student = {} } = nextProps.currentUser;
-    this.setState({ student });
-  }
-
   onRemove = name => {
-    const { currentStudent } = this.state;
-    this.setState({ currentStudent: { ...currentStudent, [name]: [] } });
+    const { student } = this.state;
+    this.setState({ student: { ...student, [name]: [] } });
   };
 
   beforeUpload = (file, name) => {
-    const { currentStudent } = this.state;
+    const { student } = this.state;
     this.setState({
-      currentStudent: { ...currentStudent, [name]: [file] }
+      student: { ...student, [name]: [file] }
     });
     return false;
   };
@@ -46,17 +40,17 @@ class User extends Component {
   };
 
   updateStudent = () => {
-    const { currentStudent } = this.state;
+    const { student } = this.state;
     const { currentUser, updateCurrentStudent } = this.props;
     const formData = new FormData();
-    const modifiedKeys = Object.keys(currentStudent).filter(
-      k => currentStudent[k][0] !== currentUser.student[k]
+    const modifiedKeys = Object.keys(student).filter(
+      k => student[k][0] !== currentUser.student[k]
     );
     modifiedKeys.forEach(key => {
-      formData.append(`student[${key}]`, currentStudent[key][0]);
+      formData.append(`student[${key}]`, student[key][0]);
     });
 
-    this.setState({ currentStudent: { resumeEnUrl: [], resumeSvUrl: [] } });
+    this.setState({ student: { resumeEnUrl: [], resumeSvUrl: [] } });
     updateCurrentStudent(formData);
   };
 
@@ -76,8 +70,8 @@ class User extends Component {
   };
 
   render() {
-    const { currentUser, fetching } = this.props;
-    const { currentStudent, disabled, student } = this.state;
+    const { currentUser, currentStudent, fetching } = this.props;
+    const { student, disabled } = this.state;
     if (fetching) {
       return <LoadingSpinner />;
     }
@@ -86,7 +80,7 @@ class User extends Component {
     }
 
     const { email, firstName, lastName, roles } = currentUser;
-    const { resumeEnUrl, resumeSvUrl } = currentStudent;
+    const { resumeEnUrl, resumeSvUrl } = student;
     return (
       <div>
         <h1>
@@ -109,7 +103,7 @@ class User extends Component {
           fileList={{ resumeEnUrl, resumeSvUrl }}
           onSubmit={this.updateStudent}
           disabled={isEmpty(resumeSvUrl) && isEmpty(resumeEnUrl)}
-          currentStudent={student || {}}
+          currentStudent={currentStudent || {}}
         />
       </div>
     );

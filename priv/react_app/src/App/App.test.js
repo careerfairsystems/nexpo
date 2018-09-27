@@ -49,6 +49,7 @@ const state = {
       '1': { id: 1, email: 'dev@it', firstName: 'X', roles: [1, 2] },
       '2': { id: 2, email: 't@it', firstName: 'T', lastName: 'Y', roles: [] }
     },
+    students: {},
     roles: {
       '1': { id: 1, type: 'admin', permissions: ['read_all'], users: [1] },
       '2': { id: 2, type: 'zzz', permissions: ['read_users'], users: [1] }
@@ -109,4 +110,6 @@ it('renders routes without crashing', () => {
   mount(route('/forgot-password'));
   mount(route('/user'));
   mount(route('/invalid-path'));
+  mount(route('/session/application'));
+  mount(route('/session/applications'));
 });
