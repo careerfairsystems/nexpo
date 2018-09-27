@@ -70,6 +70,10 @@ export const EntitiesReducer = (
       normalized = normalize(action.users, Schema.usersSchema());
       return defaultsDeep(state, camelCaseKeys(normalized.entities));
     }
+    case actionTypes.PUT_CURRENT_STUDENT_SUCCESS: {
+      normalized = normalize(action.student, Schema.studentSchema());
+      return defaultsDeep(state, camelCaseKeys(normalized.entities));
+    }
     case actionTypes.FETCH_CATEGORY_SUCCESS:
     case actionTypes.POST_CATEGORY_SUCCESS:
     case actionTypes.PUT_CATEGORY_SUCCESS:

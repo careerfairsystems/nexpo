@@ -5,9 +5,9 @@ export const updateCurrentStudentIsLoading = () => ({
   type: actionTypes.PUT_CURRENT_STUDENT
 });
 
-export const updateCurrentStudentSuccess = user => ({
+export const updateCurrentStudentSuccess = student => ({
   type: actionTypes.PUT_CURRENT_STUDENT_SUCCESS,
-  user
+  student
 });
 
 export const updateCurrentStudentFailure = () => ({
@@ -19,8 +19,8 @@ export function updateCurrentStudent(data) {
     dispatch(updateCurrentStudentIsLoading());
     return API.users
       .updateMyStudent(data)
-      .then(user => {
-        dispatch(updateCurrentStudentSuccess(user.data));
+      .then(student => {
+        dispatch(updateCurrentStudentSuccess(student.data));
       })
       .catch(() => {
         dispatch(updateCurrentStudentFailure());
