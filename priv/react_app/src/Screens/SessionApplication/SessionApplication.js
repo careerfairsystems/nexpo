@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 // import { message } from 'antd';
-import { isEmpty } from 'lodash/fp';
+import { isEmpty, filter } from 'lodash/fp';
 import NotFound from '../NotFound';
 import LoadingSpinner from '../../Components/LoadingSpinner';
 import HtmlTitle from '../../Components/HtmlTitle';
@@ -97,7 +97,7 @@ class SessionApplication extends Component {
         <h1>Apply for student sessions</h1>
         <SessionForm
           onSubmit={this.createStudentSessionAppl}
-          companies={companies || {}}
+          companies={filter('studentSessionDays', companies)}
         />
 
         <h2 style={{ marginTop: 24 }}>Make sure your CVs are uploaded!</h2>
