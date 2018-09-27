@@ -17,19 +17,19 @@ class InitialSignup extends Component {
     finished: false
   };
 
-  _signup = () => {
+  signup = () => {
     const { email } = this.state;
 
     // reset errors to give user feedback that something happened
     this.setState({ errors: {} });
 
     API.signup
-      .initial_signup(email)
-      .then(res => this.setState({ finished: true }))
+      .initialSignup(email)
+      .then(() => this.setState({ finished: true }))
       .catch(err => this.setState({ errors: err.errors }));
   };
 
-  _renderUsernameInput = () => {
+  renderUsernameInput = () => {
     const { email, errors } = this.state;
     return (
       <TextField
@@ -38,13 +38,13 @@ class InitialSignup extends Component {
         value={email}
         autoFocus
         onChange={(event, val) => this.setState({ email: val })}
-        onKeyPress={event => (event.key === 'Enter' ? this._signup() : null)}
+        onKeyPress={event => (event.key === 'Enter' ? this.signup() : null)}
       />
     );
   };
 
-  _renderSignupButton = () => (
-    <RaisedButton label="Sign up" primary onClick={() => this._signup()} />
+  renderSignupButton = () => (
+    <RaisedButton label="Sign up" primary onClick={() => this.signup()} />
   );
 
   render() {
@@ -57,10 +57,10 @@ class InitialSignup extends Component {
       <div className="GatherEmail_Component">
         <h1>Sign up</h1>
         <h2>Please enter your email</h2>
-        {this._renderUsernameInput()}
+        {this.renderUsernameInput()}
         <br />
         <br />
-        {this._renderSignupButton()}
+        {this.renderSignupButton()}
         <br />
         <br />
         <div>Already have an account?</div>
