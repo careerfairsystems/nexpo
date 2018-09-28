@@ -43,6 +43,7 @@ class Company extends Component {
       resetForm('company');
     } else {
       updateCompany(id, { company: newCompany });
+      this.setState({ edit: false });
     }
   };
 

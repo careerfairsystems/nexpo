@@ -22,7 +22,7 @@ const CompanyForm = ({ handleSubmit }) => (
     <Field name="website" label="Website:" component={TextInput} />
     <Field name="description" label="Description:" component={TextArea} />
     <Field
-      name="student_session_days"
+      name="studentSessionDays"
       label="Student Session Days:"
       options={plainOptions}
       component={RadioGroup}
