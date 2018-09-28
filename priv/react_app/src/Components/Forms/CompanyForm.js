@@ -4,6 +4,7 @@ import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import { Button, Form, Input, Radio } from 'antd';
 import makeField from './helper';
+import UploadButton from './UploadButton';
 
 const plainOptions = [
   { value: 0, label: 'No days' },
@@ -16,9 +17,18 @@ const TextInput = makeField(Input);
 const TextArea = makeField(Input.TextArea);
 const RadioGroup = makeField(Radio.Group);
 
-const CompanyForm = ({ handleSubmit }) => (
+const CompanyForm = ({ handleSubmit, logoUrl, beforeUpload, onRemove }) => (
   <Form onSubmit={handleSubmit}>
     <Field name="name" label="Name:" component={TextInput} />
+    <Field
+      name="logoUrl"
+      label="Logo"
+      fileList={logoUrl ? [logoUrl] : []}
+      currentStudent={{}}
+      beforeUpload={beforeUpload}
+      component={UploadButton}
+      onRemove={onRemove}
+    />
     <Field name="website" label="Website:" component={TextInput} />
     <Field name="description" label="Description:" component={TextArea} />
     <Field

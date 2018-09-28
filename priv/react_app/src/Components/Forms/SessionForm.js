@@ -39,7 +39,7 @@ const StudentSessionForm = ({ handleSubmit, companies }) => (
       required
       validate={requiredMotivation}
       component={TextArea}
-      maxlength="2400"
+      maxLength="2400"
       rows={6}
     />
     <Button htmlType="submit">Submit Student Session</Button>

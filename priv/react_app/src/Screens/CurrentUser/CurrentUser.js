@@ -97,7 +97,7 @@ class User extends Component {
           initialValues={currentUser}
         />
         <StudentForm
-          action="//jsonplaceholder.typicode.com/posts/"
+          action=""
           beforeUpload={this.beforeUpload}
           onRemove={this.onRemove}
           fileList={{ resumeEnUrl, resumeSvUrl }}
