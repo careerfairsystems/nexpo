@@ -13,9 +13,9 @@ class SessionCompanies extends Component {
     getAllCompanies();
   }
 
-  renderCompany = ({ name, website, description }) => (
+  renderCompany = ({ name, website, logoUrl, description }) => (
     <List.Item
-      extra={<Avatar icon="user" size={272} />}
+      extra={<Avatar src={logoUrl} size={128} />}
       actions={[
         <InvisibleLink to="/session/application">Apply now</InvisibleLink>
       ]}
@@ -47,6 +47,7 @@ class SessionCompanies extends Component {
           size="large"
           dataSource={filter('studentSessionDays', companies)}
           renderItem={this.renderCompany}
+          style={{ whiteSpace: 'pre-wrap' }}
         />
       </div>
     );

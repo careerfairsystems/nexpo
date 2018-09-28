@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { isEmpty, isNil } from 'lodash/fp';
-import { Button } from 'antd';
+import Button from 'antd/lib/button';
+import Avatar from 'antd/lib/avatar';
 import CompanyForm from '../../Components/Forms/CompanyForm';
 import HtmlTitle from '../../Components/HtmlTitle';
 import NotFound from '../NotFound';
@@ -15,6 +16,7 @@ class Company extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      company: { logoUrl: null },
       edit: false
     };
   }
@@ -27,22 +29,43 @@ class Company extends Component {
     getCompany(id);
   }
 
-  changeState = () => {
+  onRemove = name => {
+    const { company } = this.state;
+    this.setState({ company: { ...company, [name]: null } });
+  };
+
+  beforeUpload = (file, name) => {
+    const { company } = this.state;
+    this.setState({
+      company: { ...company, [name]: file }
+    });
+    return false;
+  };
+
+  toggleEdit = () => {
     const { edit } = this.state;
     this.setState({ edit: !edit });
   };
 
   updateCompany = values => {
-    const newCompany = {
-      ...values
-    };
     const { id, company, createCompany, resetForm, updateCompany } = this.props;
+    const { company: stateCompany } = this.state;
+    const newCompany = {
+      ...values,
+      ...stateCompany
+    };
+
+    const formData = new FormData();
+    Object.keys(newCompany).forEach(key => {
+      formData.append(`company[${key}]`, newCompany[key]);
+    });
     // If this.props.company is empty we are creating a new company
     if (isEmpty(company)) {
-      createCompany({ company: newCompany });
+      createCompany(formData);
       resetForm('company');
     } else {
-      updateCompany(id, { company: newCompany });
+      updateCompany(id, formData);
+      this.setState({ edit: false });
     }
   };
 
@@ -70,9 +93,13 @@ class Company extends Component {
         <HtmlTitle title={name} />
         <div>
           <CompanyForm
+            action=""
             disabled={false}
             onSubmit={this.updateCompany}
             initialValues={company}
+            beforeUpload={this.beforeUpload}
+            onRemove={this.onRemove}
+            logoUrl={this.state.company.logoUrl}
           />
         </div>
       </div>
@@ -84,11 +111,12 @@ class Company extends Component {
 
     const { name, website, description } = company;
     return (
-      <div className="Company_Component">
+      <div className="Company_Component" style={{ whiteSpace: 'pre-wrap' }}>
         <HtmlTitle title={name} />
 
         <div className="left-col">
           <div className="paper main-info">
+            <Avatar src={company.logoUrl} size={128} alt="Company Logotype" />
             <h1>{name}</h1>
             <a href={website}>{website}</a>
             <p>
@@ -99,7 +127,7 @@ class Company extends Component {
           <div className="paper entries">
             <h2>Entries</h2>
           </div>
-          <Button onClick={this.changeState}> Edit</Button>
+          <Button onClick={this.toggleEdit}> Edit</Button>
         </div>
       </div>
     );

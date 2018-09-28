@@ -10,7 +10,7 @@ import SessionForm from '../../Components/Forms/SessionForm';
 
 // const props = {
 //   name: 'file',
-//   action: '//jsonplaceholder.typicode.com/posts/',
+//   action: '',
 //   headers: {
 //     authorization: 'authorization-text'
 //   },
@@ -102,7 +102,7 @@ class SessionApplication extends Component {
 
         <h2 style={{ marginTop: 24 }}>Make sure your CVs are uploaded!</h2>
         <StudentForm
-          action="//jsonplaceholder.typicode.com/posts/"
+          action=""
           beforeUpload={this.beforeUpload}
           onRemove={this.onRemove}
           fileList={{ resumeEnUrl, resumeSvUrl }}
