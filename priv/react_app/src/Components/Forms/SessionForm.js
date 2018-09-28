@@ -35,10 +35,11 @@ const StudentSessionForm = ({ handleSubmit, companies }) => (
     </Field>
     <Field
       name="motivation"
-      label="Write a short motivation to why you want to get in contact with the company"
+      label="Write a short motivation to why you want to get in contact with the company. (Max 400 words)"
       required
       validate={requiredMotivation}
       component={TextArea}
+      maxlength="2400"
       rows={6}
     />
     <Button htmlType="submit">Submit Student Session</Button>
