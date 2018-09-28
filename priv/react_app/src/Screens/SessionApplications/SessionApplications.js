@@ -47,6 +47,7 @@ class SessionApplications extends Component {
           bordered
           dataSource={applications}
           renderItem={this.renderApplication}
+          locale={{ emptyText: 'No Applications' }}
         />
       </div>
     );
