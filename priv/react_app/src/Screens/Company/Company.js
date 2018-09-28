@@ -85,7 +85,7 @@ class Company extends Component {
 
     const { name, website, description } = company;
     return (
-      <div className="Company_Component">
+      <div className="Company_Component" style={{ whiteSpace: 'pre-wrap' }}>
         <HtmlTitle title={name} />
 
         <div className="left-col">
