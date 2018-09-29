@@ -49,8 +49,8 @@ defmodule Nexpo.Router do
       resources "/student_session_time_slots", StudentSessionTimeSlot
       
     end
-    resources "/industry", Industry
-    resources "/job_offer", JobOffer
+    resources "/industries", Industry
+    resources "/job_offers", JobOffer
     resources "/categories", CategoryController, only: [:index, :show, :create]
 
     resources "/roles", RoleController
