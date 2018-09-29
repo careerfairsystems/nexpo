@@ -8,5 +8,7 @@ defmodule Nexpo.Repo.Migrations.CreateIndustry do
       timestamps()
     end
 
+    create unique_index(:industries, [:name])
+
   end
 end
