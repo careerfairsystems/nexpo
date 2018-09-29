@@ -31,7 +31,7 @@ defmodule Nexpo.EmailViewTest do
   end
 
   test "signup_url" do
-    user = Nexpo.User.initial_signup!(%{username: "hejsan"})
+    user = Nexpo.User.initial_signup!(%{email: "hejsan@test.se"})
 
     expected = Application.get_env(:nexpo, :frontend_url) <> "/signup?key=" <> user.signup_key
     assert signup_url(user) == expected

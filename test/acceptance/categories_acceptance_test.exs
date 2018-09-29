@@ -5,6 +5,7 @@ defmodule Nexpo.CategoriesAcceptanceTest do
     {:ok, conn: put_req_header(conn, "accept", "application/json")}
   end
 
+  @tag :logged_in
   test "GET /categories returns all categories that exist", %{conn: conn} do
     categories = Factory.insert_list(3, :category)
     conn = conn |> get("/api/categories")
@@ -14,6 +15,7 @@ defmodule Nexpo.CategoriesAcceptanceTest do
     assert length(response) == length(categories)
   end
 
+  @tag :logged_in
   test "GET /categories is empty if no categories exist", %{conn: conn} do
     conn = conn |> get("/api/categories")
     assert json_response(conn, 200)
@@ -21,6 +23,7 @@ defmodule Nexpo.CategoriesAcceptanceTest do
     assert length(respose) == 0
   end
 
+  @tag :logged_in
   test "GET /categories/:id returns an empty attributes list if no exist", %{conn: conn} do
     category = Factory.insert(:category)
 
@@ -44,6 +47,7 @@ defmodule Nexpo.CategoriesAcceptanceTest do
     assert ExJsonSchema.Validator.validate(schema, response) == :ok
   end
 
+  @tag :logged_in
   test "GET /categories returns data on the right format", %{conn: conn} do
     Factory.insert(:category) |> Factory.with_attributes(3)
     Factory.insert(:category) |> Factory.with_attributes(3)
@@ -72,6 +76,7 @@ defmodule Nexpo.CategoriesAcceptanceTest do
     assert ExJsonSchema.Validator.validate(schema, response) == :ok
   end
 
+  @tag :logged_in
   test "GET /categories/:id returns data on the right format", %{conn: conn} do
     category = Factory.insert(:category) |> Factory.with_attributes(3)
     conn = conn |> get("/api/categories/#{category.id}")
@@ -95,9 +100,10 @@ defmodule Nexpo.CategoriesAcceptanceTest do
     assert ExJsonSchema.Validator.validate(schema, response) == :ok
   end
 
+  @tag :logged_in
   test "POST /categories/ creates a category given correct parameters", %{conn: conn} do
     params = Factory.params_for(:category)
-    conn = post(conn, "/api/categories", params)
+    conn = post(conn, "/api/categories", category: params)
 
     assert json_response(conn, 201)
 
@@ -106,22 +112,18 @@ defmodule Nexpo.CategoriesAcceptanceTest do
 
   end
 
+  @tag :logged_in
   test "POST /categories fails given insufficient data", %{conn: conn} do
     params = %{}
-    conn = post(conn, "/api/categories", params)
-
-    assert json_response(conn, 422)
-
-    # Test incorrect data types
-    params = %{title: 1}
-    conn = post(conn, "/api/categories", params)
+    conn = post(conn, "/api/categories", category: params)
 
     assert json_response(conn, 422)
   end
 
+  @tag :logged_in
   test "POST /categories/ returns the category on success", %{conn: conn} do
     params = Factory.params_for(:category)
-    conn = post(conn, "/api/categories", params)
+    conn = post(conn, "/api/categories", category: params)
 
     assert json_response(conn, 201)
     response = Poison.decode!(conn.resp_body)["data"]

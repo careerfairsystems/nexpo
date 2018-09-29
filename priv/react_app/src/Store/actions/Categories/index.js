@@ -1,3 +1,3 @@
-import * as CategoryActions from './CategoriesActions';
+import CategoriesActions from './CategoriesActions';
 
-export default CategoryActions;
+export default CategoriesActions;

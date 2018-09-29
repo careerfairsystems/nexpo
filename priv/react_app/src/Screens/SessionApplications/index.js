@@ -1,0 +1,22 @@
+import { connect } from 'react-redux';
+import { Actions, Selectors } from '../../Store';
+import SessionApplications from './SessionApplications';
+import { State } from '../../Store/reducers/index';
+
+const mapStateToProps = (state: State) => ({
+  applications: Selectors.students.getCurrentSessionAppl(state),
+  companies: state.entities.companies,
+  fetching: state.api.current_user.fetching
+});
+
+const mapDispatchToProps = {
+  getCurrentUser: Actions.users.getCurrentUser,
+  getAllCompanies: Actions.companies.getAllCompanies
+};
+
+const stateful = connect(
+  mapStateToProps,
+  mapDispatchToProps
+);
+
+export default stateful(SessionApplications);

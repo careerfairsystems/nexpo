@@ -14,7 +14,6 @@ install-deps:
 	mix local.hex --force && \
 	mix archive.install --force https://github.com/phoenixframework/archives/raw/master/phoenix_new.ez && \
 	npm run install-deps && \
-  gem install fakes3 && \
 	mix ecto.create && \
 	mix ecto.migrate
 

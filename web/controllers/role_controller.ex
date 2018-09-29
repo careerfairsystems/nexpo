@@ -1,7 +1,17 @@
 defmodule Nexpo.RoleController do
   use Nexpo.Web, :controller
 
-  alias Nexpo.Role
+  alias Nexpo.{Role, User}
+  alias Guardian.Plug.{EnsurePermissions}
+
+  plug EnsurePermissions, [handler: Nexpo.SessionController,
+                           one_of: [%{default: ["read_all"]},
+                                    %{default: ["read_roles"]}]
+                          ] when action in [:index, :show]
+  plug EnsurePermissions, [handler: Nexpo.SessionController,
+                           one_of: [%{default: ["write_all"]},
+                                    %{default: ["write_roles"]}]
+                          ] when action in [:create, :update, :delete]
 
   def index(conn, _params) do
     roles = Repo.all(Role)
@@ -25,16 +35,18 @@ defmodule Nexpo.RoleController do
   end
 
   def show(conn, %{"id" => id}) do
-    role = Role
-        |> Repo.get!(id)
-        |> Repo.preload(:users)
+    role = Repo.get!(Role, id)
+           |> Repo.preload(:users)
 
     render(conn, "show.json", role: role)
   end
 
   def update(conn, %{"id" => id, "role" => role_params}) do
     role = Repo.get!(Role, id)
+           |> Repo.preload(:users)
+
     changeset = Role.changeset(role, role_params)
+                |> User.put_assoc(role_params)
 
     case Repo.update(changeset) do
       {:ok, role} ->

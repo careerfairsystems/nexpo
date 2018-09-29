@@ -2,13 +2,13 @@ import { actionTypes } from '../..';
 import API from '../../../API';
 import { ApiError } from '../../../Errors/ApiError';
 
-export function forgot_password_request() {
+export function forgotPasswordRequest() {
   return {
     type: actionTypes.FORGOT_PASSWORD_REQUEST
   };
 }
 
-export function forgot_password_success() {
+export function forgotPasswordSuccess() {
   return {
     type: actionTypes.FORGOT_PASSWORD_SUCCESS
   };
@@ -16,9 +16,9 @@ export function forgot_password_success() {
 
 export function forgot_password({ email }) {
   return dispatch => {
-    dispatch(forgot_password_request());
+    dispatch(forgotPasswordRequest());
     return API.session.forgot_password({ email }).then(res => {
-      dispatch(forgot_password_success());
+      dispatch(forgotPasswordSuccess());
     });
   };
 }
@@ -55,13 +55,13 @@ export function verify_forgot_password_key({ key }) {
   };
 }
 
-export function replace_forgotten_password_request() {
+export function replaceForgottenPasswordRequest() {
   return {
     type: actionTypes.REPLACE_FORGOTTEN_PASSWORD_REQUEST
   };
 }
 
-export function replace_forgotten_password_success() {
+export function replaceForgottenPasswordSuccess() {
   return {
     type: actionTypes.REPLACE_FORGOTTEN_PASSWORD_SUCCESS
   };
@@ -71,7 +71,7 @@ export type ReplaceForgottenPasswordFailureAction = {
   type: string,
   errors: object
 };
-export function replace_forgotten_password_failure(
+export function replaceForgottenPasswordFailure(
   errors
 ): ReplaceForgottenPasswordFailureAction {
   return {
@@ -86,7 +86,7 @@ export function replace_forgotten_password({
   password_confirmation
 }) {
   return dispatch => {
-    dispatch(replace_forgotten_password_request());
+    dispatch(replaceForgottenPasswordRequest());
     return API.session
       .replace_forgotten_password({
         key,
@@ -94,10 +94,10 @@ export function replace_forgotten_password({
         password_confirmation
       })
       .then(res => {
-        dispatch(replace_forgotten_password_success());
+        dispatch(replaceForgottenPasswordSuccess());
       })
       .catch((error: ApiError) => {
-        dispatch(replace_forgotten_password_failure(error.errors));
+        dispatch(replaceForgottenPasswordFailure(error.errors));
       });
   };
 }

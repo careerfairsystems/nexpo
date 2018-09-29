@@ -26,7 +26,7 @@ defmodule Nexpo.Company do
   """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:name, :description, :website])
+    |> cast(params, [:name, :description, :website, :student_session_days])
     |> cast_attachments(params, [:logo_url])
     |> validate_required([:name, :description, :website])
     |> unique_constraint(:name)

@@ -1,4 +1,4 @@
-import { handleHttpResponse } from './index';
+import { handleHttpResponse } from './utils';
 import UnreachableCodeReachedError from '../Errors/UnreachableCodeReachedError';
 
 export default {

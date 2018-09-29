@@ -1,68 +1,21 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Input, Form } from 'antd';
-import { isEmpty, isFinite } from 'lodash/fp';
-import LoadingSpinner from '../../Components/LoadingSpinner';
-
-const FormItem = Form.Item;
-const userFields = ['phone_number', 'food_preferences'];
-const headers = {
-  first_name: 'First Name',
-  last_name: 'Last Name',
-  phone_number: 'Phone Number',
-  email: 'Email',
-  food_preferences: 'Food Preferences'
-};
-const renderStaticFields = ({ first_name, last_name, email, roles }) => (
-  <div>
-    <h1>
-      {first_name} {last_name}
-    </h1>
-    <h2>Email: {email}</h2>
-    <h2>Roles: {roles ? roles.toString() : 'None'}</h2>
-  </div>
-);
+import { isEmpty, isNil, map } from 'lodash/fp';
+import NotFound from '../NotFound';
+import UserForm from '../../Components/Forms/UserForm';
 
 class User extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
-      currentUser: { ...props.currentUser },
       disabled: true
     };
   }
 
-  componentWillReceiveProps(props) {
-    this.setState({ currentUser: props.currentUser });
-  }
-
-  getInput(field) {
-    const { currentUser, disabled } = this.state;
-    switch (field) {
-      case 'phone_number':
-        return (
-          <Input
-            value={currentUser[field]}
-            disabled={disabled}
-            onChange={e => {
-              const val = e.target.value;
-              if ((val && isFinite(Number(val))) || val === '') {
-                this.updateUser(field, val);
-              }
-            }}
-            style={{ width: 200 }}
-          />
-        );
-      default:
-        return (
-          <Input
-            disabled={disabled}
-            onChange={e => this.updateUser(field, e.target.value)}
-            value={currentUser[field]}
-            style={{ width: 200 }}
-          />
-        );
-    }
+  componentWillMount() {
+    const { id, getUser } = this.props;
+    getUser(id);
   }
 
   toggleEdit = () => {
@@ -70,38 +23,58 @@ class User extends Component {
     this.setState({ disabled: !disabled });
   };
 
-  updateUser(field, value) {
-    const { currentUser } = this.state;
-    this.setState({ currentUser: { ...currentUser, [field]: value } });
-  }
+  update = values => {
+    const { id, user, updateUser } = this.props;
+    const { disabled } = this.state;
+
+    const data = Object.keys(values).reduce((modified, key) => {
+      if (user[key] !== values[key]) {
+        modified[key] = values[key];
+      }
+      return modified;
+    }, {});
+
+    this.setState({ disabled: !disabled });
+    updateUser(id, { user: data });
+  };
 
   render() {
-    const { currentUser, disabled } = this.state;
-    const { fetching } = this.props;
-    if (fetching || isEmpty(currentUser)) {
-      return <LoadingSpinner />;
+    const { user } = this.props;
+    const { email, firstName, lastName, roles } = user;
+    const { disabled } = this.state;
+
+    if (isEmpty(user) || isNil(user)) {
+      return <NotFound />;
     }
 
     return (
       <div>
-        {renderStaticFields(currentUser)}
-        <Form layout="vertical">
-          {userFields.map(k => (
-            <FormItem key={k} label={headers[k] || k}>
-              {this.getInput(k)}
-            </FormItem>
-          ))}
-        </Form>
-        <Button type="primary" onClick={this.toggleEdit}>
-          {disabled ? 'Edit Profile' : 'Done'}
-        </Button>
+        <h1>
+          {firstName} {lastName}
+        </h1>
+        <h2>Email: {email}</h2>
+        <h2>
+          Roles: {isEmpty(roles) ? 'None' : map('type', roles).join(', ')}
+        </h2>
+        <UserForm
+          onSubmit={this.update}
+          disabled={disabled}
+          toggleEdit={this.toggleEdit}
+          initialValues={user}
+        />
       </div>
     );
   }
 }
+
 User.propTypes = {
-  currentUser: PropTypes.shape({ email: PropTypes.string }).isRequired,
-  fetching: PropTypes.bool.isRequired
+  id: PropTypes.string.isRequired,
+  user: PropTypes.shape({
+    email: PropTypes.string,
+    student: PropTypes.number
+  }).isRequired,
+  getUser: PropTypes.func.isRequired,
+  updateUser: PropTypes.func.isRequired
 };
 
 export default User;

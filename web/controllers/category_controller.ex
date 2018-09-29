@@ -2,6 +2,16 @@ defmodule Nexpo.CategoryController do
   use Nexpo.Web, :controller
 
   alias Nexpo.Category
+  alias Guardian.Plug.{EnsurePermissions}
+
+  plug EnsurePermissions, [handler: Nexpo.SessionController,
+                           one_of: [%{default: ["read_all"]},
+                                    %{default: ["read_categories"]}]
+                          ] when action in [:index, :show]
+  plug EnsurePermissions, [handler: Nexpo.SessionController,
+                           one_of: [%{default: ["write_all"]},
+                                    %{default: ["write_categories"]}]
+                          ] when action in [:create, :update, :delete]
 
   @apidoc """
   @api {GET} /categories List categories
@@ -45,7 +55,7 @@ defmodule Nexpo.CategoryController do
   @apiUse UnprocessableEntity
   @apiUse InternalServerError
   """
-  def create(conn, category_params) do
+  def create(conn, %{"category" => category_params}) do
     changeset = Category.changeset(%Category{}, category_params)
     case Repo.insert(changeset) do
       {:ok, category} ->
@@ -83,7 +93,7 @@ defmodule Nexpo.CategoryController do
   @apiUse InternalServerError
   """
   def show(conn, %{"id" => id}) do
-    category = Repo.get!(Category, id) 
+    category = Repo.get!(Category, id)
                |> Repo.preload([attributes: [entries: :company]])
     render(conn, "show.json", category: category)
   end

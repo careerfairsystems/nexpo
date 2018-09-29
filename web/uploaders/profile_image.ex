@@ -21,7 +21,7 @@ defmodule Nexpo.ProfileImage do
   #   {:convert, "-strip -thumbnail 250x250^ -gravity center -extent 250x250 -format png", :png}
   # end
 
-  # We use this so other file name can't be gueesed
+  # We use this so other file name can't be guessed
   def filename(version, {_, scope}) do
     :crypto.hash(:sha256, "a_very_long_string_#{scope.name}_#{version}")
     |> Base.encode16

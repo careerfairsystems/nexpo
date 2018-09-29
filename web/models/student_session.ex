@@ -17,5 +17,6 @@ defmodule Nexpo.StudentSession do
     struct
     |> cast(params, [:start, :end, :company_id, :student_id])
     |> validate_required([:start, :end, :company_id, :student_id])
+    |> unique_constraint(:unique, message: "Student has already a session with that company", name: :unique_session_id)
   end
 end

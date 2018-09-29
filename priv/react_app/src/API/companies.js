@@ -1,17 +1,39 @@
 /*
-*   This file contains methods to access the /companies reasource on the server.
+*   This file contains methods to access the /companies resource on the server.
 */
 
-import { handleHttpResponse } from './index';
+import {
+  authPost,
+  authFetch,
+  authPut,
+  authDelete,
+  handleHttpResponse
+} from './utils';
 
 export default {
   /**
+   * Create a company
+   */
+  create: data => authPost('/api/companies', data).then(handleHttpResponse),
+
+  /**
    * Fetches all companies
    */
-  getAll: () => fetch('/api/companies').then(handleHttpResponse),
+  getAll: () => authFetch('/api/companies').then(handleHttpResponse),
 
   /**
    * Fetches a company
    */
-  get: id => fetch(`/api/companies/${id}`).then(handleHttpResponse)
+  get: id => authFetch(`/api/companies/${id}`).then(handleHttpResponse),
+
+  /**
+   * Updates a company
+   */
+  update: (id, data) =>
+    authPut(`/api/companies/${id}`, data).then(handleHttpResponse),
+
+  /**
+   * Delete a company
+   */
+  destroy: id => authDelete(`/api/companies/${id}`).then(handleHttpResponse)
 };

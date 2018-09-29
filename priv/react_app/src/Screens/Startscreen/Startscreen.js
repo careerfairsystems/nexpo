@@ -1,15 +1,22 @@
 import React, { Component } from 'react';
-
-const hostString =
-  "If you are a host, don't forget to upload you resumes under you profile and apply for student sessions.";
+import InvisibleLink from '../../Components/InvisibleLink';
 
 class Startscreen extends Component {
   render() {
     return (
       <div>
-        <h1>Welcome to Nexpo!</h1>
+        <h1>Welcome to Arkad!</h1>
 
-        <h3>{hostString}</h3>
+        <h3>You can now apply for Student Sessions.</h3>
+        <InvisibleLink to="/session/application">
+          Apply for Student Session
+        </InvisibleLink>
+        <br />
+        <br />
+        <h3>
+          You can also view the companies that will have student sessions.
+        </h3>
+        <InvisibleLink to="/session/companies">Go to Companies</InvisibleLink>
       </div>
     );
   }

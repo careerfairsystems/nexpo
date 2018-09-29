@@ -2,6 +2,11 @@ defmodule Nexpo.DesiredProgrammeController do
   use Nexpo.Web, :controller
 
   alias Nexpo.{Company, DesiredProgramme}
+  alias Guardian.Plug.{EnsurePermissions}
+
+  plug EnsurePermissions, [handler: Nexpo.SessionController,
+                           default: ["write_all"]
+                          ] when action in [:create]
 
   def create(conn, %{"desired_programme" => desired_programmes_params, "company_id" => company_id}) do
     data = Map.put(desired_programmes_params, "company_id", company_id)
@@ -11,7 +16,7 @@ defmodule Nexpo.DesiredProgrammeController do
                 |> DesiredProgramme.changeset(data)
 
     case Repo.insert(changeset) do
-      {:ok} ->
+      {:ok, _programme} ->
         conn
         |> redirect(to: company_path(conn, :show, company))
       {:error, changeset} ->

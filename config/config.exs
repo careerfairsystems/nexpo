@@ -32,9 +32,28 @@ config :guardian, Guardian,
   verify_issuer: true, # optional
   # Secret key is overridden in prod config
   secret_key: "vbk9Zrn5w1D7U2zUPey37NX9DZygy1lFXMSyLCYu/VorzxFzal7dcwsqp9UU6JZC",
-  serializer: Nexpo.GuardianSerializer
+  serializer: Nexpo.GuardianSerializer,
+  permissions: %{
+    default: [
+      "read_all",
+      "write_all",
+      "read_users",
+      "write_users",
+      "read_roles",
+      "write_roles",
+      "read_events",
+      "write_events",
+      "read_companies",
+      "write_companies",
+      "read_categories",
+      "write_categories",
+      "read_sessions",
+      "write_sessions",
+      "read_hosts",
+      "write_hosts",
+    ]
+  }
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env}.exs"
-

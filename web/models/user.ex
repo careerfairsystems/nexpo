@@ -16,10 +16,46 @@ defmodule Nexpo.User do
     field :forgot_password_key, :string
     field :forgot_password_time, :naive_datetime
 
-    many_to_many :roles, Nexpo.Role, join_through: "users_roles"
-    has_one :student, Nexpo.Student
+    many_to_many :roles, Nexpo.Role, join_through: "users_roles", on_replace: :delete
+    has_one :student, Nexpo.Student, on_delete: :delete_all
 
     timestamps()
+  end
+
+  def changeset(struct, params \\ %{}) do
+    struct
+    |> cast(params, [:email, :password, :first_name, :last_name])
+    |> cast(params, [:food_preferences, :phone_number])
+    |> unique_constraint(:email)
+    |> validate_length(:password, min: 6)
+    |> hash_password(params)
+    |> validate_required([:email, :hashed_password])
+  end
+
+  def get_permissions(user) do
+    Repo.all(from(
+      role in Ecto.assoc(user, :roles),
+      select: role.permissions)
+    )
+    |> List.flatten
+  end
+
+  def put_assoc(changeset, params) do
+    case Map.get(params, "user_ids") do
+      nil ->
+        changeset
+      user_ids ->
+        users = get_assoc(user_ids)
+        changeset
+        |> Ecto.Changeset.put_assoc(:users, users)
+    end
+  end
+
+  defp get_assoc(user_ids) do
+    Repo.all(from(
+      user in User,
+      where: user.id in ^user_ids)
+    )
   end
 
   def replace_forgotten_password_changeset(user, params \\ %{}) do
@@ -38,8 +74,11 @@ defmodule Nexpo.User do
     |> validate_change(:email, fn :email, email ->
 
       cond do
+        # Email canot be empty
+        email == "" -> [email: "Email cannot be empty"]
+
         # Validate username is not empty
-        email == global_email_domain() -> [email: "Cannot be empty"]
+        !String.contains?(email, "@") -> [email: "Has to include @"]
 
         # Validate email does not contains whitespace
         String.contains?(email, " ") -> [email: "Cannot contain blank spaces"]
@@ -69,15 +108,6 @@ defmodule Nexpo.User do
   def forgot_password_changeset(user, params \\ %{}) do
     changeset(user, params)
     |> generate_forgot_password_key()
-  end
-
-  def changeset(struct, params \\ %{}) do
-    struct
-    |> cast(params, [:email, :password, :first_name, :last_name])
-    |> unique_constraint(:email)
-    |> validate_length(:password, min: 6)
-    |> hash_password(params)
-    |> validate_required([:email, :hashed_password])
   end
 
   def authenticate(%{:email => email, :password => password}) do
@@ -125,23 +155,13 @@ defmodule Nexpo.User do
     end
   end
 
-  def global_email_domain do
-    "@student.lu.se"
-  end
-
-  def convert_username_to_email(username) do
-    username <> global_email_domain()
-  end
-
   # Does the initial signup
-  def initial_signup(%{:username => username}) do
-    email = convert_username_to_email(username)
+  def initial_signup(%{:email => email}) do
     User.initial_signup_changeset(%User{}, %{email: email})
     |> Repo.insert
   end
 
-  def initial_signup!(%{:username => username}) do
-    email = convert_username_to_email(username)
+  def initial_signup!(%{:email => email}) do
     User.initial_signup_changeset(%User{}, %{email: email})
     |> Repo.insert!
   end
@@ -150,9 +170,19 @@ defmodule Nexpo.User do
     case Repo.get_by(User, signup_key: params.signup_key) do
       nil -> :no_such_user
       user ->
-        user
+        Repo.preload(user, :student)
         |> User.final_signup_changeset(params)
         |> Repo.update
+    end
+  end
+
+  def final_signup!(params) do
+    case Repo.get_by(User, signup_key: params.signup_key) do
+      nil -> :no_such_user
+      user ->
+        Repo.preload(user, :student)
+        |> User.final_signup_changeset(params)
+        |> Repo.update!
     end
   end
 
