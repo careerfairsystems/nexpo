@@ -7,6 +7,8 @@ defmodule Nexpo.Repo.Migrations.CreateJobOffer do
 
       timestamps()
     end
+    
+    create unique_index(:job_offers, [:type])
 
   end
 end
