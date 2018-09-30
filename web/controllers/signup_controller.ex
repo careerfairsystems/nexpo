@@ -104,7 +104,8 @@ defmodule Nexpo.SignupController do
       password: params["password"],
       password_confirmation: params["password_confirmation"],
       first_name: params["first_name"],
-      last_name: params["last_name"]
+      last_name: params["last_name"],
+      phone_number: params["phone_number"]
     }
     case User.final_signup(params) do
       {:ok, user} ->
