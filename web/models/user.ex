@@ -95,7 +95,7 @@ defmodule Nexpo.User do
 
   def final_signup_changeset(user, params \\ %{}) do
     user
-    |> cast(params, [:password, :first_name, :last_name])
+    |> cast(params, [:password, :first_name, :last_name, :phone_number])
     |> validate_required(:password)
     |> validate_length(:password, min: 6)
     |> validate_confirmation(:password, required: true)
