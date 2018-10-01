@@ -49,7 +49,13 @@ class FinalizeSignup extends Component<Props, State> {
   signup = values => {
     const { signupKey } = this.props;
     const params = pick(
-      ['password', 'passwordConfirmation', 'firstName', 'lastName'],
+      [
+        'password',
+        'passwordConfirmation',
+        'firstName',
+        'lastName',
+        'phoneNumber'
+      ],
       values
     );
 
@@ -63,7 +69,7 @@ class FinalizeSignup extends Component<Props, State> {
   };
 
   render() {
-    const { noSuchKey, finished } = this.state;
+    const { email, finished, noSuchKey } = this.state;
 
     // Redirect to root url if sign up key is incorrect
     if (noSuchKey) {
@@ -89,7 +95,7 @@ class FinalizeSignup extends Component<Props, State> {
         <h1>Sign up</h1>
         <FinalizeSignupForm
           onSubmit={this.signup}
-          initialValues={{ email: this.state.email }}
+          initialValues={{ email }}
         />
       </div>
     );
