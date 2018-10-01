@@ -16,7 +16,7 @@ defmodule Nexpo.User do
     field :forgot_password_key, :string
     field :forgot_password_time, :naive_datetime
 
-    many_to_many :roles, Nexpo.Role, join_through: "users_roles", on_replace: :delete
+    many_to_many :roles, Nexpo.Role, join_through: "users_roles", on_replace: :delete, on_delete: :delete_all
     has_one :student, Nexpo.Student, on_delete: :delete_all
 
     timestamps()

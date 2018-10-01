@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { isEmpty, map } from 'lodash/fp';
+import { Button, Modal } from 'antd';
 import LoadingSpinner from '../../Components/LoadingSpinner';
 import NotFound from '../NotFound';
 import UserForm from '../../Components/Forms/UserForm';
 import StudentForm from '../../Components/Forms/StudentForm';
+import { logout } from '../../Store/actions/Auth/AuthActions';
 
+const { confirm } = Modal;
 class User extends Component {
   constructor(props) {
     super(props);
@@ -32,6 +35,18 @@ class User extends Component {
       student: { ...student, [name]: [file] }
     });
     return false;
+  };
+
+  destroyCurrentUser = () => {
+    const { currentUser, destroyCurrentUser, logout } = this.props;
+    confirm({
+      title: 'Do you want to delete your account?',
+      onOk() {
+        destroyCurrentUser(currentUser.id);
+        logout();
+      },
+      onCancel() {}
+    });
   };
 
   toggleEdit = () => {
@@ -85,6 +100,13 @@ class User extends Component {
       <div>
         <h1>
           {firstName} {lastName}
+          <Button
+            onClick={this.destroyCurrentUser}
+            style={{ float: 'right' }}
+            type="danger"
+          >
+            Delete Account
+          </Button>
         </h1>
         <h2>Email: {email}</h2>
         <h2>
