@@ -17,7 +17,7 @@ defmodule Nexpo.StudentSessionTimeSlot do
   """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:start, :end, :used])
-    |> validate_required([:start, :end, :used])
+    |> cast(params, [:start, :end, :used, :company_id])
+    |> validate_required([:start, :end, :used, :company_id])
   end
 end
