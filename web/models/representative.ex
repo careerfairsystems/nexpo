@@ -18,6 +18,8 @@ defmodule Nexpo.Representative do
     struct
     |> cast(params, [:user_id, :company_id])
     |> validate_required([:user_id, :company_id])
+    |> foreign_key_constraint(:user_id)
+    |> foreign_key_constraint(:company_id)
   end
 
   def build_assoc!(user, company_id) do
