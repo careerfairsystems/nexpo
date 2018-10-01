@@ -40,6 +40,8 @@ defmodule Nexpo.Support.View do
         %{:category => render_one(object.category, Nexpo.CategoryView, "category.json")}
       :roles ->
         %{:roles => render_many(object.roles, Nexpo.RoleView, "role.json")}
+      :user ->
+        %{:user => render_one(object.user, Nexpo.UserView, "user.json")}
       :users ->
         %{:users => render_many(object.users, Nexpo.UserView, "user.json")}
       :student ->

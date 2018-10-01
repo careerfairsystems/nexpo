@@ -18,6 +18,7 @@ defmodule Nexpo.User do
 
     many_to_many :roles, Nexpo.Role, join_through: "users_roles", on_replace: :delete
     has_one :student, Nexpo.Student, on_delete: :delete_all
+    has_one :representative, Nexpo.Representative, on_delete: :delete_all
 
     timestamps()
   end
