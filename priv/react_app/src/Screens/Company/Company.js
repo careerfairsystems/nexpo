@@ -174,7 +174,6 @@ Company.propTypes = {
   id: PropTypes.string,
   company: PropTypes.object.isRequired,
   createCompany: PropTypes.func.isRequired,
-  initialRepresentativeSignup: PropTypes.func.isRequired,
   fetching: PropTypes.bool.isRequired,
   getCompany: PropTypes.func.isRequired,
   match: PropTypes.shape({
