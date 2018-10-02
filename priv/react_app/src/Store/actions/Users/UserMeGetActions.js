@@ -1,5 +1,3 @@
-import { message } from 'antd';
-
 import { actionTypes } from '../..';
 import API from '../../../API';
 
