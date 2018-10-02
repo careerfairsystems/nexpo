@@ -11,6 +11,8 @@ const mapStateToProps = (state: State) => ({
 
 const mapDispatchToProps = {
   getCurrentUser: Actions.users.getCurrentUser,
+  destroyCurrentUser: Actions.users.destroyCurrentUser,
+  logout: Actions.auth.logout,
   updateCurrentUser: Actions.users.updateCurrentUser,
   updateCurrentStudent: Actions.users.updateCurrentStudent
 };

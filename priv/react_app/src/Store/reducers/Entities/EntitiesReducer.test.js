@@ -208,4 +208,25 @@ describe('Entities reducer', () => {
       }
     });
   });
+  it('should handle fetch current user success', () => {
+    const testUser = { id: 1, name: 'Test User' };
+    const action = Actions.users.getCurrentUserSuccess(testUser);
+    const state = EntitiesReducer(undefined, action);
+
+    expect(state).toMatchObject({
+      users: {
+        1: testUser
+      }
+    });
+  });
+
+  it('should handle delete current user success', () => {
+    const testUser = { id: 1, name: 'Test User' };
+    const action = Actions.users.destroyCurrentUserSuccess(testUser);
+    const state = EntitiesReducer(undefined, action);
+
+    expect(state).toMatchObject({
+      users: {}
+    });
+  });
 });

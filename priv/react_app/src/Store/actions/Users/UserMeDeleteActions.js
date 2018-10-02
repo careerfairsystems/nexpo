@@ -5,9 +5,9 @@ export const destroyCurrentUserIsLoading = () => ({
   type: actionTypes.DELETE_CURRENT_USER
 });
 
-export const destroyCurrentUserSuccess = user => ({
+export const destroyCurrentUserSuccess = id => ({
   type: actionTypes.DELETE_CURRENT_USER_SUCCESS,
-  user
+  id
 });
 
 export const destroyCurrentUserFailure = () => ({
@@ -19,8 +19,8 @@ export function destroyCurrentUser(id) {
     dispatch(destroyCurrentUserIsLoading());
     return API.users
       .destroyMe(id)
-      .then(user => {
-        dispatch(destroyCurrentUserSuccess(user.data));
+      .then(() => {
+        dispatch(destroyCurrentUserSuccess(id));
       })
       .catch(() => {
         dispatch(destroyCurrentUserFailure());
