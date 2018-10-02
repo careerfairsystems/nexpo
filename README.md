@@ -47,7 +47,7 @@ This project aims to to supply [ARKAD](https://arkad.tlth.se) with an inhouse pr
 The system requires these programs to be installed. The project intends to always follow stable releases. The system is verified to work with the following setup
 - Elixir 1.4.4 [Installation instructions](https://elixir-lang.org/install.html)
 - Erlang OTP 19.3 - Installed automatically with Elixir
-- Node 8.11.4 [Installation instructions](https://nodejs.org/en/download/)
+- Node 8.11.1 [Installation instructions](https://nodejs.org/en/download/)
 - PostgreSQL 9.6.2 [Installation instruction](https://wiki.postgresql.org/wiki/Detailed_installation_guides)
 
 We recommend installing ```node``` with nenv. [Installation instructions](https://github.com/ryuone/nenv)
