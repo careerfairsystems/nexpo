@@ -53,7 +53,6 @@
     "build": "npm run build-css && react-scripts build",
     "test": "npm run test-ci",
     "test-js": "react-scripts test --env=jsdom",
-    "clear_jest": "jest --clearCache",
     "test-watch": "npm-run-all -p watch-css test-js",
     "test-ci": "npm run build-css && CI=true npm run test-js",
     "test-coverage": "npm run test-js -- --coverage",
@@ -63,5 +62,11 @@
   "engines": {
     "node": "8.11.1",
     "npm": ">5.0.0"
-  }
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }
