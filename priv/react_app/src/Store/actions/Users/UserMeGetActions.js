@@ -1,3 +1,5 @@
+import { message } from 'antd';
+
 import { actionTypes } from '../..';
 import API from '../../../API';
 
@@ -10,9 +12,11 @@ export const getCurrentUserSuccess = user => ({
   user
 });
 
-export const getCurrentUserFailure = () => ({
-  type: actionTypes.FETCH_CURRENT_USER_FAILURE
-});
+export const getCurrentUserFailure = () => {
+  return {
+    type: actionTypes.FETCH_CURRENT_USER_FAILURE
+  };
+};
 
 export function getCurrentUser() {
   return dispatch => {
