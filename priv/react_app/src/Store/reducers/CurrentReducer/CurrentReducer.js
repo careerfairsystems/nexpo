@@ -16,6 +16,8 @@ export const CurrentReducer = (state = initialState, action): CurrentState => {
   switch (action.type) {
     case actionTypes.FETCH_CURRENT_USER_SUCCESS:
       return { ...state, user: action.user.id };
+    case actionTypes.DELETE_CURRENT_USER_SUCCESS:
+      return { ...state, user: null };
 
     default:
       return state;

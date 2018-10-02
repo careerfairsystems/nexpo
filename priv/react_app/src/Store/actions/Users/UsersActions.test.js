@@ -265,15 +265,13 @@ describe('destroyCurrentUserIsLoading', () => {
 
 describe('destroyCurrentUserSuccess', () => {
   it('should create the correct action', () => {
-    const testCurrentUser = {
-      name: 'CurrentUser1'
-    };
+    const testCurrentUserId = 1
 
     const expectedAction = {
       type: actionTypes.DELETE_CURRENT_USER_SUCCESS,
-      user: testCurrentUser
+      id: 1
     };
-    const action = Actions.users.destroyCurrentUserSuccess(testCurrentUser);
+    const action = Actions.users.destroyCurrentUserSuccess(testCurrentUserId);
     expect(action).toEqual(expectedAction);
   });
 });
@@ -302,16 +300,12 @@ describe('destroyCurrentUser', () => {
   });
 
   it('should call success action on success', () => {
-    const user = [
-      {
-        name: 'CurrentUser1'
-      }
-    ];
-    mockHttpResponse({ status: 200, body: { data: user } });
+    const userId =1
+    mockHttpResponse({ status: 200, body: { data: userId } });
 
     const expectedActions = [
       Actions.users.destroyCurrentUserIsLoading(),
-      Actions.users.destroyCurrentUserSuccess(user)
+      Actions.users.destroyCurrentUserSuccess(userId)
     ];
 
     const store = createMockStore();

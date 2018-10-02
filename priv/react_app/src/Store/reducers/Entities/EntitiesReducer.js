@@ -86,10 +86,12 @@ export const EntitiesReducer = (
       return defaultsDeep(state, camelCaseKeys(normalized.entities));
     }
     case actionTypes.FETCH_CURRENT_USER_SUCCESS:
-    case actionTypes.PUT_CURRENT_USER_SUCCESS:
-    case actionTypes.DELETE_CURRENT_USER_SUCCESS: {
+    case actionTypes.PUT_CURRENT_USER_SUCCESS: {
       normalized = normalize(action.user, Schema.userSchema());
       return defaultsDeep(state, camelCaseKeys(normalized.entities));
+    }
+    case actionTypes.DELETE_CURRENT_USER_SUCCESS: {
+      return { ...state, users: omit(action.id, state.users) };
     }
     default:
       return state;
