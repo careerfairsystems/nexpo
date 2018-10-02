@@ -6,7 +6,6 @@ import LoadingSpinner from '../../Components/LoadingSpinner';
 import NotFound from '../NotFound';
 import UserForm from '../../Components/Forms/UserForm';
 import StudentForm from '../../Components/Forms/StudentForm';
-import { logout } from '../../Store/actions/Auth/AuthActions';
 
 const { confirm } = Modal;
 class User extends Component {
@@ -37,16 +36,20 @@ class User extends Component {
     return false;
   };
 
-  destroyCurrentUser = () => {
-    const { currentUser, destroyCurrentUser, logout } = this.props;
+  showConfirm = () => {
     confirm({
       title: 'Do you want to delete your account?',
-      onOk() {
-        destroyCurrentUser(currentUser.id);
-        logout();
+      onOk: () => {
+        this.destroyCurrentUser();
       },
       onCancel() {}
     });
+  };
+
+  destroyCurrentUser = () => {
+    const { currentUser, destroyCurrentUser, logout } = this.props;
+    destroyCurrentUser(currentUser.id);
+    logout();
   };
 
   toggleEdit = () => {
@@ -101,7 +104,7 @@ class User extends Component {
         <h1>
           {firstName} {lastName}
           <Button
-            onClick={this.destroyCurrentUser}
+            onClick={this.showConfirm}
             style={{ float: 'right' }}
             type="danger"
           >
@@ -136,8 +139,14 @@ User.propTypes = {
     email: PropTypes.string,
     student: PropTypes.shape()
   }).isRequired,
+  currentStudent: PropTypes.shape({
+    resumeEnUrl: PropTypes.string,
+    resumeSvUrl: PropTypes.string
+  }).isRequired,
   fetching: PropTypes.bool.isRequired,
   getCurrentUser: PropTypes.func.isRequired,
+  destroyCurrentUser: PropTypes.func.isRequired,
+  logout: PropTypes.func.isRequired,
   updateCurrentUser: PropTypes.func.isRequired,
   updateCurrentStudent: PropTypes.func.isRequired
 };
