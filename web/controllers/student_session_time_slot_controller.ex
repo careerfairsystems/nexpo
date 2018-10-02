@@ -12,7 +12,7 @@ defmodule Nexpo.StudentSessionTimeSlotController do
     data = Map.put(student_session_time_slot_params, "company_id", company_id)
     company = Repo.get(Company, company_id)
     changeset = company
-                |> Ecto.build_assoc(:student_session_time_slot)
+                |> Ecto.build_assoc(:student_session_time_slots)
                 |> StudentSessionTimeSlot.changeset(data)
 
     case Repo.insert(changeset) do
