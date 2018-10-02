@@ -35,5 +35,4 @@ const getStore = () => {
   return store;
 };
 
-// export type State;
 export { getStore, Actions, actionTypes, Selectors };
