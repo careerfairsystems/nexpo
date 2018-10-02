@@ -1,6 +1,6 @@
 import { ApiError } from '../Errors/ApiError';
 import { getJwt } from '../Util/JwtHelper';
-import { snakeCaseKeys, snakeCaseForm } from '../Util/FormatHelper';
+import { snakeCaseKeys, formify } from '../Util/FormatHelper';
 
 type Response = {
   type: string,
@@ -31,24 +31,24 @@ export const handleHttpResponse = (response: Response): Promise => {
   });
 };
 
-const contentType = data =>
-  data instanceof FormData ? {} : { 'Content-Type': 'application/json' };
-
-const snakeCase = data => {
-  if (data instanceof FormData) {
-    return snakeCaseForm(data);
-  }
-  return JSON.stringify(snakeCaseKeys(data));
-};
-
 export const authPost = (url, data) =>
   fetch(url, {
     method: 'POST',
-    body: snakeCase(data),
+    body: JSON.stringify(snakeCaseKeys(data)),
     headers: new Headers({
       Authorization: `Bearer ${getJwt()}`,
       Accept: 'application/json',
-      ...contentType(data)
+      'Content-Type': 'application/json'
+    })
+  });
+
+export const authFormPost = (url, data) =>
+  fetch(url, {
+    method: 'POST',
+    body: formify(data),
+    headers: new Headers({
+      Authorization: `Bearer ${getJwt()}`,
+      Accept: 'application/json'
     })
   });
 
@@ -63,11 +63,21 @@ export const authFetch = url =>
 export const authPut = (url, data) =>
   fetch(url, {
     method: 'PUT',
-    body: snakeCase(data),
+    body: JSON.stringify(snakeCaseKeys(data)),
     headers: new Headers({
       Authorization: `Bearer ${getJwt()}`,
       Accept: 'application/json',
-      ...contentType(data)
+      'Content-Type': 'application/json'
+    })
+  });
+
+export const authFormPut = (url, data) =>
+  fetch(url, {
+    method: 'PUT',
+    body: formify(data),
+    headers: new Headers({
+      Authorization: `Bearer ${getJwt()}`,
+      Accept: 'application/json'
     })
   });
 
@@ -84,5 +94,7 @@ export default {
   authFetch,
   authPut,
   authDelete,
+  authFormPost,
+  authFormPut,
   handleHttpResponse
 };

@@ -55,16 +55,12 @@ class Company extends Component {
       ...stateCompany
     };
 
-    const formData = new FormData();
-    Object.keys(newCompany).forEach(key => {
-      formData.append(`company[${key}]`, newCompany[key]);
-    });
     // If this.props.company is empty we are creating a new company
     if (isEmpty(company)) {
-      createCompany(formData);
+      createCompany({ company: newCompany });
       resetForm('company');
     } else {
-      updateCompany(id, formData);
+      updateCompany(id, { company: newCompany });
       this.setState({ edit: false });
     }
   };
