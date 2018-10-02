@@ -54,6 +54,7 @@ defmodule Nexpo.UserController do
 
   def show_me(conn, %{}, user, _claims) do
     user = Repo.preload(user, [:roles, [student: [student_session_applications: :company]]])
+          |> User.company_assoc
     conn |> put_status(200) |> render("show.json", user: user)
   end
 

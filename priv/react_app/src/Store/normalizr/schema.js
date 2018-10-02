@@ -55,8 +55,9 @@ const categoriesSchema = () => {
 };
 
 const companySchema = () => {
+  const user = entity('users');
   const entry = entity('entries', {}, { model: belongsTo('company') });
-  const company = entity('companies', { entries: [entry] });
+  const company = entity('companies', { entries: [entry], users: [user] });
 
   return company;
 };
@@ -97,7 +98,7 @@ const userSchema = () => {
   );
   const role = entity('roles', {}, { model: belongsTo('user') });
 
-  const user = entity('users', { roles: [role], student });
+  const user = entity('users', { roles: [role], student, company });
 
   return user;
 };

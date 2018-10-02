@@ -3,8 +3,8 @@ import { mockHttpResponse, mockEnvironment } from '../TestHelper';
 import UnreachableCodeReachedError from '../Errors/UnreachableCodeReachedError';
 import { ApiError } from '../Errors/ApiError';
 
-describe('development_login', () => {
-  const method = () => API.session.development_login({ email: 'test' });
+describe('developmentLogin', () => {
+  const method = () => API.session.developmentLogin({ email: 'test' });
 
   it('should throw Error in production', () => {
     mockEnvironment.runInProduction(() => {

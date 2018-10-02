@@ -1,4 +1,4 @@
-import { handleHttpResponse } from './utils';
+import { handleHttpResponse, authPost } from './utils';
 import { snakeCaseKeys } from '../Util/FormatHelper';
 
 type finalSignupBody = {
@@ -20,6 +20,12 @@ export default {
         'Content-Type': 'application/json'
       })
     }).then(handleHttpResponse),
+
+  /**
+   * Initiates a representative signup
+   */
+  initialRepresentativeSignup: data =>
+    authPost('/api/initial_representative_signup', data),
 
   /**
    * Gets an ongoing signup process

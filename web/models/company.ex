@@ -10,9 +10,11 @@ defmodule Nexpo.Company do
     field :student_session_days, :integer, default: 0
 
     has_many :entries, Nexpo.CompanyEntry
+    has_many :representatives, Nexpo.Representative
     has_many :desired_programmes, Nexpo.DesiredProgramme
     has_many :student_sessions, Nexpo.StudentSession
     has_many :student_session_applications, Nexpo.StudentSessionApplication
+    many_to_many :users, Nexpo.User, join_through: "representatives", on_replace: :delete
 
     timestamps()
   end

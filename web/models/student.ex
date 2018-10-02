@@ -30,7 +30,7 @@ defmodule Nexpo.Student do
   end
 
   def build_assoc!(user) do
-    student = Student.changeset(%Student{user_id: user.id}) |> Repo.insert!
+    student = %Student{user_id: user.id} |> Student.changeset |> Repo.insert!
 
     Repo.preload(user, :student)
     |> Ecto.Changeset.change
