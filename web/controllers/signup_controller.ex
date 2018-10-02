@@ -2,11 +2,18 @@ defmodule Nexpo.SignupController do
   use Nexpo.Web, :controller
 
   alias Nexpo.Repo
-  alias Nexpo.{User, Student}
+  alias Nexpo.{User, Student, Representative}
   alias Nexpo.{Email, Mailer}
   alias Nexpo.ErrorView
   alias Nexpo.ChangesetView
   alias Nexpo.UserView
+
+  alias Guardian.Plug.{EnsurePermissions}
+
+  plug EnsurePermissions, [handler: Nexpo.SessionController,
+                           one_of: [%{default: ["write_all"]},
+                                    %{default: ["write_users"]}]
+                          ] when action in [:create_representative]
 
   @apidoc """
   @api {POST} /initial_signup Initiate sign up
@@ -32,6 +39,21 @@ defmodule Nexpo.SignupController do
       {:ok, user} ->
         Email.pre_signup_email(user) |> Mailer.deliver_later
         Student.build_assoc!(user)
+        conn
+        |> put_status(201)
+        |> render(UserView, "show.json", %{user: user})
+      {:error, changeset} ->
+        conn
+        |> put_status(400)
+        |> render(ChangesetView, "error.json", changeset: changeset)
+    end
+  end
+
+  def create_representative(conn, %{"email" => email, "company_id" => company_id}) do
+    case User.initial_signup(%{email: email}) do
+      {:ok, user} ->
+        Email.pre_signup_email(user) |> Mailer.deliver_later
+        Representative.build_assoc!(user, company_id)
         conn
         |> put_status(201)
         |> render(UserView, "show.json", %{user: user})

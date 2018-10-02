@@ -28,9 +28,9 @@ export const login = ({ email, password }) => dispatch =>
       dispatch(loginFailure());
     });
 
-export const development_login = email => dispatch =>
+export const developmentLogin = email => dispatch =>
   API.session
-    .development_login({ email })
+    .developmentLogin({ email })
     .then(res => {
       const { jwt } = res.data;
       dispatch(loginSuccess(jwt));

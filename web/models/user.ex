@@ -15,9 +15,11 @@ defmodule Nexpo.User do
     field :signup_key, :string
     field :forgot_password_key, :string
     field :forgot_password_time, :naive_datetime
+    field :company, :map, virtual: true
 
     many_to_many :roles, Nexpo.Role, join_through: "users_roles", on_replace: :delete
     has_one :student, Nexpo.Student, on_delete: :delete_all
+    has_one :representative, Nexpo.Representative, on_delete: :delete_all
 
     timestamps()
   end
@@ -56,6 +58,18 @@ defmodule Nexpo.User do
       user in User,
       where: user.id in ^user_ids)
     )
+  end
+
+  def company_assoc(user) do
+    case user |> Ecto.assoc(:representative) |> Repo.one do
+      nil -> user
+      representative ->
+        case representative |> Ecto.assoc(:company) |> Repo.one do
+          nil -> user
+          company ->
+            %{user | company: company}
+        end
+    end
   end
 
   def replace_forgotten_password_changeset(user, params \\ %{}) do
