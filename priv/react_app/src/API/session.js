@@ -17,7 +17,7 @@ export default {
   /**
    * Allows development login, only while not in production
    */
-  development_login: ({ email }) => {
+  developmentLogin: ({ email }) => {
     if (process.env.NODE_ENV === 'production') {
       throw new UnreachableCodeReachedError(
         'Development login reached in production'

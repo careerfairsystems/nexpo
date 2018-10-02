@@ -103,7 +103,7 @@ config :nexpo, Nexpo.Repo,
 
 config :arc,
   storage: Arc.Storage.S3, # or Arc.Storage.Local
-  bucket: "nexpo-test",
+  bucket: "nexpo",
   virtual_host: true # if using Amazon S3
 
 config :ex_aws,

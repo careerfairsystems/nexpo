@@ -121,15 +121,17 @@ class User extends Component {
           toggleEdit={this.toggleEdit}
           initialValues={currentUser}
         />
-        <StudentForm
-          action=""
-          beforeUpload={this.beforeUpload}
-          onRemove={this.onRemove}
-          fileList={{ resumeEnUrl, resumeSvUrl }}
-          onSubmit={this.updateStudent}
-          disabled={isEmpty(resumeSvUrl) && isEmpty(resumeEnUrl)}
-          currentStudent={currentStudent || {}}
-        />
+        {!isEmpty(currentStudent) && (
+          <StudentForm
+            action=""
+            beforeUpload={this.beforeUpload}
+            onRemove={this.onRemove}
+            fileList={{ resumeEnUrl, resumeSvUrl }}
+            onSubmit={this.updateStudent}
+            disabled={isEmpty(resumeSvUrl) && isEmpty(resumeEnUrl)}
+            currentStudent={currentStudent || {}}
+          />
+        )}
       </div>
     );
   }
