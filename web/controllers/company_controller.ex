@@ -74,11 +74,13 @@ defmodule Nexpo.CompanyController do
   def show(conn, %{"id" => id}) do
     company = Company
         |> Repo.get!(id)
-        |> Repo.preload(:entries)
+        |> Repo.preload(:entries, :student_session_time_slots)
         |> Repo.preload(:desired_programmes)
-        |> Repo.preload(:student_session_time_slots)
         |> Repo.preload(:student_sessions)
         |> Repo.preload(:student_session_applications)
+        |> Repo.preload(:industries)
+        |> Repo.preload(:job_offers)
+
     render(conn, "show.json", company: company)
   end
 

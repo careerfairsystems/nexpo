@@ -2,11 +2,6 @@ defmodule Nexpo.StudentSessionTimeSlotController do
   use Nexpo.Web, :controller
 
   alias Nexpo.{Company, StudentSessionTimeSlot}
-  alias Guardian.Plug.{EnsurePermissions}
-
-  plug EnsurePermissions, [handler: Nexpo.SessionController,
-                           default: ["write_all"]
-                          ] when action in [:create]
 
   def create(conn, %{"student_session_time_slot" => student_session_time_slot_params, "company_id" => company_id}) do
     data = Map.put(student_session_time_slot_params, "company_id", company_id)
