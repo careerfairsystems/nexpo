@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { isEmpty, isNil } from 'lodash/fp';
+import { isEmpty, isNil, toInteger } from 'lodash/fp';
 import Button from 'antd/lib/button';
 import Avatar from 'antd/lib/avatar';
+import API from '../../API';
 import CompanyForm from '../../Components/Forms/CompanyForm';
+import InviteForm from '../../Components/Forms/InviteForm';
 import HtmlTitle from '../../Components/HtmlTitle';
 import NotFound from '../NotFound';
 import LoadingSpinner from '../../Components/LoadingSpinner';
@@ -69,6 +71,14 @@ class Company extends Component {
     }
   };
 
+  invite = values => {
+    const { id } = this.props;
+    API.signup
+      .initialRepresentativeSignup({ ...values, companyId: toInteger(id) })
+      .then(() => null)
+      .catch(() => null);
+  };
+
   showStudentSession() {
     const { company } = this.props;
     switch (company.studentSessionDays) {
@@ -92,15 +102,18 @@ class Company extends Component {
       <div className="Company_Component">
         <HtmlTitle title={name} />
         <div>
+          <h1>{name}</h1>
           <CompanyForm
-            action=""
-            disabled={false}
             onSubmit={this.updateCompany}
             initialValues={company}
             beforeUpload={this.beforeUpload}
             onRemove={this.onRemove}
             logoUrl={this.state.company.logoUrl}
           />
+          <br />
+          <br />
+          <h2>Invite Company Representatives</h2>
+          <InviteForm onSubmit={this.invite} />
         </div>
       </div>
     );
@@ -158,6 +171,7 @@ Company.propTypes = {
   id: PropTypes.string,
   company: PropTypes.object.isRequired,
   createCompany: PropTypes.func.isRequired,
+  initialRepresentativeSignup: PropTypes.func.isRequired,
   fetching: PropTypes.bool.isRequired,
   getCompany: PropTypes.func.isRequired,
   match: PropTypes.shape({

@@ -83,7 +83,7 @@ describe('development login action', () => {
 
     const store = createMockStore();
     const params = { email: 'test-user@student.lu.se' };
-    return store.dispatch(Actions.auth.development_login(params)).then(() => {
+    return store.dispatch(Actions.auth.developmentLogin(params)).then(() => {
       const calledActions = store.getActions();
       expect(calledActions).toEqual(expectedActions);
     });
@@ -95,7 +95,7 @@ describe('development login action', () => {
 
     const store = createMockStore();
     const params = { email: 'test' };
-    return store.dispatch(Actions.auth.development_login(params)).then(() => {
+    return store.dispatch(Actions.auth.developmentLogin(params)).then(() => {
       const calledActions = store.getActions();
       expect(calledActions).toEqual(expectedActions);
     });
