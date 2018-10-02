@@ -1,3 +1,4 @@
+import { message } from 'antd';
 import { actionTypes } from '../..';
 import API from '../../../API';
 
@@ -18,6 +19,9 @@ export type GetCategoryFailureAction = {
   type: string
 };
 export function getCategoryFailure(): GetCategoryFailureAction {
+  message.error(
+    'Something went wrong when trying to fetch category, please try again later'
+  );
   return {
     type: actionTypes.FETCH_CATEGORY_FAILURE
   };
