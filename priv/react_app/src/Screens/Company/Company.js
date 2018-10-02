@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { isEmpty, isNil, toInteger } from 'lodash/fp';
 import Button from 'antd/lib/button';
 import Avatar from 'antd/lib/avatar';
+import message from 'antd/lib/message';
 import API from '../../API';
 import CompanyForm from '../../Components/Forms/CompanyForm';
 import InviteForm from '../../Components/Forms/InviteForm';
@@ -71,12 +72,18 @@ class Company extends Component {
     }
   };
 
-  invite = values => {
-    const { id } = this.props;
+  invite = ({ email }) => {
+    const { id, resetForm } = this.props;
     API.signup
-      .initialRepresentativeSignup({ ...values, companyId: toInteger(id) })
-      .then(() => null)
-      .catch(() => null);
+      .initialRepresentativeSignup({ email, companyId: toInteger(id) })
+      .then(res => {
+        if (res.ok) {
+          message.success(`Invitation sent to ${email}.`);
+          resetForm('invite');
+        } else {
+          message.warning('Invitation could not be sent.');
+        }
+      });
   };
 
   showStudentSession() {
