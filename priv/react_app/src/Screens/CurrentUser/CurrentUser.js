@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { isEmpty, map } from 'lodash/fp';
+import { Button, Modal } from 'antd';
 import LoadingSpinner from '../../Components/LoadingSpinner';
 import NotFound from '../NotFound';
 import UserForm from '../../Components/Forms/UserForm';
 import StudentForm from '../../Components/Forms/StudentForm';
 
+const { confirm } = Modal;
 class User extends Component {
   constructor(props) {
     super(props);
@@ -32,6 +34,22 @@ class User extends Component {
       student: { ...student, [name]: [file] }
     });
     return false;
+  };
+
+  showConfirm = () => {
+    confirm({
+      title: 'Do you want to delete your account?',
+      onOk: () => {
+        this.destroyCurrentUser();
+      },
+      onCancel() {}
+    });
+  };
+
+  destroyCurrentUser = () => {
+    const { currentUser, destroyCurrentUser, logout } = this.props;
+    destroyCurrentUser(currentUser.id);
+    logout();
   };
 
   toggleEdit = () => {
@@ -85,6 +103,13 @@ class User extends Component {
       <div>
         <h1>
           {firstName} {lastName}
+          <Button
+            onClick={this.showConfirm}
+            style={{ float: 'right' }}
+            type="danger"
+          >
+            Delete Account
+          </Button>
         </h1>
         <h2>Email: {email}</h2>
         <h2>
@@ -96,15 +121,17 @@ class User extends Component {
           toggleEdit={this.toggleEdit}
           initialValues={currentUser}
         />
-        <StudentForm
-          action=""
-          beforeUpload={this.beforeUpload}
-          onRemove={this.onRemove}
-          fileList={{ resumeEnUrl, resumeSvUrl }}
-          onSubmit={this.updateStudent}
-          disabled={isEmpty(resumeSvUrl) && isEmpty(resumeEnUrl)}
-          currentStudent={currentStudent || {}}
-        />
+        {!isEmpty(currentStudent) && (
+          <StudentForm
+            action=""
+            beforeUpload={this.beforeUpload}
+            onRemove={this.onRemove}
+            fileList={{ resumeEnUrl, resumeSvUrl }}
+            onSubmit={this.updateStudent}
+            disabled={isEmpty(resumeSvUrl) && isEmpty(resumeEnUrl)}
+            currentStudent={currentStudent || {}}
+          />
+        )}
       </div>
     );
   }
@@ -114,8 +141,14 @@ User.propTypes = {
     email: PropTypes.string,
     student: PropTypes.shape()
   }).isRequired,
+  currentStudent: PropTypes.shape({
+    resumeEnUrl: PropTypes.string,
+    resumeSvUrl: PropTypes.string
+  }).isRequired,
   fetching: PropTypes.bool.isRequired,
   getCurrentUser: PropTypes.func.isRequired,
+  destroyCurrentUser: PropTypes.func.isRequired,
+  logout: PropTypes.func.isRequired,
   updateCurrentUser: PropTypes.func.isRequired,
   updateCurrentStudent: PropTypes.func.isRequired
 };

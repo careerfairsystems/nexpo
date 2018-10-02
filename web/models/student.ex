@@ -11,8 +11,8 @@ defmodule Nexpo.Student do
     field :resume_sv_url, Nexpo.CvSv.Type
     belongs_to :user, Nexpo.User, foreign_key: :user_id
 
-    has_many :student_sessions, Nexpo.StudentSession
-    has_many :student_session_applications, Nexpo.StudentSessionApplication
+    has_many :student_sessions, Nexpo.StudentSession, on_delete: :nilify_all
+    has_many :student_session_applications, Nexpo.StudentSessionApplication, on_delete: :nilify_all
 
     timestamps()
   end
@@ -30,7 +30,7 @@ defmodule Nexpo.Student do
   end
 
   def build_assoc!(user) do
-    student = Student.changeset(%Student{user_id: user.id}) |> Repo.insert!
+    student = %Student{user_id: user.id} |> Student.changeset |> Repo.insert!
 
     Repo.preload(user, :student)
     |> Ecto.Changeset.change

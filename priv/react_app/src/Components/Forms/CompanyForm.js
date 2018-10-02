@@ -17,7 +17,13 @@ const TextInput = makeField(Input);
 const TextArea = makeField(Input.TextArea);
 const RadioGroup = makeField(Radio.Group);
 
-const CompanyForm = ({ handleSubmit, logoUrl, beforeUpload, onRemove }) => (
+const CompanyForm = ({
+  handleSubmit,
+  logoUrl,
+  beforeUpload,
+  onRemove,
+  onCancel
+}) => (
   <Form onSubmit={handleSubmit}>
     <Field name="name" label="Name:" component={TextInput} />
     <Field
@@ -37,7 +43,10 @@ const CompanyForm = ({ handleSubmit, logoUrl, beforeUpload, onRemove }) => (
       options={plainOptions}
       component={RadioGroup}
     />
-    <Button htmlType="submit">Submit</Button>
+    <Button onClick={onCancel}>Cancel</Button>
+    <Button htmlType="submit" type="primary">
+      Submit
+    </Button>
   </Form>
 );
 
