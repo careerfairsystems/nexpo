@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { Actions } from '../../Store';
-import { State } from '../../Store/reducers/index';
+import type { State } from '../../Store/reducers/reducers';
 import Category from './Category';
 
 const mapStateToProps = (state: State, props) => {

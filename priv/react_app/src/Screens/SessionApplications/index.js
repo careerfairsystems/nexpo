@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { Actions, Selectors } from '../../Store';
 import SessionApplications from './SessionApplications';
-import { State } from '../../Store/reducers/index';
+import type { State } from '../../Store/reducers/reducers';
 
 const mapStateToProps = (state: State) => ({
   applications: Selectors.students.getCurrentSessionAppl(state),
