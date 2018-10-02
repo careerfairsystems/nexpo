@@ -13,6 +13,8 @@ This project aims to to supply [ARKAD](https://arkad.tlth.se) with an inhouse pr
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 
+- [Welcome](#welcome)
+- [Table of Contents](#table-of-contents)
 - [System Requirements](#system-requirements)
 - [Technical Description](#technical-description)
   - [Backend](#backend)
@@ -21,6 +23,7 @@ This project aims to to supply [ARKAD](https://arkad.tlth.se) with an inhouse pr
     - [Folder structure frontend](#folder-structure-frontend)
 - [Development](#development)
   - [Setup environment](#setup-environment)
+  - [Reset Linux environment](#reset-linux-environment)
   - [Implement things](#implement-things)
     - [Development lifecycle](#development-lifecycle)
     - [Testing](#testing)
@@ -44,7 +47,7 @@ This project aims to to supply [ARKAD](https://arkad.tlth.se) with an inhouse pr
 The system requires these programs to be installed. The project intends to always follow stable releases. The system is verified to work with the following setup
 - Elixir 1.4.4 [Installation instructions](https://elixir-lang.org/install.html)
 - Erlang OTP 19.3 - Installed automatically with Elixir
-- Node 6.11.4 [Installation instructions](https://nodejs.org/en/download/)
+- Node 8.11.4 [Installation instructions](https://nodejs.org/en/download/)
 - PostgreSQL 9.6.2 [Installation instruction](https://wiki.postgresql.org/wiki/Detailed_installation_guides)
 
 We recommend installing ```node``` with nenv. [Installation instructions](https://github.com/ryuone/nenv)
@@ -227,22 +230,22 @@ The frontend is configured with [Create React App](https://github.com/facebookin
     - ```npm``` - version 5 or higher. [Installation instructions](https://www.npmjs.com/get-npm)
 3. Navigate yourself to the project root using the terminal.
 4. Based on your running dist do one of the following:
-    - Mac: 
+    - Mac:
       - Execute ```make install-mac```
     - Linux:
       - Open the following file: ```config/dev.exs```
       - After ```poolsize: 10 ```, add ```username: "nexpo", password: "nexpo"```. Do not forget to add a ```,``` after poolsize.
       - Do the same thing for ```config/test```
-      - Execute ```make install-linux``` 
-5. Grab a cup of coffee! 
-6. Start the stack with ```npm run dev``` 
+      - Execute ```make install-linux```
+5. Grab a cup of coffee!
+6. Start the stack with ```npm run dev```
 
 ## Reset Linux environment
 
 If you at any time need to reset your environment do the following: (NOTE THAT THIS WILL DROP ALL YOUR LOCAL DATA!)
 1. Navigate to the project root using the terminal
-2. Execute ```make fresh-install-linux``` 
-3. Grab a cup of coffee! 
+2. Execute ```make fresh-install-linux```
+3. Grab a cup of coffee!
 4. Start the stack with ```npm run dev```
 
 - Windows
