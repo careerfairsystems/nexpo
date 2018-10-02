@@ -8,6 +8,13 @@ defmodule Nexpo.SignupController do
   alias Nexpo.ChangesetView
   alias Nexpo.UserView
 
+  alias Guardian.Plug.{EnsurePermissions}
+
+  plug EnsurePermissions, [handler: Nexpo.SessionController,
+                           one_of: [%{default: ["write_all"]},
+                                    %{default: ["write_users"]}]
+                          ] when action in [:create_representative]
+
   @apidoc """
   @api {POST} /initial_signup Initiate sign up
   @apiGroup Sign up
