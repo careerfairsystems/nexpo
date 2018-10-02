@@ -5,7 +5,6 @@ import LoadingSpinner from '../../Components/LoadingSpinner';
 import NotFound from '../NotFound';
 import UserForm from '../../Components/Forms/UserForm';
 import StudentForm from '../../Components/Forms/StudentForm';
-import CompanyForm from '../../Components/Forms/CompanyForm';
 
 class User extends Component {
   constructor(props) {

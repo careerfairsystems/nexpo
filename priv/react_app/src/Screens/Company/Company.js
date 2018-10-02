@@ -106,7 +106,7 @@ class Company extends Component {
     const { company } = this.props;
     const { name } = company;
     return (
-      <div className="Company_Component">
+      <div className="company-edit-view">
         <HtmlTitle title={name} />
         <div>
           <h1>{name}</h1>
@@ -116,6 +116,7 @@ class Company extends Component {
             beforeUpload={this.beforeUpload}
             onRemove={this.onRemove}
             logoUrl={this.state.company.logoUrl}
+            onCancel={this.toggleEdit}
           />
           <br />
           <br />
@@ -131,24 +132,19 @@ class Company extends Component {
 
     const { name, website, description } = company;
     return (
-      <div className="Company_Component" style={{ whiteSpace: 'pre-wrap' }}>
+      <div className="company-show-view">
         <HtmlTitle title={name} />
 
-        <div className="left-col">
-          <div className="paper main-info">
-            <Avatar src={company.logoUrl} size={128} alt="Company Logotype" />
-            <h1>{name}</h1>
-            <a href={website}>{website}</a>
-            <p>
-              {name} has student sessions: {this.showStudentSession()}
-            </p>
-            <p>{description}</p>
-          </div>
-          <div className="paper entries">
-            <h2>Entries</h2>
-          </div>
-          <Button onClick={this.toggleEdit}> Edit</Button>
+        <div>
+          <Avatar src={company.logoUrl} size={128} alt="Company Logotype" />
+          <h1>{name}</h1>
+          <a href={website}>{website}</a>
+          <p>
+            {name} has student sessions: {this.showStudentSession()}
+          </p>
+          <p>{description}</p>
         </div>
+        <Button onClick={this.toggleEdit}>Edit</Button>
       </div>
     );
   }
