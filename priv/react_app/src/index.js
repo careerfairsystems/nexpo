@@ -9,8 +9,6 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import { setupErrorTracking } from './Util/ErrorTracking';
 
-// Required by material-ui
-
 import App from './App';
 import './index.css';
 

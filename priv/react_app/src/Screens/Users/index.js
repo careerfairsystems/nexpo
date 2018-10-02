@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import Users from './Users';
 import { Actions } from '../../Store';
-import type { State } from '../../Store/reducers/reducers';
+import type { State } from '../../Store/reducers';
 
 const mapStateToProps = (state: State) => ({
   users: state.entities.users,

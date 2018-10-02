@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { filter, isEmpty } from 'lodash/fp';
 import Table from 'antd/lib/table';
 import LoadingSpinner from '../../Components/LoadingSpinner';
-import type { State } from '../../Store/reducers/reducers';
+import type { State } from '../../Store/reducers';
 
 /**
  * Responsible for rendering a table of attributes and entries

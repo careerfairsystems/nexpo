@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { Actions, Selectors } from '../../Store';
 import SessionApplication from './SessionApplication';
-import type { State } from '../../Store/reducers/reducers';
+import type { State } from '../../Store/reducers';
 
 const mapStateToProps = (state: State) => ({
   companies: state.entities.companies,
