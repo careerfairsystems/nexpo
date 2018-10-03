@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import Table from 'antd/lib/table';
-import Button from 'antd/lib/button';
+import { Table, Input, Button, Icon } from 'antd';
+import { size } from 'lodash/fp';
 import Popconfirm from 'antd/lib/popconfirm';
 import Divider from 'antd/lib/divider';
 import InvisibleLink from '../../Components/InvisibleLink';
@@ -19,11 +19,58 @@ class Companies extends Component {
     getAllCompanies();
   }
 
+  handleSearch = (selectedKeys, confirm) => () => {
+    confirm();
+    this.setState({ searchText: selectedKeys[0] });
+  };
+
+  handleReset = clearFilters => () => {
+    clearFilters();
+    this.setState({ searchText: '' });
+  };
+
   companyColumns = () => [
     {
       title: 'Name',
       dataIndex: 'name',
       key: 'name',
+      filterDropdown: ({
+        setSelectedKeys,
+        selectedKeys,
+        confirm,
+        clearFilters
+      }) => (
+        <div className="custom-filter-dropdown">
+          <Input
+            ref={ele => (this.searchInput = ele)}
+            placeholder="Search by company name"
+            value={selectedKeys[0]}
+            onChange={e =>
+              setSelectedKeys(e.target.value ? [e.target.value] : [])
+            }
+            onPressEnter={this.handleSearch(selectedKeys, confirm)}
+          />
+          <Button
+            type="primary"
+            onClick={this.handleSearch(selectedKeys, confirm)}
+          >
+            Search
+          </Button>
+          <Button onClick={this.handleReset(clearFilters)}>Reset</Button>
+        </div>
+      ),
+      filterIcon: filtered => (
+        <Icon type="search" style={{ color: filtered ? '#108ee9' : '#aaa' }} />
+      ),
+      onFilter: (value, record) =>
+        record.name.toLowerCase().includes(value.toLowerCase()),
+      onFilterDropdownVisibleChange: visible => {
+        if (visible) {
+          setTimeout(() => {
+            this.searchInput.focus();
+          });
+        }
+      },
       render: (name, { id }) => (
         <InvisibleLink to={`/companies/${id}`}>{name}</InvisibleLink>
       )
@@ -36,7 +83,9 @@ class Companies extends Component {
     {
       title: 'Description',
       dataIndex: 'description',
-      key: 'description'
+      key: 'description',
+      render: description =>
+        size(description) > 42 ? `${description.slice(0, 42)} ...` : description
     },
     {
       title: 'Action',
@@ -53,7 +102,7 @@ class Companies extends Component {
             title="Sure to delete?"
             onConfirm={() => this.props.deleteCompany(company.id)}
           >
-            <a href={null}>Delete</a>
+            <span style={{ color: '#ff4d4f', cursor: 'pointer' }}>Delete</span>
           </Popconfirm>
         </span>
       )

@@ -10,6 +10,14 @@ h1 {
   font-weight: 300;
 }
 
+table {
+  table-layout: fixed;
+}
+
+img {
+  object-fit: contain;
+}
+
 .logo {
   width: 80px;
   height: 64px;

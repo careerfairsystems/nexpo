@@ -1,3 +1,4 @@
+import { message } from 'antd';
 import { actionTypes } from '../..';
 import API from '../../../API';
 
@@ -8,6 +9,7 @@ export function createRoleIsLoading() {
 }
 
 export function createRoleSuccess(role) {
+  message.success('Role successfully created');
   return {
     type: actionTypes.POST_ROLE_SUCCESS,
     role
@@ -18,6 +20,7 @@ export type CreateRoleFailureAction = {
   type: string
 };
 export function createRoleFailure(): CreateRoleFailureAction {
+  message.error('Something went wrong, please try again later');
   return {
     type: actionTypes.POST_ROLE_FAILURE
   };

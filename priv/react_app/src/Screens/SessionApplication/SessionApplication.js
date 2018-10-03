@@ -28,7 +28,7 @@ class SessionApplication extends Component {
     super(props);
 
     this.state = {
-      student: { resumeEnUrl: [], resumeSvUrl: [] },
+      student: { resumeEnUrl: null, resumeSvUrl: null },
       disabled: true
     };
   }
@@ -41,7 +41,7 @@ class SessionApplication extends Component {
   onRemove = name => {
     const { student } = this.state;
     delete student[name];
-    this.setState({ student: { ...student, [name]: [] } });
+    this.setState({ student: { ...student, [name]: null } });
   };
 
   toggleEdit = () => {
@@ -52,24 +52,17 @@ class SessionApplication extends Component {
   beforeUpload = (file, name) => {
     const { student } = this.state;
     this.setState({
-      student: { ...student, [name]: [file] }
+      student: { ...student, [name]: file }
     });
     return false;
   };
 
   updateStudent = () => {
     const { student } = this.state;
-    const { currentUser, updateCurrentStudent } = this.props;
-    const formData = new FormData();
-    const modifiedKeys = Object.keys(student).filter(
-      k => student[k][0] !== currentUser.student[k]
-    );
-    modifiedKeys.forEach(key => {
-      formData.append(`student[${key}]`, student[key][0]);
-    });
+    const { updateCurrentStudent } = this.props;
 
-    this.setState({ student: { resumeEnUrl: [], resumeSvUrl: [] } });
-    updateCurrentStudent(formData);
+    this.setState({ student: { resumeEnUrl: null, resumeSvUrl: null } });
+    updateCurrentStudent({ student });
   };
 
   createStudentSessionAppl = data => {
@@ -100,7 +93,11 @@ class SessionApplication extends Component {
           companies={filter('studentSessionDays', companies)}
         />
 
-        <h2 style={{ marginTop: 24 }}>Make sure your CVs are uploaded!</h2>
+        <h2 style={{ marginTop: 24 }}>Make sure your CV is uploaded!</h2>
+        <h4>
+          You only need to upload your CV(s) once. All the companies you apply
+          for will receive the same CV(s) but different motivations.
+        </h4>
         <StudentForm
           action=""
           beforeUpload={this.beforeUpload}

@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import ForgotPasswordEnterEmail from './ForgotPasswordEnterEmail';
-import { Actions, State } from '../../Store';
+import { Actions } from '../../Store';
+import type { State } from '../../Store/reducers';
 
 const mapStateToProps = (state: State) => ({
   success: state.api.forgot_password.success

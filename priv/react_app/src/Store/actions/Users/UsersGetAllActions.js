@@ -1,3 +1,4 @@
+import { message } from 'antd';
 import { actionTypes } from '../..';
 import API from '../../../API';
 
@@ -18,6 +19,9 @@ export type GetAllUsersFailureAction = {
   type: string
 };
 export function getAllUsersFailure(): GetAllUsersFailureAction {
+  message.error(
+    'Something went wrong when trying to fetch all users, please try again later'
+  );
   return {
     type: actionTypes.FETCH_USERS_FAILURE
   };

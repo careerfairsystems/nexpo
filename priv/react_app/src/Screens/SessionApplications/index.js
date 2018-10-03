@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { Actions, Selectors } from '../../Store';
 import SessionApplications from './SessionApplications';
-import { State } from '../../Store/reducers/index';
+import type { State } from '../../Store/reducers';
 
 const mapStateToProps = (state: State) => ({
   applications: Selectors.students.getCurrentSessionAppl(state),
@@ -11,7 +11,8 @@ const mapStateToProps = (state: State) => ({
 
 const mapDispatchToProps = {
   getCurrentUser: Actions.users.getCurrentUser,
-  getAllCompanies: Actions.companies.getAllCompanies
+  getAllCompanies: Actions.companies.getAllCompanies,
+  destroyStudentSessionAppl: Actions.studentSessions.destroyStudentSessionAppl
 };
 
 const stateful = connect(
