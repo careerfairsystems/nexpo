@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { isEmpty, isNil } from 'lodash/fp';
+import { isNil } from 'lodash/fp';
 import { List, Avatar, Popconfirm, Button } from 'antd';
 import NotFound from '../NotFound';
 import LoadingSpinner from '../../Components/LoadingSpinner';
@@ -90,7 +90,7 @@ class SessionApplications extends Component {
     if (fetching) {
       return <LoadingSpinner />;
     }
-    if (isNil(applications) || isEmpty(applications)) {
+    if (isNil(applications)) {
       return <NotFound />;
     }
     return (
@@ -110,11 +110,12 @@ class SessionApplications extends Component {
 }
 
 SessionApplications.defaultProps = {
+  applications: null,
   fetching: false
 };
 
 SessionApplications.propTypes = {
-  applications: PropTypes.array.isRequired,
+  applications: PropTypes.array,
   getAllCompanies: PropTypes.func.isRequired,
   destroyStudentSessionAppl: PropTypes.func.isRequired,
   fetching: PropTypes.bool,

@@ -31,7 +31,7 @@ describe('SessionApplications', () => {
 
   it('renders NotFound when not fetching and applications are empty', () => {
     const wrapper = shallow(
-      <SessionApplications {...props} applications={[]} />
+      <SessionApplications {...props} applications={null} />
     );
     expect(wrapper.find(NotFound)).toHaveLength(1);
   });
@@ -53,7 +53,7 @@ describe('SessionApplications', () => {
     });
   });
 
-  it('Can render listitems', () => {
+  it('can render listitems', () => {
     const wrapper = shallow(<SessionApplications {...props} />);
     // Check to see that list items renders properly
     wrapper.instance().toggleEditMode(1);
