@@ -6,7 +6,7 @@ class Startscreen extends Component {
     return (
       <div>
         <h1>Welcome to ARKAD!</h1>
-        <h3>How to apply for Student sessions:</h3>
+        <h3>How to apply for Student Sessions:</h3>
         <h4>
           <li>
             Go to your <InvisibleLink to="/user"> profile </InvisibleLink> and
