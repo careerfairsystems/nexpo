@@ -5,16 +5,24 @@ class Session extends Component {
   render() {
     return (
       <div>
-        <InvisibleLink to="session/application">Apply</InvisibleLink>
-        <br />
-        <InvisibleLink to="session/applications">
-          View your applications
-        </InvisibleLink>
-        <br />
-        <InvisibleLink to="session/companies">
-          View available companies
-        </InvisibleLink>
-        <br />
+        <h3>
+          <li>
+            <InvisibleLink to="session/application">Apply</InvisibleLink>
+          </li>
+          <br />
+          <li>
+            <InvisibleLink to="session/applications">
+              View your applications
+            </InvisibleLink>
+          </li>
+          <br />
+          <li>
+            <InvisibleLink to="session/companies">
+              View available companies
+            </InvisibleLink>
+          </li>
+          <br />
+        </h3>
       </div>
     );
   }

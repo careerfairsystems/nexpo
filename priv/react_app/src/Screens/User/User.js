@@ -1,79 +1,185 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { isEmpty, isNil, map } from 'lodash/fp';
-import NotFound from '../NotFound';
+import { isEmpty, isNil, toInteger } from 'lodash/fp';
+import Button from 'antd/lib/button';
+import Avatar from 'antd/lib/avatar';
+import message from 'antd/lib/message';
+import API from '../../API';
 import UserForm from '../../Components/Forms/UserForm';
+import InviteForm from '../../Components/Forms/InviteForm';
+import HtmlTitle from '../../Components/HtmlTitle';
+import NotFound from '../NotFound';
+import LoadingSpinner from '../../Components/LoadingSpinner';
+import './User.css';
 
+/**
+ * Responsible for rendering a user. User id is recieved via url
+ */
 class User extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
-      disabled: true
+      user: { logoUrl: null },
+      edit: false
     };
   }
 
   componentWillMount() {
-    const { id, getUser } = this.props;
+    const { id, getUser, location } = this.props;
+    if (location && location.hash === '#edit') {
+      this.setState({ edit: true });
+    }
     getUser(id);
   }
 
+  onRemove = name => {
+    const { user } = this.state;
+    this.setState({ user: { ...user, [name]: null } });
+  };
+
+  beforeUpload = (file, name) => {
+    const { user } = this.state;
+    this.setState({
+      user: { ...user, [name]: file }
+    });
+    return false;
+  };
+
   toggleEdit = () => {
-    const { disabled } = this.state;
-    this.setState({ disabled: !disabled });
+    const { edit } = this.state;
+    this.setState({ edit: !edit });
   };
 
-  update = values => {
-    const { id, user, updateUser } = this.props;
-    const { disabled } = this.state;
+  updateUser = values => {
+    const { id, user, createUser, resetForm, updateUser } = this.props;
+    const { user: stateUser } = this.state;
+    const newUser = {
+      ...values,
+      ...stateUser
+    };
 
-    const data = Object.keys(values).reduce((modified, key) => {
-      if (user[key] !== values[key]) {
-        modified[key] = values[key];
-      }
-      return modified;
-    }, {});
-
-    this.setState({ disabled: !disabled });
-    updateUser(id, { user: data });
-  };
-
-  render() {
-    const { user } = this.props;
-    const { email, firstName, lastName, roles } = user;
-    const { disabled } = this.state;
-
-    if (isEmpty(user) || isNil(user)) {
-      return <NotFound />;
+    // If this.props.user is empty we are creating a new user
+    if (isEmpty(user)) {
+      createUser({ user: newUser });
+      resetForm('user');
+    } else {
+      updateUser(id, { user: newUser });
+      this.setState({ edit: false });
     }
+  };
 
+  invite = ({ email }) => {
+    const { id, resetForm } = this.props;
+    API.signup
+      .initialRepresentativeSignup({ email, userId: toInteger(id) })
+      .then(res => {
+        if (res.ok) {
+          message.success(`Invitation sent to ${email}.`);
+          resetForm('invite');
+        } else {
+          message.warning('Invitation could not be sent.');
+        }
+      });
+  };
+
+  showStudentSession() {
+    const { user } = this.props;
+    switch (user.studentSessionDays) {
+      case 0:
+        return 'No days';
+      case 1:
+        return 'First day';
+      case 2:
+        return 'Second day';
+      case 3:
+        return 'Both days';
+      default:
+        return 'Invalid days';
+    }
+  }
+
+  renderEditView() {
+    const { user } = this.props;
+    const { name } = user;
     return (
-      <div>
-        <h1>
-          {firstName} {lastName}
-        </h1>
-        <h2>Email: {email}</h2>
-        <h2>
-          Roles: {isEmpty(roles) ? 'None' : map('type', roles).join(', ')}
-        </h2>
-        <UserForm
-          onSubmit={this.update}
-          disabled={disabled}
-          toggleEdit={this.toggleEdit}
-          initialValues={user}
-        />
+      <div className="user-edit-view">
+        <HtmlTitle title={name} />
+        <div>
+          <h1>{name}</h1>
+          <UserForm
+            onSubmit={this.updateUser}
+            initialValues={user}
+            beforeUpload={this.beforeUpload}
+            onRemove={this.onRemove}
+            logoUrl={this.state.user.logoUrl}
+            onCancel={this.toggleEdit}
+          />
+          <br />
+          <br />
+          <h2>Invite User Representatives</h2>
+          <InviteForm onSubmit={this.invite} />
+        </div>
       </div>
     );
   }
+
+  renderShowView() {
+    const { user } = this.props;
+
+    const { name, website, description } = user;
+    return (
+      <div className="user-show-view">
+        <HtmlTitle title={name} />
+
+        <div>
+          <Avatar
+            src={user.logoUrl}
+            size={128}
+            shape="square"
+            alt="User Logotype"
+          />
+          <h1>{name}</h1>
+          <a href={website}>{website}</a>
+          <p>
+            {name} has student sessions: {this.showStudentSession()}
+          </p>
+          <p>{description}</p>
+        </div>
+        <Button onClick={this.toggleEdit}>Edit</Button>
+      </div>
+    );
+  }
+
+  render() {
+    const { edit } = this.state;
+    const { user, fetching, match } = this.props;
+    const isCreatingNew = match && match.path === '/companies/new';
+    if (fetching) return <LoadingSpinner />;
+    if ((isEmpty(user) || isNil(user)) && !isCreatingNew) return <NotFound />;
+
+    if (!edit && !isEmpty(user) && !isNil(user)) {
+      return this.renderShowView();
+    }
+    return this.renderEditView();
+  }
 }
 
+User.defaultProps = {
+  id: null,
+  match: {
+    path: ''
+  }
+};
 User.propTypes = {
-  id: PropTypes.string.isRequired,
-  user: PropTypes.shape({
-    email: PropTypes.string,
-    student: PropTypes.number
-  }).isRequired,
+  id: PropTypes.string,
+  user: PropTypes.object.isRequired,
+  createUser: PropTypes.func.isRequired,
+  fetching: PropTypes.bool.isRequired,
   getUser: PropTypes.func.isRequired,
+  match: PropTypes.shape({
+    path: PropTypes.string
+  }),
+  resetForm: PropTypes.func.isRequired,
   updateUser: PropTypes.func.isRequired
 };
 

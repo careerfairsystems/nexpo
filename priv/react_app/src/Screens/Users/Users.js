@@ -4,43 +4,10 @@ import PropTypes from 'prop-types';
 import Table from 'antd/lib/table';
 import Button from 'antd/lib/button';
 import Divider from 'antd/lib/divider';
+import Popconfirm from 'antd/lib/popconfirm';
 import InvisibleLink from '../../Components/InvisibleLink';
 import LoadingSpinner from '../../Components/LoadingSpinner';
 import HtmlTitle from '../../Components/HtmlTitle';
-
-const userColumns = [
-  {
-    title: 'Email',
-    dataIndex: 'email',
-    key: 'email',
-    render: (email, { id }) => (
-      <InvisibleLink to={`/users/${id}`}>{email}</InvisibleLink>
-    )
-  },
-  {
-    title: 'First Name',
-    dataIndex: 'firstName',
-    key: 'firstName'
-  },
-  {
-    title: 'Last Name',
-    dataIndex: 'lastName',
-    key: 'lastName'
-  },
-  {
-    title: 'Action',
-    key: 'action',
-    render: user => (
-      <span>
-        <InvisibleLink to={`/users/${user.id}`}>Show</InvisibleLink>
-        <Divider type="vertical" />
-        <InvisibleLink to="#user-edit">Edit</InvisibleLink>
-        <Divider type="vertical" />
-        <InvisibleLink to="#user-delete">Delete</InvisibleLink>
-      </span>
-    )
-  }
-];
 
 /**
  * Responsible for rendering a list of users
@@ -50,6 +17,45 @@ class Users extends Component {
     const { getAllUsers } = this.props;
     getAllUsers();
   }
+
+  userColumns = () => [
+    {
+      title: 'Email',
+      dataIndex: 'email',
+      key: 'email',
+      render: (email, { id }) => (
+        <InvisibleLink to={`/users/${id}`}>{email}</InvisibleLink>
+      )
+    },
+    {
+      title: 'First Name',
+      dataIndex: 'firstName',
+      key: 'firstName'
+    },
+    {
+      title: 'Last Name',
+      dataIndex: 'lastName',
+      key: 'lastName'
+    },
+    {
+      title: 'Action',
+      key: 'action',
+      render: user => (
+        <span>
+          <InvisibleLink to={`/users/${user.id}`}>Show</InvisibleLink>
+          <Divider type="vertical" />
+          <InvisibleLink to={`/users/${user.id}#edit`}>Edit</InvisibleLink>
+          <Divider type="vertical" />
+          <Popconfirm
+            title="Sure to delete?"
+            onConfirm={() => this.props.deleteUser(user.id)}
+          >
+            <span style={{ color: '#ff4d4f', cursor: 'pointer' }}>Delete</span>
+          </Popconfirm>
+        </span>
+      )
+    }
+  ];
 
   renderUsers() {
     const { users } = this.props;
@@ -61,7 +67,7 @@ class Users extends Component {
         <h1>Users</h1>
 
         <Table
-          columns={userColumns}
+          columns={this.userColumns()}
           dataSource={Object.keys(users).map(i => ({
             ...users[i],
             key: i
