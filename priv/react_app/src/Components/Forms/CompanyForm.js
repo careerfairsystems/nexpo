@@ -16,6 +16,7 @@ const plainOptions = [
 const TextInput = makeField(Input);
 const TextArea = makeField(Input.TextArea);
 const RadioGroup = makeField(Radio.Group);
+const required = value => (value ? undefined : "Field can't be empty");
 
 const CompanyForm = ({
   handleSubmit,
@@ -25,7 +26,33 @@ const CompanyForm = ({
   onCancel
 }) => (
   <Form onSubmit={handleSubmit}>
-    <Field name="name" label="Name:" component={TextInput} />
+    <Field
+      name="name"
+      label="Name"
+      component={TextInput}
+      validate={required}
+      required
+    />
+    <Field
+      name="website"
+      label="Website:"
+      component={TextInput}
+      validate={required}
+      required
+    />
+    <Field
+      name="description"
+      label="Description:"
+      component={TextArea}
+      validate={required}
+      required
+    />
+    <Field
+      name="studentSessionDays"
+      label="Student Session Days:"
+      options={plainOptions}
+      component={RadioGroup}
+    />
     <Field
       name="logoUrl"
       label="Logo"
@@ -33,15 +60,8 @@ const CompanyForm = ({
       currentStudent={{}}
       beforeUpload={beforeUpload}
       component={UploadButton}
+      accept="image/*"
       onRemove={onRemove}
-    />
-    <Field name="website" label="Website:" component={TextInput} />
-    <Field name="description" label="Description:" component={TextArea} />
-    <Field
-      name="studentSessionDays"
-      label="Student Session Days:"
-      options={plainOptions}
-      component={RadioGroup}
     />
     <Button onClick={onCancel}>Cancel</Button>
     <Button htmlType="submit" type="primary">

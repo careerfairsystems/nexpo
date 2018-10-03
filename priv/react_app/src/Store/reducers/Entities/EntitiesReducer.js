@@ -14,6 +14,7 @@ export type EntitiesState = {
   entries: {},
   roles: {},
   users: {},
+  sessionApplications: {},
   students: {}
 };
 
@@ -24,6 +25,7 @@ const initialState = {
   entries: {},
   roles: {},
   users: {},
+  sessionApplications: {},
   students: {}
 };
 
@@ -65,6 +67,12 @@ export const EntitiesReducer = (
     case actionTypes.POST_STUDENT_SESSION_APPL_SUCCESS: {
       normalized = normalize(action.user, Schema.userSchema());
       return defaultsDeep(state, camelCaseKeys(normalized.entities));
+    }
+    case actionTypes.DELETE_STUDENT_SESSION_APPL_SUCCESS: {
+      return {
+        ...state,
+        sessionApplications: omit(action.id, state.sessionApplications)
+      };
     }
     case actionTypes.FETCH_USERS_SUCCESS: {
       normalized = normalize(action.users, Schema.usersSchema());

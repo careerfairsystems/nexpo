@@ -1,3 +1,4 @@
+import { message } from 'antd';
 import { actionTypes } from '../..';
 import API from '../../../API';
 
@@ -8,6 +9,7 @@ export function createUserIsLoading() {
 }
 
 export function createUserSuccess(user) {
+  message.success('User successfully created');
   return {
     type: actionTypes.POST_USER_SUCCESS,
     user
@@ -18,6 +20,7 @@ export type CreateUserFailureAction = {
   type: string
 };
 export function createUserFailure(): CreateUserFailureAction {
+  message.error('Something went wrong, please try again later');
   return {
     type: actionTypes.POST_USER_FAILURE
   };

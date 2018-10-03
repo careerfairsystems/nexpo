@@ -1,3 +1,4 @@
+import { message } from 'antd';
 import { actionTypes } from '../..';
 import API from '../../../API';
 
@@ -8,6 +9,7 @@ export function createCategoryIsLoading() {
 }
 
 export function createCategorySuccess(category) {
+  message.success('Category successfully created');
   return {
     type: actionTypes.POST_CATEGORY_SUCCESS,
     category
@@ -18,6 +20,7 @@ export type CreateCategoryFailureAction = {
   type: string
 };
 export function createCategoryFailure(): CreateCategoryFailureAction {
+  message.error('Something went wrong, please try again later');
   return {
     type: actionTypes.POST_CATEGORY_FAILURE
   };

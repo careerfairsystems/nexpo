@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { isEmpty, map } from 'lodash/fp';
+import { isEmpty } from 'lodash/fp';
 import { Button, Modal } from 'antd';
 import LoadingSpinner from '../../Components/LoadingSpinner';
 import NotFound from '../NotFound';
-import UserForm from '../../Components/Forms/UserForm';
+import CurrentUserForm from '../../Components/Forms/CurrentUserForm';
 import StudentForm from '../../Components/Forms/StudentForm';
 
 const { confirm } = Modal;
@@ -13,7 +13,7 @@ class User extends Component {
     super(props);
 
     this.state = {
-      student: { resumeEnUrl: [], resumeSvUrl: [] },
+      student: { resumeEnUrl: null, resumeSvUrl: null },
       disabled: true
     };
   }
@@ -25,13 +25,13 @@ class User extends Component {
 
   onRemove = name => {
     const { student } = this.state;
-    this.setState({ student: { ...student, [name]: [] } });
+    this.setState({ student: { ...student, [name]: null } });
   };
 
   beforeUpload = (file, name) => {
     const { student } = this.state;
     this.setState({
-      student: { ...student, [name]: [file] }
+      student: { ...student, [name]: file }
     });
     return false;
   };
@@ -52,44 +52,25 @@ class User extends Component {
     logout();
   };
 
-  toggleEdit = () => {
-    const { disabled } = this.state;
-    this.setState({ disabled: !disabled });
-  };
-
   updateStudent = () => {
     const { student } = this.state;
-    const { currentUser, updateCurrentStudent } = this.props;
-    const formData = new FormData();
-    const modifiedKeys = Object.keys(student).filter(
-      k => student[k][0] !== currentUser.student[k]
-    );
-    modifiedKeys.forEach(key => {
-      formData.append(`student[${key}]`, student[key][0]);
-    });
+    const { updateCurrentStudent } = this.props;
 
-    this.setState({ student: { resumeEnUrl: [], resumeSvUrl: [] } });
-    updateCurrentStudent(formData);
+    this.setState({ student: { resumeEnUrl: null, resumeSvUrl: null } });
+    updateCurrentStudent({ student });
   };
 
   updateUser = values => {
-    const { currentUser, updateCurrentUser } = this.props;
+    const { updateCurrentUser } = this.props;
     const { disabled } = this.state;
 
-    const data = Object.keys(values).reduce((modified, key) => {
-      if (currentUser[key] !== values[key]) {
-        modified[key] = values[key];
-      }
-      return modified;
-    }, {});
-
     this.setState({ disabled: !disabled });
-    updateCurrentUser({ user: data });
+    updateCurrentUser({ user: values });
   };
 
   render() {
     const { currentUser, currentStudent, fetching } = this.props;
-    const { student, disabled } = this.state;
+    const { student } = this.state;
     if (fetching) {
       return <LoadingSpinner />;
     }
@@ -97,7 +78,7 @@ class User extends Component {
       return <NotFound />;
     }
 
-    const { email, firstName, lastName, roles } = currentUser;
+    const { email, firstName, lastName } = currentUser;
     const { resumeEnUrl, resumeSvUrl } = student;
     return (
       <div>
@@ -112,13 +93,8 @@ class User extends Component {
           </Button>
         </h1>
         <h2>Email: {email}</h2>
-        <h2>
-          Roles: {isEmpty(roles) ? 'None' : map('type', roles).join(', ')}
-        </h2>
-        <UserForm
+        <CurrentUserForm
           onSubmit={this.updateUser}
-          disabled={disabled}
-          toggleEdit={this.toggleEdit}
           initialValues={currentUser}
         />
         {!isEmpty(currentStudent) && (

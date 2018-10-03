@@ -45,7 +45,7 @@ User.changeset(user)
 |> Nexpo.Repo.update!
 
 User.changeset(test_user)
-|> Ecto.Changeset.put_assoc(:roles, [role])
+|> Ecto.Changeset.put_assoc(:roles, [pleb_role])
 |> Nexpo.Repo.update!
 
 #Create some companies
@@ -92,6 +92,8 @@ Repo.insert!(%CategoryAttribute{title: "Sabrering för nybörjare", category_id:
 # Create some student-session applications
 alias Nexpo.StudentSessionApplication
 Repo.insert!(%StudentSessionApplication{motivation: "Im really good", company_id: 1, student_id: 2})
+Repo.insert!(%StudentSessionApplication{motivation: "Im awesome good", company_id: 2, student_id: 2})
+Repo.insert!(%StudentSessionApplication{motivation: "Im awesome really good", company_id: 4, student_id: 2})
 #Create some random company entries
 alias Nexpo.CompanyEntry
 
