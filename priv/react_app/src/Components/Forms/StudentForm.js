@@ -38,7 +38,7 @@ const StudentForm = ({
     />
 
     <Button disabled={disabled} htmlType="submit">
-      Save CV
+      Save CV(s)
     </Button>
   </Form>
 );

@@ -93,10 +93,10 @@ class SessionApplication extends Component {
           companies={filter('studentSessionDays', companies)}
         />
 
-        <h2 style={{ marginTop: 24 }}>Make sure your CVs are uploaded!</h2>
+        <h2 style={{ marginTop: 24 }}>Make sure your CV is uploaded!</h2>
         <h4>
-          You only need to upload your CV once. All the companies you apply for
-          will receive the same CV but different motivations.
+          You only need to upload your CV(s) once. All the companies you apply
+          for will receive the same CV(s) but different motivations.
         </h4>
         <StudentForm
           action=""
