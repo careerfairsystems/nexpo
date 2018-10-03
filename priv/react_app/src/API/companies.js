@@ -3,9 +3,9 @@
 */
 
 import {
-  authPost,
+  authFormPost,
   authFetch,
-  authPut,
+  authFormPut,
   authDelete,
   handleHttpResponse
 } from './utils';
@@ -14,7 +14,7 @@ export default {
   /**
    * Create a company
    */
-  create: data => authPost('/api/companies', data).then(handleHttpResponse),
+  create: data => authFormPost('/api/companies', data).then(handleHttpResponse),
 
   /**
    * Fetches all companies
@@ -30,7 +30,7 @@ export default {
    * Updates a company
    */
   update: (id, data) =>
-    authPut(`/api/companies/${id}`, data).then(handleHttpResponse),
+    authFormPut(`/api/companies/${id}`, data).then(handleHttpResponse),
 
   /**
    * Delete a company
