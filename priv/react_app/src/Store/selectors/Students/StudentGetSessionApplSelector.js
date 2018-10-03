@@ -6,7 +6,7 @@ export const getCurrentSessionAppl = state => {
 
   return filter(
     appl => appl.student === currentStudent.id,
-    state.entities.sessionApplications
+    state.entities.studentSessionApplications
   );
 };
 

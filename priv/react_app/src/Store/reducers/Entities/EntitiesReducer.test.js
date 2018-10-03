@@ -15,7 +15,7 @@ describe('Entities reducer', () => {
       entries: {},
       roles: {},
       users: {},
-      sessionApplications: {},
+      studentSessionApplications: {},
       students: {}
     };
     expect(EntitiesReducer(undefined, {})).toEqual(initialState);
@@ -237,12 +237,12 @@ describe('Entities reducer', () => {
       sessionApplicationId
     );
     const state = EntitiesReducer(
-      { sessionApplications: { 1: { id: 1, companyId: 1, studentId: 1 } } },
+      { studentSessionApplications: { 1: { id: 1, companyId: 1, studentId: 1 } } },
       action
     );
 
     expect(state).toMatchObject({
-      sessionApplications: {}
+      studentSessionApplications: {}
     });
   });
 
@@ -259,10 +259,10 @@ describe('Entities reducer', () => {
       ...oldAppl,
       ...data
     });
-    const state = EntitiesReducer(testData.sessionApplications, action);
+    const state = EntitiesReducer(testData.studentSessionApplications, action);
 
     expect(state).toMatchObject({
-      sessionApplications: {
+      studentSessionApplications: {
         1: { id: 1, companyId: 1, studentId: 1, motivation: 'New Motivation' }
       }
     });
