@@ -97,3 +97,61 @@ describe('createStudentSessionAppl', () => {
       });
   });
 });
+
+describe('destroyStudentSessionAppl', () => {
+  it('should call start action', () => {
+    mockHttpResponse({ status: 200, body: {} });
+    const store = createMockStore();
+    const data = { id: 1 };
+
+    return store
+      .dispatch(Actions.studentSessions.destroyStudentSessionAppl(data.id))
+      .then(() => {
+        const calledActions = store.getActions();
+        expect(calledActions[0]).toEqual(
+          Actions.studentSessions.destroyStudentSessionApplIsLoading()
+        );
+      });
+  });
+
+  it('should call failure action on failure', () => {
+    mockHttpResponse({ status: 401, body: {} });
+    const data = { id: 1 };
+
+    const expectedActions = [
+      Actions.studentSessions.destroyStudentSessionApplIsLoading(),
+      Actions.studentSessions.destroyStudentSessionApplFailure()
+    ];
+
+    const store = createMockStore();
+
+    return store
+      .dispatch(Actions.studentSessions.destroyStudentSessionAppl(data.id))
+      .then(() => {
+        const calledActions = store.getActions();
+        expect(calledActions).toEqual(expectedActions);
+      });
+  });
+
+  it('should call success action on success', () => {
+    const application = { id: 1 };
+    mockHttpResponse({ status: 200, body: {} });
+
+    const expectedActions = [
+      Actions.studentSessions.destroyStudentSessionApplIsLoading(),
+      Actions.studentSessions.destroyStudentSessionApplSuccess(application.id)
+    ];
+
+    const store = createMockStore();
+    const data = { application };
+
+    return store
+      .dispatch(
+        Actions.studentSessions.destroyStudentSessionAppl(data.application.id)
+      )
+      .then(() => {
+        const calledActions = store.getActions();
+        expect(calledActions).toEqual(expectedActions);
+      });
+  });
+});

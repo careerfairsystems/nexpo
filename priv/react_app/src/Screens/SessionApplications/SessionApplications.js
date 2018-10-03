@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { isNil } from 'lodash/fp';
-import { List, Avatar } from 'antd';
+import { List, Avatar, Popconfirm } from 'antd';
 import NotFound from '../NotFound';
 import LoadingSpinner from '../../Components/LoadingSpinner';
 import HtmlTitle from '../../Components/HtmlTitle';
@@ -15,7 +15,16 @@ class SessionApplications extends Component {
   getCompany = ({ company }) => this.props.companies[company] || {};
 
   renderApplication = application => (
-    <List.Item>
+    <List.Item
+      actions={[
+        <Popconfirm
+          title="Sure to delete?"
+          onConfirm={() => this.props.destroyStudentSessionAppl(application.id)}
+        >
+          <span style={{ color: '#ff4d4f', cursor: 'pointer' }}>Delete</span>
+        </Popconfirm>
+      ]}
+    >
       <List.Item.Meta
         title={this.getCompany(application).name}
         description={`Motivation: ${application.motivation}`}
@@ -40,7 +49,6 @@ class SessionApplications extends Component {
     if (isNil(applications)) {
       return <NotFound />;
     }
-
     return (
       <div style={{ padding: 24 }}>
         <HtmlTitle title="Student Session Application" />
@@ -58,7 +66,9 @@ class SessionApplications extends Component {
 }
 
 SessionApplications.propTypes = {
-  applications: PropTypes.array.isRequired
+  applications: PropTypes.array.isRequired,
+  getAllCompanies: PropTypes.func.isRequired,
+  destroyStudentSessionAppl: PropTypes.func.isRequired
 };
 
 export default SessionApplications;
