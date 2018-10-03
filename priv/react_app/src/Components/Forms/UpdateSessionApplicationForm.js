@@ -10,7 +10,7 @@ const TextArea = makeField(Input.TextArea);
 const requiredMotivation = value =>
   value ? undefined : 'Please provide a motivation';
 
-const UpdateSessionApplicationForm = ({ handleSubmit }) => (
+const UpdateSessionApplicationForm = ({ handleSubmit, invalid, pristine }) => (
   <Form onSubmit={handleSubmit}>
     <Field
       name="motivation"
@@ -20,7 +20,7 @@ const UpdateSessionApplicationForm = ({ handleSubmit }) => (
       maxLength="2400"
       rows={6}
     />
-    <Button type="primary" htmlType="submit">
+    <Button disabled={invalid || pristine} type="primary" htmlType="submit">
       Update
     </Button>
   </Form>
@@ -30,14 +30,11 @@ UpdateSessionApplicationForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired
 };
 
-const mapStateToProps = state => ({
-  formState: state.form.UpdateSessionApplicationForm
+const mapStateToProps = (state, props) => ({
+  formState: state.form.UpdateSessionApplicationForm,
+  form: `updateStudentSessionApplication${props.id}`
 });
 
 const stateful = connect(mapStateToProps);
 
-export default stateful(
-  reduxForm({ form: 'updateStudentSessionApplication' })(
-    UpdateSessionApplicationForm
-  )
-);
+export default stateful(reduxForm()(UpdateSessionApplicationForm));

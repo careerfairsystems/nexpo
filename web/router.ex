@@ -42,6 +42,7 @@ defmodule Nexpo.Router do
     delete "/me", UserController, :delete_me
     put "/me/student", StudentController, :update_student
     delete "/me/student_session_applications/:id", StudentSessionApplicationController, :delete_me
+    put "/me/student_session_applications/:id", StudentSessionApplicationController, :update_me
 
     resources "/users", UserController, only: [:index, :show, :update, :delete]
     resources "/roles", RoleController

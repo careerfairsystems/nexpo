@@ -21,51 +21,55 @@ class SessionApplications extends Component {
   getCompany = ({ company }) => this.props.companies[company] || {};
 
   toggleEditMode = id => {
-    const { editing } = this.state;
-    editing[id] = !editing[id];
+    const editing = {};
+    editing[id] = !this.state.editing[id];
     this.setState({ editing });
   };
 
-  updateStudentSessionAppl = values => {
+  updateStudentSessionAppl = (id, values) => {
     const { updateStudentSessionAppl } = this.props;
-    console.log(values);
+    updateStudentSessionAppl(id, { studentSessionApplication: values });
     this.setState({ editing: {} });
   };
 
-  renderApplication = application => (
-    <List.Item
-      actions={[
-        <Button
-          onClick={() => this.toggleEditMode(application.id)}
-          style={{ color: '#40a9ff', cursor: 'pointer' }}
-        >
-          {this.state.editing[application.id] ? 'Cancel' : 'Edit'}
-        </Button>,
-        <Popconfirm
-          title="Sure to delete?"
-          onConfirm={() => this.props.destroyStudentSessionAppl(application.id)}
-        >
-          <span style={{ color: '#ff4d4f', cursor: 'pointer' }}>Delete</span>
-        </Popconfirm>
-      ]}
-    >
-      <List.Item.Meta
-        title={this.getCompany(application).name}
-        description={this.renderMotivationField(
-          application.motivation,
-          application.id
-        )}
-        avatar={
-          <Avatar
-            src={this.getCompany(application).logoUrl}
-            size={128}
-            shape="square"
-            alt="Company Logotype"
-          />
-        }
-      />
-    </List.Item>
-  );
+  renderApplication = application => {
+    const { editing } = this.state;
+    const { destroyStudentSessionAppl } = this.props;
+    return (
+      <List.Item
+        actions={[
+          <Button
+            type={editing[application.id] ? 'default' : 'primary'}
+            onClick={() => this.toggleEditMode(application.id)}
+          >
+            {editing[application.id] ? 'Cancel' : 'Edit'}
+          </Button>,
+          <Popconfirm
+            title="Sure to delete?"
+            onConfirm={() => destroyStudentSessionAppl(application.id)}
+          >
+            <span style={{ color: '#ff4d4f', cursor: 'pointer' }}>Delete</span>
+          </Popconfirm>
+        ]}
+      >
+        <List.Item.Meta
+          title={this.getCompany(application).name}
+          description={this.renderMotivationField(
+            application.motivation,
+            application.id
+          )}
+          avatar={
+            <Avatar
+              src={this.getCompany(application).logoUrl}
+              size={128}
+              shape="square"
+              alt="Company Logotype"
+            />
+          }
+        />
+      </List.Item>
+    );
+  };
 
   renderMotivationField = (motivation, id) => {
     const { editing } = this.state;
@@ -73,7 +77,8 @@ class SessionApplications extends Component {
       return (
         <UpdateSessionApplicationForm
           initialValues={{ motivation }}
-          onSubmit={this.updateStudentSessionAppl}
+          id={id}
+          onSubmit={values => this.updateStudentSessionAppl(id, values)}
         />
       );
     return `Motivation: ${motivation}`;
@@ -104,10 +109,15 @@ class SessionApplications extends Component {
   }
 }
 
+SessionApplications.defaultProps = {
+  fetching: false
+};
+
 SessionApplications.propTypes = {
   applications: PropTypes.array.isRequired,
   getAllCompanies: PropTypes.func.isRequired,
   destroyStudentSessionAppl: PropTypes.func.isRequired,
+  fetching: PropTypes.bool,
   updateStudentSessionAppl: PropTypes.func.isRequired
 };
 
