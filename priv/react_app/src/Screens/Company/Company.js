@@ -132,7 +132,12 @@ class Company extends Component {
         <HtmlTitle title={name} />
 
         <div>
-          <Avatar src={company.logoUrl} size={128} alt="Company Logotype" />
+          <Avatar
+            src={company.logoUrl}
+            size={128}
+            shape="square"
+            alt="Company Logotype"
+          />
           <h1>{name}</h1>
           <a href={website}>{website}</a>
           <p>

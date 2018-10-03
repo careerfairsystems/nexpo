@@ -5,6 +5,7 @@ import { Button, Icon, Upload } from 'antd';
 import makeField from './helper';
 
 const UploadButton = ({
+  accept,
   beforeUpload,
   action,
   currentStudent,
@@ -13,7 +14,7 @@ const UploadButton = ({
   fileList
 }) => (
   <Upload
-    accept=".pdf"
+    accept={accept}
     action={action}
     beforeUpload={file => beforeUpload(file, name)}
     onRemove={() => onRemove(name)}

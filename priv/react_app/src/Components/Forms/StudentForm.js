@@ -23,6 +23,7 @@ const StudentForm = ({
       currentStudent={currentStudent}
       beforeUpload={beforeUpload}
       component={UploadButton}
+      accept=".pdf"
       onRemove={onRemove}
     />
     <Field
@@ -32,6 +33,7 @@ const StudentForm = ({
       currentStudent={currentStudent}
       beforeUpload={beforeUpload}
       component={UploadButton}
+      accept=".pdf"
       onRemove={onRemove}
     />
 

@@ -60,6 +60,7 @@ const CompanyForm = ({
       currentStudent={{}}
       beforeUpload={beforeUpload}
       component={UploadButton}
+      accept="image/*"
       onRemove={onRemove}
     />
     <Button onClick={onCancel}>Cancel</Button>
