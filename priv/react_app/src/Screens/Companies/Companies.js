@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import { Table, Input, Button, Icon } from 'antd';
+import { size } from 'lodash/fp';
 import Popconfirm from 'antd/lib/popconfirm';
 import Divider from 'antd/lib/divider';
 import InvisibleLink from '../../Components/InvisibleLink';
@@ -83,7 +84,8 @@ class Companies extends Component {
       title: 'Description',
       dataIndex: 'description',
       key: 'description',
-      render: description => `${description.slice(0, 42)} ...`
+      render: description =>
+        size(description) > 42 ? `${description.slice(0, 42)} ...` : description
     },
     {
       title: 'Action',
