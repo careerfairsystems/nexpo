@@ -12,18 +12,21 @@ class SessionApplications extends Component {
     getAllCompanies();
   }
 
-  getStyle = ({ companyApproved }) => ({
-    backgroundColor: companyApproved ? '#87d068' : '#002B64'
-  });
-
-  getCompany = ({ company }) => this.props.companies[company];
+  getCompany = ({ company }) => this.props.companies[company] || {};
 
   renderApplication = application => (
     <List.Item>
       <List.Item.Meta
         title={this.getCompany(application).name}
         description={`Motivation: ${application.motivation}`}
-        avatar={<Avatar icon="mail" style={this.getStyle(application)} />}
+        avatar={
+          <Avatar
+            src={this.getCompany(application).logoUrl}
+            size={128}
+            shape="square"
+            alt="Company Logotype"
+          />
+        }
       />
     </List.Item>
   );

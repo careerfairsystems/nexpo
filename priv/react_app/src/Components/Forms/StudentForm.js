@@ -18,20 +18,22 @@ const StudentForm = ({
     <Field
       name="resumeSvUrl"
       label="Swedish CV"
-      fileList={fileList.resumeSvUrl}
+      fileList={fileList.resumeSvUrl ? [fileList.resumeSvUrl] : []}
       action={action}
       currentStudent={currentStudent}
       beforeUpload={beforeUpload}
       component={UploadButton}
+      accept=".pdf"
       onRemove={onRemove}
     />
     <Field
       name="resumeEnUrl"
       label="English CV"
-      fileList={fileList.resumeEnUrl}
+      fileList={fileList.resumeEnUrl ? [fileList.resumeEnUrl] : []}
       currentStudent={currentStudent}
       beforeUpload={beforeUpload}
       component={UploadButton}
+      accept=".pdf"
       onRemove={onRemove}
     />
 

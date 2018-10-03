@@ -1,4 +1,11 @@
-import { isObject, isArray, reduce, camelCase, snakeCase } from 'lodash/fp';
+import {
+  isObject,
+  isArray,
+  reduce,
+  camelCase,
+  snakeCase,
+  pickBy
+} from 'lodash/fp';
 
 const convertKeys = (obj, convert) => {
   if (!isObject(obj)) {
@@ -19,19 +26,21 @@ const convertKeys = (obj, convert) => {
 export const camelCaseKeys = obj => convertKeys(obj, camelCase);
 export const snakeCaseKeys = obj => convertKeys(obj, snakeCase);
 
-const convertForm = (obj, convert) => {
+export const formify = data => {
   const formData = new FormData();
-
-  Array.from(obj.entries()).forEach(([key, value]) =>
-    formData.append(convert(key), value)
-  );
-
+  Object.keys(pickBy(isObject, data)).forEach(objKey => {
+    Object.keys(data[objKey]).forEach(key => {
+      formData.append(
+        `${snakeCase(objKey)}[${snakeCase(key)}]`,
+        data[objKey][key]
+      );
+    });
+  });
   return formData;
 };
 
-export const camelCaseForm = obj =>
-  convertForm(obj, key => key.replace(/_([a-z])/g, g => g[1].toUpperCase()));
-export const snakeCaseForm = obj =>
-  convertForm(obj, key => key.replace(/([A-Z])/g, '_$1').toLowerCase());
-
-export default { camelCaseKeys, snakeCaseKeys, camelCaseForm, snakeCaseForm };
+export default {
+  camelCaseKeys,
+  snakeCaseKeys,
+  formify
+};
