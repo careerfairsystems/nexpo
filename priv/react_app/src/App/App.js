@@ -21,6 +21,7 @@ import User from '../Screens/User';
 import CurrentUser from '../Screens/CurrentUser';
 import Companies from '../Screens/Companies';
 import Company from '../Screens/Company';
+import CurrentCompany from '../Screens/CurrentCompany';
 import SessionApplication from '../Screens/SessionApplication';
 import SessionApplications from '../Screens/SessionApplications';
 import SessionCompanies from '../Screens/SessionCompanies';
@@ -59,6 +60,7 @@ const routes = (
       component={SessionApplications}
     />
     <PrivateRoute path="/session/companies" component={SessionCompanies} />
+    <PrivateRoute path="/company" component={CurrentCompany} />
     <Route component={NotFound} />
   </Switch>
 );
@@ -172,6 +174,10 @@ class App extends Component {
                     title: 'View Companies'
                   })
                 ]
+              })}
+              {this.restrictedMenuItem({
+                route: 'company',
+                title: 'Your Company'
               })}
               {isLoggedIn ? this.loggedInMenuItem() : this.loggedOutMenuItem()}
             </Menu>
