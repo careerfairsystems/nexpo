@@ -17,6 +17,7 @@ export const getParameterByName = (name, url = window.location.href) => {
 };
 
 export const toExternal = url => {
+  if (!url) return url;
   if (url.match(/^[a-zA-Z]*:\/\/|^\/\//)) {
     return url;
   }
