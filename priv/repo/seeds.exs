@@ -45,7 +45,7 @@ User.changeset(user)
 |> Nexpo.Repo.update!
 
 User.changeset(test_user)
-|> Ecto.Changeset.put_assoc(:roles, [role])
+|> Ecto.Changeset.put_assoc(:roles, [pleb_role])
 |> Nexpo.Repo.update!
 
 #Create some companies
