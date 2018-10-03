@@ -58,16 +58,12 @@ class Company extends Component {
       ...stateCompany
     };
 
-    const formData = new FormData();
-    Object.keys(newCompany).forEach(key => {
-      formData.append(`company[${key}]`, newCompany[key]);
-    });
     // If this.props.company is empty we are creating a new company
     if (isEmpty(company)) {
-      createCompany(formData);
+      createCompany({ company: newCompany });
       resetForm('company');
     } else {
-      updateCompany(id, formData);
+      updateCompany(id, { company: newCompany });
       this.setState({ edit: false });
     }
   };
@@ -136,7 +132,12 @@ class Company extends Component {
         <HtmlTitle title={name} />
 
         <div>
-          <Avatar src={company.logoUrl} size={128} alt="Company Logotype" />
+          <Avatar
+            src={company.logoUrl}
+            size={128}
+            shape="square"
+            alt="Company Logotype"
+          />
           <h1>{name}</h1>
           <a href={website}>{website}</a>
           <p>

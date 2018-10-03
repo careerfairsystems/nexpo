@@ -13,7 +13,7 @@ class User extends Component {
     super(props);
 
     this.state = {
-      student: { resumeEnUrl: [], resumeSvUrl: [] },
+      student: { resumeEnUrl: null, resumeSvUrl: null },
       disabled: true
     };
   }
@@ -25,13 +25,13 @@ class User extends Component {
 
   onRemove = name => {
     const { student } = this.state;
-    this.setState({ student: { ...student, [name]: [] } });
+    this.setState({ student: { ...student, [name]: null } });
   };
 
   beforeUpload = (file, name) => {
     const { student } = this.state;
     this.setState({
-      student: { ...student, [name]: [file] }
+      student: { ...student, [name]: file }
     });
     return false;
   };
@@ -59,32 +59,18 @@ class User extends Component {
 
   updateStudent = () => {
     const { student } = this.state;
-    const { currentUser, updateCurrentStudent } = this.props;
-    const formData = new FormData();
-    const modifiedKeys = Object.keys(student).filter(
-      k => student[k][0] !== currentUser.student[k]
-    );
-    modifiedKeys.forEach(key => {
-      formData.append(`student[${key}]`, student[key][0]);
-    });
+    const { updateCurrentStudent } = this.props;
 
-    this.setState({ student: { resumeEnUrl: [], resumeSvUrl: [] } });
-    updateCurrentStudent(formData);
+    this.setState({ student: { resumeEnUrl: null, resumeSvUrl: null } });
+    updateCurrentStudent({ student });
   };
 
   updateUser = values => {
-    const { currentUser, updateCurrentUser } = this.props;
+    const { updateCurrentUser } = this.props;
     const { disabled } = this.state;
 
-    const data = Object.keys(values).reduce((modified, key) => {
-      if (currentUser[key] !== values[key]) {
-        modified[key] = values[key];
-      }
-      return modified;
-    }, {});
-
     this.setState({ disabled: !disabled });
-    updateCurrentUser({ user: data });
+    updateCurrentUser({ user: values });
   };
 
   render() {
