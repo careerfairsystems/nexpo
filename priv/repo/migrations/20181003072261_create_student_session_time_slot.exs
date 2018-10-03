@@ -3,8 +3,8 @@ defmodule Nexpo.Repo.Migrations.CreateStudentSessionTimeSlot do
 
   def change do
     create table(:student_session_time_slots) do
-      add :start, :datetime
-      add :end, :datetime
+      add :start, :date
+      add :end, :date
       add :used, :boolean, default: false, null: false
       add :company_id, references(:companies, on_delete: :nothing)
 
@@ -13,4 +13,3 @@ defmodule Nexpo.Repo.Migrations.CreateStudentSessionTimeSlot do
     create index(:student_session_time_slots, [:company_id])
   end
 end
- 
