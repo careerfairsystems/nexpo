@@ -68,6 +68,13 @@ export const EntitiesReducer = (
       normalized = normalize(action.user, Schema.userSchema());
       return defaultsDeep(state, camelCaseKeys(normalized.entities));
     }
+    case actionTypes.PUT_STUDENT_SESSION_APPL_SUCCESS: {
+      normalized = normalize(
+        action.sessionApplication,
+        Schema.sessionApplicationSchema()
+      );
+      return defaultsDeep(state, camelCaseKeys(normalized.entities));
+    }
     case actionTypes.DELETE_STUDENT_SESSION_APPL_SUCCESS: {
       return {
         ...state,

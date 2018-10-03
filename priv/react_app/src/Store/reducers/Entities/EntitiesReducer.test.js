@@ -245,4 +245,26 @@ describe('Entities reducer', () => {
       sessionApplications: {}
     });
   });
+
+  it('should handle update session application', () => {
+    const data = { motivation: 'New Motivation' };
+    const oldAppl = {
+      id: 1,
+      companyId: 1,
+      studentId: 1,
+      motivation: 'Old motivation'
+    };
+
+    const action = Actions.studentSessions.updateStudentSessionApplSuccess({
+      ...oldAppl,
+      ...data
+    });
+    const state = EntitiesReducer(testData.sessionApplications, action);
+
+    expect(state).toMatchObject({
+      sessionApplications: {
+        1: { id: 1, companyId: 1, studentId: 1, motivation: 'New Motivation' }
+      }
+    });
+  });
 });

@@ -26,6 +26,22 @@ const entity = (key, definition = {}, options = {}) =>
     processStrategy: options.model
   });
 
+const sessionApplicationSchema = () => {
+  const company = entity(
+    'companies',
+    {},
+    { model: hasMany('sessionApplications') }
+  );
+  const student = entity(
+    'students',
+    {},
+    { model: hasMany('sessionApplications') }
+  );
+  const application = entity('sessionApplications', { company, student });
+  return application;
+};
+const sessionApplicationsSchema = () => [sessionApplicationSchema()];
+
 const categorySchema = () => {
   const company = entity(
     'companies',
@@ -112,6 +128,8 @@ export default {
   companiesSchema,
   roleSchema,
   rolesSchema,
+  sessionApplicationSchema,
+  sessionApplicationsSchema,
   userSchema,
   usersSchema,
   studentSchema,
