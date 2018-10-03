@@ -59,11 +59,11 @@ describe('userform should function correctly', () => {
   it('should add/remove field from student when beforeUpload/onRemove is called', () => {
     const wrapper = shallow(<CurrentUser {...props} />);
     const placeholderUrl = 'placeholder.com';
-    expect(wrapper.state('student').resumeSvUrl).toEqual([]);
+    expect(wrapper.state('student').resumeSvUrl).toEqual(null);
     wrapper.instance().beforeUpload(placeholderUrl, 'resumeSvUrl');
-    expect(wrapper.state('student').resumeSvUrl).toEqual([placeholderUrl]);
+    expect(wrapper.state('student').resumeSvUrl).toEqual(placeholderUrl);
     wrapper.instance().onRemove('resumeSvUrl');
-    expect(wrapper.state('student').resumeSvUrl).toEqual([]);
+    expect(wrapper.state('student').resumeSvUrl).toEqual(null);
   });
 
   it('should only update the changed values', () => {
@@ -74,21 +74,19 @@ describe('userform should function correctly', () => {
     const values = { phoneNumber, foodPreferences };
     wrapper.instance().updateUser(values);
     expect(updateCurrentUser).toHaveBeenCalledTimes(1);
-    expect(updateCurrentUser).toHaveBeenCalledWith({ user: { phoneNumber } });
+    expect(updateCurrentUser).toHaveBeenCalledWith({ user: values });
   });
 
   it('should update student and reset state', () => {
     const wrapper = shallow(<CurrentUser {...props} />);
     const { updateCurrentStudent } = props;
     const placeholderUrl = 'placeholder.com';
-    const formData = new FormData();
-    const key = 'resumeSvUrl';
-    formData.append(`student[${key}]`, placeholderUrl);
-    wrapper.instance().beforeUpload(placeholderUrl, key);
-    expect(wrapper.state('student').resumeSvUrl).toEqual([placeholderUrl]);
+    const student = { resumeSvUrl: placeholderUrl, resumeEnUrl: null };
+    wrapper.instance().beforeUpload(placeholderUrl, 'resumeSvUrl');
+    expect(wrapper.state('student').resumeSvUrl).toEqual(placeholderUrl);
     wrapper.instance().updateStudent();
-    expect(wrapper.state('student').resumeSvUrl).toEqual([]);
-    expect(updateCurrentStudent).toHaveBeenCalledWith(formData);
+    expect(wrapper.state('student').resumeSvUrl).toEqual(null);
+    expect(updateCurrentStudent).toHaveBeenCalledWith({ student });
   });
 
   it('should destroy user properly', () => {

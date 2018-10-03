@@ -6,6 +6,7 @@ import {
   authPost,
   authFetch,
   authPut,
+  authFormPut,
   authDelete,
   handleHttpResponse
 } from './utils';
@@ -30,7 +31,7 @@ export default {
    * Updates the current user's student
    */
   updateMyStudent: data =>
-    authPut('/api/me/student', data).then(handleHttpResponse),
+    authFormPut('/api/me/student', data).then(handleHttpResponse),
 
   /**
    * Create a user
