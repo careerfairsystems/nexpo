@@ -14,7 +14,7 @@ export type EntitiesState = {
   entries: {},
   roles: {},
   users: {},
-  sessionApplications: {},
+  studentSessionApplications: {},
   students: {}
 };
 
@@ -25,7 +25,7 @@ const initialState = {
   entries: {},
   roles: {},
   users: {},
-  sessionApplications: {},
+  studentSessionApplications: {},
   students: {}
 };
 
@@ -78,7 +78,7 @@ export const EntitiesReducer = (
     case actionTypes.DELETE_STUDENT_SESSION_APPL_SUCCESS: {
       return {
         ...state,
-        sessionApplications: omit(action.id, state.sessionApplications)
+        studentSessionApplications: omit(action.id, state.studentSessionApplications)
       };
     }
     case actionTypes.FETCH_USERS_SUCCESS: {
