@@ -21,6 +21,7 @@ import User from '../Screens/User';
 import CurrentUser from '../Screens/CurrentUser';
 import Companies from '../Screens/Companies';
 import Company from '../Screens/Company';
+import Session from '../Screens/Session';
 import SessionApplication from '../Screens/SessionApplication';
 import SessionApplications from '../Screens/SessionApplications';
 import SessionCompanies from '../Screens/SessionCompanies';
@@ -53,6 +54,7 @@ const routes = (
     <Route path="/signup" component={Signup} />
     <Route path="/forgot-password" component={ForgotPassword} />
     <Route path="/user" component={CurrentUser} />
+    <PrivateRoute exact path="/session" component={Session} />
     <PrivateRoute path="/session/application" component={SessionApplication} />
     <PrivateRoute
       path="/session/applications"
@@ -82,10 +84,14 @@ class App extends Component {
   };
 
   restrictedSubMenu = ({ route, title, menus }) => {
-    const { currentUser, isLoggedIn } = this.props;
+    const { currentUser, isLoggedIn, redirect } = this.props;
     if (isLoggedIn && hasPermission(currentUser, route)) {
       return (
-        <Menu.SubMenu title={title} key={`/${route}`}>
+        <Menu.SubMenu
+          title={title}
+          key={`/${route}`}
+          onTitleClick={() => redirect(`/${route}`)}
+        >
           {menus}
         </Menu.SubMenu>
       );
