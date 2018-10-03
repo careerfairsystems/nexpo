@@ -4,33 +4,59 @@ import LoadingSpinner from '../../Components/LoadingSpinner';
 import NotFound from '../NotFound';
 import SessionApplications from './SessionApplications';
 
-it('renders without crashing', () => {
-  const props = {
-    applications: [{ id: 1, companyId: 1, studentId: 1 }],
-    getAllCompanies: jest.fn(),
-    destroyStudentSessionAppl: jest.fn()
-  };
-  shallow(<SessionApplications {...props} />);
-});
+describe('SessionApplications', () => {
+  let props;
+  beforeEach(() => {
+    props = {
+      applications: [
+        { id: 1, companyId: 1, studentId: 1, motivation: 'Really motivating' },
+        { id: 2, companyId: 1, studentId: 1, motivation: 'Really motivating' }
+      ],
+      companies: {},
+      fetching: false,
+      getAllCompanies: jest.fn(),
+      destroyStudentSessionAppl: jest.fn(),
+      updateStudentSessionAppl: jest.fn()
+    };
+  });
 
-it('renders loadingspinner when fetching', () => {
-  const props = {
-    applications: [{ id: 1, companyId: 1, studentId: 1 }],
-    fetching: true,
-    getAllCompanies: jest.fn(),
-    destroyStudentSessionAppl: jest.fn()
-  };
-  const wrapper = shallow(<SessionApplications {...props} />);
-  expect(wrapper.find(LoadingSpinner)).toHaveLength(1);
-});
+  it('renders without crashing', () => {
+    shallow(<SessionApplications {...props} />);
+  });
 
-it('renders NotFound when  not fetching and applications are empty', () => {
-  const props = {
-    applications: null,
-    fetching: false,
-    getAllCompanies: jest.fn(),
-    destroyStudentSessionAppl: jest.fn()
-  };
-  const wrapper = shallow(<SessionApplications {...props} />);
-  expect(wrapper.find(NotFound)).toHaveLength(1);
+  it('renders loadingspinner when fetching', () => {
+    const wrapper = shallow(<SessionApplications {...props} fetching />);
+    expect(wrapper.find(LoadingSpinner)).toHaveLength(1);
+  });
+
+  it('renders NotFound when not fetching and applications are empty', () => {
+    const wrapper = shallow(
+      <SessionApplications {...props} applications={[]} />
+    );
+    expect(wrapper.find(NotFound)).toHaveLength(1);
+  });
+
+  it('renders toggles edit correctly', () => {
+    const wrapper = shallow(<SessionApplications {...props} />);
+    expect(wrapper.state().editing).toEqual({});
+    wrapper.instance().toggleEditMode(1);
+    expect(wrapper.state().editing).toEqual({ 1: true });
+    wrapper.instance().toggleEditMode(2);
+    expect(wrapper.state().editing).toEqual({ 2: true });
+  });
+  it('calls updateStudentSessionApplwith correct parameters', () => {
+    const wrapper = shallow(<SessionApplications {...props} />);
+    const data = { motivation: 'Lul' };
+    wrapper.instance().updateStudentSessionAppl(1, data);
+    expect(props.updateStudentSessionAppl).toHaveBeenCalledWith(1, {
+      studentSessionApplication: { ...data }
+    });
+  });
+
+  it('Can render listitems', () => {
+    const wrapper = shallow(<SessionApplications {...props} />);
+    // Check to see that list items renders properly
+    wrapper.instance().toggleEditMode(1);
+    wrapper.find('List').dive();
+  });
 });

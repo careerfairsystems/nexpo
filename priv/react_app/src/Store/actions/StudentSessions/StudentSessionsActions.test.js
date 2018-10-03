@@ -195,17 +195,35 @@ describe('updateStudentSessionAppl', () => {
   it('should call success action on success', () => {
     const id = 1;
     const data = { motivation: 'New motivation' };
-    mockHttpResponse({ status: 200, body: {} });
+
+    const appl = {
+      motivation: 'Old motivation',
+      id: 1,
+      companyId: 1,
+      studentId: 1
+    };
+    mockHttpResponse({
+      status: 200,
+      body: { data: { ...appl, ...data } }
+    });
 
     const expectedActions = [
       Actions.studentSessions.updateStudentSessionApplIsLoading(),
-      Actions.studentSessions.updateStudentSessionApplSuccess(data)
+      Actions.studentSessions.updateStudentSessionApplSuccess({
+        ...appl,
+        ...data
+      })
     ];
 
     const store = createMockStore();
-
+    const studentSessionApplication = { studentSessionApplication: data };
     return store
-      .dispatch(Actions.studentSessions.updateStudentSessionAppl(id, data))
+      .dispatch(
+        Actions.studentSessions.updateStudentSessionAppl(
+          id,
+          studentSessionApplication
+        )
+      )
       .then(() => {
         const calledActions = store.getActions();
         expect(calledActions).toEqual(expectedActions);
