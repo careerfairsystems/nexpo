@@ -9,7 +9,12 @@ const TextInput = makeField(Input);
 
 const CurrentUserForm = ({ handleSubmit, disabled, reset, pristine }) => (
   <Form onSubmit={handleSubmit}>
-    <Field name="phoneNumber" label="Phone Number" component={TextInput} />
+    <Field
+      name="phoneNumber"
+      label="Phone Number"
+      component={TextInput}
+      type="number"
+    />
     <Button disabled={pristine} htmlType="submit">
       Submit
     </Button>
