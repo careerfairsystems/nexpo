@@ -5,6 +5,7 @@ import { Table, Input, Button, Icon } from 'antd';
 import { size } from 'lodash/fp';
 import Popconfirm from 'antd/lib/popconfirm';
 import Divider from 'antd/lib/divider';
+import { toExternal } from '../../Util/URLHelper';
 import InvisibleLink from '../../Components/InvisibleLink';
 import LoadingSpinner from '../../Components/LoadingSpinner';
 import HtmlTitle from '../../Components/HtmlTitle';
@@ -78,7 +79,8 @@ class Companies extends Component {
     {
       title: 'Website',
       dataIndex: 'website',
-      key: 'website'
+      key: 'website',
+      render: website => <a href={toExternal(website)}>{website}</a>
     },
     {
       title: 'Description',
