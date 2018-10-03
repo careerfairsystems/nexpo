@@ -82,7 +82,8 @@ class Companies extends Component {
     {
       title: 'Description',
       dataIndex: 'description',
-      key: 'description'
+      key: 'description',
+      render: description => `${description.slice(0, 42)} ...`
     },
     {
       title: 'Action',
