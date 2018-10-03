@@ -14,7 +14,7 @@ export default {
   /**
    * Create a role
    */
-  create: () => authPost('/api/roles').then(handleHttpResponse),
+  create: data => authPost('/api/roles', data).then(handleHttpResponse),
 
   /**
    * Fetches all roles
@@ -29,7 +29,8 @@ export default {
   /**
    * Updates a role
    */
-  update: id => authPut(`/api/roles/${id}`).then(handleHttpResponse),
+  update: (id, data) =>
+    authPut(`/api/roles/${id}`, data).then(handleHttpResponse),
 
   /**
    * Delete a role

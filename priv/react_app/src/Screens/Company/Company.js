@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { isEmpty, isNil } from 'lodash/fp';
+import { isEmpty, isNil, toInteger } from 'lodash/fp';
 import Button from 'antd/lib/button';
 import Avatar from 'antd/lib/avatar';
+import message from 'antd/lib/message';
+import API from '../../API';
 import CompanyForm from '../../Components/Forms/CompanyForm';
+import InviteForm from '../../Components/Forms/InviteForm';
 import HtmlTitle from '../../Components/HtmlTitle';
 import NotFound from '../NotFound';
 import LoadingSpinner from '../../Components/LoadingSpinner';
@@ -65,6 +68,20 @@ class Company extends Component {
     }
   };
 
+  invite = ({ email }) => {
+    const { id, resetForm } = this.props;
+    API.signup
+      .initialRepresentativeSignup({ email, companyId: toInteger(id) })
+      .then(res => {
+        if (res.ok) {
+          message.success(`Invitation sent to ${email}.`);
+          resetForm('invite');
+        } else {
+          message.warning('Invitation could not be sent.');
+        }
+      });
+  };
+
   showStudentSession() {
     const { company } = this.props;
     switch (company.studentSessionDays) {
@@ -85,18 +102,22 @@ class Company extends Component {
     const { company } = this.props;
     const { name } = company;
     return (
-      <div className="Company_Component">
+      <div className="company-edit-view">
         <HtmlTitle title={name} />
         <div>
+          <h1>{name}</h1>
           <CompanyForm
-            action=""
-            disabled={false}
             onSubmit={this.updateCompany}
             initialValues={company}
             beforeUpload={this.beforeUpload}
             onRemove={this.onRemove}
             logoUrl={this.state.company.logoUrl}
+            onCancel={this.toggleEdit}
           />
+          <br />
+          <br />
+          <h2>Invite Company Representatives</h2>
+          <InviteForm onSubmit={this.invite} />
         </div>
       </div>
     );
@@ -107,24 +128,19 @@ class Company extends Component {
 
     const { name, website, description } = company;
     return (
-      <div className="Company_Component" style={{ whiteSpace: 'pre-wrap' }}>
+      <div className="company-show-view">
         <HtmlTitle title={name} />
 
-        <div className="left-col">
-          <div className="paper main-info">
-            <Avatar src={company.logoUrl} size={128} alt="Company Logotype" />
-            <h1>{name}</h1>
-            <a href={website}>{website}</a>
-            <p>
-              {name} has student sessions: {this.showStudentSession()}
-            </p>
-            <p>{description}</p>
-          </div>
-          <div className="paper entries">
-            <h2>Entries</h2>
-          </div>
-          <Button onClick={this.toggleEdit}> Edit</Button>
+        <div>
+          <Avatar src={company.logoUrl} size={128} alt="Company Logotype" />
+          <h1>{name}</h1>
+          <a href={website}>{website}</a>
+          <p>
+            {name} has student sessions: {this.showStudentSession()}
+          </p>
+          <p>{description}</p>
         </div>
+        <Button onClick={this.toggleEdit}>Edit</Button>
       </div>
     );
   }

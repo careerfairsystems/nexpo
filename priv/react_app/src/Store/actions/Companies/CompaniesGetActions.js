@@ -1,3 +1,4 @@
+import { message } from 'antd';
 import { actionTypes } from '../..';
 import API from '../../../API';
 
@@ -18,6 +19,9 @@ export type GetCompanyFailureAction = {
   type: string
 };
 export function getCompanyFailure(): GetCompanyFailureAction {
+  message.error(
+    'Something went wrong when trying to fetch company, please try again later'
+  );
   return {
     type: actionTypes.FETCH_COMPANY_FAILURE
   };

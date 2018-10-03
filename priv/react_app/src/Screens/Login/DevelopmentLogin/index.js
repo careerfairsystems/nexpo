@@ -8,7 +8,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  login: Actions.auth.development_login
+  login: Actions.auth.developmentLogin
 };
 
 const stateful = connect(

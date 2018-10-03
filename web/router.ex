@@ -50,9 +50,16 @@ defmodule Nexpo.Router do
       # resources "/student_session_applications", StudentSessionApplicationController
     end
 
+    post "/initial_representative_signup", SignupController, :create_representative
+    resources "/representatives", RepresentativeController
+
     resources "/companies", CompanyController do
       resources "/desired_programmes", DesiredProgrammeController
+      resources "/student_session_time_slots", StudentSessionTimeSlotController
+
     end
+    resources "/industries", IndustryController
+    resources "/job_offers", JobOfferController
     resources "/categories", CategoryController
     resources "/programmes", ProgrammeController
 

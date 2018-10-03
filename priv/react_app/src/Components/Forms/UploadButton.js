@@ -13,6 +13,7 @@ const UploadButton = ({
   fileList
 }) => (
   <Upload
+    accept=".pdf"
     action={action}
     beforeUpload={file => beforeUpload(file, name)}
     onRemove={() => onRemove(name)}

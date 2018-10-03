@@ -1,3 +1,4 @@
+import { message } from 'antd';
 import { actionTypes } from '../..';
 import API from '../../../API';
 
@@ -8,6 +9,7 @@ export function updateUserIsLoading() {
 }
 
 export function updateUserSuccess(user) {
+  message.success('User successfully updated');
   return {
     type: actionTypes.PUT_USER_SUCCESS,
     user
@@ -18,6 +20,7 @@ export type UpdateUserFailureAction = {
   type: string
 };
 export function updateUserFailure(): UpdateUserFailureAction {
+  message.error('Something went wrong, please try again later');
   return {
     type: actionTypes.PUT_USER_FAILURE
   };

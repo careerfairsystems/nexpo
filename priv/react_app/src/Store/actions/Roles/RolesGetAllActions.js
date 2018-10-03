@@ -1,3 +1,4 @@
+import { message } from 'antd';
 import { actionTypes } from '../..';
 import API from '../../../API';
 
@@ -18,6 +19,9 @@ export type GetAllRolesFailureAction = {
   type: string
 };
 export function getAllRolesFailure(): GetAllRolesFailureAction {
+  message.error(
+    'Something went wrong when trying to fetch all roles, please try again later'
+  );
   return {
     type: actionTypes.FETCH_ROLES_FAILURE
   };

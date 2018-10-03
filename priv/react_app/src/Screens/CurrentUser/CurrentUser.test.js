@@ -1,5 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
+import { Button } from 'antd';
 import CurrentUser from './CurrentUser';
 import LoadingSpinner from '../../Components/LoadingSpinner';
 import NotFound from '../NotFound';
@@ -8,7 +9,9 @@ describe('userform should function correctly', () => {
   let props;
   beforeEach(() => {
     props = {
+      currentStudent: {},
       currentUser: {
+        id: 1,
         firstName: 'John',
         lastName: 'Smith',
         phoneNumber: '11111',
@@ -18,8 +21,11 @@ describe('userform should function correctly', () => {
           resumeSvUrl: 'oldPlaceholder.com'
         }
       },
+
       fetching: false,
       getCurrentUser: jest.fn(),
+      destroyCurrentUser: jest.fn(),
+      logout: jest.fn(),
       updateCurrentUser: jest.fn(),
       updateCurrentStudent: jest.fn()
     };
@@ -81,5 +87,14 @@ describe('userform should function correctly', () => {
     wrapper.instance().updateStudent();
     expect(wrapper.state('student').resumeSvUrl).toEqual(null);
     expect(updateCurrentStudent).toHaveBeenCalledWith({ student });
+  });
+
+  it('should destroy user properly', () => {
+    const wrapper = shallow(<CurrentUser {...props} />);
+    const { currentUser, destroyCurrentUser, logout } = props;
+    wrapper.instance().destroyCurrentUser();
+    expect(destroyCurrentUser).toHaveBeenCalledWith(currentUser.id);
+    expect(logout).toHaveBeenCalledTimes(1);
+    wrapper.find(Button).simulate('click');
   });
 });
