@@ -15,7 +15,14 @@ class SessionCompanies extends Component {
 
   renderCompany = ({ name, website, logoUrl, description }) => (
     <List.Item
-      extra={<Avatar src={logoUrl} size={128} />}
+      extra={
+        <Avatar
+          src={logoUrl}
+          size={128}
+          shape="square"
+          alt="Company Logotype"
+        />
+      }
       actions={[
         <InvisibleLink to="/session/application">Apply now</InvisibleLink>
       ]}
