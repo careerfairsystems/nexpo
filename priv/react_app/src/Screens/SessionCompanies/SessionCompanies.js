@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { isNil, filter } from 'lodash/fp';
 import { List, Avatar } from 'antd';
 import NotFound from '../NotFound';
+import { toExternal } from '../../Util/URLHelper';
 import LoadingSpinner from '../../Components/LoadingSpinner';
 import HtmlTitle from '../../Components/HtmlTitle';
 import InvisibleLink from '../../Components/InvisibleLink';
@@ -29,7 +30,7 @@ class SessionCompanies extends Component {
     >
       <List.Item.Meta
         title={name}
-        description={<a href={website}>{website}</a>}
+        description={<a href={toExternal(website)}>{website}</a>}
       />
       {description}
     </List.Item>

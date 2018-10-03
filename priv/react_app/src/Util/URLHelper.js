@@ -7,7 +7,7 @@
  * @param {String} name
  * @param {String} url
  */
-const getParameterByName = (name, url = window.location.href) => {
+export const getParameterByName = (name, url = window.location.href) => {
   name = name.replace(/[[\]]/g, '\\$&');
   const regex = new RegExp(`[?&]${name}(=([^&#]*)|&|#|$)`);
   const results = regex.exec(url);
@@ -16,6 +16,15 @@ const getParameterByName = (name, url = window.location.href) => {
   return decodeURIComponent(results[2].replace(/\+/g, ' '));
 };
 
+export const toExternal = url => {
+  if (!url) return url;
+  if (url.match(/^[a-zA-Z]*:\/\/|^\/\//)) {
+    return url;
+  }
+  return `//${url}`;
+};
+
 export default {
-  getParameterByName
+  getParameterByName,
+  toExternal
 };

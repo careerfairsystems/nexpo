@@ -4,11 +4,12 @@ import { isEmpty, isNil, toInteger } from 'lodash/fp';
 import Button from 'antd/lib/button';
 import Avatar from 'antd/lib/avatar';
 import message from 'antd/lib/message';
+import NotFound from '../NotFound';
 import API from '../../API';
+import { toExternal } from '../../Util/URLHelper';
 import CompanyForm from '../../Components/Forms/CompanyForm';
 import InviteForm from '../../Components/Forms/InviteForm';
 import HtmlTitle from '../../Components/HtmlTitle';
-import NotFound from '../NotFound';
 import LoadingSpinner from '../../Components/LoadingSpinner';
 import './Company.css';
 
@@ -139,7 +140,7 @@ class Company extends Component {
             alt="Company Logotype"
           />
           <h1>{name}</h1>
-          <a href={website}>{website}</a>
+          <a href={toExternal(website)}>{website}</a>
           <p>
             {name} has student sessions: {this.showStudentSession()}
           </p>
