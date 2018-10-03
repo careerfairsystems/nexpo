@@ -22,4 +22,15 @@ defmodule Nexpo.StudentSessionApplicationController do
         |> render(Nexpo.ChangesetView, "error.json", changeset: changeset)
     end
   end
+
+  def delete_me(conn, %{"id" => id}, user, _claims) do
+    student = Repo.get_by!(Student, %{user_id: user.id})
+    case Repo.get_by(StudentSessionApplication, %{id: id, student_id: student.id}) do
+      nil ->  conn
+        |> put_status(400)
+        |> render(Nexpo.ErrorView, "400.json")
+      application -> Repo.delete!(application)
+          send_resp(conn, :no_content, "")
+    end
+  end
 end

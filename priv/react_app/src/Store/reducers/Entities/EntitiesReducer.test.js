@@ -15,6 +15,7 @@ describe('Entities reducer', () => {
       entries: {},
       roles: {},
       users: {},
+      sessionApplications: {},
       students: {}
     };
     expect(EntitiesReducer(undefined, {})).toEqual(initialState);
@@ -227,6 +228,21 @@ describe('Entities reducer', () => {
 
     expect(state).toMatchObject({
       users: {}
+    });
+  });
+
+  it('should handle delete session application', () => {
+    const sessionApplicationId = 1;
+    const action = Actions.studentSessions.destroyStudentSessionAppl(
+      sessionApplicationId
+    );
+    const state = EntitiesReducer(
+      { sessionApplications: { 1: { id: 1, companyId: 1, studentId: 1 } } },
+      action
+    );
+
+    expect(state).toMatchObject({
+      sessionApplications: {}
     });
   });
 });
