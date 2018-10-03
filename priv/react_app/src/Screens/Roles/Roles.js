@@ -30,7 +30,7 @@ const roleColumns = [
       <span>
         <InvisibleLink to={`/roles/${role.id}`}>Show</InvisibleLink>
         <Divider type="vertical" />
-        <InvisibleLink to="#role-edit">Edit</InvisibleLink>
+        <InvisibleLink to={`/roles/${role.id}/#role-edit`}>Edit</InvisibleLink>
         <Divider type="vertical" />
         <InvisibleLink to="#role-delete">Delete</InvisibleLink>
       </span>

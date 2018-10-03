@@ -8,15 +8,30 @@ import HtmlTitle from '../../Components/HtmlTitle';
  * Responsible for rendering a role. Role id is recieved via url
  */
 class Role extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      edit: false
+    };
+  }
+
   componentWillMount() {
-    const { id, getRole } = this.props;
+    const { id, getRole, location } = this.props;
+    if (location && location.hash === '#role-edit') {
+      this.setState({ edit: true });
+    }
     getRole(id);
   }
 
   render() {
+    const { edit } = this.state;
     const { role } = this.props;
+
     if (isEmpty(role) || isNil(role)) {
       return <NotFound />;
+    }
+    if (edit) {
+      return this.renderEditView();
     }
 
     const { type, permissions } = role;
@@ -34,6 +49,11 @@ class Role extends Component {
         </div>
       </div>
     );
+  }
+
+  renderEditView() {
+    const { role } = this.props;
+    return <div className="role-edit-view">/*TODO*/</div>;
   }
 }
 
