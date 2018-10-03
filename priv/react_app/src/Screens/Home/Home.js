@@ -1,9 +1,9 @@
 import React from 'react';
 import InvisibleLink from '../../Components/InvisibleLink';
 
-const Session = () => (
+const Home = () => (
   <div>
-    <h1>Welcome to ARKAD - Student Session!</h1>
+    <h1>Welcome to ARKAD!</h1>
     <h3>How to apply for Student Sessions:</h3>
     <h4>
       <li>
@@ -37,4 +37,4 @@ const Session = () => (
   </div>
 );
 
-export default Session;
+export default Home;
