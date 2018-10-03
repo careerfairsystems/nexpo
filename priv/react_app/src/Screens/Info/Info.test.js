@@ -1,8 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import Startscreen from './Startscreen';
+import Info from './Info';
 
 it('renders without crashing', () => {
-  shallow(<Startscreen />);
+  shallow(<Info />);
 });

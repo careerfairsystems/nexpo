@@ -8,10 +8,11 @@ import Icon from 'antd/lib/icon';
 
 import { startCase } from 'lodash/fp';
 
-import { Route, Switch, Redirect, Link } from 'react-router-dom';
+import { Route, Switch, Link } from 'react-router-dom';
 import PrivateRoute from '../Components/PrivateRoute';
 
-import Startscreen from '../Screens/Startscreen';
+import Home from '../Screens/Home';
+import Info from '../Screens/Info';
 import Categories from '../Screens/Categories';
 import Category from '../Screens/Category';
 import Roles from '../Screens/Roles';
@@ -38,8 +39,8 @@ const { Header, Content, Footer } = Layout;
 
 const routes = (
   <Switch>
-    <Route exact path="/" render={() => <Redirect to="/start" />} />
-    <Route exact path="/start" component={Startscreen} />
+    <PrivateRoute exact path="/" component={Home} />
+    <Route exact path="/info" component={Info} />
     <PrivateRoute exact path="/categories" component={Categories} />
     <PrivateRoute path="/categories/:id" component={Category} />
     <PrivateRoute exact path="/companies" component={Companies} />
