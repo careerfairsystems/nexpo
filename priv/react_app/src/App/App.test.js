@@ -110,6 +110,7 @@ it('renders routes without crashing', () => {
   mount(route('/forgot-password'));
   mount(route('/user'));
   mount(route('/invalid-path'));
+  mount(route('/session'));
   mount(route('/session/application'));
   mount(route('/session/applications'));
   mount(route('/session/companies'));

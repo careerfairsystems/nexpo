@@ -1,17 +1,23 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import InvisibleLink from '../../Components/InvisibleLink';
 
 class Session extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
   render() {
-    return <React.Fragment />;
+    return (
+      <div>
+        <InvisibleLink to="session/application">Apply</InvisibleLink>
+        <br />
+        <InvisibleLink to="session/applications">
+          View your applications
+        </InvisibleLink>
+        <br />
+        <InvisibleLink to="session/companies">
+          View available companies
+        </InvisibleLink>
+        <br />
+      </div>
+    );
   }
 }
 
-Session.propTypes = {};
-Session.defaultProps = {};
 export default Session;
