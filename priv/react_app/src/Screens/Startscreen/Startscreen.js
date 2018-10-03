@@ -10,7 +10,8 @@ class Startscreen extends Component {
         <h4>
           <li>
             {' '}
-            Go to your profile and fill in your phone number and upload your CV.{' '}
+            Go to your <InvisibleLink to="/user"> profile </InvisibleLink> and
+            fill in your phone number and upload your CV.{' '}
           </li>
           <li>
             {' '}
@@ -22,7 +23,7 @@ class Startscreen extends Component {
           <br />
           Note: If you apply for more than one company they will all receive the
           same CV but different motivations. You can view all your applications
-          here.
+          <InvisibleLink to="/session/applications"> here.</InvisibleLink>
         </h4>
         <br />
         <br />
@@ -33,7 +34,10 @@ class Startscreen extends Component {
         <br />
         <br />
         <h3>Do you have any questions about the student sessions?</h3>
-        <h4>Contact: company.arkad@tlth.se</h4>
+        <h4>
+          Contact:{' '}
+          <a href="mailto:company.arkad@tlth.se">company.arkad@tlth.se</a>
+        </h4>
       </div>
     );
   }
