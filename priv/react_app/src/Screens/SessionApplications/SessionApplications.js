@@ -29,6 +29,7 @@ class SessionApplications extends Component {
   updateStudentSessionAppl = values => {
     const { updateStudentSessionAppl } = this.props;
     console.log(values);
+    this.setState({ editing: {} });
   };
 
   renderApplication = application => (
@@ -106,7 +107,8 @@ class SessionApplications extends Component {
 SessionApplications.propTypes = {
   applications: PropTypes.array.isRequired,
   getAllCompanies: PropTypes.func.isRequired,
-  destroyStudentSessionAppl: PropTypes.func.isRequired
+  destroyStudentSessionAppl: PropTypes.func.isRequired,
+  updateStudentSessionAppl: PropTypes.func.isRequired
 };
 
 export default SessionApplications;
