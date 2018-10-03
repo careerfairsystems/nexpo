@@ -46,6 +46,12 @@ defmodule Nexpo.Support.View do
         %{:users => render_many(object.users, Nexpo.UserView, "user.json")}
       :student ->
         %{:student => render_one(object.student, Nexpo.StudentView, "student.json")}
+      :student_session_applications ->
+        %{:student_session_applications => render_many(
+            object.student_session_applications,
+            Nexpo.StudentSessionApplicationView,
+            "student_session_application.json"
+          )}
       :logo_url ->
         %{:logo_url => Nexpo.ProfileImage.url(get_url(object, relation), :original)}
       :resume_en_url ->

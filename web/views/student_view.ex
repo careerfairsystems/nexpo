@@ -13,15 +13,6 @@ defmodule Nexpo.StudentView do
     # Define own parameters to keep
     base = [:id, :user_id, :year, :resume_en_url, :resume_sv_url]
 
-    data = Nexpo.Support.View.render_object(student, base)
-
-    session_applications = student.student_session_applications
-    if Ecto.assoc_loaded?(session_applications) do
-      session_applications = session_applications
-        |> render_many(Nexpo.StudentSessionApplicationView, "student_session_application.json", as: :student_session_application)
-      Map.put(data, :session_applications, session_applications)
-    else
-      data
-    end
+    Nexpo.Support.View.render_object(student, base)
   end
 end
