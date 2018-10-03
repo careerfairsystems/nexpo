@@ -10,7 +10,7 @@ class Startscreen extends Component {
         <h4>
           <li>
             Go to your <InvisibleLink to="/user"> profile </InvisibleLink> and
-            fill in your phone number and upload your CV.
+            fill in your phone number and upload your CV(s).
           </li>
           <li>
             Go to
@@ -20,7 +20,8 @@ class Startscreen extends Component {
           </li>
           <br />
           Note: If you apply for more than one company they will all receive the
-          same CV but different motivations. You can view all your applications
+          same CV(s) but different motivations. You can view all your
+          applications
           <InvisibleLink to="/session/applications"> here</InvisibleLink>.
         </h4>
         <br />
