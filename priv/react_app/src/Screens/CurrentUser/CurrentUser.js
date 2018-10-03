@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { isEmpty, map } from 'lodash/fp';
+import { isEmpty } from 'lodash/fp';
 import { Button, Modal } from 'antd';
 import LoadingSpinner from '../../Components/LoadingSpinner';
 import NotFound from '../NotFound';
-import UserForm from '../../Components/Forms/UserForm';
+import CurrentUserForm from '../../Components/Forms/CurrentUserForm';
 import StudentForm from '../../Components/Forms/StudentForm';
 
 const { confirm } = Modal;
@@ -52,11 +52,6 @@ class User extends Component {
     logout();
   };
 
-  toggleEdit = () => {
-    const { disabled } = this.state;
-    this.setState({ disabled: !disabled });
-  };
-
   updateStudent = () => {
     const { student } = this.state;
     const { updateCurrentStudent } = this.props;
@@ -75,7 +70,7 @@ class User extends Component {
 
   render() {
     const { currentUser, currentStudent, fetching } = this.props;
-    const { student, disabled } = this.state;
+    const { student } = this.state;
     if (fetching) {
       return <LoadingSpinner />;
     }
@@ -83,7 +78,7 @@ class User extends Component {
       return <NotFound />;
     }
 
-    const { email, firstName, lastName, roles } = currentUser;
+    const { email, firstName, lastName } = currentUser;
     const { resumeEnUrl, resumeSvUrl } = student;
     return (
       <div>
@@ -98,13 +93,8 @@ class User extends Component {
           </Button>
         </h1>
         <h2>Email: {email}</h2>
-        <h2>
-          Roles: {isEmpty(roles) ? 'None' : map('type', roles).join(', ')}
-        </h2>
-        <UserForm
+        <CurrentUserForm
           onSubmit={this.updateUser}
-          disabled={disabled}
-          toggleEdit={this.toggleEdit}
           initialValues={currentUser}
         />
         {!isEmpty(currentStudent) && (

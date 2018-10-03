@@ -48,14 +48,6 @@ describe('userform should function correctly', () => {
     expect(wrapper.find(NotFound).length).toBe(1);
   });
 
-  it('should toggle state when toggleEdit is called', () => {
-    const startState = true;
-    const wrapper = shallow(<CurrentUser {...props} />);
-    expect(wrapper.state('disabled')).toBe(startState);
-    wrapper.instance().toggleEdit();
-    expect(wrapper.state('disabled')).toBe(!startState);
-  });
-
   it('should add/remove field from student when beforeUpload/onRemove is called', () => {
     const wrapper = shallow(<CurrentUser {...props} />);
     const placeholderUrl = 'placeholder.com';
