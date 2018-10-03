@@ -53,7 +53,7 @@ class Companies extends Component {
             title="Sure to delete?"
             onConfirm={() => this.props.deleteCompany(company.id)}
           >
-            <a href={null}>Delete</a>
+            <span style={{ color: '#ff4d4f', cursor: 'pointer' }}>Delete</span>
           </Popconfirm>
         </span>
       )
