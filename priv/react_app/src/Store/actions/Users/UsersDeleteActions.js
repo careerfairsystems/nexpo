@@ -1,3 +1,4 @@
+import { message } from 'antd';
 import { actionTypes } from '../..';
 import API from '../../../API';
 
@@ -8,6 +9,7 @@ export function destroyUserIsLoading() {
 }
 
 export function destroyUserSuccess(user) {
+  message.success('User successfully deleted');
   return {
     type: actionTypes.DELETE_USER_SUCCESS,
     user
@@ -18,6 +20,7 @@ export type DestroyUserFailureAction = {
   type: string
 };
 export function destroyUserFailure(): DestroyUserFailureAction {
+  message.error('Something went wrong, please try again later');
   return {
     type: actionTypes.DELETE_USER_FAILURE
   };

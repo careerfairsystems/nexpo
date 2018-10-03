@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { Actions, Selectors } from '../../Store';
 import CurrentUser from './CurrentUser';
-import { State } from '../../Store/reducers/index';
+import type { State } from '../../Store/reducers';
 
 const mapStateToProps = (state: State) => ({
   currentUser: Selectors.users.getCurrentUser(state),

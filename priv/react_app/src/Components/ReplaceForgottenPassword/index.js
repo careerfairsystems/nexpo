@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import ReplaceForgottenPassword from './ReplaceForgottenPassword';
-import { Actions, State } from '../../Store/index';
+import { Actions } from '../../Store';
+import type { State } from '../../Store/reducers';
 
 const mapStateToProps = (state: State) => ({
   keyIsValid: state.auth.forgotPassword.validKey,
