@@ -9,20 +9,19 @@ class Startscreen extends Component {
         <h3>How to apply for Student sessions:</h3>
         <h4>
           <li>
-            {' '}
-            Go to your profile and fill in your phone number and upload your CV.{' '}
+            Go to your <InvisibleLink to="/user"> profile </InvisibleLink> and
+            fill in your phone number and upload your CV.
           </li>
           <li>
-            {' '}
-            Go to{' '}
+            Go to
             <InvisibleLink to="/session/application">apply </InvisibleLink>
             and choose a company. Write a short motivation and submit your
-            application.{' '}
+            application.
           </li>
           <br />
           Note: If you apply for more than one company they will all receive the
           same CV but different motivations. You can view all your applications
-          here.
+          <InvisibleLink to="/session/applications"> here.</InvisibleLink>
         </h4>
         <br />
         <br />
@@ -33,7 +32,10 @@ class Startscreen extends Component {
         <br />
         <br />
         <h3>Do you have any questions about the student sessions?</h3>
-        <h4>Contact: company.arkad@tlth.se</h4>
+        <h4>
+          Contact:
+          <a href="mailto:company.arkad@tlth.se">company.arkad@tlth.se</a>
+        </h4>
       </div>
     );
   }
