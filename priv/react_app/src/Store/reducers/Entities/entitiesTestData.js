@@ -107,6 +107,9 @@ const testData = {
       }
     ]
   },
+  sessionApplications: {
+    1: { id: 1, companyId: 1, studentId: 1, motivation: 'Old motivation' }
+  },
   categories: [
     {
       title: 'Logistik',
