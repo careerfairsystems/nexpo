@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './ReplaceForgottenPassword.css';
 import PropTypes from 'prop-types';
-import { SubmissionError } from 'redux-form';
 import ReplacePasswordForm from '../Forms/ReplacePasswordForm';
 import { SuccessMessage } from '../SuccessMessage/SuccessMessage';
 import { NotFound } from '../../Screens/NotFound/NotFound';
@@ -28,11 +27,6 @@ class ReplaceForgottenPassword extends Component<Props> {
     return sendNewPasswordToBackend({
       password,
       password_confirmation: passwordConfirmation
-    }).catch(errors => {
-      throw new SubmissionError({
-        password: errors.password,
-        passwordConfirmation: errors.password_confirmation
-      });
     });
   };
 

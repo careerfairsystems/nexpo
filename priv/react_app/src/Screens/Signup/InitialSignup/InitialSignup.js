@@ -16,7 +16,7 @@ class InitialSignup extends Component {
 
   signup = values => {
     const { email } = values;
-    API.signup
+    return API.signup
       .initialSignup(email)
       .then(() => this.setState({ finished: true }))
       .catch(err => {

@@ -1,3 +1,4 @@
+import { SubmissionError } from 'redux-form';
 import { actionTypes } from '../..';
 import API from '../../../API';
 import { ApiError } from '../../../Errors/ApiError';
@@ -97,7 +98,13 @@ export function replace_forgotten_password({
         dispatch(replaceForgottenPasswordSuccess());
       })
       .catch((error: ApiError) => {
-        dispatch(replaceForgottenPasswordFailure(error.errors));
+        const { errors } = error;
+        dispatch(replaceForgottenPasswordFailure(errors));
+        if (errors)
+          throw new SubmissionError({
+            password: errors.password,
+            passwordConfirmation: errors.password_confirmation
+          });
       });
   };
 }
