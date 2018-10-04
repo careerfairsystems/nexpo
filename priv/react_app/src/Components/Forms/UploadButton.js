@@ -14,6 +14,7 @@ const UploadButton = ({
   fileList
 }) => [
   <Upload
+    key="uploadButton"
     accept={accept}
     action={action}
     beforeUpload={file => beforeUpload(file, name)}
@@ -31,7 +32,9 @@ const UploadButton = ({
       />
     )}
   </Upload>,
-  <a href={currentStudent[name]}>Current CV</a>
+  <a key="CVlink" href={currentStudent[name]}>
+    Current CV
+  </a>
 ];
 
 export default makeField(UploadButton);
