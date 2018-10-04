@@ -12,7 +12,7 @@ const UploadButton = ({
   name,
   onRemove,
   fileList
-}) => (
+}) => [
   <Upload
     accept={accept}
     action={action}
@@ -30,7 +30,8 @@ const UploadButton = ({
         theme="outlined"
       />
     )}
-  </Upload>
-);
+  </Upload>,
+  <a href={currentStudent[name]}>Current CV</a>
+];
 
 export default makeField(UploadButton);
