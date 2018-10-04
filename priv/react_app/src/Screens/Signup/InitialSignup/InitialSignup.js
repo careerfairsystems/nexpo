@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import TextField from 'material-ui/TextField';
-import RaisedButton from 'material-ui/RaisedButton';
+import { SubmissionError } from 'redux-form';
 import { Link } from 'react-router-dom';
 import './InitialSignup.css';
 import API from '../../../API';
-
+import SignupForm from '../../../Components/Forms/SignupForm';
 import SuccessMessage from '../../../Components/SuccessMessage';
 
 /**
@@ -12,40 +11,18 @@ import SuccessMessage from '../../../Components/SuccessMessage';
  */
 class InitialSignup extends Component {
   state = {
-    email: '',
-    errors: {},
     finished: false
   };
 
-  signup = () => {
-    const { email } = this.state;
-
-    // reset errors to give user feedback that something happened
-    this.setState({ errors: {} });
-
+  signup = values => {
+    const { email } = values;
     API.signup
       .initialSignup(email)
       .then(() => this.setState({ finished: true }))
-      .catch(err => this.setState({ errors: err.errors }));
+      .catch(err => {
+        throw new SubmissionError({ ...err.errors });
+      });
   };
-
-  renderUsernameInput = () => {
-    const { email, errors } = this.state;
-    return (
-      <TextField
-        floatingLabelText="Email"
-        errorText={errors.email ? errors.email[0] : null}
-        value={email}
-        autoFocus
-        onChange={(event, val) => this.setState({ email: val })}
-        onKeyPress={event => (event.key === 'Enter' ? this.signup() : null)}
-      />
-    );
-  };
-
-  renderSignupButton = () => (
-    <RaisedButton label="Sign up" primary onClick={() => this.signup()} />
-  );
 
   render() {
     const { finished } = this.state;
@@ -57,10 +34,7 @@ class InitialSignup extends Component {
       <div className="GatherEmail_Component">
         <h1>Sign up</h1>
         <h2>Please enter your email</h2>
-        {this.renderUsernameInput()}
-        <br />
-        <br />
-        {this.renderSignupButton()}
+        <SignupForm onSubmit={this.signup} />
         <br />
         <br />
         <div>Already have an account?</div>
