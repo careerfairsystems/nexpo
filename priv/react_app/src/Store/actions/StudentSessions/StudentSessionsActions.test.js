@@ -1,3 +1,4 @@
+import { reset } from 'redux-form';
 import { Actions, actionTypes } from '../..';
 import { mockHttpResponse, createMockStore } from '../../../TestHelper';
 
@@ -64,7 +65,8 @@ describe('createStudentSessionAppl', () => {
 
     const expectedActions = [
       Actions.studentSessions.createStudentSessionApplIsLoading(),
-      Actions.studentSessions.createStudentSessionApplSuccess(application)
+      Actions.studentSessions.createStudentSessionApplSuccess(application),
+      reset('studentSession')
     ];
 
     const store = createMockStore();

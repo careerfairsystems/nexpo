@@ -27,10 +27,8 @@ class SessionApplication extends Component {
   constructor(props) {
     super(props);
 
-    const { resumeEnUrl, resumeSvUrl } = props.currentStudent;
-
     this.state = {
-      student: { resumeEnUrl, resumeSvUrl },
+      student: { resumeEnUrl: null, resumeSvUrl: null },
       disabled: true
     };
   }

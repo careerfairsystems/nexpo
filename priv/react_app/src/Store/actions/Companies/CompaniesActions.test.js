@@ -1,3 +1,4 @@
+import { reset } from 'redux-form';
 import { Actions, actionTypes } from '../..';
 import { mockHttpResponse, createMockStore } from '../../../TestHelper';
 
@@ -148,7 +149,8 @@ describe('createCompany', () => {
 
     const expectedActions = [
       Actions.companies.createCompanyIsLoading(),
-      Actions.companies.createCompanySuccess(company)
+      Actions.companies.createCompanySuccess(company),
+      reset('company')
     ];
 
     const store = createMockStore();
