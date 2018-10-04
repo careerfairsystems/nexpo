@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 // import { message } from 'antd';
-import { isEmpty, filter } from 'lodash/fp';
+import { isEmpty, filter, sortBy } from 'lodash/fp';
 import NotFound from '../NotFound';
 import LoadingSpinner from '../../Components/LoadingSpinner';
 import HtmlTitle from '../../Components/HtmlTitle';
@@ -27,8 +27,10 @@ class SessionApplication extends Component {
   constructor(props) {
     super(props);
 
+    const { resumeEnUrl, resumeSvUrl } = props.currentStudent;
+
     this.state = {
-      student: { resumeEnUrl: null, resumeSvUrl: null },
+      student: { resumeEnUrl, resumeSvUrl },
       disabled: true
     };
   }
@@ -90,7 +92,7 @@ class SessionApplication extends Component {
         <h1>Apply for student sessions</h1>
         <SessionForm
           onSubmit={this.createStudentSessionAppl}
-          companies={filter('studentSessionDays', companies)}
+          companies={sortBy('name', filter('studentSessionDays', companies))}
         />
 
         <h2 style={{ marginTop: 24 }}>Make sure your CV is uploaded!</h2>

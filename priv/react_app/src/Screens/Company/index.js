@@ -21,8 +21,8 @@ const mapStateToProps = (state, props) => {
 const mapDispatchToProps = {
   getCompany: Actions.companies.getCompany,
   createCompany: Actions.companies.createCompany,
-  resetForm: reset,
-  updateCompany: Actions.companies.updateCompany
+  updateCompany: Actions.companies.updateCompany,
+  resetForm: reset
 };
 
 const stateful = connect(
