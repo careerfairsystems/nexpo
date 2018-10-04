@@ -23,7 +23,8 @@ const CompanyForm = ({
   logoUrl,
   beforeUpload,
   onRemove,
-  onCancel
+  onCancel,
+  submitting
 }) => (
   <Form onSubmit={handleSubmit}>
     <Field
@@ -64,14 +65,15 @@ const CompanyForm = ({
       onRemove={onRemove}
     />
     <Button onClick={onCancel}>Cancel</Button>
-    <Button htmlType="submit" type="primary">
+    <Button disabled={submitting} htmlType="submit" type="primary">
       Submit
     </Button>
   </Form>
 );
 
 CompanyForm.propTypes = {
-  handleSubmit: PropTypes.func.isRequired
+  handleSubmit: PropTypes.func.isRequired,
+  submitting: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = state => ({

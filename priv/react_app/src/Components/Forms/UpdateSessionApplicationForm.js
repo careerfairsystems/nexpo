@@ -10,7 +10,12 @@ const TextArea = makeField(Input.TextArea);
 const requiredMotivation = value =>
   value ? undefined : 'Please provide a motivation';
 
-const UpdateSessionApplicationForm = ({ handleSubmit, invalid, pristine }) => (
+const UpdateSessionApplicationForm = ({
+  handleSubmit,
+  invalid,
+  pristine,
+  submitting
+}) => (
   <Form onSubmit={handleSubmit}>
     <Field
       name="motivation"
@@ -20,14 +25,21 @@ const UpdateSessionApplicationForm = ({ handleSubmit, invalid, pristine }) => (
       maxLength="2400"
       rows={6}
     />
-    <Button disabled={invalid || pristine} type="primary" htmlType="submit">
+    <Button
+      disabled={invalid || pristine || submitting}
+      type="primary"
+      htmlType="submit"
+    >
       Update
     </Button>
   </Form>
 );
 
 UpdateSessionApplicationForm.propTypes = {
-  handleSubmit: PropTypes.func.isRequired
+  handleSubmit: PropTypes.func.isRequired,
+  invalid: PropTypes.bool.isRequired,
+  pristine: PropTypes.bool.isRequired,
+  submitting: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = (state, props) => ({
