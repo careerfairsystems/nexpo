@@ -93,10 +93,7 @@ class FinalizeSignup extends Component<Props, State> {
     return (
       <div className="GatherDetails_Component">
         <h1>Sign up</h1>
-        <FinalizeSignupForm
-          onSubmit={this.signup}
-          initialValues={{ email }}
-        />
+        <FinalizeSignupForm onSubmit={this.signup} initialValues={{ email }} />
       </div>
     );
   }

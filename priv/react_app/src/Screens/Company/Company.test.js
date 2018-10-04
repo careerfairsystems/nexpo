@@ -112,7 +112,7 @@ describe('Company', () => {
       describe: 'We do testing!',
       studentSessionDays: 2
     };
-    const id = 1;
+    const id = "1";
     const wrapper = shallow(<Company id={id} {...props} company={company} />);
     const newDescription = 'Our company is awesome';
     wrapper.instance().updateCompany({ description: newDescription });

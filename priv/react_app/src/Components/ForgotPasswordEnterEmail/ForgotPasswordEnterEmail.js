@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import './ForgotPasswordEnterEmail.css';
 import PropTypes from 'prop-types';
-import TextField from 'material-ui/TextField';
-import RaisedButton from 'material-ui/RaisedButton';
+import Button from 'antd/lib/button';
+import Input from 'antd/lib/input';
 import { Link } from 'react-router-dom';
 import { SuccessMessage } from '../SuccessMessage/SuccessMessage';
 
@@ -48,23 +48,20 @@ class ForgotPasswordEnterEmail extends Component<Props> {
       <div className="ForgotPasswordEnterEmail_Component">
         <h1>Forgot password</h1>
 
-        <TextField
-          floatingLabelText="Email"
+        <Input
+          placeholder="Enter your Email"
           type="email"
           value={this.state.email}
-          onChange={(e, val) => this._updateEmail(val)}
-          onKeyPress={event =>
-            event.key === 'Enter' ? this._queryBackend() : null
-          }
+          onChange={e => this._updateEmail(e.target.value)}
+          onPressEnter={this._queryBackend}
+          style={{ width: 400 }}
         />
 
         <br />
 
-        <RaisedButton
-          primary
-          label="Send email"
-          onClick={this._queryBackend}
-        />
+        <Button type="primary" onClick={this._queryBackend}>
+          Send email
+        </Button>
         <br />
         <br />
 
