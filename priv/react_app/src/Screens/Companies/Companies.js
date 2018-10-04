@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import { Table, Input, Button, Icon } from 'antd';
-import { size } from 'lodash/fp';
+import { size, sortBy } from 'lodash/fp';
 import Popconfirm from 'antd/lib/popconfirm';
 import Divider from 'antd/lib/divider';
 import { toExternal } from '../../Util/URLHelper';
@@ -122,10 +122,10 @@ class Companies extends Component {
 
         <Table
           columns={this.companyColumns()}
-          dataSource={Object.keys(companies).map(i => ({
+          dataSource={sortBy('name', Object.keys(companies).map(i => ({
             ...companies[i],
             key: i
-          }))}
+          })))}
         />
         <InvisibleLink to="/companies/new">
           <Button onClick={() => null} type="primary">
