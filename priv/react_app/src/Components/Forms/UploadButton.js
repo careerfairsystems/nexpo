@@ -32,9 +32,11 @@ const UploadButton = ({
       />
     )}
   </Upload>,
-  <a key="CVlink" href={currentStudent[name]}>
-    Current CV
-  </a>
+  !isEmpty(currentStudent[name]) && (
+    <a key="CVlink" href={currentStudent[name]}>
+      Current CV
+    </a>
+  )
 ];
 
 export default makeField(UploadButton);
