@@ -6,8 +6,7 @@ const Info = () => (
     <h1>Welcome to ARKAD!</h1>
     <h3>What is this?</h3>
     <h4>
-      This is the inhouse project management system for Arkad, called Nexpo -
-      Next generation Expo!
+      This is the inhouse project management system for Arkad, called Nexpo.
     </h4>
     <br />
     <h3>How to register for Nexpo</h3>

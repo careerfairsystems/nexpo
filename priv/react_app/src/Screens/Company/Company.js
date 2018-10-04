@@ -52,7 +52,7 @@ class Company extends Component {
   };
 
   updateCompany = values => {
-    const { id, company, createCompany, resetForm, updateCompany } = this.props;
+    const { id, company, createCompany, updateCompany } = this.props;
     const { company: stateCompany } = this.state;
     const newCompany = {
       ...values,
@@ -62,7 +62,6 @@ class Company extends Component {
     // If this.props.company is empty we are creating a new company
     if (isEmpty(company)) {
       createCompany({ company: newCompany });
-      resetForm('company');
     } else {
       updateCompany(id, { company: newCompany });
       this.setState({ edit: false });

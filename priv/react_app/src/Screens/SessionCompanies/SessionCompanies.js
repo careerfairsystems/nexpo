@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { isNil, filter } from 'lodash/fp';
+import { isNil, filter, sortBy } from 'lodash/fp';
 import { List, Avatar } from 'antd';
 import NotFound from '../NotFound';
 import { toExternal } from '../../Util/URLHelper';
@@ -53,7 +53,7 @@ class SessionCompanies extends Component {
         <List
           itemLayout="vertical"
           size="large"
-          dataSource={filter('studentSessionDays', companies)}
+          dataSource={sortBy('name', filter('studentSessionDays', companies))}
           renderItem={this.renderCompany}
           style={{ whiteSpace: 'pre-wrap' }}
         />

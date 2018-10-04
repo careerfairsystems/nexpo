@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { isNil } from 'lodash/fp';
+import { isNil, sortBy } from 'lodash/fp';
 import { List, Avatar, Popconfirm, Button } from 'antd';
 import NotFound from '../NotFound';
 import LoadingSpinner from '../../Components/LoadingSpinner';
@@ -100,7 +100,7 @@ class SessionApplications extends Component {
         <List
           size="large"
           bordered
-          dataSource={applications}
+          dataSource={sortBy(appl => this.getCompany(appl).name, applications)}
           renderItem={this.renderApplication}
           locale={{ emptyText: 'No Applications' }}
         />

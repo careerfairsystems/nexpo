@@ -95,7 +95,7 @@ const route = path => (
 
 it('renders routes without crashing', () => {
   mount(route('/'));
-  mount(route('/start'));
+  mount(route('/info'));
   mount(route('/categories'));
   mount(route('/categories/1'));
   mount(route('/companies'));
@@ -109,9 +109,9 @@ it('renders routes without crashing', () => {
   mount(route('/signup'));
   mount(route('/forgot-password'));
   mount(route('/user'));
-  mount(route('/invalid-path'));
   mount(route('/session'));
   mount(route('/session/application'));
   mount(route('/session/applications'));
   mount(route('/session/companies'));
+  mount(route('/invalid-path'));
 });
