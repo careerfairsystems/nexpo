@@ -17,7 +17,7 @@ const gdprText =
 const agreeText =
   'I agree that Teknologkåren vid LTH will treat my personal data provided by this application in connection with the Student Session.';
 
-const FinalizeSignupForm = ({ handleSubmit }) => (
+const FinalizeSignupForm = ({ handleSubmit, submitting }) => (
   <Form onSubmit={handleSubmit} style={{ maxWidth: 600 }}>
     <Field
       name="email"
@@ -62,7 +62,7 @@ const FinalizeSignupForm = ({ handleSubmit }) => (
     <Field name="gdpr" component={CheckBoxField} validate={requiredGDPR}>
       {agreeText}
     </Field>
-    <Button type="primary" htmlType="submit">
+    <Button disabled={submitting} type="primary" htmlType="submit">
       Sign up
     </Button>
   </Form>
@@ -71,7 +71,8 @@ const FinalizeSignupForm = ({ handleSubmit }) => (
 FinalizeSignupForm.defaultProps = {};
 
 FinalizeSignupForm.propTypes = {
-  handleSubmit: PropTypes.func.isRequired
+  handleSubmit: PropTypes.func.isRequired,
+  submitting: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = state => ({

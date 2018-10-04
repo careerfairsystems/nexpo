@@ -7,7 +7,7 @@ import makeField, { validatePassword } from './helper';
 
 const TextInput = makeField(Input);
 const required = value => (value ? undefined : 'Cant be blank');
-const ReplacePasswordForm = ({ handleSubmit }) => (
+const ReplacePasswordForm = ({ handleSubmit, submitting }) => (
   <Form onSubmit={handleSubmit}>
     <Field
       name="password"
@@ -28,14 +28,15 @@ const ReplacePasswordForm = ({ handleSubmit }) => (
       style={{ width: 400 }}
       validate={[required]}
     />
-    <Button type="primary" htmlType="submit">
+    <Button disabled={submitting} type="primary" htmlType="submit">
       Update password
     </Button>
   </Form>
 );
 
 ReplacePasswordForm.propTypes = {
-  handleSubmit: PropTypes.func.isRequired
+  handleSubmit: PropTypes.func.isRequired,
+  submitting: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -45,5 +46,7 @@ const mapStateToProps = state => ({
 const stateful = connect(mapStateToProps);
 
 export default stateful(
-  reduxForm({ form: 'signup', validate: validatePassword })(ReplacePasswordForm)
+  reduxForm({ form: 'replacePassword', validate: validatePassword })(
+    ReplacePasswordForm
+  )
 );

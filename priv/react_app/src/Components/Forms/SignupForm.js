@@ -7,7 +7,7 @@ import makeField from './helper';
 
 const TextInput = makeField(Input);
 const required = value => (value ? undefined : 'Cant be blank');
-const SignupForm = ({ handleSubmit }) => (
+const SignupForm = ({ handleSubmit, submitting }) => (
   <Form onSubmit={handleSubmit}>
     <Field
       name="email"
@@ -19,20 +19,15 @@ const SignupForm = ({ handleSubmit }) => (
       style={{ width: 400 }}
       validate={[required]}
     />
-    <Button type="primary" htmlType="submit">
+    <Button disabled={submitting} type="primary" htmlType="submit">
       Sign up
     </Button>
   </Form>
 );
 
-SignupForm.defaultProps = {
-  disabled: true
-};
-
 SignupForm.propTypes = {
-  disabled: PropTypes.bool,
   handleSubmit: PropTypes.func.isRequired,
-  reset: PropTypes.func.isRequired
+  submitting: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = state => ({
