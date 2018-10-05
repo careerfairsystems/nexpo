@@ -3,10 +3,9 @@ import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import { Button, Input, Form } from 'antd';
-import makeField, { validatePassword } from './helper';
+import makeField, { required, validatePassword } from './helper';
 
 const TextInput = makeField(Input);
-const required = value => (value ? undefined : 'Cant be blank');
 const ReplacePasswordForm = ({ handleSubmit, submitting }) => (
   <Form onSubmit={handleSubmit}>
     <Field

@@ -11,6 +11,7 @@ export const validatePassword = values => {
   }
   return errors;
 };
+export const required = value => (value ? undefined : "Field can't be empty");
 
 const makeField = Component => ({
   input,

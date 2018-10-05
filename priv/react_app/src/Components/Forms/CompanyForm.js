@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import { Button, Form, Input, Radio } from 'antd';
-import makeField from './helper';
+import makeField, { required } from './helper';
 import UploadButton from './UploadButton';
 
 const plainOptions = [
@@ -16,7 +16,6 @@ const plainOptions = [
 const TextInput = makeField(Input);
 const TextArea = makeField(Input.TextArea);
 const RadioGroup = makeField(Radio.Group);
-const required = value => (value ? undefined : "Field can't be empty");
 
 const CompanyForm = ({
   handleSubmit,
@@ -72,7 +71,11 @@ const CompanyForm = ({
 );
 
 CompanyForm.propTypes = {
+  beforeUpload: PropTypes.func.isRequired,
+  logoUrl: PropTypes.string.isRequired,
   handleSubmit: PropTypes.func.isRequired,
+  onCancel: PropTypes.func.isRequired,
+  onRemove: PropTypes.func.isRequired,
   submitting: PropTypes.bool.isRequired
 };
 
