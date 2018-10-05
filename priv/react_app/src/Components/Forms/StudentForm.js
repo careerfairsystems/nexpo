@@ -12,7 +12,8 @@ const StudentForm = ({
   action,
   currentStudent,
   onRemove,
-  fileList
+  fileList,
+  submitting
 }) => (
   <Form onSubmit={handleSubmit}>
     <Field
@@ -37,7 +38,7 @@ const StudentForm = ({
       onRemove={onRemove}
     />
 
-    <Button disabled={disabled} htmlType="submit">
+    <Button disabled={disabled || submitting} htmlType="submit">
       Save CV(s)
     </Button>
   </Form>
@@ -50,7 +51,7 @@ StudentForm.defaultProps = {
 StudentForm.propTypes = {
   disabled: PropTypes.bool,
   handleSubmit: PropTypes.func.isRequired,
-  reset: PropTypes.func.isRequired
+  submitting: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = state => ({
