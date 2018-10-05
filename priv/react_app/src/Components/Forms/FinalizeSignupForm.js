@@ -57,7 +57,9 @@ const FinalizeSignupForm = ({ handleSubmit, submitting }) => (
       label="Phone Number"
       component={TextInput}
     />
-    {<span style={{ whiteSpace: 'pre-wrap' }}>{gdprText}</span>}
+    <span style={{ whiteSpace: 'pre-wrap' }}>{gdprText}</span>
+    <br />
+    <br />
     <Field name="gdpr" component={CheckBoxField} validate={requiredGDPR}>
       {agreeText}
     </Field>
