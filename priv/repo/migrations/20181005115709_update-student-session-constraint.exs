@@ -6,7 +6,7 @@ defmodule Nexpo.Repo.Migrations.UpdateStudentSessionConstraint do
     drop constraint(:student_session_applications, "student_session_applications_company_id_fkey")
 
     alter table(:student_sessions) do
-        modify :company_id, references(:companies, on_delete: :nilify_all)
+      modify :company_id, references(:companies, on_delete: :nilify_all)
     end
     alter table(:student_session_applications) do
       modify :company_id, references(:companies, on_delete: :nilify_all)
