@@ -64,7 +64,7 @@ const FinalizeSignupForm = ({ handleSubmit, submitting }) => (
       {agreeText}
     </Field>
     <Button disabled={submitting} type="primary" htmlType="submit">
-      Sign up
+      Sign Up
     </Button>
   </Form>
 );

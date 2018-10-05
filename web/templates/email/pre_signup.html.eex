@@ -1,6 +1,6 @@
 <h1>Welcome to Arkad!</h1>
 
-<div>This mail was sent by Nexpo, the inhouse project management system for Arkad./div>
+<div>This mail was sent by Nexpo, the inhouse project management system for Arkad.</div>
 
 <br/>
 <a href=<%= signup_url(@user) %>>

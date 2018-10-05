@@ -32,7 +32,7 @@ class InitialSignup extends Component {
     }
     return (
       <div className="initial-signup">
-        <h1>Sign up</h1>
+        <h1>Sign Up</h1>
         <h2>Please enter your email</h2>
         <SignupForm onSubmit={this.signup} />
         <br />

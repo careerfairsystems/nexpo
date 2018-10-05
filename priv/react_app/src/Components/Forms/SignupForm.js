@@ -18,7 +18,7 @@ const SignupForm = ({ handleSubmit, submitting }) => (
       validate={[required]}
     />
     <Button disabled={submitting} type="primary" htmlType="submit">
-      Sign up
+      Sign Up
     </Button>
   </Form>
 );
