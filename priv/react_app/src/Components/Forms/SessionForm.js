@@ -29,7 +29,6 @@ const StudentSessionForm = ({ handleSubmit, companies, submitting }) => (
       name="companyId"
       validate={requiredCompany}
       component={InputSelect}
-      style={{ width: 150 }}
     >
       {map(companyOption, companies)}
     </Field>

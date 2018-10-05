@@ -15,7 +15,6 @@ const ProductionLoginForm = ({ handleSubmit, submitting }) => (
       type="email"
       required
       autoFocus
-      style={{ width: 400 }}
       validate={[required]}
     />
     <Field
@@ -24,7 +23,6 @@ const ProductionLoginForm = ({ handleSubmit, submitting }) => (
       component={TextInput}
       type="password"
       required
-      style={{ width: 400 }}
       validate={[required]}
     />
     <Button disabled={submitting} type="primary" htmlType="submit">

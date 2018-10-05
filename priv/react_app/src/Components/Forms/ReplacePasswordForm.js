@@ -15,7 +15,6 @@ const ReplacePasswordForm = ({ handleSubmit, submitting }) => (
       type="password"
       required
       autoFocus
-      style={{ width: 400 }}
       validate={[required]}
     />
     <Field
@@ -24,7 +23,6 @@ const ReplacePasswordForm = ({ handleSubmit, submitting }) => (
       component={TextInput}
       type="password"
       required
-      style={{ width: 400 }}
       validate={[required]}
     />
     <Button disabled={submitting} type="primary" htmlType="submit">

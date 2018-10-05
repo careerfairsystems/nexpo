@@ -54,7 +54,6 @@ class ForgotPasswordEnterEmail extends Component<Props> {
           value={this.state.email}
           onChange={e => this._updateEmail(e.target.value)}
           onPressEnter={this._queryBackend}
-          style={{ width: 400 }}
         />
 
         <br />
