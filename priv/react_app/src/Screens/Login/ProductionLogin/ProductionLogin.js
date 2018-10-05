@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import './ProductionLogin.css';
 import { Redirect, Link } from 'react-router-dom';
 import HtmlTitle from '../../../Components/HtmlTitle';
-import LoginForm from '../../../Components/Forms/LoginForm';
+import ProductionLoginForm from '../../../Components/Forms/ProductionLoginForm';
 /**
  * Handles login in production. Supports redirecting back to the route that redirected here
  *
@@ -33,7 +33,7 @@ class ProductionLogin extends Component {
         <HtmlTitle title="Login" />
 
         <h1>Login</h1>
-        <LoginForm onSubmit={this.login} />
+        <ProductionLoginForm onSubmit={this.login} />
 
         <br />
         <br />

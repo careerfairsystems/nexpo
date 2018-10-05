@@ -11,7 +11,6 @@ import './Message.css';
  * - Consists of an icon, text, and a link
  */
 const iconStyle = {
-  height: '200px',
   width: 'auto',
   fontSize: 200
 };
