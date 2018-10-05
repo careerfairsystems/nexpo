@@ -1,4 +1,4 @@
-defmodule :"Elixir.Nexpo.Repo.Migrations.Update-student-session-on-delete" do
+defmodule :"Elixir.Nexpo.Repo.Migrations.Update-student-session-constraint" do
   use Ecto.Migration
 
   def change do
