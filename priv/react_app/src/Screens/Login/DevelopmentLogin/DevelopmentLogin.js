@@ -35,7 +35,7 @@ class DevelopmentLogin extends Component {
     }
 
     return (
-      <div className="DevelopmentLogin_Component">
+      <div className="development-login">
         <HtmlTitle title="Dev Login" />
         <Icon type="warning" theme="filled" style={styles.icon} />
         <h1>Development Login</h1>

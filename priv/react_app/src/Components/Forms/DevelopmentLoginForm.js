@@ -14,7 +14,6 @@ const DevelopmentLoginForm = ({ handleSubmit, submitting }) => (
       component={TextInput}
       type="email"
       autoFocus
-      style={{ width: 400 }}
     />
     <Button disabled={submitting} type="primary" htmlType="submit">
       Login as User

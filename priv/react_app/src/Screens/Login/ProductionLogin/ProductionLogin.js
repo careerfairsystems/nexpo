@@ -29,7 +29,7 @@ class ProductionLogin extends Component {
     }
 
     return (
-      <div className="ProductionLogin_Component">
+      <div className="production-login">
         <HtmlTitle title="Login" />
 
         <h1>Login</h1>

@@ -15,7 +15,6 @@ const SignupForm = ({ handleSubmit, submitting }) => (
       type="email"
       required
       autoFocus
-      style={{ width: 400 }}
       validate={[required]}
     />
     <Button disabled={submitting} type="primary" htmlType="submit">

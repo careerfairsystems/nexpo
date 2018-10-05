@@ -38,7 +38,6 @@ class InitialSignup extends Component {
         <br />
         <br />
         <div>Already have an account?</div>
-        <br />
         <div className="links">
           <Link to="/login">Log in</Link>
         </div>
