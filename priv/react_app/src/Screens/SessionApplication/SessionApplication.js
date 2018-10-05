@@ -85,7 +85,7 @@ class SessionApplication extends Component {
     }
 
     return (
-      <div style={{ padding: 24 }}>
+      <div>
         <HtmlTitle title="Student Session Application" />
         <h1>Apply for student sessions</h1>
         <SessionForm

@@ -2,7 +2,6 @@
 
 body {
   font-family: 'Roboto', sans-serif;
-  background-color: rgb(240, 242, 245);
   margin: 0;
   padding: 0;
 }
@@ -26,4 +25,50 @@ img {
   background-size: contain;
   margin: 0 28px 0 0;
   float: left;
+}
+
+.app-header {
+  padding: 0;
+  background: #fff;
+  overflow: hidden;
+
+  .app-header-menu {
+    display: flex;
+    line-height: 64px;
+  }
+}
+.app-content {
+  .app-breadcrumb {
+    margin: 16px;
+  }
+  .app-inner {
+    background: #fff;
+    padding: 16px;
+    min-height: 50vh;
+  }
+}
+
+.ant-form-item-label {
+  white-space: normal;
+}
+
+@media (min-width: 600px) {
+  body {
+    background-color: rgb(240, 242, 245);
+  }
+
+  .app-header {
+    padding: 0 50px;
+  }
+  .app-content {
+    padding: 0 50px;
+
+    .app-breadcrumb {
+      margin: 16px 0;
+    }
+    .app-inner {
+      padding: 48px;
+      background: #fff;
+    }
+  }
 }
