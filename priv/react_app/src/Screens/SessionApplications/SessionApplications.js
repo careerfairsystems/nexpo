@@ -94,7 +94,7 @@ class SessionApplications extends Component {
       return <NotFound />;
     }
     return (
-      <div style={{ padding: 24 }}>
+      <div>
         <HtmlTitle title="Student Session Application" />
         <h1>Student Session Applications</h1>
         <List

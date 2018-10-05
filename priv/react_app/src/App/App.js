@@ -131,20 +131,14 @@ class App extends Component {
         <HtmlTitle />
 
         <Layout>
-          <Header
-            className="header"
-            style={{ background: '#fff', overflow: 'hidden' }}
-          >
+          <Header className="app-header">
             <Link to="/" className="logo" />
 
             <Menu
+              className="app-header-menu"
               theme="light"
               mode="horizontal"
               onClick={({ key }) => redirect(key)}
-              style={{
-                display: 'flex',
-                lineHeight: '64px'
-              }}
             >
               {this.restrictedMenuItem({
                 route: 'companies',
@@ -183,17 +177,15 @@ class App extends Component {
               {isLoggedIn ? this.loggedInMenuItem() : this.loggedOutMenuItem()}
             </Menu>
           </Header>
-          <Content style={{ padding: '0 50px' }}>
-            <Breadcrumb style={{ margin: '16px 0' }}>
+          <Content className="app-content">
+            <Breadcrumb className="app-breadcrumb">
               <Breadcrumb.Item key="home">
                 <Link to="/">Home</Link>
               </Breadcrumb.Item>
               {breadcrumbItems}
             </Breadcrumb>
-            <Layout style={{ padding: '24px 0', background: '#fff' }}>
-              <Content style={{ padding: '0 24px', minHeight: 280 }}>
-                {routes}
-              </Content>
+            <Layout className="app-inner">
+              <Content>{routes}</Content>
             </Layout>
           </Content>
           <Footer />
