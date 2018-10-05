@@ -52,6 +52,10 @@ img {
   white-space: normal;
 }
 
+.ant-form-item-control {
+  line-height: unset;
+}
+
 @media (min-width: 600px) {
   body {
     background-color: rgb(240, 242, 245);

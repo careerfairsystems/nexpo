@@ -31,14 +31,15 @@ class InitialSignup extends Component {
       return <SuccessMessage message="Please check your inbox" />;
     }
     return (
-      <div className="GatherEmail_Component">
+      <div className="initial-signup">
         <h1>Sign up</h1>
         <h2>Please enter your email</h2>
         <SignupForm onSubmit={this.signup} />
         <br />
         <br />
-        <div>Already have an account?</div>
-        <div className="links">
+        <div className="existing-account">
+          Already have an account?
+          <br />
           <Link to="/login">Log in</Link>
         </div>
       </div>

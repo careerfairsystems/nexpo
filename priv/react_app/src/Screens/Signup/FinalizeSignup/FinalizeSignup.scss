@@ -1,6 +1,9 @@
-.GatherDetails_Component {
-  margin-top: 150px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.finalize-signup {
+  h1 {
+    text-align: center;
+  }
+  form {
+    max-width: 400px;
+    margin: auto;
+  }
 }
