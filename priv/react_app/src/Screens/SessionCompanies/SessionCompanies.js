@@ -47,7 +47,7 @@ class SessionCompanies extends Component {
     }
 
     return (
-      <div style={{ padding: 24 }}>
+      <div>
         <HtmlTitle title="Student Session Companies" />
         <h1>Student Session Companies</h1>
         <List
