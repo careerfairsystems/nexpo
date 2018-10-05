@@ -6,7 +6,7 @@ import { Button, Input, Form } from 'antd';
 import makeField, { required } from './helper';
 
 const TextInput = makeField(Input);
-const SignupForm = ({ handleSubmit, submitting }) => (
+const ProductionLoginForm = ({ handleSubmit, submitting }) => (
   <Form onSubmit={handleSubmit}>
     <Field
       name="email"
@@ -18,21 +18,32 @@ const SignupForm = ({ handleSubmit, submitting }) => (
       style={{ width: 400 }}
       validate={[required]}
     />
+    <Field
+      name="password"
+      label="Password"
+      component={TextInput}
+      type="password"
+      required
+      style={{ width: 400 }}
+      validate={[required]}
+    />
     <Button disabled={submitting} type="primary" htmlType="submit">
-      Sign up
+      Login
     </Button>
   </Form>
 );
 
-SignupForm.propTypes = {
+ProductionLoginForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   submitting: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = state => ({
-  formState: state.form.SignupForm
+  formState: state.form.ProductionLoginForm
 });
 
 const stateful = connect(mapStateToProps);
 
-export default stateful(reduxForm({ form: 'signup' })(SignupForm));
+export default stateful(
+  reduxForm({ form: 'productionLogin' })(ProductionLoginForm)
+);

@@ -2,7 +2,6 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { shallow, mount } from 'enzyme';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import App from './App';
 import ConnectedApp from './index';
@@ -85,11 +84,9 @@ const state = {
 
 const route = path => (
   <Provider store={createMockStore(state)}>
-    <MuiThemeProvider>
-      <MemoryRouter initialEntries={[path]}>
-        <Route component={ConnectedApp} />
-      </MemoryRouter>
-    </MuiThemeProvider>
+    <MemoryRouter initialEntries={[path]}>
+      <Route component={ConnectedApp} />
+    </MemoryRouter>
   </Provider>
 );
 

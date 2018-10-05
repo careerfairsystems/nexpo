@@ -4,9 +4,26 @@ import { MemoryRouter } from 'react-router-dom';
 import DevelopmentLogin from './DevelopmentLogin';
 
 it('should render without crashing', () => {
+  const props = {
+    isLoggedIn: false,
+    login: jest.fn()
+  };
   shallow(
     <MemoryRouter>
-      <DevelopmentLogin />
+      <DevelopmentLogin {...props} />
     </MemoryRouter>
   );
+});
+it('should call login with correct parameters', () => {
+  const props = {
+    isLoggedIn: false,
+    login: jest.fn(),
+    location: { state: {} }
+  };
+  const wrapper = shallow(<DevelopmentLogin {...props} />);
+  expect(props.login).toHaveBeenCalledTimes(0);
+  const email = 'dev@it';
+  wrapper.instance().login({ email });
+  expect(props.login).toHaveBeenCalledTimes(1);
+  expect(props.login).lastCalledWith(email);
 });

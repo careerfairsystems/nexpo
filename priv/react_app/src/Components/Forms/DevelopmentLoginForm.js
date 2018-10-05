@@ -3,36 +3,36 @@ import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import { Button, Input, Form } from 'antd';
-import makeField, { required } from './helper';
+import makeField from './helper';
 
 const TextInput = makeField(Input);
-const SignupForm = ({ handleSubmit, submitting }) => (
+const DevelopmentLoginForm = ({ handleSubmit, submitting }) => (
   <Form onSubmit={handleSubmit}>
     <Field
       name="email"
       label="Email"
       component={TextInput}
       type="email"
-      required
       autoFocus
       style={{ width: 400 }}
-      validate={[required]}
     />
     <Button disabled={submitting} type="primary" htmlType="submit">
-      Sign up
+      Login as User
     </Button>
   </Form>
 );
 
-SignupForm.propTypes = {
+DevelopmentLoginForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   submitting: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = state => ({
-  formState: state.form.SignupForm
+  formState: state.form.DevelopmentLoginForm
 });
 
 const stateful = connect(mapStateToProps);
 
-export default stateful(reduxForm({ form: 'signup' })(SignupForm));
+export default stateful(
+  reduxForm({ form: 'developmentLogin' })(DevelopmentLoginForm)
+);

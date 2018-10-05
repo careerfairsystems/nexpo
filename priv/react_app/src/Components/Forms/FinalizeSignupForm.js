@@ -3,11 +3,10 @@ import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import { Button, Checkbox, Form, Input } from 'antd';
-import makeField, { validatePassword } from './helper';
+import makeField, { required, validatePassword } from './helper';
 
 const TextInput = makeField(Input);
 const CheckBoxField = makeField(Checkbox);
-const required = value => (value ? undefined : "Field can't be empty");
 const requiredGDPR = value =>
   value ? undefined : 'You must agree to be able to sign up';
 
