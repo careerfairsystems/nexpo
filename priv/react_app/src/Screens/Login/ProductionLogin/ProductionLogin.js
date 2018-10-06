@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import './ProductionLogin.css';
 import { Redirect, Link } from 'react-router-dom';
 import HtmlTitle from '../../../Components/HtmlTitle';
 import ProductionLoginForm from '../../../Components/Forms/ProductionLoginForm';

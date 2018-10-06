@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import ForgotPasswordForm from '../Forms/ForgotPasswordForm';
 import { SuccessMessage } from '../SuccessMessage/SuccessMessage';
-import './ForgotPasswordEnterEmail.css';
 
 type Props = {
   callBackend: boolean,

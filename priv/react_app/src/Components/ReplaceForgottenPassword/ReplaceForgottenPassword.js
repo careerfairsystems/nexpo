@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import ReplacePasswordForm from '../Forms/ReplacePasswordForm';
 import { SuccessMessage } from '../SuccessMessage/SuccessMessage';
 import { NotFound } from '../../Screens/NotFound/NotFound';
-import './ReplaceForgottenPassword.css';
 
 type Props = {
   sendNewPasswordToBackend: func,
