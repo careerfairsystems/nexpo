@@ -1,12 +1,11 @@
 import React from 'react';
-import './ForgotPassword.css';
-import UrlHelper from '../../Util/URLHelper';
+import { getParameterByName } from '../../Util/URLHelper';
 import HtmlTitle from '../../Components/HtmlTitle';
 import ForgotPasswordEnterEmail from '../../Components/ForgotPasswordEnterEmail';
 import ReplaceForgottenPassword from '../../Components/ReplaceForgottenPassword';
 
 const ForgotPassword = () => {
-  const key = UrlHelper.getParameterByName('key');
+  const key = getParameterByName('key');
 
   return (
     <div>

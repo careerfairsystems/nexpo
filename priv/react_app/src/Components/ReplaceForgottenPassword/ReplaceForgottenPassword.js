@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import './ReplaceForgottenPassword.css';
 import PropTypes from 'prop-types';
 import ReplacePasswordForm from '../Forms/ReplacePasswordForm';
 import { SuccessMessage } from '../SuccessMessage/SuccessMessage';
 import { NotFound } from '../../Screens/NotFound/NotFound';
+import './ReplaceForgottenPassword.css';
 
 type Props = {
   sendNewPasswordToBackend: func,
@@ -47,7 +47,7 @@ class ReplaceForgottenPassword extends Component<Props> {
     }
 
     return (
-      <div className="ReplaceForgottenPassword_Component">
+      <div className="replace-forgotten-password">
         <h1>Replace password</h1>
         <ReplacePasswordForm onSubmit={this.sendQueryToBackend} />
       </div>
