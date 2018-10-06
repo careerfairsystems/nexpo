@@ -29,37 +29,24 @@ it('renders a ForgotPasswordForm', () => {
   expect(wrapper.find(ForgotPasswordForm)).toHaveLength(1);
 });
 
-// it('input correctly updates state', () => {
-//   const props = {
-//     callBackend: jest.fn()
-//   };
-//   const email = 'dev@it';
-//   const wrapper = shallow(<ForgotPasswordEnterEmail {...props} />);
-//   expect(wrapper.state('email')).toEqual('');
-//   wrapper
-//     .find(Input)
-//     .props()
-//     .onChange({ target: { value: email } });
-//   expect(wrapper.state('email')).toEqual(email);
-// });
-
-// it('calls callBackend on button click and input enter press', () => {
-//   const props = {
-//     callBackend: jest.fn()
-//   };
-//   const wrapper = shallow(<ForgotPasswordEnterEmail {...props} />);
-//   const email1 = 'dev@it';
-//   const email2 = 'test@it';
-//   wrapper.setState({ email: email1 });
-//   expect(props.callBackend).toHaveBeenCalledTimes(0);
-//   wrapper.find(Button).simulate('click');
-//   expect(props.callBackend).toHaveBeenCalledTimes(1);
-//   expect(props.callBackend).lastCalledWith({ email: email1 });
-//   wrapper.setState({ email: email2 });
-//   wrapper
-//     .find(Input)
-//     .props()
-//     .onPressEnter();
-//   expect(props.callBackend).toHaveBeenCalledTimes(2);
-//   expect(props.callBackend).lastCalledWith({ email: email2 });
-// });
+it('calls callBackend on ForgotPasswordForm onSubmit', () => {
+  const props = {
+    callBackend: jest.fn()
+  };
+  const wrapper = shallow(<ForgotPasswordEnterEmail {...props} />);
+  const email1 = 'dev@it';
+  const email2 = 'test@it';
+  expect(props.callBackend).toHaveBeenCalledTimes(0);
+  wrapper
+    .find(ForgotPasswordForm)
+    .props()
+    .onSubmit({ email: email1 });
+  expect(props.callBackend).toHaveBeenCalledTimes(1);
+  expect(props.callBackend).lastCalledWith({ email: email1 });
+  wrapper
+    .find(ForgotPasswordForm)
+    .props()
+    .onSubmit({ email: email2 });
+  expect(props.callBackend).toHaveBeenCalledTimes(2);
+  expect(props.callBackend).lastCalledWith({ email: email2 });
+});
