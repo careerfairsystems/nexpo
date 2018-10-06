@@ -96,6 +96,7 @@ it('renders routes without crashing', () => {
   mount(route('/categories'));
   mount(route('/categories/1'));
   mount(route('/companies'));
+  mount(route('/companies/new'));
   mount(route('/companies/1'));
   mount(route('/users'));
   mount(route('/users/1'));

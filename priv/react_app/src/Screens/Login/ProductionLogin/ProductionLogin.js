@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import './ProductionLogin.css';
 import { Redirect, Link } from 'react-router-dom';
 import HtmlTitle from '../../../Components/HtmlTitle';
 import ProductionLoginForm from '../../../Components/Forms/ProductionLoginForm';
@@ -38,11 +37,11 @@ class ProductionLogin extends Component {
         <br />
         <br />
 
-        <div>Hard time logging in?</div>
-        <br />
+        <div className="existing-account">
+          <div>Hard time logging in?</div>
 
-        <div className="links">
           <Link to="/signup">Sign up</Link>
+          <br />
           <Link to="/forgot-password">Forgot password</Link>
         </div>
       </div>

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { SubmissionError } from 'redux-form';
 import { Link } from 'react-router-dom';
-import './InitialSignup.css';
 import API from '../../../API';
 import SignupForm from '../../../Components/Forms/SignupForm';
 import SuccessMessage from '../../../Components/SuccessMessage';
