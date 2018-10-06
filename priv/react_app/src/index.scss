@@ -48,6 +48,24 @@ img {
   }
 }
 
+.initial-signup,
+.finalize-signup,
+.production-login,
+.development-login,
+.replace-forgotten-password,
+.forgot-password-enter-email {
+  h1,
+  h2 {
+    text-align: center;
+  }
+
+  form,
+  .existing-account {
+    max-width: 400px;
+    margin: auto;
+  }
+}
+
 .ant-form-item-label {
   white-space: normal;
 }
