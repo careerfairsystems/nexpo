@@ -1,7 +1,6 @@
 // @flow
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import './FinalizeSignup.css';
 import { SubmissionError } from 'redux-form';
 import { pick } from 'lodash/fp';
 import ErrorMessage from '../../../Components/ErrorMessage';
