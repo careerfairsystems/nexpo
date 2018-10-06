@@ -70,9 +70,13 @@ const CompanyForm = ({
   </Form>
 );
 
+CompanyForm.defaultProps = {
+  logoUrl: null
+};
+
 CompanyForm.propTypes = {
   beforeUpload: PropTypes.func.isRequired,
-  logoUrl: PropTypes.string.isRequired,
+  logoUrl: PropTypes.string,
   handleSubmit: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired,
   onRemove: PropTypes.func.isRequired,
