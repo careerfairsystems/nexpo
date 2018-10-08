@@ -1,7 +1,6 @@
 import { connect } from 'react-redux';
 import ProductionLogin from './ProductionLogin';
-
-import { Actions } from '../../../../../Store';
+import { Actions } from '../../../../Store';
 
 const mapStateToProps = state => ({
   error: state.auth.error,
