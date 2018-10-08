@@ -26,6 +26,12 @@ const entity = (key, definition = {}, options = {}) =>
     processStrategy: options.model
   });
 
+const mailtemplateSchema = () => entity('mailtemplates');
+const mailtemplatesSchema = () => [mailtemplateSchema];
+
+const deadlineSchema = () => entity('deadlines');
+const deadlinesSchema = () => [deadlineSchema];
+
 const sessionApplicationSchema = () => {
   const company = entity(
     'companies',
@@ -129,6 +135,10 @@ export default {
   categoriesSchema,
   companySchema,
   companiesSchema,
+  mailtemplateSchema,
+  mailtemplatesSchema,
+  deadlineSchema,
+  deadlinesSchema,
   roleSchema,
   rolesSchema,
   sessionApplicationSchema,
