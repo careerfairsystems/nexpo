@@ -113,13 +113,16 @@ class SessionApplication extends Component {
 }
 
 SessionApplication.defaultProps = {
-  companies: {}
+  companies: {},
+  fetching: false
 };
 
 SessionApplication.propTypes = {
-  companies: PropTypes.object.isRequired,
+  companies: PropTypes.object,
+  createStudentSessionAppl: PropTypes.func.isRequired,
+  fetching: PropTypes.bool,
   getAllCompanies: PropTypes.func.isRequired,
-  getCurrentUser: PropTypes.func.isRequired
+  updateCurrentStudent: PropTypes.func.isRequired
 };
 
 export default SessionApplication;

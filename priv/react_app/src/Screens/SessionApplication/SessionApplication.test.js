@@ -4,6 +4,11 @@ import { shallow } from 'enzyme';
 import SessionApplication from './SessionApplication';
 
 it('renders without crashing', () => {
-  const func = () => 'a';
-  shallow(<SessionApplication getAllCompanies={func} getCurrentUser={func} />);
+  const props = {
+    createStudentSessionAppl: jest.fn(),
+    getCurrentUser: jest.fn(),
+    getAllCompanies: jest.fn(),
+    updateCurrentStudent: jest.fn()
+  };
+  shallow(<SessionApplication {...props} />);
 });

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import { Button, Form } from 'antd';
+import { Actions } from '../../Store';
 import UploadButton from './UploadButton';
 
 const StudentForm = ({
@@ -13,36 +14,43 @@ const StudentForm = ({
   currentStudent,
   onRemove,
   fileList,
+  updateCurrentStudent,
   submitting
-}) => (
-  <Form onSubmit={handleSubmit}>
-    <Field
-      name="resumeSvUrl"
-      label="Swedish CV"
-      fileList={fileList.resumeSvUrl ? [fileList.resumeSvUrl] : []}
-      action={action}
-      currentStudent={currentStudent}
-      beforeUpload={beforeUpload}
-      component={UploadButton}
-      accept=".pdf"
-      onRemove={onRemove}
-    />
-    <Field
-      name="resumeEnUrl"
-      label="English CV"
-      fileList={fileList.resumeEnUrl ? [fileList.resumeEnUrl] : []}
-      currentStudent={currentStudent}
-      beforeUpload={beforeUpload}
-      component={UploadButton}
-      accept=".pdf"
-      onRemove={onRemove}
-    />
+}) => {
+  const destroyCv = cv =>
+    updateCurrentStudent({ student: { [cv]: null } }, false);
+  return (
+    <Form onSubmit={handleSubmit}>
+      <Field
+        name="resumeSvUrl"
+        label="Swedish CV"
+        fileList={fileList.resumeSvUrl ? [fileList.resumeSvUrl] : []}
+        action={action}
+        currentStudent={currentStudent}
+        beforeUpload={beforeUpload}
+        component={UploadButton}
+        accept=".pdf"
+        destroyCv={destroyCv}
+        onRemove={onRemove}
+      />
+      <Field
+        name="resumeEnUrl"
+        label="English CV"
+        fileList={fileList.resumeEnUrl ? [fileList.resumeEnUrl] : []}
+        currentStudent={currentStudent}
+        beforeUpload={beforeUpload}
+        component={UploadButton}
+        destroyCv={destroyCv}
+        accept=".pdf"
+        onRemove={onRemove}
+      />
 
-    <Button disabled={disabled || submitting} htmlType="submit">
-      Save CV(s)
-    </Button>
-  </Form>
-);
+      <Button disabled={disabled || submitting} htmlType="submit">
+        Save CV(s)
+      </Button>
+    </Form>
+  );
+};
 
 StudentForm.defaultProps = {
   disabled: false
@@ -58,6 +66,13 @@ const mapStateToProps = state => ({
   formState: state.form.StudentForm
 });
 
-const stateful = connect(mapStateToProps);
+const mapDispatchToProps = {
+  updateCurrentStudent: Actions.users.updateCurrentStudent
+};
+
+const stateful = connect(
+  mapStateToProps,
+  mapDispatchToProps
+);
 
 export default stateful(reduxForm({ form: 'student' })(StudentForm));

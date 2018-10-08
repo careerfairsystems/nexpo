@@ -1,7 +1,7 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
 import { isEmpty } from 'lodash/fp';
-import { Button, Icon, Upload } from 'antd';
+import { Button, Icon, Popconfirm, Upload } from 'antd';
 import makeField from './helper';
 
 const UploadButton = ({
@@ -11,6 +11,7 @@ const UploadButton = ({
   currentStudent,
   name,
   onRemove,
+  destroyCv,
   fileList
 }) => [
   <Upload
@@ -32,11 +33,20 @@ const UploadButton = ({
       />
     )}
   </Upload>,
-  !isEmpty(currentStudent[name]) && (
+  !isEmpty(currentStudent[name]) && [
     <a key="CVlink" href={currentStudent[name]}>
       Current CV
-    </a>
-  )
+    </a>,
+    <Popconfirm
+      key="delete"
+      title="Sure to delete?"
+      onConfirm={() => destroyCv(name)}
+    >
+      <span style={{ marginLeft: 10, color: '#ff4d4f', cursor: 'pointer' }}>
+        Delete
+      </span>
+    </Popconfirm>
+  ]
 ];
 
 export default makeField(UploadButton);
