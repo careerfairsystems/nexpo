@@ -3,7 +3,7 @@ import InvisibleLink from '../../../Components/InvisibleLink';
 
 const SessionHome = () => (
   <div>
-    <h1>Welcome to ARKAD - Student Session!</h1>
+    <h1>Welcome to Student Session!</h1>
     <h3>How to apply for Student Sessions:</h3>
     <h4>
       <li>
