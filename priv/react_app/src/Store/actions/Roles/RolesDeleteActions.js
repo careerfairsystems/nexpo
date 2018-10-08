@@ -8,11 +8,11 @@ export function destroyRoleIsLoading() {
   };
 }
 
-export function destroyRoleSuccess(role) {
+export function destroyRoleSuccess(id) {
   message.success('Role successfully deleted');
   return {
     type: actionTypes.DELETE_ROLE_SUCCESS,
-    role
+    id
   };
 }
 
@@ -31,8 +31,8 @@ export function destroyRole(id) {
     dispatch(destroyRoleIsLoading());
     return API.roles
       .destroy(id)
-      .then(role => {
-        dispatch(destroyRoleSuccess(role.data));
+      .then(() => {
+        dispatch(destroyRoleSuccess(id));
       })
       .catch(() => {
         dispatch(destroyRoleFailure());

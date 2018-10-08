@@ -1,72 +1,72 @@
 import { Actions, actionTypes } from '../..';
 import { mockHttpResponse, createMockStore } from '../../../TestHelper';
 
-describe('getAllCategoriesIsLoading', () => {
+describe('getAllDeadlinesIsLoading', () => {
   it('should create the correct action', () => {
     const expectedAction = {
-      type: actionTypes.FETCH_CATEGORIES
+      type: actionTypes.FETCH_DEADLINES
     };
-    const action = Actions.categories.getAllCategoriesIsLoading();
+    const action = Actions.deadlines.getAllDeadlinesIsLoading();
     expect(action).toEqual(expectedAction);
   });
 });
 
-describe('getAllCategoriesSuccess', () => {
+describe('getAllDeadlinesSuccess', () => {
   it('should create the correct action', () => {
-    const testCategories = [
+    const testDeadlines = [
       {
-        name: 'Category1'
+        name: 'Deadline1'
       }
     ];
 
     const expectedAction = {
-      type: actionTypes.FETCH_CATEGORIES_SUCCESS,
-      categories: testCategories
+      type: actionTypes.FETCH_DEADLINES_SUCCESS,
+      deadlines: testDeadlines
     };
-    const action = Actions.categories.getAllCategoriesSuccess(testCategories);
+    const action = Actions.deadlines.getAllDeadlinesSuccess(testDeadlines);
     expect(action).toEqual(expectedAction);
   });
 });
 
-describe('getAllCategoriesFailure', () => {
+describe('getAllDeadlinesFailure', () => {
   it('should create the correct action', () => {
     const expectedAction = {
-      type: actionTypes.FETCH_CATEGORIES_FAILURE
+      type: actionTypes.FETCH_DEADLINES_FAILURE
     };
-    const action = Actions.categories.getAllCategoriesFailure();
+    const action = Actions.deadlines.getAllDeadlinesFailure();
     expect(action).toEqual(expectedAction);
   });
 });
 
-describe('getAllCategories', () => {
+describe('getAllDeadlines', () => {
   it('should call start action', () => {
     mockHttpResponse({ status: 200, body: {} });
     const store = createMockStore();
 
-    return store.dispatch(Actions.categories.getAllCategories()).then(() => {
+    return store.dispatch(Actions.deadlines.getAllDeadlines()).then(() => {
       const calledActions = store.getActions();
       expect(calledActions[0]).toEqual(
-        Actions.categories.getAllCategoriesIsLoading()
+        Actions.deadlines.getAllDeadlinesIsLoading()
       );
     });
   });
 
   it('should call success action on success', () => {
-    const categories = [
+    const deadlines = [
       {
-        name: 'Category1'
+        name: 'Deadline1'
       }
     ];
-    mockHttpResponse({ status: 200, body: { data: categories } });
+    mockHttpResponse({ status: 200, body: { data: deadlines } });
 
     const expectedActions = [
-      Actions.categories.getAllCategoriesIsLoading(),
-      Actions.categories.getAllCategoriesSuccess(categories)
+      Actions.deadlines.getAllDeadlinesIsLoading(),
+      Actions.deadlines.getAllDeadlinesSuccess(deadlines)
     ];
 
     const store = createMockStore();
 
-    return store.dispatch(Actions.categories.getAllCategories()).then(() => {
+    return store.dispatch(Actions.deadlines.getAllDeadlines()).then(() => {
       const calledActions = store.getActions();
       expect(calledActions).toEqual(expectedActions);
     });
@@ -76,83 +76,83 @@ describe('getAllCategories', () => {
     mockHttpResponse({ status: 401, body: {} });
 
     const expectedActions = [
-      Actions.categories.getAllCategoriesIsLoading(),
-      Actions.categories.getAllCategoriesFailure()
+      Actions.deadlines.getAllDeadlinesIsLoading(),
+      Actions.deadlines.getAllDeadlinesFailure()
     ];
 
     const store = createMockStore();
 
-    return store.dispatch(Actions.categories.getAllCategories()).then(() => {
+    return store.dispatch(Actions.deadlines.getAllDeadlines()).then(() => {
       const calledActions = store.getActions();
       expect(calledActions).toEqual(expectedActions);
     });
   });
 });
 
-describe('createCategoryIsLoading', () => {
+describe('createDeadlineIsLoading', () => {
   it('should create the correct action', () => {
     const expectedAction = {
-      type: actionTypes.POST_CATEGORY
+      type: actionTypes.POST_DEADLINE
     };
-    const action = Actions.categories.createCategoryIsLoading();
+    const action = Actions.deadlines.createDeadlineIsLoading();
     expect(action).toEqual(expectedAction);
   });
 });
 
-describe('createCategorySuccess', () => {
+describe('createDeadlineSuccess', () => {
   it('should create the correct action', () => {
-    const testCategory = {
-      name: 'Category1'
+    const testDeadline = {
+      name: 'Deadline1'
     };
 
     const expectedAction = {
-      type: actionTypes.POST_CATEGORY_SUCCESS,
-      category: testCategory
+      type: actionTypes.POST_DEADLINE_SUCCESS,
+      deadline: testDeadline
     };
-    const action = Actions.categories.createCategorySuccess(testCategory);
+    const action = Actions.deadlines.createDeadlineSuccess(testDeadline);
     expect(action).toEqual(expectedAction);
   });
 });
 
-describe('createCategoryFailure', () => {
+describe('createDeadlineFailure', () => {
   it('should create the correct action', () => {
     const expectedAction = {
-      type: actionTypes.POST_CATEGORY_FAILURE
+      type: actionTypes.POST_DEADLINE_FAILURE
     };
-    const action = Actions.categories.createCategoryFailure();
+    const action = Actions.deadlines.createDeadlineFailure();
     expect(action).toEqual(expectedAction);
   });
 });
 
-describe('createCategory', () => {
+describe('createDeadline', () => {
   it('should call start action', () => {
     mockHttpResponse({ status: 200, body: {} });
     const store = createMockStore();
-    const data = { category: { name: 'Test Category' } };
+    const data = { deadline: { name: 'Test Deadline' } };
 
-    return store.dispatch(Actions.categories.createCategory(data)).then(() => {
+    return store.dispatch(Actions.deadlines.createDeadline(data)).then(() => {
       const calledActions = store.getActions();
       expect(calledActions[0]).toEqual(
-        Actions.categories.createCategoryIsLoading()
+        Actions.deadlines.createDeadlineIsLoading()
       );
     });
   });
 
   it('should call success action on success', () => {
-    const category = {
-      name: 'Category1'
+    const deadline = {
+      name: 'Deadline1'
     };
-    mockHttpResponse({ status: 200, body: { data: category } });
+    mockHttpResponse({ status: 200, body: { data: deadline } });
 
     const expectedActions = [
-      Actions.categories.createCategoryIsLoading(),
-      Actions.categories.createCategorySuccess(category)
+      Actions.deadlines.createDeadlineIsLoading(),
+      Actions.deadlines.createDeadlineSuccess(deadline)
     ];
 
     const store = createMockStore();
-    const data = { category };
+    const data = { deadline };
 
-    return store.dispatch(Actions.categories.createCategory(data)).then(() => {
+    return store.dispatch(Actions.deadlines.createDeadline(data)).then(() => {
       const calledActions = store.getActions();
       expect(calledActions).toEqual(expectedActions);
     });
@@ -160,84 +160,84 @@ describe('createCategory', () => {
 
   it('should call failure action on failure', () => {
     mockHttpResponse({ status: 401, body: {} });
-    const data = { category: { name: 'Test Category' } };
+    const data = { deadline: { name: 'Test Deadline' } };
 
     const expectedActions = [
-      Actions.categories.createCategoryIsLoading(),
-      Actions.categories.createCategoryFailure()
+      Actions.deadlines.createDeadlineIsLoading(),
+      Actions.deadlines.createDeadlineFailure()
     ];
 
     const store = createMockStore();
 
-    return store.dispatch(Actions.categories.createCategory(data)).then(() => {
+    return store.dispatch(Actions.deadlines.createDeadline(data)).then(() => {
       const calledActions = store.getActions();
       expect(calledActions).toEqual(expectedActions);
     });
   });
 });
 
-describe('getCategoryIsLoading', () => {
+describe('getDeadlineIsLoading', () => {
   it('should create the correct action', () => {
     const expectedAction = {
-      type: actionTypes.FETCH_CATEGORY
+      type: actionTypes.FETCH_DEADLINE
     };
-    const action = Actions.categories.getCategoryIsLoading();
+    const action = Actions.deadlines.getDeadlineIsLoading();
     expect(action).toEqual(expectedAction);
   });
 });
 
-describe('getCategorySuccess', () => {
+describe('getDeadlineSuccess', () => {
   it('should create the correct action', () => {
-    const testCategory = {
-      name: 'Category1'
+    const testDeadline = {
+      name: 'Deadline1'
     };
 
     const expectedAction = {
-      type: actionTypes.FETCH_CATEGORY_SUCCESS,
-      category: testCategory
+      type: actionTypes.FETCH_DEADLINE_SUCCESS,
+      deadline: testDeadline
     };
-    const action = Actions.categories.getCategorySuccess(testCategory);
+    const action = Actions.deadlines.getDeadlineSuccess(testDeadline);
     expect(action).toEqual(expectedAction);
   });
 });
 
-describe('getCategoryFailure', () => {
+describe('getDeadlineFailure', () => {
   it('should create the correct action', () => {
     const expectedAction = {
-      type: actionTypes.FETCH_CATEGORY_FAILURE
+      type: actionTypes.FETCH_DEADLINE_FAILURE
     };
-    const action = Actions.categories.getCategoryFailure();
+    const action = Actions.deadlines.getDeadlineFailure();
     expect(action).toEqual(expectedAction);
   });
 });
 
-describe('getCategory', () => {
+describe('getDeadline', () => {
   it('should call start action', () => {
     mockHttpResponse({ status: 200, body: {} });
     const store = createMockStore();
 
-    return store.dispatch(Actions.categories.getCategory()).then(() => {
+    return store.dispatch(Actions.deadlines.getDeadline()).then(() => {
       const calledActions = store.getActions();
       expect(calledActions[0]).toEqual(
-        Actions.categories.getCategoryIsLoading()
+        Actions.deadlines.getDeadlineIsLoading()
       );
     });
   });
 
   it('should call success action on success', () => {
-    const category = {
-      name: 'Category1'
+    const deadline = {
+      name: 'Deadline1'
     };
-    mockHttpResponse({ status: 200, body: { data: category } });
+    mockHttpResponse({ status: 200, body: { data: deadline } });
 
     const expectedActions = [
-      Actions.categories.getCategoryIsLoading(),
-      Actions.categories.getCategorySuccess(category)
+      Actions.deadlines.getDeadlineIsLoading(),
+      Actions.deadlines.getDeadlineSuccess(deadline)
     ];
 
     const store = createMockStore();
 
-    return store.dispatch(Actions.categories.getCategory()).then(() => {
+    return store.dispatch(Actions.deadlines.getDeadline()).then(() => {
       const calledActions = store.getActions();
       expect(calledActions).toEqual(expectedActions);
     });
@@ -247,86 +247,86 @@ describe('getCategory', () => {
     mockHttpResponse({ status: 401, body: {} });
 
     const expectedActions = [
-      Actions.categories.getCategoryIsLoading(),
-      Actions.categories.getCategoryFailure()
+      Actions.deadlines.getDeadlineIsLoading(),
+      Actions.deadlines.getDeadlineFailure()
     ];
 
     const store = createMockStore();
 
-    return store.dispatch(Actions.categories.getCategory()).then(() => {
+    return store.dispatch(Actions.deadlines.getDeadline()).then(() => {
       const calledActions = store.getActions();
       expect(calledActions).toEqual(expectedActions);
     });
   });
 });
 
-describe('updateCategoryIsLoading', () => {
+describe('updateDeadlineIsLoading', () => {
   it('should create the correct action', () => {
     const expectedAction = {
-      type: actionTypes.PUT_CATEGORY
+      type: actionTypes.PUT_DEADLINE
     };
-    const action = Actions.categories.updateCategoryIsLoading();
+    const action = Actions.deadlines.updateDeadlineIsLoading();
     expect(action).toEqual(expectedAction);
   });
 });
 
-describe('updateCategorySuccess', () => {
+describe('updateDeadlineSuccess', () => {
   it('should create the correct action', () => {
-    const testCategory = {
-      name: 'Category1'
+    const testDeadline = {
+      name: 'Deadline1'
     };
 
     const expectedAction = {
-      type: actionTypes.PUT_CATEGORY_SUCCESS,
-      category: testCategory
+      type: actionTypes.PUT_DEADLINE_SUCCESS,
+      deadline: testDeadline
     };
-    const action = Actions.categories.updateCategorySuccess(testCategory);
+    const action = Actions.deadlines.updateDeadlineSuccess(testDeadline);
     expect(action).toEqual(expectedAction);
   });
 });
 
-describe('updateCategoryFailure', () => {
+describe('updateDeadlineFailure', () => {
   it('should update the correct action', () => {
     const expectedAction = {
-      type: actionTypes.PUT_CATEGORY_FAILURE
+      type: actionTypes.PUT_DEADLINE_FAILURE
     };
-    const action = Actions.categories.updateCategoryFailure();
+    const action = Actions.deadlines.updateDeadlineFailure();
     expect(action).toEqual(expectedAction);
   });
 });
 
-describe('updateCategory', () => {
+describe('updateDeadline', () => {
   it('should call start action', () => {
     mockHttpResponse({ status: 200, body: {} });
     const store = createMockStore();
-    const data = { category: { name: 'Test Category' } };
+    const data = { deadline: { name: 'Test Deadline' } };
 
     return store
-      .dispatch(Actions.categories.updateCategory(1, data))
+      .dispatch(Actions.deadlines.updateDeadline(1, data))
       .then(() => {
         const calledActions = store.getActions();
         expect(calledActions[0]).toEqual(
-          Actions.categories.updateCategoryIsLoading()
+          Actions.deadlines.updateDeadlineIsLoading()
         );
       });
   });
 
   it('should call success action on success', () => {
-    const category = {
-      name: 'Category1'
+    const deadline = {
+      name: 'Deadline1'
     };
-    mockHttpResponse({ status: 200, body: { data: category } });
+    mockHttpResponse({ status: 200, body: { data: deadline } });
 
     const expectedActions = [
-      Actions.categories.updateCategoryIsLoading(),
-      Actions.categories.updateCategorySuccess(category)
+      Actions.deadlines.updateDeadlineIsLoading(),
+      Actions.deadlines.updateDeadlineSuccess(deadline)
     ];
 
     const store = createMockStore();
-    const data = { category };
+    const data = { deadline };
 
     return store
-      .dispatch(Actions.categories.updateCategory(1, data))
+      .dispatch(Actions.deadlines.updateDeadline(1, data))
       .then(() => {
         const calledActions = store.getActions();
         expect(calledActions).toEqual(expectedActions);
@@ -335,17 +335,17 @@ describe('updateCategory', () => {
 
   it('should call failure action on failure', () => {
     mockHttpResponse({ status: 401, body: {} });
-    const data = { category: { name: 'Test Category' } };
+    const data = { deadline: { name: 'Test Deadline' } };
 
     const expectedActions = [
-      Actions.categories.updateCategoryIsLoading(),
-      Actions.categories.updateCategoryFailure()
+      Actions.deadlines.updateDeadlineIsLoading(),
+      Actions.deadlines.updateDeadlineFailure()
     ];
 
     const store = createMockStore();
 
     return store
-      .dispatch(Actions.categories.updateCategory(1, data))
+      .dispatch(Actions.deadlines.updateDeadline(1, data))
       .then(() => {
         const calledActions = store.getActions();
         expect(calledActions).toEqual(expectedActions);
@@ -353,66 +353,70 @@ describe('updateCategory', () => {
   });
 });
 
-describe('destroyCategoryIsLoading', () => {
+describe('destroyDeadlineIsLoading', () => {
   it('should create the correct action', () => {
     const expectedAction = {
-      type: actionTypes.DELETE_CATEGORY
+      type: actionTypes.DELETE_DEADLINE
     };
-    const action = Actions.categories.destroyCategoryIsLoading();
+    const action = Actions.deadlines.destroyDeadlineIsLoading();
     expect(action).toEqual(expectedAction);
   });
 });
 
-describe('destroyCategorySuccess', () => {
+describe('destroyDeadlineSuccess', () => {
   it('should create the correct action', () => {
-    const testCategoryId = 1;
+    const testDeadline = {
+      id: 1,
+      name: 'Deadline1'
+    };
 
     const expectedAction = {
-      type: actionTypes.DELETE_CATEGORY_SUCCESS,
-      id: testCategoryId
+      type: actionTypes.DELETE_DEADLINE_SUCCESS,
+      id: testDeadline.id
     };
-    const action = Actions.categories.destroyCategorySuccess(testCategoryId);
+    const action = Actions.deadlines.destroyDeadlineSuccess(testDeadline.id);
     expect(action).toEqual(expectedAction);
   });
 });
 
-describe('destroyCategoryFailure', () => {
+describe('destroyDeadlineFailure', () => {
   it('should destroy the correct action', () => {
     const expectedAction = {
-      type: actionTypes.DELETE_CATEGORY_FAILURE
+      type: actionTypes.DELETE_DEADLINE_FAILURE
     };
-    const action = Actions.categories.destroyCategoryFailure();
+    const action = Actions.deadlines.destroyDeadlineFailure();
     expect(action).toEqual(expectedAction);
   });
 });
 
-describe('destroyCategory', () => {
+describe('destroyDeadline', () => {
   it('should call start action', () => {
     mockHttpResponse({ status: 200, body: {} });
     const store = createMockStore();
 
-    return store.dispatch(Actions.categories.destroyCategory(1)).then(() => {
+    return store.dispatch(Actions.deadlines.destroyDeadline(1)).then(() => {
       const calledActions = store.getActions();
       expect(calledActions[0]).toEqual(
-        Actions.categories.destroyCategoryIsLoading()
+        Actions.deadlines.destroyDeadlineIsLoading()
       );
     });
   });
 
   it('should call success action on success', () => {
-    const category = {
-      id: 1
+    const deadline = {
+      id: 1,
+      name: 'Deadline1'
     };
-    mockHttpResponse({ status: 200, body: { data: category.id } });
+    mockHttpResponse({ status: 200, body: '' });
 
     const expectedActions = [
-      Actions.categories.destroyCategoryIsLoading(),
-      Actions.categories.destroyCategorySuccess(category.id)
+      Actions.deadlines.destroyDeadlineIsLoading(),
+      Actions.deadlines.destroyDeadlineSuccess(deadline.id)
     ];
 
     const store = createMockStore();
 
-    return store.dispatch(Actions.categories.destroyCategory(1)).then(() => {
+    return store.dispatch(Actions.deadlines.destroyDeadline(1)).then(() => {
       const calledActions = store.getActions();
       expect(calledActions).toEqual(expectedActions);
     });
@@ -421,13 +425,13 @@ describe('destroyCategory', () => {
   it('should call failure action on failure', () => {
     mockHttpResponse({ status: 401, body: {} });
     const expectedActions = [
-      Actions.categories.destroyCategoryIsLoading(),
-      Actions.categories.destroyCategoryFailure()
+      Actions.deadlines.destroyDeadlineIsLoading(),
+      Actions.deadlines.destroyDeadlineFailure()
     ];
 
     const store = createMockStore();
 
-    return store.dispatch(Actions.categories.destroyCategory(1)).then(() => {
+    return store.dispatch(Actions.deadlines.destroyDeadline(1)).then(() => {
       const calledActions = store.getActions();
       expect(calledActions).toEqual(expectedActions);
     });
