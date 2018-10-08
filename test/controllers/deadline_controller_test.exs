@@ -2,7 +2,7 @@ defmodule Nexpo.DeadlineControllerTest do
   use Nexpo.ConnCase
 
   alias Nexpo.Deadline
-  @valid_attrs %{end: %{day: 17, month: 4, year: 2010}, name: "some content", start: %{day: 17, month: 4, year: 2010}}
+  @valid_attrs %{name: "some deadline", start: ~N[2000-01-01 23:00:00], end: ~N[2000-01-01 23:00:00]}
   @invalid_attrs %{}
 
   setup %{conn: conn} do

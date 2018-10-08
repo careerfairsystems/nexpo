@@ -3,8 +3,8 @@ defmodule Nexpo.Deadline do
 
   schema "deadlines" do
     field :name, :string
-    field :start, Ecto.Date
-    field :end, Ecto.Date
+    field :start, :naive_datetime
+    field :end, :naive_datetime
 
     timestamps()
   end

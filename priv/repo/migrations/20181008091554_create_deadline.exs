@@ -4,8 +4,8 @@ defmodule Nexpo.Repo.Migrations.CreateDeadline do
   def change do
     create table(:deadlines) do
       add :name, :string
-      add :start, :date
-      add :end, :date
+      add :start, :naive_datetime
+      add :end, :naive_datetime
 
       timestamps()
     end

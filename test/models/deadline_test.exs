@@ -3,7 +3,7 @@ defmodule Nexpo.DeadlineTest do
 
   alias Nexpo.Deadline
 
-  @valid_attrs %{end: %{day: 17, month: 4, year: 2010}, name: "some content", start: %{day: 17, month: 4, year: 2010}}
+  @valid_attrs %{end: ~N[2000-01-01 23:00:00], name: "some content", start: ~N[2000-01-01 23:00:00]}
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do
