@@ -112,6 +112,22 @@ export const EntitiesReducer = (
     case actionTypes.DELETE_CATEGORY_SUCCESS: {
       return { ...state, categories: omit(action.id, state.categories) };
     }
+    case actionTypes.FETCH_MAILTEMPLATES_SUCCESS: {
+      normalized = normalize(
+        action.mailtemplates,
+        Schema.mailtemplatesSchema()
+      );
+      return defaultsDeep(state, camelCaseKeys(normalized.entities));
+    }
+    case actionTypes.FETCH_MAILTEMPLATE_SUCCESS:
+    case actionTypes.POST_MAILTEMPLATE_SUCCESS:
+    case actionTypes.PUT_MAILTEMPLATE_SUCCESS: {
+      normalized = normalize(action.mailtemplate, Schema.mailtemplateSchema());
+      return defaultsDeep(state, camelCaseKeys(normalized.entities));
+    }
+    case actionTypes.DELETE_MAILTEMPLATE_SUCCESS: {
+      return { ...state, mailtemplates: omit(action.id, state.mailtemplates) };
+    }
     case actionTypes.FETCH_CURRENT_USER_SUCCESS:
     case actionTypes.PUT_CURRENT_USER_SUCCESS: {
       normalized = normalize(action.user, Schema.userSchema());

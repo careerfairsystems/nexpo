@@ -27,10 +27,10 @@ const entity = (key, definition = {}, options = {}) =>
   });
 
 const mailtemplateSchema = () => entity('mailtemplates');
-const mailtemplatesSchema = () => [mailtemplateSchema];
+const mailtemplatesSchema = () => [mailtemplateSchema()];
 
 const deadlineSchema = () => entity('deadlines');
-const deadlinesSchema = () => [deadlineSchema];
+const deadlinesSchema = () => [deadlineSchema()];
 
 const sessionApplicationSchema = () => {
   const company = entity(
