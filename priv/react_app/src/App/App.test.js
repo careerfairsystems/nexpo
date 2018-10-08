@@ -46,9 +46,28 @@ const state = {
   entities: {
     users: {
       '1': { id: 1, email: 'dev@it', firstName: 'X', roles: [1, 2] },
-      '2': { id: 2, email: 't@it', firstName: 'T', lastName: 'Y', roles: [] }
+      '2': { id: 2, email: 't@it', firstName: 'T', roles: [], student: 1 }
     },
-    students: {},
+    students: {
+      '1': {
+        id: 1,
+        resumeEnUrl: null,
+        resumeSvUrl: null,
+        studentSessionApplications: [1],
+        user: 1,
+        year: 2000
+      }
+    },
+    studentSessionApplications: {
+      '1': {
+        id: 1,
+        company: 2,
+        companyApproved: false,
+        studentConfirmed: false,
+        motivation: 'Please talk to me!',
+        student: 1
+      }
+    },
     roles: {
       '1': { id: 1, type: 'admin', permissions: ['read_all'], users: [1] },
       '2': { id: 2, type: 'zzz', permissions: ['read_users'], users: [1] }

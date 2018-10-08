@@ -9,10 +9,12 @@ import { EntitiesReducer } from './EntitiesReducer';
 describe('Entities reducer', () => {
   it('should return the empty initial state', () => {
     const initialState = {
-      companies: {},
-      attributes: {},
       categories: {},
+      attributes: {},
+      companies: {},
       entries: {},
+      deadlines: {},
+      mailtemplates: {},
       roles: {},
       users: {},
       studentSessionApplications: {},

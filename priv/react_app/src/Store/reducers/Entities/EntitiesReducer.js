@@ -8,10 +8,12 @@ import { camelCaseKeys } from '../../../Util/FormatHelper';
 import { actionTypes } from '../..';
 
 export type EntitiesState = {
-  companies: {},
-  attributes: {},
   categories: {},
+  attributes: {},
+  companies: {},
   entries: {},
+  deadlines: {},
+  mailtemplates: {},
   roles: {},
   users: {},
   studentSessionApplications: {},
@@ -19,10 +21,12 @@ export type EntitiesState = {
 };
 
 const initialState = {
-  companies: {},
-  attributes: {},
   categories: {},
+  attributes: {},
+  companies: {},
   entries: {},
+  deadlines: {},
+  mailtemplates: {},
   roles: {},
   users: {},
   studentSessionApplications: {},
