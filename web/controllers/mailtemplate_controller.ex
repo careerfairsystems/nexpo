@@ -1,7 +1,7 @@
-defmodule Nexpo.DeadlineController do
+defmodule Nexpo.MailtemplateController do
   use Nexpo.Web, :controller
 
-  alias Nexpo.Deadline
+  alias Nexpo.Mailtemplate
   alias Guardian.Plug.{EnsurePermissions}
 
   plug EnsurePermissions, [handler: Nexpo.SessionController,
@@ -12,19 +12,19 @@ defmodule Nexpo.DeadlineController do
                           ] when action in [:create, :update, :delete]
 
   def index(conn, _params) do
-    deadlines = Repo.all(Deadline)
-    render(conn, "index.json", deadlines: deadlines)
+    mailtemplates = Repo.all(Mailtemplate)
+    render(conn, "index.json", mailtemplates: mailtemplates)
   end
 
-  def create(conn, %{"deadline" => deadline_params}) do
-    changeset = Deadline.changeset(%Deadline{}, deadline_params)
+  def create(conn, %{"mailtemplate" => mailtemplate_params}) do
+    changeset = Mailtemplate.changeset(%Mailtemplate{}, mailtemplate_params)
 
     case Repo.insert(changeset) do
-      {:ok, deadline} ->
+      {:ok, mailtemplate} ->
         conn
         |> put_status(:created)
-        |> put_resp_header("location", deadline_path(conn, :show, deadline))
-        |> render("show.json", deadline: deadline)
+        |> put_resp_header("location", mailtemplate_path(conn, :show, mailtemplate))
+        |> render("show.json", mailtemplate: mailtemplate)
       {:error, changeset} ->
         conn
         |> put_status(:unprocessable_entity)
@@ -33,17 +33,17 @@ defmodule Nexpo.DeadlineController do
   end
 
   def show(conn, %{"id" => id}) do
-    deadline = Repo.get!(Deadline, id)
-    render(conn, "show.json", deadline: deadline)
+    mailtemplate = Repo.get!(Mailtemplate, id)
+    render(conn, "show.json", mailtemplate: mailtemplate)
   end
 
-  def update(conn, %{"id" => id, "deadline" => deadline_params}) do
-    deadline = Repo.get!(Deadline, id)
-    changeset = Deadline.changeset(deadline, deadline_params)
+  def update(conn, %{"id" => id, "mailtemplate" => mailtemplate_params}) do
+    mailtemplate = Repo.get!(Mailtemplate, id)
+    changeset = Mailtemplate.changeset(mailtemplate, mailtemplate_params)
 
     case Repo.update(changeset) do
-      {:ok, deadline} ->
-        render(conn, "show.json", deadline: deadline)
+      {:ok, mailtemplate} ->
+        render(conn, "show.json", mailtemplate: mailtemplate)
       {:error, changeset} ->
         conn
         |> put_status(:unprocessable_entity)
@@ -52,11 +52,11 @@ defmodule Nexpo.DeadlineController do
   end
 
   def delete(conn, %{"id" => id}) do
-    deadline = Repo.get!(Deadline, id)
+    mailtemplate = Repo.get!(Mailtemplate, id)
 
     # Here we use delete! (with a bang) because we expect
     # it to always work (and if it does not, it will raise).
-    Repo.delete!(deadline)
+    Repo.delete!(mailtemplate)
 
     send_resp(conn, :no_content, "")
   end
