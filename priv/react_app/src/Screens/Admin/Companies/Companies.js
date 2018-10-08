@@ -72,7 +72,7 @@ class Companies extends Component {
         }
       },
       render: (name, { id }) => (
-        <InvisibleLink to={`/companies/${id}`}>{name}</InvisibleLink>
+        <InvisibleLink to={`/admin/companies/${id}`}>{name}</InvisibleLink>
       )
     },
     {
@@ -93,9 +93,9 @@ class Companies extends Component {
       key: 'action',
       render: company => (
         <span>
-          <InvisibleLink to={`/companies/${company.id}`}>Show</InvisibleLink>
+          <InvisibleLink to={`/admin/companies/${company.id}`}>Show</InvisibleLink>
           <Divider type="vertical" />
-          <InvisibleLink to={`/companies/${company.id}#edit`}>
+          <InvisibleLink to={`/admin/companies/${company.id}#edit`}>
             Edit
           </InvisibleLink>
           <Divider type="vertical" />

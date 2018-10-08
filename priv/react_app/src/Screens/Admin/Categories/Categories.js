@@ -21,7 +21,7 @@ const categoryColumns = [
     dataIndex: 'title',
     key: 'title',
     render: (title, { id }) => (
-      <InvisibleLink to={`/categories/${id}`}>{title}</InvisibleLink>
+      <InvisibleLink to={`/admin/categories/${id}`}>{title}</InvisibleLink>
     )
   },
   {
@@ -29,7 +29,7 @@ const categoryColumns = [
     key: 'action',
     render: category => (
       <span>
-        <InvisibleLink to={`/categories/${category.id}`}>Show</InvisibleLink>
+        <InvisibleLink to={`/admin/categories/${category.id}`}>Show</InvisibleLink>
         <Divider type="vertical" />
         <InvisibleLink to="#">Edit</InvisibleLink>
         <Divider type="vertical" />

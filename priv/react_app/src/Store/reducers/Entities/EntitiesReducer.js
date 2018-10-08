@@ -128,6 +128,19 @@ export const EntitiesReducer = (
     case actionTypes.DELETE_MAILTEMPLATE_SUCCESS: {
       return { ...state, mailtemplates: omit(action.id, state.mailtemplates) };
     }
+    case actionTypes.FETCH_DEADLINES_SUCCESS: {
+      normalized = normalize(action.deadlines, Schema.deadlinesSchema());
+      return defaultsDeep(state, camelCaseKeys(normalized.entities));
+    }
+    case actionTypes.FETCH_DEADLINE_SUCCESS:
+    case actionTypes.POST_DEADLINE_SUCCESS:
+    case actionTypes.PUT_DEADLINE_SUCCESS: {
+      normalized = normalize(action.deadline, Schema.deadlineSchema());
+      return defaultsDeep(state, camelCaseKeys(normalized.entities));
+    }
+    case actionTypes.DELETE_DEADLINE_SUCCESS: {
+      return { ...state, deadlines: omit(action.id, state.deadlines) };
+    }
     case actionTypes.FETCH_CURRENT_USER_SUCCESS:
     case actionTypes.PUT_CURRENT_USER_SUCCESS: {
       normalized = normalize(action.user, Schema.userSchema());

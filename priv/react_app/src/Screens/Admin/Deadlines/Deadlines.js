@@ -24,7 +24,7 @@ class Deadlines extends Component {
       dataIndex: 'name',
       key: 'name',
       render: (name, { id }) => (
-        <InvisibleLink to={`/deadlines/${id}`}>{name}</InvisibleLink>
+        <InvisibleLink to={`/admin/deadlines/${id}`}>{name}</InvisibleLink>
       )
     },
     {
@@ -42,7 +42,7 @@ class Deadlines extends Component {
       key: 'action',
       render: deadline => (
         <span>
-          <InvisibleLink to={`/deadlines/${deadline.id}`}>Edit</InvisibleLink>
+          <InvisibleLink to={`/admin/deadlines/${deadline.id}`}>Edit</InvisibleLink>
           <Divider type="vertical" />
           <Popconfirm
             title="Sure to delete?"

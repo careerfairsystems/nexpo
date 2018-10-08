@@ -18,6 +18,8 @@ import Categories from '../Screens/Admin/Categories';
 import Category from '../Screens/Admin/Category';
 import Mailtemplates from '../Screens/Admin/Mailtemplates';
 import Mailtemplate from '../Screens/Admin/Mailtemplate';
+import Deadlines from '../Screens/Admin/Deadlines';
+import Deadline from '../Screens/Admin/Deadline';
 import Roles from '../Screens/Admin/Roles';
 import Role from '../Screens/Admin/Role';
 import Users from '../Screens/Admin/Users';
@@ -52,6 +54,8 @@ const routes = (
     <PrivateRoute path="/admin/companies/:id" component={Company} />
     <PrivateRoute exact path="/admin/mailtemplates" component={Mailtemplates} />
     <PrivateRoute path="/admin/mailtemplates/:id" component={Mailtemplate} />
+    <PrivateRoute exact path="/admin/deadlines" component={Deadlines} />
+    <PrivateRoute path="/admin/deadlines/:id" component={Deadline} />
     <PrivateRoute exact path="/admin/users" component={Users} />
     <PrivateRoute path="/admin/users/:id" component={User} />
     <PrivateRoute exact path="/admin/roles" component={Roles} />
@@ -169,6 +173,10 @@ class App extends Component {
                   this.restrictedMenuItem({
                     route: 'admin/mailtemplates',
                     title: 'Mailtemplates'
+                  }),
+                  this.restrictedMenuItem({
+                    route: 'admin/deadlines',
+                    title: 'Deadlines'
                   })
                 ]
               })}

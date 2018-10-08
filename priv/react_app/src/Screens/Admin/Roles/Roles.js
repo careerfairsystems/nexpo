@@ -14,7 +14,7 @@ const roleColumns = [
     dataIndex: 'type',
     key: 'type',
     render: (type, { id }) => (
-      <InvisibleLink to={`/roles/${id}`}>{type}</InvisibleLink>
+      <InvisibleLink to={`/admin/roles/${id}`}>{type}</InvisibleLink>
     )
   },
   {
@@ -28,7 +28,7 @@ const roleColumns = [
     key: 'action',
     render: role => (
       <span>
-        <InvisibleLink to={`/roles/${role.id}`}>Show</InvisibleLink>
+        <InvisibleLink to={`/admin/roles/${role.id}`}>Show</InvisibleLink>
         <Divider type="vertical" />
         <InvisibleLink to="#role-edit">Edit</InvisibleLink>
         <Divider type="vertical" />

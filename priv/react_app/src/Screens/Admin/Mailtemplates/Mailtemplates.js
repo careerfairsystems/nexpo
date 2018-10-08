@@ -24,7 +24,7 @@ class Mailtemplates extends Component {
       dataIndex: 'name',
       key: 'name',
       render: (name, { id }) => (
-        <InvisibleLink to={`/mailtemplates/${id}`}>{name}</InvisibleLink>
+        <InvisibleLink to={`/admin/mailtemplates/${id}`}>{name}</InvisibleLink>
       )
     },
     {
@@ -42,7 +42,7 @@ class Mailtemplates extends Component {
       key: 'action',
       render: mailtemplate => (
         <span>
-          <InvisibleLink to={`/mailtemplates/${mailtemplate.id}`}>
+          <InvisibleLink to={`/admin/mailtemplates/${mailtemplate.id}`}>
             Edit
           </InvisibleLink>
           <Divider type="vertical" />

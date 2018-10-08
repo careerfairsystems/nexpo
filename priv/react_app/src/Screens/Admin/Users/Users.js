@@ -14,7 +14,7 @@ const userColumns = [
     dataIndex: 'email',
     key: 'email',
     render: (email, { id }) => (
-      <InvisibleLink to={`/users/${id}`}>{email}</InvisibleLink>
+      <InvisibleLink to={`/admin/users/${id}`}>{email}</InvisibleLink>
     )
   },
   {
@@ -32,7 +32,7 @@ const userColumns = [
     key: 'action',
     render: user => (
       <span>
-        <InvisibleLink to={`/users/${user.id}`}>Show</InvisibleLink>
+        <InvisibleLink to={`/admin/users/${user.id}`}>Show</InvisibleLink>
         <Divider type="vertical" />
         <InvisibleLink to="#user-edit">Edit</InvisibleLink>
         <Divider type="vertical" />
