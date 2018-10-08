@@ -13,23 +13,24 @@ import PrivateRoute from '../Components/PrivateRoute';
 
 import Home from '../Screens/Home';
 import Info from '../Screens/Info';
-import Categories from '../Screens/Categories';
-import Category from '../Screens/Category';
-import Roles from '../Screens/Roles';
-import Role from '../Screens/Role';
-import Users from '../Screens/Users';
-import User from '../Screens/User';
+import AdminHome from '../Screens/Admin/AdminHome';
+import Categories from '../Screens/Admin/Categories';
+import Category from '../Screens/Admin/Category';
+import Roles from '../Screens/Admin/Roles';
+import Role from '../Screens/Admin/Role';
+import Users from '../Screens/Admin/Users';
+import User from '../Screens/Admin/User';
 import CurrentUser from '../Screens/CurrentUser';
-import Companies from '../Screens/Companies';
-import Company from '../Screens/Company';
-import Session from '../Screens/Session';
-import SessionApplication from '../Screens/SessionApplication';
-import SessionApplications from '../Screens/SessionApplications';
-import SessionCompanies from '../Screens/SessionCompanies';
-import Login from '../Screens/Login';
-import Logout from '../Screens/Logout';
-import Signup from '../Screens/Signup';
-import ForgotPassword from '../Screens/ForgotPassword';
+import Companies from '../Screens/Admin/Companies';
+import Company from '../Screens/Admin/Company';
+import SessionHome from '../Screens/Session/SessionHome';
+import SessionApplication from '../Screens/Session/SessionApplication';
+import SessionApplications from '../Screens/Session/SessionApplications';
+import SessionCompanies from '../Screens/Session/SessionCompanies';
+import Login from '../Screens/Auth/Login';
+import Logout from '../Screens/Auth/Logout';
+import Signup from '../Screens/Auth/Signup';
+import ForgotPassword from '../Screens/Auth/ForgotPassword';
 import NotFound from '../Screens/NotFound';
 
 import HtmlTitle from '../Components/HtmlTitle';
@@ -41,21 +42,22 @@ const routes = (
   <Switch>
     <PrivateRoute exact path="/" component={Home} />
     <Route exact path="/info" component={Info} />
-    <PrivateRoute exact path="/categories" component={Categories} />
-    <PrivateRoute path="/categories/:id" component={Category} />
-    <PrivateRoute exact path="/companies" component={Companies} />
-    <PrivateRoute exact path="/companies/new" component={Company} />
-    <PrivateRoute path="/companies/:id" component={Company} />
-    <PrivateRoute exact path="/users" component={Users} />
-    <PrivateRoute path="/users/:id" component={User} />
-    <PrivateRoute exact path="/roles" component={Roles} />
-    <PrivateRoute path="/roles/:id" component={Role} />
+    <PrivateRoute exact path="/admin" component={AdminHome} />
+    <PrivateRoute exact path="/admin/categories" component={Categories} />
+    <PrivateRoute path="/admin/categories/:id" component={Category} />
+    <PrivateRoute exact path="/admin/companies" component={Companies} />
+    <PrivateRoute exact path="/admin/companies/new" component={Company} />
+    <PrivateRoute path="/admin/companies/:id" component={Company} />
+    <PrivateRoute exact path="/admin/users" component={Users} />
+    <PrivateRoute path="/admin/users/:id" component={User} />
+    <PrivateRoute exact path="/admin/roles" component={Roles} />
+    <PrivateRoute path="/admin/roles/:id" component={Role} />
     <Route path="/login" component={Login} />
     <Route path="/logout" component={Logout} />
     <Route path="/signup" component={Signup} />
     <Route path="/forgot-password" component={ForgotPassword} />
     <Route path="/user" component={CurrentUser} />
-    <PrivateRoute exact path="/session" component={Session} />
+    <PrivateRoute exact path="/session" component={SessionHome} />
     <PrivateRoute path="/session/application" component={SessionApplication} />
     <PrivateRoute
       path="/session/applications"
@@ -140,21 +142,27 @@ class App extends Component {
               mode="horizontal"
               onClick={({ key }) => redirect(key)}
             >
-              {this.restrictedMenuItem({
-                route: 'companies',
-                title: 'Companies'
-              })}
-              {this.restrictedMenuItem({
-                route: 'categories',
-                title: 'Categories'
-              })}
-              {this.restrictedMenuItem({
-                route: 'roles',
-                title: 'Roles'
-              })}
-              {this.restrictedMenuItem({
-                route: 'users',
-                title: 'Users'
+              {this.restrictedSubMenu({
+                route: 'admin',
+                title: 'Admin',
+                menus: [
+                  this.restrictedMenuItem({
+                    route: 'admin/companies',
+                    title: 'Companies'
+                  }),
+                  this.restrictedMenuItem({
+                    route: 'admin/categories',
+                    title: 'Categories'
+                  }),
+                  this.restrictedMenuItem({
+                    route: 'admin/roles',
+                    title: 'Roles'
+                  }),
+                  this.restrictedMenuItem({
+                    route: 'admin/users',
+                    title: 'Users'
+                  })
+                ]
               })}
               {this.restrictedSubMenu({
                 route: 'session',

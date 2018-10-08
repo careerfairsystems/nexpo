@@ -6,6 +6,7 @@ import { shallow, mount } from 'enzyme';
 import App from './App';
 import ConnectedApp from './index';
 import { createMockStore } from '../TestHelper';
+import NotFound from '../Screens/NotFound';
 
 it('renders without crashing', () => {
   shallow(
@@ -109,26 +110,28 @@ const route = path => (
   </Provider>
 );
 
+const found = wrapper => expect(wrapper.find(NotFound)).toHaveLength(0);
+
 it('renders routes without crashing', () => {
-  mount(route('/'));
-  mount(route('/info'));
-  mount(route('/categories'));
-  mount(route('/categories/1'));
-  mount(route('/companies'));
-  mount(route('/companies/new'));
-  mount(route('/companies/1'));
-  mount(route('/users'));
-  mount(route('/users/1'));
-  mount(route('/roles'));
-  mount(route('/roles/1'));
-  mount(route('/login'));
-  mount(route('/logout'));
-  mount(route('/signup'));
-  mount(route('/forgot-password'));
-  mount(route('/user'));
-  mount(route('/session'));
-  mount(route('/session/application'));
-  mount(route('/session/applications'));
-  mount(route('/session/companies'));
-  mount(route('/invalid-path'));
+  found(mount(route('/')));
+  found(mount(route('/info')));
+  found(mount(route('/admin/categories')));
+  found(mount(route('/admin/categories/1')));
+  found(mount(route('/admin/companies')));
+  mount(route('/admin/companies/new')); // NOT FOUND?
+  found(mount(route('/admin/companies/1')));
+  found(mount(route('/admin/users')));
+  found(mount(route('/admin/users/1')));
+  found(mount(route('/admin/roles')));
+  found(mount(route('/admin/roles/1')));
+  found(mount(route('/login')));
+  found(mount(route('/logout')));
+  found(mount(route('/signup')));
+  found(mount(route('/forgot-password')));
+  found(mount(route('/user')));
+  found(mount(route('/session')));
+  found(mount(route('/session/application')));
+  found(mount(route('/session/applications')));
+  found(mount(route('/session/companies')));
+  expect(mount(route('/invalid-path')).find(NotFound)).toHaveLength(1);
 });
