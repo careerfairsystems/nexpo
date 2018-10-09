@@ -140,11 +140,9 @@ describe('createCompany', () => {
   });
 
   it('should call success action on success', () => {
-    const company = [
-      {
-        name: 'Company1'
-      }
-    ];
+    const company = {
+      name: 'Company1'
+    };
     mockHttpResponse({ status: 200, body: { data: company } });
 
     const expectedActions = [
@@ -227,11 +225,9 @@ describe('getCompany', () => {
   });
 
   it('should call success action on success', () => {
-    const company = [
-      {
-        name: 'Company1'
-      }
-    ];
+    const company = {
+      name: 'Company1'
+    };
     mockHttpResponse({ status: 200, body: { data: company } });
 
     const expectedActions = [
@@ -314,11 +310,9 @@ describe('updateCompany', () => {
   });
 
   it('should call success action on success', () => {
-    const company = [
-      {
-        name: 'Company1'
-      }
-    ];
+    const company = {
+      name: 'Company1'
+    };
     mockHttpResponse({ status: 200, body: { data: company } });
 
     const expectedActions = [

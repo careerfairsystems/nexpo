@@ -56,11 +56,9 @@ describe('createStudentSessionAppl', () => {
   });
 
   it('should call success action on success', () => {
-    const application = [
-      {
-        name: 'StudentSessionAppl1'
-      }
-    ];
+    const application = {
+      name: 'StudentSessionAppl1'
+    };
     mockHttpResponse({ status: 200, body: { data: application } });
 
     const expectedActions = [

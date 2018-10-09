@@ -8,11 +8,11 @@ export function destroyUserIsLoading() {
   };
 }
 
-export function destroyUserSuccess(user) {
+export function destroyUserSuccess(id) {
   message.success('User successfully deleted');
   return {
     type: actionTypes.DELETE_USER_SUCCESS,
-    user
+    id
   };
 }
 
@@ -31,8 +31,8 @@ export function destroyUser(id) {
     dispatch(destroyUserIsLoading());
     return API.users
       .destroy(id)
-      .then(user => {
-        dispatch(destroyUserSuccess(user.data));
+      .then(() => {
+        dispatch(destroyUserSuccess(id));
       })
       .catch(() => {
         dispatch(destroyUserFailure());

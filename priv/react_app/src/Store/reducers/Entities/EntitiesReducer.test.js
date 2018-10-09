@@ -9,10 +9,12 @@ import { EntitiesReducer } from './EntitiesReducer';
 describe('Entities reducer', () => {
   it('should return the empty initial state', () => {
     const initialState = {
-      companies: {},
-      attributes: {},
       categories: {},
+      attributes: {},
+      companies: {},
       entries: {},
+      deadlines: {},
+      mailtemplates: {},
       roles: {},
       users: {},
       studentSessionApplications: {},
@@ -223,7 +225,7 @@ describe('Entities reducer', () => {
 
   it('should handle delete current user success', () => {
     const testUser = { id: 1, name: 'Test User' };
-    const action = Actions.users.destroyCurrentUserSuccess(testUser);
+    const action = Actions.users.destroyCurrentUserSuccess(testUser.id);
     const state = EntitiesReducer(undefined, action);
 
     expect(state).toMatchObject({
@@ -237,7 +239,9 @@ describe('Entities reducer', () => {
       sessionApplicationId
     );
     const state = EntitiesReducer(
-      { studentSessionApplications: { 1: { id: 1, companyId: 1, studentId: 1 } } },
+      {
+        studentSessionApplications: { 1: { id: 1, companyId: 1, studentId: 1 } }
+      },
       action
     );
 

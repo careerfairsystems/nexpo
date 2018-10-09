@@ -64,6 +64,8 @@ defmodule Nexpo.Router do
     resources "/job_offers", JobOfferController
     resources "/categories", CategoryController
     resources "/programmes", ProgrammeController
+    resources "/deadlines", DeadlineController
+    resources "/mailtemplates", MailtemplateController
 
     resources "/student_session_applications", StudentSessionApplicationController, only: [:create]
   end

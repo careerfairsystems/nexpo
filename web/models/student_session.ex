@@ -2,8 +2,8 @@ defmodule Nexpo.StudentSession do
   use Nexpo.Web, :model
 
   schema "student_sessions" do
-    field :start, Ecto.Date
-    field :end, Ecto.Date
+    field :start, :naive_datetime
+    field :end, :naive_datetime
     belongs_to :company, Nexpo.Company
     belongs_to :student, Nexpo.Student
 
