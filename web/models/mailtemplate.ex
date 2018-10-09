@@ -16,7 +16,7 @@ defmodule Nexpo.Mailtemplate do
   def changeset(struct, params \\ %{}) do
     struct
     |> cast(params, [:name, :subject, :content, :signature])
-    |> validate_required([:name, :subject, :content, :signature])
+    |> validate_required([:name, :subject, :content])
     |> unique_constraint(:name)
   end
 end
