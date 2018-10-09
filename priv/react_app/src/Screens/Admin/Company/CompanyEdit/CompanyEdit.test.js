@@ -13,6 +13,9 @@ describe('CompanyEdit', () => {
       createCompany: jest.fn(),
       fetching: false,
       getCompany: jest.fn(),
+      history: {
+        push: jest.fn()
+      },
       resetForm: jest.fn(),
       updateCompany: jest.fn()
     };
@@ -69,17 +72,6 @@ describe('CompanyEdit', () => {
     // expect(wrapper.find(MailLink)).toHaveLength(1);
   });
 
-
-  it('beforeUpload correctly changes state', () => {
-    const wrapper = shallow(<CompanyEdit id="1" {...props} />);
-    expect(wrapper.state().company.logoUrl).toEqual(null);
-    const file = 'New File';
-    wrapper.instance().beforeUpload(file, 'logoUrl');
-    expect(wrapper.state().company.logoUrl).toEqual(file);
-    wrapper.instance().onRemove('logoUrl');
-    expect(wrapper.state().company.logoUrl).toEqual(null);
-  });
-  // If there is not a company in props we want to create a new one
   it('updateCompany functions correctly', () => {
     const company = {
       name: 'Test CompanyEdit',
@@ -94,7 +86,7 @@ describe('CompanyEdit', () => {
     const newDescription = 'Our company is awesome';
     wrapper.instance().updateCompany({ description: newDescription });
     expect(props.updateCompany).toHaveBeenCalledWith(id, {
-      company: { description: newDescription, logoUrl: null }
+      company: { description: newDescription }
     });
   });
 });
