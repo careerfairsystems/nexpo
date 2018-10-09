@@ -7,46 +7,25 @@ import '../Company.css';
  * Responsible for rendering a company. Company id is recieved via url
  */
 class CompanyNew extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      company: { logoUrl: null }
-    };
-  }
-
-  onRemove = name => {
-    const { company } = this.state;
-    this.setState({ company: { ...company, [name]: null } });
-  };
-
-  beforeUpload = (file, name) => {
-    const { company } = this.state;
-    this.setState({
-      company: { ...company, [name]: file }
-    });
-    return false;
-  };
-
   createCompany = values => {
+    let logoUrl;
+    const { logoUrl: fileArray } = values;
+    if (fileArray && fileArray.length > 0) {
+      [logoUrl] = fileArray;
+    }
     const { createCompany } = this.props;
-    const { company: stateCompany } = this.state;
-    const newCompany = {
+    const company = {
       ...values,
-      ...stateCompany
+      logoUrl
     };
-    createCompany({ company: newCompany });
+    createCompany({ company });
   };
 
   render() {
     return (
       <div className="company-edit-view">
         <div>
-          <CompanyForm
-            onSubmit={this.createCompany}
-            beforeUpload={this.beforeUpload}
-            onRemove={this.onRemove}
-            logoUrl={this.state.company.logoUrl}
-          />
+          <CompanyForm onSubmit={this.createCompany} />
         </div>
       </div>
     );

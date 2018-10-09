@@ -6,20 +6,22 @@ import makeField from './helper';
 
 const UploadButton = ({
   accept,
-  beforeUpload,
   action,
   currentStudent,
   name,
-  onRemove,
+  onChange,
   fileList
 }) => [
   <Upload
     key="uploadButton"
     accept={accept}
     action={action}
-    beforeUpload={file => beforeUpload(file, name)}
-    onRemove={() => onRemove(name)}
     fileList={fileList}
+    beforeUpload={file => {
+      onChange([file]);
+      return false;
+    }}
+    onRemove={() => onChange([])}
   >
     <Button>
       <Icon type="upload" /> Upload

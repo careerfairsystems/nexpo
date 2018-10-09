@@ -14,40 +14,22 @@ import '../Company.css';
  * Responsible for editing a company. Company id is recieved via url
  */
 class CompanyEdit extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      company: { logoUrl: null }
-    };
-  }
-
   componentWillMount() {
     const { id, getCompany } = this.props;
     getCompany(id);
   }
 
-  onRemove = name => {
-    const { company } = this.state;
-    this.setState({ company: { ...company, [name]: null } });
-  };
-
-  beforeUpload = (file, name) => {
-    const { company } = this.state;
-    this.setState({
-      company: { ...company, [name]: file }
-    });
-    return false;
-  };
-
   updateCompany = values => {
     const { id, updateCompany } = this.props;
-    const { company: stateCompany } = this.state;
-    const newCompany = {
-      ...values,
-      ...stateCompany
-    };
+    let logoUrl;
+    let company = { ...values };
+    const { logoUrl: fileArray } = values;
+    if (fileArray && fileArray.length > 0) {
+      [logoUrl] = fileArray;
+      company = { ...company, logoUrl };
+    }
 
-    updateCompany(id, { company: newCompany });
+    updateCompany(id, { company });
   };
 
   invite = ({ email }) => {
@@ -78,10 +60,7 @@ class CompanyEdit extends Component {
           <h1>{name}</h1>
           <CompanyForm
             onSubmit={this.updateCompany}
-            initialValues={company}
-            beforeUpload={this.beforeUpload}
-            onRemove={this.onRemove}
-            logoUrl={this.state.company.logoUrl}
+            initialValues={{ ...company, logoUrl: [] }}
           />
           <br />
           <br />

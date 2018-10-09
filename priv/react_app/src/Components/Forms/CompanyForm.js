@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Field, reduxForm } from 'redux-form';
+import { Field, reduxForm, formValueSelector } from 'redux-form';
 import { connect } from 'react-redux';
 import { Button, Form, Input, Radio } from 'antd';
 import makeField, { required } from './helper';
@@ -17,14 +17,7 @@ const TextInput = makeField(Input);
 const TextArea = makeField(Input.TextArea);
 const RadioGroup = makeField(Radio.Group);
 
-const CompanyForm = ({
-  handleSubmit,
-  logoUrl,
-  beforeUpload,
-  onRemove,
-  onCancel,
-  submitting
-}) => (
+const CompanyForm = ({ handleSubmit, onCancel, submitting, fileList }) => (
   <Form onSubmit={handleSubmit}>
     <Field
       name="name"
@@ -56,12 +49,10 @@ const CompanyForm = ({
     <Field
       name="logoUrl"
       label="Logo"
-      fileList={logoUrl ? [logoUrl] : []}
+      fileList={fileList}
       currentStudent={{}}
-      beforeUpload={beforeUpload}
       component={UploadButton}
       accept="image/*"
-      onRemove={onRemove}
     />
     {onCancel && <Button onClick={onCancel}>Cancel</Button>}
     <Button disabled={submitting} htmlType="submit" type="primary">
@@ -71,22 +62,25 @@ const CompanyForm = ({
 );
 
 CompanyForm.defaultProps = {
-  logoUrl: null,
-  onCancel:null
+  fileList: [],
+  onCancel: null
 };
 
 CompanyForm.propTypes = {
-  beforeUpload: PropTypes.func.isRequired,
-  logoUrl: PropTypes.string,
+  fileList: PropTypes.arrayOf(PropTypes.shape(PropTypes.string)),
   handleSubmit: PropTypes.func.isRequired,
   onCancel: PropTypes.func,
-  onRemove: PropTypes.func.isRequired,
   submitting: PropTypes.bool.isRequired
 };
 
-const mapStateToProps = state => ({
-  formState: state.form.CompanyForm
-});
+const selector = formValueSelector('company'); // <-- same as form name
+const mapStateToProps = state => {
+  const fileList = selector(state, 'logoUrl');
+  return {
+    fileList,
+    formState: state.form.CompanyForm
+  };
+};
 
 const stateful = connect(mapStateToProps);
 
