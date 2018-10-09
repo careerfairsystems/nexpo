@@ -18,7 +18,7 @@ const MailtemplateForm = ({ handleSubmit }) => (
       prefix={<Icon type="mail" />}
     />
     <Field name="content" label="Content:" component={TextArea} />
-    <Field name="signature" label="Signature:" component={TextInput} />
+    <Field name="signature" label="Signature:" component={TextArea} />
     <Button htmlType="submit">Create template</Button>
   </Form>
 );
