@@ -69,26 +69,6 @@ describe('CompanyEdit', () => {
     // expect(wrapper.find(MailLink)).toHaveLength(1);
   });
 
-  it('should set edit mode if url contains #edit', () => {
-    const company = {
-      name: 'Test CompanyEdit',
-      website: 'testcompany.com',
-      describe: 'We do testing!',
-      studentSessionDays: 0
-    };
-    const location = { hash: '#edit' };
-    const wrapper = shallow(
-      <CompanyEdit id="1" {...props} company={company} location={location} />
-    );
-    expect(wrapper.state().edit).toEqual(true);
-  });
-
-  it('toggleEdit correctly changes state', () => {
-    const wrapper = shallow(<CompanyEdit id="1" {...props} />);
-    expect(wrapper.state().edit).toEqual(false);
-    wrapper.instance().toggleEdit();
-    expect(wrapper.state().edit).toEqual(true);
-  });
 
   it('beforeUpload correctly changes state', () => {
     const wrapper = shallow(<CompanyEdit id="1" {...props} />);
@@ -100,15 +80,6 @@ describe('CompanyEdit', () => {
     expect(wrapper.state().company.logoUrl).toEqual(null);
   });
   // If there is not a company in props we want to create a new one
-  it('updateCompany functions correctly', () => {
-    const wrapper = shallow(<CompanyEdit id="1" {...props} />);
-    const newDescription = 'Our company is awesome';
-    wrapper.instance().updateCompany({ description: newDescription });
-    expect(props.createCompany).toHaveBeenCalledWith({
-      company: { description: newDescription, logoUrl: null }
-    });
-  });
-  // If there is a company in props we want to update it
   it('updateCompany functions correctly', () => {
     const company = {
       name: 'Test CompanyEdit',

@@ -63,7 +63,7 @@ const CompanyForm = ({
       accept="image/*"
       onRemove={onRemove}
     />
-    <Button onClick={onCancel}>Cancel</Button>
+    {onCancel && <Button onClick={onCancel}>Cancel</Button>}
     <Button disabled={submitting} htmlType="submit" type="primary">
       Submit
     </Button>
@@ -71,14 +71,15 @@ const CompanyForm = ({
 );
 
 CompanyForm.defaultProps = {
-  logoUrl: null
+  logoUrl: null,
+  onCancel:null
 };
 
 CompanyForm.propTypes = {
   beforeUpload: PropTypes.func.isRequired,
   logoUrl: PropTypes.string,
   handleSubmit: PropTypes.func.isRequired,
-  onCancel: PropTypes.func.isRequired,
+  onCancel: PropTypes.func,
   onRemove: PropTypes.func.isRequired,
   submitting: PropTypes.bool.isRequired
 };

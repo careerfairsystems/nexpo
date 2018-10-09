@@ -27,7 +27,7 @@ class CompanyNew extends Component {
     return false;
   };
 
-  updateCompany = values => {
+  createCompany = values => {
     const { createCompany } = this.props;
     const { company: stateCompany } = this.state;
     const newCompany = {
@@ -42,7 +42,7 @@ class CompanyNew extends Component {
       <div className="company-edit-view">
         <div>
           <CompanyForm
-            onSubmit={this.updateCompany}
+            onSubmit={this.createCompany}
             beforeUpload={this.beforeUpload}
             onRemove={this.onRemove}
             logoUrl={this.state.company.logoUrl}
