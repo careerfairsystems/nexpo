@@ -153,7 +153,7 @@ class Company extends Component {
   render() {
     const { edit } = this.state;
     const { company, fetching, match } = this.props;
-    const isCreatingNew = match && match.path === '/companies/new';
+    const isCreatingNew = match && match.path === '/admin/companies/new';
     if (fetching) return <LoadingSpinner />;
     if ((isEmpty(company) || isNil(company)) && !isCreatingNew)
       return <NotFound />;

@@ -118,7 +118,7 @@ it('renders routes without crashing', () => {
   found(mount(route('/admin/categories')));
   found(mount(route('/admin/categories/1')));
   found(mount(route('/admin/companies')));
-  mount(route('/admin/companies/new')); // NOT FOUND?
+  found(mount(route('/admin/companies/new')));
   found(mount(route('/admin/companies/1')));
   found(mount(route('/admin/users')));
   found(mount(route('/admin/users/1')));
