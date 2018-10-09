@@ -17,8 +17,7 @@ const StudentForm = ({
   updateCurrentStudent,
   submitting
 }) => {
-  const destroyCv = cv =>
-    updateCurrentStudent({ student: { [cv]: null } }, false);
+  const destroyCv = cv => updateCurrentStudent({ student: { [cv]: null } });
   return (
     <Form onSubmit={handleSubmit}>
       <Field

@@ -30,10 +30,8 @@ export default {
   /**
    * Updates the current user's student
    */
-  updateMyStudent: (data, isFormData = true) =>
-    isFormData
-      ? authFormPut('/api/me/student', data).then(handleHttpResponse)
-      : authPut('/api/me/student', data).then(handleHttpResponse),
+  updateMyStudent: data =>
+    authFormPut('/api/me/student', data).then(handleHttpResponse),
 
   /**
    * Create a user
