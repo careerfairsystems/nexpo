@@ -1,11 +1,9 @@
-import { reset } from 'redux-form';
 import { connect } from 'react-redux';
 import { Actions } from '../../../../Store';
 import CompanyNew from './CompanyNew';
 
 const mapDispatchToProps = {
-  createCompany: Actions.companies.createCompany,
-  resetForm: reset
+  createCompany: Actions.companies.createCompany
 };
 
 const stateful = connect(

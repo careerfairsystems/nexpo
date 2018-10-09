@@ -77,6 +77,7 @@ CompanyEdit.propTypes = {
   company: PropTypes.object.isRequired,
   fetching: PropTypes.bool.isRequired,
   getCompany: PropTypes.func.isRequired,
+  history: PropTypes.shape({ redirect: PropTypes.func }).isRequired,
   match: PropTypes.shape({
     path: PropTypes.string
   }),

@@ -76,7 +76,7 @@ CompanyForm.defaultProps = {
 };
 
 CompanyForm.propTypes = {
-  fileList: PropTypes.arrayOf(PropTypes.shape(PropTypes.string)),
+  fileList: PropTypes.array,
   handleSubmit: PropTypes.func.isRequired,
   logoUrl: PropTypes.string,
   onCancel: PropTypes.func,
@@ -85,10 +85,9 @@ CompanyForm.propTypes = {
 
 const selector = formValueSelector('company'); // <-- same as form name
 const mapStateToProps = state => {
-  let logoUrl = selector(state, 'logoUrl');
-  logoUrl = isEmpty(logoUrl) ? [] : [logoUrl];
+  const logoUrl = selector(state, 'logoUrl');
   return {
-    fileList: logoUrl,
+    fileList: isEmpty(logoUrl) ? [] : [logoUrl],
     formState: state.form.CompanyForm
   };
 };

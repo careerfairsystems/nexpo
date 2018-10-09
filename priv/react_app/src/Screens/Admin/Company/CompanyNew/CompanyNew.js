@@ -8,17 +8,8 @@ import '../Company.css';
  */
 class CompanyNew extends Component {
   createCompany = values => {
-    let logoUrl;
-    const { logoUrl: fileArray } = values;
-    if (fileArray && fileArray.length > 0) {
-      [logoUrl] = fileArray;
-    }
     const { createCompany } = this.props;
-    const company = {
-      ...values,
-      logoUrl
-    };
-    createCompany({ company });
+    createCompany({ company: values });
   };
 
   render() {
@@ -33,18 +24,16 @@ class CompanyNew extends Component {
 }
 
 CompanyNew.defaultProps = {
-  id: null,
   match: {
     path: ''
   }
 };
+
 CompanyNew.propTypes = {
-  id: PropTypes.string,
   createCompany: PropTypes.func.isRequired,
   match: PropTypes.shape({
     path: PropTypes.string
-  }),
-  resetForm: PropTypes.func.isRequired
+  })
 };
 
 export default CompanyNew;
