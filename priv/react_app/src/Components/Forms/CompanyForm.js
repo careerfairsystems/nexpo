@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Field, reduxForm, formValueSelector } from 'redux-form';
 import { connect } from 'react-redux';
+import { isEmpty } from 'lodash/fp';
 import { Button, Form, Input, Radio } from 'antd';
 import makeField, { required } from './helper';
 import UploadButton from './UploadButton';
@@ -17,7 +18,13 @@ const TextInput = makeField(Input);
 const TextArea = makeField(Input.TextArea);
 const RadioGroup = makeField(Radio.Group);
 
-const CompanyForm = ({ handleSubmit, onCancel, submitting, fileList }) => (
+const CompanyForm = ({
+  handleSubmit,
+  onCancel,
+  submitting,
+  fileList,
+  logoUrl
+}) => (
   <Form onSubmit={handleSubmit}>
     <Field
       name="name"
@@ -50,7 +57,8 @@ const CompanyForm = ({ handleSubmit, onCancel, submitting, fileList }) => (
       name="logoUrl"
       label="Logo"
       fileList={fileList}
-      currentStudent={{}}
+      currentValue={logoUrl}
+      currentValueText="Current Logo"
       component={UploadButton}
       accept="image/*"
     />
@@ -63,21 +71,24 @@ const CompanyForm = ({ handleSubmit, onCancel, submitting, fileList }) => (
 
 CompanyForm.defaultProps = {
   fileList: [],
+  logoUrl: '',
   onCancel: null
 };
 
 CompanyForm.propTypes = {
   fileList: PropTypes.arrayOf(PropTypes.shape(PropTypes.string)),
   handleSubmit: PropTypes.func.isRequired,
+  logoUrl: PropTypes.string,
   onCancel: PropTypes.func,
   submitting: PropTypes.bool.isRequired
 };
 
 const selector = formValueSelector('company'); // <-- same as form name
 const mapStateToProps = state => {
-  const fileList = selector(state, 'logoUrl');
+  let logoUrl = selector(state, 'logoUrl');
+  logoUrl = isEmpty(logoUrl) ? [] : [logoUrl];
   return {
-    fileList,
+    fileList: logoUrl,
     formState: state.form.CompanyForm
   };
 };

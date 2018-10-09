@@ -20,16 +20,9 @@ class CompanyEdit extends Component {
   }
 
   updateCompany = values => {
-    const { id, updateCompany } = this.props;
-    let logoUrl;
-    let company = { ...values };
-    const { logoUrl: fileArray } = values;
-    if (fileArray && fileArray.length > 0) {
-      [logoUrl] = fileArray;
-      company = { ...company, logoUrl };
-    }
-
-    updateCompany(id, { company });
+    const { id, updateCompany, history } = this.props;
+    updateCompany(id, { company: values });
+    history.push(`/admin/companies/${id}`);
   };
 
   invite = ({ email }) => {
@@ -61,6 +54,7 @@ class CompanyEdit extends Component {
           <CompanyForm
             onSubmit={this.updateCompany}
             initialValues={{ ...company, logoUrl: [] }}
+            logoUrl={company.logoUrl}
           />
           <br />
           <br />

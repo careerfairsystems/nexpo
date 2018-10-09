@@ -7,10 +7,10 @@ import makeField from './helper';
 const UploadButton = ({
   accept,
   action,
-  currentStudent,
-  name,
+  currentValue,
   onChange,
-  fileList
+  fileList,
+  currentValueText
 }) => [
   <Upload
     key="uploadButton"
@@ -18,15 +18,15 @@ const UploadButton = ({
     action={action}
     fileList={fileList}
     beforeUpload={file => {
-      onChange([file]);
+      onChange(file);
       return false;
     }}
-    onRemove={() => onChange([])}
+    onRemove={() => onChange(null)}
   >
     <Button>
       <Icon type="upload" /> Upload
     </Button>
-    {!isEmpty(currentStudent[name]) && (
+    {!isEmpty(currentValue) && (
       <Icon
         style={{ color: 'green', fontSize: 20, marginLeft: 10 }}
         type="check"
@@ -34,9 +34,9 @@ const UploadButton = ({
       />
     )}
   </Upload>,
-  !isEmpty(currentStudent[name]) && (
-    <a key="CVlink" href={currentStudent[name]}>
-      Current CV
+  !isEmpty(currentValue) && (
+    <a key="CVlink" href={currentValue}>
+      {currentValueText}
     </a>
   )
 ];
