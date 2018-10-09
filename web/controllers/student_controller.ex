@@ -61,10 +61,18 @@ defmodule Nexpo.StudentController do
 
   def update_student(conn, %{"student" => student_params}, user, _claims) do
     student = Repo.get_by!(Student, %{user_id: user.id})
+
+    deleted_resumes = student_params
+      |> Enum.filter(fn {k, v} ->
+        k in ["resume_sv_url", "resume_en_url"] and v == "null" end)
+      |> Enum.map(fn {k, v} -> {k, nil} end)
+      |> Map.new
+
+    student_params = Map.merge(student_params, deleted_resumes)
     changeset = Student.changeset(student, student_params)
 
-    Enum.each([:resume_sv_url, :resume_en_url], fn attr ->
-      delete_cv?(student, student_params, attr)
+    Enum.each(deleted_resumes, fn {k, v} ->
+      delete_cv?(student, student_params, String.to_atom(k))
     end)
 
     case Repo.update(changeset) do
@@ -96,7 +104,8 @@ defmodule Nexpo.StudentController do
 
   defp delete_cv!(student, params, attr, cv_file) do
     case Map.get(params, Atom.to_string(attr)) do
-      p when p in [nil, "null"] -> case attr do
+      nil ->
+        case attr do
           :resume_sv_url -> CvSv.delete({cv_file, student})
           :resume_en_url -> CvEn.delete({cv_file, student})
         end
