@@ -24,6 +24,8 @@ import Roles from '../Screens/Admin/Roles';
 import Role from '../Screens/Admin/Role';
 import Users from '../Screens/Admin/Users';
 import User from '../Screens/Admin/User';
+import Programmes from '../Screens/Admin/Programmes';
+import Programme from '../Screens/Admin/Programme';
 import CurrentUser from '../Screens/CurrentUser';
 import Companies from '../Screens/Admin/Companies';
 import Company from '../Screens/Admin/Company';
@@ -58,6 +60,8 @@ const routes = (
     <PrivateRoute path="/admin/deadlines/:id" component={Deadline} />
     <PrivateRoute exact path="/admin/users" component={Users} />
     <PrivateRoute path="/admin/users/:id" component={User} />
+    <PrivateRoute exact path="/admin/programmes" component={Programmes} />
+    <PrivateRoute path="/admin/programmes/:id" component={Programme} />
     <PrivateRoute exact path="/admin/roles" component={Roles} />
     <PrivateRoute path="/admin/roles/:id" component={Role} />
     <Route path="/login" component={Login} />
