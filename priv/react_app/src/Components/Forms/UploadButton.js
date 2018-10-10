@@ -6,31 +6,39 @@ import makeField from './helper';
 
 const UploadButton = ({
   accept,
-  beforeUpload,
   action,
-  currentStudent,
-  name,
-  onRemove,
-  fileList
-}) => (
+  currentValue,
+  onChange,
+  fileList,
+  currentValueText
+}) => [
   <Upload
+    key="uploadButton"
     accept={accept}
     action={action}
-    beforeUpload={file => beforeUpload(file, name)}
-    onRemove={() => onRemove(name)}
     fileList={fileList}
+    beforeUpload={file => {
+      onChange(file);
+      return false;
+    }}
+    onRemove={() => onChange(null)}
   >
     <Button>
       <Icon type="upload" /> Upload
     </Button>
-    {!isEmpty(currentStudent[name]) && (
+    {!isEmpty(currentValue) && (
       <Icon
         style={{ color: 'green', fontSize: 20, marginLeft: 10 }}
         type="check"
         theme="outlined"
       />
     )}
-  </Upload>
-);
+  </Upload>,
+  !isEmpty(currentValue) && (
+    <a key="CVlink" href={currentValue}>
+      {currentValueText}
+    </a>
+  )
+];
 
 export default makeField(UploadButton);

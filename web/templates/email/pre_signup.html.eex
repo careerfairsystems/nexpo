@@ -1,9 +1,15 @@
-<h1>Hi!</h1>
+<h1>Welcome to Arkad!</h1>
 
-<div>Welcome to Nexpo!</div>
+<div>This mail was sent by Nexpo, the inhouse project management system for Arkad.</div>
 
 <br/>
 <a href=<%= signup_url(@user) %>>
-  Please click this link to verify your email
+  Please click this link to verify your email and then complete the registration.
 </a>
 
+<br/>
+<br/>
+<div>
+  If someone else signed up with your email, we're sorry someone mistakenly made a Nexpo account with your email!
+  Please respond to this email and we will remove your email from our system.
+</div>

@@ -1,3 +1,4 @@
+import message from 'antd/lib/message';
 import { Actions, actionTypes } from '../..';
 import API from '../../../API';
 
@@ -7,9 +8,12 @@ export function logout() {
   };
 }
 
-export const loginFailure = () => ({
-  type: actionTypes.LOGIN_FAILURE
-});
+export const loginFailure = () => {
+  message.error('That email and password combination is incorrect');
+  return {
+    type: actionTypes.LOGIN_FAILURE
+  };
+};
 
 export const loginSuccess = (jwt: string) => ({
   type: actionTypes.LOGIN_SUCCESS,

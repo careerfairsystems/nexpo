@@ -7,7 +7,14 @@ import makeField from './helper';
 
 const TextInput = makeField(Input);
 
-const UserForm = ({ handleSubmit, toggleEdit, disabled, reset, pristine }) => (
+const UserForm = ({
+  handleSubmit,
+  toggleEdit,
+  disabled,
+  reset,
+  submitting,
+  pristine
+}) => (
   <Form onSubmit={handleSubmit}>
     <Field
       name="phoneNumber"
@@ -21,6 +28,16 @@ const UserForm = ({ handleSubmit, toggleEdit, disabled, reset, pristine }) => (
       component={TextInput}
       disabled={disabled}
     />
+    <Button
+      type="primary"
+      onClick={() => {
+        toggleEdit();
+        if (!disabled) reset();
+      }}
+    >
+      {disabled ? 'Edit' : 'Cancel'}
+    </Button>
+    <Button disabled={disabled || submitting} htmlType="submit">
     <Button disabled={pristine} htmlType="submit">
       Submit
     </Button>
@@ -35,6 +52,7 @@ UserForm.propTypes = {
   disabled: PropTypes.bool,
   handleSubmit: PropTypes.func.isRequired,
   reset: PropTypes.func.isRequired,
+  submitting: PropTypes.bool.isRequired,
   toggleEdit: PropTypes.func.isRequired
 };
 

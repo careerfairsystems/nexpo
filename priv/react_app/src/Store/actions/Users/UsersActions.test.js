@@ -127,11 +127,9 @@ describe('getCurrentUser', () => {
   });
 
   it('should call success action on success', () => {
-    const user = [
-      {
-        name: 'CurrentUser1'
-      }
-    ];
+    const user = {
+      name: 'CurrentUser1'
+    };
     mockHttpResponse({ status: 200, body: { data: user } });
 
     const expectedActions = [
@@ -214,11 +212,9 @@ describe('updateCurrentUser', () => {
   });
 
   it('should call success action on success', () => {
-    const user = [
-      {
-        name: 'CurrentUser1'
-      }
-    ];
+    const user = {
+      name: 'CurrentUser1'
+    };
     mockHttpResponse({ status: 200, body: { data: user } });
 
     const expectedActions = [
@@ -265,7 +261,7 @@ describe('destroyCurrentUserIsLoading', () => {
 
 describe('destroyCurrentUserSuccess', () => {
   it('should create the correct action', () => {
-    const testCurrentUserId = 1
+    const testCurrentUserId = 1;
 
     const expectedAction = {
       type: actionTypes.DELETE_CURRENT_USER_SUCCESS,
@@ -300,7 +296,7 @@ describe('destroyCurrentUser', () => {
   });
 
   it('should call success action on success', () => {
-    const userId =1
+    const userId = 1;
     mockHttpResponse({ status: 200, body: { data: userId } });
 
     const expectedActions = [
@@ -466,11 +462,9 @@ describe('createUser', () => {
   });
 
   it('should call success action on success', () => {
-    const user = [
-      {
-        name: 'User1'
-      }
-    ];
+    const user = {
+      name: 'User1'
+    };
     mockHttpResponse({ status: 200, body: { data: user } });
 
     const expectedActions = [
@@ -552,11 +546,9 @@ describe('getUser', () => {
   });
 
   it('should call success action on success', () => {
-    const user = [
-      {
-        name: 'User1'
-      }
-    ];
+    const user = {
+      name: 'User1'
+    };
     mockHttpResponse({ status: 200, body: { data: user } });
 
     const expectedActions = [
@@ -637,11 +629,9 @@ describe('updateUser', () => {
   });
 
   it('should call success action on success', () => {
-    const user = [
-      {
-        name: 'User1'
-      }
-    ];
+    const user = {
+      name: 'User1'
+    };
     mockHttpResponse({ status: 200, body: { data: user } });
 
     const expectedActions = [
@@ -689,14 +679,15 @@ describe('destroyUserIsLoading', () => {
 describe('destroyUserSuccess', () => {
   it('should create the correct action', () => {
     const testUser = {
+      id: 1,
       name: 'User1'
     };
 
     const expectedAction = {
       type: actionTypes.DELETE_USER_SUCCESS,
-      user: testUser
+      id: testUser.id
     };
-    const action = Actions.users.destroyUserSuccess(testUser);
+    const action = Actions.users.destroyUserSuccess(testUser.id);
     expect(action).toEqual(expectedAction);
   });
 });
@@ -723,16 +714,15 @@ describe('destroyUser', () => {
   });
 
   it('should call success action on success', () => {
-    const user = [
-      {
-        name: 'User1'
-      }
-    ];
-    mockHttpResponse({ status: 200, body: { data: user } });
+    const user = {
+      id: 1,
+      name: 'User1'
+    };
+    mockHttpResponse({ status: 200, body: '' });
 
     const expectedActions = [
       Actions.users.destroyUserIsLoading(),
-      Actions.users.destroyUserSuccess(user)
+      Actions.users.destroyUserSuccess(user.id)
     ];
 
     const store = createMockStore();

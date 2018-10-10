@@ -9,12 +9,15 @@ import { EntitiesReducer } from './EntitiesReducer';
 describe('Entities reducer', () => {
   it('should return the empty initial state', () => {
     const initialState = {
-      companies: {},
-      attributes: {},
       categories: {},
+      attributes: {},
+      companies: {},
       entries: {},
+      deadlines: {},
+      mailtemplates: {},
       roles: {},
       users: {},
+      studentSessionApplications: {},
       students: {}
     };
     expect(EntitiesReducer(undefined, {})).toEqual(initialState);
@@ -222,11 +225,50 @@ describe('Entities reducer', () => {
 
   it('should handle delete current user success', () => {
     const testUser = { id: 1, name: 'Test User' };
-    const action = Actions.users.destroyCurrentUserSuccess(testUser);
+    const action = Actions.users.destroyCurrentUserSuccess(testUser.id);
     const state = EntitiesReducer(undefined, action);
 
     expect(state).toMatchObject({
       users: {}
+    });
+  });
+
+  it('should handle delete session application', () => {
+    const sessionApplicationId = 1;
+    const action = Actions.studentSessions.destroyStudentSessionAppl(
+      sessionApplicationId
+    );
+    const state = EntitiesReducer(
+      {
+        studentSessionApplications: { 1: { id: 1, companyId: 1, studentId: 1 } }
+      },
+      action
+    );
+
+    expect(state).toMatchObject({
+      studentSessionApplications: {}
+    });
+  });
+
+  it('should handle update session application', () => {
+    const data = { motivation: 'New Motivation' };
+    const oldAppl = {
+      id: 1,
+      companyId: 1,
+      studentId: 1,
+      motivation: 'Old motivation'
+    };
+
+    const action = Actions.studentSessions.updateStudentSessionApplSuccess({
+      ...oldAppl,
+      ...data
+    });
+    const state = EntitiesReducer(testData.studentSessionApplications, action);
+
+    expect(state).toMatchObject({
+      studentSessionApplications: {
+        1: { id: 1, companyId: 1, studentId: 1, motivation: 'New Motivation' }
+      }
     });
   });
 });

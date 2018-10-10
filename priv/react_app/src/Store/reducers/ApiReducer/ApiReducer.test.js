@@ -24,6 +24,16 @@ it('should set the correct initial state', () => {
       errors: undefined,
       success: false
     },
+    deadlines: {
+      fetching: false,
+      errors: undefined,
+      success: false
+    },
+    mailtemplates: {
+      fetching: false,
+      errors: undefined,
+      success: false
+    },
     users: {
       fetching: false,
       errors: undefined,

@@ -139,11 +139,9 @@ describe('createCategory', () => {
   });
 
   it('should call success action on success', () => {
-    const category = [
-      {
-        name: 'Category1'
-      }
-    ];
+    const category = {
+      name: 'Category1'
+    };
     mockHttpResponse({ status: 200, body: { data: category } });
 
     const expectedActions = [
@@ -227,11 +225,9 @@ describe('getCategory', () => {
   });
 
   it('should call success action on success', () => {
-    const category = [
-      {
-        name: 'Category1'
-      }
-    ];
+    const category = {
+      name: 'Category1'
+    };
     mockHttpResponse({ status: 200, body: { data: category } });
 
     const expectedActions = [
@@ -316,11 +312,9 @@ describe('updateCategory', () => {
   });
 
   it('should call success action on success', () => {
-    const category = [
-      {
-        name: 'Category1'
-      }
-    ];
+    const category = {
+      name: 'Category1'
+    };
     mockHttpResponse({ status: 200, body: { data: category } });
 
     const expectedActions = [
@@ -371,15 +365,13 @@ describe('destroyCategoryIsLoading', () => {
 
 describe('destroyCategorySuccess', () => {
   it('should create the correct action', () => {
-    const testCategory = {
-      name: 'Category1'
-    };
+    const testCategoryId = 1;
 
     const expectedAction = {
       type: actionTypes.DELETE_CATEGORY_SUCCESS,
-      category: testCategory
+      id: testCategoryId
     };
-    const action = Actions.categories.destroyCategorySuccess(testCategory);
+    const action = Actions.categories.destroyCategorySuccess(testCategoryId);
     expect(action).toEqual(expectedAction);
   });
 });
@@ -408,16 +400,14 @@ describe('destroyCategory', () => {
   });
 
   it('should call success action on success', () => {
-    const category = [
-      {
-        name: 'Category1'
-      }
-    ];
-    mockHttpResponse({ status: 200, body: { data: category } });
+    const category = {
+      id: 1
+    };
+    mockHttpResponse({ status: 200, body: { data: category.id } });
 
     const expectedActions = [
       Actions.categories.destroyCategoryIsLoading(),
-      Actions.categories.destroyCategorySuccess(category)
+      Actions.categories.destroyCategorySuccess(category.id)
     ];
 
     const store = createMockStore();
