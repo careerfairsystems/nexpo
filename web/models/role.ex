@@ -8,7 +8,7 @@ defmodule Nexpo.Role do
     field :type, :string
     field :permissions, {:array, :string}, default: []
 
-    many_to_many :users, Nexpo.User, join_through: "users_roles", on_delete: :delete_all #TODO: not sure
+    many_to_many :users, Nexpo.User, join_through: "users_roles", on_delete: :delete_all 
 
     timestamps()
   end

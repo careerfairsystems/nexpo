@@ -18,7 +18,9 @@ const mapStateToProps = (state, props) => {
 };
 
 const mapDispatchToProps = {
-  getRole: Actions.roles.getRole
+  getRole: Actions.roles.getRole,
+  createRole: Actions.roles.createRole,
+  updateRole: Actions.roles.updateRole
 };
 
 const stateful = connect(

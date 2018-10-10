@@ -60,6 +60,7 @@ const routes = (
     <PrivateRoute path="/admin/users/:id" component={User} />
     <PrivateRoute exact path="/admin/roles" component={Roles} />
     <PrivateRoute path="/admin/roles/:id" component={Role} />
+    <PrivateRoute path="/admin/roles/:id/#edit" component={Role} />
     <Route path="/login" component={Login} />
     <Route path="/logout" component={Logout} />
     <Route path="/signup" component={Signup} />

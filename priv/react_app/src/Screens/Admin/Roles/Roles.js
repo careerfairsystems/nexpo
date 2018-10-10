@@ -13,8 +13,18 @@ import HtmlTitle from '../../../Components/HtmlTitle';
  * Responsible for rendering a list of roles
  */
 class Roles extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      edit: false
+    };
+  }
+
   componentWillMount() {
-    const { getAllRoles } = this.props;
+    const { getAllRoles, location } = this.props;
+    if (location && location.hash === '#edit') {
+      this.setState({ edit: true });
+    }
     getAllRoles();
   }
 
@@ -40,7 +50,7 @@ class Roles extends Component {
         <span>
           <InvisibleLink to={`/admin/roles/${role.id}`}>Show</InvisibleLink>
           <Divider type="vertical" />
-          <InvisibleLink to={`/admin/roles/${role.id}/#role-edit`}>
+          <InvisibleLink to={`/admin/roles/${role.id}/#edit`}>
             Edit
           </InvisibleLink>
           <Divider type="vertical" />
@@ -54,6 +64,11 @@ class Roles extends Component {
       )
     }
   ];
+
+  toggleEdit = () => {
+    const { edit } = this.state;
+    this.setState({ edit: !edit });
+  };
 
   renderRoles() {
     const { roles } = this.props;

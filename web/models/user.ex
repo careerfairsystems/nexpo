@@ -17,7 +17,7 @@ defmodule Nexpo.User do
     field :forgot_password_time, :naive_datetime
     field :company, :map, virtual: true
 
-    many_to_many :roles, Nexpo.Role, join_through: "users_roles", on_delete: :delete_all #TODO: not sure
+    many_to_many :roles, Nexpo.Role, join_through: "users_roles", on_delete: :delete_all
     has_one :student, Nexpo.Student, on_delete: :delete_all
     has_one :representative, Nexpo.Representative, on_delete: :delete_all
 
