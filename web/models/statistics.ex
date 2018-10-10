@@ -1,12 +1,13 @@
 defmodule Nexpo.Statistics do
   use Nexpo.Web, :model
-  alias Nexpo.Student
+  alias Nexpo.{Student, Company, Statistics, Repo, StudentSessionApplication }
   alias Nexpo.Company
   alias Nexpo.Statistics
   alias Nexpo.Repo
   schema "statistics" do
     field :nbr_searching_students, :integer, virtual: true
     field :nbr_students, :integer, virtual: true
+    field :nbr_applications, :integer, virtual: true
     field :company_stats, {:array, :map}, virtual: true
     timestamps()
   end
@@ -28,13 +29,16 @@ defmodule Nexpo.Statistics do
   end
 
   def getAll() do
-    count = length(Repo.all(
+    nbr_students_applied = length(Repo.all(
       from student in Student,
       join: appl in assoc(student, :student_session_applications),
       group_by: student.id,
       select: student.id
     ))
-
+    nbr_applications = Repo.one(
+      from appl in StudentSessionApplication,
+      select: count(appl.id)
+    )
     nbr_students = Repo.one(
       from student in Student,
       select: count(student.id)
@@ -51,8 +55,9 @@ defmodule Nexpo.Statistics do
     Enum.at(Repo.all(from(
       statistic in Statistics,
       select: %{
-        nbr_searching_students: type(^count, :integer),
+        nbr_searching_students: type(^nbr_students_applied, :integer),
         nbr_students: type(^nbr_students, :integer),
+        nbr_applications: type(^nbr_applications, :integer),
         company_stats: type(^company, {:array, :map})
       }
     )), 0)

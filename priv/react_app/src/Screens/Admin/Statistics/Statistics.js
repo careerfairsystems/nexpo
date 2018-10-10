@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Table } from 'antd';
-import { orderBy } from 'lodash/fp';
+import { orderBy, divide } from 'lodash/fp';
 import PropTypes from 'prop-types';
 
 const columns = [
@@ -24,13 +24,28 @@ class Statistics extends Component {
 
   render() {
     const { statistics } = this.props;
-    const { companyStats = [] } = statistics;
+    const {
+      companyStats = [],
+      nbrSearchingStudents,
+      nbrStudents,
+      nbrApplications
+    } = statistics;
     return (
       <div>
         <h1>Statistics</h1>
-        {`Number of searching students: ${statistics.nbrSearchingStudents}`}
+        {`Number of students that has applied: ${nbrSearchingStudents}`}
         <br />
-        {`Number of students: ${statistics.nbrStudents}`}
+        {`Number of students: ${nbrStudents}`}
+        <br />
+        {`Percentage of students that has applied: ${divide(
+          nbrSearchingStudents || 0,
+          nbrStudents || 1
+        ) * 100}%`}
+        <br />
+        {`Average number of applications per student: ${divide(
+          nbrApplications || 0,
+          nbrSearchingStudents || 1
+        )}`}
         <br />
         <br />
         <br />
