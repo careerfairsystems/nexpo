@@ -26,6 +26,7 @@ describe('userform should function correctly', () => {
       getCurrentUser: jest.fn(),
       destroyCurrentUser: jest.fn(),
       logout: jest.fn(),
+      resetForm: jest.fn(),
       updateCurrentUser: jest.fn(),
       updateCurrentStudent: jest.fn()
     };
@@ -48,16 +49,6 @@ describe('userform should function correctly', () => {
     expect(wrapper.find(NotFound).length).toBe(1);
   });
 
-  it('should add/remove field from student when beforeUpload/onRemove is called', () => {
-    const wrapper = shallow(<CurrentUser {...props} />);
-    const placeholderUrl = 'placeholder.com';
-    expect(wrapper.state('student').resumeSvUrl).toEqual(null);
-    wrapper.instance().beforeUpload(placeholderUrl, 'resumeSvUrl');
-    expect(wrapper.state('student').resumeSvUrl).toEqual(placeholderUrl);
-    wrapper.instance().onRemove('resumeSvUrl');
-    expect(wrapper.state('student').resumeSvUrl).toEqual(null);
-  });
-
   it('should only update the changed values', () => {
     const wrapper = shallow(<CurrentUser {...props} />);
     const { currentUser, updateCurrentUser } = props;
@@ -71,14 +62,13 @@ describe('userform should function correctly', () => {
 
   it('should update student and reset state', () => {
     const wrapper = shallow(<CurrentUser {...props} />);
-    const { updateCurrentStudent } = props;
-    const placeholderUrl = 'placeholder.com';
-    const student = { resumeSvUrl: placeholderUrl, resumeEnUrl: null };
-    wrapper.instance().beforeUpload(placeholderUrl, 'resumeSvUrl');
-    expect(wrapper.state('student').resumeSvUrl).toEqual(placeholderUrl);
-    wrapper.instance().updateStudent();
-    expect(wrapper.state('student').resumeSvUrl).toEqual(null);
-    expect(updateCurrentStudent).toHaveBeenCalledWith({ student });
+    const { updateCurrentStudent, resetForm } = props;
+    const resumeEnUrl = 'placeholder.com';
+    wrapper.instance().updateStudent({ resumeEnUrl });
+    expect(resetForm).toHaveBeenCalledTimes(1);
+    expect(updateCurrentStudent).toHaveBeenCalledWith({
+      student: { resumeEnUrl }
+    });
   });
 
   it('should destroy user properly', () => {

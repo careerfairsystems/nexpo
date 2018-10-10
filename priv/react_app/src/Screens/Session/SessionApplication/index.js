@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import { reset } from 'redux-form';
 import { Actions, Selectors } from '../../../Store';
 import SessionApplication from './SessionApplication';
 import type { State } from '../../../Store/reducers';
@@ -11,11 +12,12 @@ const mapStateToProps = (state: State) => ({
 });
 
 const mapDispatchToProps = {
-  getCurrentUser: Actions.users.getCurrentUser,
-  updateCurrentUser: Actions.users.updateCurrentUser,
-  updateCurrentStudent: Actions.users.updateCurrentStudent,
+  createStudentSessionAppl: Actions.studentSessions.createStudentSessionAppl,
   getAllCompanies: Actions.companies.getAllCompanies,
-  createStudentSessionAppl: Actions.studentSessions.createStudentSessionAppl
+  getCurrentUser: Actions.users.getCurrentUser,
+  resetForm: reset,
+  updateCurrentStudent: Actions.users.updateCurrentStudent,
+  updateCurrentUser: Actions.users.updateCurrentUser
 };
 
 const stateful = connect(

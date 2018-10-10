@@ -120,6 +120,7 @@ it('renders routes without crashing', () => {
   found(mount(route('/admin/companies')));
   found(mount(route('/admin/companies/new')));
   found(mount(route('/admin/companies/1')));
+  found(mount(route('/admin/companies/1/edit')));
   found(mount(route('/admin/users')));
   found(mount(route('/admin/users/1')));
   found(mount(route('/admin/roles')));

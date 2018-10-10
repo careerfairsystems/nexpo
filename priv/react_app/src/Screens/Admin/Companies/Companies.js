@@ -93,9 +93,11 @@ class Companies extends Component {
       key: 'action',
       render: company => (
         <span>
-          <InvisibleLink to={`/admin/companies/${company.id}`}>Show</InvisibleLink>
+          <InvisibleLink to={`/admin/companies/${company.id}`}>
+            Show
+          </InvisibleLink>
           <Divider type="vertical" />
-          <InvisibleLink to={`/admin/companies/${company.id}#edit`}>
+          <InvisibleLink to={`/admin/companies/${company.id}/edit`}>
             Edit
           </InvisibleLink>
           <Divider type="vertical" />
@@ -129,7 +131,7 @@ class Companies extends Component {
             }))
           )}
         />
-        <InvisibleLink to="/companies/new">
+        <InvisibleLink to="companies/new">
           <Button onClick={() => null} type="primary">
             New company
           </Button>

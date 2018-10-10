@@ -26,7 +26,9 @@ import Users from '../Screens/Admin/Users';
 import User from '../Screens/Admin/User';
 import CurrentUser from '../Screens/CurrentUser';
 import Companies from '../Screens/Admin/Companies';
-import Company from '../Screens/Admin/Company';
+import { CompanyNew } from '../Screens/Admin/Company';
+import { CompanyEdit } from '../Screens/Admin/Company';
+import { CompanyShow } from '../Screens/Admin/Company';
 import SessionHome from '../Screens/Session/SessionHome';
 import SessionApplication from '../Screens/Session/SessionApplication';
 import SessionApplications from '../Screens/Session/SessionApplications';
@@ -50,8 +52,13 @@ const routes = (
     <PrivateRoute exact path="/admin/categories" component={Categories} />
     <PrivateRoute path="/admin/categories/:id" component={Category} />
     <PrivateRoute exact path="/admin/companies" component={Companies} />
-    <PrivateRoute exact path="/admin/companies/new" component={Company} />
-    <PrivateRoute path="/admin/companies/:id" component={Company} />
+    <PrivateRoute exact path="/admin/companies/new" component={CompanyNew} />
+    <PrivateRoute
+      exact
+      path="/admin/companies/:id/edit"
+      component={CompanyEdit}
+    />
+    <PrivateRoute path="/admin/companies/:id" component={CompanyShow} />
     <PrivateRoute exact path="/admin/mailtemplates" component={Mailtemplates} />
     <PrivateRoute path="/admin/mailtemplates/:id" component={Mailtemplate} />
     <PrivateRoute exact path="/admin/deadlines" component={Deadlines} />
