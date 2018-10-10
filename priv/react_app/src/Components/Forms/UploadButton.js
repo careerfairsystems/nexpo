@@ -6,26 +6,29 @@ import makeField from './helper';
 
 const UploadButton = ({
   accept,
-  beforeUpload,
   action,
-  currentStudent,
+  currentValue,
+  destroyFile,
   name,
-  onRemove,
-  destroyCv,
-  fileList
+  onChange,
+  fileList,
+  currentValueText
 }) => [
   <Upload
     key="uploadButton"
     accept={accept}
     action={action}
-    beforeUpload={file => beforeUpload(file, name)}
-    onRemove={() => onRemove(name)}
     fileList={fileList}
+    beforeUpload={file => {
+      onChange(file);
+      return false;
+    }}
+    onRemove={() => onChange(null)}
   >
     <Button>
       <Icon type="upload" /> Upload
     </Button>
-    {!isEmpty(currentStudent[name]) && (
+    {!isEmpty(currentValue) && (
       <Icon
         style={{ color: 'green', fontSize: 20, marginLeft: 10 }}
         type="check"
@@ -33,14 +36,14 @@ const UploadButton = ({
       />
     )}
   </Upload>,
-  !isEmpty(currentStudent[name]) && [
-    <a key="CVlink" href={currentStudent[name]}>
-      Current CV
+  !isEmpty(currentValue) && [
+    <a key="CVlink" href={currentValue}>
+      {currentValueText}
     </a>,
     <Popconfirm
       key="delete"
       title="Sure to delete?"
-      onConfirm={() => destroyCv(name)}
+      onConfirm={() => destroyFile(name)}
     >
       <span style={{ marginLeft: 10, color: '#ff4d4f', cursor: 'pointer' }}>
         Delete

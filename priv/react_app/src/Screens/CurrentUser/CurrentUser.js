@@ -9,32 +9,10 @@ import StudentForm from '../../Components/Forms/StudentForm';
 
 const { confirm } = Modal;
 class CurrentUser extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      student: { resumeEnUrl: null, resumeSvUrl: null },
-      disabled: true
-    };
-  }
-
   componentWillMount() {
     const { getCurrentUser } = this.props;
     getCurrentUser();
   }
-
-  onRemove = name => {
-    const { student } = this.state;
-    this.setState({ student: { ...student, [name]: null } });
-  };
-
-  beforeUpload = (file, name) => {
-    const { student } = this.state;
-    this.setState({
-      student: { ...student, [name]: file }
-    });
-    return false;
-  };
 
   showConfirm = () => {
     confirm({
@@ -52,34 +30,28 @@ class CurrentUser extends Component {
     logout();
   };
 
-  updateStudent = () => {
-    const { student } = this.state;
-    const { updateCurrentStudent } = this.props;
-
-    this.setState({ student: { resumeEnUrl: null, resumeSvUrl: null } });
-    updateCurrentStudent({ student });
+  updateStudent = values => {
+    const { updateCurrentStudent, resetForm } = this.props;
+    resetForm('student');
+    return updateCurrentStudent({ student: values });
   };
 
   updateUser = values => {
     const { updateCurrentUser } = this.props;
-    const { disabled } = this.state;
-
-    this.setState({ disabled: !disabled });
     updateCurrentUser({ user: values });
   };
 
   render() {
     const { currentUser, currentStudent, fetching } = this.props;
-    const { student } = this.state;
     if (fetching) {
       return <LoadingSpinner />;
     }
     if (isEmpty(currentUser)) {
       return <NotFound />;
     }
+    console.log(currentStudent);
 
     const { email, firstName, lastName } = currentUser;
-    const { resumeEnUrl, resumeSvUrl } = student;
     return (
       <div>
         <h1>
@@ -99,12 +71,7 @@ class CurrentUser extends Component {
         />
         {!isEmpty(currentStudent) && (
           <StudentForm
-            action=""
-            beforeUpload={this.beforeUpload}
-            onRemove={this.onRemove}
-            fileList={{ resumeEnUrl, resumeSvUrl }}
             onSubmit={this.updateStudent}
-            disabled={isEmpty(resumeSvUrl) && isEmpty(resumeEnUrl)}
             currentStudent={currentStudent || {}}
           />
         )}
@@ -125,6 +92,7 @@ CurrentUser.propTypes = {
   getCurrentUser: PropTypes.func.isRequired,
   destroyCurrentUser: PropTypes.func.isRequired,
   logout: PropTypes.func.isRequired,
+  resetForm: PropTypes.func.isRequired,
   updateCurrentUser: PropTypes.func.isRequired,
   updateCurrentStudent: PropTypes.func.isRequired
 };

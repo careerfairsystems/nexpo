@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Field, reduxForm } from 'redux-form';
+import { Field, reduxForm, formValueSelector } from 'redux-form';
 import { connect } from 'react-redux';
+import { isEmpty } from 'lodash/fp';
 import { Button, Form, Input, Radio } from 'antd';
 import makeField, { required } from './helper';
 import UploadButton from './UploadButton';
@@ -19,11 +20,10 @@ const RadioGroup = makeField(Radio.Group);
 
 const CompanyForm = ({
   handleSubmit,
-  logoUrl,
-  beforeUpload,
-  onRemove,
   onCancel,
-  submitting
+  submitting,
+  fileList,
+  logoUrl
 }) => (
   <Form onSubmit={handleSubmit}>
     <Field
@@ -56,14 +56,13 @@ const CompanyForm = ({
     <Field
       name="logoUrl"
       label="Logo"
-      fileList={logoUrl ? [logoUrl] : []}
-      currentStudent={{}}
-      beforeUpload={beforeUpload}
+      fileList={fileList}
+      currentValue={logoUrl}
+      currentValueText="Current Logo"
       component={UploadButton}
       accept="image/*"
-      onRemove={onRemove}
     />
-    <Button onClick={onCancel}>Cancel</Button>
+    {onCancel && <Button onClick={onCancel}>Cancel</Button>}
     <Button disabled={submitting} htmlType="submit" type="primary">
       Submit
     </Button>
@@ -71,21 +70,27 @@ const CompanyForm = ({
 );
 
 CompanyForm.defaultProps = {
-  logoUrl: null
+  fileList: [],
+  logoUrl: '',
+  onCancel: null
 };
 
 CompanyForm.propTypes = {
-  beforeUpload: PropTypes.func.isRequired,
-  logoUrl: PropTypes.string,
+  fileList: PropTypes.array,
   handleSubmit: PropTypes.func.isRequired,
-  onCancel: PropTypes.func.isRequired,
-  onRemove: PropTypes.func.isRequired,
+  logoUrl: PropTypes.string,
+  onCancel: PropTypes.func,
   submitting: PropTypes.bool.isRequired
 };
 
-const mapStateToProps = state => ({
-  formState: state.form.CompanyForm
-});
+const selector = formValueSelector('company'); // <-- same as form name
+const mapStateToProps = state => {
+  const logoUrl = selector(state, 'logoUrl');
+  return {
+    fileList: isEmpty(logoUrl) ? [] : [logoUrl],
+    formState: state.form.CompanyForm
+  };
+};
 
 const stateful = connect(mapStateToProps);
 

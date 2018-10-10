@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Field, reduxForm } from 'redux-form';
+import { Field, reduxForm, formValueSelector } from 'redux-form';
+import { isEmpty } from 'lodash/fp';
 import { connect } from 'react-redux';
 import { Button, Form } from 'antd';
 import { Actions } from '../../Store';
@@ -8,44 +9,41 @@ import UploadButton from './UploadButton';
 
 const StudentForm = ({
   handleSubmit,
-  disabled,
-  beforeUpload,
   action,
   currentStudent,
-  onRemove,
-  fileList,
-  updateCurrentStudent,
-  submitting
+  pristine,
+  submitting,
+  fileListEn,
+  fileListSv,
+  updateCurrentStudent
 }) => {
-  const destroyCv = cv =>
-    updateCurrentStudent({ student: { [cv]: null } }, false);
+  const destroyCv = cv => updateCurrentStudent({ student: { [cv]: null } });
+
   return (
     <Form onSubmit={handleSubmit}>
       <Field
         name="resumeSvUrl"
         label="Swedish CV"
-        fileList={fileList.resumeSvUrl ? [fileList.resumeSvUrl] : []}
+        destroyFile={destroyCv}
         action={action}
-        currentStudent={currentStudent}
-        beforeUpload={beforeUpload}
+        fileList={fileListSv}
+        currentValue={currentStudent.resumeSvUrl}
+        currentValueText="Current CV"
         component={UploadButton}
         accept=".pdf"
-        destroyCv={destroyCv}
-        onRemove={onRemove}
       />
       <Field
         name="resumeEnUrl"
         label="English CV"
-        fileList={fileList.resumeEnUrl ? [fileList.resumeEnUrl] : []}
-        currentStudent={currentStudent}
-        beforeUpload={beforeUpload}
+        destroyFile={destroyCv}
+        fileList={fileListEn}
+        currentValue={currentStudent.resumeEnUrl}
+        currentValueText="Current CV"
         component={UploadButton}
-        destroyCv={destroyCv}
         accept=".pdf"
-        onRemove={onRemove}
       />
 
-      <Button disabled={disabled || submitting} htmlType="submit">
+      <Button disabled={pristine} loading={submitting} htmlType="submit">
         Save CV(s)
       </Button>
     </Form>
@@ -53,18 +51,34 @@ const StudentForm = ({
 };
 
 StudentForm.defaultProps = {
-  disabled: false
+  action: '',
+  fileListEn: [],
+  fileListSv: []
 };
 
 StudentForm.propTypes = {
-  disabled: PropTypes.bool,
+  action: PropTypes.string,
+  currentStudent: PropTypes.shape({
+    resumeEnUrl: PropTypes.string,
+    resumeSvUrl: PropTypes.string
+  }).isRequired,
+  fileListEn: PropTypes.array,
+  fileListSv: PropTypes.array,
   handleSubmit: PropTypes.func.isRequired,
+  pristine: PropTypes.bool.isRequired,
   submitting: PropTypes.bool.isRequired
 };
 
-const mapStateToProps = state => ({
-  formState: state.form.StudentForm
-});
+const selector = formValueSelector('student'); // <-- same as form name
+const mapStateToProps = state => {
+  const fileListSv = selector(state, 'resumeSvUrl');
+  const fileListEn = selector(state, 'resumeEnUrl');
+  return {
+    fileListSv: isEmpty(fileListSv) ? [] : [fileListSv],
+    fileListEn: isEmpty(fileListEn) ? [] : [fileListEn],
+    formState: state.form.StudentForm
+  };
+};
 
 const mapDispatchToProps = {
   updateCurrentStudent: Actions.users.updateCurrentStudent
