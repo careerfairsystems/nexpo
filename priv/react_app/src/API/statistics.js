@@ -6,7 +6,7 @@ import { authFetch, handleHttpResponse } from './utils';
 
 export default {
   /**
-   * Fetches all companies
+   * Fetches all statistics
    */
   getAll: () => authFetch('/api/statistics').then(handleHttpResponse)
 };
