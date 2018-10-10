@@ -35,12 +35,12 @@ defmodule Nexpo.CompanyController do
     }
   @apiUse InternalServerError
   """
-  def index(conn, _params) do
+  def index(conn, _params, _user, _claims) do
     companies = Repo.all(Company)
     render(conn, "index.json", companies: companies)
   end
 
-  def create(conn, %{"company" => company_params}) do
+  def create(conn, %{"company" => company_params}, _user, _claims) do
     changeset = Company.changeset(%Company{}, company_params)
 
     case Repo.insert(changeset) do
@@ -72,7 +72,7 @@ defmodule Nexpo.CompanyController do
   @apiUse NotFoundError
   @apiUse InternalServerError
   """
-  def show(conn, %{"id" => id}) do
+  def show(conn, %{"id" => id}, _user, _claims) do
     company = Repo.get!(Company, id)
         |> Repo.preload([:users, :entries, :desired_programmes])
         |> Repo.preload([:student_sessions, :student_session_applications])
@@ -80,14 +80,14 @@ defmodule Nexpo.CompanyController do
     render(conn, "show.json", company: company)
   end
 
-  def update(conn, %{"id" => id, "company" => company_params}) do
+  def update(conn, %{"id" => id, "company" => company_params}, _user, _claims) do
     Company
     |> Repo.get(id)
     |> Company.changeset(company_params)
     |> update_company(conn)
   end
 
-  def update(conn, params) do
+  def update(conn, params, _user, _claims) do
     {id, company_params} = Map.pop(params, "id")
     Company
     |> Repo.get(id)
@@ -95,7 +95,7 @@ defmodule Nexpo.CompanyController do
     |> update_company(conn)
   end
 
-  defp update_company(changeset, conn) do
+  defp update_company(changeset, conn, _user, _claims) do
     case Repo.update(changeset) do
       {:ok, company} ->
         render(conn, "show.json", company: company)
@@ -106,7 +106,7 @@ defmodule Nexpo.CompanyController do
     end
   end
 
-  def delete(conn, %{"id" => id}) do
+  def delete(conn, %{"id" => id}, _user, _claims) do
     company = Repo.get!(Company, id)
 
     # Here we use delete! (with a bang) because we expect

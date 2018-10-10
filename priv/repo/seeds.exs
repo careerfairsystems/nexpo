@@ -26,19 +26,16 @@ alias Nexpo.Repo
 alias Nexpo.User
 Repo.insert!(%User{email: "dev@it", first_name: "Dev", last_name: "Dev", phone_number: "0707112233", food_preferences: "cake", hashed_password: "legit_hash_123"})
 Repo.insert!(%User{email: "test@it", first_name: "Test", last_name: "McTest", phone_number: "13371337", food_preferences: "Cookies", hashed_password: "legit_hash_123"})
+Repo.insert!(%User{email: "test@google", first_name: "Mr.", last_name: "Google", phone_number: "555123456", food_preferences: "User data only!", hashed_password: "legit_hash_321"})
+
+user = Repo.get_by(User, %{email: "dev@it"}) |> Repo.preload([:roles, :student])
+test_user = Repo.get_by(User, %{email: "test@it"}) |> Repo.preload([:roles, :student])
+rep_user = Repo.get_by(User, %{email: "test@google"}) |> Repo.preload([:representative])
 
 #Create some roles
 alias Nexpo.Role
 role = Repo.insert!(%Role{type: "admin", permissions: ["read_all", "write_all"]})
 pleb_role = Repo.insert!(%Role{type: "pleb", permissions: []})
-
-#Associate role with user
-alias Nexpo.Student
-user = Repo.get_by(User, %{email: "dev@it"}) |> Repo.preload([:roles, :student])
-Student.build_assoc!(user)
-
-test_user = Repo.get_by(User, %{email: "test@it"}) |> Repo.preload([:roles, :student])
-Student.build_assoc!(test_user)
 
 User.changeset(user)
 |> Ecto.Changeset.put_assoc(:roles, [role])
@@ -48,6 +45,12 @@ User.changeset(test_user)
 |> Ecto.Changeset.put_assoc(:roles, [pleb_role])
 |> Nexpo.Repo.update!
 
+#Associate role with user
+alias Nexpo.Student
+
+Student.build_assoc!(user)
+Student.build_assoc!(test_user)
+
 #Create some companies
 alias Nexpo.Company
 Repo.insert!(%Company{name: "Spotify", description: "We do music!", website: "www.spotify.com", student_session_days: 1})
@@ -55,6 +58,12 @@ Repo.insert!(%Company{name: "Google", description: "We code!", website: "www.goo
 Repo.insert!(%Company{name: "IBM", description: "We make things!", website: "www.ibm.com"})
 Repo.insert!(%Company{name: "Intel", description: "We do stuff!", website: "www.intel.com", student_session_days: 3})
 Repo.insert!(%Company{name: "Jesus wine makers", description: "We do wine!", website: "www.jesus.com"})
+
+google = Repo.get_by!(Company, %{name: "Google"})
+
+alias Nexpo.Representative
+
+Representative.build_assoc!(rep_user, google.id)
 
 #Create some Categories
 alias Nexpo.Category
