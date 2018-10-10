@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { isEmpty } from 'lodash/fp';
+import { isEmpty, omit } from 'lodash/fp';
 import { Button, Modal } from 'antd';
 import LoadingSpinner from '../../Components/LoadingSpinner';
 import NotFound from '../NotFound';
@@ -49,9 +49,9 @@ class CurrentUser extends Component {
     if (isEmpty(currentUser)) {
       return <NotFound />;
     }
-    console.log(currentStudent);
 
     const { email, firstName, lastName } = currentUser;
+
     return (
       <div>
         <h1>
@@ -72,7 +72,7 @@ class CurrentUser extends Component {
         {!isEmpty(currentStudent) && (
           <StudentForm
             onSubmit={this.updateStudent}
-            currentStudent={currentStudent || {}}
+            initialValues={omit('year', currentStudent) || {}}
           />
         )}
       </div>

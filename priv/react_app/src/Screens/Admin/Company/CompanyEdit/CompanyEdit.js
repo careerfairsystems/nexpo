@@ -53,7 +53,7 @@ class CompanyEdit extends Component {
           <h1>{name}</h1>
           <CompanyForm
             onSubmit={this.updateCompany}
-            initialValues={{ ...company, logoUrl: [] }}
+            initialValues={company}
             logoUrl={company.logoUrl}
           />
           <br />

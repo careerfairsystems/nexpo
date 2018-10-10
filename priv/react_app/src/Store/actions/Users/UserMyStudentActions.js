@@ -21,11 +21,11 @@ export const updateCurrentStudentFailure = () => {
   };
 };
 
-export function updateCurrentStudent(data, isFormData = true) {
+export function updateCurrentStudent(data) {
   return dispatch => {
     dispatch(updateCurrentStudentIsLoading());
     return API.users
-      .updateMyStudent(data, isFormData)
+      .updateMyStudent(data)
       .then(student => {
         dispatch(updateCurrentStudentSuccess(student.data));
       })
