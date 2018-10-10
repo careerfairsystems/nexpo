@@ -37,6 +37,14 @@ defmodule Nexpo.Company do
     |> unique_constraint(:name)
   end
 
+  def representative_changeset(struct, params \\ %{}) do
+    struct
+    |> cast(params, [:description, :website])
+    |> cast_attachments(params, [:logo_url])
+    |> validate_required([:name, :description, :website])
+    |> unique_constraint(:name)
+  end
+
   def put_assoc(changeset, params) do
     case Map.get(params, "company_ids") do
       nil ->

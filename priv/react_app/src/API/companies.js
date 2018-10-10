@@ -23,6 +23,11 @@ export default {
   updateMyCompany: data => authPut('/api/me/company', data).then(handleHttpResponse),
 
   /**
+  * Removes the current company
+  */
+  destoryMyCompany: data => authDelete('/api/me/company', data).then(handleHttpResponse),
+
+  /**
    * Create a company
    */
   create: data => authFormPost('/api/companies', data).then(handleHttpResponse),

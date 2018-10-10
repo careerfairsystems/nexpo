@@ -5,22 +5,21 @@ export const destroyCurrentCompanyIsLoading = () => ({
   type: actionTypes.DELETE_CURRENT_COMPANY
 });
 
-export const destroyCurrentCompanySuccess = id => ({
-  type: actionTypes.DELETE_CURRENT_COMPANY_SUCCESS,
-  id
+export const destroyCurrentCompanySuccess = () => ({
+  type: actionTypes.DELETE_CURRENT_COMPANY_SUCCESS
 });
 
 export const destroyCurrentCompanyFailure = () => ({
   type: actionTypes.DELETE_CURRENT_COMPANY_FAILURE
 });
 
-export function destroyCurrentCompany(id) {
+export function destroyCurrentCompany() {
   return dispatch => {
     dispatch(destroyCurrentCompanyIsLoading());
     return API.companies
-      .destroyMe(id)
+      .destroyMyCompany()
       .then(() => {
-        dispatch(destroyCurrentCompanySuccess(id));
+        dispatch(destroyCurrentCompanySuccess());
       })
       .catch(() => {
         dispatch(destroyCurrentCompanyFailure());
