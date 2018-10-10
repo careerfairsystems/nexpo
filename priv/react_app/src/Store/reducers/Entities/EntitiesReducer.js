@@ -156,9 +156,9 @@ export const EntitiesReducer = (
       return defaultsDeep(state, camelCaseKeys(normalized.entities));
     }
     case actionTypes.FETCH_STATISTICS_SUCCESS: {
-      // normalized = normalize(action.student, Schema.statisticsSchema());
-      return { ...state, statistics: action.statistics };
+      // normalized = normalize(action.statistics, Schema.statisticsSchema());
       // return defaultsDeep(state, camelCaseKeys(normalized.entities));
+      return { ...state, statistics: camelCaseKeys(action.statistics) };
     }
     default:
       return state;

@@ -18,6 +18,7 @@ describe('Entities reducer', () => {
       roles: {},
       users: {},
       studentSessionApplications: {},
+      statistics: {},
       students: {}
     };
     expect(EntitiesReducer(undefined, {})).toEqual(initialState);
