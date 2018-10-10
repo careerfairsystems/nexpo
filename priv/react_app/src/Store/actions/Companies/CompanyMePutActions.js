@@ -17,7 +17,7 @@ export const updateCurrentCompanyFailure = () => ({
 export function updateCurrentCompany(data) {
   return dispatch => {
     dispatch(updateCurrentCompanyIsLoading());
-    return API.users
+    return API.companies
       .updateMyCompany(data)
       .then(company => {
         dispatch(updateCurrentCompanySuccess(company.data));

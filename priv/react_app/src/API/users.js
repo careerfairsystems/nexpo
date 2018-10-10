@@ -34,16 +34,6 @@ export default {
     authFormPut('/api/me/student', data).then(handleHttpResponse),
 
   /**
-   * Fetches the current company
-   */
-  getMyCompany: () => authFetch('/api/me/company').then(handleHttpResponse),
-
-  /**
-   * Updates the current company
-   */
-  updateMyCompany: data => authPut('/api/me/company', data).then(handleHttpResponse),
-
-  /**
    * Create a user
    */
   create: data => authPost('/api/users', data).then(handleHttpResponse),
