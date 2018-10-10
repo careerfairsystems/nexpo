@@ -20,8 +20,6 @@ class Company extends Component {
   render() {
     const { currentCompany } = this.props;
 
-    console.log( currentCompany );
-
     if (isEmpty(currentCompany) || isNil(currentCompany)) return <NotFound />
 
     return (
