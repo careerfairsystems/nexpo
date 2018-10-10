@@ -7,10 +7,6 @@ defmodule Nexpo.StatisticsControllerTest do
     {:ok, conn: put_req_header(conn, "accept", "application/json")}
   end
 
-
-
-
-
   @tag :logged_in
   test "deletes chosen resource", %{conn: conn} do
     statistics = Repo.insert! %Statistics{}
