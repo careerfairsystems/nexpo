@@ -26,10 +26,8 @@ import Users from '../Screens/Admin/Users';
 import User from '../Screens/Admin/User';
 import CurrentUser from '../Screens/CurrentUser';
 import Companies from '../Screens/Admin/Companies';
-import { CompanyNew } from '../Screens/Admin/Company';
-import { CompanyEdit } from '../Screens/Admin/Company';
-import { CompanyShow } from '../Screens/Admin/Company';
-import CurrentCompany from '../Screens/CurrentCompany';
+import { CompanyNew, CompanyEdit, CompanyShow } from '../Screens/Admin/Company';
+import { CurrentCompanyShow, CurrentCompanyEdit } from '../Screens/CurrentCompany';
 import SessionHome from '../Screens/Session/SessionHome';
 import SessionApplication from '../Screens/Session/SessionApplication';
 import SessionApplications from '../Screens/Session/SessionApplications';
@@ -80,7 +78,8 @@ const routes = (
       component={SessionApplications}
     />
     <PrivateRoute path="/session/companies" component={SessionCompanies} />
-    <PrivateRoute path="/company" component={CurrentCompany} />
+    <PrivateRoute exact path="/company" component={CurrentCompanyShow} />
+    <PrivateRoute exact path="/company/edit" component={CurrentCompanyEdit} />
     <Route component={NotFound} />
   </Switch>
 );

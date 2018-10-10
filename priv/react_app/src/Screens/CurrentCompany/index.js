@@ -1,22 +1,4 @@
-import { connect } from 'react-redux';
-import { Actions, Selectors } from '../../Store';
-import CurrentCompany from './CurrentCompany';
-import { State } from '../../Store/reducers/index';
+import CurrentCompanyEdit from './CurrentCompanyEdit';
+import CurrentCompanyShow from './CurrentCompanyShow';
 
-const mapStateToProps = (state: State) => ({
-  currentCompany: Selectors.companies.getCurrentCompany(state),
-  fetching: state.api.current_company.fetching
-});
-
-const mapDispatchToProps = {
-  getCurrentCompany: Actions.companies.getCurrentCompany,
-  // destroyCurrentCompany: Actions.companies.destroyCurrentCompany,
-  updateCurrentCompany: Actions.companies.updateCurrentCompany
-};
-
-const stateful = connect(
-  mapStateToProps,
-  mapDispatchToProps
-);
-
-export default stateful(CurrentCompany);
+export { CurrentCompanyEdit, CurrentCompanyShow };
