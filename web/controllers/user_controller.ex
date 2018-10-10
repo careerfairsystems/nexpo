@@ -20,7 +20,7 @@ defmodule Nexpo.UserController do
   end
 
   def show(conn, %{"id" => id}, _user, _claims) do
-    user = Repo.get!(User, id) |> Repo.preload([:roles, :student])
+    user = Repo.get!(User, id) |> Repo.preload([:roles, :student, :representative])
 
     render(conn, "show.json", user: user)
   end

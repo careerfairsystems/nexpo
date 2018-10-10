@@ -91,6 +91,7 @@ defmodule Nexpo.Factory do
            |> Nexpo.User.final_signup!
     Nexpo.Repo.get!(Nexpo.User, user.id)
     |> Nexpo.Repo.preload(:student)
+    |> Nexpo.Repo.preload(:representative)
   end
 
   @doc """

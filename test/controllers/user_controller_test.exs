@@ -26,7 +26,7 @@ defmodule Nexpo.UserControllerTest do
       "food_preferences" => user.food_preferences,
       "phone_number" => user.phone_number,
       "roles" => [],
-      "company" => user.company,
+      "representative" => user.representative,
       "student" => %{
           "id" => user.student.id,
           "resume_en_url" => user.student.resume_en_url,
