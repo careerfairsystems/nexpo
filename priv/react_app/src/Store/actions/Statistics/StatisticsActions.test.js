@@ -50,16 +50,15 @@ describe('getAllStatistics', () => {
   });
 
   it('should call success action on success', () => {
-    const roles = [
-      {
-        name: 'Role1'
-      }
-    ];
-    mockHttpResponse({ status: 200, body: { data: roles } });
+    const statistics = {
+      numberApplications: 10
+    };
+
+    mockHttpResponse({ status: 200, body: { data: statistics } });
 
     const expectedActions = [
       Actions.statistics.getAllStatisticsIsLoading(),
-      Actions.statistics.getAllStatisticsSuccess(roles)
+      Actions.statistics.getAllStatisticsSuccess(statistics)
     ];
 
     const store = createMockStore();
