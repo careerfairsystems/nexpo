@@ -26,6 +26,31 @@ const entity = (key, definition = {}, options = {}) =>
     processStrategy: options.model
   });
 
+const mailtemplateSchema = () => entity('mailtemplates');
+const mailtemplatesSchema = () => [mailtemplateSchema()];
+
+const deadlineSchema = () => entity('deadlines');
+const deadlinesSchema = () => [deadlineSchema()];
+
+const sessionApplicationSchema = () => {
+  const company = entity(
+    'companies',
+    {},
+    { model: hasMany('student_session_applications') }
+  );
+  const student = entity(
+    'students',
+    {},
+    { model: hasMany('student_session_applications') }
+  );
+  const application = entity('student_session_applications', {
+    company,
+    student
+  });
+  return application;
+};
+const studentSessionApplicationsSchema = () => [sessionApplicationSchema()];
+
 const categorySchema = () => {
   const company = entity(
     'companies',
@@ -85,14 +110,14 @@ const studentsSchema = () => [studentSchema()];
 const userSchema = () => {
   const company = entity('companies');
   const sessionApplication = entity(
-    'session_applications',
+    'student_session_applications',
     { company },
     { model: belongsTo('student') }
   );
   const student = entity(
     'students',
     {
-      session_applications: [sessionApplication]
+      student_session_applications: [sessionApplication]
     },
     { model: belongsTo('user') }
   );
@@ -111,8 +136,14 @@ export default {
   categoriesSchema,
   companySchema,
   companiesSchema,
+  mailtemplateSchema,
+  mailtemplatesSchema,
+  deadlineSchema,
+  deadlinesSchema,
   roleSchema,
   rolesSchema,
+  sessionApplicationSchema,
+  studentSessionApplicationsSchema,
   userSchema,
   usersSchema,
   studentSchema,

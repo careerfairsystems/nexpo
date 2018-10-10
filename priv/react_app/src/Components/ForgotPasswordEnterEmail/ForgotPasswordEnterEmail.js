@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import './ForgotPasswordEnterEmail.css';
 import PropTypes from 'prop-types';
-import TextField from 'material-ui/TextField';
-import RaisedButton from 'material-ui/RaisedButton';
 import { Link } from 'react-router-dom';
+import ForgotPasswordForm from '../Forms/ForgotPasswordForm';
 import { SuccessMessage } from '../SuccessMessage/SuccessMessage';
 
 type Props = {
@@ -20,17 +18,10 @@ class ForgotPasswordEnterEmail extends Component<Props> {
     success: false
   };
 
-  state = {
-    email: ''
-  };
-
-  _updateEmail = val => {
-    this.setState({ email: val });
-  };
-
-  _queryBackend = () => {
-    const { email } = this.state;
-    this.props.callBackend({ email });
+  queryBackend = values => {
+    const { email } = values;
+    const { callBackend } = this.props;
+    callBackend({ email });
   };
 
   render() {
@@ -45,32 +36,17 @@ class ForgotPasswordEnterEmail extends Component<Props> {
       );
     }
     return (
-      <div className="ForgotPasswordEnterEmail_Component">
+      <div className="forgot-password-enter-email">
         <h1>Forgot password</h1>
 
-        <TextField
-          floatingLabelText="Email"
-          type="email"
-          value={this.state.email}
-          onChange={(e, val) => this._updateEmail(val)}
-          onKeyPress={event =>
-            event.key === 'Enter' ? this._queryBackend() : null
-          }
-        />
+        <ForgotPasswordForm onSubmit={this.queryBackend} />
 
-        <br />
-
-        <RaisedButton
-          primary
-          label="Send email"
-          onClick={this._queryBackend}
-        />
         <br />
         <br />
 
-        <div>Already have an account?</div>
-        <br />
-        <div className="links">
+        <div className="existing-account">
+          Already have an account?
+          <br />
           <Link to="/login">Log in</Link>
         </div>
       </div>

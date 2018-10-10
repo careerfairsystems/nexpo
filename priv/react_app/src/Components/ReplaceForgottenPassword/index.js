@@ -13,15 +13,13 @@ const mapDispatchToprops = (dispatch, props) => {
   const { hashKey } = props;
   const key = hashKey;
   return {
-    sendNewPasswordToBackend: ({ password, password_confirmation }) => {
-      dispatch(
+    sendNewPasswordToBackend: ({ password, password_confirmation }) => dispatch(
         Actions.accounts.replace_forgotten_password({
           key,
           password,
           password_confirmation
         })
-      );
-    },
+      ),
     verifyKey: () => {
       dispatch(Actions.accounts.verify_forgot_password_key({ key }));
     }

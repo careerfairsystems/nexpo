@@ -1,3 +1,4 @@
+import { reset } from 'redux-form';
 import message from 'antd/lib/message';
 import { actionTypes } from '../..';
 import API from '../../../API';
@@ -33,6 +34,7 @@ export function createStudentSessionAppl(data) {
       .create(data)
       .then(user => {
         dispatch(createStudentSessionApplSuccess(user.data));
+        dispatch(reset('studentSession'));
       })
       .catch(() => {
         dispatch(createStudentSessionApplFailure());
