@@ -7,6 +7,7 @@ import DeadlinesActions from './Deadlines';
 import MailtemplatesActions from './Mailtemplates';
 import AccountActions from './Accounts';
 import StudentSessionsActions from './StudentSessions';
+import ProgrammesActions from './Programmes';
 
 export default {
   auth: AuthActions,
@@ -14,6 +15,7 @@ export default {
   users: UsersActions,
   categories: CategoriesActions,
   companies: CompaniesActions,
+  programmes: ProgrammesActions,
   deadlines: DeadlinesActions,
   mailtemplates: MailtemplatesActions,
   accounts: AccountActions,

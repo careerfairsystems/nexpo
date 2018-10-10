@@ -1,72 +1,72 @@
 import { Actions, actionTypes } from '../..';
 import { mockHttpResponse, createMockStore } from '../../../TestHelper';
 
-describe('getAllCategoriesIsLoading', () => {
+describe('getAllProgrammesIsLoading', () => {
   it('should create the correct action', () => {
     const expectedAction = {
-      type: actionTypes.FETCH_CATEGORIES
+      type: actionTypes.FETCH_PROGRAMMES
     };
-    const action = Actions.categories.getAllCategoriesIsLoading();
+    const action = Actions.programmes.getAllProgrammesIsLoading();
     expect(action).toEqual(expectedAction);
   });
 });
 
-describe('getAllCategoriesSuccess', () => {
+describe('getAllProgrammesSuccess', () => {
   it('should create the correct action', () => {
-    const testCategories = [
+    const testProgrammes = [
       {
-        name: 'Category1'
+        name: 'Programme1'
       }
     ];
 
     const expectedAction = {
-      type: actionTypes.FETCH_CATEGORIES_SUCCESS,
-      categories: testCategories
+      type: actionTypes.FETCH_PROGRAMMES_SUCCESS,
+      programmes: testProgrammes
     };
-    const action = Actions.categories.getAllCategoriesSuccess(testCategories);
+    const action = Actions.programmes.getAllProgrammesSuccess(testProgrammes);
     expect(action).toEqual(expectedAction);
   });
 });
 
-describe('getAllCategoriesFailure', () => {
+describe('getAllProgrammesFailure', () => {
   it('should create the correct action', () => {
     const expectedAction = {
-      type: actionTypes.FETCH_CATEGORIES_FAILURE
+      type: actionTypes.FETCH_PROGRAMMES_FAILURE
     };
-    const action = Actions.categories.getAllCategoriesFailure();
+    const action = Actions.programmes.getAllProgrammesFailure();
     expect(action).toEqual(expectedAction);
   });
 });
 
-describe('getAllCategories', () => {
+describe('getAllProgrammes', () => {
   it('should call start action', () => {
     mockHttpResponse({ status: 200, body: {} });
     const store = createMockStore();
 
-    return store.dispatch(Actions.categories.getAllCategories()).then(() => {
+    return store.dispatch(Actions.programmes.getAllProgrammes()).then(() => {
       const calledActions = store.getActions();
       expect(calledActions[0]).toEqual(
-        Actions.categories.getAllCategoriesIsLoading()
+        Actions.programmes.getAllProgrammesIsLoading()
       );
     });
   });
 
   it('should call success action on success', () => {
-    const categories = [
+    const programmes = [
       {
-        name: 'Category1'
+        name: 'Programme1'
       }
     ];
-    mockHttpResponse({ status: 200, body: { data: categories } });
+    mockHttpResponse({ status: 200, body: { data: programmes } });
 
     const expectedActions = [
-      Actions.categories.getAllCategoriesIsLoading(),
-      Actions.categories.getAllCategoriesSuccess(categories)
+      Actions.programmes.getAllProgrammesIsLoading(),
+      Actions.programmes.getAllProgrammesSuccess(programmes)
     ];
 
     const store = createMockStore();
 
-    return store.dispatch(Actions.categories.getAllCategories()).then(() => {
+    return store.dispatch(Actions.programmes.getAllProgrammes()).then(() => {
       const calledActions = store.getActions();
       expect(calledActions).toEqual(expectedActions);
     });
@@ -76,83 +76,83 @@ describe('getAllCategories', () => {
     mockHttpResponse({ status: 401, body: {} });
 
     const expectedActions = [
-      Actions.categories.getAllCategoriesIsLoading(),
-      Actions.categories.getAllCategoriesFailure()
+      Actions.programmes.getAllProgrammesIsLoading(),
+      Actions.programmes.getAllProgrammesFailure()
     ];
 
     const store = createMockStore();
 
-    return store.dispatch(Actions.categories.getAllCategories()).then(() => {
+    return store.dispatch(Actions.programmes.getAllProgrammes()).then(() => {
       const calledActions = store.getActions();
       expect(calledActions).toEqual(expectedActions);
     });
   });
 });
 
-describe('createCategoryIsLoading', () => {
+describe('createProgrammeIsLoading', () => {
   it('should create the correct action', () => {
     const expectedAction = {
-      type: actionTypes.POST_CATEGORY
+      type: actionTypes.POST_PROGRAMME
     };
-    const action = Actions.categories.createCategoryIsLoading();
+    const action = Actions.programmes.createProgrammeIsLoading();
     expect(action).toEqual(expectedAction);
   });
 });
 
-describe('createCategorySuccess', () => {
+describe('createProgrammeSuccess', () => {
   it('should create the correct action', () => {
-    const testCategory = {
-      name: 'Category1'
+    const testProgramme = {
+      name: 'Programme1'
     };
 
     const expectedAction = {
-      type: actionTypes.POST_CATEGORY_SUCCESS,
-      category: testCategory
+      type: actionTypes.POST_PROGRAMME_SUCCESS,
+      programme: testProgramme
     };
-    const action = Actions.categories.createCategorySuccess(testCategory);
+    const action = Actions.programmes.createProgrammeSuccess(testProgramme);
     expect(action).toEqual(expectedAction);
   });
 });
 
-describe('createCategoryFailure', () => {
+describe('createProgrammeFailure', () => {
   it('should create the correct action', () => {
     const expectedAction = {
-      type: actionTypes.POST_CATEGORY_FAILURE
+      type: actionTypes.POST_PROGRAMME_FAILURE
     };
-    const action = Actions.categories.createCategoryFailure();
+    const action = Actions.programmes.createProgrammeFailure();
     expect(action).toEqual(expectedAction);
   });
 });
 
-describe('createCategory', () => {
+describe('createProgramme', () => {
   it('should call start action', () => {
     mockHttpResponse({ status: 200, body: {} });
     const store = createMockStore();
-    const data = { category: { name: 'Test Category' } };
+    const data = { programme: { name: 'Test Programme' } };
 
-    return store.dispatch(Actions.categories.createCategory(data)).then(() => {
+    return store.dispatch(Actions.programmes.createProgramme(data)).then(() => {
       const calledActions = store.getActions();
       expect(calledActions[0]).toEqual(
-        Actions.categories.createCategoryIsLoading()
+        Actions.programmes.createProgrammeIsLoading()
       );
     });
   });
 
   it('should call success action on success', () => {
-    const category = {
-      name: 'Category1'
+    const programme = {
+      name: 'Programme1'
     };
-    mockHttpResponse({ status: 200, body: { data: category } });
+    mockHttpResponse({ status: 200, body: { data: programme } });
 
     const expectedActions = [
-      Actions.categories.createCategoryIsLoading(),
-      Actions.categories.createCategorySuccess(category)
+      Actions.programmes.createProgrammeIsLoading(),
+      Actions.programmes.createProgrammeSuccess(programme)
     ];
 
     const store = createMockStore();
-    const data = { category };
+    const data = { programme };
 
-    return store.dispatch(Actions.categories.createCategory(data)).then(() => {
+    return store.dispatch(Actions.programmes.createProgramme(data)).then(() => {
       const calledActions = store.getActions();
       expect(calledActions).toEqual(expectedActions);
     });
@@ -160,84 +160,84 @@ describe('createCategory', () => {
 
   it('should call failure action on failure', () => {
     mockHttpResponse({ status: 401, body: {} });
-    const data = { category: { name: 'Test Category' } };
+    const data = { programme: { name: 'Test Programme' } };
 
     const expectedActions = [
-      Actions.categories.createCategoryIsLoading(),
-      Actions.categories.createCategoryFailure()
+      Actions.programmes.createProgrammeIsLoading(),
+      Actions.programmes.createProgrammeFailure()
     ];
 
     const store = createMockStore();
 
-    return store.dispatch(Actions.categories.createCategory(data)).then(() => {
+    return store.dispatch(Actions.programmes.createProgramme(data)).then(() => {
       const calledActions = store.getActions();
       expect(calledActions).toEqual(expectedActions);
     });
   });
 });
 
-describe('getCategoryIsLoading', () => {
+describe('getProgrammeIsLoading', () => {
   it('should create the correct action', () => {
     const expectedAction = {
-      type: actionTypes.FETCH_CATEGORY
+      type: actionTypes.FETCH_PROGRAMME
     };
-    const action = Actions.categories.getCategoryIsLoading();
+    const action = Actions.programmes.getProgrammeIsLoading();
     expect(action).toEqual(expectedAction);
   });
 });
 
-describe('getCategorySuccess', () => {
+describe('getProgrammeSuccess', () => {
   it('should create the correct action', () => {
-    const testCategory = {
-      name: 'Category1'
+    const testProgramme = {
+      name: 'Programme1'
     };
 
     const expectedAction = {
-      type: actionTypes.FETCH_CATEGORY_SUCCESS,
-      category: testCategory
+      type: actionTypes.FETCH_PROGRAMME_SUCCESS,
+      programme: testProgramme
     };
-    const action = Actions.categories.getCategorySuccess(testCategory);
+    const action = Actions.programmes.getProgrammeSuccess(testProgramme);
     expect(action).toEqual(expectedAction);
   });
 });
 
-describe('getCategoryFailure', () => {
+describe('getProgrammeFailure', () => {
   it('should create the correct action', () => {
     const expectedAction = {
-      type: actionTypes.FETCH_CATEGORY_FAILURE
+      type: actionTypes.FETCH_PROGRAMME_FAILURE
     };
-    const action = Actions.categories.getCategoryFailure();
+    const action = Actions.programmes.getProgrammeFailure();
     expect(action).toEqual(expectedAction);
   });
 });
 
-describe('getCategory', () => {
+describe('getProgramme', () => {
   it('should call start action', () => {
     mockHttpResponse({ status: 200, body: {} });
     const store = createMockStore();
 
-    return store.dispatch(Actions.categories.getCategory()).then(() => {
+    return store.dispatch(Actions.programmes.getProgramme()).then(() => {
       const calledActions = store.getActions();
       expect(calledActions[0]).toEqual(
-        Actions.categories.getCategoryIsLoading()
+        Actions.programmes.getProgrammeIsLoading()
       );
     });
   });
 
   it('should call success action on success', () => {
-    const category = {
-      name: 'Category1'
+    const programme = {
+      name: 'Programme1'
     };
-    mockHttpResponse({ status: 200, body: { data: category } });
+    mockHttpResponse({ status: 200, body: { data: programme } });
 
     const expectedActions = [
-      Actions.categories.getCategoryIsLoading(),
-      Actions.categories.getCategorySuccess(category)
+      Actions.programmes.getProgrammeIsLoading(),
+      Actions.programmes.getProgrammeSuccess(programme)
     ];
 
     const store = createMockStore();
 
-    return store.dispatch(Actions.categories.getCategory()).then(() => {
+    return store.dispatch(Actions.programmes.getProgramme()).then(() => {
       const calledActions = store.getActions();
       expect(calledActions).toEqual(expectedActions);
     });
@@ -247,86 +247,86 @@ describe('getCategory', () => {
     mockHttpResponse({ status: 401, body: {} });
 
     const expectedActions = [
-      Actions.categories.getCategoryIsLoading(),
-      Actions.categories.getCategoryFailure()
+      Actions.programmes.getProgrammeIsLoading(),
+      Actions.programmes.getProgrammeFailure()
     ];
 
     const store = createMockStore();
 
-    return store.dispatch(Actions.categories.getCategory()).then(() => {
+    return store.dispatch(Actions.programmes.getProgramme()).then(() => {
       const calledActions = store.getActions();
       expect(calledActions).toEqual(expectedActions);
     });
   });
 });
 
-describe('updateCategoryIsLoading', () => {
+describe('updateProgrammeIsLoading', () => {
   it('should create the correct action', () => {
     const expectedAction = {
-      type: actionTypes.PUT_CATEGORY
+      type: actionTypes.PUT_PROGRAMME
     };
-    const action = Actions.categories.updateCategoryIsLoading();
+    const action = Actions.programmes.updateProgrammeIsLoading();
     expect(action).toEqual(expectedAction);
   });
 });
 
-describe('updateCategorySuccess', () => {
+describe('updateProgrammeSuccess', () => {
   it('should create the correct action', () => {
-    const testCategory = {
-      name: 'Category1'
+    const testProgramme = {
+      name: 'Programme1'
     };
 
     const expectedAction = {
-      type: actionTypes.PUT_CATEGORY_SUCCESS,
-      category: testCategory
+      type: actionTypes.PUT_PROGRAMME_SUCCESS,
+      programme: testProgramme
     };
-    const action = Actions.categories.updateCategorySuccess(testCategory);
+    const action = Actions.programmes.updateProgrammeSuccess(testProgramme);
     expect(action).toEqual(expectedAction);
   });
 });
 
-describe('updateCategoryFailure', () => {
+describe('updateProgrammeFailure', () => {
   it('should update the correct action', () => {
     const expectedAction = {
-      type: actionTypes.PUT_CATEGORY_FAILURE
+      type: actionTypes.PUT_PROGRAMME_FAILURE
     };
-    const action = Actions.categories.updateCategoryFailure();
+    const action = Actions.programmes.updateProgrammeFailure();
     expect(action).toEqual(expectedAction);
   });
 });
 
-describe('updateCategory', () => {
+describe('updateProgramme', () => {
   it('should call start action', () => {
     mockHttpResponse({ status: 200, body: {} });
     const store = createMockStore();
-    const data = { category: { name: 'Test Category' } };
+    const data = { programme: { name: 'Test Programme' } };
 
     return store
-      .dispatch(Actions.categories.updateCategory(1, data))
+      .dispatch(Actions.programmes.updateProgramme(1, data))
       .then(() => {
         const calledActions = store.getActions();
         expect(calledActions[0]).toEqual(
-          Actions.categories.updateCategoryIsLoading()
+          Actions.programmes.updateProgrammeIsLoading()
         );
       });
   });
 
   it('should call success action on success', () => {
-    const category = {
-      name: 'Category1'
+    const programme = {
+      name: 'Programme1'
     };
-    mockHttpResponse({ status: 200, body: { data: category } });
+    mockHttpResponse({ status: 200, body: { data: programme } });
 
     const expectedActions = [
-      Actions.categories.updateCategoryIsLoading(),
-      Actions.categories.updateCategorySuccess(category)
+      Actions.programmes.updateProgrammeIsLoading(),
+      Actions.programmes.updateProgrammeSuccess(programme)
     ];
 
     const store = createMockStore();
-    const data = { category };
+    const data = { programme };
 
     return store
-      .dispatch(Actions.categories.updateCategory(1, data))
+      .dispatch(Actions.programmes.updateProgramme(1, data))
       .then(() => {
         const calledActions = store.getActions();
         expect(calledActions).toEqual(expectedActions);
@@ -335,17 +335,17 @@ describe('updateCategory', () => {
 
   it('should call failure action on failure', () => {
     mockHttpResponse({ status: 401, body: {} });
-    const data = { category: { name: 'Test Category' } };
+    const data = { programme: { name: 'Test Programme' } };
 
     const expectedActions = [
-      Actions.categories.updateCategoryIsLoading(),
-      Actions.categories.updateCategoryFailure()
+      Actions.programmes.updateProgrammeIsLoading(),
+      Actions.programmes.updateProgrammeFailure()
     ];
 
     const store = createMockStore();
 
     return store
-      .dispatch(Actions.categories.updateCategory(1, data))
+      .dispatch(Actions.programmes.updateProgramme(1, data))
       .then(() => {
         const calledActions = store.getActions();
         expect(calledActions).toEqual(expectedActions);
@@ -353,66 +353,66 @@ describe('updateCategory', () => {
   });
 });
 
-describe('destroyCategoryIsLoading', () => {
+describe('destroyProgrammeIsLoading', () => {
   it('should create the correct action', () => {
     const expectedAction = {
-      type: actionTypes.DELETE_CATEGORY
+      type: actionTypes.DELETE_PROGRAMME
     };
-    const action = Actions.categories.destroyCategoryIsLoading();
+    const action = Actions.programmes.destroyProgrammeIsLoading();
     expect(action).toEqual(expectedAction);
   });
 });
 
-describe('destroyCategorySuccess', () => {
+describe('destroyProgrammeSuccess', () => {
   it('should create the correct action', () => {
-    const testCategoryId = 1;
+    const testProgrammeId = 1;
 
     const expectedAction = {
-      type: actionTypes.DELETE_CATEGORY_SUCCESS,
-      id: testCategoryId
+      type: actionTypes.DELETE_PROGRAMME_SUCCESS,
+      id: testProgrammeId
     };
-    const action = Actions.categories.destroyCategorySuccess(testCategoryId);
+    const action = Actions.programmes.destroyProgrammeSuccess(testProgrammeId);
     expect(action).toEqual(expectedAction);
   });
 });
 
-describe('destroyCategoryFailure', () => {
+describe('destroyProgrammeFailure', () => {
   it('should destroy the correct action', () => {
     const expectedAction = {
-      type: actionTypes.DELETE_CATEGORY_FAILURE
+      type: actionTypes.DELETE_PROGRAMME_FAILURE
     };
-    const action = Actions.categories.destroyCategoryFailure();
+    const action = Actions.programmes.destroyProgrammeFailure();
     expect(action).toEqual(expectedAction);
   });
 });
 
-describe('destroyCategory', () => {
+describe('destroyProgramme', () => {
   it('should call start action', () => {
     mockHttpResponse({ status: 200, body: {} });
     const store = createMockStore();
 
-    return store.dispatch(Actions.categories.destroyCategory(1)).then(() => {
+    return store.dispatch(Actions.programmes.destroyProgramme(1)).then(() => {
       const calledActions = store.getActions();
       expect(calledActions[0]).toEqual(
-        Actions.categories.destroyCategoryIsLoading()
+        Actions.programmes.destroyProgrammeIsLoading()
       );
     });
   });
 
   it('should call success action on success', () => {
-    const category = {
+    const programme = {
       id: 1
     };
-    mockHttpResponse({ status: 200, body: { data: category.id } });
+    mockHttpResponse({ status: 200, body: { data: programme.id } });
 
     const expectedActions = [
-      Actions.categories.destroyCategoryIsLoading(),
-      Actions.categories.destroyCategorySuccess(category.id)
+      Actions.programmes.destroyProgrammeIsLoading(),
+      Actions.programmes.destroyProgrammeSuccess(programme.id)
     ];
 
     const store = createMockStore();
 
-    return store.dispatch(Actions.categories.destroyCategory(1)).then(() => {
+    return store.dispatch(Actions.programmes.destroyProgramme(1)).then(() => {
       const calledActions = store.getActions();
       expect(calledActions).toEqual(expectedActions);
     });
@@ -421,13 +421,13 @@ describe('destroyCategory', () => {
   it('should call failure action on failure', () => {
     mockHttpResponse({ status: 401, body: {} });
     const expectedActions = [
-      Actions.categories.destroyCategoryIsLoading(),
-      Actions.categories.destroyCategoryFailure()
+      Actions.programmes.destroyProgrammeIsLoading(),
+      Actions.programmes.destroyProgrammeFailure()
     ];
 
     const store = createMockStore();
 
-    return store.dispatch(Actions.categories.destroyCategory(1)).then(() => {
+    return store.dispatch(Actions.programmes.destroyProgramme(1)).then(() => {
       const calledActions = store.getActions();
       expect(calledActions).toEqual(expectedActions);
     });

@@ -175,6 +175,10 @@ class App extends Component {
                     title: 'Users'
                   }),
                   this.restrictedMenuItem({
+                    route: 'admin/programmes',
+                    title: 'Programmes'
+                  }),
+                  this.restrictedMenuItem({
                     route: 'admin/mailtemplates',
                     title: 'Mailtemplates'
                   }),
