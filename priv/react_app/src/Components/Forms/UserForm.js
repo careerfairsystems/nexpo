@@ -3,57 +3,48 @@ import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import { Button, Input, Form } from 'antd';
-import makeField from './helper';
+import makeField, { required } from './helper';
 
 const TextInput = makeField(Input);
+const TextArea = makeField(Input.TextArea);
 
-const UserForm = ({
-  handleSubmit,
-  toggleEdit,
-  disabled,
-  reset,
-  submitting,
-  pristine
-}) => (
+const UserForm = ({ handleSubmit, pristine }) => (
   <Form onSubmit={handleSubmit}>
+    <Field
+      name="firstName"
+      label="First Name"
+      component={TextInput}
+      validate={required}
+      required
+    />
+    <Field
+      name="lastName"
+      label="Last Name"
+      component={TextInput}
+      validate={required}
+      required
+    />
     <Field
       name="phoneNumber"
       label="Phone Number"
       component={TextInput}
-      disabled={disabled}
+      validate={required}
+      required
     />
     <Field
       name="foodPreferences"
       label="Food Preferences"
-      component={TextInput}
-      disabled={disabled}
+      component={TextArea}
     />
-    <Button
-      type="primary"
-      onClick={() => {
-        toggleEdit();
-        if (!disabled) reset();
-      }}
-    >
-      {disabled ? 'Edit' : 'Cancel'}
-    </Button>
-    <Button disabled={disabled || submitting} htmlType="submit">
     <Button disabled={pristine} htmlType="submit">
       Submit
     </Button>
   </Form>
 );
 
-UserForm.defaultProps = {
-  disabled: false
-};
-
 UserForm.propTypes = {
-  disabled: PropTypes.bool,
   handleSubmit: PropTypes.func.isRequired,
-  reset: PropTypes.func.isRequired,
-  submitting: PropTypes.bool.isRequired,
-  toggleEdit: PropTypes.func.isRequired
+  pristine: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = state => ({

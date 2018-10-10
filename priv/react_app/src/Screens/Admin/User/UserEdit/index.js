@@ -1,0 +1,31 @@
+import { connect } from 'react-redux';
+import { denormalize } from 'normalizr';
+import { Actions } from '../../../../Store';
+import Schema from '../../../../Store/normalizr/schema';
+import UserEdit from './UserEdit';
+
+const mapStateToProps = (state, props) => {
+  const userId = props.match.params.id;
+  const user = state.entities.users[userId] || {};
+  const fetching = state.api.users.fetching;
+
+  const { roles } = denormalize(
+    { roles: user.roles },
+    Schema.userSchema(),
+    state.entities
+  );
+
+  return { id: userId, user: { ...user, roles }, fetching };
+};
+
+const mapDispatchToProps = {
+  getUser: Actions.users.getUser,
+  updateUser: Actions.users.updateUser
+};
+
+const stateful = connect(
+  mapStateToProps,
+  mapDispatchToProps
+);
+
+export default stateful(UserEdit);

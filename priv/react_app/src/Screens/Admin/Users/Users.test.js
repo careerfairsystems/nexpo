@@ -23,13 +23,6 @@ it('calls fetch all users prop on mount', () => {
   expect(func).toHaveBeenCalledTimes(1);
 });
 
-it('calls fetch all users prop on mount', () => {
-  const func = jest.fn();
-  const wrapper = shallow(<Users getAllUsers={func} />);
-
-  wrapper.find(Button).simulate('click');
-});
-
 it('should render users', () => {
   const func = jest.fn();
   const users = {
