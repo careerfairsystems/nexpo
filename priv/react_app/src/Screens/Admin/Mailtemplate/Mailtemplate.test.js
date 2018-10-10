@@ -76,7 +76,7 @@ describe('Mailtemplate', () => {
     const wrapper = shallow(
       <Mailtemplate id={id} {...props} mailtemplate={mailtemplate} />
     );
-    const newSubject = 'Welcome to Arkad!';
+    const newSubject = 'Welcome to ARKAD!';
     wrapper.instance().updateMailtemplate({ subject: newSubject });
     expect(props.updateMailtemplate).toHaveBeenCalledWith(id, {
       mailtemplate: { subject: newSubject }
