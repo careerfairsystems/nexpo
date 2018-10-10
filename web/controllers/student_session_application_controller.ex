@@ -23,6 +23,25 @@ defmodule Nexpo.StudentSessionApplicationController do
     end
   end
 
+  def update_me(conn, %{"id" => id,"student_session_application" => student_session_applications_params }, user, _claims) do
+    student = Repo.get_by!(Student, %{user_id: user.id})
+    case Repo.get_by(StudentSessionApplication, %{id: id, student_id: student.id}) do
+      nil ->  conn
+        |> put_status(400)
+        |> render(Nexpo.ErrorView, "400.json")
+      application ->
+        changeset = StudentSessionApplication.changeset(application, student_session_applications_params)
+        case Repo.update(changeset) do
+          {:ok, appl} ->
+            render(conn, "show.json", student_session_application: appl)
+          {:error, changeset} ->
+            conn
+            |> put_status(:unprocessable_entity)
+            |> render(Nexpo.ChangesetView, "error.json", changeset: changeset)
+        end
+    end
+  end
+
   def delete_me(conn, %{"id" => id}, user, _claims) do
     student = Repo.get_by!(Student, %{user_id: user.id})
     case Repo.get_by(StudentSessionApplication, %{id: id, student_id: student.id}) do

@@ -2,6 +2,16 @@
  * A helper class for handling user permissions, currently only handles read
  */
 const routePermissions = {
+  admin: [
+    'read_all',
+    'read_categories',
+    'read_companies',
+    'read_roles',
+    'read_users',
+    'read_events',
+    'read_sessions',
+    'read_hosts'
+  ],
   categories: ['read_all', 'read_categories'],
   companies: ['read_all', 'read_companies'],
   roles: ['read_all', 'read_roles'],
@@ -21,9 +31,9 @@ export const hasPermission = (currentUser, route) => {
   }
   if (permissionsNeeded) {
     const { roles = [] } = currentUser;
-    return roles.some(role => {
-      return role.permissions.some(p => permissionsNeeded.includes(p));
-    });
+    return roles.some(role =>
+      role.permissions.some(p => permissionsNeeded.includes(p))
+    );
   }
   return true;
 };

@@ -8,11 +8,11 @@ export function destroyCategoryIsLoading() {
   };
 }
 
-export function destroyCategorySuccess(category) {
+export function destroyCategorySuccess(id) {
   message.success('Category successfully deleted');
   return {
     type: actionTypes.DELETE_CATEGORY_SUCCESS,
-    category
+    id
   };
 }
 
@@ -31,8 +31,8 @@ export function destroyCategory(id) {
     dispatch(destroyCategoryIsLoading());
     return API.categories
       .destroy(id)
-      .then(category => {
-        dispatch(destroyCategorySuccess(category.data));
+      .then(() => {
+        dispatch(destroyCategorySuccess(id));
       })
       .catch(() => {
         dispatch(destroyCategoryFailure());

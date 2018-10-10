@@ -1,10 +1,10 @@
 import React from 'react';
-import CircularProgress from 'material-ui/CircularProgress';
+import { Spin, Icon } from 'antd';
 
+const antIcon = <Icon type="loading" style={{ fontSize: 100 }} spin />;
 const LoadingSpinner = props => (
   <div>
-    <CircularProgress size={100} thickness={7} />
-    <h3> Loading </h3>
+    <Spin tip="Loading..." indicator={antIcon} size="large" />
   </div>
 );
 

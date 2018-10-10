@@ -88,13 +88,26 @@ Repo.insert!(%CategoryAttribute{title: "Yrkesvaskning", category_id: 4})
 Repo.insert!(%CategoryAttribute{title: "Sabrering för nybörjare", category_id: 4})
 Repo.insert!(%CategoryAttribute{title: "Sabrering för nybörjare", category_id: 4})
 
-
 # Create some student-session applications
 alias Nexpo.StudentSessionApplication
 Repo.insert!(%StudentSessionApplication{motivation: "Im really good", company_id: 1, student_id: 2})
 Repo.insert!(%StudentSessionApplication{motivation: "Im awesome good", company_id: 2, student_id: 2})
 Repo.insert!(%StudentSessionApplication{motivation: "Im awesome really good", company_id: 4, student_id: 2})
+
 #Create some random company entries
 alias Nexpo.CompanyEntry
 
 SeedEntries.seed(Repo, CompanyEntry, 100)
+
+# Create some mailtemplates
+alias Nexpo.Mailtemplate
+Repo.insert!(%Mailtemplate{name: "Pre Signup", subject: "Nexpo | Verify your email!", content: "<h1>Welcome!</h1><a href=<%= signup_url(@user) %>>link</a>", signature: ""})
+Repo.insert!(%Mailtemplate{name: "Completed Signup", subject: "Nexpo | Welcome to Arkad!", content: "<h1>Welcome!</h1><a href=<%= application_url() %>>login</a>", signature: ""})
+Repo.insert!(%Mailtemplate{name: "Reset Password", subject: "Nexpo | Reset password!", content: "<h1>Reset Password!</h1><a href=<%= reset_password_url(@user) %>>Reset</a>", signature: ""})
+Repo.insert!(%Mailtemplate{name: "Hosts Welcome", subject: "Arkad | Welcome Hosts!", content: "<h1>Welcome <%= @user.first_name %></h1>", signature: "Best Regards\nhosts.arkad@tlth.se"})
+
+# Create some deadlines
+alias Nexpo.Deadline
+Repo.insert!(%Deadline{name: "Host Applications", start: ~N[2000-01-01 23:00:00], end: ~N[2040-01-01 23:00:00]})
+Repo.insert!(%Deadline{name: "Company Registration", start: ~N[2040-01-01 08:00:00], end: ~N[2060-01-01 23:59:00]})
+Repo.insert!(%Deadline{name: "Gasque Reservations", start: ~N[2010-11-14 08:00:07], end: ~N[2040-01-01 10:00:00]})

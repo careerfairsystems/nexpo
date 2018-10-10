@@ -1,7 +1,8 @@
-<h1>Welcome to Nexpo, <%= @user.first_name %>!</h1>
+<h1>Welcome to Arkad, <%= @user.first_name %>!</h1>
 
-<br/>
 <a href="<%= application_url() %>">
-  Start working in Nexpo by clicking here
+  Please login to your account and start using Nexpo by clicking here.
 </a>
 
+<br/><br/>
+<div>This mail was sent by Nexpo, the inhouse project management system for Arkad.</div>

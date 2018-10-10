@@ -7,23 +7,24 @@ import makeField from './helper';
 
 const TextInput = makeField(Input);
 
-const CurrentUserForm = ({ handleSubmit, disabled, reset, pristine }) => (
+const CurrentUserForm = ({ handleSubmit, pristine, submitting }) => (
   <Form onSubmit={handleSubmit}>
-    <Field name="phoneNumber" label="Phone Number" component={TextInput} />
-    <Button disabled={pristine} htmlType="submit">
+    <Field
+      name="phoneNumber"
+      label="Phone Number"
+      component={TextInput}
+      type="number"
+    />
+    <Button disabled={pristine || submitting} htmlType="submit">
       Submit
     </Button>
   </Form>
 );
 
-CurrentUserForm.defaultProps = {
-  disabled: true
-};
-
 CurrentUserForm.propTypes = {
-  disabled: PropTypes.bool,
   handleSubmit: PropTypes.func.isRequired,
-  reset: PropTypes.func.isRequired
+  pristine: PropTypes.bool.isRequired,
+  submitting: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -32,4 +33,4 @@ const mapStateToProps = state => ({
 
 const stateful = connect(mapStateToProps);
 
-export default stateful(reduxForm({ form: 'user' })(CurrentUserForm));
+export default stateful(reduxForm({ form: 'currentUser' })(CurrentUserForm));

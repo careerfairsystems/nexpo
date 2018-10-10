@@ -48,6 +48,12 @@ defmodule Nexpo.Support.View do
         %{:student => render_one(object.student, Nexpo.StudentView, "student.json")}
       :representative ->
         %{:representative => render_one(object.representative, Nexpo.RepresentativeView, "representative.json")}
+      :student_session_applications ->
+        %{:student_session_applications => render_many(
+            object.student_session_applications,
+            Nexpo.StudentSessionApplicationView,
+            "student_session_application.json"
+          )}
       :logo_url ->
         %{:logo_url => Nexpo.ProfileImage.url(get_url(object, relation), :original)}
       :resume_en_url ->

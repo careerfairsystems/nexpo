@@ -1,0 +1,49 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Field, reduxForm } from 'redux-form';
+import { connect } from 'react-redux';
+import { Button, Input, Form } from 'antd';
+import makeField, { required, validatePassword } from './helper';
+
+const TextInput = makeField(Input);
+const ReplacePasswordForm = ({ handleSubmit, submitting }) => (
+  <Form onSubmit={handleSubmit}>
+    <Field
+      name="password"
+      label="Password"
+      component={TextInput}
+      type="password"
+      required
+      autoFocus
+      validate={[required]}
+    />
+    <Field
+      name="passwordConfirmation"
+      label="Confirm new Password"
+      component={TextInput}
+      type="password"
+      required
+      validate={[required]}
+    />
+    <Button disabled={submitting} type="primary" htmlType="submit">
+      Update password
+    </Button>
+  </Form>
+);
+
+ReplacePasswordForm.propTypes = {
+  handleSubmit: PropTypes.func.isRequired,
+  submitting: PropTypes.bool.isRequired
+};
+
+const mapStateToProps = state => ({
+  formState: state.form.ReplacePasswordForm
+});
+
+const stateful = connect(mapStateToProps);
+
+export default stateful(
+  reduxForm({ form: 'replacePassword', validate: validatePassword })(
+    ReplacePasswordForm
+  )
+);

@@ -21,7 +21,7 @@ const requiredCompany = value =>
 const requiredMotivation = value =>
   value ? undefined : 'Please provide a motivation';
 
-const StudentSessionForm = ({ handleSubmit, companies }) => (
+const StudentSessionForm = ({ handleSubmit, companies, submitting }) => (
   <Form onSubmit={handleSubmit}>
     <Field
       label="Choose the company you would like to meet"
@@ -29,7 +29,6 @@ const StudentSessionForm = ({ handleSubmit, companies }) => (
       name="companyId"
       validate={requiredCompany}
       component={InputSelect}
-      style={{ width: 150 }}
     >
       {map(companyOption, companies)}
     </Field>
@@ -42,18 +41,16 @@ const StudentSessionForm = ({ handleSubmit, companies }) => (
       maxLength="2400"
       rows={6}
     />
-    <Button htmlType="submit">Submit Student Session</Button>
+    <Button disabled={submitting} htmlType="submit">
+      Submit Student Session
+    </Button>
   </Form>
 );
 
-StudentSessionForm.defaultProps = {
-  disabled: false
-};
-
 StudentSessionForm.propTypes = {
-  disabled: PropTypes.bool,
+  companies: PropTypes.array.isRequired,
   handleSubmit: PropTypes.func.isRequired,
-  companies: PropTypes.array.isRequired
+  submitting: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = state => ({

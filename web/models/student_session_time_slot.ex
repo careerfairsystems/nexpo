@@ -2,8 +2,8 @@ defmodule Nexpo.StudentSessionTimeSlot do
   use Nexpo.Web, :model
 
   schema "student_session_time_slots" do
-    field :start, Ecto.Date
-    field :end, Ecto.Date
+    field :start, :naive_datetime
+    field :end, :naive_datetime
     field :used, :boolean, default: false
 
     belongs_to :company, Nexpo.Company

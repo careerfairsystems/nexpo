@@ -3,11 +3,10 @@ import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import { Button, Checkbox, Form, Input } from 'antd';
-import makeField from './helper';
+import makeField, { required, validatePassword } from './helper';
 
 const TextInput = makeField(Input);
 const CheckBoxField = makeField(Checkbox);
-const required = value => (value ? undefined : "Field can't be empty");
 const requiredGDPR = value =>
   value ? undefined : 'You must agree to be able to sign up';
 
@@ -17,17 +16,7 @@ const gdprText =
 const agreeText =
   'I agree that Teknologkåren vid LTH will treat my personal data provided by this application in connection with the Student Session.';
 
-const validatePasswords = values => {
-  const errors = {};
-  if (values && values.password && values.passwordConfirmation) {
-    if (values.password !== values.passwordConfirmation) {
-      errors.passwordConfirmation = 'Passwords Must Match';
-    }
-  }
-  return errors;
-};
-
-const FinalizeSignupForm = ({ handleSubmit }) => (
+const FinalizeSignupForm = ({ handleSubmit, submitting }) => (
   <Form onSubmit={handleSubmit} style={{ maxWidth: 600 }}>
     <Field
       name="email"
@@ -68,12 +57,14 @@ const FinalizeSignupForm = ({ handleSubmit }) => (
       label="Phone Number"
       component={TextInput}
     />
-    {<span style={{ whiteSpace: 'pre-wrap' }}>{gdprText}</span>}
+    <span style={{ whiteSpace: 'pre-wrap' }}>{gdprText}</span>
+    <br />
+    <br />
     <Field name="gdpr" component={CheckBoxField} validate={requiredGDPR}>
       {agreeText}
     </Field>
-    <Button type="primary" htmlType="submit">
-      Sign up
+    <Button disabled={submitting} type="primary" htmlType="submit">
+      Sign Up
     </Button>
   </Form>
 );
@@ -81,7 +72,8 @@ const FinalizeSignupForm = ({ handleSubmit }) => (
 FinalizeSignupForm.defaultProps = {};
 
 FinalizeSignupForm.propTypes = {
-  handleSubmit: PropTypes.func.isRequired
+  handleSubmit: PropTypes.func.isRequired,
+  submitting: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -93,7 +85,7 @@ const stateful = connect(mapStateToProps);
 export default stateful(
   reduxForm({
     form: 'finalizeSignup',
-    validate: validatePasswords,
+    validate: validatePassword,
     enableReinitialize: true
   })(FinalizeSignupForm)
 );

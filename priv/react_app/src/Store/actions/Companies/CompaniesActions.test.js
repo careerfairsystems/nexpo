@@ -1,3 +1,4 @@
+import { reset } from 'redux-form';
 import { Actions, actionTypes } from '../..';
 import { mockHttpResponse, createMockStore } from '../../../TestHelper';
 
@@ -139,16 +140,15 @@ describe('createCompany', () => {
   });
 
   it('should call success action on success', () => {
-    const company = [
-      {
-        name: 'Company1'
-      }
-    ];
+    const company = {
+      name: 'Company1'
+    };
     mockHttpResponse({ status: 200, body: { data: company } });
 
     const expectedActions = [
       Actions.companies.createCompanyIsLoading(),
-      Actions.companies.createCompanySuccess(company)
+      Actions.companies.createCompanySuccess(company),
+      reset('company')
     ];
 
     const store = createMockStore();
@@ -225,11 +225,9 @@ describe('getCompany', () => {
   });
 
   it('should call success action on success', () => {
-    const company = [
-      {
-        name: 'Company1'
-      }
-    ];
+    const company = {
+      name: 'Company1'
+    };
     mockHttpResponse({ status: 200, body: { data: company } });
 
     const expectedActions = [
@@ -312,11 +310,9 @@ describe('updateCompany', () => {
   });
 
   it('should call success action on success', () => {
-    const company = [
-      {
-        name: 'Company1'
-      }
-    ];
+    const company = {
+      name: 'Company1'
+    };
     mockHttpResponse({ status: 200, body: { data: company } });
 
     const expectedActions = [
