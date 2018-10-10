@@ -1,7 +1,8 @@
 defmodule Nexpo.CompanyController do
   use Nexpo.Web, :controller
+  use Guardian.Phoenix.Controller
 
-  alias Nexpo.Company
+  alias Nexpo.{Company, Representative}
   alias Guardian.Plug.{EnsurePermissions}
 
   plug EnsurePermissions, [handler: Nexpo.SessionController,
@@ -113,6 +114,12 @@ defmodule Nexpo.CompanyController do
     Repo.delete!(company)
 
     send_resp(conn, :no_content, "")
+  end
+
+  def show_me(conn, %{}, user, _claims) do
+    representative = Repo.get_by!(Representative, %{user_id: user.id})
+    company = Ecto.assoc(representative, :company) # |> Repo.preload([:industries, :job_offers, :users, :entries, :representatives, :desired_programmes, :student_sessions, :student_session_applications, :student_session_time_slots])
+    conn |> put_status(200) |> render("show.json", company: company)
   end
 
   @apidoc

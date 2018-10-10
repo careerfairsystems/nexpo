@@ -17,7 +17,7 @@ export const destroyCurrentCompanyFailure = () => ({
 export function destroyCurrentCompany(id) {
   return dispatch => {
     dispatch(destroyCurrentCompanyIsLoading());
-    return API.companies
+    return API.users
       .destroyMe(id)
       .then(() => {
         dispatch(destroyCurrentCompanySuccess(id));

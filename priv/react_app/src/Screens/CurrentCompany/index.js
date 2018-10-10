@@ -9,8 +9,8 @@ const mapStateToProps = (state: State) => ({
 });
 
 const mapDispatchToProps = {
-  // getCurrentCompany: Actions.companies.getCurrentCompany,
-  destroyCurrentCompany: Actions.companies.destroyCurrentCompany,
+  getCurrentCompany: Actions.companies.getCurrentCompany,
+  // destroyCurrentCompany: Actions.companies.destroyCurrentCompany,
   updateCurrentCompany: Actions.companies.updateCurrentCompany
 };
 

@@ -17,8 +17,8 @@ export const getCurrentCompanyFailure = () => ({
 export function getCurrentCompany() {
   return dispatch => {
     dispatch(getCurrentCompanyIsLoading());
-    return API.companies
-      .getMe()
+    return API.users
+      .getMyCompany()
       .then(company => {
         dispatch(getCurrentCompanySuccess(company.data));
       })
