@@ -2,11 +2,11 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { shallow, mount } from 'enzyme';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import App from './App';
 import ConnectedApp from './index';
 import { createMockStore } from '../TestHelper';
+import NotFound from '../Screens/NotFound';
 
 it('renders without crashing', () => {
   shallow(
@@ -47,9 +47,28 @@ const state = {
   entities: {
     users: {
       '1': { id: 1, email: 'dev@it', firstName: 'X', roles: [1, 2] },
-      '2': { id: 2, email: 't@it', firstName: 'T', lastName: 'Y', roles: [] }
+      '2': { id: 2, email: 't@it', firstName: 'T', roles: [], student: 1 }
     },
-    students: {},
+    students: {
+      '1': {
+        id: 1,
+        resumeEnUrl: null,
+        resumeSvUrl: null,
+        studentSessionApplications: [1],
+        user: 1,
+        year: 2000
+      }
+    },
+    studentSessionApplications: {
+      '1': {
+        id: 1,
+        company: 2,
+        companyApproved: false,
+        studentConfirmed: false,
+        motivation: 'Please talk to me!',
+        student: 1
+      }
+    },
     roles: {
       '1': { id: 1, type: 'admin', permissions: ['read_all'], users: [1] },
       '2': { id: 2, type: 'zzz', permissions: ['read_users'], users: [1] }
@@ -85,33 +104,34 @@ const state = {
 
 const route = path => (
   <Provider store={createMockStore(state)}>
-    <MuiThemeProvider>
-      <MemoryRouter initialEntries={[path]}>
-        <Route component={ConnectedApp} />
-      </MemoryRouter>
-    </MuiThemeProvider>
+    <MemoryRouter initialEntries={[path]}>
+      <Route component={ConnectedApp} />
+    </MemoryRouter>
   </Provider>
 );
 
+const found = wrapper => expect(wrapper.find(NotFound)).toHaveLength(0);
+
 it('renders routes without crashing', () => {
-  mount(route('/'));
-  mount(route('/start'));
-  mount(route('/categories'));
-  mount(route('/categories/1'));
-  mount(route('/companies'));
-  mount(route('/companies/1'));
-  mount(route('/users'));
-  mount(route('/users/1'));
-  mount(route('/roles'));
-  mount(route('/roles/1'));
-  mount(route('/login'));
-  mount(route('/logout'));
-  mount(route('/signup'));
-  mount(route('/forgot-password'));
-  mount(route('/user'));
-  mount(route('/invalid-path'));
-  mount(route('/session'));
-  mount(route('/session/application'));
-  mount(route('/session/applications'));
-  mount(route('/session/companies'));
+  found(mount(route('/')));
+  found(mount(route('/info')));
+  found(mount(route('/admin/categories')));
+  found(mount(route('/admin/categories/1')));
+  found(mount(route('/admin/companies')));
+  found(mount(route('/admin/companies/new')));
+  found(mount(route('/admin/companies/1')));
+  found(mount(route('/admin/users')));
+  found(mount(route('/admin/users/1')));
+  found(mount(route('/admin/roles')));
+  found(mount(route('/admin/roles/1')));
+  found(mount(route('/login')));
+  found(mount(route('/logout')));
+  found(mount(route('/signup')));
+  found(mount(route('/forgot-password')));
+  found(mount(route('/user')));
+  found(mount(route('/session')));
+  found(mount(route('/session/application')));
+  found(mount(route('/session/applications')));
+  found(mount(route('/session/companies')));
+  expect(mount(route('/invalid-path')).find(NotFound)).toHaveLength(1);
 });

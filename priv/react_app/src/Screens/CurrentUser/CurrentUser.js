@@ -8,7 +8,7 @@ import CurrentUserForm from '../../Components/Forms/CurrentUserForm';
 import StudentForm from '../../Components/Forms/StudentForm';
 
 const { confirm } = Modal;
-class User extends Component {
+class CurrentUser extends Component {
   constructor(props) {
     super(props);
 
@@ -112,10 +112,10 @@ class User extends Component {
     );
   }
 }
-User.propTypes = {
+CurrentUser.propTypes = {
   currentUser: PropTypes.shape({
     email: PropTypes.string,
-    student: PropTypes.shape()
+    student: PropTypes.number
   }).isRequired,
   currentStudent: PropTypes.shape({
     resumeEnUrl: PropTypes.string,
@@ -129,4 +129,4 @@ User.propTypes = {
   updateCurrentStudent: PropTypes.func.isRequired
 };
 
-export default User;
+export default CurrentUser;

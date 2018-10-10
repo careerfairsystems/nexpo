@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import { Button, Form, Input, Radio } from 'antd';
-import makeField from './helper';
+import makeField, { required } from './helper';
 import UploadButton from './UploadButton';
 
 const plainOptions = [
@@ -16,14 +16,14 @@ const plainOptions = [
 const TextInput = makeField(Input);
 const TextArea = makeField(Input.TextArea);
 const RadioGroup = makeField(Radio.Group);
-const required = value => (value ? undefined : "Field can't be empty");
 
 const CompanyForm = ({
   handleSubmit,
   logoUrl,
   beforeUpload,
   onRemove,
-  onCancel
+  onCancel,
+  submitting
 }) => (
   <Form onSubmit={handleSubmit}>
     <Field
@@ -64,14 +64,23 @@ const CompanyForm = ({
       onRemove={onRemove}
     />
     <Button onClick={onCancel}>Cancel</Button>
-    <Button htmlType="submit" type="primary">
+    <Button disabled={submitting} htmlType="submit" type="primary">
       Submit
     </Button>
   </Form>
 );
 
+CompanyForm.defaultProps = {
+  logoUrl: null
+};
+
 CompanyForm.propTypes = {
-  handleSubmit: PropTypes.func.isRequired
+  beforeUpload: PropTypes.func.isRequired,
+  logoUrl: PropTypes.string,
+  handleSubmit: PropTypes.func.isRequired,
+  onCancel: PropTypes.func.isRequired,
+  onRemove: PropTypes.func.isRequired,
+  submitting: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = state => ({

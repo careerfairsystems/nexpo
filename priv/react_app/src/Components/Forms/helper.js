@@ -2,6 +2,16 @@ import React from 'react';
 import { Form } from 'antd';
 
 const FormItem = Form.Item;
+export const validatePassword = values => {
+  const errors = {};
+  if (values && values.password && values.passwordConfirmation) {
+    if (values.password !== values.passwordConfirmation) {
+      errors.passwordConfirmation = 'Passwords Must Match';
+    }
+  }
+  return errors;
+};
+export const required = value => (value ? undefined : "Field can't be empty");
 
 const makeField = Component => ({
   input,

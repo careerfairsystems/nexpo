@@ -25,7 +25,7 @@ defmodule Nexpo.StudentControllerTest do
       "year" => student.year,
       "resume_en_url" => student.resume_en_url,
       "resume_sv_url" => student.resume_sv_url,
-      "session_applications" => []}
+      "student_session_applications" => []}
   end
 
   @tag :logged_in

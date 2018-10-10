@@ -1,8 +1,9 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import TextField from 'material-ui/TextField';
-import RaisedButton from 'material-ui/RaisedButton';
+import Input from 'antd/lib/input';
 import ForgotPasswordEnterEmail from './ForgotPasswordEnterEmail';
+import ForgotPasswordForm from '../Forms/ForgotPasswordForm';
+import { SuccessMessage } from '../SuccessMessage/SuccessMessage';
 
 it('can render without crashing', () => {
   const props = {
@@ -11,18 +12,41 @@ it('can render without crashing', () => {
   shallow(<ForgotPasswordEnterEmail {...props} />);
 });
 
-it('renders an input field', () => {
+it('renders SuccessMessage on success', () => {
   const props = {
-    callBackend: jest.fn()
+    callBackend: jest.fn(),
+    success: true
   };
   const wrapper = shallow(<ForgotPasswordEnterEmail {...props} />);
-  expect(wrapper.find(TextField)).toHaveLength(1);
+  expect(wrapper.find(SuccessMessage)).toHaveLength(1);
 });
 
-it('renders a button', () => {
+it('renders a ForgotPasswordForm', () => {
   const props = {
     callBackend: jest.fn()
   };
   const wrapper = shallow(<ForgotPasswordEnterEmail {...props} />);
-  expect(wrapper.find(RaisedButton)).toHaveLength(1);
+  expect(wrapper.find(ForgotPasswordForm)).toHaveLength(1);
+});
+
+it('calls callBackend on ForgotPasswordForm onSubmit', () => {
+  const props = {
+    callBackend: jest.fn()
+  };
+  const wrapper = shallow(<ForgotPasswordEnterEmail {...props} />);
+  const email1 = 'dev@it';
+  const email2 = 'test@it';
+  expect(props.callBackend).toHaveBeenCalledTimes(0);
+  wrapper
+    .find(ForgotPasswordForm)
+    .props()
+    .onSubmit({ email: email1 });
+  expect(props.callBackend).toHaveBeenCalledTimes(1);
+  expect(props.callBackend).lastCalledWith({ email: email1 });
+  wrapper
+    .find(ForgotPasswordForm)
+    .props()
+    .onSubmit({ email: email2 });
+  expect(props.callBackend).toHaveBeenCalledTimes(2);
+  expect(props.callBackend).lastCalledWith({ email: email2 });
 });

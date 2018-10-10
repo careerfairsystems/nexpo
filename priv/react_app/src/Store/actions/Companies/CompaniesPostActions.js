@@ -1,3 +1,4 @@
+import { reset } from 'redux-form';
 import { message } from 'antd';
 import { actionTypes } from '../..';
 
@@ -34,6 +35,7 @@ export function createCompany(data) {
       .create(data)
       .then(company => {
         dispatch(createCompanySuccess(company.data));
+        dispatch(reset('company'));
       })
       .catch(() => {
         dispatch(createCompanyFailure());

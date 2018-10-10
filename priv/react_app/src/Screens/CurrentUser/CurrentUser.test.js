@@ -9,7 +9,9 @@ describe('userform should function correctly', () => {
   let props;
   beforeEach(() => {
     props = {
-      currentStudent: {},
+      currentStudent: {
+        resumeSvUrl: 'oldPlaceholder.com'
+      },
       currentUser: {
         id: 1,
         firstName: 'John',
@@ -17,9 +19,7 @@ describe('userform should function correctly', () => {
         phoneNumber: '11111',
         foodPreferences: 'Cake',
         roles: [],
-        student: {
-          resumeSvUrl: 'oldPlaceholder.com'
-        }
+        student: 1
       },
 
       fetching: false,

@@ -6,6 +6,8 @@ import { combineReducers } from 'redux';
 import ApiReducerCategories from './ApiReducerCategories';
 import ApiReducerCompanies from './ApiReducerCompanies';
 import ApiReducerCurrentUser from './ApiReducerCurrentUser';
+import ApiReducerMailtemplates from './ApiReducerMailtemplates';
+import ApiReducerDeadlines from './ApiReducerDeadlines';
 import ApiReducerRoles from './ApiReducerRoles';
 import ApiReducerUsers from './ApiReducerUsers';
 import ApiReducerForgotPassword from './ApiReducerForgotPassword';
@@ -21,6 +23,8 @@ export type ApiStatus = {
 export type ApiState = {
   categories: ApiStatus,
   companies: ApiStatus,
+  mailtemplates: ApiStatus,
+  deadlines: ApiStatus,
   roles: ApiStatus,
   users: ApiStatus,
   current_user: ApiStatus,
@@ -63,6 +67,8 @@ export const ApiReducer: ApiState = combineReducers({
   categories: ApiReducerCategories,
   companies: ApiReducerCompanies,
   current_user: ApiReducerCurrentUser,
+  deadlines: ApiReducerDeadlines,
+  mailtemplates: ApiReducerMailtemplates,
   roles: ApiReducerRoles,
   users: ApiReducerUsers,
   forgot_password: ApiReducerForgotPassword,
