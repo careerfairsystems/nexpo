@@ -95,7 +95,7 @@ defmodule Nexpo.CompanyController do
     |> update_company(conn)
   end
 
-  defp update_company(changeset, conn, _user, _claims) do
+  defp update_company(changeset, conn) do
     case Repo.update(changeset) do
       {:ok, company} ->
         render(conn, "show.json", company: company)
