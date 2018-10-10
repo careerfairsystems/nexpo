@@ -78,8 +78,8 @@ const routes = (
       component={SessionApplications}
     />
     <PrivateRoute path="/session/companies" component={SessionCompanies} />
-    <PrivateRoute exact path="/company" component={CurrentCompanyShow} />
     <PrivateRoute exact path="/company/edit" component={CurrentCompanyEdit} />
+    <PrivateRoute path="/company" component={CurrentCompanyShow} />
     <Route component={NotFound} />
   </Switch>
 );
