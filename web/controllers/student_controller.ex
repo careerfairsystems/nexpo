@@ -65,13 +65,13 @@ defmodule Nexpo.StudentController do
     deleted_resumes = student_params
       |> Enum.filter(fn {k, v} ->
         k in ["resume_sv_url", "resume_en_url"] and v == "null" end)
-      |> Enum.map(fn {k, v} -> {k, nil} end)
+      |> Enum.map(fn {k, _v} -> {k, nil} end)
       |> Map.new
 
     student_params = Map.merge(student_params, deleted_resumes)
     changeset = Student.changeset(student, student_params)
 
-    Enum.each(deleted_resumes, fn {k, v} ->
+    Enum.each(deleted_resumes, fn {k, _v} ->
       delete_cv?(student, student_params, String.to_atom(k))
     end)
 
