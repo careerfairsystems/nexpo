@@ -61,10 +61,20 @@ defmodule Nexpo.StudentController do
 
   def update_student(conn, %{"student" => student_params}, user, _claims) do
     student = Repo.get_by!(Student, %{user_id: user.id})
+
+    deleted_resumes = student_params
+      |> Enum.filter(fn {k, v} ->
+        k in ["resume_sv_url", "resume_en_url"] and v == "null" end)
+      |> Enum.map(fn {k, _v} -> {k, nil} end)
+      |> Map.new
+
+    student_params = Map.merge(student_params, deleted_resumes)
     changeset = Student.changeset(student, student_params)
-    Map.keys(changeset.changes)
-      |> Enum.filter(fn attr -> attr == :resume_sv_url or attr == :resume_en_url end)
-      |> Enum.each(fn cv -> update_cv(student, changeset, cv) end)
+
+    Enum.each(deleted_resumes, fn {k, _v} ->
+      delete_cv?(student, student_params, String.to_atom(k))
+    end)
+
     case Repo.update(changeset) do
       {:ok, student} ->
         render(conn, "show.json", student: student)
@@ -85,14 +95,21 @@ defmodule Nexpo.StudentController do
     send_resp(conn, :no_content, "")
   end
 
-  defp update_cv(student, changeset, cv) do
-    cv_file = Map.get(student, cv)
-    # This means that we recently sent null to indicate file removal
-    if Map.get(changeset, cv) == nil and  cv_file != nil do
-      case cv do
-        :resume_sv_url -> CvSv.delete({cv_file, student})
-        :resume_en_url -> CvEn.delete({cv_file, student})
-      end
+  defp delete_cv?(student, params, attr) do
+    case Map.get(student, attr) do
+      nil -> nil
+      existing_cv -> delete_cv!(student, params, attr, existing_cv)
+    end
+  end
+
+  defp delete_cv!(student, params, attr, cv_file) do
+    case Map.get(params, Atom.to_string(attr)) do
+      nil ->
+        case attr do
+          :resume_sv_url -> CvSv.delete({cv_file, student})
+          :resume_en_url -> CvEn.delete({cv_file, student})
+        end
+      _ -> nil
     end
   end
 end

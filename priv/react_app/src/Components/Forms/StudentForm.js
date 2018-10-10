@@ -18,7 +18,6 @@ const StudentForm = ({
   updateCurrentStudent
 }) => {
   const destroyCv = cv => updateCurrentStudent({ student: { [cv]: null } });
-
   return (
     <Form onSubmit={handleSubmit}>
       <Field
@@ -66,7 +65,8 @@ StudentForm.propTypes = {
   fileListSv: PropTypes.array,
   handleSubmit: PropTypes.func.isRequired,
   pristine: PropTypes.bool.isRequired,
-  submitting: PropTypes.bool.isRequired
+  submitting: PropTypes.bool.isRequired,
+  updateCurrentStudent: PropTypes.func.isRequired
 };
 
 const selector = formValueSelector('student'); // <-- same as form name
