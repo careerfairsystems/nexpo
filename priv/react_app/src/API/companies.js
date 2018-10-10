@@ -5,6 +5,7 @@
 import {
   authFormPost,
   authFetch,
+  authPut,
   authFormPut,
   authDelete,
   handleHttpResponse
