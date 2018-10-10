@@ -28,9 +28,9 @@ class Statistics extends Component {
     return (
       <div>
         <h1>Statistics</h1>
-        {`NUMBER OF SEARCHING STUDENTS: ${statistics.nbrSearchingStudents}`}
+        {`Number of searching students: ${statistics.nbrSearchingStudents}`}
         <br />
-        {`NUMBER OF STUDENTS: ${statistics.nbrStudents}`}
+        {`Number of students: ${statistics.nbrStudents}`}
         <br />
         <br />
         <br />
