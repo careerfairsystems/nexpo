@@ -46,7 +46,7 @@ defmodule Nexpo.Router do
 
     resources "/users", UserController, only: [:index, :show, :update, :delete]
     resources "/roles", RoleController
-    resources "/statistics", StatisticsController
+    get "/statistics", StatisticsController, :index
     resources "/students", StudentController do
       resources "/student_sessions", StudentSessionController
       # resources "/student_session_applications", StudentSessionApplicationController
