@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { isEmpty, isNil, toInteger } from 'lodash/fp';
+import { isEmpty, isNil, toInteger, map } from 'lodash/fp';
 import Button from 'antd/lib/button';
 import Avatar from 'antd/lib/avatar';
 import message from 'antd/lib/message';
@@ -114,10 +114,6 @@ class User extends Component {
             logoUrl={this.state.user.logoUrl}
             onCancel={this.toggleEdit}
           />
-          <br />
-          <br />
-          <h2>Invite User Representatives</h2>
-          <InviteForm onSubmit={this.invite} />
         </div>
       </div>
     );
@@ -125,11 +121,20 @@ class User extends Component {
 
   renderShowView() {
     const { user } = this.props;
-
-    const { name, website, description } = user;
+    console.log(user);
+    const {
+      firstName,
+      lastName,
+      foodPreferences,
+      description,
+      email,
+      phoneNumber,
+      roles
+    } = user;
+    const displayName = firstName ? [firstName, lastName].join(' ') : email;
     return (
       <div className="user-show-view">
-        <HtmlTitle title={name} />
+        <HtmlTitle title={displayName} />
 
         <div>
           <Avatar
@@ -138,12 +143,13 @@ class User extends Component {
             shape="square"
             alt="User Logotype"
           />
-          <h1>{name}</h1>
-          <a href={website}>{website}</a>
+          <h1>{displayName}</h1>
+          <p>Email: {email}</p>
+          <p>Phone number: {phoneNumber}</p>
           <p>
-            {name} has student sessions: {this.showStudentSession()}
+            Roles: {isEmpty(roles) ? 'None' : map('type', roles).join(', ')}
           </p>
-          <p>{description}</p>
+          <p>Food Preferences: {foodPreferences}</p>
         </div>
         <Button onClick={this.toggleEdit}>Edit</Button>
       </div>
