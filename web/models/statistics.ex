@@ -39,10 +39,11 @@ defmodule Nexpo.Statistics do
       from student in Student,
       select: count(student.id)
     )
-
+    # Fetch all companies with student session days and count their applications
     company = (Repo.all(
       from company in Company,
-      join: appl in assoc(company, :student_session_applications),
+      where: company.student_session_days != 0,
+      left_join: appl in assoc(company, :student_session_applications),
       group_by: company.id,
       select: %{id: company.id, name: company.name, nbr_applications: count(appl.id)}
     ))
