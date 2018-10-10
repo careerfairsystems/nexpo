@@ -1,62 +1,76 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Field, reduxForm } from 'redux-form';
+import { Field, reduxForm, formValueSelector } from 'redux-form';
+import { isEmpty } from 'lodash/fp';
 import { connect } from 'react-redux';
 import { Button, Form } from 'antd';
 import UploadButton from './UploadButton';
 
 const StudentForm = ({
   handleSubmit,
-  disabled,
-  beforeUpload,
   action,
   currentStudent,
-  onRemove,
-  fileList,
-  submitting
+  pristine,
+  submitting,
+  fileListEn,
+  fileListSv
 }) => (
   <Form onSubmit={handleSubmit}>
     <Field
       name="resumeSvUrl"
       label="Swedish CV"
-      fileList={fileList.resumeSvUrl ? [fileList.resumeSvUrl] : []}
       action={action}
-      currentStudent={currentStudent}
-      beforeUpload={beforeUpload}
+      fileList={fileListSv}
+      currentValue={currentStudent.resumeSvUrl}
+      currentValueText="Current CV"
       component={UploadButton}
       accept=".pdf"
-      onRemove={onRemove}
     />
     <Field
       name="resumeEnUrl"
       label="English CV"
-      fileList={fileList.resumeEnUrl ? [fileList.resumeEnUrl] : []}
-      currentStudent={currentStudent}
-      beforeUpload={beforeUpload}
+      fileList={fileListEn}
+      currentValue={currentStudent.resumeEnUrl}
+      currentValueText="Current CV"
       component={UploadButton}
       accept=".pdf"
-      onRemove={onRemove}
     />
 
-    <Button disabled={disabled || submitting} htmlType="submit">
+    <Button disabled={pristine} loading={submitting} htmlType="submit">
       Save CV(s)
     </Button>
   </Form>
 );
 
 StudentForm.defaultProps = {
-  disabled: false
+  action: '',
+  fileListEn: [],
+  fileListSv: []
 };
 
 StudentForm.propTypes = {
-  disabled: PropTypes.bool,
+  action: PropTypes.string,
+  currentStudent: PropTypes.shape({
+    resumeEnUrl: PropTypes.string,
+    resumeSvUrl: PropTypes.string
+  }).isRequired,
+  fileListEn: PropTypes.array,
+  fileListSv: PropTypes.array,
   handleSubmit: PropTypes.func.isRequired,
+  pristine: PropTypes.bool.isRequired,
   submitting: PropTypes.bool.isRequired
 };
 
-const mapStateToProps = state => ({
-  formState: state.form.StudentForm
-});
+const selector = formValueSelector('student'); // <-- same as form name
+const mapStateToProps = state => {
+  const fileListSv = selector(state, 'resumeSvUrl');
+  const fileListEn = selector(state, 'resumeEnUrl');
+  return {
+    fileListSv: isEmpty(fileListSv) ? [] : [fileListSv],
+    fileListEn: isEmpty(fileListEn) ? [] : [fileListEn],
+    formState: state.form.StudentForm
+  };
+};
 
 const stateful = connect(mapStateToProps);
 
