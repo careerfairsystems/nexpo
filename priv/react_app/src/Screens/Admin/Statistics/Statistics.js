@@ -27,6 +27,7 @@ class Statistics extends Component {
     const { companyStats = [] } = statistics;
     return (
       <div>
+        <h1>Statistics</h1>
         {`NUMBER OF SEARCHING STUDENTS: ${statistics.nbrSearchingStudents}`}
         <br />
         {`NUMBER OF STUDENTS: ${statistics.nbrStudents}`}
@@ -51,7 +52,20 @@ class Statistics extends Component {
   }
 }
 
-Statistics.propTypes = { getAllStatistics: PropTypes.func.isRequired };
+Statistics.propTypes = {
+  getAllStatistics: PropTypes.func.isRequired,
+  statistics: PropTypes.shape({
+    companyStats: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string,
+        id: PropTypes.number,
+        nbrApplications: PropTypes.number
+      })
+    ),
+    nbrStudents: PropTypes.number,
+    nbrSearchingStudents: PropTypes.number
+  }).isRequired
+};
 Statistics.defaultProps = {};
 
 export default Statistics;
