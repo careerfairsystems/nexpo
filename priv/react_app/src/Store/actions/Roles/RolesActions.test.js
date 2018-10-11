@@ -1,3 +1,4 @@
+import { reset } from 'redux-form';
 import { Actions, actionTypes } from '../..';
 import { mockHttpResponse, createMockStore } from '../../../TestHelper';
 
@@ -142,7 +143,8 @@ describe('createRole', () => {
 
     const expectedActions = [
       Actions.roles.createRoleIsLoading(),
-      Actions.roles.createRoleSuccess(role)
+      Actions.roles.createRoleSuccess(role),
+      reset('role')
     ];
 
     const store = createMockStore();

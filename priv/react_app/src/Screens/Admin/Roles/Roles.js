@@ -38,7 +38,7 @@ class Roles extends Component {
         <span>
           <InvisibleLink to={`/admin/roles/${role.id}`}>Show</InvisibleLink>
           <Divider type="vertical" />
-          <InvisibleLink to={`/admin/roles/${role.id}/#edit`}>
+          <InvisibleLink to={`/admin/roles/${role.id}/edit`}>
             Edit
           </InvisibleLink>
           <Divider type="vertical" />

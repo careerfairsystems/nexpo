@@ -32,7 +32,7 @@ class RoleEdit extends Component {
       <div className="role-edit-view">
         <HtmlTitle title={capitalize(role.type)} />
         <div>
-          <h1>Role</h1>
+          <h1>Role: {capitalize(role.type)}</h1>
           <RoleForm onSubmit={this.updateRole} initialValues={role} />
         </div>
       </div>

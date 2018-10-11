@@ -14,7 +14,7 @@ it('should render without crashing', () => {
     createUser: jest.fn(),
     fetching: false,
     resetForm: jest.fn(),
-    history:{}
+    history: {}
   };
   shallow(<UserEdit id="1" {...props} />);
 });
@@ -27,7 +27,7 @@ it('should render NotFound if there is no user', () => {
     createUser: jest.fn(),
     fetching: false,
     resetForm: jest.fn(),
-    history:{}
+    history: {}
   };
   const wrapper = shallow(<UserEdit id="1" {...props} />);
 
@@ -42,7 +42,7 @@ it('should render LoadingSpinner if fetching is true', () => {
     createUser: jest.fn(),
     fetching: true,
     resetForm: jest.fn(),
-    history:{}
+    history: {}
   };
   const wrapper = shallow(<UserEdit id="1" {...props} />);
 
@@ -57,13 +57,12 @@ it('updateValues should call updateUser with correct values', () => {
     createUser: jest.fn(),
     fetching: false,
     resetForm: jest.fn(),
-    history:{push:jest.fn()}
+    history: { push: jest.fn() }
   };
-  const id = "1"
-  const values ={phoneNumber: "1331337" }
+  const id = '1';
+  const values = { phoneNumber: '1331337' };
   const wrapper = shallow(<UserEdit id={id} {...props} />);
   wrapper.instance().updateUser(values);
-  expect(props.updateUser).toHaveBeenCalledWith(id, {user:values})
-  expect(props.history.push).toHaveBeenCalledWith(`/admin/users/${id}`)
-
+  expect(props.updateUser).toHaveBeenCalledWith(id, { user: values });
+  expect(props.history.push).toHaveBeenCalledWith(`/admin/users/${id}`);
 });
