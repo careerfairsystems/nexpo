@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { isEmpty } from 'lodash/fp';
+import { isEmpty, omit } from 'lodash/fp';
 import { Button, Modal } from 'antd';
 import LoadingSpinner from '../../Components/LoadingSpinner';
 import NotFound from '../NotFound';
@@ -9,32 +9,10 @@ import StudentForm from '../../Components/Forms/StudentForm';
 
 const { confirm } = Modal;
 class CurrentUser extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      student: { resumeEnUrl: null, resumeSvUrl: null },
-      disabled: true
-    };
-  }
-
   componentWillMount() {
     const { getCurrentUser } = this.props;
     getCurrentUser();
   }
-
-  onRemove = name => {
-    const { student } = this.state;
-    this.setState({ student: { ...student, [name]: null } });
-  };
-
-  beforeUpload = (file, name) => {
-    const { student } = this.state;
-    this.setState({
-      student: { ...student, [name]: file }
-    });
-    return false;
-  };
 
   showConfirm = () => {
     confirm({
@@ -52,25 +30,23 @@ class CurrentUser extends Component {
     logout();
   };
 
-  updateStudent = () => {
-    const { student } = this.state;
+  updateStudent = values => {
     const { updateCurrentStudent } = this.props;
+    return updateCurrentStudent({ student: values });
+  };
 
-    this.setState({ student: { resumeEnUrl: null, resumeSvUrl: null } });
-    updateCurrentStudent({ student });
+  resetStudentForm = () => {
+    const { resetForm } = this.props;
+    resetForm('student');
   };
 
   updateUser = values => {
     const { updateCurrentUser } = this.props;
-    const { disabled } = this.state;
-
-    this.setState({ disabled: !disabled });
     updateCurrentUser({ user: values });
   };
 
   render() {
     const { currentUser, currentStudent, fetching } = this.props;
-    const { student } = this.state;
     if (fetching) {
       return <LoadingSpinner />;
     }
@@ -79,7 +55,7 @@ class CurrentUser extends Component {
     }
 
     const { email, firstName, lastName } = currentUser;
-    const { resumeEnUrl, resumeSvUrl } = student;
+
     return (
       <div>
         <h1>
@@ -99,13 +75,9 @@ class CurrentUser extends Component {
         />
         {!isEmpty(currentStudent) && (
           <StudentForm
-            action=""
-            beforeUpload={this.beforeUpload}
-            onRemove={this.onRemove}
-            fileList={{ resumeEnUrl, resumeSvUrl }}
             onSubmit={this.updateStudent}
-            disabled={isEmpty(resumeSvUrl) && isEmpty(resumeEnUrl)}
-            currentStudent={currentStudent || {}}
+            onSubmitSuccess={this.resetStudentForm}
+            initialValues={omit('year', currentStudent) || {}}
           />
         )}
       </div>
@@ -125,6 +97,7 @@ CurrentUser.propTypes = {
   getCurrentUser: PropTypes.func.isRequired,
   destroyCurrentUser: PropTypes.func.isRequired,
   logout: PropTypes.func.isRequired,
+  resetForm: PropTypes.func.isRequired,
   updateCurrentUser: PropTypes.func.isRequired,
   updateCurrentStudent: PropTypes.func.isRequired
 };

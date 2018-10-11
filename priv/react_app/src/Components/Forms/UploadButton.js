@@ -1,42 +1,33 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { isEmpty } from 'lodash/fp';
 import { Button, Icon, Upload } from 'antd';
 import makeField from './helper';
 
-const UploadButton = ({
-  accept,
-  beforeUpload,
-  action,
-  currentStudent,
-  name,
-  onRemove,
-  fileList
-}) => [
+const UploadButton = ({ accept, value, onChange }) => (
   <Upload
     key="uploadButton"
     accept={accept}
-    action={action}
-    beforeUpload={file => beforeUpload(file, name)}
-    onRemove={() => onRemove(name)}
-    fileList={fileList}
+    fileList={isEmpty(value) ? [] : [value]}
+    beforeUpload={file => {
+      onChange(file);
+      return false;
+    }}
+    onRemove={() => onChange(null)}
   >
     <Button>
-      <Icon type="upload" /> Upload
+      <Icon type="upload" />
+      Upload
     </Button>
-    {!isEmpty(currentStudent[name]) && (
-      <Icon
-        style={{ color: 'green', fontSize: 20, marginLeft: 10 }}
-        type="check"
-        theme="outlined"
-      />
-    )}
-  </Upload>,
-  !isEmpty(currentStudent[name]) && (
-    <a key="CVlink" href={currentStudent[name]}>
-      Current CV
-    </a>
-  )
-];
+  </Upload>
+);
+
+UploadButton.defaultProps = {};
+
+UploadButton.propTypes = {
+  accept: PropTypes.string.isRequired,
+  value: PropTypes.oneOfType([PropTypes.object, PropTypes.string]).isRequired,
+  onChange: PropTypes.func.isRequired
+};
 
 export default makeField(UploadButton);

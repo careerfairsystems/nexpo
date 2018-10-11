@@ -18,6 +18,7 @@ describe('Entities reducer', () => {
       roles: {},
       users: {},
       studentSessionApplications: {},
+      statistics: {},
       students: {}
     };
     expect(EntitiesReducer(undefined, {})).toEqual(initialState);
@@ -269,6 +270,17 @@ describe('Entities reducer', () => {
       studentSessionApplications: {
         1: { id: 1, companyId: 1, studentId: 1, motivation: 'New Motivation' }
       }
+    });
+  });
+
+  it('should handle fetch statistics success', () => {
+    const statistics = { nbrApplicatons: 10 };
+
+    const action = Actions.statistics.getAllStatisticsSuccess(statistics);
+    const state = EntitiesReducer(testData.statistics, action);
+
+    expect(state).toMatchObject(
+      { statistics: { nbrApplicatons: 10}
     });
   });
 });

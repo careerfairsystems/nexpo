@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
+import { isNil } from 'lodash/fp';
 import { Button, Form, Input, Radio } from 'antd';
 import makeField, { required } from './helper';
 import UploadButton from './UploadButton';
@@ -17,14 +18,7 @@ const TextInput = makeField(Input);
 const TextArea = makeField(Input.TextArea);
 const RadioGroup = makeField(Radio.Group);
 
-const CompanyForm = ({
-  handleSubmit,
-  logoUrl,
-  beforeUpload,
-  onRemove,
-  onCancel,
-  submitting
-}) => (
+const CompanyForm = ({ handleSubmit, onCancel, submitting }) => (
   <Form onSubmit={handleSubmit}>
     <Field
       name="name"
@@ -56,14 +50,10 @@ const CompanyForm = ({
     <Field
       name="logoUrl"
       label="Logo"
-      fileList={logoUrl ? [logoUrl] : []}
-      currentStudent={{}}
-      beforeUpload={beforeUpload}
+      accept=".jpg,.jpeg,.gif,.png"
       component={UploadButton}
-      accept="image/*"
-      onRemove={onRemove}
     />
-    <Button onClick={onCancel}>Cancel</Button>
+    {onCancel && <Button onClick={onCancel}>Cancel</Button>}
     <Button disabled={submitting} htmlType="submit" type="primary">
       Submit
     </Button>
@@ -71,21 +61,28 @@ const CompanyForm = ({
 );
 
 CompanyForm.defaultProps = {
-  logoUrl: null
+  onCancel: null
 };
 
 CompanyForm.propTypes = {
-  beforeUpload: PropTypes.func.isRequired,
-  logoUrl: PropTypes.string,
   handleSubmit: PropTypes.func.isRequired,
-  onCancel: PropTypes.func.isRequired,
-  onRemove: PropTypes.func.isRequired,
+  onCancel: PropTypes.func,
   submitting: PropTypes.bool.isRequired
 };
 
-const mapStateToProps = state => ({
-  formState: state.form.CompanyForm
-});
+const mapStateToProps = (state, props) => {
+  const { initialValues = {} } = props;
+  const { logoUrl: currentLogoUrl } = initialValues;
+
+  let logoUrl = null;
+  if (!isNil(currentLogoUrl))
+    logoUrl = { uid: '-1', name: 'Logotype', url: currentLogoUrl };
+
+  return {
+    initialValues: { ...initialValues, logoUrl },
+    formState: state.form.CompanyForm
+  };
+};
 
 const stateful = connect(mapStateToProps);
 

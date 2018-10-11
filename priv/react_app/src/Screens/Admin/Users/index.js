@@ -9,7 +9,8 @@ const mapStateToProps = (state: State) => ({
 });
 
 const mapDispatchToProps = {
-  getAllUsers: Actions.users.getAllUsers
+  getAllUsers: Actions.users.getAllUsers,
+  deleteUser: Actions.users.destroyUser
 };
 
 const stateful = connect(

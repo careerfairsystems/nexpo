@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import { reset } from 'redux-form';
 import { Actions, Selectors } from '../../Store';
 import CurrentUser from './CurrentUser';
 import type { State } from '../../Store/reducers';
@@ -13,6 +14,7 @@ const mapDispatchToProps = {
   getCurrentUser: Actions.users.getCurrentUser,
   destroyCurrentUser: Actions.users.destroyCurrentUser,
   logout: Actions.auth.logout,
+  resetForm: reset,
   updateCurrentUser: Actions.users.updateCurrentUser,
   updateCurrentStudent: Actions.users.updateCurrentStudent
 };
