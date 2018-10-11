@@ -31,9 +31,13 @@ class CurrentUser extends Component {
   };
 
   updateStudent = values => {
-    const { updateCurrentStudent, resetForm } = this.props;
-    resetForm('student');
+    const { updateCurrentStudent } = this.props;
     return updateCurrentStudent({ student: values });
+  };
+
+  resetStudentForm = () => {
+    const { resetForm } = this.props;
+    resetForm('student');
   };
 
   updateUser = values => {
@@ -72,6 +76,7 @@ class CurrentUser extends Component {
         {!isEmpty(currentStudent) && (
           <StudentForm
             onSubmit={this.updateStudent}
+            onSubmitSuccess={this.resetStudentForm}
             initialValues={omit('year', currentStudent) || {}}
           />
         )}

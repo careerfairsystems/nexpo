@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Field, reduxForm } from 'redux-form';
+import { Field, reduxForm, reset } from 'redux-form';
 import { isNil } from 'lodash/fp';
 import { Button, Form } from 'antd';
 import UploadButton from './UploadButton';
 
-const StudentForm = ({ handleSubmit, action, pristine, submitting }) => (
+const StudentForm = ({ handleSubmit, action, submitting }) => (
   <Form onSubmit={handleSubmit}>
     <Field
       name="resumeSvUrl"
@@ -23,7 +23,7 @@ const StudentForm = ({ handleSubmit, action, pristine, submitting }) => (
       component={UploadButton}
     />
 
-    <Button disabled={pristine} loading={submitting} htmlType="submit">
+    <Button disabled={submitting} htmlType="submit">
       Save CV(s)
     </Button>
   </Form>
@@ -46,7 +46,6 @@ StudentForm.propTypes = {
     })
   }).isRequired,
   handleSubmit: PropTypes.func.isRequired,
-  pristine: PropTypes.bool.isRequired,
   submitting: PropTypes.bool.isRequired
 };
 
@@ -73,4 +72,10 @@ const mapStateToProps = (state, props) => {
 
 const stateful = connect(mapStateToProps);
 
-export default stateful(reduxForm({ form: 'student' })(StudentForm));
+export default stateful(
+  reduxForm({
+    form: 'student',
+    enableReinitialize: true,
+    keepDirtyOnReinitialize: true
+  })(StudentForm)
+);
