@@ -51,12 +51,11 @@ StudentForm.propTypes = {
 };
 
 const mapStateToProps = (state, props) => {
+  const { initialValues = {} } = props;
   const {
-    initialValues: {
-      resumeSvUrl: currentResumeSvUrl,
-      resumeEnUrl: currentResumeEnUrl
-    }
-  } = props;
+    resumeSvUrl: currentResumeSvUrl,
+    resumeEnUrl: currentResumeEnUrl
+  } = initialValues;
 
   let resumeSvUrl = null;
   if (!isNil(currentResumeSvUrl))
@@ -67,7 +66,7 @@ const mapStateToProps = (state, props) => {
     resumeEnUrl = { uid: '-1', name: 'English CV', url: currentResumeEnUrl };
 
   return {
-    initialValues: { ...props.initialValues, resumeSvUrl, resumeEnUrl },
+    initialValues: { ...initialValues, resumeSvUrl, resumeEnUrl },
     formState: state.form.StudentForm
   };
 };

@@ -74,16 +74,15 @@ CompanyForm.propTypes = {
 };
 
 const mapStateToProps = (state, props) => {
-  const {
-    initialValues: { logoUrl: currentLogoUrl }
-  } = props;
+  const { initialValues = {} } = props;
+  const { logoUrl: currentLogoUrl } = initialValues;
 
   let logoUrl = null;
   if (!isNil(currentLogoUrl))
     logoUrl = { uid: '-1', name: 'Logotype', url: currentLogoUrl };
 
   return {
-    initialValues: { ...props.initialValues, logoUrl },
+    initialValues: { ...initialValues, logoUrl },
     formState: state.form.CompanyForm
   };
 };
