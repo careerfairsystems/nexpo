@@ -2,6 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import UserShow from './UserShow';
 import NotFound from '../../../NotFound';
+import LoadingSpinner from '../../../../Components/LoadingSpinner';
 // import HtmlTitle from '../../../Components/HtmlTitle';
 
 it('should render without crashing', () => {
@@ -31,11 +32,26 @@ it('should render NotFound if there is no user', () => {
   expect(wrapper.find(NotFound)).toHaveLength(1);
 });
 
-it('should render user information', () => {
+it('should render LoadingSpinner if fetching is true', () => {
+  const props = {
+    user: {},
+    getUser: jest.fn(),
+    updateUser: jest.fn(),
+    createUser: jest.fn(),
+    fetching: true,
+    resetForm: jest.fn()
+  };
+  const wrapper = shallow(<UserShow id="1" {...props} />);
+
+  expect(wrapper.find(LoadingSpinner)).toHaveLength(1);
+});
+
+it('displayName and roles should function correctly', () => {
   const user = {
     email: 'dev@it',
     firstName: 'Dev',
-    lastName: 'X'
+    lastName: 'X',
+    roles: [{ type: 'admin' }]
   };
   const props = {
     getUser: jest.fn(),
@@ -45,6 +61,8 @@ it('should render user information', () => {
     resetForm: jest.fn()
   };
   const wrapper = shallow(<UserShow id="1" user={user} {...props} />);
-
-  expect(wrapper.contains(<h1>Dev X</h1>)).toBeTruthy();
+  const displayName = wrapper.instance().displayName();
+  const roles = wrapper.instance().roles();
+  expect(roles).toEqual('admin')
+  expect(displayName).toEqual(`${user.firstName} ${user.lastName}`);
 });

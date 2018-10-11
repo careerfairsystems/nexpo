@@ -1,3 +1,4 @@
+import { reset } from 'redux-form';
 import { message } from 'antd';
 import { actionTypes } from '../..';
 import API from '../../../API';
@@ -33,6 +34,7 @@ export function createRole(data) {
       .create(data)
       .then(role => {
         dispatch(createRoleSuccess(role.data));
+        dispatch(reset('role'));
       })
       .catch(() => {
         dispatch(createRoleFailure());

@@ -9,6 +9,7 @@ const mapStateToProps = (state: State) => ({
 });
 
 const mapDispatchToProps = {
+  deleteRole: Actions.roles.destroyRole,
   getAllRoles: Actions.roles.getAllRoles
 };
 
