@@ -40,13 +40,13 @@ class UserShow extends Component {
 
     return (
       <div className="user-show-view">
-        <HtmlTitle title={this.displayName} />
+        <HtmlTitle title={this.displayName()} />
 
         <div>
-          <h1>{this.displayName}</h1>
+          <h1>{this.displayName()}</h1>
           <p>Email: {user.email}</p>
           <p>Phone number: {user.phoneNumber}</p>
-          <p>Roles: {this.roles}</p>
+          <p>Roles: {this.roles()}</p>
           <p>Food Preferences: {user.foodPreferences}</p>
         </div>
         <InvisibleLink to={`/admin/users/${user.id}/edit`}>Edit</InvisibleLink>
