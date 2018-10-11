@@ -35,6 +35,7 @@ const RoleForm = ({ handleSubmit }) => (
       name="permissions"
       label="Permissions:"
       mode="multiple"
+      format={null}
       component={FieldSelect}
     >
       {perms.map(permission => (
@@ -49,15 +50,9 @@ RoleForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired
 };
 
-const mapStateToProps = (state, props) => {
-  const { initialValues = {} } = props;
-  const { permissions = [] } = initialValues;
-
-  return {
-    initialValues: { ...initialValues, permissions },
-    formState: state.form.RoleForm
-  };
-};
+const mapStateToProps = state => ({
+  formState: state.form.RoleForm
+});
 
 const stateful = connect(mapStateToProps);
 
