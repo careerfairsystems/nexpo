@@ -50,7 +50,7 @@ const CompanyForm = ({ handleSubmit, onCancel, submitting }) => (
     <Field
       name="logoUrl"
       label="Logo"
-      accept="image/*"
+      accept=".jpg,.jpeg,.gif,.png"
       component={UploadButton}
     />
     {onCancel && <Button onClick={onCancel}>Cancel</Button>}
