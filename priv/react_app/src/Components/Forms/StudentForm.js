@@ -1,25 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Field, reduxForm, reset } from 'redux-form';
+import { Field, reduxForm } from 'redux-form';
 import { isNil } from 'lodash/fp';
 import { Button, Form } from 'antd';
 import UploadButton from './UploadButton';
 
-const StudentForm = ({ handleSubmit, action, submitting }) => (
+const StudentForm = ({ handleSubmit, submitting }) => (
   <Form onSubmit={handleSubmit}>
     <Field
       name="resumeSvUrl"
       label="Swedish CV"
       accept=".pdf"
-      action={action}
       component={UploadButton}
     />
     <Field
       name="resumeEnUrl"
       label="English CV"
       accept=".pdf"
-      action={action}
       component={UploadButton}
     />
 
@@ -29,12 +27,7 @@ const StudentForm = ({ handleSubmit, action, submitting }) => (
   </Form>
 );
 
-StudentForm.defaultProps = {
-  action: ''
-};
-
 StudentForm.propTypes = {
-  action: PropTypes.string,
   initialValues: PropTypes.shape({
     resumeEnUrl: PropTypes.shape({
       name: PropTypes.string,

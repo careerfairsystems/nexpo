@@ -1,14 +1,13 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { isEmpty } from 'lodash/fp';
 import { Button, Icon, Upload } from 'antd';
 import makeField from './helper';
 
-const UploadButton = ({ accept, action, value, onChange }) => (
+const UploadButton = ({ accept, value, onChange }) => (
   <Upload
     key="uploadButton"
     accept={accept}
-    action={action}
     fileList={isEmpty(value) ? [] : [value]}
     beforeUpload={file => {
       onChange(file);
@@ -22,5 +21,13 @@ const UploadButton = ({ accept, action, value, onChange }) => (
     </Button>
   </Upload>
 );
+
+UploadButton.defaultProps = {};
+
+UploadButton.propTypes = {
+  accept: PropTypes.string.isRequired,
+  value: PropTypes.oneOfType([PropTypes.object, PropTypes.string]).isRequired,
+  onChange: PropTypes.func.isRequired
+};
 
 export default makeField(UploadButton);

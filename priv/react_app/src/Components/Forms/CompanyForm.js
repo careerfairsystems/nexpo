@@ -18,7 +18,7 @@ const TextInput = makeField(Input);
 const TextArea = makeField(Input.TextArea);
 const RadioGroup = makeField(Radio.Group);
 
-const CompanyForm = ({ action, handleSubmit, onCancel, submitting }) => (
+const CompanyForm = ({ handleSubmit, onCancel, submitting }) => (
   <Form onSubmit={handleSubmit}>
     <Field
       name="name"
@@ -51,7 +51,6 @@ const CompanyForm = ({ action, handleSubmit, onCancel, submitting }) => (
       name="logoUrl"
       label="Logo"
       accept="image/*"
-      action={action}
       component={UploadButton}
     />
     {onCancel && <Button onClick={onCancel}>Cancel</Button>}
@@ -62,12 +61,10 @@ const CompanyForm = ({ action, handleSubmit, onCancel, submitting }) => (
 );
 
 CompanyForm.defaultProps = {
-  action: '',
   onCancel: null
 };
 
 CompanyForm.propTypes = {
-  action: PropTypes.string,
   handleSubmit: PropTypes.func.isRequired,
   onCancel: PropTypes.func,
   submitting: PropTypes.bool.isRequired
