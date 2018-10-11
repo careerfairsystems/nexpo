@@ -145,6 +145,7 @@ defmodule Nexpo.CompanyController do
     Repo.delete!(company)
 
     send_resp(conn, :no_content, "")
+  end
 
   defp delete_file?(model, params, attr) do
     case Map.get(model, attr) do
