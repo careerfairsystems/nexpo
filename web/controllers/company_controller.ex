@@ -80,23 +80,7 @@ defmodule Nexpo.CompanyController do
     render(conn, "show.json", company: company)
   end
 
-<<<<<<< HEAD
   def update(conn, %{"id" => id, "company" => company_params}, _user, _claims) do
-    Company
-    |> Repo.get(id)
-    |> Company.changeset(company_params)
-    |> update_company(conn)
-  end
-
-  def update(conn, params, _user, _claims) do
-    {id, company_params} = Map.pop(params, "id")
-    Company
-    |> Repo.get(id)
-    |> Company.changeset(company_params)
-    |> update_company(conn)
-  end
-=======
-  def update(conn, %{"id" => id, "company" => company_params}) do
     company = Repo.get!(Company, id)
 
     deleted_files = company_params
@@ -111,7 +95,6 @@ defmodule Nexpo.CompanyController do
     Enum.each(deleted_files, fn {k, _v} ->
       delete_file?(company, company_params, String.to_atom(k))
     end)
->>>>>>> master
 
     case Repo.update(changeset) do
       {:ok, company} ->
@@ -133,7 +116,6 @@ defmodule Nexpo.CompanyController do
     send_resp(conn, :no_content, "")
   end
 
-<<<<<<< HEAD
   def show_me(conn, %{}, user, _claims) do
     representative = Repo.get_by!(Representative, %{user_id: user.id})
     company = Ecto.assoc(representative, :company) |> Repo.one |> Repo.preload([:industries, :job_offers, :users, :entries, :representatives, :desired_programmes, :student_sessions, :student_session_applications, :student_session_time_slots])
@@ -163,7 +145,7 @@ defmodule Nexpo.CompanyController do
     Repo.delete!(company)
 
     send_resp(conn, :no_content, "")
-=======
+
   defp delete_file?(model, params, attr) do
     case Map.get(model, attr) do
       nil -> nil
@@ -179,7 +161,6 @@ defmodule Nexpo.CompanyController do
         end
       _ -> nil
     end
->>>>>>> master
   end
 
   @apidoc
