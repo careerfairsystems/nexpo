@@ -124,6 +124,7 @@ it('renders routes without crashing', () => {
   found(mount(route('/admin/companies/1/edit')));
   found(mount(route('/admin/users')));
   found(mount(route('/admin/users/1')));
+  found(mount(route('/admin/users/1/edit')));
   found(mount(route('/admin/roles')));
   found(mount(route('/admin/roles/1')));
   found(mount(route('/admin/statistics')));
