@@ -5,6 +5,7 @@ import mailtemplates from './mailtemplates';
 import roles from './roles';
 import signup from './signup';
 import session from './session';
+import statistics from './statistics';
 import studentSessions from './studentSessions';
 import users from './users';
 
@@ -16,6 +17,7 @@ export default {
   roles,
   signup,
   session,
+  statistics,
   studentSessions,
   users
 };

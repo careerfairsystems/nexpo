@@ -16,6 +16,7 @@ export type EntitiesState = {
   mailtemplates: {},
   roles: {},
   users: {},
+  statistics: {},
   studentSessionApplications: {},
   students: {}
 };
@@ -29,6 +30,7 @@ const initialState = {
   mailtemplates: {},
   roles: {},
   users: {},
+  statistics: {},
   studentSessionApplications: {},
   students: {}
 };
@@ -152,6 +154,11 @@ export const EntitiesReducer = (
     case actionTypes.PUT_CURRENT_STUDENT_SUCCESS: {
       normalized = normalize(action.student, Schema.studentSchema());
       return defaultsDeep(state, camelCaseKeys(normalized.entities));
+    }
+    case actionTypes.FETCH_STATISTICS_SUCCESS: {
+      // normalized = normalize(action.statistics, Schema.statisticsSchema());
+      // return defaultsDeep(state, camelCaseKeys(normalized.entities));
+      return { ...state, statistics: camelCaseKeys(action.statistics) };
     }
     default:
       return state;
