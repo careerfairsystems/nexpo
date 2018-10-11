@@ -51,11 +51,7 @@ class CompanyEdit extends Component {
         <HtmlTitle title={name} />
         <div>
           <h1>{name}</h1>
-          <CompanyForm
-            onSubmit={this.updateCompany}
-            initialValues={{ ...company, logoUrl: [] }}
-            logoUrl={company.logoUrl}
-          />
+          <CompanyForm onSubmit={this.updateCompany} initialValues={company} />
           <br />
           <br />
           <h2>Invite Company Representatives</h2>
