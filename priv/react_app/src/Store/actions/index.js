@@ -7,6 +7,7 @@ import DeadlinesActions from './Deadlines';
 import MailtemplatesActions from './Mailtemplates';
 import AccountActions from './Accounts';
 import StudentSessionsActions from './StudentSessions';
+import StatisticsActions from './Statistics';
 
 export default {
   auth: AuthActions,
@@ -17,5 +18,6 @@ export default {
   deadlines: DeadlinesActions,
   mailtemplates: MailtemplatesActions,
   accounts: AccountActions,
+  statistics: StatisticsActions,
   studentSessions: StudentSessionsActions
 };

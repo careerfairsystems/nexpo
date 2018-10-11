@@ -91,7 +91,8 @@ const state = {
       '3': { value: '61', id: 3, company: 2, attribute: 1 },
       '4': { value: '66', id: 4, company: 2, attribute: 2 },
       '5': { value: '29', id: 5, company: 1, attribute: 1 }
-    }
+    },
+    statistics: {}
   },
   auth: {
     error: false,
@@ -126,6 +127,7 @@ it('renders routes without crashing', () => {
   found(mount(route('/admin/users/1/edit')));
   found(mount(route('/admin/roles')));
   found(mount(route('/admin/roles/1')));
+  found(mount(route('/admin/statistics')));
   found(mount(route('/login')));
   found(mount(route('/logout')));
   found(mount(route('/signup')));

@@ -26,9 +26,7 @@ import Users from '../Screens/Admin/Users';
 import { UserEdit, UserShow } from '../Screens/Admin/User';
 import CurrentUser from '../Screens/CurrentUser';
 import Companies from '../Screens/Admin/Companies';
-import { CompanyNew } from '../Screens/Admin/Company';
-import { CompanyEdit } from '../Screens/Admin/Company';
-import { CompanyShow } from '../Screens/Admin/Company';
+import { CompanyEdit, CompanyNew, CompanyShow } from '../Screens/Admin/Company';
 import SessionHome from '../Screens/Session/SessionHome';
 import SessionApplication from '../Screens/Session/SessionApplication';
 import SessionApplications from '../Screens/Session/SessionApplications';
@@ -41,6 +39,7 @@ import NotFound from '../Screens/NotFound';
 
 import HtmlTitle from '../Components/HtmlTitle';
 import { hasPermission } from '../Util/PermissionsHelper';
+import Statistics from '../Screens/Admin/Statistics';
 
 const { Header, Content, Footer } = Layout;
 
@@ -80,6 +79,7 @@ const routes = (
       component={SessionApplications}
     />
     <PrivateRoute path="/session/companies" component={SessionCompanies} />
+    <PrivateRoute path="/admin/statistics" component={Statistics} />
     <Route component={NotFound} />
   </Switch>
 );
@@ -185,6 +185,10 @@ class App extends Component {
                   this.restrictedMenuItem({
                     route: 'admin/deadlines',
                     title: 'Deadlines'
+                  }),
+                  this.restrictedMenuItem({
+                    route: 'admin/statistics',
+                    title: 'Statistics'
                   })
                 ]
               })}
