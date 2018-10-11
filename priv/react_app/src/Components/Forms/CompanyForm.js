@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Field, reduxForm, formValueSelector } from 'redux-form';
+import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
-import { isEmpty } from 'lodash/fp';
+import { isNil } from 'lodash/fp';
 import { Button, Form, Input, Radio } from 'antd';
 import makeField, { required } from './helper';
 import UploadButton from './UploadButton';
@@ -18,13 +18,7 @@ const TextInput = makeField(Input);
 const TextArea = makeField(Input.TextArea);
 const RadioGroup = makeField(Radio.Group);
 
-const CompanyForm = ({
-  handleSubmit,
-  onCancel,
-  submitting,
-  fileList,
-  logoUrl
-}) => (
+const CompanyForm = ({ handleSubmit, onCancel, submitting }) => (
   <Form onSubmit={handleSubmit}>
     <Field
       name="name"
@@ -56,11 +50,8 @@ const CompanyForm = ({
     <Field
       name="logoUrl"
       label="Logo"
-      fileList={fileList}
-      currentValue={logoUrl}
-      currentValueText="Current Logo"
+      accept=".jpg,.jpeg,.gif,.png"
       component={UploadButton}
-      accept="image/*"
     />
     {onCancel && <Button onClick={onCancel}>Cancel</Button>}
     <Button disabled={submitting} htmlType="submit" type="primary">
@@ -70,24 +61,25 @@ const CompanyForm = ({
 );
 
 CompanyForm.defaultProps = {
-  fileList: [],
-  logoUrl: '',
   onCancel: null
 };
 
 CompanyForm.propTypes = {
-  fileList: PropTypes.array,
   handleSubmit: PropTypes.func.isRequired,
-  logoUrl: PropTypes.string,
   onCancel: PropTypes.func,
   submitting: PropTypes.bool.isRequired
 };
 
-const selector = formValueSelector('company'); // <-- same as form name
-const mapStateToProps = state => {
-  const logoUrl = selector(state, 'logoUrl');
+const mapStateToProps = (state, props) => {
+  const { initialValues = {} } = props;
+  const { logoUrl: currentLogoUrl } = initialValues;
+
+  let logoUrl = null;
+  if (!isNil(currentLogoUrl))
+    logoUrl = { uid: '-1', name: 'Logotype', url: currentLogoUrl };
+
   return {
-    fileList: isEmpty(logoUrl) ? [] : [logoUrl],
+    initialValues: { ...initialValues, logoUrl },
     formState: state.form.CompanyForm
   };
 };

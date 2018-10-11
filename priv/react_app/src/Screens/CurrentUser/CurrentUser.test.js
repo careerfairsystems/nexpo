@@ -62,10 +62,9 @@ describe('userform should function correctly', () => {
 
   it('should update student and reset state', () => {
     const wrapper = shallow(<CurrentUser {...props} />);
-    const { updateCurrentStudent, resetForm } = props;
+    const { updateCurrentStudent } = props;
     const resumeEnUrl = 'placeholder.com';
     wrapper.instance().updateStudent({ resumeEnUrl });
-    expect(resetForm).toHaveBeenCalledTimes(1);
     expect(updateCurrentStudent).toHaveBeenCalledWith({
       student: { resumeEnUrl }
     });
