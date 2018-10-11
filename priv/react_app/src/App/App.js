@@ -79,12 +79,9 @@ const routes = (
       component={SessionApplications}
     />
     <PrivateRoute path="/session/companies" component={SessionCompanies} />
-<<<<<<< HEAD
     <PrivateRoute exact path="/company/edit" component={CurrentCompanyEdit} />
     <PrivateRoute path="/company" component={CurrentCompanyShow} />
-=======
     <PrivateRoute path="/admin/statistics" component={Statistics} />
->>>>>>> master
     <Route component={NotFound} />
   </Switch>
 );
