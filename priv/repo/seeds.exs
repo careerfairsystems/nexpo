@@ -111,9 +111,9 @@ SeedEntries.seed(Repo, CompanyEntry, 100)
 # Create some mailtemplates
 alias Nexpo.Mailtemplate
 Repo.insert!(%Mailtemplate{name: "Pre Signup", subject: "Nexpo | Verify your email!", content: "<h1>Welcome!</h1><a href=<%= signup_url(@user) %>>link</a>", signature: ""})
-Repo.insert!(%Mailtemplate{name: "Completed Signup", subject: "Nexpo | Welcome to Arkad!", content: "<h1>Welcome!</h1><a href=<%= application_url() %>>login</a>", signature: ""})
+Repo.insert!(%Mailtemplate{name: "Completed Signup", subject: "Nexpo | Welcome to ARKAD!", content: "<h1>Welcome!</h1><a href=<%= application_url() %>>login</a>", signature: ""})
 Repo.insert!(%Mailtemplate{name: "Reset Password", subject: "Nexpo | Reset password!", content: "<h1>Reset Password!</h1><a href=<%= reset_password_url(@user) %>>Reset</a>", signature: ""})
-Repo.insert!(%Mailtemplate{name: "Hosts Welcome", subject: "Arkad | Welcome Hosts!", content: "<h1>Welcome <%= @user.first_name %></h1>", signature: "Best Regards\nhosts.arkad@tlth.se"})
+Repo.insert!(%Mailtemplate{name: "Hosts Welcome", subject: "ARKAD | Welcome Hosts!", content: "<h1>Welcome <%= @user.first_name %></h1>", signature: "Best Regards\nhosts.arkad@tlth.se"})
 
 # Create some deadlines
 alias Nexpo.Deadline

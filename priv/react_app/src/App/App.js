@@ -40,6 +40,7 @@ import NotFound from '../Screens/NotFound';
 
 import HtmlTitle from '../Components/HtmlTitle';
 import { hasPermission } from '../Util/PermissionsHelper';
+import Statistics from '../Screens/Admin/Statistics';
 
 const { Header, Content, Footer } = Layout;
 
@@ -78,8 +79,12 @@ const routes = (
       component={SessionApplications}
     />
     <PrivateRoute path="/session/companies" component={SessionCompanies} />
+<<<<<<< HEAD
     <PrivateRoute exact path="/company/edit" component={CurrentCompanyEdit} />
     <PrivateRoute path="/company" component={CurrentCompanyShow} />
+=======
+    <PrivateRoute path="/admin/statistics" component={Statistics} />
+>>>>>>> master
     <Route component={NotFound} />
   </Switch>
 );
@@ -185,6 +190,10 @@ class App extends Component {
                   this.restrictedMenuItem({
                     route: 'admin/deadlines',
                     title: 'Deadlines'
+                  }),
+                  this.restrictedMenuItem({
+                    route: 'admin/statistics',
+                    title: 'Statistics'
                   })
                 ]
               })}

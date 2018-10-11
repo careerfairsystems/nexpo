@@ -2,7 +2,7 @@ defmodule Nexpo.CompanyController do
   use Nexpo.Web, :controller
   use Guardian.Phoenix.Controller
 
-  alias Nexpo.{Company, Representative}
+  alias Nexpo.{Company, ProfileImage, Representative}
   alias Guardian.Plug.{EnsurePermissions}
 
   plug EnsurePermissions, [handler: Nexpo.SessionController,
@@ -80,6 +80,7 @@ defmodule Nexpo.CompanyController do
     render(conn, "show.json", company: company)
   end
 
+<<<<<<< HEAD
   def update(conn, %{"id" => id, "company" => company_params}, _user, _claims) do
     Company
     |> Repo.get(id)
@@ -94,8 +95,24 @@ defmodule Nexpo.CompanyController do
     |> Company.changeset(company_params)
     |> update_company(conn)
   end
+=======
+  def update(conn, %{"id" => id, "company" => company_params}) do
+    company = Repo.get!(Company, id)
 
-  defp update_company(changeset, conn) do
+    deleted_files = company_params
+      |> Enum.filter(fn {k, v} ->
+        k in ["logo_url"] and v == "null" end)
+      |> Enum.map(fn {k, _v} -> {k, nil} end)
+      |> Map.new
+
+    company_params = Map.merge(company_params, deleted_files)
+    changeset = Company.changeset(company, company_params)
+
+    Enum.each(deleted_files, fn {k, _v} ->
+      delete_file?(company, company_params, String.to_atom(k))
+    end)
+>>>>>>> master
+
     case Repo.update(changeset) do
       {:ok, company} ->
         render(conn, "show.json", company: company)
@@ -116,6 +133,7 @@ defmodule Nexpo.CompanyController do
     send_resp(conn, :no_content, "")
   end
 
+<<<<<<< HEAD
   def show_me(conn, %{}, user, _claims) do
     representative = Repo.get_by!(Representative, %{user_id: user.id})
     company = Ecto.assoc(representative, :company) |> Repo.one |> Repo.preload([:industries, :job_offers, :users, :entries, :representatives, :desired_programmes, :student_sessions, :student_session_applications, :student_session_time_slots])
@@ -145,6 +163,23 @@ defmodule Nexpo.CompanyController do
     Repo.delete!(company)
 
     send_resp(conn, :no_content, "")
+=======
+  defp delete_file?(model, params, attr) do
+    case Map.get(model, attr) do
+      nil -> nil
+      existing_file -> delete_file!(model, params, attr, existing_file)
+    end
+  end
+
+  defp delete_file!(model, params, attr, file) do
+    case Map.get(params, Atom.to_string(attr)) do
+      nil ->
+        case attr do
+          :logo_url -> ProfileImage.delete({file, model})
+        end
+      _ -> nil
+    end
+>>>>>>> master
   end
 
   @apidoc
