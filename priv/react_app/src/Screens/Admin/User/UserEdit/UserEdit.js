@@ -7,6 +7,7 @@ import LoadingSpinner from '../../../../Components/LoadingSpinner';
 
 import NotFound from '../../../NotFound';
 import UserForm from '../../../../Components/Forms/UserForm';
+import '../User.css';
 
 /**
  * Responsible for rendering a user. User id is recieved via url
@@ -18,26 +19,22 @@ class UserEdit extends Component {
   }
 
   updateUser = values => {
-    const { id, updateUser } = this.props;
-    const { user: stateUser } = this.state;
-    const newUser = {
-      ...values,
-      ...stateUser
-    };
-
-    updateUser(id, { user: newUser });
+    const { id, updateUser, history } = this.props;
+    updateUser(id, { user: values });
+    history.push(`/admin/users/${id}`);
   };
 
   render() {
     const { user, fetching } = this.props;
-    const { name } = user;
+
     if (fetching) return <LoadingSpinner />;
     if (isEmpty(user) || isNil(user)) return <NotFound />;
+
     return (
       <div className="user-edit-view">
-        <HtmlTitle title={name} />
+        <HtmlTitle title={user.name} />
         <div>
-          <h1>{name}</h1>
+          <h1>{user.name}</h1>
           <UserForm onSubmit={this.updateUser} initialValues={user} />
         </div>
       </div>
@@ -46,19 +43,15 @@ class UserEdit extends Component {
 }
 
 UserEdit.defaultProps = {
-  id: null,
-  match: {
-    path: ''
-  }
+  id: null
 };
+
 UserEdit.propTypes = {
   id: PropTypes.string,
-  user: PropTypes.object.isRequired,
+  user: PropTypes.shape({ name: PropTypes.string }).isRequired,
   fetching: PropTypes.bool.isRequired,
   getUser: PropTypes.func.isRequired,
-  match: PropTypes.shape({
-    path: PropTypes.string
-  }),
+  history: PropTypes.shape({ push: PropTypes.func }).isRequired,
   updateUser: PropTypes.func.isRequired
 };
 

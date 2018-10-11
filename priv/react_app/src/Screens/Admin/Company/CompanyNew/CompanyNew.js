@@ -15,25 +15,14 @@ class CompanyNew extends Component {
   render() {
     return (
       <div className="company-edit-view">
-        <div>
-          <CompanyForm onSubmit={this.createCompany} />
-        </div>
+        <CompanyForm onSubmit={this.createCompany} />
       </div>
     );
   }
 }
 
-CompanyNew.defaultProps = {
-  match: {
-    path: ''
-  }
-};
-
 CompanyNew.propTypes = {
-  createCompany: PropTypes.func.isRequired,
-  match: PropTypes.shape({
-    path: PropTypes.string
-  })
+  createCompany: PropTypes.func.isRequired
 };
 
 export default CompanyNew;
