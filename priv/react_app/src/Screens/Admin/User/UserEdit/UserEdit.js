@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { isEmpty, isNil } from 'lodash/fp';
 import HtmlTitle from '../../../../Components/HtmlTitle';
 import LoadingSpinner from '../../../../Components/LoadingSpinner';
-import '../User.css';
 
 import NotFound from '../../../NotFound';
 import UserForm from '../../../../Components/Forms/UserForm';

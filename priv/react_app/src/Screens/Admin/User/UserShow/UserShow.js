@@ -5,7 +5,6 @@ import { isEmpty, isNil, map } from 'lodash/fp';
 import HtmlTitle from '../../../../Components/HtmlTitle';
 import LoadingSpinner from '../../../../Components/LoadingSpinner';
 import InvisibleLink from '../../../../Components/InvisibleLink';
-import '../User.css';
 
 import NotFound from '../../../NotFound';
 
