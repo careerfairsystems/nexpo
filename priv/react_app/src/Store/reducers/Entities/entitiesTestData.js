@@ -177,6 +177,9 @@ const testData = {
         entries: [{ id: 4, value: '1', company: { id: 2, name: 'Google' } }]
       }
     ]
+  },
+  statistics: {
+    nbrApplicatons: 5
   }
 };
 
