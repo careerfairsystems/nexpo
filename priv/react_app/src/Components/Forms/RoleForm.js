@@ -2,17 +2,30 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
-import { Button, Form, Input, Radio } from 'antd';
+import { Button, Form, Input, Select } from 'antd';
 
 import makeField from './helper';
 
 const TextInput = makeField(Input);
-const RadioGroup = makeField(Radio.Group);
+const FieldSelect = makeField(Select);
 
-const options = [
-  { value: ['read_all'], label: 'read_all' },
-  { value: ['write_all'], label: 'write_all' },
-  { value: [''], label: 'no permissions' }
+const permissions = [
+  'read_all',
+  'write_all',
+  'read_users',
+  'write_users',
+  'read_roles',
+  'write_roles',
+  'read_events',
+  'write_events',
+  'read_companies',
+  'write_companies',
+  'read_categories',
+  'write_categories',
+  'read_sessions',
+  'write_sessions',
+  'read_hosts',
+  'write_hosts'
 ];
 
 const RoleForm = ({ handleSubmit }) => (
@@ -21,9 +34,13 @@ const RoleForm = ({ handleSubmit }) => (
     <Field
       name="permissions"
       label="Permissions:"
-      component={RadioGroup}
-      options={options}
-    />
+      mode="multiple"
+      component={FieldSelect}
+    >
+      {permissions.map(permission => (
+        <Select.Option key={permission}>{permission}</Select.Option>
+      ))}
+    </Field>
     <Button htmlType="submit">Submit</Button>
   </Form>
 );

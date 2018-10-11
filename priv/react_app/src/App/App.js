@@ -21,7 +21,7 @@ import Mailtemplate from '../Screens/Admin/Mailtemplate';
 import Deadlines from '../Screens/Admin/Deadlines';
 import Deadline from '../Screens/Admin/Deadline';
 import Roles from '../Screens/Admin/Roles';
-import Role from '../Screens/Admin/Role';
+import { RoleEdit, RoleShow } from '../Screens/Admin/Role';
 import Users from '../Screens/Admin/Users';
 import { UserEdit, UserShow } from '../Screens/Admin/User';
 import CurrentUser from '../Screens/CurrentUser';
@@ -43,44 +43,43 @@ import Statistics from '../Screens/Admin/Statistics';
 
 const { Header, Content, Footer } = Layout;
 
+const privateRoutes = [
+  { path: '/admin', component: AdminHome },
+  { path: '/admin/categories', component: Categories },
+  { path: '/admin/categories/:id', component: Category },
+  { path: '/admin/companies', component: Companies },
+  { path: '/admin/companies/new', component: CompanyNew },
+  { path: '/admin/companies/:id', component: CompanyShow },
+  { path: '/admin/companies/:id/edit', component: CompanyEdit },
+  { path: '/admin/mailtemplates', component: Mailtemplates },
+  { path: '/admin/mailtemplates/:id', component: Mailtemplate },
+  { path: '/admin/deadlines', component: Deadlines },
+  { path: '/admin/deadlines/:id', component: Deadline },
+  { path: '/admin/users', component: Users },
+  { path: '/admin/users/:id', component: UserShow },
+  { path: '/admin/users/:id/edit', component: UserEdit },
+  { path: '/admin/roles', component: Roles },
+  { path: '/admin/roles/:id', component: RoleShow },
+  { path: '/admin/roles/:id/edit', component: RoleEdit },
+  { path: '/admin/statistics', component: Statistics },
+  { path: '/session', component: SessionHome },
+  { path: '/session/application', component: SessionApplication },
+  { path: '/session/applications', component: SessionApplications },
+  { path: '/session/companies', component: SessionCompanies }
+];
+
 const routes = (
   <Switch>
     <PrivateRoute exact path="/" component={Home} />
-    <Route exact path="/info" component={Info} />
-    <PrivateRoute exact path="/admin" component={AdminHome} />
-    <PrivateRoute exact path="/admin/categories" component={Categories} />
-    <PrivateRoute path="/admin/categories/:id" component={Category} />
-    <PrivateRoute exact path="/admin/companies" component={Companies} />
-    <PrivateRoute exact path="/admin/companies/new" component={CompanyNew} />
-    <PrivateRoute
-      exact
-      path="/admin/companies/:id/edit"
-      component={CompanyEdit}
-    />
-    <PrivateRoute path="/admin/companies/:id" component={CompanyShow} />
-    <PrivateRoute exact path="/admin/mailtemplates" component={Mailtemplates} />
-    <PrivateRoute path="/admin/mailtemplates/:id" component={Mailtemplate} />
-    <PrivateRoute exact path="/admin/deadlines" component={Deadlines} />
-    <PrivateRoute path="/admin/deadlines/:id" component={Deadline} />
-    <PrivateRoute exact path="/admin/users" component={Users} />
-    <PrivateRoute exact path="/admin/users/:id/edit" component={UserEdit} />
-    <PrivateRoute path="/admin/users/:id" component={UserShow} />
-    <PrivateRoute exact path="/admin/roles" component={Roles} />
-    <PrivateRoute path="/admin/roles/:id" component={Role} />
-    <PrivateRoute path="/admin/roles/:id/#edit" component={Role} />
+    <Route path="/info" component={Info} />
+    {privateRoutes.map(props => (
+      <PrivateRoute key={props.path} exact {...props} />
+    ))}
     <Route path="/login" component={Login} />
     <Route path="/logout" component={Logout} />
     <Route path="/signup" component={Signup} />
     <Route path="/forgot-password" component={ForgotPassword} />
     <Route path="/user" component={CurrentUser} />
-    <PrivateRoute exact path="/session" component={SessionHome} />
-    <PrivateRoute path="/session/application" component={SessionApplication} />
-    <PrivateRoute
-      path="/session/applications"
-      component={SessionApplications}
-    />
-    <PrivateRoute path="/session/companies" component={SessionCompanies} />
-    <PrivateRoute path="/admin/statistics" component={Statistics} />
     <Route component={NotFound} />
   </Switch>
 );
