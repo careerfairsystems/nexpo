@@ -1,6 +1,5 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import Input from 'antd/lib/input';
 import ForgotPasswordEnterEmail from './ForgotPasswordEnterEmail';
 import ForgotPasswordForm from '../Forms/ForgotPasswordForm';
 import { SuccessMessage } from '../SuccessMessage/SuccessMessage';
