@@ -3,6 +3,7 @@ defmodule Nexpo.StudentController do
   use Guardian.Phoenix.Controller
 
   alias Nexpo.Student
+  alias Nexpo.{CvSv, CvEn}
   alias Guardian.Plug.{EnsurePermissions}
 
   plug EnsurePermissions, [handler: Nexpo.SessionController,
@@ -54,12 +55,25 @@ defmodule Nexpo.StudentController do
         conn
         |> put_status(:unprocessable_entity)
         |> render(Nexpo.ChangesetView, "error.json", changeset: changeset)
+      end
     end
-  end
+
 
   def update_student(conn, %{"student" => student_params}, user, _claims) do
     student = Repo.get_by!(Student, %{user_id: user.id})
+
+    deleted_files = student_params
+      |> Enum.filter(fn {k, v} ->
+        k in ["resume_sv_url", "resume_en_url"] and v == "null" end)
+      |> Enum.map(fn {k, _v} -> {k, nil} end)
+      |> Map.new
+
+    student_params = Map.merge(student_params, deleted_files)
     changeset = Student.changeset(student, student_params)
+
+    Enum.each(deleted_files, fn {k, _v} ->
+      delete_file?(student, student_params, String.to_atom(k))
+    end)
 
     case Repo.update(changeset) do
       {:ok, student} ->
@@ -79,5 +93,23 @@ defmodule Nexpo.StudentController do
     Repo.delete!(student)
 
     send_resp(conn, :no_content, "")
+  end
+
+  defp delete_file?(model, params, attr) do
+    case Map.get(model, attr) do
+      nil -> nil
+      existing_cv -> delete_file!(model, params, attr, existing_cv)
+    end
+  end
+
+  defp delete_file!(model, params, attr, file) do
+    case Map.get(params, Atom.to_string(attr)) do
+      nil ->
+        case attr do
+          :resume_sv_url -> CvSv.delete({file, model})
+          :resume_en_url -> CvEn.delete({file, model})
+        end
+      _ -> nil
+    end
   end
 end
