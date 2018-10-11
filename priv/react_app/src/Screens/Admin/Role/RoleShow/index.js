@@ -9,19 +9,17 @@ const mapStateToProps = (state, props) => {
   const roleId = props.match.params.id;
   const role = state.entities.roles[roleId] || {};
 
-  const users = denormalize(
+  const { users } = denormalize(
     { users: role.users },
     Schema.roleSchema(),
     state.entities
   );
 
-  return { id: roleId, role, users, fetching };
+  return { id: roleId, role: { ...role, users }, fetching };
 };
 
 const mapDispatchToProps = {
-  getRole: Actions.roles.getRole,
-  createRole: Actions.roles.createRole,
-  updateRole: Actions.roles.updateRole
+  getRole: Actions.roles.getRole
 };
 
 const stateful = connect(
