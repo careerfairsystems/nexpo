@@ -9,7 +9,7 @@ import makeField from './helper';
 const TextInput = makeField(Input);
 const FieldSelect = makeField(Select);
 
-const permissions = [
+const perms = [
   'read_all',
   'write_all',
   'read_users',
@@ -30,14 +30,14 @@ const permissions = [
 
 const RoleForm = ({ handleSubmit }) => (
   <Form onSubmit={handleSubmit}>
-    <Field name="type" label="Name:" component={TextInput} />
+    <Field name="type" label="Type:" component={TextInput} />
     <Field
       name="permissions"
       label="Permissions:"
       mode="multiple"
       component={FieldSelect}
     >
-      {permissions.map(permission => (
+      {perms.map(permission => (
         <Select.Option key={permission}>{permission}</Select.Option>
       ))}
     </Field>
@@ -49,9 +49,15 @@ RoleForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired
 };
 
-const mapStateToProps = state => ({
-  formState: state.form.RoleForm
-});
+const mapStateToProps = (state, props) => {
+  const { initialValues = {} } = props;
+  const { permissions = [] } = initialValues;
+
+  return {
+    initialValues: { ...initialValues, permissions },
+    formState: state.form.RoleForm
+  };
+};
 
 const stateful = connect(mapStateToProps);
 

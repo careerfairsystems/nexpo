@@ -81,9 +81,11 @@ class Roles extends Component {
             }))
           )}
         />
-        <Button onClick={() => null} type="primary">
-          New role
-        </Button>
+        <InvisibleLink to="/admin/roles/new">
+          <Button onClick={() => null} type="primary">
+            New role
+          </Button>
+        </InvisibleLink>
       </div>
     );
   }

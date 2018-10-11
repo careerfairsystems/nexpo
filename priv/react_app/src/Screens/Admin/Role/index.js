@@ -1,4 +1,5 @@
+import RoleNew from './RoleNew';
 import RoleShow from './RoleShow';
 import RoleEdit from './RoleEdit';
 
-export { RoleShow, RoleEdit };
+export { RoleNew, RoleShow, RoleEdit };

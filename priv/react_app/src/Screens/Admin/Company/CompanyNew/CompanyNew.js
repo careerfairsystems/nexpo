@@ -14,7 +14,7 @@ class CompanyNew extends Component {
 
   render() {
     return (
-      <div className="company-edit-view">
+      <div className="company-new-view">
         <CompanyForm onSubmit={this.createCompany} />
       </div>
     );

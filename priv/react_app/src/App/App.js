@@ -21,12 +21,12 @@ import Mailtemplate from '../Screens/Admin/Mailtemplate';
 import Deadlines from '../Screens/Admin/Deadlines';
 import Deadline from '../Screens/Admin/Deadline';
 import Roles from '../Screens/Admin/Roles';
-import { RoleEdit, RoleShow } from '../Screens/Admin/Role';
+import { RoleNew, RoleShow, RoleEdit } from '../Screens/Admin/Role';
 import Users from '../Screens/Admin/Users';
-import { UserEdit, UserShow } from '../Screens/Admin/User';
+import { UserShow, UserEdit } from '../Screens/Admin/User';
 import CurrentUser from '../Screens/CurrentUser';
 import Companies from '../Screens/Admin/Companies';
-import { CompanyEdit, CompanyNew, CompanyShow } from '../Screens/Admin/Company';
+import { CompanyNew, CompanyShow, CompanyEdit } from '../Screens/Admin/Company';
 import SessionHome from '../Screens/Session/SessionHome';
 import SessionApplication from '../Screens/Session/SessionApplication';
 import SessionApplications from '../Screens/Session/SessionApplications';
@@ -59,6 +59,7 @@ const privateRoutes = [
   { path: '/admin/users/:id', component: UserShow },
   { path: '/admin/users/:id/edit', component: UserEdit },
   { path: '/admin/roles', component: Roles },
+  { path: '/admin/roles/new', component: RoleNew },
   { path: '/admin/roles/:id', component: RoleShow },
   { path: '/admin/roles/:id/edit', component: RoleEdit },
   { path: '/admin/statistics', component: Statistics },
