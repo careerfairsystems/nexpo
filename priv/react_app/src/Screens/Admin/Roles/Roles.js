@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Popconfirm from 'antd/lib/popconfirm';
 import { sortBy } from 'lodash/fp';
-import Table from 'antd/lib/table';
-import Button from 'antd/lib/button';
-import Divider from 'antd/lib/divider';
+import { Popconfirm, Table, Button, Divider } from 'antd';
+
 import InvisibleLink from '../../../Components/InvisibleLink';
 import LoadingSpinner from '../../../Components/LoadingSpinner';
 import HtmlTitle from '../../../Components/HtmlTitle';
@@ -13,18 +11,8 @@ import HtmlTitle from '../../../Components/HtmlTitle';
  * Responsible for rendering a list of roles
  */
 class Roles extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      edit: false
-    };
-  }
-
   componentWillMount() {
-    const { getAllRoles, location } = this.props;
-    if (location && location.hash === '#edit') {
-      this.setState({ edit: true });
-    }
+    const { getAllRoles } = this.props;
     getAllRoles();
   }
 
@@ -56,7 +44,7 @@ class Roles extends Component {
           <Divider type="vertical" />
           <Popconfirm
             title="Are you sure you want to delete this role?"
-            onConfirm={() => this.props.deleteRole(role.id)}
+            onConfirm={() => this.deleteRole(role)}
           >
             <span style={{ color: '#ff4d4f', cursor: 'pointer' }}>Delete</span>
           </Popconfirm>
@@ -70,15 +58,19 @@ class Roles extends Component {
     this.setState({ edit: !edit });
   };
 
-  renderRoles() {
-    const { roles } = this.props;
+  deleteRole = ({ id }) => {
+    const { deleteRole } = this.props;
+    deleteRole(id);
+  };
+
+  render() {
+    const { roles, fetching } = this.props;
+    if (fetching) return <LoadingSpinner />;
 
     return (
       <div>
         <HtmlTitle title="Roles" />
-
         <h1>Roles</h1>
-
         <Table
           columns={this.roleColumns()}
           dataSource={sortBy(
@@ -89,31 +81,19 @@ class Roles extends Component {
             }))
           )}
         />
-
         <Button onClick={() => null} type="primary">
           New role
         </Button>
       </div>
     );
   }
-
-  render() {
-    if (this.props.fetching) {
-      return <LoadingSpinner />;
-    }
-    return this.renderRoles();
-  }
 }
 
 Roles.propTypes = {
   roles: PropTypes.object.isRequired,
   fetching: PropTypes.bool.isRequired,
-  getAllRoles: PropTypes.func.isRequired
-};
-
-Roles.defaultProps = {
-  roles: {},
-  fetching: false
+  getAllRoles: PropTypes.func.isRequired,
+  deleteRole: PropTypes.func.isRequired
 };
 
 export default Roles;
