@@ -56,6 +56,7 @@ const RoleForm = ({ handleSubmit, users }) => (
       label="Users:"
       mode="multiple"
       format={null}
+      optionFilterProp="children"
       component={FieldSelect}
     >
       {map(renderUserItem, users)}
