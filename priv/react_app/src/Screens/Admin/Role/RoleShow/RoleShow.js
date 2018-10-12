@@ -37,7 +37,11 @@ class RoleShow extends Component {
             renderItem={({ id, firstName, lastName, email }) => (
               <List.Item>
                 <List.Item.Meta
-                  avatar={<Avatar size="large">{id}</Avatar>}
+                  avatar={
+                    <InvisibleLink to={`/admin/users/${id}`}>
+                      <Avatar size="large">{id}</Avatar>
+                    </InvisibleLink>
+                  }
                   title={[firstName, lastName].join(' ')}
                   description={`Email: ${email}`}
                 />
