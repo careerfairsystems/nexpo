@@ -10,8 +10,11 @@ describe('RoleEdit', () => {
   beforeEach(() => {
     props = {
       role: { type: 'admin', permissions: ['read_all', 'write_all'] },
+      users: { '1': { id: 1, email: 'dev@it' } },
       getRole: jest.fn(),
-      fetching: false,
+      getAllUsers: jest.fn(),
+      fetchingUsers: false,
+      fetchingRoles: false,
       updateRole: jest.fn(),
       history: { push: jest.fn() }
     };
@@ -19,6 +22,13 @@ describe('RoleEdit', () => {
 
   it('should render without crashing', () => {
     shallow(<RoleEdit id="1" {...props} />);
+  });
+
+  it('should call getRole and getAllUsers on mount', () => {
+    shallow(<RoleEdit id="1" {...props} />);
+
+    expect(props.getRole).toHaveBeenCalledWith('1');
+    expect(props.getAllUsers).toHaveBeenCalled();
   });
 
   it('should render NotFound if there is no role', () => {
