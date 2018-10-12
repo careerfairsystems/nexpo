@@ -6,6 +6,7 @@ import {
   snakeCase,
   pickBy
 } from 'lodash/fp';
+import moment from 'moment';
 
 const convertKeys = (obj, convert) => {
   if (!isObject(obj)) {
@@ -39,7 +40,10 @@ export const formify = data => {
   return formData;
 };
 
+export const dateFormat = time => moment(time).format('dddd D MMMM YYYY h:mm');
+
 export default {
+  dateFormat,
   camelCaseKeys,
   snakeCaseKeys,
   formify

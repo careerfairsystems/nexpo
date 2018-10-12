@@ -3,6 +3,13 @@ defmodule Nexpo.StudentSessionTimeSlotController do
 
   alias Nexpo.{Company, StudentSessionTimeSlot}
 
+  alias Guardian.Plug.{EnsurePermissions}
+
+  plug EnsurePermissions, [handler: Nexpo.SessionController,
+                           one_of: [%{default: ["read_all"]},
+                                    %{default: ["read_companies"]}]
+                          ] when action in [:create]
+
   def create(conn, %{"student_session_time_slot" => student_session_time_slot_params, "company_id" => company_id}) do
     data = Map.put(student_session_time_slot_params, "company_id", company_id)
     company = Repo.get(Company, company_id)

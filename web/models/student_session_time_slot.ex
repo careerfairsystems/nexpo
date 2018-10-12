@@ -4,7 +4,7 @@ defmodule Nexpo.StudentSessionTimeSlot do
   schema "student_session_time_slots" do
     field :start, :naive_datetime
     field :end, :naive_datetime
-    field :used, :boolean, default: false
+    field :location, :string
 
     belongs_to :company, Nexpo.Company
 
@@ -17,7 +17,7 @@ defmodule Nexpo.StudentSessionTimeSlot do
   """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:start, :end, :used, :company_id])
-    |> validate_required([:start, :end, :used, :company_id])
+    |> cast(params, [:start, :end, :location, :company_id])
+    |> validate_required([:start, :end, :location, :company_id])
   end
 end

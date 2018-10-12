@@ -6,6 +6,7 @@ import { isNil } from 'lodash/fp';
 import { Button, Form, Input, Radio } from 'antd';
 import makeField, { required } from './helper';
 import UploadButton from './UploadButton';
+import DynamicFields from './DynamicFields';
 
 const plainOptions = [
   { value: 0, label: 'No days' },
@@ -53,6 +54,12 @@ const CompanyForm = ({ handleSubmit, onCancel, submitting }) => (
       accept=".jpg,.jpeg,.gif,.png"
       component={UploadButton}
     />
+    <Field
+      name="studentSessionTimeSlots"
+      label="Student Session Time Slots"
+      component={TextInput}
+    />
+    <DynamicFields />
     {onCancel && <Button onClick={onCancel}>Cancel</Button>}
     <Button disabled={submitting} htmlType="submit" type="primary">
       Submit
