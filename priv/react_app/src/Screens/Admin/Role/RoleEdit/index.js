@@ -3,17 +3,21 @@ import { Actions } from '../../../../Store';
 import RoleEdit from './RoleEdit';
 
 const mapStateToProps = (state, props) => {
-  const { fetching } = state.api.roles;
   const roleId = props.match.params.id;
   const role = state.entities.roles[roleId] || {};
 
-  return { id: roleId, role, fetching };
+  return {
+    id: roleId,
+    role,
+    fetchingRoles: state.api.roles.fetching,
+    fetchingUsers: state.api.users.fetching
+  };
 };
 
 const mapDispatchToProps = {
   getRole: Actions.roles.getRole,
-  createRole: Actions.roles.createRole,
-  updateRole: Actions.roles.updateRole
+  updateRole: Actions.roles.updateRole,
+  getAllUsers: Actions.users.getAllUsers
 };
 
 const stateful = connect(

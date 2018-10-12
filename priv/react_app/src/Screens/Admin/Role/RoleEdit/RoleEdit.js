@@ -13,8 +13,9 @@ import '../Role.css';
  */
 class RoleEdit extends Component {
   componentWillMount() {
-    const { id, getRole } = this.props;
+    const { id, getRole, getAllUsers } = this.props;
     getRole(id);
+    getAllUsers();
   }
 
   updateRole = values => {
@@ -24,12 +25,10 @@ class RoleEdit extends Component {
   };
 
   render() {
-    const { role, fetching } = this.props;
+    const { role, fetchingRoles, fetchingUsers } = this.props;
 
-    if (fetching) return <LoadingSpinner />;
+    if (fetchingRoles || fetchingUsers) return <LoadingSpinner />;
     if (isEmpty(role) || isNil(role)) return <NotFound />;
-
-    console.log(role);
 
     return (
       <div className="role-edit-view">
@@ -47,7 +46,9 @@ RoleEdit.propTypes = {
   id: PropTypes.string.isRequired,
   role: PropTypes.shape({ type: PropTypes.string }).isRequired,
   getRole: PropTypes.func.isRequired,
-  fetching: PropTypes.bool.isRequired,
+  getAllUsers: PropTypes.func.isRequired,
+  fetchingRoles: PropTypes.bool.isRequired,
+  fetchingUsers: PropTypes.bool.isRequired,
   updateRole: PropTypes.func.isRequired,
   history: PropTypes.shape({ push: PropTypes.func }).isRequired
 };
