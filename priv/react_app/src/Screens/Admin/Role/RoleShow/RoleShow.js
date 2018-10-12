@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { isEmpty, isNil, capitalize } from 'lodash/fp';
+import { isEmpty, isNil, capitalize, join } from 'lodash/fp';
 import { List, Avatar } from 'antd';
 import NotFound from '../../../NotFound';
 import HtmlTitle from '../../../../Components/HtmlTitle';
@@ -29,7 +29,7 @@ class RoleShow extends Component {
 
         <div>
           <h1>{capitalize(role.type)}</h1>
-          <p>Permissions: {role.permissions.join(', ')}</p>
+          <p>Permissions: {join(',', role.permissions)}</p>
           <h2>Users</h2>
           <List
             dataSource={role.users}
@@ -37,7 +37,11 @@ class RoleShow extends Component {
             renderItem={({ id, firstName, lastName, email }) => (
               <List.Item>
                 <List.Item.Meta
-                  avatar={<Avatar size="large">{id}</Avatar>}
+                  avatar={
+                    <InvisibleLink to={`/admin/users/${id}`}>
+                      <Avatar size="large">{id}</Avatar>
+                    </InvisibleLink>
+                  }
                   title={[firstName, lastName].join(' ')}
                   description={`Email: ${email}`}
                 />
