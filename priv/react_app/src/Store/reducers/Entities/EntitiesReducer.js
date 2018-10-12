@@ -98,13 +98,8 @@ export const EntitiesReducer = (
       return mergeWith(handleMerge, state, camelCaseKeys(normalized.entities));
     }
     case actionTypes.DELETE_STUDENT_SESSION_APPL_SUCCESS: {
-      return {
-        ...state,
-        studentSessionApplications: omit(
-          action.id,
-          state.studentSessionApplications
-        )
-      };
+      const appls = state.studentSessionApplications;
+      return { ...state, studentSessionApplications: omit(action.id, appls) };
     }
     case actionTypes.FETCH_CATEGORIES_SUCCESS: {
       normalized = normalize(action.categories, Schema.categoriesSchema());
@@ -161,8 +156,6 @@ export const EntitiesReducer = (
       return mergeWith(handleMerge, state, camelCaseKeys(normalized.entities));
     }
     case actionTypes.FETCH_STATISTICS_SUCCESS: {
-      // normalized = normalize(action.statistics, Schema.statisticsSchema());
-      // return mergeWith(handleMerge, state, camelCaseKeys(normalized.entities));
       return { ...state, statistics: camelCaseKeys(action.statistics) };
     }
     default:
