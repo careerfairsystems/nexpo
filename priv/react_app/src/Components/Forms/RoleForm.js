@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
+import { map } from 'lodash/fp';
 import { Button, Form, Input, Select } from 'antd';
 
 import makeField from './helper';
@@ -28,7 +29,7 @@ const perms = [
   'write_hosts'
 ];
 
-const RoleForm = ({ handleSubmit }) => (
+const RoleForm = ({ handleSubmit, users }) => (
   <Form onSubmit={handleSubmit}>
     <Field name="type" label="Type:" component={TextInput} />
     <Field
@@ -42,6 +43,22 @@ const RoleForm = ({ handleSubmit }) => (
         <Select.Option key={permission}>{permission}</Select.Option>
       ))}
     </Field>
+    <Field
+      name="users"
+      label="Users:"
+      mode="multiple"
+      format={null}
+      component={FieldSelect}
+    >
+      {map(
+        ({ id, email }) => (
+          <Select.Option key={id} value={id}>
+            {email}
+          </Select.Option>
+        ),
+        users
+      )}
+    </Field>
     <Button htmlType="submit">Submit</Button>
   </Form>
 );
@@ -51,6 +68,7 @@ RoleForm.propTypes = {
 };
 
 const mapStateToProps = state => ({
+  users: state.entities.users,
   formState: state.form.RoleForm
 });
 

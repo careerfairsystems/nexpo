@@ -6,6 +6,7 @@ import NotFound from '../../../NotFound';
 import RoleForm from '../../../../Components/Forms/RoleForm';
 import HtmlTitle from '../../../../Components/HtmlTitle';
 import LoadingSpinner from '../../../../Components/LoadingSpinner';
+import '../Role.css';
 
 /**
  * Responsible for rendering a role. Role id is recieved via url
@@ -27,6 +28,8 @@ class RoleEdit extends Component {
 
     if (fetching) return <LoadingSpinner />;
     if (isEmpty(role) || isNil(role)) return <NotFound />;
+
+    console.log(role);
 
     return (
       <div className="role-edit-view">

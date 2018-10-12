@@ -5,6 +5,7 @@ import { List, Avatar } from 'antd';
 import NotFound from '../../../NotFound';
 import HtmlTitle from '../../../../Components/HtmlTitle';
 import InvisibleLink from '../../../../Components/InvisibleLink';
+import '../Role.css';
 
 /**
  * Responsible for rendering a role. Role id is recieved via url
@@ -36,7 +37,7 @@ class RoleShow extends Component {
             renderItem={({ id, firstName, lastName, email }) => (
               <List.Item>
                 <List.Item.Meta
-                  avatar={<Avatar>{id}</Avatar>}
+                  avatar={<Avatar size="large">{id}</Avatar>}
                   title={[firstName, lastName].join(' ')}
                   description={`Email: ${email}`}
                 />

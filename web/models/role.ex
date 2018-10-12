@@ -8,7 +8,7 @@ defmodule Nexpo.Role do
     field :type, :string
     field :permissions, {:array, :string}, default: []
 
-    many_to_many :users, Nexpo.User, join_through: "users_roles", on_delete: :delete_all 
+    many_to_many :users, Nexpo.User, join_through: "users_roles", on_delete: :delete_all
 
     timestamps()
   end
@@ -23,7 +23,7 @@ defmodule Nexpo.Role do
   end
 
   def put_assoc(changeset, params) do
-    case Map.get(params, "role_ids") do
+    case Map.get(params, "roles") do
       nil ->
         changeset
       role_ids ->

@@ -1,7 +1,5 @@
 import { connect } from 'react-redux';
-import { denormalize } from 'normalizr';
 import { Actions } from '../../../../Store';
-import Schema from '../../../../Store/normalizr/schema';
 import RoleEdit from './RoleEdit';
 
 const mapStateToProps = (state, props) => {
@@ -9,13 +7,7 @@ const mapStateToProps = (state, props) => {
   const roleId = props.match.params.id;
   const role = state.entities.roles[roleId] || {};
 
-  const users = denormalize(
-    { users: role.users },
-    Schema.roleSchema(),
-    state.entities
-  );
-
-  return { id: roleId, role, users, fetching };
+  return { id: roleId, role, fetching };
 };
 
 const mapDispatchToProps = {

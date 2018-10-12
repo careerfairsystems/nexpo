@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import RoleForm from '../../../../Components/Forms/RoleForm';
+import '../Role.css';
 
 /**
  * Responsible for rendering a role. Role id is recieved via url

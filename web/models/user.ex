@@ -43,7 +43,7 @@ defmodule Nexpo.User do
   end
 
   def put_assoc(changeset, params) do
-    case Map.get(params, "user_ids") do
+    case Map.get(params, "users") do
       nil ->
         changeset
       user_ids ->
