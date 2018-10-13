@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import { isEmpty, isNil, map } from 'lodash/fp';
+import { Button } from 'antd';
 import HtmlTitle from '../../../../Components/HtmlTitle';
 import LoadingSpinner from '../../../../Components/LoadingSpinner';
 import InvisibleLink from '../../../../Components/InvisibleLink';
@@ -42,14 +43,16 @@ class UserShow extends Component {
       <div className="user-show-view">
         <HtmlTitle title={this.displayName()} />
 
-        <div>
-          <h1>{this.displayName()}</h1>
-          <p>Email: {user.email}</p>
-          <p>Phone number: {user.phoneNumber}</p>
-          <p>Roles: {this.roles()}</p>
-          <p>Food Preferences: {user.foodPreferences}</p>
-        </div>
-        <InvisibleLink to={`/admin/users/${user.id}/edit`}>Edit</InvisibleLink>
+        <h1 className="centering">{this.displayName()}</h1>
+        <p>Email: {user.email}</p>
+        <p>Phone number: {user.phoneNumber}</p>
+        <p>Roles: {this.roles()}</p>
+        <p>Food Preferences: {user.foodPreferences}</p>
+        <InvisibleLink to={`/admin/users/${user.id}/edit`}>
+          <Button onClick={() => null} type="primary">
+            Edit
+          </Button>
+        </InvisibleLink>
       </div>
     );
   }

@@ -23,7 +23,14 @@ describe('CompanyShow', () => {
       name: 'Test CompanyShow',
       website: 'testcompany.com',
       describe: 'We do testing!',
-      studentSessionDays: 0
+      studentSessionDays: 0,
+      studentSessionApplications: [
+        {
+          id: 1,
+          motivation: 'This is my motivation!',
+          companyApproved: false
+        }
+      ]
     };
     shallow(<CompanyShow id="1" {...props} company={company} />);
   });

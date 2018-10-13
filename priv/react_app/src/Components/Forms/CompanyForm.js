@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Field, reduxForm } from 'redux-form';
+import { Field, FieldArray, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import { isNil } from 'lodash/fp';
 import { Button, Form, Input, Radio } from 'antd';
 import makeField, { required } from './helper';
 import UploadButton from './UploadButton';
+import DynamicTimeSlots from './DynamicTimeSlots';
 
 const plainOptions = [
   { value: 0, label: 'No days' },
@@ -53,6 +54,8 @@ const CompanyForm = ({ handleSubmit, onCancel, submitting }) => (
       accept=".jpg,.jpeg,.gif,.png"
       component={UploadButton}
     />
+    <h3>Student Session Time Slots</h3>
+    <FieldArray name="studentSessionTimeSlots" component={DynamicTimeSlots} />
     {onCancel && <Button onClick={onCancel}>Cancel</Button>}
     <Button disabled={submitting} htmlType="submit" type="primary">
       Submit

@@ -10,9 +10,9 @@ defmodule Nexpo.StudentSessionTimeSlotView do
   end
 
   def render("student_session_time_slot.json", %{student_session_time_slot: student_session_time_slot}) do
-    %{id: student_session_time_slot.id,
-      start: student_session_time_slot.start,
-      end: student_session_time_slot.end,
-      used: student_session_time_slot.used}
+    # Define own parameters to keep
+    base = [:id, :start, :end, :location]
+
+    Nexpo.Support.View.render_object(student_session_time_slot, base)
   end
 end

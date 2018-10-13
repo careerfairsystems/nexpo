@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { isEmpty, isNil, capitalize, join } from 'lodash/fp';
-import { List, Avatar } from 'antd';
+import { List, Avatar, Button } from 'antd';
 import NotFound from '../../../NotFound';
 import HtmlTitle from '../../../../Components/HtmlTitle';
 import InvisibleLink from '../../../../Components/InvisibleLink';
@@ -51,7 +51,11 @@ class RoleShow extends Component {
         </div>
         <br />
 
-        <InvisibleLink to={`/admin/roles/${role.id}/edit`}>Edit</InvisibleLink>
+        <InvisibleLink to={`/admin/roles/${role.id}/edit`}>
+          <Button onClick={() => null} type="primary">
+            Edit
+          </Button>
+        </InvisibleLink>
       </div>
     );
   }

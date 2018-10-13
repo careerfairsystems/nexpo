@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import Table from 'antd/lib/table';
+import { Table } from 'antd';
 import ConnectedAttributes, { Attributes } from './Attributes';
 import { createMockStore } from '../../../TestHelper';
 import LoadingSpinner from '../../../Components/LoadingSpinner';

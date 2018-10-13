@@ -7,10 +7,10 @@ import { DatePicker } from 'antd';
  */
 const MyDatePicker = ({ value, onChange, ...rest }) => (
   <DatePicker
-    value={moment(value)}
+    value={moment(value).isValid() ? moment(value) : null}
     showTime
     format="YYYY-MM-DD HH:mm"
-    onChange={date => onChange(date.toISOString())}
+    onChange={date => (date ? onChange(date.toISOString()) : onChange(null))}
     {...rest}
   />
 );

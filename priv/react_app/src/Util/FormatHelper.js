@@ -4,8 +4,9 @@ import {
   reduce,
   camelCase,
   snakeCase,
-  pickBy
+  has
 } from 'lodash/fp';
+import moment from 'moment';
 
 const convertKeys = (obj, convert) => {
   if (!isObject(obj)) {
@@ -26,21 +27,40 @@ const convertKeys = (obj, convert) => {
 export const camelCaseKeys = obj => convertKeys(obj, camelCase);
 export const snakeCaseKeys = obj => convertKeys(obj, snakeCase);
 
-export const formify = data => {
-  const formData = new FormData();
-  Object.keys(pickBy(isObject, data)).forEach(objKey => {
-    Object.keys(data[objKey]).forEach(key => {
-      formData.append(
-        `${snakeCase(objKey)}[${snakeCase(key)}]`,
-        data[objKey][key]
-      );
-    });
+const dateFormats = ['YYYY-MM-DD HH:mm'];
+
+export const toFormData = (obj, form, namespace) => {
+  const fd = form || new FormData();
+  let formKey;
+
+  Object.keys(obj).forEach(key => {
+    if (has(key, obj) && obj[key]) {
+      const snakeKey = snakeCase(key);
+      const value = obj[key];
+      if (namespace) {
+        formKey = `${namespace}[${snakeKey}]`;
+      } else {
+        formKey = snakeKey;
+      }
+
+      if (moment(value, dateFormats, true).isValid()) {
+        fd.append(formKey, moment(value).toISOString());
+      } else if (isObject(value) && !(value instanceof File)) {
+        toFormData(value, fd, formKey);
+      } else {
+        fd.append(formKey, value);
+      }
+    }
   });
-  return formData;
+
+  return fd;
 };
 
+export const toDayFormat = time => moment(time).format('dddd D MMMM YYYY h:mm');
+
 export default {
+  toDayFormat,
   camelCaseKeys,
   snakeCaseKeys,
-  formify
+  toFormData
 };

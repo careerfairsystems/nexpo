@@ -1,15 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-
-import Layout from 'antd/lib/layout';
-import Menu from 'antd/lib/menu';
-import Breadcrumb from 'antd/lib/breadcrumb';
-import Icon from 'antd/lib/icon';
-
-import { startCase } from 'lodash/fp';
-
 import { Route, Switch, Link } from 'react-router-dom';
-import PrivateRoute from '../Components/PrivateRoute';
+import { Layout, Menu, Breadcrumb, Icon } from 'antd';
+import { startCase } from 'lodash/fp';
 
 import Home from '../Screens/Home';
 import Info from '../Screens/Info';
@@ -24,6 +17,7 @@ import Roles from '../Screens/Admin/Roles';
 import { RoleNew, RoleShow, RoleEdit } from '../Screens/Admin/Role';
 import Users from '../Screens/Admin/Users';
 import { UserShow, UserEdit } from '../Screens/Admin/User';
+import Statistics from '../Screens/Admin/Statistics';
 import CurrentUser from '../Screens/CurrentUser';
 import Companies from '../Screens/Admin/Companies';
 import { CompanyNew, CompanyShow, CompanyEdit } from '../Screens/Admin/Company';
@@ -37,9 +31,9 @@ import Signup from '../Screens/Auth/Signup';
 import ForgotPassword from '../Screens/Auth/ForgotPassword';
 import NotFound from '../Screens/NotFound';
 
+import PrivateRoute from '../Components/PrivateRoute';
 import HtmlTitle from '../Components/HtmlTitle';
 import { hasPermission } from '../Util/PermissionsHelper';
-import Statistics from '../Screens/Admin/Statistics';
 
 const { Header, Content, Footer } = Layout;
 

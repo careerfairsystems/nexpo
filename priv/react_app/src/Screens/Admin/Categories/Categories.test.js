@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import Table from 'antd/lib/table';
-import Button from 'antd/lib/button';
+import { Table, Button } from 'antd';
+
 import Categories from './Categories';
 import LoadingSpinner from '../../../Components/LoadingSpinner';
 
