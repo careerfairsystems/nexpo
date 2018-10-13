@@ -4,7 +4,6 @@ import {
   reduce,
   camelCase,
   snakeCase,
-  pickBy,
   has
 } from 'lodash/fp';
 import moment from 'moment';
@@ -27,20 +26,6 @@ const convertKeys = (obj, convert) => {
 
 export const camelCaseKeys = obj => convertKeys(obj, camelCase);
 export const snakeCaseKeys = obj => convertKeys(obj, snakeCase);
-
-export const formify = data => {
-  const formData = new FormData();
-  Object.keys(pickBy(isObject, data)).forEach(objKey => {
-    Object.keys(data[objKey]).forEach(key => {
-      console.log(data[objKey][key]);
-      formData.append(
-        `${snakeCase(objKey)}[${snakeCase(key)}]`,
-        data[objKey][key]
-      );
-    });
-  });
-  return formData;
-};
 
 const dateFormats = ['YYYY-MM-DD HH:mm'];
 
@@ -77,6 +62,5 @@ export default {
   dateFormat,
   camelCaseKeys,
   snakeCaseKeys,
-  formify,
   toFormData
 };
