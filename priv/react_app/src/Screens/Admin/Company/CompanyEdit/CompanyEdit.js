@@ -5,8 +5,8 @@ import { message } from 'antd';
 
 import NotFound from '../../../NotFound';
 import API from '../../../../API';
-import CompanyForm from '../../../../Components/Forms/CompanyForm';
-import InviteForm from '../../../../Components/Forms/InviteForm';
+import CompanyForm from '../../../../Forms/CompanyForm';
+import InviteForm from '../../../../Forms/InviteForm';
 import HtmlTitle from '../../../../Components/HtmlTitle';
 import LoadingSpinner from '../../../../Components/LoadingSpinner';
 import '../Company.css';

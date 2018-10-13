@@ -6,7 +6,7 @@ import { pick } from 'lodash/fp';
 import ErrorMessage from '../../../../Components/ErrorMessage';
 import SuccessMessage from '../../../../Components/SuccessMessage';
 import API from '../../../../API';
-import FinalizeSignupForm from '../../../../Components/Forms/FinalizeSignupForm';
+import FinalizeSignupForm from '../../../../Forms/FinalizeSignupForm';
 
 type Props = {
   signupKey: string

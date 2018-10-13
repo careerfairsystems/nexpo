@@ -74,7 +74,19 @@ const state = {
       '2': { id: 2, type: 'zzz', permissions: ['read_users'], users: [1] }
     },
     companies: {
-      '1': { id: 1, name: 'Spotify', entries: [1, 2, 3] },
+      '1': {
+        id: 1,
+        name: 'Spotify',
+        entries: [1, 2, 3],
+        studentSessionTimeSlots: [
+          {
+            id: 1,
+            start: '1970-01-01T00:00:00.000000',
+            end: '2000-01-01T00:00:00.000000',
+            location: 'E-huset'
+          }
+        ]
+      },
       '2': { id: 2, name: 'Google', entries: [4, 5] }
     },
     categories: {

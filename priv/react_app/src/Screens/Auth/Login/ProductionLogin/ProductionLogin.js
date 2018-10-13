@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Redirect, Link } from 'react-router-dom';
 import HtmlTitle from '../../../../Components/HtmlTitle';
-import ProductionLoginForm from '../../../../Components/Forms/ProductionLoginForm';
+import ProductionLoginForm from '../../../../Forms/ProductionLoginForm';
 /**
  * Handles login in production. Supports redirecting back to the route that redirected here
  *

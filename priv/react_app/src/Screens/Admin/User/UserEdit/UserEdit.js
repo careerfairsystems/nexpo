@@ -6,7 +6,7 @@ import HtmlTitle from '../../../../Components/HtmlTitle';
 import LoadingSpinner from '../../../../Components/LoadingSpinner';
 
 import NotFound from '../../../NotFound';
-import UserForm from '../../../../Components/Forms/UserForm';
+import UserForm from '../../../../Forms/UserForm';
 import '../User.css';
 
 /**

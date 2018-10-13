@@ -4,8 +4,8 @@ import { isEmpty, filter, sortBy } from 'lodash/fp';
 import NotFound from '../../NotFound';
 import LoadingSpinner from '../../../Components/LoadingSpinner';
 import HtmlTitle from '../../../Components/HtmlTitle';
-import StudentForm from '../../../Components/Forms/StudentForm';
-import SessionForm from '../../../Components/Forms/SessionForm';
+import StudentForm from '../../../Forms/StudentForm';
+import SessionForm from '../../../Forms/SessionForm';
 
 class SessionApplication extends Component {
   componentWillMount() {
