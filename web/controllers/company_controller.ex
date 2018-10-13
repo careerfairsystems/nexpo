@@ -81,7 +81,7 @@ defmodule Nexpo.CompanyController do
   end
 
   def update(conn, %{"id" => id, "company" => company_params}) do
-    company = Repo.get!(Company, id)
+    company = Repo.get!(Company, id) |> Repo.preload(:student_session_time_slots)
 
     deleted_files = company_params
       |> Enum.filter(fn {k, v} ->
@@ -90,7 +90,7 @@ defmodule Nexpo.CompanyController do
       |> Map.new
 
     company_params = Map.merge(company_params, deleted_files)
-    changeset = Company.changeset(company, company_params)
+    changeset = Company.update_changeset(company, company_params)
 
     Enum.each(deleted_files, fn {k, _v} ->
       delete_file?(company, company_params, String.to_atom(k))
