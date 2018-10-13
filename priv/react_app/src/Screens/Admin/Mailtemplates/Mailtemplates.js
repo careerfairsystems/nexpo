@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-
-import { Table, Button } from 'antd';
+import { Table, Button, Popconfirm, Divider } from 'antd';
 import { sortBy } from 'lodash/fp';
-import Popconfirm from 'antd/lib/popconfirm';
-import Divider from 'antd/lib/divider';
+
 import InvisibleLink from '../../../Components/InvisibleLink';
 import LoadingSpinner from '../../../Components/LoadingSpinner';
 import HtmlTitle from '../../../Components/HtmlTitle';

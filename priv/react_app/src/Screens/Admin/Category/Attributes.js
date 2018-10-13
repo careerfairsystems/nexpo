@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { filter, isEmpty } from 'lodash/fp';
-import Table from 'antd/lib/table';
+import { Table } from 'antd';
 import LoadingSpinner from '../../../Components/LoadingSpinner';
 import type { State } from '../../../Store/reducers';
 

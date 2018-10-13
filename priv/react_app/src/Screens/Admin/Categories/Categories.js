@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { denormalize } from 'normalizr';
-import Table from 'antd/lib/table';
-import Button from 'antd/lib/button';
-import Divider from 'antd/lib/divider';
+import { Table, Button, Divider } from 'antd';
 import Schema from '../../../Store/normalizr/schema';
 import InvisibleLink from '../../../Components/InvisibleLink';
 import LoadingSpinner from '../../../Components/LoadingSpinner';
@@ -29,7 +27,9 @@ const categoryColumns = [
     key: 'action',
     render: category => (
       <span>
-        <InvisibleLink to={`/admin/categories/${category.id}`}>Show</InvisibleLink>
+        <InvisibleLink to={`/admin/categories/${category.id}`}>
+          Show
+        </InvisibleLink>
         <Divider type="vertical" />
         <InvisibleLink to="#">Edit</InvisibleLink>
         <Divider type="vertical" />

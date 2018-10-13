@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { isEmpty, isNil, toInteger } from 'lodash/fp';
-import message from 'antd/lib/message';
+import { message } from 'antd';
+
 import NotFound from '../../../NotFound';
 import API from '../../../../API';
 import CompanyForm from '../../../../Components/Forms/CompanyForm';

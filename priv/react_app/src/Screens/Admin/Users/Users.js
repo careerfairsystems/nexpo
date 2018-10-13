@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Table, Divider, Popconfirm } from 'antd';
 
-import Table from 'antd/lib/table';
-import Divider from 'antd/lib/divider';
-import Popconfirm from 'antd/lib/popconfirm';
 import InvisibleLink from '../../../Components/InvisibleLink';
 import LoadingSpinner from '../../../Components/LoadingSpinner';
 import HtmlTitle from '../../../Components/HtmlTitle';
