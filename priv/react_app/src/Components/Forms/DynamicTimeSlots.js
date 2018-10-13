@@ -1,14 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Form, List, Input, Icon, Button } from 'antd';
+import { Form, List, Input, Checkbox, Icon, Button } from 'antd';
 import { Field } from 'redux-form';
 import makeField from './helper';
 import DatePicker from '../DatePicker';
 
 const TextInput = makeField(Input);
+const FieldCheckbox = makeField(Checkbox);
 const MyDatePicker = makeField(DatePicker);
 
-const renderTimeSlot = (timeSlot, index, fields) => (
+const renderTimeSlot = (timeSlot, index) => (
   <List.Item key={index}>
     <Field
       name={`${timeSlot}.start`}
@@ -28,7 +29,12 @@ const renderTimeSlot = (timeSlot, index, fields) => (
       component={TextInput}
       label="Location"
     />
-    <Button shape="circle" icon="delete" onClick={() => fields.remove(index)} />
+    <Field
+      name={`${timeSlot}.delete`}
+      type="checkbox"
+      component={FieldCheckbox}
+      label="Delete"
+    />
   </List.Item>
 );
 
@@ -39,7 +45,7 @@ const DynamicTimeSlots = ({ fields }) => (
       bordered
       locale={{ emptyText: 'No Student Time Slots' }}
       dataSource={fields.map(i => i)}
-      renderItem={(item, index) => renderTimeSlot(item, index, fields)}
+      renderItem={renderTimeSlot}
     />
     <Button type="dashed" onClick={() => fields.push({})}>
       <Icon type="plus" />

@@ -7,6 +7,7 @@ defmodule Nexpo.StudentSessionTimeSlot do
     field :start, :naive_datetime
     field :end, :naive_datetime
     field :location, :string
+    field :delete, :boolean, virtual: true
 
     belongs_to :company, Nexpo.Company
 
