@@ -4,7 +4,6 @@ defmodule Nexpo.StudentSessionApplication do
   schema "student_session_applications" do
     field :motivation, :string
     field :companyApproved, :boolean, default: false
-    field :studentConfirmed, :boolean, default: false
     field :score, :integer, default: 0
     belongs_to :company, Nexpo.Company
     belongs_to :student, Nexpo.Student
@@ -17,8 +16,8 @@ defmodule Nexpo.StudentSessionApplication do
   """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:motivation, :companyApproved, :studentConfirmed, :score, :company_id, :student_id])
-    |> validate_required([:motivation, :companyApproved, :studentConfirmed, :score, :company_id, :student_id])
+    |> cast(params, [:motivation, :companyApproved, :score, :company_id, :student_id])
+    |> validate_required([:motivation, :companyApproved, :score, :company_id, :student_id])
     |> unique_constraint(:unique, message: "Student has already applied to that company", name: :unique_session_appl_id)
   end
 end
