@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 import Deadline from './Deadline';
 import NotFound from '../../NotFound';
 import LoadingSpinner from '../../../Components/LoadingSpinner';
-import DeadlineForm from '../../../Components/Forms/DeadlineForm';
+import DeadlineForm from '../../../Forms/DeadlineForm';
 
 describe('Deadline', () => {
   let props;

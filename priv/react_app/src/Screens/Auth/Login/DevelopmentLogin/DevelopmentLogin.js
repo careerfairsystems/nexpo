@@ -4,7 +4,7 @@ import { Icon } from 'antd';
 import { Redirect } from 'react-router-dom';
 import './DevelopmentLogin.css';
 import HtmlTitle from '../../../../Components/HtmlTitle';
-import DevelopmentLoginForm from '../../../../Components/Forms/DevelopmentLoginForm';
+import DevelopmentLoginForm from '../../../../Forms/DevelopmentLoginForm';
 
 /**
  * Handles authorization in development

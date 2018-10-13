@@ -5,7 +5,7 @@ import { List, Avatar, Popconfirm, Button } from 'antd';
 import NotFound from '../../NotFound';
 import LoadingSpinner from '../../../Components/LoadingSpinner';
 import HtmlTitle from '../../../Components/HtmlTitle';
-import UpdateSessionApplicationForm from '../../../Components/Forms/UpdateSessionApplicationForm';
+import UpdateSessionApplicationForm from '../../../Forms/UpdateSessionApplicationForm';
 
 class SessionApplications extends Component {
   constructor(props) {

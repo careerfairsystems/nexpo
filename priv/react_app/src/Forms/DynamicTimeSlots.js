@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Form, List, Input, Checkbox, Icon, Button } from 'antd';
 import { Field } from 'redux-form';
 import makeField from './helper';
-import DatePicker from '../DatePicker';
+import DatePicker from '../Components/DatePicker';
 
 const TextInput = makeField(Input);
 const FieldCheckbox = makeField(Checkbox);

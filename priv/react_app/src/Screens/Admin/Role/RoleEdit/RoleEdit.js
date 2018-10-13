@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { isEmpty, isNil, capitalize } from 'lodash/fp';
 
 import NotFound from '../../../NotFound';
-import RoleForm from '../../../../Components/Forms/RoleForm';
+import RoleForm from '../../../../Forms/RoleForm';
 import HtmlTitle from '../../../../Components/HtmlTitle';
 import LoadingSpinner from '../../../../Components/LoadingSpinner';
 import '../Role.css';

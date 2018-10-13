@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { SubmissionError } from 'redux-form';
 import { Link } from 'react-router-dom';
 import API from '../../../../API';
-import SignupForm from '../../../../Components/Forms/SignupForm';
+import SignupForm from '../../../../Forms/SignupForm';
 import SuccessMessage from '../../../../Components/SuccessMessage';
 
 /**

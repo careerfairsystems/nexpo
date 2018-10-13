@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import { Button, Form, Input } from 'antd';
-import DatePicker from '../DatePicker';
+import DatePicker from '../Components/DatePicker';
 
 import makeField from './helper';
 

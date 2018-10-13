@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 import Mailtemplate from './Mailtemplate';
 import NotFound from '../../NotFound';
 import LoadingSpinner from '../../../Components/LoadingSpinner';
-import MailtemplateForm from '../../../Components/Forms/MailtemplateForm';
+import MailtemplateForm from '../../../Forms/MailtemplateForm';
 
 describe('Mailtemplate', () => {
   let props;
