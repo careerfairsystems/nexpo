@@ -56,10 +56,10 @@ export const toFormData = (obj, form, namespace) => {
   return fd;
 };
 
-export const dateFormat = time => moment(time).format('dddd D MMMM YYYY h:mm');
+export const toDayFormat = time => moment(time).format('dddd D MMMM YYYY h:mm');
 
 export default {
-  dateFormat,
+  toDayFormat,
   camelCaseKeys,
   snakeCaseKeys,
   toFormData

@@ -4,7 +4,7 @@ import { isEmpty, isNil } from 'lodash/fp';
 import { List, Avatar, Button } from 'antd';
 import NotFound from '../../../NotFound';
 import { toExternal } from '../../../../Util/URLHelper';
-import { dateFormat } from '../../../../Util/FormatHelper';
+import { toDayFormat } from '../../../../Util/FormatHelper';
 import InvisibleLink from '../../../../Components/InvisibleLink';
 import HtmlTitle from '../../../../Components/HtmlTitle';
 import LoadingSpinner from '../../../../Components/LoadingSpinner';
@@ -70,9 +70,9 @@ class CompanyShow extends Component {
               <List.Item.Meta
                 avatar={<Avatar size="large">{id}</Avatar>}
                 title={`Location: ${location}`}
-                description={`Start Time: ${dateFormat(
+                description={`Start Time: ${toDayFormat(
                   start
-                )}\nEnd Time: ${dateFormat(end)}`}
+                )}\nEnd Time: ${toDayFormat(end)}`}
               />
             </List.Item>
           )}
