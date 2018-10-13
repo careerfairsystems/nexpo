@@ -57,8 +57,7 @@ const DynamicTimeSlots = ({ fields }) => (
 DynamicTimeSlots.propTypes = {
   fields: PropTypes.shape({
     map: PropTypes.func.isRequired,
-    push: PropTypes.func.isRequired,
-    remove: PropTypes.func.isRequired
+    push: PropTypes.func.isRequired
   }).isRequired
 };
 

@@ -69,7 +69,6 @@ CompanyForm.defaultProps = {
 
 CompanyForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
-  array: PropTypes.shape({ push: PropTypes.func }).isRequired,
   onCancel: PropTypes.func,
   submitting: PropTypes.bool.isRequired
 };

@@ -57,7 +57,6 @@ defmodule Nexpo.Router do
 
     resources "/companies", CompanyController do
       resources "/desired_programmes", DesiredProgrammeController
-      resources "/student_session_time_slots", StudentSessionTimeSlotController
     end
 
     resources "/industries", IndustryController

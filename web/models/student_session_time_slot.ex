@@ -43,9 +43,6 @@ defmodule Nexpo.StudentSessionTimeSlot do
      |> mark_for_delete()
    end
 
-   @doc """
-   Puts an delete action to the changeset
-   """
    defp mark_for_delete(changeset) do
      if get_change(changeset, :delete) do
        %{ changeset | action: :delete }

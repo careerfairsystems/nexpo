@@ -30,18 +30,7 @@ defmodule Nexpo.Company do
   @doc """
   Builds a changeset based on the `struct` and `params`.
   """
-  def changeset(struct, params \\ %{}) do
-    struct
-    |> cast(params, [:name, :description, :website, :student_session_days])
-    |> cast_attachments(params, [:logo_url])
-    |> validate_required([:name, :description, :website])
-    |> unique_constraint(:name)
-  end
-
-  @doc """
-  Builds an update changeset based on the `struct` and `params`.
-  """
-  def update_changeset(%Company{} = company, params) do
+  def changeset(%Company{} = company, params \\ %{}) do
     company
     |> cast(params, [:name, :description, :website, :student_session_days])
     |> cast_attachments(params, [:logo_url])

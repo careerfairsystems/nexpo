@@ -90,7 +90,7 @@ defmodule Nexpo.CompanyController do
       |> Map.new
 
     company_params = Map.merge(company_params, deleted_files)
-    changeset = Company.update_changeset(company, company_params)
+    changeset = Company.changeset(company, company_params)
 
     Enum.each(deleted_files, fn {k, _v} ->
       delete_file?(company, company_params, String.to_atom(k))
