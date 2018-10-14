@@ -46,7 +46,8 @@ export const toFormData = (obj, form, namespace) => {
       if (moment(value, dateFormats, true).isValid()) {
         fd.append(formKey, moment(value).toISOString());
       } else if (isObject(value) && !(value instanceof File)) {
-        toFormData(value, fd, formKey);
+        const nil = has('uid', value) && value.uid === '-1';
+        if (!nil) toFormData(value, fd, formKey);
       } else {
         fd.append(formKey, value);
       }
