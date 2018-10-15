@@ -6,6 +6,7 @@ import LoadingSpinner from '../../../Components/LoadingSpinner';
 import HtmlTitle from '../../../Components/HtmlTitle';
 import StudentForm from '../../../Forms/StudentForm';
 import SessionForm from '../../../Forms/SessionForm';
+import '../Session.css';
 
 class SessionApplication extends Component {
   componentWillMount() {
@@ -37,7 +38,7 @@ class SessionApplication extends Component {
     }
 
     return (
-      <div>
+      <div className="session-application">
         <HtmlTitle title="Student Session Application" />
         <h1>Apply for student sessions</h1>
         <SessionForm
