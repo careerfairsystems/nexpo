@@ -5,7 +5,6 @@ defmodule Nexpo.Statistics do
   embedded_schema do
     field :nbr_searching_students, :integer
     field :nbr_students, :integer
-    field :nbr_applications, :integer
     field :company_stats, {:array, :map}
     field :applications_per_day, :date
     timestamps()
