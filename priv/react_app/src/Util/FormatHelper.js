@@ -57,7 +57,7 @@ export const toFormData = (obj, form, namespace) => {
   return fd;
 };
 
-export const toDayFormat = time => moment(time).format('dddd D MMMM YYYY h:mm');
+export const toDayFormat = time => moment(time).format('dddd D MMMM YYYY HH:mm');
 
 export default {
   toDayFormat,
