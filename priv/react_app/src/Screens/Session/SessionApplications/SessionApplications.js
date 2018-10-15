@@ -6,6 +6,7 @@ import NotFound from '../../NotFound';
 import LoadingSpinner from '../../../Components/LoadingSpinner';
 import HtmlTitle from '../../../Components/HtmlTitle';
 import UpdateSessionApplicationForm from '../../../Forms/UpdateSessionApplicationForm';
+import '../Session.css';
 
 class SessionApplications extends Component {
   constructor(props) {
@@ -94,7 +95,7 @@ class SessionApplications extends Component {
       return <NotFound />;
     }
     return (
-      <div>
+      <div className="session-applications">
         <HtmlTitle title="Student Session Application" />
         <h1>Student Session Applications</h1>
         <List

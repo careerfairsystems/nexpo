@@ -1,8 +1,9 @@
 import React from 'react';
 import InvisibleLink from '../../../Components/InvisibleLink';
+import '../Session.css';
 
 const SessionHome = () => (
-  <div>
+  <div className="session-home">
     <h1>Welcome to Student Session!</h1>
     <h3>How to apply for Student Sessions:</h3>
     <h4>

@@ -34,7 +34,7 @@ export const toFormData = (obj, form, namespace) => {
   let formKey;
 
   Object.keys(obj).forEach(key => {
-    if (has(key, obj) && obj[key]) {
+    if (has(key, obj)) {
       const snakeKey = snakeCase(key);
       const value = obj[key];
       if (namespace) {
@@ -57,7 +57,8 @@ export const toFormData = (obj, form, namespace) => {
   return fd;
 };
 
-export const toDayFormat = time => moment(time).format('dddd D MMMM YYYY HH:mm');
+export const toDayFormat = time =>
+  moment(time).format('dddd D MMMM YYYY HH:mm');
 
 export default {
   toDayFormat,
