@@ -21,7 +21,8 @@
     "redux": "^4.0.1",
     "redux-form": "^7.4.2",
     "redux-logger": "^3.0.6",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "victory": "^30.5.0"
   },
   "devDependencies": {
     "enzyme": "^3.7.0",
