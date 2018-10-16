@@ -105,12 +105,8 @@ class App extends Component {
   };
 
   restrictedSubMenu = ({ route, title, menus }) => {
-    const { currentUser, isLoggedIn, redirect } = this.props;
-    if (
-      isLoggedIn &&
-      hasPermission(currentUser, route) &&
-      hasAccess(currentUser, route)
-    ) {
+    const { currentUser: user, isLoggedIn, redirect } = this.props;
+    if (isLoggedIn && hasPermission(user, route) && hasAccess(user, route)) {
       return (
         <Menu.SubMenu
           title={title}
@@ -125,12 +121,8 @@ class App extends Component {
   };
 
   restrictedMenuItem = ({ route, title }) => {
-    const { currentUser, isLoggedIn } = this.props;
-    if (
-      isLoggedIn &&
-      hasPermission(currentUser, route) &&
-      hasAccess(currentUser, route)
-    ) {
+    const { currentUser: user, isLoggedIn } = this.props;
+    if (isLoggedIn && hasPermission(user, route) && hasAccess(user, route)) {
       return <Menu.Item key={`/${route}`}>{title}</Menu.Item>;
     }
     return null;
