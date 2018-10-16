@@ -108,13 +108,12 @@ class Companies extends Component {
 
 Companies.propTypes = {
   companies: PropTypes.object,
-  fetching: PropTypes.bool,
+  fetching: PropTypes.bool.isRequired,
   getAllCompanies: PropTypes.func.isRequired
 };
 
 Companies.defaultProps = {
-  companies: {},
-  fetching: false
+  companies: {}
 };
 
 export default Companies;

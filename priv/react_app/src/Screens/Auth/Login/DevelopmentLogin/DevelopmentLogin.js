@@ -46,9 +46,9 @@ class DevelopmentLogin extends Component {
 }
 
 DevelopmentLogin.propTypes = {
-  location: PropTypes.shape({ state: { from: { pathname: PropTypes.string } } })
-    .isRequired,
+  location: PropTypes.shape({ state: PropTypes.object }).isRequired,
   isLoggedIn: PropTypes.bool.isRequired,
   login: PropTypes.func.isRequired
 };
+
 export default DevelopmentLogin;

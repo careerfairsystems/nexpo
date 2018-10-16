@@ -77,6 +77,18 @@ const expandedRowRender = attributes => category => (
  * Responsible for rendering a list of categories
  */
 class Categories extends Component {
+  static propTypes = {
+    categories: PropTypes.object,
+    attributes: PropTypes.object,
+    fetching: PropTypes.bool.isRequired,
+    getAllCategories: PropTypes.func.isRequired
+  };
+
+  static defaultProps = {
+    categories: {},
+    attributes: []
+  };
+
   componentWillMount() {
     const { getAllCategories } = this.props;
     getAllCategories();
@@ -105,27 +117,13 @@ class Categories extends Component {
   }
 
   render() {
-    if (this.props.fetching) {
+    const { fetching } = this.props;
+
+    if (fetching) {
       return <LoadingSpinner />;
     }
     return this.renderCategories();
   }
 }
-
-Categories.defaultProps = {
-  attributes: []
-};
-
-Categories.propTypes = {
-  categories: PropTypes.object.isRequired,
-  attributes: PropTypes.object,
-  fetching: PropTypes.bool.isRequired,
-  getAllCategories: PropTypes.func.isRequired
-};
-
-Categories.defaultProps = {
-  categories: {},
-  fetching: false
-};
 
 export default Categories;

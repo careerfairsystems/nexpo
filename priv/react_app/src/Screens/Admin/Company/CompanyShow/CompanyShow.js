@@ -14,6 +14,23 @@ import '../Company.css';
  * Responsible for rendering a company. Company id is recieved via url
  */
 class CompanyShow extends Component {
+  static propTypes = {
+    id: PropTypes.string,
+    company: PropTypes.object.isRequired,
+    fetching: PropTypes.bool.isRequired,
+    getCompany: PropTypes.func.isRequired,
+    match: PropTypes.shape({
+      path: PropTypes.string
+    })
+  };
+
+  static defaultProps = {
+    id: null,
+    match: {
+      path: ''
+    }
+  };
+
   componentWillMount() {
     const { id, getCompany } = this.props;
     getCompany(id);
@@ -87,21 +104,5 @@ class CompanyShow extends Component {
     );
   }
 }
-
-CompanyShow.defaultProps = {
-  id: null,
-  match: {
-    path: ''
-  }
-};
-CompanyShow.propTypes = {
-  id: PropTypes.string,
-  company: PropTypes.object.isRequired,
-  fetching: PropTypes.bool.isRequired,
-  getCompany: PropTypes.func.isRequired,
-  match: PropTypes.shape({
-    path: PropTypes.string
-  })
-};
 
 export default CompanyShow;

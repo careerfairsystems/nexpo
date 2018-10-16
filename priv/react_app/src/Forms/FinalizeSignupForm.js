@@ -69,8 +69,6 @@ const FinalizeSignupForm = ({ handleSubmit, submitting }) => (
   </Form>
 );
 
-FinalizeSignupForm.defaultProps = {};
-
 FinalizeSignupForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   submitting: PropTypes.bool.isRequired

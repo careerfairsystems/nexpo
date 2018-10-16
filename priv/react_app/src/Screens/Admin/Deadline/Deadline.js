@@ -6,6 +6,19 @@ import DeadlineForm from '../../../Forms/DeadlineForm';
 import LoadingSpinner from '../../../Components/LoadingSpinner';
 
 class Deadline extends Component {
+  static propTypes = {
+    id: PropTypes.string,
+    deadline: PropTypes.object.isRequired,
+    createDeadline: PropTypes.func.isRequired,
+    fetching: PropTypes.bool.isRequired,
+    getDeadline: PropTypes.func.isRequired,
+    updateDeadline: PropTypes.func.isRequired
+  };
+
+  static defaultProps = {
+    id: null
+  };
+
   componentWillMount() {
     const { id, getDeadline } = this.props;
     getDeadline(id);
@@ -40,17 +53,5 @@ class Deadline extends Component {
     );
   }
 }
-
-Deadline.defaultProps = {
-  id: null
-};
-Deadline.propTypes = {
-  id: PropTypes.string,
-  deadline: PropTypes.object.isRequired,
-  createDeadline: PropTypes.func.isRequired,
-  fetching: PropTypes.bool.isRequired,
-  getDeadline: PropTypes.func.isRequired,
-  updateDeadline: PropTypes.func.isRequired
-};
 
 export default Deadline;

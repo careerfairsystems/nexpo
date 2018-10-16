@@ -14,6 +14,23 @@ import '../User.css';
  * Responsible for rendering a user. User id is recieved via url
  */
 class UserShow extends Component {
+  static propTypes = {
+    id: PropTypes.string,
+    user: PropTypes.object.isRequired,
+    fetching: PropTypes.bool.isRequired,
+    getUser: PropTypes.func.isRequired,
+    match: PropTypes.shape({
+      path: PropTypes.string
+    })
+  };
+
+  static defaultProps = {
+    id: null,
+    match: {
+      path: ''
+    }
+  };
+
   componentWillMount() {
     const { id, getUser } = this.props;
     getUser(id);
@@ -57,21 +74,5 @@ class UserShow extends Component {
     );
   }
 }
-
-UserShow.defaultProps = {
-  id: null,
-  match: {
-    path: ''
-  }
-};
-UserShow.propTypes = {
-  id: PropTypes.string,
-  user: PropTypes.object.isRequired,
-  fetching: PropTypes.bool.isRequired,
-  getUser: PropTypes.func.isRequired,
-  match: PropTypes.shape({
-    path: PropTypes.string
-  })
-};
 
 export default UserShow;

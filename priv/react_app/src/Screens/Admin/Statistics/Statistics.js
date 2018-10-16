@@ -46,6 +46,21 @@ const getData = applicationsPerDay => {
 };
 
 class Statistics extends Component {
+  static propTypes = {
+    getAllStatistics: PropTypes.func.isRequired,
+    statistics: PropTypes.shape({
+      companyStats: PropTypes.arrayOf(
+        PropTypes.shape({
+          name: PropTypes.string,
+          id: PropTypes.number,
+          nbrApplications: PropTypes.number
+        })
+      ),
+      nbrStudents: PropTypes.number,
+      nbrSearchingStudents: PropTypes.number
+    }).isRequired
+  };
+
   componentWillMount() {
     const { getAllStatistics } = this.props;
     getAllStatistics();
@@ -147,21 +162,5 @@ class Statistics extends Component {
     );
   }
 }
-
-Statistics.propTypes = {
-  getAllStatistics: PropTypes.func.isRequired,
-  statistics: PropTypes.shape({
-    companyStats: PropTypes.arrayOf(
-      PropTypes.shape({
-        name: PropTypes.string,
-        id: PropTypes.number,
-        nbrApplications: PropTypes.number
-      })
-    ),
-    nbrStudents: PropTypes.number,
-    nbrSearchingStudents: PropTypes.number
-  }).isRequired
-};
-Statistics.defaultProps = {};
 
 export default Statistics;

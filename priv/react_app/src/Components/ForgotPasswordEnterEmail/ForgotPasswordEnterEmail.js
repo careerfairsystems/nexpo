@@ -5,9 +5,9 @@ import ForgotPasswordForm from '../../Forms/ForgotPasswordForm';
 import { SuccessMessage } from '../SuccessMessage/SuccessMessage';
 
 type Props = {
-  callBackend: boolean,
-  success: boolean
+  callBackend: boolean
 };
+
 class ForgotPasswordEnterEmail extends Component<Props> {
   static propTypes = {
     callBackend: PropTypes.func.isRequired,

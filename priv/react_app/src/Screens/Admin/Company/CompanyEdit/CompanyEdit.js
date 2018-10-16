@@ -15,6 +15,20 @@ import '../Company.css';
  * Responsible for editing a company. Company id is recieved via url
  */
 class CompanyEdit extends Component {
+  static propTypes = {
+    id: PropTypes.string,
+    company: PropTypes.shape({ name: PropTypes.string }).isRequired,
+    fetching: PropTypes.bool.isRequired,
+    getCompany: PropTypes.func.isRequired,
+    history: PropTypes.shape({ push: PropTypes.func }).isRequired,
+    resetForm: PropTypes.func.isRequired,
+    updateCompany: PropTypes.func.isRequired
+  };
+
+  static defaultProps = {
+    id: null
+  };
+
   componentWillMount() {
     const { id, getCompany } = this.props;
     getCompany(id);
@@ -69,19 +83,5 @@ class CompanyEdit extends Component {
     );
   }
 }
-
-CompanyEdit.defaultProps = {
-  id: null
-};
-
-CompanyEdit.propTypes = {
-  id: PropTypes.string,
-  company: PropTypes.shape({ name: PropTypes.string }).isRequired,
-  fetching: PropTypes.bool.isRequired,
-  getCompany: PropTypes.func.isRequired,
-  history: PropTypes.shape({ push: PropTypes.func }).isRequired,
-  resetForm: PropTypes.func.isRequired,
-  updateCompany: PropTypes.func.isRequired
-};
 
 export default CompanyEdit;

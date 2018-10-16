@@ -11,6 +11,17 @@ import HtmlTitle from '../../../Components/HtmlTitle';
  * Responsible for rendering a list of mailtemplates
  */
 class Mailtemplates extends Component {
+  static propTypes = {
+    mailtemplates: PropTypes.object,
+    fetching: PropTypes.bool.isRequired,
+    getAllMailtemplates: PropTypes.func.isRequired,
+    deleteMailtemplate: PropTypes.func.isRequired
+  };
+
+  static defaultProps = {
+    mailtemplates: {}
+  };
+
   componentWillMount() {
     const { getAllMailtemplates } = this.props;
     getAllMailtemplates();
@@ -97,17 +108,5 @@ class Mailtemplates extends Component {
     return this.renderMailtemplates();
   }
 }
-
-Mailtemplates.defaultProps = {
-  mailtemplates: {},
-  fetching: false
-};
-
-Mailtemplates.propTypes = {
-  mailtemplates: PropTypes.object,
-  fetching: PropTypes.bool,
-  getAllMailtemplates: PropTypes.func.isRequired,
-  deleteMailtemplate: PropTypes.func.isRequired
-};
 
 export default Mailtemplates;

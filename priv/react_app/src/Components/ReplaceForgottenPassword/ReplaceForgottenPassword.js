@@ -15,6 +15,17 @@ type Props = {
 };
 
 class ReplaceForgottenPassword extends Component<Props> {
+  static propTypes = {
+    verifyKey: PropTypes.func.isRequired,
+    sendNewPasswordToBackend: PropTypes.func.isRequired,
+    keyIsValid: PropTypes.bool.isRequired,
+    success: PropTypes.bool
+  };
+
+  static defaultProps = {
+    success: false
+  };
+
   componentDidMount() {
     const { verifyKey } = this.props;
     verifyKey();
@@ -53,16 +64,5 @@ class ReplaceForgottenPassword extends Component<Props> {
     );
   }
 }
-
-ReplaceForgottenPassword.defaultProps = {
-  success: false
-};
-
-ReplaceForgottenPassword.propTypes = {
-  verifyKey: PropTypes.func.isRequired,
-  sendNewPasswordToBackend: PropTypes.func.isRequired,
-  keyIsValid: PropTypes.bool.isRequired,
-  success: PropTypes.bool
-};
 
 export default ReplaceForgottenPassword;

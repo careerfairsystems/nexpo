@@ -9,6 +9,27 @@ import SessionForm from '../../../Forms/SessionForm';
 import '../Session.css';
 
 class SessionApplication extends Component {
+  static propTypes = {
+    companies: PropTypes.object,
+    fetching: PropTypes.bool.isRequired,
+    currentUser: PropTypes.shape({
+      email: PropTypes.string,
+      student: PropTypes.number
+    }).isRequired,
+    currentStudent: PropTypes.shape({
+      resumeEnUrl: PropTypes.string,
+      resumeSvUrl: PropTypes.string
+    }).isRequired,
+    getAllCompanies: PropTypes.func.isRequired,
+    createStudentSessionAppl: PropTypes.func.isRequired,
+    updateCurrentStudent: PropTypes.func.isRequired,
+    resetForm: PropTypes.func.isRequired
+  };
+
+  static defaultProps = {
+    companies: {}
+  };
+
   componentWillMount() {
     const { getAllCompanies } = this.props;
     getAllCompanies();
@@ -64,27 +85,5 @@ class SessionApplication extends Component {
     );
   }
 }
-
-SessionApplication.defaultProps = {
-  companies: {},
-  fetching: false
-};
-
-SessionApplication.propTypes = {
-  companies: PropTypes.object,
-  currentUser: PropTypes.shape({
-    email: PropTypes.string,
-    student: PropTypes.number
-  }).isRequired,
-  currentStudent: PropTypes.shape({
-    resumeEnUrl: PropTypes.string,
-    resumeSvUrl: PropTypes.string
-  }).isRequired,
-  createStudentSessionAppl: PropTypes.func.isRequired,
-  fetching: PropTypes.bool,
-  getAllCompanies: PropTypes.func.isRequired,
-  resetForm: PropTypes.func.isRequired,
-  updateCurrentStudent: PropTypes.func.isRequired
-};
 
 export default SessionApplication;

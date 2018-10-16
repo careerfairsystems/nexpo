@@ -11,6 +11,17 @@ import HtmlTitle from '../../../Components/HtmlTitle';
  * Responsible for rendering a list of deadlines
  */
 class Deadlines extends Component {
+  static propTypes = {
+    deadlines: PropTypes.object,
+    fetching: PropTypes.bool.isRequired,
+    getAllDeadlines: PropTypes.func.isRequired,
+    deleteDeadline: PropTypes.func.isRequired
+  };
+
+  static defaultProps = {
+    deadlines: {}
+  };
+
   componentWillMount() {
     const { getAllDeadlines } = this.props;
     getAllDeadlines();
@@ -96,17 +107,5 @@ class Deadlines extends Component {
     return this.renderDeadlines();
   }
 }
-
-Deadlines.defaultProps = {
-  deadlines: {},
-  fetching: false
-};
-
-Deadlines.propTypes = {
-  deadlines: PropTypes.object,
-  fetching: PropTypes.bool,
-  getAllDeadlines: PropTypes.func.isRequired,
-  deleteDeadline: PropTypes.func.isRequired
-};
 
 export default Deadlines;

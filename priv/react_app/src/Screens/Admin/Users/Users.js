@@ -12,6 +12,17 @@ import FilterSearch, { FilterIcon } from '../../../Components/FilterSearch';
  * Responsible for rendering a list of users
  */
 class Users extends Component {
+  static propTypes = {
+    users: PropTypes.object,
+    fetching: PropTypes.bool.isRequired,
+    getAllUsers: PropTypes.func.isRequired,
+    deleteUser: PropTypes.func.isRequired
+  };
+
+  static defaultProps = {
+    users: {}
+  };
+
   componentWillMount() {
     const { getAllUsers } = this.props;
     getAllUsers();
@@ -94,17 +105,5 @@ class Users extends Component {
     return this.renderUsers();
   }
 }
-
-Users.defaultProps = {
-  users: {},
-  fetching: false
-};
-
-Users.propTypes = {
-  users: PropTypes.object,
-  fetching: PropTypes.bool,
-  getAllUsers: PropTypes.func.isRequired,
-  deleteUser: PropTypes.func.isRequired
-};
 
 export default Users;

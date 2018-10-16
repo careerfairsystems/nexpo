@@ -4,7 +4,8 @@ import SessionCompanies from './SessionCompanies';
 import type { State } from '../../../Store/reducers';
 
 const mapStateToProps = (state: State) => ({
-  companies: state.entities.companies
+  companies: state.entities.companies,
+  fetching: state.api.companies.fetching
 });
 
 const mapDispatchToProps = {

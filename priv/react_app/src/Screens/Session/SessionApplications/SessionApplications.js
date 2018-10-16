@@ -9,6 +9,19 @@ import UpdateSessionApplicationForm from '../../../Forms/UpdateSessionApplicatio
 import '../Session.css';
 
 class SessionApplications extends Component {
+  static propTypes = {
+    applications: PropTypes.array,
+    companies: PropTypes.object,
+    getAllCompanies: PropTypes.func.isRequired,
+    destroyStudentSessionAppl: PropTypes.func.isRequired,
+    fetching: PropTypes.bool.isRequired,
+    updateStudentSessionAppl: PropTypes.func.isRequired
+  };
+
+  static defaultProps = {
+    applications: null
+  };
+
   constructor(props) {
     super(props);
     this.state = { editing: {} };
@@ -95,9 +108,11 @@ class SessionApplications extends Component {
     if (fetching) {
       return <LoadingSpinner />;
     }
+
     if (isNil(applications)) {
       return <NotFound />;
     }
+
     return (
       <div className="session-applications">
         <HtmlTitle title="Student Session Application" />
@@ -113,19 +128,5 @@ class SessionApplications extends Component {
     );
   }
 }
-
-SessionApplications.defaultProps = {
-  applications: null,
-  fetching: false
-};
-
-SessionApplications.propTypes = {
-  applications: PropTypes.array,
-  companies: PropTypes.object,
-  getAllCompanies: PropTypes.func.isRequired,
-  destroyStudentSessionAppl: PropTypes.func.isRequired,
-  fetching: PropTypes.bool,
-  updateStudentSessionAppl: PropTypes.func.isRequired
-};
 
 export default SessionApplications;
