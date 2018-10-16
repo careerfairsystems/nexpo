@@ -21,9 +21,12 @@ class CompanyEdit extends Component {
   }
 
   updateCompany = values => {
-    const { id, updateCompany, history } = this.props;
+    const { id, updateCompany } = this.props;
     updateCompany(id, { company: values });
+  };
 
+  onSuccess = () => {
+    const { id, history } = this.props;
     history.push(`/admin/companies/${id}`);
   };
 
@@ -52,7 +55,11 @@ class CompanyEdit extends Component {
         <HtmlTitle title={company.name} />
         <div>
           <h1>{company.name}</h1>
-          <CompanyForm onSubmit={this.updateCompany} initialValues={company} />
+          <CompanyForm
+            onSubmit={this.updateCompany}
+            onSubmitSuccess={this.onSuccess}
+            initialValues={company}
+          />
           <br />
           <br />
           <h2>Invite Company Representatives</h2>

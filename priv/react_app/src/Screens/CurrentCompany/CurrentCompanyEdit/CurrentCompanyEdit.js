@@ -3,14 +3,9 @@ import PropTypes from 'prop-types';
 import { isEmpty, isNil } from 'lodash/fp';
 import NotFound from '../../NotFound';
 import CurrentCompanyForm from '../../../Forms/CurrentCompanyForm';
+import LoadingSpinner from '../../../Components/LoadingSpinner';
 
 class CurrentCompanyEdit extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {};
-  }
-
   componentWillMount() {
     const { getCurrentCompany } = this.props;
     getCurrentCompany();
@@ -19,6 +14,11 @@ class CurrentCompanyEdit extends Component {
   updateCurrentCompany = values => {
     const { updateCurrentCompany } = this.props;
     return updateCurrentCompany({ company: values });
+  };
+
+  onSuccess = () => {
+    const { history } = this.props;
+    history.push('/company/show');
   };
 
   showStudentSession() {
@@ -38,8 +38,9 @@ class CurrentCompanyEdit extends Component {
   }
 
   render() {
-    const { currentCompany } = this.props;
+    const { currentCompany, fetching } = this.props;
 
+    if (fetching) return <LoadingSpinner />;
     if (isEmpty(currentCompany) || isNil(currentCompany)) return <NotFound />;
 
     const { name } = currentCompany;
@@ -52,6 +53,7 @@ class CurrentCompanyEdit extends Component {
         </div>
         <CurrentCompanyForm
           onSubmit={this.updateCurrentCompany}
+          onSubmitSuccess={this.onSuccess}
           initialValues={currentCompany}
         />
       </div>
@@ -59,9 +61,9 @@ class CurrentCompanyEdit extends Component {
   }
 }
 
-CurrentCompanyEdit.defaultProps = {};
-
 CurrentCompanyEdit.propTypes = {
+  fetching: PropTypes.bool.isRequired,
+  history: PropTypes.object.isRequired,
   currentCompany: PropTypes.object.isRequired,
   getCurrentCompany: PropTypes.func.isRequired,
   updateCurrentCompany: PropTypes.func.isRequired
