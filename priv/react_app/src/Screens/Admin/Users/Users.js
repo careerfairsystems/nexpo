@@ -91,8 +91,8 @@ class Users extends Component {
 }
 
 Users.propTypes = {
-  users: PropTypes.object.isRequired,
-  fetching: PropTypes.bool.isRequired,
+  users: PropTypes.object,
+  fetching: PropTypes.bool,
   getAllUsers: PropTypes.func.isRequired
 };
 
