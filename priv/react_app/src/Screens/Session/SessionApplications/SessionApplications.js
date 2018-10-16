@@ -19,6 +19,7 @@ class SessionApplications extends Component {
   };
 
   static defaultProps = {
+    companies: {},
     applications: null
   };
 

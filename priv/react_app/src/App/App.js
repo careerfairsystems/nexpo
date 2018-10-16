@@ -241,8 +241,7 @@ App.propTypes = {
   isLoggedIn: PropTypes.bool.isRequired,
   currentUser: PropTypes.object.isRequired,
   pathname: PropTypes.string.isRequired,
-  redirect: PropTypes.func.isRequired,
-  logout: PropTypes.func.isRequired
+  redirect: PropTypes.func.isRequired
 };
 
 export default App;

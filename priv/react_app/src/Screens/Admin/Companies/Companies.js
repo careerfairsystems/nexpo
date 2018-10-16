@@ -59,7 +59,10 @@ class Companies extends Component {
           <Divider type="vertical" />
           <Popconfirm
             title="Sure to delete?"
-            onConfirm={() => this.props.deleteCompany(company.id)}
+            onConfirm={() => {
+              const { deleteCompany } = this.props;
+              deleteCompany(company.id);
+            }}
           >
             <span style={{ color: '#ff4d4f', cursor: 'pointer' }}>Delete</span>
           </Popconfirm>
@@ -109,7 +112,8 @@ class Companies extends Component {
 Companies.propTypes = {
   companies: PropTypes.object,
   fetching: PropTypes.bool.isRequired,
-  getAllCompanies: PropTypes.func.isRequired
+  getAllCompanies: PropTypes.func.isRequired,
+  deleteCompany: PropTypes.func.isRequired
 };
 
 Companies.defaultProps = {
