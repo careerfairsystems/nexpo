@@ -44,7 +44,7 @@ export const toFormData = (obj, form, namespace) => {
       }
 
       if (moment(value, dateFormats, true).isValid()) {
-        fd.append(formKey, moment(value).toISOString());
+        fd.append(formKey, moment.utc(value).toISOString());
       } else if (isObject(value) && !(value instanceof File)) {
         const nil = has('uid', value) && value.uid === '-1';
         if (!nil) toFormData(value, fd, formKey);
@@ -58,7 +58,7 @@ export const toFormData = (obj, form, namespace) => {
 };
 
 export const toDayFormat = time =>
-  moment(time).format('dddd D MMMM YYYY HH:mm');
+  moment.utc(time).format('dddd D MMMM YYYY HH:mm');
 
 export default {
   toDayFormat,
