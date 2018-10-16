@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import CompanyForm from '../../../../Components/Forms/CompanyForm';
+import CompanyForm from '../../../../Forms/CompanyForm';
 import '../Company.css';
 
 /**
@@ -14,26 +14,15 @@ class CompanyNew extends Component {
 
   render() {
     return (
-      <div className="company-edit-view">
-        <div>
-          <CompanyForm onSubmit={this.createCompany} />
-        </div>
+      <div className="company-new-view">
+        <CompanyForm onSubmit={this.createCompany} />
       </div>
     );
   }
 }
 
-CompanyNew.defaultProps = {
-  match: {
-    path: ''
-  }
-};
-
 CompanyNew.propTypes = {
-  createCompany: PropTypes.func.isRequired,
-  match: PropTypes.shape({
-    path: PropTypes.string
-  })
+  createCompany: PropTypes.func.isRequired
 };
 
 export default CompanyNew;

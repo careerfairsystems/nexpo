@@ -2,7 +2,7 @@ defmodule Nexpo.UserController do
   use Nexpo.Web, :controller
   use Guardian.Phoenix.Controller
 
-  alias Nexpo.{User, Role, Email, Mailer}
+  alias Nexpo.{User, Email, Mailer}
   alias Guardian.Plug.{EnsurePermissions}
 
   plug EnsurePermissions, [handler: Nexpo.SessionController,
@@ -30,7 +30,6 @@ defmodule Nexpo.UserController do
            |> Repo.preload([:roles, :student])
 
     changeset = User.changeset(user, user_params)
-                |> Role.put_assoc(user_params)
 
     case Repo.update(changeset) do
       {:ok, user} ->

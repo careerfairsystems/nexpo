@@ -1,6 +1,6 @@
 import { ApiError } from '../Errors/ApiError';
 import { getJwt } from '../Util/JwtHelper';
-import { snakeCaseKeys, formify } from '../Util/FormatHelper';
+import { snakeCaseKeys, toFormData } from '../Util/FormatHelper';
 
 type Response = {
   type: string,
@@ -45,7 +45,7 @@ export const authPost = (url, data) =>
 export const authFormPost = (url, data) =>
   fetch(url, {
     method: 'POST',
-    body: formify(data),
+    body: toFormData(data),
     headers: new Headers({
       Authorization: `Bearer ${getJwt()}`,
       Accept: 'application/json'
@@ -74,7 +74,7 @@ export const authPut = (url, data) =>
 export const authFormPut = (url, data) =>
   fetch(url, {
     method: 'PUT',
-    body: formify(data),
+    body: toFormData(data),
     headers: new Headers({
       Authorization: `Bearer ${getJwt()}`,
       Accept: 'application/json'

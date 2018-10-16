@@ -261,13 +261,10 @@ describe('destroyCurrentUserIsLoading', () => {
 
 describe('destroyCurrentUserSuccess', () => {
   it('should create the correct action', () => {
-    const testCurrentUserId = 1;
-
     const expectedAction = {
       type: actionTypes.DELETE_CURRENT_USER_SUCCESS,
-      id: 1
     };
-    const action = Actions.users.destroyCurrentUserSuccess(testCurrentUserId);
+    const action = Actions.users.destroyCurrentUserSuccess();
     expect(action).toEqual(expectedAction);
   });
 });

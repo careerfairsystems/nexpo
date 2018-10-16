@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-
-import { Table, Button } from 'antd';
+import { Table, Button, Popconfirm, Divider } from 'antd';
 import { sortBy } from 'lodash/fp';
-import Popconfirm from 'antd/lib/popconfirm';
-import Divider from 'antd/lib/divider';
+
 import InvisibleLink from '../../../Components/InvisibleLink';
 import LoadingSpinner from '../../../Components/LoadingSpinner';
 import HtmlTitle from '../../../Components/HtmlTitle';
@@ -42,7 +40,9 @@ class Deadlines extends Component {
       key: 'action',
       render: deadline => (
         <span>
-          <InvisibleLink to={`/admin/deadlines/${deadline.id}`}>Edit</InvisibleLink>
+          <InvisibleLink to={`/admin/deadlines/${deadline.id}`}>
+            Edit
+          </InvisibleLink>
           <Divider type="vertical" />
           <Popconfirm
             title="Sure to delete?"

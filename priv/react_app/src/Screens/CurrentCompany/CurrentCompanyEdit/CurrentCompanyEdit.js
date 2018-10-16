@@ -2,14 +2,13 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { isEmpty, isNil } from 'lodash/fp';
 import NotFound from '../../NotFound';
-import CurrentCompanyForm from '../../../Components/Forms/CurrentCompanyForm';
+import CurrentCompanyForm from '../../../Forms/CurrentCompanyForm';
 
-class Company extends Component {
+class CurrentCompanyEdit extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-    };
+    this.state = {};
   }
 
   componentWillMount() {
@@ -20,7 +19,7 @@ class Company extends Component {
   updateCurrentCompany = values => {
     const { updateCurrentCompany } = this.props;
     return updateCurrentCompany({ company: values });
-  }
+  };
 
   showStudentSession() {
     const { currentCompany } = this.props;
@@ -41,14 +40,16 @@ class Company extends Component {
   render() {
     const { currentCompany } = this.props;
 
-    if (isEmpty(currentCompany) || isNil(currentCompany)) return <NotFound />
+    if (isEmpty(currentCompany) || isNil(currentCompany)) return <NotFound />;
 
     const { name } = currentCompany;
 
     return (
       <div>
         <h1>{name}</h1>
-        <div style={{marginBottom: 20}}>Student Session Days: {this.showStudentSession()}</div>
+        <div style={{ marginBottom: 20 }}>
+          Student Session Days: {this.showStudentSession()}
+        </div>
         <CurrentCompanyForm
           onSubmit={this.updateCurrentCompany}
           initialValues={currentCompany}
@@ -58,13 +59,12 @@ class Company extends Component {
   }
 }
 
-Company.defaultProps = {
-};
+CurrentCompanyEdit.defaultProps = {};
 
-Company.propTypes = {
+CurrentCompanyEdit.propTypes = {
   currentCompany: PropTypes.object.isRequired,
   getCurrentCompany: PropTypes.func.isRequired,
   updateCurrentCompany: PropTypes.func.isRequired
 };
 
-export default Company;
+export default CurrentCompanyEdit;

@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { isEmpty, isNil, toInteger } from 'lodash/fp';
-import message from 'antd/lib/message';
+import { message } from 'antd';
+
 import NotFound from '../../../NotFound';
 import API from '../../../../API';
-import CompanyForm from '../../../../Components/Forms/CompanyForm';
-import InviteForm from '../../../../Components/Forms/InviteForm';
+import CompanyForm from '../../../../Forms/CompanyForm';
+import InviteForm from '../../../../Forms/InviteForm';
 import HtmlTitle from '../../../../Components/HtmlTitle';
 import LoadingSpinner from '../../../../Components/LoadingSpinner';
 import '../Company.css';
@@ -22,6 +23,7 @@ class CompanyEdit extends Component {
   updateCompany = values => {
     const { id, updateCompany, history } = this.props;
     updateCompany(id, { company: values });
+
     history.push(`/admin/companies/${id}`);
   };
 
@@ -45,12 +47,11 @@ class CompanyEdit extends Component {
     if (fetching) return <LoadingSpinner />;
     if (isEmpty(company) || isNil(company)) return <NotFound />;
 
-    const { name } = company;
     return (
       <div className="company-edit-view">
-        <HtmlTitle title={name} />
+        <HtmlTitle title={company.name} />
         <div>
-          <h1>{name}</h1>
+          <h1>{company.name}</h1>
           <CompanyForm onSubmit={this.updateCompany} initialValues={company} />
           <br />
           <br />
@@ -63,20 +64,15 @@ class CompanyEdit extends Component {
 }
 
 CompanyEdit.defaultProps = {
-  id: null,
-  match: {
-    path: ''
-  }
+  id: null
 };
+
 CompanyEdit.propTypes = {
   id: PropTypes.string,
-  company: PropTypes.object.isRequired,
+  company: PropTypes.shape({ name: PropTypes.string }).isRequired,
   fetching: PropTypes.bool.isRequired,
   getCompany: PropTypes.func.isRequired,
-  history: PropTypes.shape({ redirect: PropTypes.func }).isRequired,
-  match: PropTypes.shape({
-    path: PropTypes.string
-  }),
+  history: PropTypes.shape({ push: PropTypes.func }).isRequired,
   resetForm: PropTypes.func.isRequired,
   updateCompany: PropTypes.func.isRequired
 };

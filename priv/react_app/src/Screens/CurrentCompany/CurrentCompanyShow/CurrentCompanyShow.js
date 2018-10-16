@@ -1,18 +1,19 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { isEmpty, isNil } from 'lodash/fp';
-import Avatar from 'antd/lib/avatar';
+import { Avatar, Button, List } from 'antd';
 import { toExternal } from '../../../Util/URLHelper';
+import { toDayFormat } from '../../../Util/FormatHelper';
 import NotFound from '../../NotFound';
 import HtmlTitle from '../../../Components/HtmlTitle';
 import InvisibleLink from '../../../Components/InvisibleLink';
+import '../../Admin/Company/Company.css';
 
-class Company extends Component {
+class CurrentCompanyShow extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-    };
+    this.state = {};
   }
 
   componentWillMount() {
@@ -39,7 +40,7 @@ class Company extends Component {
   render() {
     const { currentCompany } = this.props;
 
-    if (isEmpty(currentCompany) || isNil(currentCompany)) return <NotFound />
+    if (isEmpty(currentCompany) || isNil(currentCompany)) return <NotFound />;
 
     const { name, description, website, logoUrl } = currentCompany;
 
@@ -47,7 +48,7 @@ class Company extends Component {
       <div className="company-show-view">
         <HtmlTitle title={name} />
 
-        <div>
+        <div className="centering">
           <Avatar
             src={logoUrl}
             size={128}
@@ -56,23 +57,44 @@ class Company extends Component {
           />
           <h1>{name}</h1>
           <a href={toExternal(website)}>{website}</a>
-          <p>
-            {name} has student sessions: {this.showStudentSession()}
-          </p>
-          <p>{description}</p>
         </div>
-        <InvisibleLink to="/company/edit">Edit</InvisibleLink>
+
+        <p>
+          {name} has student sessions: {this.showStudentSession()}
+        </p>
+        <p>{description}</p>
+        <h3>Student Session Time Slots</h3>
+        <List
+          dataSource={currentCompany.studentSessionTimeSlots}
+          bordered
+          renderItem={({ id, start, end, location }) => (
+            <List.Item>
+              <List.Item.Meta
+                avatar={<Avatar size="large">{id}</Avatar>}
+                title={`Location: ${location}`}
+                description={`Start Time: ${toDayFormat(
+                  start
+                )}\nEnd Time: ${toDayFormat(end)}`}
+              />
+            </List.Item>
+          )}
+        />
+        <br />
+        <InvisibleLink to="/company/edit">
+          <Button onClick={() => null} type="primary">
+            Edit
+          </Button>
+        </InvisibleLink>
       </div>
     );
   }
 }
 
-Company.defaultProps = {
-};
+CurrentCompanyShow.defaultProps = {};
 
-Company.propTypes = {
+CurrentCompanyShow.propTypes = {
   currentCompany: PropTypes.object.isRequired,
   getCurrentCompany: PropTypes.func.isRequired
 };
 
-export default Company;
+export default CurrentCompanyShow;

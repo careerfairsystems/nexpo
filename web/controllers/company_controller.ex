@@ -81,7 +81,7 @@ defmodule Nexpo.CompanyController do
   end
 
   def update(conn, %{"id" => id, "company" => company_params}, _user, _claims) do
-    company = Repo.get!(Company, id)
+    company = Repo.get!(Company, id)|> Repo.preload(:student_session_time_slots)
 
     deleted_files = company_params
       |> Enum.filter(fn {k, v} ->

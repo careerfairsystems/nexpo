@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-
-import { Table, Input, Button, Icon } from 'antd';
+import { Table, Input, Button, Icon, Popconfirm, Divider } from 'antd';
 import { size, sortBy } from 'lodash/fp';
-import Popconfirm from 'antd/lib/popconfirm';
-import Divider from 'antd/lib/divider';
+
 import { toExternal } from '../../../Util/URLHelper';
 import InvisibleLink from '../../../Components/InvisibleLink';
 import LoadingSpinner from '../../../Components/LoadingSpinner';

@@ -1,5 +1,5 @@
 import { reset } from 'redux-form';
-import message from 'antd/lib/message';
+import { message } from 'antd';
 import { actionTypes } from '../..';
 import API from '../../../API';
 
@@ -21,7 +21,10 @@ export type CreateStudentSessionApplFailureAction = {
   type: string
 };
 export function createStudentSessionApplFailure(): CreateStudentSessionApplFailureAction {
-  message.warning('Your Application could not be saved.');
+  message.warning(
+    'Your Application could not be saved, you might have already applied to this company.'
+  );
+
   return {
     type: actionTypes.POST_STUDENT_SESSION_APPL_FAILURE
   };

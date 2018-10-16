@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { isEmpty, isNil } from 'lodash/fp';
 import NotFound from '../../NotFound';
-import MailtemplateForm from '../../../Components/Forms/MailtemplateForm';
+import MailtemplateForm from '../../../Forms/MailtemplateForm';
 import LoadingSpinner from '../../../Components/LoadingSpinner';
 
 class Mailtemplate extends Component {

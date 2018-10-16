@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import ReplacePasswordForm from '../Forms/ReplacePasswordForm';
+import ReplacePasswordForm from '../../Forms/ReplacePasswordForm';
 import { SuccessMessage } from '../SuccessMessage/SuccessMessage';
 import { NotFound } from '../../Screens/NotFound/NotFound';
 

@@ -4,6 +4,7 @@ defmodule Nexpo.StudentSession do
   schema "student_sessions" do
     field :start, :naive_datetime
     field :end, :naive_datetime
+    field :studentConfirmed, :boolean, default: false
     belongs_to :company, Nexpo.Company
     belongs_to :student, Nexpo.Student
 
@@ -15,8 +16,8 @@ defmodule Nexpo.StudentSession do
   """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:start, :end, :company_id, :student_id])
-    |> validate_required([:start, :end, :company_id, :student_id])
+    |> cast(params, [:start, :end, :studentConfirmed, :company_id, :student_id])
+    |> validate_required([:start, :end, :studentConfirmed, :company_id, :student_id])
     |> unique_constraint(:unique, message: "Student has already a session with that company", name: :unique_session_id)
   end
 end

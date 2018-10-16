@@ -7,6 +7,7 @@ import { toExternal } from '../../../Util/URLHelper';
 import LoadingSpinner from '../../../Components/LoadingSpinner';
 import HtmlTitle from '../../../Components/HtmlTitle';
 import InvisibleLink from '../../../Components/InvisibleLink';
+import '../Session.css';
 
 class SessionCompanies extends Component {
   componentWillMount() {
@@ -47,7 +48,7 @@ class SessionCompanies extends Component {
     }
 
     return (
-      <div>
+      <div className="session-companies">
         <HtmlTitle title="Student Session Companies" />
         <h1>Student Session Companies</h1>
         <List

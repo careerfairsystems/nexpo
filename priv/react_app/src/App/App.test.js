@@ -39,6 +39,7 @@ const state = {
     roles: { fetching: false, success: false },
     users: { fetching: false, success: false },
     current_user: { fetching: false, success: false },
+    current_company: { fetching: false, success: false },
     forgot_password: { fetching: false, success: false },
     login: { fetching: false, success: false },
     replace_password: { fetching: false, success: false },
@@ -74,7 +75,19 @@ const state = {
       '2': { id: 2, type: 'zzz', permissions: ['read_users'], users: [1] }
     },
     companies: {
-      '1': { id: 1, name: 'Spotify', entries: [1, 2, 3] },
+      '1': {
+        id: 1,
+        name: 'Spotify',
+        entries: [1, 2, 3],
+        studentSessionTimeSlots: [
+          {
+            id: 1,
+            start: '1970-01-01T00:00:00.000000',
+            end: '2000-01-01T00:00:00.000000',
+            location: 'E-huset'
+          }
+        ]
+      },
       '2': { id: 2, name: 'Google', entries: [4, 5] }
     },
     categories: {
@@ -124,8 +137,11 @@ it('renders routes without crashing', () => {
   found(mount(route('/admin/companies/1/edit')));
   found(mount(route('/admin/users')));
   found(mount(route('/admin/users/1')));
+  found(mount(route('/admin/users/1/edit')));
   found(mount(route('/admin/roles')));
+  found(mount(route('/admin/roles/new')));
   found(mount(route('/admin/roles/1')));
+  found(mount(route('/admin/roles/1/edit')));
   found(mount(route('/admin/statistics')));
   found(mount(route('/login')));
   found(mount(route('/logout')));

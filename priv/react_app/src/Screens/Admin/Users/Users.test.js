@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import Table from 'antd/lib/table';
-import Button from 'antd/lib/button';
+import { Table } from 'antd';
+
 import Users from './Users';
 import LoadingSpinner from '../../../Components/LoadingSpinner';
 
@@ -21,13 +21,6 @@ it('calls fetch all users prop on mount', () => {
   const wrapper = shallow(<Users getAllUsers={func} />);
 
   expect(func).toHaveBeenCalledTimes(1);
-});
-
-it('calls fetch all users prop on mount', () => {
-  const func = jest.fn();
-  const wrapper = shallow(<Users getAllUsers={func} />);
-
-  wrapper.find(Button).simulate('click');
 });
 
 it('should render users', () => {

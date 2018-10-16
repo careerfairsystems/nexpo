@@ -54,6 +54,12 @@ defmodule Nexpo.Support.View do
             Nexpo.StudentSessionApplicationView,
             "student_session_application.json"
           )}
+      :student_session_time_slots ->
+        %{:student_session_time_slots => render_many(
+            object.student_session_time_slots,
+            Nexpo.StudentSessionTimeSlotView,
+            "student_session_time_slot.json"
+          )}
       :logo_url ->
         %{:logo_url => Nexpo.ProfileImage.url(get_url(object, relation), :original)}
       :resume_en_url ->

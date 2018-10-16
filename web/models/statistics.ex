@@ -3,10 +3,10 @@ defmodule Nexpo.Statistics do
   alias Nexpo.{Student, Company, Repo, StudentSessionApplication }
 
   embedded_schema do
-    field :nbr_searching_students, :integer, virtual: true
-    field :nbr_students, :integer, virtual: true
-    field :nbr_applications, :integer, virtual: true
-    field :company_stats, {:array, :map}, virtual: true
+    field :nbr_searching_students, :integer
+    field :nbr_students, :integer
+    field :company_stats, {:array, :map}
+    field :applications_per_day, :date
     timestamps()
   end
 
@@ -17,10 +17,12 @@ defmodule Nexpo.Statistics do
       group_by: student.id,
       select: student.id
     ))
-    nbr_applications = Repo.one(
+
+    applications_per_day = Repo.all(
       from appl in StudentSessionApplication,
-      select: count(appl.id)
+      select: appl.inserted_at
     )
+
     nbr_students = Repo.one(
       from student in Student,
       select: count(student.id)
@@ -37,8 +39,8 @@ defmodule Nexpo.Statistics do
      %{
         nbr_searching_students: nbr_students_applied,
         nbr_students: nbr_students,
-        nbr_applications: nbr_applications,
-        company_stats: company
+        company_stats: company,
+        applications_per_day: applications_per_day
       }
   end
 

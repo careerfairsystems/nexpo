@@ -16,7 +16,7 @@ defmodule Nexpo.User do
     field :forgot_password_key, :string
     field :forgot_password_time, :naive_datetime
 
-    many_to_many :roles, Nexpo.Role, join_through: "users_roles", on_replace: :delete, on_delete: :delete_all
+    many_to_many :roles, Nexpo.Role, join_through: "users_roles", on_delete: :delete_all
     has_one :student, Nexpo.Student, on_delete: :delete_all
     has_one :representative, Nexpo.Representative, on_delete: :delete_all
 
@@ -42,7 +42,7 @@ defmodule Nexpo.User do
   end
 
   def put_assoc(changeset, params) do
-    case Map.get(params, "user_ids") do
+    case Map.get(params, "users") do
       nil ->
         changeset
       user_ids ->

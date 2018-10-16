@@ -4,8 +4,8 @@ import { isEmpty, omit } from 'lodash/fp';
 import { Button, Modal } from 'antd';
 import LoadingSpinner from '../../Components/LoadingSpinner';
 import NotFound from '../NotFound';
-import CurrentUserForm from '../../Components/Forms/CurrentUserForm';
-import StudentForm from '../../Components/Forms/StudentForm';
+import CurrentUserForm from '../../Forms/CurrentUserForm';
+import StudentForm from '../../Forms/StudentForm';
 
 const { confirm } = Modal;
 class CurrentUser extends Component {

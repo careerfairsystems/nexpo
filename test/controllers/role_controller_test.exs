@@ -52,10 +52,10 @@ defmodule Nexpo.RoleControllerTest do
   end
 
   @tag :logged_in
-  test "updates and renders chosen resource with user ids", %{conn: conn} do
+  test "updates and renders chosen resource with users", %{conn: conn} do
     role = Repo.insert! %Role{}
     user = Factory.create_user()
-    attrs = %{type: "type", user_ids: [user.id]}
+    attrs = %{type: "type", users: [user.id]}
     conn = put conn, role_path(conn, :update, role), role: attrs
     assert json_response(conn, 200)["data"]["id"]
     role = Role |> Repo.get_by(%{type: "type"})
