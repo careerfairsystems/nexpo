@@ -1,5 +1,4 @@
 import { handleHttpResponse, authPost, fetchJson } from './utils';
-import { snakeCaseKeys } from '../Util/FormatHelper';
 
 type finalSignupBody = {
   password: string,
