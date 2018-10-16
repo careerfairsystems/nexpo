@@ -2,7 +2,14 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Col, Row, Table } from 'antd';
 import { orderBy, divide, groupBy, sortBy } from 'lodash/fp';
-import { VictoryAxis, VictoryLabel, VictoryChart, VictoryLine } from 'victory';
+import {
+  VictoryAxis,
+  VictoryChart,
+  VictoryLabel,
+  VictoryLine,
+  VictoryTooltip,
+  VictoryVoronoiContainer
+} from 'victory';
 import moment from 'moment';
 
 const columns = [
@@ -50,12 +57,11 @@ class Statistics extends Component {
       companyStats = [],
       nbrSearchingStudents,
       nbrStudents,
-      applicationsPerDay = []
+      applicationsPerDay = [],
+      wordsPerAppl = 0
     } = statistics;
     const data = getData(applicationsPerDay);
-
     const nbrApplications = applicationsPerDay.length;
-
     return (
       <div>
         <h1>Statistics</h1>
@@ -75,15 +81,33 @@ class Statistics extends Component {
               nbrApplications || 0,
               nbrSearchingStudents || 1
             ).toFixed(2)}`}
+            <br />
+            {`Average number of words per application: ${wordsPerAppl.toFixed(
+              2
+            )}`}
           </Col>
           <Col span={10}>
-            <VictoryChart>
+            <VictoryChart
+              containerComponent={
+                <VictoryVoronoiContainer
+                  labels={d => `y: ${d.y}, x: ${d.x}`}
+                  labelComponent={
+                    <VictoryTooltip
+                      cornerRadius={0}
+                      flyoutStyle={{ fill: 'white' }}
+                    />
+                  }
+                />
+              }
+            >
               <VictoryLabel
-                text="Number of applications Over time"
+                text="Number of applications over time"
                 x={225}
                 y={30}
                 textAnchor="middle"
               />
+              {/* Add this back on the 19th Wooo
+
               <VictoryLine
                 style={{
                   data: { stroke: 'red', strokeWidth: 2 },
@@ -92,17 +116,17 @@ class Statistics extends Component {
                 labels={['Deadline']}
                 labelComponent={<VictoryLabel y={200} />}
                 x={() => (data.length > 0 ? '2018-10-19' : null)}
-              />
+              /> */}
               <VictoryAxis tickCount={3} />
               <VictoryAxis
                 style={{ axisLabel: { marginRight: 20 } }}
                 dependentAxis
-                tickLabelComponent={<VictoryLabel />}
               />
               <VictoryLine data={data} />
             </VictoryChart>
           </Col>
         </Row>
+
         <br />
         <br />
         <br />

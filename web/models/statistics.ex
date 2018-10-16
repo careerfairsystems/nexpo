@@ -7,6 +7,7 @@ defmodule Nexpo.Statistics do
     field :nbr_students, :integer
     field :company_stats, {:array, :map}
     field :applications_per_day, :date
+    field :words_per_appl, :integer
     timestamps()
   end
 
@@ -18,10 +19,13 @@ defmodule Nexpo.Statistics do
       select: student.id
     ))
 
-    applications_per_day = Repo.all(
+    applications = Repo.all(
       from appl in StudentSessionApplication,
-      select: appl.inserted_at
+      select: %{date: appl.inserted_at, motivation: appl.motivation }
     )
+    words_per_appl = Enum.reduce(applications, 0 , fn x, acc -> length(String.split(x.motivation, " ")) + acc end) / length(applications)
+
+    applications_per_day = Enum.map(applications, fn a -> a.date end)
 
     nbr_students = Repo.one(
       from student in Student,
@@ -40,7 +44,8 @@ defmodule Nexpo.Statistics do
         nbr_searching_students: nbr_students_applied,
         nbr_students: nbr_students,
         company_stats: company,
-        applications_per_day: applications_per_day
+        applications_per_day: applications_per_day,
+        words_per_appl: words_per_appl
       }
   end
 
