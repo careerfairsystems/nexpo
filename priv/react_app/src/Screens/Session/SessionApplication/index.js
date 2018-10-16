@@ -8,7 +8,7 @@ const mapStateToProps = (state: State) => ({
   companies: state.entities.companies,
   currentUser: Selectors.users.getCurrentUser(state),
   currentStudent: Selectors.students.getCurrentStudent(state),
-  fetching: state.api.current_user.fetching
+  fetching: state.api.currentUser.fetching
 });
 
 const mapDispatchToProps = {

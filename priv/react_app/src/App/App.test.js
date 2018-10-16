@@ -38,11 +38,11 @@ const state = {
     companies: { fetching: false, success: false },
     roles: { fetching: false, success: false },
     users: { fetching: false, success: false },
-    current_user: { fetching: false, success: false },
-    forgot_password: { fetching: false, success: false },
+    currentUser: { fetching: false, success: false },
+    forgotPassword: { fetching: false, success: false },
     login: { fetching: false, success: false },
-    replace_password: { fetching: false, success: false },
-    verify_forgot_password_key: { fetching: false, success: false }
+    replacePassword: { fetching: false, success: false },
+    verifyForgotPasswordKey: { fetching: false, success: false }
   },
   entities: {
     users: {

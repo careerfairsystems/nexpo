@@ -4,7 +4,7 @@ import { Selectors } from '../../Store';
 
 const mapStateToProps = state => ({
   currentUser: Selectors.users.getCurrentUser(state),
-  fetching: state.api.current_user.fetching,
+  fetching: state.api.currentUser.fetching,
   isLoggedIn: state.auth.isLoggedIn
 });
 

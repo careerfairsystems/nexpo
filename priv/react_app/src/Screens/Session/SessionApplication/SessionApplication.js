@@ -27,7 +27,7 @@ class SessionApplication extends Component {
   createStudentSessionAppl = data => {
     const { createStudentSessionAppl } = this.props;
     createStudentSessionAppl({
-      student_session_application: data
+      studentSessionApplication: data
     });
   };
 

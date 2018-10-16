@@ -15,9 +15,9 @@ type Props = {
 type State = {
   email: string,
   password: string,
-  password_confirmation: string,
-  first_name: string,
-  last_name: string,
+  passwordConfirmation: string,
+  firstName: string,
+  lastName: string,
   errors: object,
   noSuchKey: boolean,
   finished: boolean

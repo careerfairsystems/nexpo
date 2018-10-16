@@ -10,7 +10,7 @@ type Props = {
   keyIsValid: boolean,
   errors: {
     password: string[],
-    password_confirmation: string[]
+    passwordConfirmation: string[]
   },
   success: boolean
 };
@@ -25,7 +25,7 @@ class ReplaceForgottenPassword extends Component<Props> {
     const { sendNewPasswordToBackend } = this.props;
     return sendNewPasswordToBackend({
       password,
-      password_confirmation: passwordConfirmation
+      passwordConfirmation
     });
   };
 

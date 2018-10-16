@@ -5,23 +5,24 @@ import type { State } from '../../Store/reducers';
 
 const mapStateToProps = (state: State) => ({
   keyIsValid: state.auth.forgotPassword.validKey,
-  errors: state.api.replace_password.errors || {},
-  success: state.api.replace_password.success
+  errors: state.api.replacePassword.errors || {},
+  success: state.api.replacePassword.success
 });
 
 const mapDispatchToprops = (dispatch, props) => {
   const { hashKey } = props;
   const key = hashKey;
   return {
-    sendNewPasswordToBackend: ({ password, password_confirmation }) => dispatch(
-        Actions.accounts.replace_forgotten_password({
+    sendNewPasswordToBackend: ({ password, passwordConfirmation }) =>
+      dispatch(
+        Actions.accounts.replaceForgottenPassword({
           key,
           password,
-          password_confirmation
+          passwordConfirmation
         })
       ),
     verifyKey: () => {
-      dispatch(Actions.accounts.verify_forgot_password_key({ key }));
+      dispatch(Actions.accounts.verifyForgotPasswordKey({ key }));
     }
   };
 };
