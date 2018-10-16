@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import CurrentCompanyShow from './CurrentCompanyShow';
 
-describe('companyform should function correctly', () => {
+describe('current company show should function correctly', () => {
   beforeEach(() => {});
 
   it('should render without crashing', () => {
