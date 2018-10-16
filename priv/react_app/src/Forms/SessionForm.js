@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { map } from 'lodash/fp';
+import { map, toLower } from 'lodash/fp';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import { Select, Input, Form, Button } from 'antd';
@@ -27,6 +27,8 @@ const StudentSessionForm = ({ handleSubmit, companies, submitting }) => (
       label="Choose the company you would like to meet"
       required
       name="companyId"
+      showSearch
+      optionFilterProp="children"
       validate={requiredCompany}
       component={InputSelect}
     >
