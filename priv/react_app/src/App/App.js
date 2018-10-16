@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Route, Switch, Link } from 'react-router-dom';
+import { Route, Switch, Link, Redirect } from 'react-router-dom';
 import { Layout, Menu, Breadcrumb, Icon } from 'antd';
 import { startCase } from 'lodash/fp';
 
@@ -64,7 +64,10 @@ const privateRoutes = [
   { path: '/session', component: SessionHome },
   { path: '/session/application', component: SessionApplication },
   { path: '/session/applications', component: SessionApplications },
-  { path: '/session/companies', component: SessionCompanies }
+  { path: '/session/companies', component: SessionCompanies },
+  { path: '/company', render: () => <Redirect to="/company/show" /> },
+  { path: '/company/show', component: { CurrentCompanyShow } },
+  { path: '/company/edit', component: { CurrentCompanyEdit } }
 ];
 
 const routes = (
@@ -74,8 +77,6 @@ const routes = (
     {privateRoutes.map(props => (
       <PrivateRoute key={props.path} exact {...props} />
     ))}
-    <PrivateRoute exact path="/company/edit" component={CurrentCompanyEdit} />
-    <PrivateRoute exact path="/company/show" component={CurrentCompanyShow} />
     <Route path="/login" component={Login} />
     <Route path="/logout" component={Logout} />
     <Route path="/signup" component={Signup} />
@@ -125,7 +126,11 @@ class App extends Component {
 
   restrictedMenuItem = ({ route, title }) => {
     const { currentUser, isLoggedIn } = this.props;
-    if (isLoggedIn && hasPermission(currentUser, route)&&hasAccess(currentUser, route)) {
+    if (
+      isLoggedIn &&
+      hasPermission(currentUser, route) &&
+      hasAccess(currentUser, route)
+    ) {
       return <Menu.Item key={`/${route}`}>{title}</Menu.Item>;
     }
     return null;
