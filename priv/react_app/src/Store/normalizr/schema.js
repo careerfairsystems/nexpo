@@ -122,8 +122,9 @@ const userSchema = () => {
     { model: belongsTo('user') }
   );
   const role = entity('roles', {}, { model: belongsTo('user') });
+  const representative = entity('representatives', {company}, { model: belongsTo('user') });
 
-  const user = entity('users', { roles: [role], student, company });
+  const user = entity('users', { roles: [role], student, representative });
 
   return user;
 };

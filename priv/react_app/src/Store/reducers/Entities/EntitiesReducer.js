@@ -155,6 +155,10 @@ export const EntitiesReducer = (
       normalized = normalize(action.student, Schema.studentSchema());
       return mergeWith(handleMerge, state, camelCaseKeys(normalized.entities));
     }
+    case actionTypes.FETCH_CURRENT_COMPANY_SUCCESS: {
+      normalized = normalize(action.company, Schema.companySchema());
+      return mergeWith(handleMerge, state, camelCaseKeys(normalized.entities));
+    }
     case actionTypes.FETCH_STATISTICS_SUCCESS: {
       return { ...state, statistics: camelCaseKeys(action.statistics) };
     }

@@ -21,11 +21,17 @@ const routePermissions = {
   hosts: ['read_all', 'read_hosts']
 };
 
+const routeAccess = {
+  company: 'representative',
+  session: 'student'
+};
+
 const getBasePath = route => route.split('/').filter(i => i)[0];
 
 export const hasPermission = (currentUser, route) => {
   const basePath = getBasePath(route);
   const permissionsNeeded = routePermissions[basePath];
+
   if (!currentUser) {
     return false;
   }
@@ -38,4 +44,17 @@ export const hasPermission = (currentUser, route) => {
   return true;
 };
 
-export default { hasPermission };
+export const hasAccess = (currentUser, route) => {
+  const basePath = getBasePath(route);
+  const accessNeeded = routeAccess[basePath];
+
+  if (!currentUser) {
+    return false;
+  }
+  if (accessNeeded) {
+    return !!currentUser[accessNeeded];
+  }
+  return true;
+};
+
+export default { hasAccess, hasPermission };

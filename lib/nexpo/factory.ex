@@ -90,7 +90,7 @@ defmodule Nexpo.Factory do
            |> Map.put(:signup_key, user.signup_key)
            |> Nexpo.User.final_signup!
     Nexpo.Repo.get!(Nexpo.User, user.id)
-    |> Nexpo.Repo.preload(:student)
+    |> Nexpo.Repo.preload([:student, :representative])
   end
 
   @doc """

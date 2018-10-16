@@ -39,6 +39,14 @@ defmodule Nexpo.Company do
     |> cast_assoc(:student_session_time_slots, with: &TimeSlot.update_changeset(&1, &2, company))
   end
 
+  def representative_changeset(struct, params \\ %{}) do
+    struct
+    |> cast(params, [:description, :website])
+    |> cast_attachments(params, [:logo_url])
+    |> validate_required([:name, :description, :website])
+    |> unique_constraint(:name)
+  end
+
   def put_assoc(changeset, params) do
     case Map.get(params, "company_ids") do
       nil ->
