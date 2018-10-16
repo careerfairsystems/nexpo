@@ -121,7 +121,7 @@ SessionApplications.defaultProps = {
 
 SessionApplications.propTypes = {
   applications: PropTypes.array,
-  companies: PropTypes.array,
+  companies: PropTypes.object,
   getAllCompanies: PropTypes.func.isRequired,
   destroyStudentSessionAppl: PropTypes.func.isRequired,
   fetching: PropTypes.bool,

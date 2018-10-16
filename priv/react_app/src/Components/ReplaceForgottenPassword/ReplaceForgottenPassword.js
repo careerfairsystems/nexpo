@@ -11,13 +11,13 @@ type Props = {
   errors: {
     password: string[],
     passwordConfirmation: string[]
-  },
-  success: boolean
+  }
 };
 
 class ReplaceForgottenPassword extends Component<Props> {
   componentDidMount() {
-    this.props.verifyKey();
+    const { verifyKey } = this.props;
+    verifyKey();
   }
 
   sendQueryToBackend = values => {
@@ -53,6 +53,7 @@ class ReplaceForgottenPassword extends Component<Props> {
     );
   }
 }
+
 ReplaceForgottenPassword.defaultProps = {
   success: false
 };

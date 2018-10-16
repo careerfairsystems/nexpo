@@ -42,7 +42,7 @@ describe('SessionApplication', () => {
     const wrapper = shallow(<SessionApplication {...props} />);
     wrapper.instance().createStudentSessionAppl(appl);
     expect(props.createStudentSessionAppl).toHaveBeenCalledWith({
-      student_session_application: appl
+      studentSessionApplication: appl
     });
   });
 });
