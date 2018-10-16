@@ -49,6 +49,11 @@ it('should set the correct initial state', () => {
       errors: undefined,
       success: false
     },
+    currentCompany: {
+      fetching: false,
+      errors: undefined,
+      success: false
+    },
     forgotPassword: {
       fetching: false,
       errors: undefined,

@@ -5,12 +5,28 @@
 import {
   authFormPost,
   authFetch,
+  authPut,
   authFormPut,
   authDelete,
   handleHttpResponse
 } from './utils';
 
 export default {
+  /**
+  * Fetches the current company
+  */
+  getMyCompany: () => authFetch('/api/me/company').then(handleHttpResponse),
+
+  /**
+  * Updates the current company
+  */
+  updateMyCompany: data => authPut('/api/me/company', data).then(handleHttpResponse),
+
+  /**
+  * Removes the current company
+  */
+  destoryMyCompany: data => authDelete('/api/me/company', data).then(handleHttpResponse),
+
   /**
    * Create a company
    */
