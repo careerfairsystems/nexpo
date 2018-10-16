@@ -47,8 +47,15 @@ const state = {
   },
   entities: {
     users: {
-      '1': { id: 1, email: 'dev@it', firstName: 'X', roles: [1, 2] },
-      '2': { id: 2, email: 't@it', firstName: 'T', roles: [], student: 1 }
+      '1': {
+        id: 1,
+        email: 'dev@it',
+        firstName: 'X',
+        roles: [1, 2],
+        student: 1,
+        representative: 1
+      },
+      '2': { id: 2, email: 't@it', firstName: 'T', roles: [] }
     },
     students: {
       '1': {
@@ -59,6 +66,9 @@ const state = {
         user: 1,
         year: 2000
       }
+    },
+    representatives: {
+      '1': { id: 1, company: 1, user: 1 }
     },
     studentSessionApplications: {
       '1': {
@@ -152,5 +162,8 @@ it('renders routes without crashing', () => {
   found(mount(route('/session/application')));
   found(mount(route('/session/applications')));
   found(mount(route('/session/companies')));
+  found(mount(route('/company')));
+  found(mount(route('/company/show')));
+  found(mount(route('/company/edit')));
   expect(mount(route('/invalid-path')).find(NotFound)).toHaveLength(1);
 });

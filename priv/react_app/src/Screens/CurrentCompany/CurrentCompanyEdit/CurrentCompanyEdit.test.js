@@ -3,17 +3,18 @@ import { shallow } from 'enzyme';
 import CurrentCompanyEdit from './CurrentCompanyEdit';
 
 describe('current company edit should function correctly', () => {
-  beforeEach(() => {});
+  let props;
+  beforeEach(() => {
+    props = {
+      currentCompany: {},
+      fetching: false,
+      history: { push: jest.fn() },
+      getCurrentCompany: jest.fn(),
+      updateCurrentCompany: jest.fn()
+    };
+  });
 
   it('should render without crashing', () => {
-    const f = jest.fn();
-    shallow(
-      <CurrentCompanyEdit
-        getCurrentCompany={f}
-        id="1"
-        currentCompany={{}}
-        updateCurrentCompany={f}
-      />
-    );
+    shallow(<CurrentCompanyEdit id="1" {...props} />);
   });
 });
