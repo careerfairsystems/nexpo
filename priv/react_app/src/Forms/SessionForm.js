@@ -27,6 +27,8 @@ const StudentSessionForm = ({ handleSubmit, companies, submitting }) => (
       label="Choose the company you would like to meet"
       required
       name="companyId"
+      showSearch
+      optionFilterProp="children"
       validate={requiredCompany}
       component={InputSelect}
     >

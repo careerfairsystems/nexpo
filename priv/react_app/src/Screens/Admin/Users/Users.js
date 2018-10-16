@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { toLower } from 'lodash/fp';
 import { Table, Divider, Popconfirm } from 'antd';
 
 import InvisibleLink from '../../../Components/InvisibleLink';
 import LoadingSpinner from '../../../Components/LoadingSpinner';
 import HtmlTitle from '../../../Components/HtmlTitle';
+import FilterSearch, { FilterIcon } from '../../../Components/FilterSearch';
 
 /**
  * Responsible for rendering a list of users
@@ -22,6 +24,9 @@ class Users extends Component {
         title: 'Email',
         dataIndex: 'email',
         key: 'email',
+        filterDropdown: FilterSearch,
+        filterIcon: FilterIcon,
+        onFilter: (value, user) => toLower(user.email).includes(toLower(value)),
         render: (email, { id }) => (
           <InvisibleLink to={`/admin/users/${id}`}>{email}</InvisibleLink>
         )
@@ -86,8 +91,8 @@ class Users extends Component {
 }
 
 Users.propTypes = {
-  users: PropTypes.object.isRequired,
-  fetching: PropTypes.bool.isRequired,
+  users: PropTypes.object,
+  fetching: PropTypes.bool,
   getAllUsers: PropTypes.func.isRequired
 };
 
