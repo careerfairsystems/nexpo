@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { map, toLower } from 'lodash/fp';
+import { map } from 'lodash/fp';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import { Select, Input, Form, Button } from 'antd';
