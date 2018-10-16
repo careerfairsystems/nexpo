@@ -9,6 +9,7 @@ describe('users', () => {
   let props;
   beforeEach(() => {
     props = {
+      fetching: false,
       getAllUsers: jest.fn(),
       deleteUser: jest.fn()
     };

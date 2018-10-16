@@ -8,6 +8,7 @@ describe('SessionApplication', () => {
   let props;
   beforeEach(() => {
     props = {
+      fetching: false,
       createStudentSessionAppl: jest.fn(),
       currentUser: {},
       currentStudent: {},

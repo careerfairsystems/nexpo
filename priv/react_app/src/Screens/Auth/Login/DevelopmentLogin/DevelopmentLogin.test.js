@@ -8,6 +8,7 @@ it('should render without crashing', () => {
     isLoggedIn: false,
     login: jest.fn()
   };
+  // MemoryRouter should give location? But gives prop-type error `location`
   shallow(
     <MemoryRouter>
       <DevelopmentLogin {...props} />

@@ -66,6 +66,7 @@ const stateful = connect((state: State, props) => {
   };
 
   return {
+    fetching: state.api.categories.fetching,
     attributes: [companyColumn].concat(
       attributes.map(({ title }) => ({
         title,

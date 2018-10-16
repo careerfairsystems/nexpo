@@ -86,7 +86,7 @@ class Categories extends Component {
 
   static defaultProps = {
     categories: {},
-    attributes: []
+    attributes: {}
   };
 
   componentWillMount() {
