@@ -38,20 +38,25 @@ class Deadlines extends Component {
     {
       title: 'Action',
       key: 'action',
-      render: deadline => (
-        <span>
-          <InvisibleLink to={`/admin/deadlines/${deadline.id}`}>
-            Edit
-          </InvisibleLink>
-          <Divider type="vertical" />
-          <Popconfirm
-            title="Sure to delete?"
-            onConfirm={() => this.props.deleteDeadline(deadline.id)}
-          >
-            <span style={{ color: '#ff4d4f', cursor: 'pointer' }}>Delete</span>
-          </Popconfirm>
-        </span>
-      )
+      render: deadline => {
+        const { deleteDeadline } = this.props;
+        return (
+          <span>
+            <InvisibleLink to={`/admin/deadlines/${deadline.id}`}>
+              Edit
+            </InvisibleLink>
+            <Divider type="vertical" />
+            <Popconfirm
+              title="Sure to delete?"
+              onConfirm={() => deleteDeadline(deadline.id)}
+            >
+              <span style={{ color: '#ff4d4f', cursor: 'pointer' }}>
+                Delete
+              </span>
+            </Popconfirm>
+          </span>
+        );
+      }
     }
   ];
 
@@ -84,22 +89,24 @@ class Deadlines extends Component {
   }
 
   render() {
-    if (this.props.fetching) {
+    const { fetching } = this.props;
+    if (fetching) {
       return <LoadingSpinner />;
     }
     return this.renderDeadlines();
   }
 }
 
-Deadlines.propTypes = {
-  deadlines: PropTypes.object.isRequired,
-  fetching: PropTypes.bool.isRequired,
-  getAllDeadlines: PropTypes.func.isRequired
-};
-
 Deadlines.defaultProps = {
   deadlines: {},
   fetching: false
+};
+
+Deadlines.propTypes = {
+  deadlines: PropTypes.object,
+  fetching: PropTypes.bool,
+  getAllDeadlines: PropTypes.func.isRequired,
+  deleteDeadline: PropTypes.func.isRequired
 };
 
 export default Deadlines;

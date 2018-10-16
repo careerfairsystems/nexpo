@@ -18,7 +18,7 @@ it('should render loading', () => {
 
 it('calls fetch all users prop on mount', () => {
   const func = jest.fn();
-  const wrapper = shallow(<Users getAllUsers={func} />);
+  shallow(<Users getAllUsers={func} />);
 
   expect(func).toHaveBeenCalledTimes(1);
 });

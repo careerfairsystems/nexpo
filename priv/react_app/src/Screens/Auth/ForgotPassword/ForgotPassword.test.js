@@ -8,10 +8,10 @@ it('can render without crashing', () => {
   shallow(<ForgotPassword />);
 });
 
-// it("renders ReplaceForgottenPassword", () => {
-//   const wrapper = shallow(<ForgotPassword/>)
-//   expect(wrapper.find(ReplaceForgottenPassword)).toHaveLength(1)
-// })
+it('renders ReplaceForgottenPassword', () => {
+  const wrapper = shallow(<ForgotPassword />);
+  expect(wrapper.find(ReplaceForgottenPassword)).toHaveLength(1);
+});
 
 it('renders ForgotPasswordEnterEmail', () => {
   const wrapper = shallow(<ForgotPassword />);

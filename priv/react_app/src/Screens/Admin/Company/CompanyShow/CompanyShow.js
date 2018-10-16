@@ -97,14 +97,11 @@ CompanyShow.defaultProps = {
 CompanyShow.propTypes = {
   id: PropTypes.string,
   company: PropTypes.object.isRequired,
-  createCompany: PropTypes.func.isRequired,
   fetching: PropTypes.bool.isRequired,
   getCompany: PropTypes.func.isRequired,
   match: PropTypes.shape({
     path: PropTypes.string
-  }),
-  resetForm: PropTypes.func.isRequired,
-  updateCompany: PropTypes.func.isRequired
+  })
 };
 
 export default CompanyShow;

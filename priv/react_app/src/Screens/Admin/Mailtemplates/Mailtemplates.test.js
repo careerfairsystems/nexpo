@@ -20,7 +20,7 @@ it('should render loading', () => {
 
 it('calls fetch all mailtemplates prop on mount', () => {
   const func = jest.fn();
-  const wrapper = shallow(<Mailtemplates getAllMailtemplates={func} />);
+  shallow(<Mailtemplates getAllMailtemplates={func} />);
 
   expect(func).toHaveBeenCalledTimes(1);
 });

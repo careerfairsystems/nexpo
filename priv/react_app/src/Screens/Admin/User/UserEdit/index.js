@@ -7,7 +7,7 @@ import UserEdit from './UserEdit';
 const mapStateToProps = (state, props) => {
   const userId = props.match.params.id;
   const user = state.entities.users[userId] || {};
-  const fetching = state.api.users.fetching;
+  const { fetching } = state.api.users;
 
   const { roles } = denormalize(
     { roles: user.roles },

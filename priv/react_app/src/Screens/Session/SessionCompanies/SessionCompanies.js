@@ -64,7 +64,9 @@ class SessionCompanies extends Component {
 }
 
 SessionCompanies.propTypes = {
-  companies: PropTypes.object.isRequired
+  fetching: PropTypes.bool.isRequired,
+  companies: PropTypes.object.isRequired,
+  getAllCompanies: PropTypes.func.isRequired
 };
 
 export default SessionCompanies;

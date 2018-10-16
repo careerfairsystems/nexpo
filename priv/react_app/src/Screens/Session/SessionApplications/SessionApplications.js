@@ -19,11 +19,15 @@ class SessionApplications extends Component {
     getAllCompanies();
   }
 
-  getCompany = ({ company }) => this.props.companies[company] || {};
+  getCompany = ({ company }) => {
+    const { companies } = this.props;
+    return companies[company] || {};
+  };
 
   toggleEditMode = id => {
+    const { editing: stateEditing } = this.state;
     const editing = {};
-    editing[id] = !this.state.editing[id];
+    editing[id] = !stateEditing[id];
     this.setState({ editing });
   };
 
@@ -117,6 +121,7 @@ SessionApplications.defaultProps = {
 
 SessionApplications.propTypes = {
   applications: PropTypes.array,
+  companies: PropTypes.array,
   getAllCompanies: PropTypes.func.isRequired,
   destroyStudentSessionAppl: PropTypes.func.isRequired,
   fetching: PropTypes.bool,

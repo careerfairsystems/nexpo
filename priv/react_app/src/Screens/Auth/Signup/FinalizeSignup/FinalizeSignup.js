@@ -1,4 +1,3 @@
-// @flow
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { SubmissionError } from 'redux-form';
@@ -42,7 +41,7 @@ class FinalizeSignup extends Component<Props, State> {
     API.signup
       .getCurrentSignup(signupKey)
       .then(res => this.setState({ email: res.data.email }))
-      .catch(err => this.setState({ noSuchKey: true }));
+      .catch(() => this.setState({ noSuchKey: true }));
   };
 
   signup = values => {
@@ -100,10 +99,6 @@ class FinalizeSignup extends Component<Props, State> {
 
 FinalizeSignup.propTypes = {
   signupKey: PropTypes.string.isRequired
-};
-
-FinalizeSignup.defaultProps = {
-  signupKey: undefined
 };
 
 export default FinalizeSignup;

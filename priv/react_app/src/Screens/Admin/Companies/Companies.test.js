@@ -18,7 +18,7 @@ it('should render loading', () => {
 
 it('calls fetch all companies prop on mount', () => {
   const func = jest.fn();
-  const wrapper = shallow(<Companies getAllCompanies={func} />);
+  shallow(<Companies getAllCompanies={func} />);
 
   expect(func).toHaveBeenCalledTimes(1);
 });

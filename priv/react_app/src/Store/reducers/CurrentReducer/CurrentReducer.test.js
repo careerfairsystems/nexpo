@@ -2,7 +2,7 @@
 *   This file tests the reducers handling incoming actions.
 *   See http://redux.js.org/docs/recipes/WritingTests.html for writing action and reducer tests.
 */
-import { Actions, actionTypes } from '../..';
+import { Actions } from '../..';
 import { CurrentReducer } from './CurrentReducer';
 
 describe('Current reducer', () => {
