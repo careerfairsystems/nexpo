@@ -65,9 +65,8 @@ const privateRoutes = [
   { path: '/session/application', component: SessionApplication },
   { path: '/session/applications', component: SessionApplications },
   { path: '/session/companies', component: SessionCompanies },
-  { path: '/company', render: () => <Redirect to="/company/show" /> },
-  { path: '/company/show', component: { CurrentCompanyShow } },
-  { path: '/company/edit', component: { CurrentCompanyEdit } }
+  { path: '/company/show', component: CurrentCompanyShow },
+  { path: '/company/edit', component: CurrentCompanyEdit }
 ];
 
 const routes = (
@@ -77,6 +76,7 @@ const routes = (
     {privateRoutes.map(props => (
       <PrivateRoute key={props.path} exact {...props} />
     ))}
+    <Route path="/company" render={() => <Redirect to="/company/show" />} />
     <Route path="/login" component={Login} />
     <Route path="/logout" component={Logout} />
     <Route path="/signup" component={Signup} />
