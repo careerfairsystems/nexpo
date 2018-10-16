@@ -43,7 +43,6 @@ class CurrentCompanyShow extends Component {
     if (isEmpty(currentCompany) || isNil(currentCompany)) return <NotFound />;
 
     const { name, description, website, logoUrl } = currentCompany;
-
     return (
       <div className="company-show-view">
         <HtmlTitle title={name} />
@@ -75,6 +74,19 @@ class CurrentCompanyShow extends Component {
                 description={`Start Time: ${toDayFormat(
                   start
                 )}\nEnd Time: ${toDayFormat(end)}`}
+              />
+            </List.Item>
+          )}
+        />
+        <h3>Student Session applications</h3>
+        <List
+          dataSource={currentCompany.studentSessionApplications}
+          bordered
+          renderItem={({ id, motivation }) => (
+            <List.Item>
+              <List.Item.Meta
+                avatar={<Avatar size="large">{id}</Avatar>}
+                description={`Motivation: ${motivation}`}
               />
             </List.Item>
           )}
