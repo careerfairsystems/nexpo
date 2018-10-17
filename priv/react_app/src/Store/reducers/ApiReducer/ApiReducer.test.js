@@ -44,6 +44,11 @@ it('should set the correct initial state', () => {
       errors: undefined,
       success: false
     },
+    programmes: {
+      fetching: false,
+      errors: undefined,
+      success: false
+    },
     currentUser: {
       fetching: false,
       errors: undefined,
