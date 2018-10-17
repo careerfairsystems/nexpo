@@ -8,11 +8,11 @@ export function updateStudentSessionIsLoading() {
   };
 }
 
-export function updateStudentSessionSuccess(sessionApplication) {
+export function updateStudentSessionSuccess(studentSession) {
   message.success('Your Application was successfully updated.');
   return {
     type: actionTypes.PUT_STUDENT_SESSION_SUCCESS,
-    sessionApplication
+    studentSession
   };
 }
 

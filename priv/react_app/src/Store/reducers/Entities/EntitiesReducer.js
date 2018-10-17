@@ -93,8 +93,12 @@ export const EntitiesReducer = (
       return mergeWith(handleMerge, state, camelCaseKeys(normalized.entities));
     }
     case actionTypes.PUT_STUDENT_SESSION_APPL_SUCCESS: {
+      normalized = normalize(action.session, Schema.studentSessionSchema());
+      return mergeWith(handleMerge, state, camelCaseKeys(normalized.entities));
+    }
+    case actionTypes.PUT_STUDENT_SESSIONSUCCESS: {
       normalized = normalize(
-        action.sessionApplication,
+        action.studentSession,
         Schema.sessionApplicationSchema()
       );
       return mergeWith(handleMerge, state, camelCaseKeys(normalized.entities));

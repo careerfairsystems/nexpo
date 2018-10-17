@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { isNil, sortBy } from 'lodash/fp';
-import { List, Avatar, Popconfirm, Button } from 'antd';
+import { Icon, List, Avatar, Popconfirm, Button } from 'antd';
 import NotFound from '../../NotFound';
 import LoadingSpinner from '../../../Components/LoadingSpinner';
 import HtmlTitle from '../../../Components/HtmlTitle';
@@ -42,12 +42,14 @@ class StudentSessions extends Component {
     return (
       <List.Item
         actions={[
-          <Button
-            type="primary"
-            onClick={() => this.confirmSession(session.id)}
-          >
-            Confirm
-          </Button>,
+          !session.studentConfirmed && (
+            <Button
+              type="primary"
+              onClick={() => this.confirmSession(session.id)}
+            >
+              Confirm
+            </Button>
+          ),
           <Popconfirm
             title="Sure to delete?"
             onConfirm={() => destroyStudentSessionAppl(session.id)}
@@ -58,7 +60,11 @@ class StudentSessions extends Component {
       >
         <List.Item.Meta
           title={this.getCompany(session).name}
-          description={this.renderTimeField(session.start, session.end)}
+          description={this.renderTimeField(
+            session.start,
+            session.end,
+            session.studentConfirmed
+          )}
           avatar={
             <Avatar
               src={this.getCompany(session).logoUrl}
@@ -72,7 +78,28 @@ class StudentSessions extends Component {
     );
   };
 
-  renderTimeField = (start, end) => `Start: ${start}\nEnd: ${end}`;
+  renderTimeField = (start, end, studentConfirmed) => (
+    <div>
+      {`Start: ${start}`}
+      <br />
+      {`\nEnd: ${end}`}
+      {studentConfirmed && (
+        <Icon
+          style={{
+            color: '#4caf50',
+            float: 'right',
+            fontSize: 50,
+            marginTop: 'auto',
+            marginBottom: 'auto'
+          }}
+          type="check-circle"
+          theme="filled"
+        >
+          Confirmed
+        </Icon>
+      )}
+    </div>
+  );
 
   render() {
     const { sessions, fetching } = this.props;
