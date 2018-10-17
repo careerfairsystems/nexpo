@@ -50,6 +50,25 @@ const sessionApplicationSchema = () => {
   return application;
 };
 const studentSessionApplicationsSchema = () => [sessionApplicationSchema()];
+const studentSessionSchema = () => {
+  const company = entity(
+    'companies',
+    {},
+    { model: hasMany('student_sessions') }
+  );
+  const student = entity(
+    'students',
+    {},
+    { model: hasMany('student_sessions') }
+  );
+  const session = entity('student_sessions', {
+    company,
+    student
+  });
+  return session;
+};
+
+const studentSessionsSchema = () => [studentSessionSchema()];
 
 const categorySchema = () => {
   const company = entity(
@@ -114,15 +133,25 @@ const userSchema = () => {
     { company },
     { model: belongsTo('student') }
   );
+  const studentSession = entity(
+    'student_sessions',
+    { company },
+    { model: belongsTo('student') }
+  );
   const student = entity(
     'students',
     {
-      student_session_applications: [sessionApplication]
+      student_session_applications: [sessionApplication],
+      student_sessions: [studentSession]
     },
     { model: belongsTo('user') }
   );
   const role = entity('roles', {}, { model: belongsTo('user') });
-  const representative = entity('representatives', {company}, { model: belongsTo('user') });
+  const representative = entity(
+    'representatives',
+    { company },
+    { model: belongsTo('user') }
+  );
 
   const user = entity('users', { roles: [role], student, representative });
 
@@ -144,6 +173,8 @@ export default {
   rolesSchema,
   sessionApplicationSchema,
   studentSessionApplicationsSchema,
+  studentSessionSchema,
+  studentSessionsSchema,
   userSchema,
   usersSchema,
   studentSchema,

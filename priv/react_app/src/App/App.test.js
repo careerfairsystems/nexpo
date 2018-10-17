@@ -80,6 +80,14 @@ const state = {
         student: 1
       }
     },
+    studentSessions: {
+      '1': {
+        id: 1,
+        company: 2,
+        studentConfirmed: false,
+        student: 1
+      }
+    },
     roles: {
       '1': { id: 1, type: 'admin', permissions: ['read_all'], users: [1] },
       '2': { id: 2, type: 'zzz', permissions: ['read_users'], users: [1] }

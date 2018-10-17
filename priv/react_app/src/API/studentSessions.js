@@ -19,5 +19,9 @@ export default {
   update: (id, data) =>
     authPut(`/api/me/student_session_applications/${id}`, data).then(
       handleHttpResponse
-    )
+    ),
+  confirmSession: id =>
+    authPut(`/api/me/student_sessions/${id}`, {
+      studentSessions: { studentConfirmed: true }
+    }).then(handleHttpResponse)
 };

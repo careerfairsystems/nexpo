@@ -110,6 +110,15 @@ const testData = {
   studentSessionApplications: {
     1: { id: 1, companyId: 1, studentId: 1, motivation: 'Old motivation' }
   },
+  studentSessionDays: {
+    1: {
+      id: 1,
+      companyId: 1,
+      studentId: 1,
+      start: '2018-01-01',
+      end: '2018-01-01'
+    }
+  },
   categories: [
     {
       title: 'Logistik',
