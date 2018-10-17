@@ -106,8 +106,8 @@ class StudentSessions extends Component {
         <h1>Student Sessions</h1>
         <h4>
           The time slots found on this page is the student sessions you have
-          been approved. You have to approve all the slots that you would like
-          to keep, otherwise, the slot will be given to another student.
+          been approved for. You have to confirme all the slots that you would
+          like to keep, otherwise, the slot will be given to another student.
         </h4>
         <List
           size="large"

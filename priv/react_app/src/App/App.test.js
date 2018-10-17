@@ -170,6 +170,7 @@ it('renders routes without crashing', () => {
   found(mount(route('/session/application')));
   found(mount(route('/session/applications')));
   found(mount(route('/session/companies')));
+  found(mount(route('/session/approved')));
   found(mount(route('/company')));
   found(mount(route('/company/show')));
   found(mount(route('/company/edit')));
