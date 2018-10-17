@@ -90,7 +90,7 @@ class Deadlines extends Component {
             }))
           )}
         />
-        <InvisibleLink to="/deadlines/new">
+        <InvisibleLink to="/admin/deadlines/new">
           <Button onClick={() => null} type="primary">
             New deadline
           </Button>

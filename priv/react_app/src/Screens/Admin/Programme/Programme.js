@@ -1,80 +1,55 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { isEmpty, isNil, map } from 'lodash/fp';
-import NotFound from '../../NotFound';
+import { isEmpty } from 'lodash/fp';
+
 import ProgrammeForm from '../../../Forms/ProgrammeForm';
+import LoadingSpinner from '../../../Components/LoadingSpinner';
+import NotFound from '../../NotFound';
 
 class Programme extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      disabled: true
-    };
-  }
+  static propTypes = {
+    id: PropTypes.string.isRequired,
+    programme: PropTypes.shape({
+      email: PropTypes.string,
+      student: PropTypes.number
+    }).isRequired,
+    fetching: PropTypes.bool.isRequired,
+    getProgramme: PropTypes.func.isRequired,
+    createProgramme: PropTypes.func.isRequired,
+    updateProgramme: PropTypes.func.isRequired
+  };
 
   componentWillMount() {
     const { id, getProgramme } = this.props;
-    getProgramme(id);
+    if (id) getProgramme(id);
   }
 
-  toggleEdit = () => {
-    const { disabled } = this.state;
-    this.setState({ disabled: !disabled });
-  };
+  updateProgramme = values => {
+    const { id, programme, createProgramme, updateProgramme } = this.props;
 
-  update = values => {
-    const { id, programme, updateProgramme } = this.props;
-    const { disabled } = this.state;
-
-    const data = Object.keys(values).reduce((modified, key) => {
-      if (programme[key] !== values[key]) {
-        modified[key] = values[key];
-      }
-      return modified;
-    }, {});
-
-    this.setState({ disabled: !disabled });
-    updateProgramme(id, { programme: data });
+    if (isEmpty(programme)) {
+      createProgramme({ programme: values });
+    } else {
+      updateProgramme(id, { programme: values });
+    }
   };
 
   render() {
-    const { programme } = this.props;
-    const { email, firstName, lastName, roles } = programme;
-    const { disabled } = this.state;
+    const { id, programme, fetching } = this.props;
 
-    if (isEmpty(programme) || isNil(programme)) {
-      return <NotFound />;
-    }
+    if (fetching) return <LoadingSpinner />;
+    if (id && isEmpty(programme)) return <NotFound />;
 
     return (
-      <div>
-        <h1>
-          {firstName} {lastName}
-        </h1>
-        <h2>Email: {email}</h2>
-        <h2>
-          Roles: {isEmpty(roles) ? 'None' : map('type', roles).join(', ')}
-        </h2>
+      <div className="programme">
+        <h1>Programme</h1>
         <ProgrammeForm
-          onSubmit={this.update}
-          disabled={disabled}
-          toggleEdit={this.toggleEdit}
+          onSubmit={this.updateProgramme}
           initialValues={programme}
         />
       </div>
     );
   }
 }
-
-Programme.propTypes = {
-  id: PropTypes.string.isRequired,
-  programme: PropTypes.shape({
-    email: PropTypes.string,
-    student: PropTypes.number
-  }).isRequired,
-  getProgramme: PropTypes.func.isRequired,
-  updateProgramme: PropTypes.func.isRequired
-};
 
 export default Programme;
