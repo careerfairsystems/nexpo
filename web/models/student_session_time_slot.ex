@@ -1,6 +1,6 @@
 defmodule Nexpo.StudentSessionTimeSlot do
   use Nexpo.Web, :model
-  
+
   alias Nexpo.StudentSessionTimeSlot, as: TimeSlot
 
   schema "student_session_time_slots" do
@@ -10,6 +10,7 @@ defmodule Nexpo.StudentSessionTimeSlot do
     field :delete, :boolean, virtual: true
 
     belongs_to :company, Nexpo.Company
+    has_one :student_session, Nexpo.StudentSession, on_delete: :delete_all
 
     timestamps()
 
@@ -23,7 +24,7 @@ defmodule Nexpo.StudentSessionTimeSlot do
     |> cast(params, [:start, :end, :location, :company_id])
     |> validate_required([:start, :end, :location, :company_id])
   end
-  
+
   @doc """
   Builds an update changeset based on `company_id` and `params`
   """
@@ -32,7 +33,7 @@ defmodule Nexpo.StudentSessionTimeSlot do
      |> cast(params, [:start, :end, :location, :company_id])
      |> validate_required([:start, :end, :location, :company_id])
    end
-   
+
    @doc """
    Builds an update changeset based on `company_id` and `params`
    """
