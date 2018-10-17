@@ -17,6 +17,8 @@ import Roles from '../Screens/Admin/Roles';
 import { RoleNew, RoleShow, RoleEdit } from '../Screens/Admin/Role';
 import Users from '../Screens/Admin/Users';
 import { UserShow, UserEdit } from '../Screens/Admin/User';
+import Programmes from '../Screens/Admin/Programmes';
+import Programme from '../Screens/Admin/Programme';
 import Statistics from '../Screens/Admin/Statistics';
 import CurrentUser from '../Screens/CurrentUser';
 import Companies from '../Screens/Admin/Companies';
@@ -46,6 +48,8 @@ const privateRoutes = [
   { path: '/admin', component: AdminHome },
   { path: '/admin/categories', component: Categories },
   { path: '/admin/categories/:id', component: Category },
+  { path: '/admin/programmes', component: Programmes },
+  { path: '/admin/programmes/:id', component: Programme },
   { path: '/admin/companies', component: Companies },
   { path: '/admin/companies/new', component: CompanyNew },
   { path: '/admin/companies/:id', component: CompanyShow },
@@ -181,6 +185,10 @@ class App extends Component {
                   this.restrictedMenuItem({
                     route: 'admin/users',
                     title: 'Users'
+                  }),
+                  this.restrictedMenuItem({
+                    route: 'admin/programmes',
+                    title: 'Programmes'
                   }),
                   this.restrictedMenuItem({
                     route: 'admin/mailtemplates',

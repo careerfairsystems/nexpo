@@ -10,7 +10,14 @@ function MailLink({ to, children }) {
 
 MailLink.propTypes = {
   to: PropTypes.string.isRequired,
-  children: PropTypes.oneOfType([PropTypes.object, PropTypes.string]).isRequired
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node
+  ])
+};
+
+MailLink.defaultProps = {
+  children: undefined
 };
 
 export default MailLink;

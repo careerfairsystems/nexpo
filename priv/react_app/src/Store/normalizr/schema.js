@@ -32,6 +32,9 @@ const mailtemplatesSchema = () => [mailtemplateSchema()];
 const deadlineSchema = () => entity('deadlines');
 const deadlinesSchema = () => [deadlineSchema()];
 
+const programmeSchema = () => entity('programmes');
+const programmesSchema = () => [programmeSchema()];
+
 const sessionApplicationSchema = () => {
   const company = entity(
     'companies',
@@ -169,6 +172,8 @@ export default {
   mailtemplatesSchema,
   deadlineSchema,
   deadlinesSchema,
+  programmeSchema,
+  programmesSchema,
   roleSchema,
   rolesSchema,
   sessionApplicationSchema,
