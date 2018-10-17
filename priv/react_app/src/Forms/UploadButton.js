@@ -22,8 +22,6 @@ const UploadButton = ({ accept, value, onChange }) => (
   </Upload>
 );
 
-UploadButton.defaultProps = {};
-
 UploadButton.propTypes = {
   accept: PropTypes.string.isRequired,
   value: PropTypes.oneOfType([PropTypes.object, PropTypes.string]).isRequired,

@@ -28,17 +28,17 @@ export type ApiState = {
   deadlines: ApiStatus,
   roles: ApiStatus,
   users: ApiStatus,
-  current_user: ApiStatus,
-  current_company: ApiStatus,
-  forgot_password: ApiStatus,
+  currentUser: ApiStatus,
+  currentCompany: ApiStatus,
+  forgotPassword: ApiStatus,
   login: ApiStatus,
-  verify_forgot_password_key: ApiStatus,
-  replace_password: ApiStatus & {
+  replacePassword: ApiStatus & {
     errors: {
       password: string[],
-      password_confirmation: string[]
+      passwordConfirmation: string[]
     }
-  }
+  },
+  verifyForgotPasswordKey: ApiStatus
 };
 
 export const initialStatus: ApiStatus = {
@@ -68,16 +68,16 @@ export const failure = error => ({
 export const ApiReducer: ApiState = combineReducers({
   categories: ApiReducerCategories,
   companies: ApiReducerCompanies,
-  current_user: ApiReducerCurrentUser,
-  current_company: ApiReducerCurrentCompany,
+  currentUser: ApiReducerCurrentUser,
+  currentCompany: ApiReducerCurrentCompany,
   deadlines: ApiReducerDeadlines,
   mailtemplates: ApiReducerMailtemplates,
   roles: ApiReducerRoles,
   users: ApiReducerUsers,
-  forgot_password: ApiReducerForgotPassword,
+  forgotPassword: ApiReducerForgotPassword,
   login: ApiReducerLogin,
-  verify_forgot_password_key: ApiReducerVerifyForgotPassword,
-  replace_password: ApiReducerReplacePassword
+  verifyForgotPasswordKey: ApiReducerVerifyForgotPassword,
+  replacePassword: ApiReducerReplacePassword
 });
 
 export default ApiReducer;

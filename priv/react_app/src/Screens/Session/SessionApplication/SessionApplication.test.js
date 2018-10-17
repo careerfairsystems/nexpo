@@ -8,6 +8,7 @@ describe('SessionApplication', () => {
   let props;
   beforeEach(() => {
     props = {
+      fetching: false,
       createStudentSessionAppl: jest.fn(),
       currentUser: {},
       currentStudent: {},
@@ -42,7 +43,7 @@ describe('SessionApplication', () => {
     const wrapper = shallow(<SessionApplication {...props} />);
     wrapper.instance().createStudentSessionAppl(appl);
     expect(props.createStudentSessionAppl).toHaveBeenCalledWith({
-      student_session_application: appl
+      studentSessionApplication: appl
     });
   });
 });

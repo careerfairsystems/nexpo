@@ -1,4 +1,4 @@
-import { handleHttpResponse } from './utils';
+import { fetchJson, handleHttpResponse } from './utils';
 import UnreachableCodeReachedError from '../Errors/UnreachableCodeReachedError';
 
 export default {
@@ -6,13 +6,9 @@ export default {
    * Tries to login
    */
   login: ({ email, password }) =>
-    fetch('/api/login', {
-      method: 'POST',
-      body: JSON.stringify({ email, password }),
-      headers: new Headers({
-        'Content-Type': 'application/json'
-      })
-    }).then(handleHttpResponse),
+    fetchJson('/api/login', { data: { email, password }, method: 'POST' }).then(
+      handleHttpResponse
+    ),
 
   /**
    * Allows development login, only while not in production
@@ -23,12 +19,9 @@ export default {
         'Development login reached in production'
       );
     } else {
-      return fetch('/api/development_login', {
-        method: 'POST',
-        body: JSON.stringify({ email }),
-        headers: new Headers({
-          'Content-Type': 'application/json'
-        })
+      return fetchJson('/api/development_login', {
+        data: { email },
+        method: 'POST'
       }).then(handleHttpResponse);
     }
   },
@@ -36,24 +29,17 @@ export default {
   /**
    *
    */
-  forgot_password: ({ email }) =>
-    fetch('/api/password/forgot', {
-      method: 'POST',
-      body: JSON.stringify({ email }),
-      headers: new Headers({
-        'Content-Type': 'application/json'
-      })
-    }).then(handleHttpResponse),
+  forgotPassword: ({ email }) =>
+    fetchJson('/api/password/forgot', { data: { email }, method: 'POST' }).then(
+      handleHttpResponse
+    ),
 
-  verify_forgot_password_key: ({ key }) =>
+  verifyForgotPasswordKey: ({ key }) =>
     fetch(`/api/password/forgot/${key}`).then(handleHttpResponse),
 
-  replace_forgotten_password: ({ key, password, password_confirmation }) =>
-    fetch(`/api/password/new/${key}`, {
-      method: 'POST',
-      body: JSON.stringify({ password, password_confirmation }),
-      headers: new Headers({
-        'Content-Type': 'application/json'
-      })
+  replaceForgottenPassword: ({ key, password, passwordConfirmation }) =>
+    fetchJson(`/api/password/new/${key}`, {
+      data: { password, passwordConfirmation },
+      method: 'POST'
     }).then(handleHttpResponse)
 };

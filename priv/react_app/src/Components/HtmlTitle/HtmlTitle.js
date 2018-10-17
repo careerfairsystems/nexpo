@@ -18,4 +18,8 @@ HtmlTitle.propTypes = {
   title: PropTypes.string
 };
 
+HtmlTitle.defaultProps = {
+  title: null
+};
+
 export default HtmlTitle;

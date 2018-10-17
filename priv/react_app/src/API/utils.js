@@ -89,6 +89,15 @@ export const authDelete = url =>
     })
   });
 
+export const fetchJson = (url, { data, method }) =>
+  fetch(url, {
+    method,
+    body: JSON.stringify(snakeCaseKeys(data)),
+    headers: new Headers({
+      'Content-Type': 'application/json'
+    })
+  });
+
 export default {
   authPost,
   authFetch,
@@ -96,5 +105,6 @@ export default {
   authDelete,
   authFormPost,
   authFormPut,
+  fetchJson,
   handleHttpResponse
 };

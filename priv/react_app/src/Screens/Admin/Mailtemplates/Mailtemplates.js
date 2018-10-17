@@ -11,6 +11,17 @@ import HtmlTitle from '../../../Components/HtmlTitle';
  * Responsible for rendering a list of mailtemplates
  */
 class Mailtemplates extends Component {
+  static propTypes = {
+    mailtemplates: PropTypes.object,
+    fetching: PropTypes.bool.isRequired,
+    getAllMailtemplates: PropTypes.func.isRequired,
+    deleteMailtemplate: PropTypes.func.isRequired
+  };
+
+  static defaultProps = {
+    mailtemplates: {}
+  };
+
   componentWillMount() {
     const { getAllMailtemplates } = this.props;
     getAllMailtemplates();
@@ -38,20 +49,25 @@ class Mailtemplates extends Component {
     {
       title: 'Action',
       key: 'action',
-      render: mailtemplate => (
-        <span>
-          <InvisibleLink to={`/admin/mailtemplates/${mailtemplate.id}`}>
-            Edit
-          </InvisibleLink>
-          <Divider type="vertical" />
-          <Popconfirm
-            title="Sure to delete?"
-            onConfirm={() => this.props.deleteMailtemplate(mailtemplate.id)}
-          >
-            <span style={{ color: '#ff4d4f', cursor: 'pointer' }}>Delete</span>
-          </Popconfirm>
-        </span>
-      )
+      render: mailtemplate => {
+        const { deleteMailtemplate } = this.props;
+        return (
+          <span>
+            <InvisibleLink to={`/admin/mailtemplates/${mailtemplate.id}`}>
+              Edit
+            </InvisibleLink>
+            <Divider type="vertical" />
+            <Popconfirm
+              title="Sure to delete?"
+              onConfirm={() => deleteMailtemplate(mailtemplate.id)}
+            >
+              <span style={{ color: '#ff4d4f', cursor: 'pointer' }}>
+                Delete
+              </span>
+            </Popconfirm>
+          </span>
+        );
+      }
     }
   ];
 
@@ -84,22 +100,13 @@ class Mailtemplates extends Component {
   }
 
   render() {
-    if (this.props.fetching) {
+    const { fetching } = this.props;
+
+    if (fetching) {
       return <LoadingSpinner />;
     }
     return this.renderMailtemplates();
   }
 }
-
-Mailtemplates.propTypes = {
-  mailtemplates: PropTypes.object.isRequired,
-  fetching: PropTypes.bool.isRequired,
-  getAllMailtemplates: PropTypes.func.isRequired
-};
-
-Mailtemplates.defaultProps = {
-  mailtemplates: {},
-  fetching: false
-};
 
 export default Mailtemplates;

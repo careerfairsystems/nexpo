@@ -3,11 +3,11 @@
  */
 
 // The Raven client is loaded in <head/> tag in index.html
-const Raven = window.Raven;
+const { Raven } = window;
 
-const sentry_dsn = process.env.REACT_APP_SENTRY_DSN;
+const sentryDsn = process.env.REACT_APP_SENTRY_DSN;
 
 // TODO: Config Sentry with user context when there is login functionality
-const setupErrorTracking = () => Raven.config(sentry_dsn).install();
+const setupErrorTracking = () => Raven.config(sentryDsn).install();
 
 export { setupErrorTracking };

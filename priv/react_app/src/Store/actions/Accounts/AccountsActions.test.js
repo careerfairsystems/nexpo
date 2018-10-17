@@ -21,7 +21,7 @@ describe('forgotPasswordSuccess', () => {
   });
 });
 
-describe('forgot_password', () => {
+describe('forgotPassword', () => {
   it('should call request and success', () => {
     const expectedActions = [
       Actions.accounts.forgotPasswordRequest(),
@@ -34,48 +34,48 @@ describe('forgot_password', () => {
     const store = createMockStore();
 
     expect.assertions(1);
-    return store.dispatch(Actions.accounts.forgot_password({})).then(() => {
+    return store.dispatch(Actions.accounts.forgotPassword({})).then(() => {
       const calledActions = store.getActions();
       expect(calledActions).toEqual(expectedActions);
     });
   });
 });
 
-describe('verify_forgot_password_key_request', () => {
+describe('verifyForgotPasswordKeyRequest', () => {
   it('should create the correct action', () => {
     const expected = {
       type: actionTypes.VERIFY_FORGOT_PASSWORD_KEY_REQUEST
     };
-    const action = Actions.accounts.verify_forgot_password_key_request();
+    const action = Actions.accounts.verifyForgotPasswordKeyRequest();
     expect(action).toEqual(expected);
   });
 });
 
-describe('verify_forgot_password_key_success', () => {
+describe('verifyForgotPasswordKeySuccess', () => {
   it('should create the correct action', () => {
     const expected = {
       type: actionTypes.VERIFY_FORGOT_PASSWORD_KEY_SUCCESS
     };
-    const action = Actions.accounts.verify_forgot_password_key_success();
+    const action = Actions.accounts.verifyForgotPasswordKeySuccess();
     expect(action).toEqual(expected);
   });
 });
 
-describe('verify_forgot_password_key_failure', () => {
+describe('verifyForgotPasswordKeyFailure', () => {
   it('should create the correct action', () => {
     const expected = {
       type: actionTypes.VERIFY_FORGOT_PASSWORD_KEY_FAILURE
     };
-    const action = Actions.accounts.verify_forgot_password_key_failure();
+    const action = Actions.accounts.verifyForgotPasswordKeyFailure();
     expect(action).toEqual(expected);
   });
 });
 
-describe('verify_forgot_password_key', () => {
+describe('verifyForgotPasswordKey', () => {
   it('should call request and success on success', () => {
     const expectedActions = [
-      Actions.accounts.verify_forgot_password_key_request(),
-      Actions.accounts.verify_forgot_password_key_success()
+      Actions.accounts.verifyForgotPasswordKeyRequest(),
+      Actions.accounts.verifyForgotPasswordKeySuccess()
     ];
     mockHttpResponse({
       status: 200,
@@ -87,8 +87,8 @@ describe('verify_forgot_password_key', () => {
 
     const params = { key: 'random-string' };
     return store
-      .dispatch(Actions.accounts.verify_forgot_password_key(params))
-      .then(res => {
+      .dispatch(Actions.accounts.verifyForgotPasswordKey(params))
+      .then(() => {
         const calledActions = store.getActions();
         expect(calledActions).toEqual(expectedActions);
       });
@@ -96,8 +96,8 @@ describe('verify_forgot_password_key', () => {
 
   it('should call request and failure on failure', () => {
     const expectedActions = [
-      Actions.accounts.verify_forgot_password_key_request(),
-      Actions.accounts.verify_forgot_password_key_failure()
+      Actions.accounts.verifyForgotPasswordKeyRequest(),
+      Actions.accounts.verifyForgotPasswordKeyFailure()
     ];
     mockHttpResponse({
       status: 404,
@@ -109,8 +109,8 @@ describe('verify_forgot_password_key', () => {
 
     const params = { key: 'random-string' };
     return store
-      .dispatch(Actions.accounts.verify_forgot_password_key(params))
-      .then(res => {
+      .dispatch(Actions.accounts.verifyForgotPasswordKey(params))
+      .then(() => {
         const calledActions = store.getActions();
         expect(calledActions).toEqual(expectedActions);
       });
@@ -151,7 +151,7 @@ describe('replaceForgottenPasswordFailure', () => {
   });
 });
 
-describe('replace_forgotten_password', () => {
+describe('replaceForgottenPassword', () => {
   it('should call request and success on http success', () => {
     mockHttpResponse({
       status: 200
@@ -166,10 +166,10 @@ describe('replace_forgotten_password', () => {
     const params = {
       key: 'random-string',
       password: 'some-password',
-      password_confirmation: 'some-password'
+      passwordConfirmation: 'some-password'
     };
     return store
-      .dispatch(Actions.accounts.replace_forgotten_password(params))
+      .dispatch(Actions.accounts.replaceForgottenPassword(params))
       .then(() => {
         const calledActions = store.getActions();
         expect(calledActions).toEqual(expected);
@@ -190,10 +190,10 @@ describe('replace_forgotten_password', () => {
     const params = {
       key: 'random-string',
       password: 'some-password',
-      password_confirmation: 'some-other-password'
+      passwordConfirmation: 'some-other-password'
     };
     return store
-      .dispatch(Actions.accounts.replace_forgotten_password(params))
+      .dispatch(Actions.accounts.replaceForgottenPassword(params))
       .then(() => {
         const calledActions = store.getActions();
         expect(calledActions).toEqual(expected);

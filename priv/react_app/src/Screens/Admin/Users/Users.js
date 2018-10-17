@@ -12,6 +12,17 @@ import FilterSearch, { FilterIcon } from '../../../Components/FilterSearch';
  * Responsible for rendering a list of users
  */
 class Users extends Component {
+  static propTypes = {
+    users: PropTypes.object,
+    fetching: PropTypes.bool.isRequired,
+    getAllUsers: PropTypes.func.isRequired,
+    deleteUser: PropTypes.func.isRequired
+  };
+
+  static defaultProps = {
+    users: {}
+  };
+
   componentWillMount() {
     const { getAllUsers } = this.props;
     getAllUsers();
@@ -44,24 +55,27 @@ class Users extends Component {
       {
         title: 'Action',
         key: 'action',
-        render: user => (
-          <span>
-            <InvisibleLink to={`/admin/users/${user.id}`}>Show</InvisibleLink>
-            <Divider type="vertical" />
-            <InvisibleLink to={`/admin/users/${user.id}/edit`}>
-              Edit
-            </InvisibleLink>
-            <Divider type="vertical" />
-            <Popconfirm
-              title="Sure to delete?"
-              onConfirm={() => this.props.deleteUser(user.id)}
-            >
-              <span style={{ color: '#ff4d4f', cursor: 'pointer' }}>
-                Delete
-              </span>
-            </Popconfirm>
-          </span>
-        )
+        render: user => {
+          const { deleteUser } = this.props;
+          return (
+            <span>
+              <InvisibleLink to={`/admin/users/${user.id}`}>Show</InvisibleLink>
+              <Divider type="vertical" />
+              <InvisibleLink to={`/admin/users/${user.id}/edit`}>
+                Edit
+              </InvisibleLink>
+              <Divider type="vertical" />
+              <Popconfirm
+                title="Sure to delete?"
+                onConfirm={() => deleteUser(user.id)}
+              >
+                <span style={{ color: '#ff4d4f', cursor: 'pointer' }}>
+                  Delete
+                </span>
+              </Popconfirm>
+            </span>
+          );
+        }
       }
     ];
 
@@ -83,22 +97,13 @@ class Users extends Component {
   }
 
   render() {
-    if (this.props.fetching) {
+    const { fetching } = this.props;
+
+    if (fetching) {
       return <LoadingSpinner />;
     }
     return this.renderUsers();
   }
 }
-
-Users.propTypes = {
-  users: PropTypes.object,
-  fetching: PropTypes.bool,
-  getAllUsers: PropTypes.func.isRequired
-};
-
-Users.defaultProps = {
-  users: {},
-  fetching: false
-};
 
 export default Users;

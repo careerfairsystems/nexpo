@@ -44,17 +44,17 @@ it('should set the correct initial state', () => {
       errors: undefined,
       success: false
     },
-    current_user: {
+    currentUser: {
       fetching: false,
       errors: undefined,
       success: false
     },
-    current_company: {
+    currentCompany: {
       fetching: false,
       errors: undefined,
       success: false
     },
-    forgot_password: {
+    forgotPassword: {
       fetching: false,
       errors: undefined,
       success: false
@@ -64,12 +64,12 @@ it('should set the correct initial state', () => {
       errors: undefined,
       success: false
     },
-    replace_password: {
+    replacePassword: {
       fetching: false,
       errors: undefined,
       success: false
     },
-    verify_forgot_password_key: {
+    verifyForgotPasswordKey: {
       fetching: false,
       errors: undefined,
       success: false
@@ -333,13 +333,13 @@ describe('fetch categories', () => {
   });
 });
 
-describe('forgot_password action', () => {
+describe('forgotPassword action', () => {
   it('should handle request action', () => {
     const startState: ApiState = {
-      forgot_password: { fetching: false, errors: undefined, success: true }
+      forgotPassword: { fetching: false, errors: undefined, success: true }
     };
     const expected: ApiState = {
-      forgot_password: { fetching: true, errors: undefined, success: false }
+      forgotPassword: { fetching: true, errors: undefined, success: false }
     };
     const state = ApiReducer(startState, forgotPasswordRequest());
     expect(state).toMatchObject(expected);
@@ -347,10 +347,10 @@ describe('forgot_password action', () => {
 
   it('should handle success action', () => {
     const startState: ApiState = {
-      forgot_password: { fetching: true, errors: {}, success: false }
+      forgotPassword: { fetching: true, errors: {}, success: false }
     };
     const expected: ApiState = {
-      forgot_password: { fetching: false, errors: undefined, success: true }
+      forgotPassword: { fetching: false, errors: undefined, success: true }
     };
     const state = ApiReducer(startState, forgotPasswordSuccess());
     expect(state).toMatchObject(expected);
@@ -360,14 +360,14 @@ describe('forgot_password action', () => {
 describe('replace forgotten password action', () => {
   it('should handle request action', () => {
     const startState: ApiState = {
-      replace_password: {
+      replacePassword: {
         fetching: false,
         errors: {},
         success: true
       }
     };
     const expected: ApiState = {
-      replace_password: {
+      replacePassword: {
         fetching: true,
         errors: undefined,
         success: false
@@ -379,14 +379,14 @@ describe('replace forgotten password action', () => {
 
   it('should handle success action', () => {
     const startState: ApiState = {
-      replace_password: {
+      replacePassword: {
         fetching: true,
         errors: {},
         success: false
       }
     };
     const expected: ApiState = {
-      replace_password: {
+      replacePassword: {
         fetching: false,
         errors: undefined,
         success: true
@@ -398,7 +398,7 @@ describe('replace forgotten password action', () => {
 
   it('should handle failure action', () => {
     const startState: ApiState = {
-      replace_password: {
+      replacePassword: {
         fetching: true,
         errors: {},
         success: true
@@ -409,7 +409,7 @@ describe('replace forgotten password action', () => {
       password: ['some-error']
     };
     const expected: ApiState = {
-      replace_password: {
+      replacePassword: {
         fetching: false,
         errors,
         success: false

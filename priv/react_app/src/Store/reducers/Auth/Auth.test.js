@@ -41,7 +41,7 @@ describe(actionTypes.LOGIN_SUCCESS, () => {
   });
 
   it('should set global jwt', () => {
-    const testState = AuthReducer(undefined, action);
+    AuthReducer(undefined, action);
     expect(getJwt()).toBe(action.jwt);
   });
 });
@@ -64,7 +64,7 @@ describe(actionTypes.LOGIN_FAILURE, () => {
   it('should remove global jwt', () => {
     const jwt = 'random-string';
     setJwt(jwt);
-    const testState = AuthReducer(undefined, action);
+    AuthReducer(undefined, action);
     expect(getJwt()).toBe('');
   });
 });
@@ -81,11 +81,11 @@ describe('logout', () => {
 
 describe('verify forgot password key success', () => {
   it('should set validKey to true', () => {
-    const init_state = {
+    const initState = {
       forgotPassword: { validKey: false }
     };
-    const action = Actions.accounts.verify_forgot_password_key_success();
-    const state = AuthReducer(init_state, action);
+    const action = Actions.accounts.verifyForgotPasswordKeySuccess();
+    const state = AuthReducer(initState, action);
 
     const expected = {
       forgotPassword: { validKey: true }
@@ -96,11 +96,11 @@ describe('verify forgot password key success', () => {
 
 describe('verify forgot password key failure', () => {
   it('should set validKey to false', () => {
-    const init_state = {
+    const initState = {
       forgotPassword: { validKey: true }
     };
-    const action = Actions.accounts.verify_forgot_password_key_failure();
-    const state = AuthReducer(init_state, action);
+    const action = Actions.accounts.verifyForgotPasswordKeyFailure();
+    const state = AuthReducer(initState, action);
 
     const expected = {
       forgotPassword: { validKey: false }

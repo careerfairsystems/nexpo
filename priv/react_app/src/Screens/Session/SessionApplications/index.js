@@ -6,7 +6,7 @@ import type { State } from '../../../Store/reducers';
 const mapStateToProps = (state: State) => ({
   applications: Selectors.students.getCurrentSessionAppl(state),
   companies: state.entities.companies,
-  fetching: state.api.current_user.fetching
+  fetching: state.api.currentUser.fetching
 });
 
 const mapDispatchToProps = {

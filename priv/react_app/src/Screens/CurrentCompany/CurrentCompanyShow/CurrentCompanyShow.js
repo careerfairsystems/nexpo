@@ -10,11 +10,10 @@ import InvisibleLink from '../../../Components/InvisibleLink';
 import '../../Admin/Company/Company.css';
 
 class CurrentCompanyShow extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {};
-  }
+  static propTypes = {
+    currentCompany: PropTypes.object.isRequired,
+    getCurrentCompany: PropTypes.func.isRequired
+  };
 
   componentWillMount() {
     const { getCurrentCompany } = this.props;
@@ -101,12 +100,5 @@ class CurrentCompanyShow extends Component {
     );
   }
 }
-
-CurrentCompanyShow.defaultProps = {};
-
-CurrentCompanyShow.propTypes = {
-  currentCompany: PropTypes.object.isRequired,
-  getCurrentCompany: PropTypes.func.isRequired
-};
 
 export default CurrentCompanyShow;

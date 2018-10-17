@@ -45,6 +45,7 @@
     "watch-css": "npm run build-css && node-sass-chokidar --include-path ./src src/ -o src/ --watch --recursive",
     "start-js": "react-scripts start",
     "start": "npm-run-all -p watch-css start-js",
+    "eslint": "eslint \"src/**/*.js\"",
     "lint": "prettier-eslint \"src/**/*.js\"",
     "lint-fix": "prettier-eslint --write \"src/**/*.js\"",
     "flow": "flow",

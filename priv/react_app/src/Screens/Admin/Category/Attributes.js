@@ -16,16 +16,15 @@ export const Attributes = ({ fetching, attributes, entries }) => (
   </div>
 );
 
-Attributes.defaultProps = {
-  fetching: false,
-  attributes: [],
-  entries: []
-};
-
 Attributes.propTypes = {
-  fetching: PropTypes.bool,
+  fetching: PropTypes.bool.isRequired,
   attributes: PropTypes.array,
   entries: PropTypes.array
+};
+
+Attributes.defaultProps = {
+  attributes: [],
+  entries: []
 };
 
 const stateful = connect((state: State, props) => {
@@ -67,6 +66,7 @@ const stateful = connect((state: State, props) => {
   };
 
   return {
+    fetching: state.api.categories.fetching,
     attributes: [companyColumn].concat(
       attributes.map(({ title }) => ({
         title,

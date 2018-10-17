@@ -44,7 +44,7 @@ describe('ReplaceForgottenPassword', () => {
     wrapper.instance().sendQueryToBackend(values);
     expect(props.sendNewPasswordToBackend).toHaveBeenCalledWith({
       password: values.password,
-      password_confirmation: values.passwordConfirmation
+      passwordConfirmation: values.passwordConfirmation
     });
   });
 });

@@ -3,10 +3,8 @@ import { shallow } from 'enzyme';
 import UserShow from './UserShow';
 import NotFound from '../../../NotFound';
 import LoadingSpinner from '../../../../Components/LoadingSpinner';
-// import HtmlTitle from '../../../Components/HtmlTitle';
 
 it('should render without crashing', () => {
-  const func = jest.fn();
   const props = {
     user: {},
     getUser: jest.fn(),
@@ -63,6 +61,6 @@ it('displayName and roles should function correctly', () => {
   const wrapper = shallow(<UserShow id="1" user={user} {...props} />);
   const displayName = wrapper.instance().displayName();
   const roles = wrapper.instance().roles();
-  expect(roles).toEqual('admin')
+  expect(roles).toEqual('admin');
   expect(displayName).toEqual(`${user.firstName} ${user.lastName}`);
 });

@@ -50,6 +50,7 @@ class ProductionLogin extends Component {
 }
 
 ProductionLogin.propTypes = {
+  location: PropTypes.shape({ state: PropTypes.object }).isRequired,
   isLoggedIn: PropTypes.bool.isRequired,
   login: PropTypes.func.isRequired
 };

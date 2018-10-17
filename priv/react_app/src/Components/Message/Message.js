@@ -40,7 +40,7 @@ const Message = ({ message, linkUrl, linkText, type }) => {
   }
 
   return (
-    <div className="Message_Component">
+    <div className="message-component">
       {icon}
       <div className="message">
         <div>{message}</div>
