@@ -78,7 +78,8 @@ defmodule Nexpo.CompaniesAcceptanceTest do
           "minItems" => 2
         },
         "users" => %{"type" => "array"},
-        "student_session_applications" => %{"type" => "array"}
+        "student_session_applications" => %{"type" => "array"},
+        "student_session_time_slots" => %{"type" => "array"}
       }
     } |> ExJsonSchema.Schema.resolve
 

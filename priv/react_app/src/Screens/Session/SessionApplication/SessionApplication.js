@@ -1,28 +1,54 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { isEmpty, filter, sortBy } from 'lodash/fp';
+import { isEmpty, filter, sortBy, omit } from 'lodash/fp';
 import NotFound from '../../NotFound';
 import LoadingSpinner from '../../../Components/LoadingSpinner';
 import HtmlTitle from '../../../Components/HtmlTitle';
-import StudentForm from '../../../Components/Forms/StudentForm';
-import SessionForm from '../../../Components/Forms/SessionForm';
+import StudentForm from '../../../Forms/StudentForm';
+import SessionForm from '../../../Forms/SessionForm';
+import '../Session.css';
 
 class SessionApplication extends Component {
+  static propTypes = {
+    companies: PropTypes.object,
+    fetching: PropTypes.bool.isRequired,
+    currentUser: PropTypes.shape({
+      email: PropTypes.string,
+      student: PropTypes.number
+    }).isRequired,
+    currentStudent: PropTypes.shape({
+      resumeEnUrl: PropTypes.string,
+      resumeSvUrl: PropTypes.string
+    }).isRequired,
+    getAllCompanies: PropTypes.func.isRequired,
+    createStudentSessionAppl: PropTypes.func.isRequired,
+    updateCurrentStudent: PropTypes.func.isRequired,
+    resetForm: PropTypes.func.isRequired
+  };
+
+  static defaultProps = {
+    companies: {}
+  };
+
   componentWillMount() {
     const { getAllCompanies } = this.props;
     getAllCompanies();
   }
 
   updateStudent = values => {
-    const { updateCurrentStudent, resetForm } = this.props;
-    resetForm('student');
+    const { updateCurrentStudent } = this.props;
     return updateCurrentStudent({ student: values });
+  };
+
+  resetStudentForm = () => {
+    const { resetForm } = this.props;
+    resetForm('student');
   };
 
   createStudentSessionAppl = data => {
     const { createStudentSessionAppl } = this.props;
     createStudentSessionAppl({
-      student_session_application: data
+      studentSessionApplication: data
     });
   };
 
@@ -37,7 +63,7 @@ class SessionApplication extends Component {
     }
 
     return (
-      <div>
+      <div className="session-application">
         <HtmlTitle title="Student Session Application" />
         <h1>Apply for student sessions</h1>
         <SessionForm
@@ -52,33 +78,12 @@ class SessionApplication extends Component {
         </h4>
         <StudentForm
           onSubmit={this.updateStudent}
-          currentStudent={currentStudent || {}}
+          onSubmitSuccess={this.resetStudentForm}
+          initialValues={omit('year', currentStudent) || {}}
         />
       </div>
     );
   }
 }
-
-SessionApplication.defaultProps = {
-  companies: {},
-  fetching: false
-};
-
-SessionApplication.propTypes = {
-  companies: PropTypes.object,
-  currentUser: PropTypes.shape({
-    email: PropTypes.string,
-    student: PropTypes.number
-  }).isRequired,
-  currentStudent: PropTypes.shape({
-    resumeEnUrl: PropTypes.string,
-    resumeSvUrl: PropTypes.string
-  }).isRequired,
-  createStudentSessionAppl: PropTypes.func.isRequired,
-  fetching: PropTypes.bool,
-  getAllCompanies: PropTypes.func.isRequired,
-  resetForm: PropTypes.func.isRequired,
-  updateCurrentStudent: PropTypes.func.isRequired
-};
 
 export default SessionApplication;

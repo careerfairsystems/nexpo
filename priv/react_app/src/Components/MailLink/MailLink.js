@@ -9,7 +9,8 @@ function MailLink({ to, children }) {
 }
 
 MailLink.propTypes = {
-  to: PropTypes.string.isRequired
+  to: PropTypes.string.isRequired,
+  children: PropTypes.object.isRequired
 };
 
 export default MailLink;

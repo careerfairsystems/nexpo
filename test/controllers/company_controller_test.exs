@@ -28,7 +28,8 @@ defmodule Nexpo.CompanyControllerTest do
       "student_session_days" => company.student_session_days,
       "entries" => [],
       "users" => [],
-      "student_session_applications" => []}
+      "student_session_applications" => [],
+      "student_session_time_slots" => []}
   end
 
   @tag :logged_in

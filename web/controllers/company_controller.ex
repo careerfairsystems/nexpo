@@ -1,8 +1,8 @@
 defmodule Nexpo.CompanyController do
   use Nexpo.Web, :controller
+  use Guardian.Phoenix.Controller
 
-  alias Nexpo.Company
-  alias Nexpo.ProfileImage
+  alias Nexpo.{Company, ProfileImage, Representative}
   alias Guardian.Plug.{EnsurePermissions}
 
   plug EnsurePermissions, [handler: Nexpo.SessionController,
@@ -35,12 +35,12 @@ defmodule Nexpo.CompanyController do
     }
   @apiUse InternalServerError
   """
-  def index(conn, _params) do
+  def index(conn, _params, _user, _claims) do
     companies = Repo.all(Company)
     render(conn, "index.json", companies: companies)
   end
 
-  def create(conn, %{"company" => company_params}) do
+  def create(conn, %{"company" => company_params}, _user, _claims) do
     changeset = Company.changeset(%Company{}, company_params)
 
     case Repo.insert(changeset) do
@@ -72,7 +72,7 @@ defmodule Nexpo.CompanyController do
   @apiUse NotFoundError
   @apiUse InternalServerError
   """
-  def show(conn, %{"id" => id}) do
+  def show(conn, %{"id" => id}, _user, _claims) do
     company = Repo.get!(Company, id)
         |> Repo.preload([:users, :entries, :desired_programmes])
         |> Repo.preload([:student_sessions, :student_session_applications])
@@ -80,8 +80,8 @@ defmodule Nexpo.CompanyController do
     render(conn, "show.json", company: company)
   end
 
-  def update(conn, %{"id" => id, "company" => company_params}) do
-    company = Repo.get!(Company, id)
+  def update(conn, %{"id" => id, "company" => company_params}, _user, _claims) do
+    company = Repo.get!(Company, id)|> Repo.preload(:student_session_time_slots)
 
     deleted_files = company_params
       |> Enum.filter(fn {k, v} ->
@@ -106,11 +106,42 @@ defmodule Nexpo.CompanyController do
     end
   end
 
-  def delete(conn, %{"id" => id}) do
+  def delete(conn, %{"id" => id}, _user, _claims) do
     company = Repo.get!(Company, id)
 
     # Here we use delete! (with a bang) because we expect
     # it to always work (and if it does not, it will raise).
+    Repo.delete!(company)
+
+    send_resp(conn, :no_content, "")
+  end
+
+  def show_me(conn, %{}, user, _claims) do
+    representative = Repo.get_by!(Representative, %{user_id: user.id})
+    company = Ecto.assoc(representative, :company) |> Repo.one |> Repo.preload([:industries, :job_offers, :users, :entries, :representatives, :desired_programmes, :student_sessions, :student_session_applications, :student_session_time_slots])
+
+    conn |> put_status(200) |> render("show.json", company: company)
+  end
+
+  def update_me(conn, %{"company" => company_params}, user, _claims) do
+    representative = Repo.get_by!(Representative, %{user_id: user.id})
+    company = Ecto.assoc(representative, :company) |> Repo.one |> Repo.preload([:industries, :job_offers, :users, :entries, :representatives, :desired_programmes, :student_sessions, :student_session_applications, :student_session_time_slots])
+    changeset = Company.representative_changeset(company, company_params)
+
+    case Repo.update(changeset) do
+      {:ok, company} ->
+        render(conn, "show.json", company: company)
+      {:error, changeset} ->
+        conn
+        |> put_status(:unprocessable_entity)
+        |> render(Nexpo.ChangesetView, "error.json", changeset: changeset)
+    end
+  end
+
+  def delete_me(conn, %{}, user, _claims) do
+    representative = Repo.get_by!(Representative, %{user_id: user.id})
+    company = Ecto.assoc(representative, :company)
+
     Repo.delete!(company)
 
     send_resp(conn, :no_content, "")

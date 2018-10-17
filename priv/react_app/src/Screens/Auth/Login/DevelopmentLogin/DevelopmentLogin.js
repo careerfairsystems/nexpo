@@ -4,7 +4,7 @@ import { Icon } from 'antd';
 import { Redirect } from 'react-router-dom';
 import './DevelopmentLogin.css';
 import HtmlTitle from '../../../../Components/HtmlTitle';
-import DevelopmentLoginForm from '../../../../Components/Forms/DevelopmentLoginForm';
+import DevelopmentLoginForm from '../../../../Forms/DevelopmentLoginForm';
 
 /**
  * Handles authorization in development
@@ -46,7 +46,9 @@ class DevelopmentLogin extends Component {
 }
 
 DevelopmentLogin.propTypes = {
+  location: PropTypes.shape({ state: PropTypes.object }).isRequired,
   isLoggedIn: PropTypes.bool.isRequired,
   login: PropTypes.func.isRequired
 };
+
 export default DevelopmentLogin;

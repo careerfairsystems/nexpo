@@ -7,7 +7,7 @@ import type { State } from '../../Store/reducers';
 const mapStateToProps = (state: State) => ({
   currentUser: Selectors.users.getCurrentUser(state),
   currentStudent: Selectors.students.getCurrentStudent(state),
-  fetching: state.api.current_user.fetching
+  fetching: state.api.currentUser.fetching
 });
 
 const mapDispatchToProps = {

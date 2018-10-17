@@ -6,13 +6,26 @@ import HtmlTitle from '../../../../Components/HtmlTitle';
 import LoadingSpinner from '../../../../Components/LoadingSpinner';
 
 import NotFound from '../../../NotFound';
-import UserForm from '../../../../Components/Forms/UserForm';
+import UserForm from '../../../../Forms/UserForm';
 import '../User.css';
 
 /**
  * Responsible for rendering a user. User id is recieved via url
  */
 class UserEdit extends Component {
+  static propTypes = {
+    id: PropTypes.string,
+    user: PropTypes.shape({ name: PropTypes.string }).isRequired,
+    fetching: PropTypes.bool.isRequired,
+    getUser: PropTypes.func.isRequired,
+    history: PropTypes.shape({ push: PropTypes.func }).isRequired,
+    updateUser: PropTypes.func.isRequired
+  };
+
+  static defaultProps = {
+    id: null
+  };
+
   componentWillMount() {
     const { id, getUser } = this.props;
     getUser(id);
@@ -41,18 +54,5 @@ class UserEdit extends Component {
     );
   }
 }
-
-UserEdit.defaultProps = {
-  id: null
-};
-
-UserEdit.propTypes = {
-  id: PropTypes.string,
-  user: PropTypes.shape({ name: PropTypes.string }).isRequired,
-  fetching: PropTypes.bool.isRequired,
-  getUser: PropTypes.func.isRequired,
-  history: PropTypes.shape({ push: PropTypes.func }).isRequired,
-  updateUser: PropTypes.func.isRequired
-};
 
 export default UserEdit;

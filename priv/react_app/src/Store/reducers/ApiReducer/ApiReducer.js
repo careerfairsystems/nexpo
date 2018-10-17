@@ -6,6 +6,7 @@ import { combineReducers } from 'redux';
 import ApiReducerCategories from './ApiReducerCategories';
 import ApiReducerCompanies from './ApiReducerCompanies';
 import ApiReducerCurrentUser from './ApiReducerCurrentUser';
+import ApiReducerCurrentCompany from './ApiReducerCurrentCompany';
 import ApiReducerMailtemplates from './ApiReducerMailtemplates';
 import ApiReducerDeadlines from './ApiReducerDeadlines';
 import ApiReducerRoles from './ApiReducerRoles';
@@ -29,16 +30,17 @@ export type ApiState = {
   roles: ApiStatus,
   users: ApiStatus,
   programmes: ApiStatus,
-  current_user: ApiStatus,
-  forgot_password: ApiStatus,
+  currentUser: ApiStatus,
+  currentCompany: ApiStatus,
+  forgotPassword: ApiStatus,
   login: ApiStatus,
-  replace_password: ApiStatus & {
+  replacePassword: ApiStatus & {
     errors: {
       password: string[],
-      password_confirmation: string[]
+      passwordConfirmation: string[]
     }
   },
-  verify_forgot_password_key: ApiStatus
+  verifyForgotPasswordKey: ApiStatus
 };
 
 export const initialStatus: ApiStatus = {
@@ -68,16 +70,17 @@ export const failure = error => ({
 export const ApiReducer: ApiState = combineReducers({
   categories: ApiReducerCategories,
   companies: ApiReducerCompanies,
-  current_user: ApiReducerCurrentUser,
+  currentUser: ApiReducerCurrentUser,
+  currentCompany: ApiReducerCurrentCompany,
   deadlines: ApiReducerDeadlines,
   mailtemplates: ApiReducerMailtemplates,
   roles: ApiReducerRoles,
   users: ApiReducerUsers,
   programmes: ApiReducerProgrammes,
-  forgot_password: ApiReducerForgotPassword,
+  forgotPassword: ApiReducerForgotPassword,
   login: ApiReducerLogin,
-  verify_forgot_password_key: ApiReducerVerifyForgotPassword,
-  replace_password: ApiReducerReplacePassword
+  verifyForgotPasswordKey: ApiReducerVerifyForgotPassword,
+  replacePassword: ApiReducerReplacePassword
 });
 
 export default ApiReducer;

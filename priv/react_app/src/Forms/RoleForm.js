@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
+import { map } from 'lodash/fp';
 import { Button, Form, Input, Select } from 'antd';
 
 import makeField from './helper';
@@ -9,7 +10,7 @@ import makeField from './helper';
 const TextInput = makeField(Input);
 const FieldSelect = makeField(Select);
 
-const perms = [
+const permissions = [
   'read_all',
   'write_all',
   'read_users',
@@ -28,7 +29,17 @@ const perms = [
   'write_hosts'
 ];
 
-const RoleForm = ({ handleSubmit }) => (
+const renderPermissionItem = permission => (
+  <Select.Option key={permission}>{permission}</Select.Option>
+);
+
+const renderUserItem = user => (
+  <Select.Option key={user.id} value={user.id}>
+    {user.email}
+  </Select.Option>
+);
+
+const RoleForm = ({ handleSubmit, users }) => (
   <Form onSubmit={handleSubmit}>
     <Field name="type" label="Type:" component={TextInput} />
     <Field
@@ -38,19 +49,29 @@ const RoleForm = ({ handleSubmit }) => (
       format={null}
       component={FieldSelect}
     >
-      {perms.map(permission => (
-        <Select.Option key={permission}>{permission}</Select.Option>
-      ))}
+      {map(renderPermissionItem, permissions)}
+    </Field>
+    <Field
+      name="users"
+      label="Users:"
+      mode="multiple"
+      format={null}
+      optionFilterProp="children"
+      component={FieldSelect}
+    >
+      {map(renderUserItem, users)}
     </Field>
     <Button htmlType="submit">Submit</Button>
   </Form>
 );
 
 RoleForm.propTypes = {
+  users: PropTypes.object.isRequired,
   handleSubmit: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
+  users: state.entities.users,
   formState: state.form.RoleForm
 });
 

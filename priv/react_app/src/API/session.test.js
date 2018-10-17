@@ -65,7 +65,7 @@ describe('login', () => {
   });
 });
 
-describe('forgot_password', () => {
+describe('forgotPassword', () => {
   it('should return a resolved promise on success', () => {
     const response = { test: 'success' };
     mockHttpResponse({
@@ -75,7 +75,7 @@ describe('forgot_password', () => {
     expect.assertions(1);
 
     return API.session
-      .forgot_password({ email: 'test' })
+      .forgotPassword({ email: 'test' })
       .then(res => expect(res).toEqual(response));
   });
 
@@ -88,11 +88,11 @@ describe('forgot_password', () => {
     expect.assertions(1);
 
     return API.session
-      .forgot_password({ email: 'test' })
+      .forgotPassword({ email: 'test' })
       .catch(err => expect(err).toBeInstanceOf(ApiError));
   });
 });
-describe('verify_forgot_password_key', () => {
+describe('verifyForgotPasswordKey', () => {
   it('should return a resolved promise on success', () => {
     const response = { test: 'success' };
     mockHttpResponse({
@@ -102,7 +102,7 @@ describe('verify_forgot_password_key', () => {
     expect.assertions(1);
 
     return API.session
-      .verify_forgot_password_key({ key: 'random-string' })
+      .verifyForgotPasswordKey({ key: 'random-string' })
       .then(res => expect(res).toEqual(response));
   });
 
@@ -115,12 +115,12 @@ describe('verify_forgot_password_key', () => {
     expect.assertions(1);
 
     return API.session
-      .verify_forgot_password_key({ key: 'random-string' })
+      .verifyForgotPasswordKey({ key: 'random-string' })
       .catch(err => expect(err).toBeInstanceOf(ApiError));
   });
 });
 
-describe('replace_forgotten_password', () => {
+describe('replaceForgottenPassword', () => {
   it('should return a resolved promise on success', () => {
     const response = { test: 'success' };
     mockHttpResponse({
@@ -132,10 +132,10 @@ describe('replace_forgotten_password', () => {
     const params = {
       key: 'random-string',
       password: 'random-password',
-      password_confirmation: 'random-password'
+      passwordConfirmation: 'random-password'
     };
     return API.session
-      .replace_forgotten_password(params)
+      .replaceForgottenPassword(params)
       .then(res => expect(res).toEqual(response));
   });
 
@@ -148,7 +148,7 @@ describe('replace_forgotten_password', () => {
     expect.assertions(1);
 
     return API.session
-      .replace_forgotten_password({})
+      .replaceForgottenPassword({})
       .catch(err => expect(err).toBeInstanceOf(ApiError));
   });
 });

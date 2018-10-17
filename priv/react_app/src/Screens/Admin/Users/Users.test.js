@@ -1,45 +1,53 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import Table from 'antd/lib/table';
-import Button from 'antd/lib/button';
+import { Table } from 'antd';
+
 import Users from './Users';
 import LoadingSpinner from '../../../Components/LoadingSpinner';
 
-it('should render without crashing', () => {
-  const func = () => 'a';
-  shallow(<Users getAllUsers={func} />);
-});
+describe('users', () => {
+  let props;
+  beforeEach(() => {
+    props = {
+      fetching: false,
+      getAllUsers: jest.fn(),
+      deleteUser: jest.fn()
+    };
+  });
 
-it('should render loading', () => {
-  const func = () => 'a';
-  const wrapper = shallow(<Users fetching getAllUsers={func} />);
-  expect(wrapper.find(LoadingSpinner)).toHaveLength(1);
-});
+  it('should render without crashing', () => {
+    shallow(<Users {...props} />);
+  });
 
-it('calls fetch all users prop on mount', () => {
-  const func = jest.fn();
-  const wrapper = shallow(<Users getAllUsers={func} />);
+  it('should render loading', () => {
+    const wrapper = shallow(<Users {...props} fetching />);
+    expect(wrapper.find(LoadingSpinner)).toHaveLength(1);
+  });
 
-  expect(func).toHaveBeenCalledTimes(1);
-});
+  it('calls fetch all users prop on mount', () => {
+    const func = jest.fn();
+    shallow(<Users {...props} getAllUsers={func} />);
 
-it('should render users', () => {
-  const func = jest.fn();
-  const users = {
-    '1': {
-      id: 1,
-      firstName: 'First',
-      lastName: 'Last',
-      email: 'first.name@domain.com'
-    },
-    '2': {
-      id: 2,
-      firstName: 'Dev',
-      lastName: 'Dev',
-      email: 'dev@it.now'
-    }
-  };
-  const wrapper = shallow(<Users id="1" users={users} getAllUsers={func} />);
+    expect(func).toHaveBeenCalledTimes(1);
+  });
 
-  expect(wrapper.find(Table)).toHaveLength(1);
+  it('should render users', () => {
+    const users = {
+      '1': {
+        id: 1,
+        firstName: 'First',
+        lastName: 'Last',
+        email: 'first.name@domain.com'
+      },
+      '2': {
+        id: 2,
+        firstName: 'Dev',
+        lastName: 'Dev',
+        email: 'dev@it.now'
+      }
+    };
+    const wrapper = shallow(<Users id="1" {...props} users={users} />);
+
+    expect(wrapper.find(Table)).toHaveLength(1);
+  });
 });

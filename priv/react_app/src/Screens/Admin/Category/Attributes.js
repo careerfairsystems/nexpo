@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { filter, isEmpty } from 'lodash/fp';
-import Table from 'antd/lib/table';
+import { Table } from 'antd';
 import LoadingSpinner from '../../../Components/LoadingSpinner';
 import type { State } from '../../../Store/reducers';
 
@@ -16,16 +16,15 @@ export const Attributes = ({ fetching, attributes, entries }) => (
   </div>
 );
 
-Attributes.defaultProps = {
-  fetching: false,
-  attributes: [],
-  entries: []
-};
-
 Attributes.propTypes = {
-  fetching: PropTypes.bool,
+  fetching: PropTypes.bool.isRequired,
   attributes: PropTypes.array,
   entries: PropTypes.array
+};
+
+Attributes.defaultProps = {
+  attributes: [],
+  entries: []
 };
 
 const stateful = connect((state: State, props) => {
@@ -67,6 +66,7 @@ const stateful = connect((state: State, props) => {
   };
 
   return {
+    fetching: state.api.categories.fetching,
     attributes: [companyColumn].concat(
       attributes.map(({ title }) => ({
         title,

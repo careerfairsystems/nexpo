@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import CompanyForm from '../../../../Components/Forms/CompanyForm';
+import CompanyForm from '../../../../Forms/CompanyForm';
 import '../Company.css';
 
 /**

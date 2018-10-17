@@ -1,15 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-
-import Layout from 'antd/lib/layout';
-import Menu from 'antd/lib/menu';
-import Breadcrumb from 'antd/lib/breadcrumb';
-import Icon from 'antd/lib/icon';
-
+import { Route, Switch, Link, Redirect } from 'react-router-dom';
+import { Layout, Menu, Breadcrumb, Icon } from 'antd';
 import { startCase } from 'lodash/fp';
-
-import { Route, Switch, Link } from 'react-router-dom';
-import PrivateRoute from '../Components/PrivateRoute';
 
 import Home from '../Screens/Home';
 import Info from '../Screens/Info';
@@ -27,9 +20,14 @@ import User from '../Screens/Admin/User';
 import Programmes from '../Screens/Admin/Programmes';
 import Programme from '../Screens/Admin/Programme';
 import { UserShow, UserEdit } from '../Screens/Admin/User';
+import Statistics from '../Screens/Admin/Statistics';
 import CurrentUser from '../Screens/CurrentUser';
 import Companies from '../Screens/Admin/Companies';
-import { CompanyNew, CompanyShow, CompanyEdit } from '../Screens/Admin/Company';
+import { CompanyNew, CompanyEdit, CompanyShow } from '../Screens/Admin/Company';
+import {
+  CurrentCompanyShow,
+  CurrentCompanyEdit
+} from '../Screens/CurrentCompany';
 import SessionHome from '../Screens/Session/SessionHome';
 import SessionApplication from '../Screens/Session/SessionApplication';
 import SessionApplications from '../Screens/Session/SessionApplications';
@@ -40,9 +38,9 @@ import Signup from '../Screens/Auth/Signup';
 import ForgotPassword from '../Screens/Auth/ForgotPassword';
 import NotFound from '../Screens/NotFound';
 
+import PrivateRoute from '../Components/PrivateRoute';
 import HtmlTitle from '../Components/HtmlTitle';
-import { hasPermission } from '../Util/PermissionsHelper';
-import Statistics from '../Screens/Admin/Statistics';
+import { hasAccess, hasPermission } from '../Util/PermissionsHelper';
 
 const { Header, Content, Footer } = Layout;
 
@@ -71,7 +69,9 @@ const privateRoutes = [
   { path: '/session', component: SessionHome },
   { path: '/session/application', component: SessionApplication },
   { path: '/session/applications', component: SessionApplications },
-  { path: '/session/companies', component: SessionCompanies }
+  { path: '/session/companies', component: SessionCompanies },
+  { path: '/company/show', component: CurrentCompanyShow },
+  { path: '/company/edit', component: CurrentCompanyEdit }
 ];
 
 const routes = (
@@ -81,6 +81,7 @@ const routes = (
     {privateRoutes.map(props => (
       <PrivateRoute key={props.path} exact {...props} />
     ))}
+    <Route path="/company" render={() => <Redirect to="/company/show" />} />
     <Route path="/login" component={Login} />
     <Route path="/logout" component={Logout} />
     <Route path="/signup" component={Signup} />
@@ -109,8 +110,8 @@ class App extends Component {
   };
 
   restrictedSubMenu = ({ route, title, menus }) => {
-    const { currentUser, isLoggedIn, redirect } = this.props;
-    if (isLoggedIn && hasPermission(currentUser, route)) {
+    const { currentUser: user, isLoggedIn, redirect } = this.props;
+    if (isLoggedIn && hasPermission(user, route) && hasAccess(user, route)) {
       return (
         <Menu.SubMenu
           title={title}
@@ -125,8 +126,8 @@ class App extends Component {
   };
 
   restrictedMenuItem = ({ route, title }) => {
-    const { currentUser, isLoggedIn } = this.props;
-    if (isLoggedIn && hasPermission(currentUser, route)) {
+    const { currentUser: user, isLoggedIn } = this.props;
+    if (isLoggedIn && hasPermission(user, route) && hasAccess(user, route)) {
       return <Menu.Item key={`/${route}`}>{title}</Menu.Item>;
     }
     return null;
@@ -220,6 +221,10 @@ class App extends Component {
                   })
                 ]
               })}
+              {this.restrictedMenuItem({
+                route: 'company/show',
+                title: 'Your Company'
+              })}
               {isLoggedIn ? this.loggedInMenuItem() : this.loggedOutMenuItem()}
             </Menu>
           </Header>
@@ -245,8 +250,7 @@ App.propTypes = {
   isLoggedIn: PropTypes.bool.isRequired,
   currentUser: PropTypes.object.isRequired,
   pathname: PropTypes.string.isRequired,
-  redirect: PropTypes.func.isRequired,
-  logout: PropTypes.func.isRequired
+  redirect: PropTypes.func.isRequired
 };
 
 export default App;

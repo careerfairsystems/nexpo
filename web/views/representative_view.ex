@@ -11,7 +11,7 @@ defmodule Nexpo.RepresentativeView do
 
   def render("representative.json", %{representative: representative}) do
     # Define own parameters to keep
-    base = [:id, :user_id, :company_id]
+    base = [:id, :company_id, :user_id]
 
     Nexpo.Support.View.render_object(representative, base)
   end

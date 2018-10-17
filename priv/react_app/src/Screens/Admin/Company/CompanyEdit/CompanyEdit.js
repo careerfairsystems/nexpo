@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { isEmpty, isNil, toInteger } from 'lodash/fp';
-import message from 'antd/lib/message';
+import { message } from 'antd';
+
 import NotFound from '../../../NotFound';
 import API from '../../../../API';
-import CompanyForm from '../../../../Components/Forms/CompanyForm';
-import InviteForm from '../../../../Components/Forms/InviteForm';
+import CompanyForm from '../../../../Forms/CompanyForm';
+import InviteForm from '../../../../Forms/InviteForm';
 import HtmlTitle from '../../../../Components/HtmlTitle';
 import LoadingSpinner from '../../../../Components/LoadingSpinner';
 import '../Company.css';
@@ -14,15 +15,32 @@ import '../Company.css';
  * Responsible for editing a company. Company id is recieved via url
  */
 class CompanyEdit extends Component {
+  static propTypes = {
+    id: PropTypes.string,
+    company: PropTypes.shape({ name: PropTypes.string }).isRequired,
+    fetching: PropTypes.bool.isRequired,
+    getCompany: PropTypes.func.isRequired,
+    history: PropTypes.shape({ push: PropTypes.func }).isRequired,
+    resetForm: PropTypes.func.isRequired,
+    updateCompany: PropTypes.func.isRequired
+  };
+
+  static defaultProps = {
+    id: null
+  };
+
   componentWillMount() {
     const { id, getCompany } = this.props;
     getCompany(id);
   }
 
   updateCompany = values => {
-    const { id, updateCompany, history } = this.props;
+    const { id, updateCompany } = this.props;
     updateCompany(id, { company: values });
+  };
 
+  onSuccess = () => {
+    const { id, history } = this.props;
     history.push(`/admin/companies/${id}`);
   };
 
@@ -51,7 +69,11 @@ class CompanyEdit extends Component {
         <HtmlTitle title={company.name} />
         <div>
           <h1>{company.name}</h1>
-          <CompanyForm onSubmit={this.updateCompany} initialValues={company} />
+          <CompanyForm
+            onSubmit={this.updateCompany}
+            onSubmitSuccess={this.onSuccess}
+            initialValues={company}
+          />
           <br />
           <br />
           <h2>Invite Company Representatives</h2>
@@ -61,19 +83,5 @@ class CompanyEdit extends Component {
     );
   }
 }
-
-CompanyEdit.defaultProps = {
-  id: null
-};
-
-CompanyEdit.propTypes = {
-  id: PropTypes.string,
-  company: PropTypes.shape({ name: PropTypes.string }).isRequired,
-  fetching: PropTypes.bool.isRequired,
-  getCompany: PropTypes.func.isRequired,
-  history: PropTypes.shape({ push: PropTypes.func }).isRequired,
-  resetForm: PropTypes.func.isRequired,
-  updateCompany: PropTypes.func.isRequired
-};
 
 export default CompanyEdit;

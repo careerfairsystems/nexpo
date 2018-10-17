@@ -8,7 +8,8 @@ import CompanyEdit from './CompanyEdit';
 const mapStateToProps = (state, props) => {
   const companyId = props.match.params.id;
   const company = state.entities.companies[companyId] || {};
-  const fetching = state.api.companies.fetching;
+  const { fetching } = state.api.companies;
+
   const entries = denormalize(
     { entries: company.entries },
     Schema.companySchema(),

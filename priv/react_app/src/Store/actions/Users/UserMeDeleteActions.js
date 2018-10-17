@@ -6,11 +6,10 @@ export const destroyCurrentUserIsLoading = () => ({
   type: actionTypes.DELETE_CURRENT_USER
 });
 
-export const destroyCurrentUserSuccess = id => {
+export const destroyCurrentUserSuccess = () => {
   message.success('Your account was successfully deleted');
   return {
-    type: actionTypes.DELETE_CURRENT_USER_SUCCESS,
-    id
+    type: actionTypes.DELETE_CURRENT_USER_SUCCESS
   };
 };
 
@@ -21,13 +20,13 @@ export const destroyCurrentUserFailure = () => {
   };
 };
 
-export function destroyCurrentUser(id) {
+export function destroyCurrentUser() {
   return dispatch => {
     dispatch(destroyCurrentUserIsLoading());
     return API.users
-      .destroyMe(id)
+      .destroyMe()
       .then(() => {
-        dispatch(destroyCurrentUserSuccess(id));
+        dispatch(destroyCurrentUserSuccess());
       })
       .catch(() => {
         dispatch(destroyCurrentUserFailure());

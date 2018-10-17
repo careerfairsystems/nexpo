@@ -38,16 +38,24 @@ const state = {
     companies: { fetching: false, success: false },
     roles: { fetching: false, success: false },
     users: { fetching: false, success: false },
-    current_user: { fetching: false, success: false },
-    forgot_password: { fetching: false, success: false },
+    currentUser: { fetching: false, success: false },
+    currentCompany: { fetching: false, success: false },
+    forgotPassword: { fetching: false, success: false },
     login: { fetching: false, success: false },
-    replace_password: { fetching: false, success: false },
-    verify_forgot_password_key: { fetching: false, success: false }
+    replacePassword: { fetching: false, success: false },
+    verifyForgotPasswordKey: { fetching: false, success: false }
   },
   entities: {
     users: {
-      '1': { id: 1, email: 'dev@it', firstName: 'X', roles: [1, 2] },
-      '2': { id: 2, email: 't@it', firstName: 'T', roles: [], student: 1 }
+      '1': {
+        id: 1,
+        email: 'dev@it',
+        firstName: 'X',
+        roles: [1, 2],
+        student: 1,
+        representative: 1
+      },
+      '2': { id: 2, email: 't@it', firstName: 'T', roles: [] }
     },
     students: {
       '1': {
@@ -58,6 +66,9 @@ const state = {
         user: 1,
         year: 2000
       }
+    },
+    representatives: {
+      '1': { id: 1, company: 1, user: 1 }
     },
     studentSessionApplications: {
       '1': {
@@ -74,7 +85,19 @@ const state = {
       '2': { id: 2, type: 'zzz', permissions: ['read_users'], users: [1] }
     },
     companies: {
-      '1': { id: 1, name: 'Spotify', entries: [1, 2, 3] },
+      '1': {
+        id: 1,
+        name: 'Spotify',
+        entries: [1, 2, 3],
+        studentSessionTimeSlots: [
+          {
+            id: 1,
+            start: '1970-01-01T00:00:00.000000',
+            end: '2000-01-01T00:00:00.000000',
+            location: 'E-huset'
+          }
+        ]
+      },
       '2': { id: 2, name: 'Google', entries: [4, 5] }
     },
     categories: {
@@ -139,5 +162,8 @@ it('renders routes without crashing', () => {
   found(mount(route('/session/application')));
   found(mount(route('/session/applications')));
   found(mount(route('/session/companies')));
+  found(mount(route('/company')));
+  found(mount(route('/company/show')));
+  found(mount(route('/company/edit')));
   expect(mount(route('/invalid-path')).find(NotFound)).toHaveLength(1);
 });

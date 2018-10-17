@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { isEmpty, isNil, capitalize } from 'lodash/fp';
+import { isEmpty, isNil, capitalize, join } from 'lodash/fp';
+import { List, Avatar, Button } from 'antd';
 import NotFound from '../../../NotFound';
 import HtmlTitle from '../../../../Components/HtmlTitle';
 import InvisibleLink from '../../../../Components/InvisibleLink';
+import '../Role.css';
 
 /**
  * Responsible for rendering a role. Role id is recieved via url
@@ -27,10 +29,33 @@ class RoleShow extends Component {
 
         <div>
           <h1>{capitalize(role.type)}</h1>
-          <p>Permissions: {role.permissions.join(', ')}</p>
+          <p>Permissions: {join(',', role.permissions)}</p>
+          <h2>Users</h2>
+          <List
+            dataSource={role.users}
+            bordered
+            renderItem={({ id, firstName, lastName, email }) => (
+              <List.Item>
+                <List.Item.Meta
+                  avatar={
+                    <InvisibleLink to={`/admin/users/${id}`}>
+                      <Avatar size="large">{id}</Avatar>
+                    </InvisibleLink>
+                  }
+                  title={[firstName, lastName].join(' ')}
+                  description={`Email: ${email}`}
+                />
+              </List.Item>
+            )}
+          />
         </div>
+        <br />
 
-        <InvisibleLink to={`/admin/roles/${role.id}/edit`}>Edit</InvisibleLink>
+        <InvisibleLink to={`/admin/roles/${role.id}/edit`}>
+          <Button onClick={() => null} type="primary">
+            Edit
+          </Button>
+        </InvisibleLink>
       </div>
     );
   }

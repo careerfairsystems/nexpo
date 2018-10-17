@@ -1,11 +1,10 @@
-import { handleHttpResponse, authPost } from './utils';
-import { snakeCaseKeys } from '../Util/FormatHelper';
+import { handleHttpResponse, authPost, fetchJson } from './utils';
 
 type finalSignupBody = {
   password: string,
-  password_confirmation: string,
-  first_name: string,
-  last_name: string
+  passwordConfirmation: string,
+  firstName: string,
+  lastName: string
 };
 
 export default {
@@ -13,13 +12,9 @@ export default {
    * Initiates a signup
    */
   initialSignup: (email: string) =>
-    fetch('/api/initial_signup', {
-      method: 'POST',
-      body: JSON.stringify({ email }),
-      headers: new Headers({
-        'Content-Type': 'application/json'
-      })
-    }).then(handleHttpResponse),
+    fetchJson('/api/initial_signup', { data: { email }, method: 'POST' }).then(
+      handleHttpResponse
+    ),
 
   /**
    * Initiates a representative signup
@@ -34,11 +29,8 @@ export default {
     fetch(`/api/initial_signup/${signupKey}`).then(handleHttpResponse),
 
   finalizeSignup: (signupKey: string, body: finalSignupBody) =>
-    fetch(`/api/final_signup/${signupKey}`, {
-      method: 'POST',
-      body: JSON.stringify(snakeCaseKeys(body)),
-      headers: new Headers({
-        'Content-Type': 'application/json'
-      })
+    fetchJson(`/api/final_signup/${signupKey}`, {
+      data: body,
+      method: 'POST'
     }).then(handleHttpResponse)
 };

@@ -5,9 +5,24 @@ import { List, Avatar, Popconfirm, Button } from 'antd';
 import NotFound from '../../NotFound';
 import LoadingSpinner from '../../../Components/LoadingSpinner';
 import HtmlTitle from '../../../Components/HtmlTitle';
-import UpdateSessionApplicationForm from '../../../Components/Forms/UpdateSessionApplicationForm';
+import UpdateSessionApplicationForm from '../../../Forms/UpdateSessionApplicationForm';
+import '../Session.css';
 
 class SessionApplications extends Component {
+  static propTypes = {
+    applications: PropTypes.array,
+    companies: PropTypes.object,
+    getAllCompanies: PropTypes.func.isRequired,
+    destroyStudentSessionAppl: PropTypes.func.isRequired,
+    fetching: PropTypes.bool.isRequired,
+    updateStudentSessionAppl: PropTypes.func.isRequired
+  };
+
+  static defaultProps = {
+    companies: {},
+    applications: null
+  };
+
   constructor(props) {
     super(props);
     this.state = { editing: {} };
@@ -18,11 +33,15 @@ class SessionApplications extends Component {
     getAllCompanies();
   }
 
-  getCompany = ({ company }) => this.props.companies[company] || {};
+  getCompany = ({ company }) => {
+    const { companies } = this.props;
+    return companies[company] || {};
+  };
 
   toggleEditMode = id => {
+    const { editing: stateEditing } = this.state;
     const editing = {};
-    editing[id] = !this.state.editing[id];
+    editing[id] = !stateEditing[id];
     this.setState({ editing });
   };
 
@@ -90,11 +109,13 @@ class SessionApplications extends Component {
     if (fetching) {
       return <LoadingSpinner />;
     }
+
     if (isNil(applications)) {
       return <NotFound />;
     }
+
     return (
-      <div>
+      <div className="session-applications">
         <HtmlTitle title="Student Session Application" />
         <h1>Student Session Applications</h1>
         <List
@@ -108,18 +129,5 @@ class SessionApplications extends Component {
     );
   }
 }
-
-SessionApplications.defaultProps = {
-  applications: null,
-  fetching: false
-};
-
-SessionApplications.propTypes = {
-  applications: PropTypes.array,
-  getAllCompanies: PropTypes.func.isRequired,
-  destroyStudentSessionAppl: PropTypes.func.isRequired,
-  fetching: PropTypes.bool,
-  updateStudentSessionAppl: PropTypes.func.isRequired
-};
 
 export default SessionApplications;

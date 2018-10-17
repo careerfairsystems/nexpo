@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-
-import { Table, Button } from 'antd';
+import { Table, Button, Popconfirm, Divider } from 'antd';
 import { sortBy } from 'lodash/fp';
-import Popconfirm from 'antd/lib/popconfirm';
-import Divider from 'antd/lib/divider';
+
 import InvisibleLink from '../../../Components/InvisibleLink';
 import LoadingSpinner from '../../../Components/LoadingSpinner';
 import HtmlTitle from '../../../Components/HtmlTitle';
@@ -13,6 +11,17 @@ import HtmlTitle from '../../../Components/HtmlTitle';
  * Responsible for rendering a list of deadlines
  */
 class Deadlines extends Component {
+  static propTypes = {
+    deadlines: PropTypes.object,
+    fetching: PropTypes.bool.isRequired,
+    getAllDeadlines: PropTypes.func.isRequired,
+    deleteDeadline: PropTypes.func.isRequired
+  };
+
+  static defaultProps = {
+    deadlines: {}
+  };
+
   componentWillMount() {
     const { getAllDeadlines } = this.props;
     getAllDeadlines();
@@ -40,18 +49,25 @@ class Deadlines extends Component {
     {
       title: 'Action',
       key: 'action',
-      render: deadline => (
-        <span>
-          <InvisibleLink to={`/admin/deadlines/${deadline.id}`}>Edit</InvisibleLink>
-          <Divider type="vertical" />
-          <Popconfirm
-            title="Sure to delete?"
-            onConfirm={() => this.props.deleteDeadline(deadline.id)}
-          >
-            <span style={{ color: '#ff4d4f', cursor: 'pointer' }}>Delete</span>
-          </Popconfirm>
-        </span>
-      )
+      render: deadline => {
+        const { deleteDeadline } = this.props;
+        return (
+          <span>
+            <InvisibleLink to={`/admin/deadlines/${deadline.id}`}>
+              Edit
+            </InvisibleLink>
+            <Divider type="vertical" />
+            <Popconfirm
+              title="Sure to delete?"
+              onConfirm={() => deleteDeadline(deadline.id)}
+            >
+              <span style={{ color: '#ff4d4f', cursor: 'pointer' }}>
+                Delete
+              </span>
+            </Popconfirm>
+          </span>
+        );
+      }
     }
   ];
 
@@ -84,22 +100,12 @@ class Deadlines extends Component {
   }
 
   render() {
-    if (this.props.fetching) {
+    const { fetching } = this.props;
+    if (fetching) {
       return <LoadingSpinner />;
     }
     return this.renderDeadlines();
   }
 }
-
-Deadlines.propTypes = {
-  deadlines: PropTypes.object.isRequired,
-  fetching: PropTypes.bool.isRequired,
-  getAllDeadlines: PropTypes.func.isRequired
-};
-
-Deadlines.defaultProps = {
-  deadlines: {},
-  fetching: false
-};
 
 export default Deadlines;

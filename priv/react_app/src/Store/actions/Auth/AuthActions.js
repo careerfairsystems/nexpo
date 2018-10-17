@@ -1,4 +1,4 @@
-import message from 'antd/lib/message';
+import { message } from 'antd';
 import { Actions, actionTypes } from '../..';
 import API from '../../../API';
 

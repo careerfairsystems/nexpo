@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import ReplacePasswordForm from '../Forms/ReplacePasswordForm';
+import ReplacePasswordForm from '../../Forms/ReplacePasswordForm';
 import { SuccessMessage } from '../SuccessMessage/SuccessMessage';
 import { NotFound } from '../../Screens/NotFound/NotFound';
 
@@ -10,14 +10,25 @@ type Props = {
   keyIsValid: boolean,
   errors: {
     password: string[],
-    password_confirmation: string[]
-  },
-  success: boolean
+    passwordConfirmation: string[]
+  }
 };
 
 class ReplaceForgottenPassword extends Component<Props> {
+  static propTypes = {
+    verifyKey: PropTypes.func.isRequired,
+    sendNewPasswordToBackend: PropTypes.func.isRequired,
+    keyIsValid: PropTypes.bool.isRequired,
+    success: PropTypes.bool
+  };
+
+  static defaultProps = {
+    success: false
+  };
+
   componentDidMount() {
-    this.props.verifyKey();
+    const { verifyKey } = this.props;
+    verifyKey();
   }
 
   sendQueryToBackend = values => {
@@ -25,7 +36,7 @@ class ReplaceForgottenPassword extends Component<Props> {
     const { sendNewPasswordToBackend } = this.props;
     return sendNewPasswordToBackend({
       password,
-      password_confirmation: passwordConfirmation
+      passwordConfirmation
     });
   };
 
@@ -53,15 +64,5 @@ class ReplaceForgottenPassword extends Component<Props> {
     );
   }
 }
-ReplaceForgottenPassword.defaultProps = {
-  success: false
-};
-
-ReplaceForgottenPassword.propTypes = {
-  verifyKey: PropTypes.func.isRequired,
-  sendNewPasswordToBackend: PropTypes.func.isRequired,
-  keyIsValid: PropTypes.bool.isRequired,
-  success: PropTypes.bool
-};
 
 export default ReplaceForgottenPassword;

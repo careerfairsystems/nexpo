@@ -1,12 +1,12 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import Table from 'antd/lib/table';
+import { Table } from 'antd';
 import ConnectedAttributes, { Attributes } from './Attributes';
 import { createMockStore } from '../../../TestHelper';
 import LoadingSpinner from '../../../Components/LoadingSpinner';
 
 it('should render without crashing', () => {
-  shallow(<Attributes />);
+  shallow(<Attributes fetching={false} />);
 });
 
 it('should render LoadingSpinner if fetching true', () => {
@@ -27,7 +27,7 @@ it('should render attributes information', () => {
     { id: 3, companyName: 'Intel', bord: '5' }
   ];
   const wrapper = shallow(
-    <Attributes attributes={attributes} entries={entries} />
+    <Attributes attributes={attributes} entries={entries} fetching={false} />
   );
 
   expect(wrapper.find(Table)).toHaveLength(1);
@@ -43,6 +43,7 @@ it('should render without crashing', () => {
 
 it('should render without crashing', () => {
   const state = {
+    api: { categories: { fetching: false } },
     entities: {
       companies: {
         '1': { id: 1, name: 'Spotify' },

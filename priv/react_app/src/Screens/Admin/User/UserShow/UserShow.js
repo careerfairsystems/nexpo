@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import { isEmpty, isNil, map } from 'lodash/fp';
+import { Button } from 'antd';
 import HtmlTitle from '../../../../Components/HtmlTitle';
 import LoadingSpinner from '../../../../Components/LoadingSpinner';
 import InvisibleLink from '../../../../Components/InvisibleLink';
@@ -13,6 +14,23 @@ import '../User.css';
  * Responsible for rendering a user. User id is recieved via url
  */
 class UserShow extends Component {
+  static propTypes = {
+    id: PropTypes.string,
+    user: PropTypes.object.isRequired,
+    fetching: PropTypes.bool.isRequired,
+    getUser: PropTypes.func.isRequired,
+    match: PropTypes.shape({
+      path: PropTypes.string
+    })
+  };
+
+  static defaultProps = {
+    id: null,
+    match: {
+      path: ''
+    }
+  };
+
   componentWillMount() {
     const { id, getUser } = this.props;
     getUser(id);
@@ -42,33 +60,19 @@ class UserShow extends Component {
       <div className="user-show-view">
         <HtmlTitle title={this.displayName()} />
 
-        <div>
-          <h1>{this.displayName()}</h1>
-          <p>Email: {user.email}</p>
-          <p>Phone number: {user.phoneNumber}</p>
-          <p>Roles: {this.roles()}</p>
-          <p>Food Preferences: {user.foodPreferences}</p>
-        </div>
-        <InvisibleLink to={`/admin/users/${user.id}/edit`}>Edit</InvisibleLink>
+        <h1 className="centering">{this.displayName()}</h1>
+        <p>Email: {user.email}</p>
+        <p>Phone number: {user.phoneNumber}</p>
+        <p>Roles: {this.roles()}</p>
+        <p>Food Preferences: {user.foodPreferences}</p>
+        <InvisibleLink to={`/admin/users/${user.id}/edit`}>
+          <Button onClick={() => null} type="primary">
+            Edit
+          </Button>
+        </InvisibleLink>
       </div>
     );
   }
 }
-
-UserShow.defaultProps = {
-  id: null,
-  match: {
-    path: ''
-  }
-};
-UserShow.propTypes = {
-  id: PropTypes.string,
-  user: PropTypes.object.isRequired,
-  fetching: PropTypes.bool.isRequired,
-  getUser: PropTypes.func.isRequired,
-  match: PropTypes.shape({
-    path: PropTypes.string
-  })
-};
 
 export default UserShow;

@@ -1,17 +1,28 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { toLower } from 'lodash/fp';
+import { Table, Divider, Popconfirm } from 'antd';
 
-import Table from 'antd/lib/table';
-import Divider from 'antd/lib/divider';
-import Popconfirm from 'antd/lib/popconfirm';
 import InvisibleLink from '../../../Components/InvisibleLink';
 import LoadingSpinner from '../../../Components/LoadingSpinner';
 import HtmlTitle from '../../../Components/HtmlTitle';
+import FilterSearch, { FilterIcon } from '../../../Components/FilterSearch';
 
 /**
  * Responsible for rendering a list of users
  */
 class Users extends Component {
+  static propTypes = {
+    users: PropTypes.object,
+    fetching: PropTypes.bool.isRequired,
+    getAllUsers: PropTypes.func.isRequired,
+    deleteUser: PropTypes.func.isRequired
+  };
+
+  static defaultProps = {
+    users: {}
+  };
+
   componentWillMount() {
     const { getAllUsers } = this.props;
     getAllUsers();
@@ -24,6 +35,9 @@ class Users extends Component {
         title: 'Email',
         dataIndex: 'email',
         key: 'email',
+        filterDropdown: FilterSearch,
+        filterIcon: FilterIcon,
+        onFilter: (value, user) => toLower(user.email).includes(toLower(value)),
         render: (email, { id }) => (
           <InvisibleLink to={`/admin/users/${id}`}>{email}</InvisibleLink>
         )
@@ -41,24 +55,27 @@ class Users extends Component {
       {
         title: 'Action',
         key: 'action',
-        render: user => (
-          <span>
-            <InvisibleLink to={`/admin/users/${user.id}`}>Show</InvisibleLink>
-            <Divider type="vertical" />
-            <InvisibleLink to={`/admin/users/${user.id}/edit`}>
-              Edit
-            </InvisibleLink>
-            <Divider type="vertical" />
-            <Popconfirm
-              title="Sure to delete?"
-              onConfirm={() => this.props.deleteUser(user.id)}
-            >
-              <span style={{ color: '#ff4d4f', cursor: 'pointer' }}>
-                Delete
-              </span>
-            </Popconfirm>
-          </span>
-        )
+        render: user => {
+          const { deleteUser } = this.props;
+          return (
+            <span>
+              <InvisibleLink to={`/admin/users/${user.id}`}>Show</InvisibleLink>
+              <Divider type="vertical" />
+              <InvisibleLink to={`/admin/users/${user.id}/edit`}>
+                Edit
+              </InvisibleLink>
+              <Divider type="vertical" />
+              <Popconfirm
+                title="Sure to delete?"
+                onConfirm={() => deleteUser(user.id)}
+              >
+                <span style={{ color: '#ff4d4f', cursor: 'pointer' }}>
+                  Delete
+                </span>
+              </Popconfirm>
+            </span>
+          );
+        }
       }
     ];
 
@@ -80,22 +97,13 @@ class Users extends Component {
   }
 
   render() {
-    if (this.props.fetching) {
+    const { fetching } = this.props;
+
+    if (fetching) {
       return <LoadingSpinner />;
     }
     return this.renderUsers();
   }
 }
-
-Users.propTypes = {
-  users: PropTypes.object.isRequired,
-  fetching: PropTypes.bool.isRequired,
-  getAllUsers: PropTypes.func.isRequired
-};
-
-Users.defaultProps = {
-  users: {},
-  fetching: false
-};
 
 export default Users;

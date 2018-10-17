@@ -14,6 +14,7 @@ it('should render without crashing', () => {
     </MemoryRouter>
   );
 });
+
 it('should call login with correct values', () => {
   const props = {
     isLoggedIn: false,

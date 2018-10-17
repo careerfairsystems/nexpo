@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { denormalize } from 'normalizr';
-import Table from 'antd/lib/table';
-import Button from 'antd/lib/button';
-import Divider from 'antd/lib/divider';
+import { Table, Button, Divider } from 'antd';
 import Schema from '../../../Store/normalizr/schema';
 import InvisibleLink from '../../../Components/InvisibleLink';
 import LoadingSpinner from '../../../Components/LoadingSpinner';
@@ -29,7 +27,9 @@ const categoryColumns = [
     key: 'action',
     render: category => (
       <span>
-        <InvisibleLink to={`/admin/categories/${category.id}`}>Show</InvisibleLink>
+        <InvisibleLink to={`/admin/categories/${category.id}`}>
+          Show
+        </InvisibleLink>
         <Divider type="vertical" />
         <InvisibleLink to="#">Edit</InvisibleLink>
         <Divider type="vertical" />
@@ -77,6 +77,18 @@ const expandedRowRender = attributes => category => (
  * Responsible for rendering a list of categories
  */
 class Categories extends Component {
+  static propTypes = {
+    categories: PropTypes.object,
+    attributes: PropTypes.object,
+    fetching: PropTypes.bool.isRequired,
+    getAllCategories: PropTypes.func.isRequired
+  };
+
+  static defaultProps = {
+    categories: {},
+    attributes: {}
+  };
+
   componentWillMount() {
     const { getAllCategories } = this.props;
     getAllCategories();
@@ -105,27 +117,13 @@ class Categories extends Component {
   }
 
   render() {
-    if (this.props.fetching) {
+    const { fetching } = this.props;
+
+    if (fetching) {
       return <LoadingSpinner />;
     }
     return this.renderCategories();
   }
 }
-
-Categories.defaultProps = {
-  attributes: []
-};
-
-Categories.propTypes = {
-  categories: PropTypes.object.isRequired,
-  attributes: PropTypes.object,
-  fetching: PropTypes.bool.isRequired,
-  getAllCategories: PropTypes.func.isRequired
-};
-
-Categories.defaultProps = {
-  categories: {},
-  fetching: false
-};
 
 export default Categories;

@@ -15,43 +15,43 @@ export function forgotPasswordSuccess() {
   };
 }
 
-export function forgot_password({ email }) {
+export function forgotPassword({ email }) {
   return dispatch => {
     dispatch(forgotPasswordRequest());
-    return API.session.forgot_password({ email }).then(res => {
+    return API.session.forgotPassword({ email }).then(() => {
       dispatch(forgotPasswordSuccess());
     });
   };
 }
 
-export function verify_forgot_password_key_request() {
+export function verifyForgotPasswordKeyRequest() {
   return {
     type: actionTypes.VERIFY_FORGOT_PASSWORD_KEY_REQUEST
   };
 }
 
-export function verify_forgot_password_key_success() {
+export function verifyForgotPasswordKeySuccess() {
   return {
     type: actionTypes.VERIFY_FORGOT_PASSWORD_KEY_SUCCESS
   };
 }
 
-export function verify_forgot_password_key_failure() {
+export function verifyForgotPasswordKeyFailure() {
   return {
     type: actionTypes.VERIFY_FORGOT_PASSWORD_KEY_FAILURE
   };
 }
 
-export function verify_forgot_password_key({ key }) {
+export function verifyForgotPasswordKey({ key }) {
   return dispatch => {
-    dispatch(verify_forgot_password_key_request());
+    dispatch(verifyForgotPasswordKeyRequest());
     return API.session
-      .verify_forgot_password_key({ key })
-      .then(res => {
-        dispatch(verify_forgot_password_key_success());
+      .verifyForgotPasswordKey({ key })
+      .then(() => {
+        dispatch(verifyForgotPasswordKeySuccess());
       })
-      .catch(err => {
-        dispatch(verify_forgot_password_key_failure());
+      .catch(() => {
+        dispatch(verifyForgotPasswordKeyFailure());
       });
   };
 }
@@ -81,20 +81,20 @@ export function replaceForgottenPasswordFailure(
   };
 }
 
-export function replace_forgotten_password({
+export function replaceForgottenPassword({
   key,
   password,
-  password_confirmation
+  passwordConfirmation
 }) {
   return dispatch => {
     dispatch(replaceForgottenPasswordRequest());
     return API.session
-      .replace_forgotten_password({
+      .replaceForgottenPassword({
         key,
         password,
-        password_confirmation
+        passwordConfirmation
       })
-      .then(res => {
+      .then(() => {
         dispatch(replaceForgottenPasswordSuccess());
       })
       .catch((error: ApiError) => {
@@ -103,7 +103,7 @@ export function replace_forgotten_password({
         if (errors)
           throw new SubmissionError({
             password: errors.password,
-            passwordConfirmation: errors.password_confirmation
+            passwordConfirmation: errors.passwordConfirmation
           });
       });
   };

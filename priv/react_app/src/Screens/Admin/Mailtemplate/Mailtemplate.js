@@ -2,10 +2,23 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { isEmpty, isNil } from 'lodash/fp';
 import NotFound from '../../NotFound';
-import MailtemplateForm from '../../../Components/Forms/MailtemplateForm';
+import MailtemplateForm from '../../../Forms/MailtemplateForm';
 import LoadingSpinner from '../../../Components/LoadingSpinner';
 
 class Mailtemplate extends Component {
+  static propTypes = {
+    id: PropTypes.string,
+    mailtemplate: PropTypes.object.isRequired,
+    createMailtemplate: PropTypes.func.isRequired,
+    fetching: PropTypes.bool.isRequired,
+    getMailtemplate: PropTypes.func.isRequired,
+    updateMailtemplate: PropTypes.func.isRequired
+  };
+
+  static defaultProps = {
+    id: null
+  };
+
   componentWillMount() {
     const { id, getMailtemplate } = this.props;
     getMailtemplate(id);
@@ -45,17 +58,5 @@ class Mailtemplate extends Component {
     );
   }
 }
-
-Mailtemplate.defaultProps = {
-  id: null
-};
-Mailtemplate.propTypes = {
-  id: PropTypes.string,
-  mailtemplate: PropTypes.object.isRequired,
-  createMailtemplate: PropTypes.func.isRequired,
-  fetching: PropTypes.bool.isRequired,
-  getMailtemplate: PropTypes.func.isRequired,
-  updateMailtemplate: PropTypes.func.isRequired
-};
 
 export default Mailtemplate;

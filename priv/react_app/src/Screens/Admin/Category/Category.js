@@ -23,7 +23,7 @@ class Category extends Component {
 
     const { title } = category;
     return (
-      <div className="Category_Component">
+      <div className="category-component">
         <HtmlTitle title={title} />
 
         <div className="left-col">
