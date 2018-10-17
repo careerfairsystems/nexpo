@@ -9,7 +9,7 @@ const mapStateToProps = (state: State) => ({
 });
 
 const mapDispatchToProps = {
-  deleteProgramme: Actions.deadlines.destroyProgramme,
+  deleteProgramme: Actions.programmes.destroyProgramme,
   getAllProgrammes: Actions.programmes.getAllProgrammes
 };
 
