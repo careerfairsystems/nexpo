@@ -20,7 +20,7 @@ function InvisibleLink({ to, children }) {
 
 InvisibleLink.propTypes = {
   to: PropTypes.any.isRequired,
-  children: PropTypes.object.isRequired
+  children: PropTypes.oneOfType([PropTypes.object, PropTypes.string]).isRequired
 };
 
 export default InvisibleLink;

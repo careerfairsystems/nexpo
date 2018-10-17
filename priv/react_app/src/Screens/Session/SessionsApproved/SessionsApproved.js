@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { isNil, sortBy } from 'lodash/fp';
-import { Icon, List, Avatar, Popconfirm, Button } from 'antd';
+import { Icon, List, Avatar, Button } from 'antd';
 import NotFound from '../../NotFound';
 import LoadingSpinner from '../../../Components/LoadingSpinner';
 import HtmlTitle from '../../../Components/HtmlTitle';
+import { studentSessionTimeFormat } from '../../../Util/FormatHelper';
+
 import '../Session.css';
 
 class StudentSessions extends Component {
@@ -12,7 +14,6 @@ class StudentSessions extends Component {
     sessions: PropTypes.array,
     companies: PropTypes.object,
     getAllCompanies: PropTypes.func.isRequired,
-    destroyStudentSessionAppl: PropTypes.func.isRequired,
     fetching: PropTypes.bool.isRequired,
     updateStudentSessionAppl: PropTypes.func.isRequired
   };
@@ -37,69 +38,56 @@ class StudentSessions extends Component {
     confirmSession(id);
   };
 
-  renderSession = session => {
-    const { destroyStudentSessionAppl } = this.props;
-    return (
-      <List.Item
-        actions={[
-          !session.studentConfirmed && (
-            <Button
-              type="primary"
-              onClick={() => this.confirmSession(session.id)}
-            >
-              Confirm
-            </Button>
-          ),
-          <Popconfirm
-            title="Sure to delete?"
-            onConfirm={() => destroyStudentSessionAppl(session.id)}
+  renderSession = session => (
+    <List.Item
+      actions={[
+        !session.studentConfirmed && (
+          <Button
+            type="primary"
+            onClick={() => this.confirmSession(session.id)}
           >
-            <span style={{ color: '#ff4d4f', cursor: 'pointer' }}>Delete</span>
-          </Popconfirm>
-        ]}
-      >
-        <List.Item.Meta
-          title={this.getCompany(session).name}
-          description={this.renderTimeField(
-            session.start,
-            session.end,
-            session.studentConfirmed
-          )}
-          avatar={
-            <Avatar
-              src={this.getCompany(session).logoUrl}
-              size={128}
-              shape="square"
-              alt="Company Logotype"
-            />
-          }
-        />
-      </List.Item>
-    );
-  };
-
-  renderTimeField = (start, end, studentConfirmed) => (
-    <div>
-      {`Start: ${start}`}
-      <br />
-      {`\nEnd: ${end}`}
-      {studentConfirmed && (
+            Confirm
+          </Button>
+        )
+      ]}
+    >
+      <List.Item.Meta
+        title={this.getCompany(session).name}
+        description={this.renderTimeField(
+          session.start,
+          session.end,
+          session.studentConfirmed
+        )}
+        avatar={
+          <Avatar
+            src={this.getCompany(session).logoUrl}
+            size={128}
+            shape="square"
+            alt="Company Logotype"
+          />
+        }
+      />
+      {session.studentConfirmed && (
         <Icon
           style={{
             color: '#4caf50',
             float: 'right',
             fontSize: 50,
             marginTop: 'auto',
-            marginBottom: 'auto'
+            marginBottom: 'auto',
+            cursor: 'default'
           }}
           type="check-circle"
           theme="filled"
-        >
-          Confirmed
-        </Icon>
+        />
       )}
-    </div>
+    </List.Item>
   );
+
+  renderTimeField = (start, end) =>
+    `Start: ${studentSessionTimeFormat(start)}\nEnd: ${studentSessionTimeFormat(
+      end
+    )}`;
 
   render() {
     const { sessions, fetching } = this.props;
