@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { isEmpty, isNil, map } from 'lodash/fp';
+import { isEmpty, isNil, map, join } from 'lodash/fp';
 import { Button } from 'antd';
 import HtmlTitle from '../../../../Components/HtmlTitle';
 import LoadingSpinner from '../../../../Components/LoadingSpinner';
@@ -50,6 +50,27 @@ class UserShow extends Component {
     return isEmpty(roles) ? 'None' : map('type', roles).join(', ');
   };
 
+  renderStudent = () => {
+    const {
+      user: { student }
+    } = this.props;
+
+    return (
+      <>
+        <p>Resume Sv: {student.resumeSvUrl || 'None'}</p>
+        <p>Resume En: {student.resumeEnUrl || 'None'}</p>
+        <p>
+          Programme: {(student.programme && student.programme.name) || 'None'}
+        </p>
+        <p>Student Session: {join(', ', student.studentSessions) || 'None'}</p>
+        <p>
+          Student Session Applications:
+          {join(', ', student.studentSessionApplications) || 'None'}
+        </p>
+      </>
+    );
+  };
+
   render() {
     const { user, fetching } = this.props;
 
@@ -65,6 +86,7 @@ class UserShow extends Component {
         <p>Phone number: {user.phoneNumber}</p>
         <p>Roles: {this.roles()}</p>
         <p>Food Preferences: {user.foodPreferences}</p>
+        {user.student && this.renderStudent()}
         <InvisibleLink to={`/admin/users/${user.id}/edit`}>
           <Button onClick={() => null} type="primary">
             Edit

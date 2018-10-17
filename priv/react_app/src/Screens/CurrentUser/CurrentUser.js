@@ -11,14 +11,9 @@ class CurrentUser extends Component {
   static propTypes = {
     currentUser: PropTypes.shape({
       email: PropTypes.string,
-      student: PropTypes.number
-    }).isRequired,
-    currentStudent: PropTypes.shape({
-      resumeEnUrl: PropTypes.string,
-      resumeSvUrl: PropTypes.string
-    }).isRequired,
+      student: PropTypes.object
+    }),
     fetching: PropTypes.bool.isRequired,
-    getCurrentUser: PropTypes.func.isRequired,
     updateCurrentUser: PropTypes.func.isRequired,
     updateCurrentStudent: PropTypes.func.isRequired,
     getAllProgrammes: PropTypes.func.isRequired,
@@ -27,9 +22,12 @@ class CurrentUser extends Component {
     resetForm: PropTypes.func.isRequired
   };
 
+  static defaultProps = {
+    currentUser: {}
+  };
+
   componentWillMount() {
-    const { getCurrentUser, getAllProgrammes } = this.props;
-    getCurrentUser();
+    const { getAllProgrammes } = this.props;
     getAllProgrammes();
   }
 
@@ -65,7 +63,7 @@ class CurrentUser extends Component {
   };
 
   render() {
-    const { currentUser, currentStudent, fetching } = this.props;
+    const { currentUser, fetching } = this.props;
     if (fetching) {
       return <LoadingSpinner />;
     }
@@ -92,14 +90,14 @@ class CurrentUser extends Component {
           onSubmit={this.updateUser}
           initialValues={currentUser}
         />
-        {!isEmpty(currentStudent) && (
+        {!isEmpty(currentUser.student) && (
           <>
             <br />
             <h2>Student Information</h2>
             <StudentForm
               onSubmit={this.updateStudent}
               onSubmitSuccess={this.resetStudentForm}
-              initialValues={currentStudent || {}}
+              initialValues={currentUser.student || {}}
             />
           </>
         )}

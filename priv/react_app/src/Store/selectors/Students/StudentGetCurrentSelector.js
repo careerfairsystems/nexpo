@@ -1,9 +1,9 @@
 import users from '../Users';
 
 export const getCurrentStudent = state => {
-  const currentUser = users.getCurrentUser(state);
+  const currentUser = users.getCurrentUser(state) || {};
 
-  return state.entities.students[currentUser.student] || {};
+  return currentUser.student;
 };
 
 export default { getCurrentStudent };

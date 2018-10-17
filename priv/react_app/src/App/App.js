@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Route, Switch, Link, Redirect } from 'react-router-dom';
+import { Route, Switch, Link } from 'react-router-dom';
 import { Layout, Menu, Breadcrumb, Icon } from 'antd';
 import { startCase } from 'lodash/fp';
 
@@ -69,6 +69,8 @@ const privateRoutes = [
   { path: '/admin/roles/:id', component: RoleShow },
   { path: '/admin/roles/:id/edit', component: RoleEdit },
   { path: '/admin/statistics', component: Statistics },
+  { path: '/user', component: CurrentUser },
+  { path: '/logout', component: Logout },
   { path: '/session', component: SessionHome },
   { path: '/session/application', component: SessionApplication },
   { path: '/session/applications', component: SessionApplications },
@@ -85,12 +87,9 @@ const routes = (
     {privateRoutes.map(props => (
       <PrivateRoute key={props.path} exact {...props} />
     ))}
-    <Route path="/company" render={() => <Redirect to="/company/show" />} />
     <Route path="/login" component={Login} />
-    <Route path="/logout" component={Logout} />
     <Route path="/signup" component={Signup} />
     <Route path="/forgot-password" component={ForgotPassword} />
-    <Route path="/user" component={CurrentUser} />
     <Route component={NotFound} />
   </Switch>
 );
@@ -99,6 +98,17 @@ const routes = (
  * The base of the application. Defines the basic layout
  */
 class App extends Component {
+  static propTypes = {
+    isLoggedIn: PropTypes.bool.isRequired,
+    currentUser: PropTypes.object,
+    pathname: PropTypes.string.isRequired,
+    redirect: PropTypes.func.isRequired
+  };
+
+  static defaultProps = {
+    currentUser: {}
+  };
+
   loggedInMenuItem = () => {
     const { currentUser } = this.props;
     const { email, firstName, lastName } = currentUser;
@@ -253,12 +263,5 @@ class App extends Component {
     );
   }
 }
-
-App.propTypes = {
-  isLoggedIn: PropTypes.bool.isRequired,
-  currentUser: PropTypes.object.isRequired,
-  pathname: PropTypes.string.isRequired,
-  redirect: PropTypes.func.isRequired
-};
 
 export default App;

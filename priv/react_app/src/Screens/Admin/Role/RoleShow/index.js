@@ -7,15 +7,16 @@ import RoleShow from './RoleShow';
 const mapStateToProps = (state, props) => {
   const { fetching } = state.api.roles;
   const roleId = props.match.params.id;
-  const role = state.entities.roles[roleId] || {};
 
-  const { users } = denormalize(
-    { users: role.users },
-    Schema.roleSchema(),
+  const {
+    roles: [role]
+  } = denormalize(
+    { roles: [roleId] },
+    { roles: Schema.rolesSchema() },
     state.entities
   );
 
-  return { id: roleId, role: { ...role, users }, fetching };
+  return { id: roleId, role, fetching };
 };
 
 const mapDispatchToProps = {
