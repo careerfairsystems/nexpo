@@ -6,7 +6,8 @@ import DevelopmentLogin from './DevelopmentLogin';
 it('should render without crashing', () => {
   const props = {
     isLoggedIn: false,
-    login: jest.fn()
+    login: jest.fn(),
+    location: { state: {} }
   };
   // MemoryRouter should give location? But gives prop-type error `location`
   shallow(

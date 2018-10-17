@@ -29,6 +29,7 @@ defmodule Nexpo.CompanyControllerTest do
       "entries" => [],
       "users" => [],
       "student_session_applications" => [],
+      "student_sessions" => [],
       "student_session_time_slots" => []}
   end
 
@@ -77,10 +78,19 @@ defmodule Nexpo.CompanyControllerTest do
 
   @tag :logged_in
   test "create company with logo_url and upload image", %{conn: conn}do
-    logo_url = %Plug.Upload{path: "test/assets/Placeholder.png", filename: "Placeholder.png"}
-    conn = post conn, company_path(conn, :create), company: Map.put(@valid_attrs, :logo_url, logo_url)
+    logo_url = %Plug.Upload{path: "test/assets/placeholder.png", filename: "placeholder.png"}
+    attrs = %{@valid_attrs | logo_url: logo_url}
+    conn = post conn, company_path(conn, :create), company: attrs
     assert json_response(conn, 201)["data"]["id"]
     assert Repo.get_by(Company, %{name: @valid_attrs.name})
+  end
+
+  @tag :logged_in
+  test "create company with invalid file format gives error", %{conn: conn}do
+    logo_url = %Plug.Upload{path: "test/assets/placeholder.pdf", filename: "placeholder.pdf"}
+    attrs = %{@valid_attrs | logo_url: logo_url}
+    conn = post conn, company_path(conn, :create), company: attrs
+    assert json_response(conn, 422)["errors"] != %{}
   end
 
 end

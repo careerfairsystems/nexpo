@@ -120,3 +120,10 @@ alias Nexpo.Deadline
 Repo.insert!(%Deadline{name: "Host Applications", start: ~N[2000-01-01 23:00:00], end: ~N[2040-01-01 23:00:00]})
 Repo.insert!(%Deadline{name: "Company Registration", start: ~N[2040-01-01 08:00:00], end: ~N[2060-01-01 23:59:00]})
 Repo.insert!(%Deadline{name: "Gasque Reservations", start: ~N[2010-11-14 08:00:07], end: ~N[2040-01-01 10:00:00]})
+
+# Create som student sessions
+alias Nexpo.StudentSession
+Repo.insert!(%StudentSession{start: ~N[2000-01-01 23:00:00], end: ~N[2040-01-01 23:00:00], company_id: 1, student_id: 2})
+Repo.insert!(%StudentSession{start: ~N[2000-01-01 23:00:00], end: ~N[2040-01-01 23:00:00], company_id: 2, student_id: 2})
+Repo.insert!(%StudentSession{start: ~N[2000-01-01 23:00:00], end: ~N[2040-01-01 23:00:00], company_id: 4, student_id: 1})
+Repo.insert!(%StudentSession{start: ~N[2000-01-01 23:00:00], end: ~N[2040-01-01 23:00:00], company_id: 3, student_id: 1})
