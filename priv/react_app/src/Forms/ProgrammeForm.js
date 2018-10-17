@@ -15,12 +15,7 @@ const ProgrammeForm = ({ handleSubmit, disabled, submitting }) => (
       component={TextInput}
       disabled={disabled}
     />
-    <Field
-      name="code"
-      label="Letter"
-      component={TextInput}
-      disabled={disabled}
-    />
+    <Field name="code" label="Code" component={TextInput} disabled={disabled} />
     <Button disabled={disabled || submitting} htmlType="submit">
       Submit
     </Button>
