@@ -10,7 +10,8 @@ describe('companies', () => {
   beforeEach(() => {
     props = {
       fetching: false,
-      getAllCompanies: jest.fn()
+      getAllCompanies: jest.fn(),
+      deleteCompany: jest.fn()
     };
   });
 

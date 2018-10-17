@@ -11,11 +11,24 @@ import '../Session.css';
 
 class StudentSessions extends Component {
   static propTypes = {
-    sessions: PropTypes.array,
-    companies: PropTypes.object,
+    sessions: PropTypes.arrayOf(
+      PropTypes.shape({
+        studentId: PropTypes.number,
+        companyId: PropTypes.number,
+        studentConfirmed: PropTypes.bool,
+        start: PropTypes.string,
+        end: PropTypes.string
+      })
+    ),
+    companies: PropTypes.shape({
+      id: PropTypes.number,
+      name: PropTypes.string,
+      description: PropTypes.string,
+      website: PropTypes.string
+    }),
+    confirmSession: PropTypes.func.isRequired,
     getAllCompanies: PropTypes.func.isRequired,
-    fetching: PropTypes.bool.isRequired,
-    updateStudentSessionAppl: PropTypes.func.isRequired
+    fetching: PropTypes.bool.isRequired
   };
 
   static defaultProps = {
@@ -67,20 +80,7 @@ class StudentSessions extends Component {
           />
         }
       />
-      {session.studentConfirmed && (
-        <Icon
-          style={{
-            color: '#4caf50',
-            float: 'right',
-            fontSize: 50,
-            marginTop: 'auto',
-            marginBottom: 'auto',
-            cursor: 'default'
-          }}
-          type="check-circle"
-          theme="filled"
-        />
-      )}
+      {session.studentConfirmed && <Icon type="check-circle" theme="filled" />}
     </List.Item>
   );
 
@@ -101,7 +101,7 @@ class StudentSessions extends Component {
     }
 
     return (
-      <div className="session-applications">
+      <div className="student-sessions">
         <HtmlTitle title="Student Session" />
         <h1>Student Sessions</h1>
         <List
