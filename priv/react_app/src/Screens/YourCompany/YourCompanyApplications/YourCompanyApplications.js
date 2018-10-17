@@ -22,7 +22,6 @@ class YourCompanyApplications extends Component {
 
     if (isEmpty(currentCompany) || isNil(currentCompany)) return <NotFound />;
 
-    // const { name } = currentCompany;
     return (
       <div className="company-show-view">
         <HtmlTitle title='Applications' />
