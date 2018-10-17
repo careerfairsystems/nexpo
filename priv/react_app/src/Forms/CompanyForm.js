@@ -12,7 +12,7 @@ import GenerateTimeSlotForm from './GenerateTimeSlotForm';
 const TextInput = makeField(Input);
 const TextArea = makeField(Input.TextArea);
 
-const CompanyForm = ({ handleSubmit, onCancel, submitting }) => (
+const CompanyForm = ({ handleSubmit, onCancel, submitting, formState }) => (
   <Form onSubmit={handleSubmit}>
     <Field
       name="name"
@@ -42,12 +42,16 @@ const CompanyForm = ({ handleSubmit, onCancel, submitting }) => (
       component={UploadButton}
     />
     <h3>Student Session Time Slots</h3>
-    <FieldArray
+    {/* <FieldArray
       name="studentSessionTimeSlotsGenerator"
       component={GenerateTimeSlotForm}
-    />
+    /> */}
 
-    <FieldArray name="studentSessionTimeSlots" component={DynamicTimeSlots} />
+    <FieldArray
+      name="studentSessionTimeSlots"
+      component={DynamicTimeSlots}
+      fieldValues={formState.values}
+    />
     {onCancel && <Button onClick={onCancel}>Cancel</Button>}
     <Button disabled={submitting} htmlType="submit" type="primary">
       Submit
@@ -68,14 +72,13 @@ CompanyForm.propTypes = {
 const mapStateToProps = (state, props) => {
   const { initialValues = {} } = props;
   const { logoUrl: currentLogoUrl } = initialValues;
-
   let logoUrl = null;
   if (!isNil(currentLogoUrl))
     logoUrl = { uid: '-1', name: 'Logotype', url: currentLogoUrl };
 
   return {
     initialValues: { ...initialValues, logoUrl },
-    formState: state.form.CompanyForm
+    formState: state.form.company || {}
   };
 };
 

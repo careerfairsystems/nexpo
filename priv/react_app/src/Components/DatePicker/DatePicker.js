@@ -9,7 +9,7 @@ const MyDatePicker = ({ value, onChange, ...rest }) => (
   <DatePicker
     value={moment(value).isValid() ? moment.utc(value) : null}
     showTime
-    format="YYYY-MM-DD"
+    format="YYYY-MM-DD HH:mm"
     onChange={date => (date ? onChange(date.toISOString()) : onChange(null))}
     {...rest}
   />
