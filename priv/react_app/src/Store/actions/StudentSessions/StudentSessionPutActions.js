@@ -9,7 +9,7 @@ export function updateStudentSessionIsLoading() {
 }
 
 export function updateStudentSessionSuccess(studentSession) {
-  message.success('Your Application was successfully updated.');
+  message.success('Your Session was successfully confirmed.');
   return {
     type: actionTypes.PUT_STUDENT_SESSION_SUCCESS,
     studentSession
@@ -20,7 +20,7 @@ export type UpdateStudentSessionFailureAction = {
   type: string
 };
 export function updateStudentSessionFailure(): UpdateStudentSessionFailureAction {
-  message.warning('Your Application could not be saved.');
+  message.warning('Something went wrong, please try again later.');
   return {
     type: actionTypes.PUT_STUDENT_SESSION_FAILURE
   };
