@@ -60,9 +60,13 @@ export const toFormData = (obj, form, namespace) => {
 export const toDayFormat = time =>
   moment.utc(time).format('dddd D MMMM YYYY HH:mm');
 
+export const StudentSessionTimeFormat = time =>
+  moment.utc(time).format('dddd (D MMMM YYYY) HH:mm');
+
 export default {
   toDayFormat,
   camelCaseKeys,
   snakeCaseKeys,
-  toFormData
+  toFormData,
+  StudentSessionTimeFormat
 };

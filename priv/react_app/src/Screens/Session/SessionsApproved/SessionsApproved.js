@@ -5,6 +5,11 @@ import { List, Avatar, Popconfirm, Button } from 'antd';
 import NotFound from '../../NotFound';
 import LoadingSpinner from '../../../Components/LoadingSpinner';
 import HtmlTitle from '../../../Components/HtmlTitle';
+import {
+  toDayFormat,
+  StudentSessionTimeFormat
+} from '../../../Util/FormatHelper';
+
 import '../Session.css';
 
 class StudentSessions extends Component {
@@ -66,7 +71,10 @@ class StudentSessions extends Component {
     );
   };
 
-  renderTimeField = (start, end) => `Start: ${start}\nEnd: ${end}`;
+  renderTimeField = (start, end) =>
+    `Start: ${StudentSessionTimeFormat(start)}\nEnd: ${StudentSessionTimeFormat(
+      end
+    )}`;
 
   render() {
     const { sessions, fetching } = this.props;
