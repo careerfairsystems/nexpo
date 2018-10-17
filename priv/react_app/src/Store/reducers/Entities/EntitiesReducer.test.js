@@ -2,6 +2,7 @@
 *   This file tests the reducers handling incoming actions.
 *   See http://redux.js.org/docs/recipes/WritingTests.html for writing action and reducer tests.
 */
+import {  omit } from 'lodash/fp';
 import { Actions } from '../..';
 import testData from './entitiesTestData';
 import { EntitiesReducer } from './EntitiesReducer';
@@ -18,6 +19,7 @@ describe('Entities reducer', () => {
       roles: {},
       users: {},
       studentSessionApplications: {},
+      studentSessions: {},
       statistics: {},
       students: {}
     };
@@ -279,8 +281,51 @@ describe('Entities reducer', () => {
     const action = Actions.statistics.getAllStatisticsSuccess(statistics);
     const state = EntitiesReducer(testData.statistics, action);
 
-    expect(state).toMatchObject(
-      { statistics: { nbrApplicatons: 10}
+    expect(state).toMatchObject({
+      statistics: { nbrApplicatons: 10 }
+    });
+  });
+
+  it('should handle DELETE_COMPANY_SUCCESS', () => {
+    const id = 1;
+    const action = Actions.companies.destroyCompanySuccess(id);
+    const state = EntitiesReducer(testData.companies, action);
+    expect(state).toMatchObject(omit(id, testData.companies));
+  });
+
+  it('should handle DELETE_ROLES_SUCCESS', () => {
+    const id = 1;
+    const action = Actions.roles.destroyRoleSuccess(id);
+    const state = EntitiesReducer(testData.roles, action);
+    expect(state).toMatchObject(omit(id, testData.roles));
+  });
+
+  it('should handle DELETE_USER_SUCCESS', () => {
+    const id = 1;
+    const action = Actions.users.destroyUserSuccess(id);
+    const state = EntitiesReducer(testData.users, action);
+    expect(state).toMatchObject(omit(id, testData.users));
+  });
+
+  it('should handle DELETE_STUDENT_SESSION_APPL_SUCCESS', () => {
+    const id = 1;
+    const action = Actions.studentSessions.destroyStudentSessionApplSuccess(id);
+    const state = EntitiesReducer(testData.studentSessionApplications, action);
+    expect(state).toMatchObject(omit(id, testData.studentSessionApplications));
+  });
+
+  it('should handle PUT_STUDENT_SESSION_SUCCESS', () => {
+    const id = 1;
+    const sessionApplication = {
+      ...testData.studentSessions[id],
+      studentConfirmed: true
+    };
+    const action = Actions.studentSessions.updateStudentSessionSuccess(sessionApplication);
+    const state = EntitiesReducer(testData.studentSessions, action);
+    expect(state).toMatchObject({
+      studentSessions: {
+        '1': sessionApplication
+      }
     });
   });
 });

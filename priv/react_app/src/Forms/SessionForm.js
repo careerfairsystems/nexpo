@@ -28,6 +28,7 @@ const StudentSessionForm = ({ handleSubmit, companies, submitting }) => (
       required
       name="companyId"
       showSearch
+      notFoundContent="You have applied to all available companies"
       optionFilterProp="children"
       validate={requiredCompany}
       component={InputSelect}

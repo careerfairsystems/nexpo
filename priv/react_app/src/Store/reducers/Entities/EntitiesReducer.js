@@ -17,6 +17,7 @@ export type EntitiesState = {
   roles: {},
   users: {},
   statistics: {},
+  studentSessions: {},
   studentSessionApplications: {},
   students: {}
 };
@@ -31,6 +32,7 @@ const initialState = {
   roles: {},
   users: {},
   statistics: {},
+  studentSessions: {},
   studentSessionApplications: {},
   students: {}
 };
@@ -94,6 +96,13 @@ export const EntitiesReducer = (
       normalized = normalize(
         action.sessionApplication,
         Schema.sessionApplicationSchema()
+      );
+      return mergeWith(handleMerge, state, camelCaseKeys(normalized.entities));
+    }
+    case actionTypes.PUT_STUDENT_SESSION_SUCCESS: {
+      normalized = normalize(
+        action.studentSession,
+        Schema.studentSessionSchema()
       );
       return mergeWith(handleMerge, state, camelCaseKeys(normalized.entities));
     }

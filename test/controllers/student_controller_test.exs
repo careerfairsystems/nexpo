@@ -25,6 +25,7 @@ defmodule Nexpo.StudentControllerTest do
       "year" => student.year,
       "resume_en_url" => student.resume_en_url,
       "resume_sv_url" => student.resume_sv_url,
+      "student_sessions" => [],
       "student_session_applications" => []}
   end
 
@@ -73,5 +74,27 @@ defmodule Nexpo.StudentControllerTest do
     conn = delete conn, student_path(conn, :delete, student)
     assert response(conn, 204)
     refute Repo.get(Student, student.id)
+  end
+
+  @tag :logged_in
+  test "update student with resume_sv_url and resume_sv_url", %{conn: conn}do
+    resume_sv_url = %Plug.Upload{path: "test/assets/placeholder.pdf", filename: "placeholder.pdf"}
+    resume_en_url = %Plug.Upload{path: "test/assets/placeholder.pdf", filename: "placeholder.pdf"}
+    user = Repo.insert! %User{email: "dev@it"}
+    student = Repo.insert! %Student{}
+    attrs = %{@valid_attrs | user_id: user.id , resume_sv_url: resume_sv_url , resume_en_url: resume_en_url }
+    conn = put conn, student_path(conn, :update, student), student: attrs
+    assert json_response(conn, 200)["data"]["id"]
+    assert Repo.get_by(Student, %{user_id: user.id})
+  end
+
+  @tag :logged_in
+  test "update student with cv that is not pdf gives error", %{conn: conn}do
+    resume_sv_url = %Plug.Upload{path: "test/assets/placeholder.png", filename: "placeholder.png"}
+    user = Repo.insert! %User{email: "dev@it"}
+    student = Repo.insert! %Student{}
+    attrs = %{@valid_attrs | user_id: user.id , resume_sv_url: resume_sv_url }
+    conn = put conn, student_path(conn, :update, student), student: attrs
+    assert json_response(conn, 422)["errors"] != %{}
   end
 end
