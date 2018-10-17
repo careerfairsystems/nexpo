@@ -47,13 +47,7 @@ class StudentSessions extends Component {
             onClick={() => this.confirmSession(session.id)}
           >
             Confirm
-          </Button>,
-          <Popconfirm
-            title="Sure to delete?"
-            onConfirm={() => destroyStudentSessionAppl(session.id)}
-          >
-            <span style={{ color: '#ff4d4f', cursor: 'pointer' }}>Delete</span>
-          </Popconfirm>
+          </Button>
         ]}
       >
         <List.Item.Meta
