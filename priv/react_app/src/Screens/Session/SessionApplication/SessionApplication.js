@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { isEmpty, omit } from 'lodash/fp';
+import { isEmpty } from 'lodash/fp';
 import NotFound from '../../NotFound';
 import LoadingSpinner from '../../../Components/LoadingSpinner';
 import HtmlTitle from '../../../Components/HtmlTitle';
@@ -70,8 +70,9 @@ class SessionApplication extends Component {
           onSubmit={this.createStudentSessionAppl}
           companies={companies}
         />
-
-        <h2 style={{ marginTop: 24 }}>Make sure your CV is uploaded!</h2>
+        <br />
+        <br />
+        <h2>Make sure your Student Information is up to date!</h2>
         <h4>
           You only need to upload your CV(s) once. All the companies you apply
           for will receive the same CV(s) but different motivations.
@@ -79,7 +80,7 @@ class SessionApplication extends Component {
         <StudentForm
           onSubmit={this.updateStudent}
           onSubmitSuccess={this.resetStudentForm}
-          initialValues={omit('year', currentStudent) || {}}
+          initialValues={currentStudent || {}}
         />
       </div>
     );

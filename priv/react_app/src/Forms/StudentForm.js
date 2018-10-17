@@ -3,11 +3,22 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import { isNil } from 'lodash/fp';
-import { Button, Form } from 'antd';
+import { Button, Form, Input } from 'antd';
+
+import makeField, { required } from './helper';
 import UploadButton from './UploadButton';
+
+const TextInput = makeField(Input);
 
 const StudentForm = ({ handleSubmit, submitting }) => (
   <Form onSubmit={handleSubmit}>
+    <Field
+      name="year"
+      label="Starting Year"
+      component={TextInput}
+      validate={required}
+      required
+    />
     <Field
       name="resumeSvUrl"
       label="Swedish CV"
@@ -22,7 +33,7 @@ const StudentForm = ({ handleSubmit, submitting }) => (
     />
 
     <Button disabled={submitting} htmlType="submit">
-      Save CV(s)
+      Submit Student Info
     </Button>
   </Form>
 );

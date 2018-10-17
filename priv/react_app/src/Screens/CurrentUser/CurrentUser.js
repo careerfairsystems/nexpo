@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { isEmpty, omit } from 'lodash/fp';
+import { isEmpty } from 'lodash/fp';
 import { Button, Modal } from 'antd';
 import LoadingSpinner from '../../Components/LoadingSpinner';
 import NotFound from '../NotFound';
@@ -68,17 +68,21 @@ class CurrentUser extends Component {
             Delete Account
           </Button>
         </h1>
-        <h2>Email: {email}</h2>
+        <p>Email: {email}</p>
         <CurrentUserForm
           onSubmit={this.updateUser}
           initialValues={currentUser}
         />
         {!isEmpty(currentStudent) && (
-          <StudentForm
-            onSubmit={this.updateStudent}
-            onSubmitSuccess={this.resetStudentForm}
-            initialValues={omit('year', currentStudent) || {}}
-          />
+          <>
+            <br />
+            <h2>Student Information</h2>
+            <StudentForm
+              onSubmit={this.updateStudent}
+              onSubmitSuccess={this.resetStudentForm}
+              initialValues={currentStudent || {}}
+            />
+          </>
         )}
       </div>
     );
