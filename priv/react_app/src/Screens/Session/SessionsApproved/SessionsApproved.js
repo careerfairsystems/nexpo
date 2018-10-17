@@ -5,7 +5,7 @@ import { Icon, List, Avatar, Button } from 'antd';
 import NotFound from '../../NotFound';
 import LoadingSpinner from '../../../Components/LoadingSpinner';
 import HtmlTitle from '../../../Components/HtmlTitle';
-import { studentSessionTimeFormat } from '../../../Util/FormatHelper';
+import { toSessionTimeFormat } from '../../../Util/FormatHelper';
 
 import '../Session.css';
 
@@ -85,9 +85,7 @@ class StudentSessions extends Component {
   );
 
   renderTimeField = (start, end) =>
-    `Start: ${studentSessionTimeFormat(start)}\nEnd: ${studentSessionTimeFormat(
-      end
-    )}`;
+    `Start: ${toSessionTimeFormat(start)}\nEnd: ${toSessionTimeFormat(end)}`;
 
   render() {
     const { sessions, fetching } = this.props;
@@ -114,7 +112,7 @@ class StudentSessions extends Component {
           bordered
           dataSource={sortBy(appl => this.getCompany(appl).name, sessions)}
           renderItem={this.renderSession}
-          locale={{ emptyText: 'No Applications' }}
+          locale={{ emptyText: 'No Confirmed Applications' }}
         />
       </div>
     );
