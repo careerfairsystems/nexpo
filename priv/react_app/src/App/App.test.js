@@ -80,6 +80,14 @@ const state = {
         student: 1
       }
     },
+    studentSessions: {
+      '1': {
+        id: 1,
+        company: 2,
+        studentConfirmed: false,
+        student: 1
+      }
+    },
     roles: {
       '1': { id: 1, type: 'admin', permissions: ['read_all'], users: [1] },
       '2': { id: 2, type: 'zzz', permissions: ['read_users'], users: [1] }
@@ -162,6 +170,7 @@ it('renders routes without crashing', () => {
   found(mount(route('/session/application')));
   found(mount(route('/session/applications')));
   found(mount(route('/session/companies')));
+  found(mount(route('/session/approved')));
   found(mount(route('/company')));
   found(mount(route('/company/applications')));
   found(mount(route('/company/profile')));

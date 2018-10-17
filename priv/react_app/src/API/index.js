@@ -1,4 +1,5 @@
 import categories from './categories';
+import programmes from './programmes';
 import companies from './companies';
 import deadlines from './deadlines';
 import mailtemplates from './mailtemplates';
@@ -11,6 +12,7 @@ import users from './users';
 
 export default {
   categories,
+  programmes,
   companies,
   deadlines,
   mailtemplates,

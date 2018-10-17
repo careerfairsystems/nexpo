@@ -11,6 +11,7 @@ import ApiReducerMailtemplates from './ApiReducerMailtemplates';
 import ApiReducerDeadlines from './ApiReducerDeadlines';
 import ApiReducerRoles from './ApiReducerRoles';
 import ApiReducerUsers from './ApiReducerUsers';
+import ApiReducerProgrammes from './ApiReducerProgrammes';
 import ApiReducerForgotPassword from './ApiReducerForgotPassword';
 import ApiReducerLogin from './ApiReducerLogin';
 import ApiReducerVerifyForgotPassword from './ApiReducerVerifyForgotPassword';
@@ -28,6 +29,7 @@ export type ApiState = {
   deadlines: ApiStatus,
   roles: ApiStatus,
   users: ApiStatus,
+  programmes: ApiStatus,
   currentUser: ApiStatus,
   currentCompany: ApiStatus,
   forgotPassword: ApiStatus,
@@ -74,6 +76,7 @@ export const ApiReducer: ApiState = combineReducers({
   mailtemplates: ApiReducerMailtemplates,
   roles: ApiReducerRoles,
   users: ApiReducerUsers,
+  programmes: ApiReducerProgrammes,
   forgotPassword: ApiReducerForgotPassword,
   login: ApiReducerLogin,
   verifyForgotPasswordKey: ApiReducerVerifyForgotPassword,

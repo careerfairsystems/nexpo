@@ -3,7 +3,8 @@ import { shallow } from 'enzyme';
 import MailLink from './MailLink';
 
 it('should render without crashing', () => {
-  shallow(<MailLink to="tester@test.test" />);
+  const mail = 'Mail-link';
+  shallow(<MailLink to="tester@test.test">{mail}</MailLink>);
 });
 
 it('renders a clickable mail link with correct name', () => {

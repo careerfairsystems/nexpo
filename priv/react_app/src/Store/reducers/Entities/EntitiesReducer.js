@@ -17,6 +17,7 @@ export type EntitiesState = {
   roles: {},
   users: {},
   statistics: {},
+  studentSessions: {},
   studentSessionApplications: {},
   students: {}
 };
@@ -31,6 +32,7 @@ const initialState = {
   roles: {},
   users: {},
   statistics: {},
+  studentSessions: {},
   studentSessionApplications: {},
   students: {}
 };
@@ -97,6 +99,13 @@ export const EntitiesReducer = (
       );
       return mergeWith(handleMerge, state, camelCaseKeys(normalized.entities));
     }
+    case actionTypes.PUT_STUDENT_SESSION_SUCCESS: {
+      normalized = normalize(
+        action.studentSession,
+        Schema.studentSessionSchema()
+      );
+      return mergeWith(handleMerge, state, camelCaseKeys(normalized.entities));
+    }
     case actionTypes.DELETE_STUDENT_SESSION_APPL_SUCCESS: {
       const appls = state.studentSessionApplications;
       return { ...state, studentSessionApplications: omit(action.id, appls) };
@@ -113,6 +122,19 @@ export const EntitiesReducer = (
     }
     case actionTypes.DELETE_CATEGORY_SUCCESS: {
       return { ...state, categories: omit(action.id, state.categories) };
+    }
+    case actionTypes.FETCH_PROGRAMMES_SUCCESS: {
+      normalized = normalize(action.programmes, Schema.programmesSchema());
+      return mergeWith(handleMerge, state, camelCaseKeys(normalized.entities));
+    }
+    case actionTypes.FETCH_PROGRAMME_SUCCESS:
+    case actionTypes.POST_PROGRAMME_SUCCESS:
+    case actionTypes.PUT_PROGRAMME_SUCCESS: {
+      normalized = normalize(action.programme, Schema.programmeSchema());
+      return mergeWith(handleMerge, state, camelCaseKeys(normalized.entities));
+    }
+    case actionTypes.DELETE_PROGRAMME_SUCCESS: {
+      return { ...state, programmes: omit(action.id, state.programmes) };
     }
     case actionTypes.FETCH_MAILTEMPLATES_SUCCESS: {
       normalized = normalize(

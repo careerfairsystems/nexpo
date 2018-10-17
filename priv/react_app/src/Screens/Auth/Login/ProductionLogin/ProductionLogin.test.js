@@ -6,7 +6,8 @@ import ProductionLogin from './ProductionLogin';
 it('should render without crashing', () => {
   const props = {
     isLoggedIn: false,
-    login: jest.fn()
+    login: jest.fn(),
+    location: { state: {} }
   };
   shallow(
     <MemoryRouter>

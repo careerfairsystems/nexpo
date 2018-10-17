@@ -1,4 +1,5 @@
 /**
+/**
  * Defines a reducer updates the state based on the action created after a call to the server.
  */
 
