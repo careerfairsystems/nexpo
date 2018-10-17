@@ -21,9 +21,9 @@ describe('userform should function correctly', () => {
         roles: [],
         student: 1
       },
-
       fetching: false,
       getCurrentUser: jest.fn(),
+      getAllProgrammes: jest.fn(),
       destroyCurrentUser: jest.fn(),
       logout: jest.fn(),
       resetForm: jest.fn(),

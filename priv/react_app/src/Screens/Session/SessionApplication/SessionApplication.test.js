@@ -13,6 +13,7 @@ describe('SessionApplication', () => {
       currentUser: {},
       currentStudent: {},
       getAllCompanies: jest.fn(),
+      getAllProgrammes: jest.fn(),
       getCurrentUser: jest.fn(),
       resetForm: jest.fn(),
       updateCurrentStudent: jest.fn()

@@ -10,7 +10,7 @@ import '../Session.css';
 
 class SessionApplication extends Component {
   static propTypes = {
-    companies: PropTypes.object,
+    availableCompanies: PropTypes.array,
     programmes: PropTypes.object,
     fetching: PropTypes.bool.isRequired,
     currentUser: PropTypes.shape({
@@ -29,7 +29,7 @@ class SessionApplication extends Component {
   };
 
   static defaultProps = {
-    companies: {},
+    availableCompanies: [],
     programmes: {}
   };
 
@@ -57,7 +57,12 @@ class SessionApplication extends Component {
   };
 
   render() {
-    const { currentUser, currentStudent, companies, fetching } = this.props;
+    const {
+      currentUser,
+      currentStudent,
+      availableCompanies,
+      fetching
+    } = this.props;
 
     if (fetching) {
       return <LoadingSpinner />;
@@ -72,7 +77,7 @@ class SessionApplication extends Component {
         <h1>Apply for student sessions</h1>
         <SessionForm
           onSubmit={this.createStudentSessionAppl}
-          companies={companies}
+          availableCompanies={availableCompanies}
         />
         <br />
         <br />
