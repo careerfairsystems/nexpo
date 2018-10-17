@@ -61,7 +61,7 @@ export const toDayFormat = time =>
   moment.utc(time).format('dddd D MMMM YYYY HH:mm');
 
 export const StudentSessionTimeFormat = time =>
-  moment.utc(time).format('dddd (D MMMM YYYY) HH:mm');
+  moment.utc(time).format('dddd D MMM HH:mm');
 
 export default {
   toDayFormat,
