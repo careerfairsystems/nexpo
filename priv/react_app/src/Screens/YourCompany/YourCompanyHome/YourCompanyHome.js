@@ -6,7 +6,7 @@ const YourCompanyHome = () => (
     <h1>Welcome to Your Company!</h1>
     <h4>
       <li>
-        Here you can edit your company information and view all applications from students.
+        Here you can view/edit your company information, view all applications from students and view all time slots for your student sessions.
       </li>
     </h4>
     <br />
