@@ -83,16 +83,19 @@ defmodule Nexpo.CompanyController do
   def update(conn, %{"id" => id, "company" => company_params}, _user, _claims) do
     company = Repo.get!(Company, id)|> Repo.preload(:student_session_time_slots)
 
-    deleted_files = company_params
+    # We need to set "null" to nil, since FormData can't send null values
+    null_params = company_params
       |> Enum.filter(fn {k, v} ->
         k in ["logo_url"] and v == "null" end)
       |> Enum.map(fn {k, _v} -> {k, nil} end)
       |> Map.new
 
-    company_params = Map.merge(company_params, deleted_files)
+    company_params = Map.merge(company_params, null_params)
     changeset = Company.changeset(company, company_params)
 
-    Enum.each(deleted_files, fn {k, _v} ->
+    Map.keys(company_params)
+    |> Enum.filter(fn k -> k in ["logo_url"] end)
+    |> Enum.each(fn k ->
       delete_file?(company, company_params, String.to_atom(k))
     end)
 

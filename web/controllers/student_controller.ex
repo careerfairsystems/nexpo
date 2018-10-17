@@ -62,17 +62,20 @@ defmodule Nexpo.StudentController do
     student = Repo.get_by!(Student, %{user_id: user.id})
               |> Repo.preload(:programme)
 
-    deleted_files = student_params
+    # We need to set "null" to nil, since FormData can't send null values
+    null_params = student_params
       |> Enum.filter(fn {k, v} ->
-        k in ["resume_sv_url", "resume_en_url"] and v == "null" end)
+        k in ["resume_sv_url", "resume_en_url", "programme"] and v == "null" end)
       |> Enum.map(fn {k, _v} -> {k, nil} end)
       |> Map.new
 
-    student_params = Map.merge(student_params, deleted_files)
+    student_params = Map.merge(student_params, null_params)
     changeset = Student.changeset(student, student_params)
                 |> Programme.put_assoc(student_params)
 
-    Enum.each(deleted_files, fn {k, _v} ->
+    Map.keys(student_params)
+    |> Enum.filter(fn k -> k in ["resume_sv_url", "resume_en_url"] end)
+    |> Enum.each(fn k ->
       delete_file?(student, student_params, String.to_atom(k))
     end)
 
