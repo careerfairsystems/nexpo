@@ -2,7 +2,7 @@
 *   This file tests the reducers handling incoming actions.
 *   See http://redux.js.org/docs/recipes/WritingTests.html for writing action and reducer tests.
 */
-import { mergeWith, omit, isArray } from 'lodash/fp';
+import {  omit } from 'lodash/fp';
 import { Actions } from '../..';
 import testData from './entitiesTestData';
 import { EntitiesReducer } from './EntitiesReducer';
