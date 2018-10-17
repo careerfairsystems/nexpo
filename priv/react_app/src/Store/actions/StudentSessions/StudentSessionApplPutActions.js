@@ -20,7 +20,7 @@ export type UpdateStudentSessionApplFailureAction = {
   type: string
 };
 export function updateStudentSessionApplFailure(): UpdateStudentSessionApplFailureAction {
-  message.warning('Your Application could not be saved.');
+  message.warning('Your Application could not be saved');
   return {
     type: actionTypes.PUT_STUDENT_SESSION_APPL_FAILURE
   };

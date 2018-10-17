@@ -77,9 +77,11 @@ class Programmes extends Component {
           }))}
         />
 
-        <Button onClick={() => null} type="primary">
-          New programme
-        </Button>
+        <InvisibleLink to="/admin/programmes/new">
+          <Button onClick={() => null} type="primary">
+            New programme
+          </Button>
+        </InvisibleLink>
       </div>
     );
   }

@@ -16,7 +16,7 @@ export const updateCurrentCompanySuccess = company => {
 };
 
 export const updateCurrentCompanyFailure = () => {
-  message.error('Something went wrong, please try again later.');
+  message.error('Something went wrong, please try again later');
   return {
     type: actionTypes.PUT_CURRENT_COMPANY_FAILURE
   };

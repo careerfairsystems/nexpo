@@ -20,7 +20,7 @@ export type UpdateStudentSessionFailureAction = {
   type: string
 };
 export function updateStudentSessionFailure(): UpdateStudentSessionFailureAction {
-  message.warning('Something went wrong, please try again later.');
+  message.warning('Something went wrong, please try again later');
   return {
     type: actionTypes.PUT_STUDENT_SESSION_FAILURE
   };

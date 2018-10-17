@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { isEmpty, isNil } from 'lodash/fp';
-import NotFound from '../../NotFound';
+import { isEmpty } from 'lodash/fp';
+
 import MailtemplateForm from '../../../Forms/MailtemplateForm';
+import NotFound from '../../NotFound';
 import LoadingSpinner from '../../../Components/LoadingSpinner';
 
 class Mailtemplate extends Component {
@@ -21,7 +22,7 @@ class Mailtemplate extends Component {
 
   componentWillMount() {
     const { id, getMailtemplate } = this.props;
-    getMailtemplate(id);
+    if (id) getMailtemplate(id);
   }
 
   updateMailtemplate = values => {
@@ -40,20 +41,18 @@ class Mailtemplate extends Component {
   };
 
   render() {
-    const { mailtemplate, fetching } = this.props;
+    const { id, mailtemplate, fetching } = this.props;
 
     if (fetching) return <LoadingSpinner />;
-    if (isEmpty(mailtemplate) || isNil(mailtemplate)) return <NotFound />;
+    if (id && isEmpty(mailtemplate)) return <NotFound />;
 
     return (
       <div className="mailtemplate">
-        <div>
-          <h1>Mailtemplate</h1>
-          <MailtemplateForm
-            onSubmit={this.updateMailtemplate}
-            initialValues={mailtemplate}
-          />
-        </div>
+        <h1>Mailtemplate</h1>
+        <MailtemplateForm
+          onSubmit={this.updateMailtemplate}
+          initialValues={mailtemplate}
+        />
       </div>
     );
   }

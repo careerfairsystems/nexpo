@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { isEmpty, isNil } from 'lodash/fp';
-import NotFound from '../../NotFound';
+import { isEmpty } from 'lodash/fp';
+
 import DeadlineForm from '../../../Forms/DeadlineForm';
+import NotFound from '../../NotFound';
 import LoadingSpinner from '../../../Components/LoadingSpinner';
 
 class Deadline extends Component {
@@ -21,7 +22,7 @@ class Deadline extends Component {
 
   componentWillMount() {
     const { id, getDeadline } = this.props;
-    getDeadline(id);
+    if (id) getDeadline(id);
   }
 
   updateDeadline = values => {
@@ -35,20 +36,15 @@ class Deadline extends Component {
   };
 
   render() {
-    const { deadline, fetching } = this.props;
+    const { id, deadline, fetching } = this.props;
 
     if (fetching) return <LoadingSpinner />;
-    if (isEmpty(deadline) || isNil(deadline)) return <NotFound />;
+    if (id && isEmpty(deadline)) return <NotFound />;
 
     return (
       <div className="deadline">
-        <div>
-          <h1>Deadline</h1>
-          <DeadlineForm
-            onSubmit={this.updateDeadline}
-            initialValues={deadline}
-          />
-        </div>
+        <h1>Deadline</h1>
+        <DeadlineForm onSubmit={this.updateDeadline} initialValues={deadline} />
       </div>
     );
   }
