@@ -12,7 +12,9 @@ const TextInput = makeField(Input);
 const FieldSelect = makeField(Select);
 
 const renderProgrammeItem = programme => (
-  <Select.Option key={programme.code}>{programme.code}</Select.Option>
+  <Select.Option key={programme.id} value={programme.id}>
+    {programme.code}
+  </Select.Option>
 );
 
 const StudentForm = ({ handleSubmit, pristine, programmes }) => (
@@ -28,6 +30,7 @@ const StudentForm = ({ handleSubmit, pristine, programmes }) => (
       name="programme"
       label="Programme:"
       showSearch
+      optionFilterProp="children"
       component={FieldSelect}
     >
       {map(renderProgrammeItem, programmes)}

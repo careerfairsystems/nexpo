@@ -2,7 +2,7 @@ defmodule Nexpo.StudentController do
   use Nexpo.Web, :controller
   use Guardian.Phoenix.Controller
 
-  alias Nexpo.Student
+  alias Nexpo.{Student, Programme}
   alias Nexpo.{CvSv, CvEn}
   alias Guardian.Plug.{EnsurePermissions}
 
@@ -39,8 +39,7 @@ defmodule Nexpo.StudentController do
   def show(conn, %{"id" => id}, _user, _claims) do
     student = Student
         |> Repo.get!(id)
-        |> Repo.preload(:student_sessions)
-        |> Repo.preload(:student_session_applications)
+        |> Repo.preload([:student_sessions, :student_session_applications])
     render(conn, "show.json", student: student)
   end
 
@@ -61,6 +60,7 @@ defmodule Nexpo.StudentController do
 
   def update_student(conn, %{"student" => student_params}, user, _claims) do
     student = Repo.get_by!(Student, %{user_id: user.id})
+              |> Repo.preload(:programme)
 
     deleted_files = student_params
       |> Enum.filter(fn {k, v} ->
@@ -70,6 +70,7 @@ defmodule Nexpo.StudentController do
 
     student_params = Map.merge(student_params, deleted_files)
     changeset = Student.changeset(student, student_params)
+                |> Programme.put_assoc(student_params)
 
     Enum.each(deleted_files, fn {k, _v} ->
       delete_file?(student, student_params, String.to_atom(k))

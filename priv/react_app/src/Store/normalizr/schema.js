@@ -122,7 +122,12 @@ const roleSchema = () => {
 const rolesSchema = () => [roleSchema()];
 
 const studentSchema = () => {
-  const student = entity('students', {}, { model: belongsTo('user') });
+  const programme = entity('programmes', {}, { model: belongsTo('student') });
+  const student = entity(
+    'students',
+    { programme },
+    { model: belongsTo('user') }
+  );
 
   return student;
 };
@@ -141,9 +146,11 @@ const userSchema = () => {
     { company },
     { model: belongsTo('student') }
   );
+  const programme = entity('programmes', {}, { model: belongsTo('student') });
   const student = entity(
     'students',
     {
+      programme,
       student_session_applications: [sessionApplication],
       student_sessions: [studentSession]
     },

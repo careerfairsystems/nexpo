@@ -57,13 +57,7 @@ class SessionApplication extends Component {
   };
 
   render() {
-    const {
-      currentUser,
-      currentStudent,
-      companies,
-      programmes,
-      fetching
-    } = this.props;
+    const { currentUser, currentStudent, companies, fetching } = this.props;
 
     if (fetching) {
       return <LoadingSpinner />;

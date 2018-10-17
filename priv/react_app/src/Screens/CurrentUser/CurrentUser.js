@@ -8,10 +8,31 @@ import CurrentUserForm from '../../Forms/CurrentUserForm';
 import StudentForm from '../../Forms/StudentForm';
 
 const { confirm } = Modal;
+
 class CurrentUser extends Component {
+  static propTypes = {
+    currentUser: PropTypes.shape({
+      email: PropTypes.string,
+      student: PropTypes.number
+    }).isRequired,
+    currentStudent: PropTypes.shape({
+      resumeEnUrl: PropTypes.string,
+      resumeSvUrl: PropTypes.string
+    }).isRequired,
+    fetching: PropTypes.bool.isRequired,
+    getCurrentUser: PropTypes.func.isRequired,
+    updateCurrentUser: PropTypes.func.isRequired,
+    updateCurrentStudent: PropTypes.func.isRequired,
+    getAllProgrammes: PropTypes.func.isRequired,
+    destroyCurrentUser: PropTypes.func.isRequired,
+    logout: PropTypes.func.isRequired,
+    resetForm: PropTypes.func.isRequired
+  };
+
   componentWillMount() {
-    const { getCurrentUser } = this.props;
+    const { getCurrentUser, getAllProgrammes } = this.props;
     getCurrentUser();
+    getAllProgrammes();
   }
 
   showConfirm = () => {
@@ -88,22 +109,5 @@ class CurrentUser extends Component {
     );
   }
 }
-CurrentUser.propTypes = {
-  currentUser: PropTypes.shape({
-    email: PropTypes.string,
-    student: PropTypes.number
-  }).isRequired,
-  currentStudent: PropTypes.shape({
-    resumeEnUrl: PropTypes.string,
-    resumeSvUrl: PropTypes.string
-  }).isRequired,
-  fetching: PropTypes.bool.isRequired,
-  getCurrentUser: PropTypes.func.isRequired,
-  destroyCurrentUser: PropTypes.func.isRequired,
-  logout: PropTypes.func.isRequired,
-  resetForm: PropTypes.func.isRequired,
-  updateCurrentUser: PropTypes.func.isRequired,
-  updateCurrentStudent: PropTypes.func.isRequired
-};
 
 export default CurrentUser;
