@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { Actions, Selectors } from '../../../Store';
-import CurrentCompanyEdit from './CurrentCompanyEdit';
+import YourCompanyApplications from './YourCompanyApplications';
 import { State } from '../../../Store/reducers/index';
 
 const mapStateToProps = (state: State) => ({
@@ -9,9 +9,8 @@ const mapStateToProps = (state: State) => ({
 });
 
 const mapDispatchToProps = {
-  getCurrentCompany: Actions.companies.getCurrentCompany,
-  // destroyCurrentCompany: Actions.companies.destroyCurrentCompany,
-  updateCurrentCompany: Actions.companies.updateCurrentCompany
+  getCurrentCompany: Actions.companies.getCurrentCompany
+  // destroyCurrentCompany: Actions.companies.destroyCurrentCompany
 };
 
 const stateful = connect(
@@ -19,4 +18,4 @@ const stateful = connect(
   mapDispatchToProps
 );
 
-export default stateful(CurrentCompanyEdit);
+export default stateful(YourCompanyApplications);

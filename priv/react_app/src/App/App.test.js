@@ -163,7 +163,8 @@ it('renders routes without crashing', () => {
   found(mount(route('/session/applications')));
   found(mount(route('/session/companies')));
   found(mount(route('/company')));
-  found(mount(route('/company/show')));
-  found(mount(route('/company/edit')));
+  found(mount(route('/company/applications')));
+  found(mount(route('/company/profile')));
+  found(mount(route('/company/profile/edit')));
   expect(mount(route('/invalid-path')).find(NotFound)).toHaveLength(1);
 });
