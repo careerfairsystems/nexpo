@@ -7,7 +7,6 @@ import { Button, Form, Input } from 'antd';
 import makeField, { required } from './helper';
 import UploadButton from './UploadButton';
 import DynamicTimeSlots from './DynamicTimeSlots';
-import GenerateTimeSlotForm from './GenerateTimeSlotForm';
 
 const TextInput = makeField(Input);
 const TextArea = makeField(Input.TextArea);
@@ -42,11 +41,6 @@ const CompanyForm = ({ handleSubmit, onCancel, submitting, formState }) => (
       component={UploadButton}
     />
     <h3>Student Session Time Slots</h3>
-    {/* <FieldArray
-      name="studentSessionTimeSlotsGenerator"
-      component={GenerateTimeSlotForm}
-    /> */}
-
     <FieldArray
       name="studentSessionTimeSlots"
       component={DynamicTimeSlots}
