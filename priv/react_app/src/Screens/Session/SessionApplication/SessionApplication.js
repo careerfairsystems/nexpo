@@ -15,7 +15,7 @@ class SessionApplication extends Component {
     fetching: PropTypes.bool.isRequired,
     currentUser: PropTypes.shape({
       email: PropTypes.string,
-      student: PropTypes.number
+      student: PropTypes.object
     }).isRequired,
     currentStudent: PropTypes.shape({
       resumeEnUrl: PropTypes.string,
@@ -89,7 +89,7 @@ class SessionApplication extends Component {
         <StudentForm
           onSubmit={this.updateStudent}
           onSubmitSuccess={this.resetStudentForm}
-          initialValues={currentStudent || {}}
+          initialValues={currentStudent}
         />
       </div>
     );

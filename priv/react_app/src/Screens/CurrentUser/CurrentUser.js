@@ -13,6 +13,7 @@ class CurrentUser extends Component {
       email: PropTypes.string,
       student: PropTypes.object
     }),
+    currentStudent: PropTypes.object,
     fetching: PropTypes.bool.isRequired,
     updateCurrentUser: PropTypes.func.isRequired,
     updateCurrentStudent: PropTypes.func.isRequired,
@@ -23,7 +24,8 @@ class CurrentUser extends Component {
   };
 
   static defaultProps = {
-    currentUser: {}
+    currentUser: {},
+    currentStudent: {}
   };
 
   componentWillMount() {
@@ -63,7 +65,7 @@ class CurrentUser extends Component {
   };
 
   render() {
-    const { currentUser, fetching } = this.props;
+    const { currentUser, currentStudent, fetching } = this.props;
     if (fetching) {
       return <LoadingSpinner />;
     }
@@ -90,14 +92,14 @@ class CurrentUser extends Component {
           onSubmit={this.updateUser}
           initialValues={currentUser}
         />
-        {!isEmpty(currentUser.student) && (
+        {!isEmpty(currentStudent) && (
           <>
             <br />
             <h2>Student Information</h2>
             <StudentForm
               onSubmit={this.updateStudent}
               onSubmitSuccess={this.resetStudentForm}
-              initialValues={currentUser.student || {}}
+              initialValues={currentStudent}
             />
           </>
         )}
