@@ -112,7 +112,7 @@ class StudentSessions extends Component {
           bordered
           dataSource={sortBy(appl => this.getCompany(appl).name, sessions)}
           renderItem={this.renderSession}
-          locale={{ emptyText: 'No Confirmed Applications' }}
+          locale={{ emptyText: 'No Sessions' }}
         />
       </div>
     );
