@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { isEmpty, filter, sortBy, omit } from 'lodash/fp';
+import { isEmpty, omit } from 'lodash/fp';
 import NotFound from '../../NotFound';
 import LoadingSpinner from '../../../Components/LoadingSpinner';
 import HtmlTitle from '../../../Components/HtmlTitle';
@@ -68,7 +68,7 @@ class SessionApplication extends Component {
         <h1>Apply for student sessions</h1>
         <SessionForm
           onSubmit={this.createStudentSessionAppl}
-          companies={sortBy('name', filter('studentSessionDays', companies))}
+          companies={companies}
         />
 
         <h2 style={{ marginTop: 24 }}>Make sure your CV is uploaded!</h2>
