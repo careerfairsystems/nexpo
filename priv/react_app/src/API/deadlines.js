@@ -3,9 +3,9 @@
 */
 
 import {
-  authPost,
+  authFormPost,
   authFetch,
-  authPut,
+  authFormPut,
   authDelete,
   handleHttpResponse
 } from './utils';
@@ -14,7 +14,7 @@ export default {
   /**
    * Create a deadline
    */
-  create: data => authPost('/api/deadlines', data).then(handleHttpResponse),
+  create: data => authFormPost('/api/deadlines', data).then(handleHttpResponse),
 
   /**
    * Fetches all deadlines
@@ -30,7 +30,7 @@ export default {
    * Updates a deadline
    */
   update: (id, data) =>
-    authPut(`/api/deadlines/${id}`, data).then(handleHttpResponse),
+    authFormPut(`/api/deadlines/${id}`, data).then(handleHttpResponse),
 
   /**
    * Delete a deadline
