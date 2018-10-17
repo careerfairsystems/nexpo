@@ -14,10 +14,11 @@ const mapStateToProps = (state: State) => ({
 const mapDispatchToProps = {
   createStudentSessionAppl: Actions.studentSessions.createStudentSessionAppl,
   getAllCompanies: Actions.companies.getAllCompanies,
+  getAllProgrammes: Actions.programmes.getAllProgrammes,
   getCurrentUser: Actions.users.getCurrentUser,
-  resetForm: reset,
   updateCurrentStudent: Actions.users.updateCurrentStudent,
-  updateCurrentUser: Actions.users.updateCurrentUser
+  updateCurrentUser: Actions.users.updateCurrentUser,
+  resetForm: reset
 };
 
 const stateful = connect(

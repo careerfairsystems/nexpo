@@ -11,6 +11,7 @@ import '../Session.css';
 class SessionApplication extends Component {
   static propTypes = {
     companies: PropTypes.object,
+    programmes: PropTypes.object,
     fetching: PropTypes.bool.isRequired,
     currentUser: PropTypes.shape({
       email: PropTypes.string,
@@ -21,18 +22,21 @@ class SessionApplication extends Component {
       resumeSvUrl: PropTypes.string
     }).isRequired,
     getAllCompanies: PropTypes.func.isRequired,
+    getAllProgrammes: PropTypes.func.isRequired,
     createStudentSessionAppl: PropTypes.func.isRequired,
     updateCurrentStudent: PropTypes.func.isRequired,
     resetForm: PropTypes.func.isRequired
   };
 
   static defaultProps = {
-    companies: {}
+    companies: {},
+    programmes: {}
   };
 
   componentWillMount() {
-    const { getAllCompanies } = this.props;
+    const { getAllCompanies, getAllProgrammes } = this.props;
     getAllCompanies();
+    getAllProgrammes();
   }
 
   updateStudent = values => {
@@ -53,7 +57,13 @@ class SessionApplication extends Component {
   };
 
   render() {
-    const { currentUser, currentStudent, companies, fetching } = this.props;
+    const {
+      currentUser,
+      currentStudent,
+      companies,
+      programmes,
+      fetching
+    } = this.props;
 
     if (fetching) {
       return <LoadingSpinner />;

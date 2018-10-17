@@ -2,15 +2,20 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
-import { isNil } from 'lodash/fp';
-import { Button, Form, Input } from 'antd';
+import { isNil, map } from 'lodash/fp';
+import { Button, Form, Input, Select } from 'antd';
 
 import makeField, { required } from './helper';
 import UploadButton from './UploadButton';
 
 const TextInput = makeField(Input);
+const FieldSelect = makeField(Select);
 
-const StudentForm = ({ handleSubmit, submitting }) => (
+const renderProgrammeItem = programme => (
+  <Select.Option key={programme.code}>{programme.code}</Select.Option>
+);
+
+const StudentForm = ({ handleSubmit, pristine, programmes }) => (
   <Form onSubmit={handleSubmit}>
     <Field
       name="year"
@@ -19,6 +24,14 @@ const StudentForm = ({ handleSubmit, submitting }) => (
       validate={required}
       required
     />
+    <Field
+      name="programme"
+      label="Programme:"
+      showSearch
+      component={FieldSelect}
+    >
+      {map(renderProgrammeItem, programmes)}
+    </Field>
     <Field
       name="resumeSvUrl"
       label="Swedish CV"
@@ -32,7 +45,7 @@ const StudentForm = ({ handleSubmit, submitting }) => (
       component={UploadButton}
     />
 
-    <Button disabled={submitting} htmlType="submit">
+    <Button disabled={pristine} htmlType="submit">
       Submit Student Info
     </Button>
   </Form>
@@ -50,7 +63,8 @@ StudentForm.propTypes = {
     })
   }).isRequired,
   handleSubmit: PropTypes.func.isRequired,
-  submitting: PropTypes.bool.isRequired
+  programmes: PropTypes.object.isRequired,
+  pristine: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = (state, props) => {
@@ -69,6 +83,7 @@ const mapStateToProps = (state, props) => {
     resumeEnUrl = { uid: '-1', name: 'English CV', url: currentResumeEnUrl };
 
   return {
+    programmes: state.entities.programmes,
     initialValues: { ...initialValues, resumeSvUrl, resumeEnUrl },
     formState: state.form.StudentForm
   };
