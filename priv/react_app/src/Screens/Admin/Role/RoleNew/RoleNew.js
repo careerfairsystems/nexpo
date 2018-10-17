@@ -8,6 +8,11 @@ import '../Role.css';
  * Responsible for rendering a role. Role id is recieved via url
  */
 class RoleNew extends Component {
+  static propTypes = {
+    createRole: PropTypes.func.isRequired,
+    getAllUsers: PropTypes.func.isRequired
+  };
+
   componentWillMount() {
     const { getAllUsers } = this.props;
     getAllUsers();
@@ -26,10 +31,5 @@ class RoleNew extends Component {
     );
   }
 }
-
-RoleNew.propTypes = {
-  createRole: PropTypes.func.isRequired,
-  getAllUsers: PropTypes.func.isRequired
-};
 
 export default RoleNew;
