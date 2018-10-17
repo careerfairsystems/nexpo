@@ -77,7 +77,12 @@ const mapStateToProps = (state, props) => {
     logoUrl = { uid: '-1', name: 'Logotype', url: currentLogoUrl };
 
   return {
-    initialValues: { ...initialValues, logoUrl },
+    initialValues: {
+      ...initialValues,
+      timeslotLength: 20,
+      breakLength: 10,
+      logoUrl
+    },
     formState: state.form.company || {}
   };
 };
