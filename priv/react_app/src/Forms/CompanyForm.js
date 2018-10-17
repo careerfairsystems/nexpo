@@ -3,16 +3,12 @@ import PropTypes from 'prop-types';
 import { Field, FieldArray, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import { isNil } from 'lodash/fp';
-import { Button, Form, Input, TimePicker, DatePicker } from 'antd';
-import moment from 'moment';
+import { Button, Form, Input } from 'antd';
 import makeField, { required } from './helper';
 import UploadButton from './UploadButton';
 import DynamicTimeSlots from './DynamicTimeSlots';
+import GenerateTimeSlotForm from './GenerateTimeSlotForm';
 
-const format = 'HH:mm';
-const dateFormat = 'YYYY/MM/DD';
-
-const InputGroup = Input.Group;
 const TextInput = makeField(Input);
 const TextArea = makeField(Input.TextArea);
 
@@ -46,56 +42,11 @@ const CompanyForm = ({ handleSubmit, onCancel, submitting }) => (
       component={UploadButton}
     />
     <h3>Student Session Time Slots</h3>
-    <text>Student Session Days:</text>
-    <div>
-      <DatePicker
-        defaultValue={moment('2018/11/14', dateFormat)}
-        format={dateFormat}
-      />
-      <DatePicker
-        defaultValue={moment('2018/11/15', dateFormat)}
-        format={dateFormat}
-      />
-    </div>
-    <text>Student Session Timeframe:</text>
-    <div>
-      <TimePicker
-        name="starttime"
-        defaultValue={moment('08:00', format)}
-        format={format}
-      />
-      <TimePicker
-        name="endtime"
-        defaultValue={moment('16:00', format)}
-        format={format}
-      />
-    </div>
+    <FieldArray
+      name="studentSessionTimeSlotsGenerator"
+      component={GenerateTimeSlotForm}
+    />
 
-    <InputGroup compact>
-      <Field
-        name="timeslot"
-        type="text"
-        component={TextInput}
-        label="Timeslot length"
-        addonAfter="minutes"
-      />
-
-      <Field
-        name="break"
-        type="text"
-        component={TextInput}
-        label="Break length"
-        addonAfter="minutes"
-      />
-      <Field
-        name="location"
-        type="text"
-        component={TextInput}
-        label="Location"
-      />
-    </InputGroup>
-
-    <Button type="secondary">Generate</Button>
     <FieldArray name="studentSessionTimeSlots" component={DynamicTimeSlots} />
     {onCancel && <Button onClick={onCancel}>Cancel</Button>}
     <Button disabled={submitting} htmlType="submit" type="primary">
