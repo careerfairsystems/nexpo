@@ -8,10 +8,10 @@ export function getProgrammeIsLoading() {
   };
 }
 
-export function getProgrammeSuccess(Programme) {
+export function getProgrammeSuccess(programme) {
   return {
     type: actionTypes.FETCH_PROGRAMME_SUCCESS,
-    Programme
+    programme
   };
 }
 
@@ -30,10 +30,10 @@ export function getProgrammeFailure(): GetProgrammeFailureAction {
 export function getProgramme(id) {
   return dispatch => {
     dispatch(getProgrammeIsLoading());
-    return API.Programmes
+    return API.programmes
       .get(id)
-      .then(Programme => {
-        dispatch(getProgrammeSuccess(Programme.data));
+      .then(programme => {
+        dispatch(getProgrammeSuccess(programme.data));
       })
       .catch(() => {
         dispatch(getProgrammeFailure());

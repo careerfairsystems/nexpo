@@ -116,13 +116,13 @@ export const EntitiesReducer = (
     }
     case actionTypes.FETCH_PROGRAMMES_SUCCESS: {
       normalized = normalize(action.programmes, Schema.programmesSchema());
-      return defaultsDeep(state, camelCaseKeys(normalized.entities));
+      return mergeWith(handleMerge, state, camelCaseKeys(normalized.entities));
     }
-    case actionTypes.FETCH_PROGRAMMES_SUCCESS:
-    case actionTypes.POST_PROGRAMMES_SUCCESS:
-    case actionTypes.PUT_PROGRAMMES_SUCCESS: {
+    case actionTypes.FETCH_PROGRAMME_SUCCESS:
+    case actionTypes.POST_PROGRAMME_SUCCESS:
+    case actionTypes.PUT_PROGRAMME_SUCCESS: {
       normalized = normalize(action.programme, Schema.programmeSchema());
-      return defaultsDeep(state, camelCaseKeys(normalized.entities));
+      return mergeWith(handleMerge, state, camelCaseKeys(normalized.entities));
     }
     case actionTypes.DELETE_PROGRAMME_SUCCESS: {
       return { ...state, programmes: omit(action.id, state.programmes) };

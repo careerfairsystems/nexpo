@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { isEmpty, isNil, map } from 'lodash/fp';
 import NotFound from '../../NotFound';
-import ProgrammeForm from '../../../Components/Forms/ProgrammeForm';
+import ProgrammeForm from '../../../Forms/ProgrammeForm';
 
 class Programme extends Component {
   constructor(props) {

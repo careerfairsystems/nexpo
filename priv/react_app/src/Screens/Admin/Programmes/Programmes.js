@@ -1,45 +1,64 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Table, Button, Divider, Popconfirm } from 'antd';
 
-import Table from 'antd/lib/table';
-import Button from 'antd/lib/button';
-import Divider from 'antd/lib/divider';
 import InvisibleLink from '../../../Components/InvisibleLink';
 import LoadingSpinner from '../../../Components/LoadingSpinner';
 import HtmlTitle from '../../../Components/HtmlTitle';
-
-const programmeColumns = [
-  {
-    title: 'Name',
-    dataIndex: 'name',
-    key: 'name',
-    render: (name, { id }) => (
-      <InvisibleLink to={`/admin/programmes/${id}`}>{name}</InvisibleLink>
-    )
-  },
-  {
-    title: 'Action',
-    key: 'action',
-    render: programme => (
-      <span>
-        <InvisibleLink to={`/admin/programmes/${programme.id}`}>Show</InvisibleLink>
-        <Divider type="vertical" />
-        <InvisibleLink to="#programme-edit">Edit</InvisibleLink>
-        <Divider type="vertical" />
-        <InvisibleLink to="#programme-delete">Delete</InvisibleLink>
-      </span>
-    )
-  }
-];
 
 /**
  * Responsible for rendering a list of programmes
  */
 class Programmes extends Component {
+  static propTypes = {
+    programmes: PropTypes.object,
+    fetching: PropTypes.bool.isRequired,
+    deleteProgramme: PropTypes.func.isRequired,
+    getAllProgrammes: PropTypes.func.isRequired
+  };
+
+  static defaultProps = {
+    programmes: {}
+  };
+
   componentWillMount() {
     const { getAllProgrammes } = this.props;
     getAllProgrammes();
   }
+
+  programmeColumns = () => [
+    {
+      title: 'Name',
+      dataIndex: 'name',
+      key: 'name',
+      render: (name, { id }) => (
+        <InvisibleLink to={`/admin/programmes/${id}`}>{name}</InvisibleLink>
+      )
+    },
+    {
+      title: 'Action',
+      key: 'action',
+      render: programme => {
+        const { deleteProgramme } = this.props;
+        return (
+          <span>
+            <InvisibleLink to={`/admin/programme/${programme.id}`}>
+              Edit
+            </InvisibleLink>
+            <Divider type="vertical" />
+            <Popconfirm
+              title="Sure to delete?"
+              onConfirm={() => deleteProgramme(programme.id)}
+            >
+              <span style={{ color: '#ff4d4f', cursor: 'pointer' }}>
+                Delete
+              </span>
+            </Popconfirm>
+          </span>
+        );
+      }
+    }
+  ];
 
   renderProgrammes() {
     const { programmes } = this.props;
@@ -51,7 +70,7 @@ class Programmes extends Component {
         <h1>Programmes</h1>
 
         <Table
-          columns={programmeColumns}
+          columns={this.programmeColumns()}
           dataSource={Object.keys(programmes).map(i => ({
             ...programmes[i],
             key: i
@@ -66,22 +85,12 @@ class Programmes extends Component {
   }
 
   render() {
-    if (this.props.fetching) {
+    const { fetching } = this.props;
+    if (fetching) {
       return <LoadingSpinner />;
     }
     return this.renderProgrammes();
   }
 }
-
-Programmes.propTypes = {
-  programmes: PropTypes.object.isRequired,
-  fetching: PropTypes.bool.isRequired,
-  getAllProgrammes: PropTypes.func.isRequired
-};
-
-Programmes.defaultProps = {
-  programmes: {},
-  fetching: false
-};
 
 export default Programmes;
