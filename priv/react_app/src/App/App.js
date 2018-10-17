@@ -31,6 +31,7 @@ import SessionHome from '../Screens/Session/SessionHome';
 import SessionApplication from '../Screens/Session/SessionApplication';
 import SessionApplications from '../Screens/Session/SessionApplications';
 import SessionCompanies from '../Screens/Session/SessionCompanies';
+import SessionsApproved from '../Screens/Session/SessionsApproved';
 import Login from '../Screens/Auth/Login';
 import Logout from '../Screens/Auth/Logout';
 import Signup from '../Screens/Auth/Signup';
@@ -69,6 +70,7 @@ const privateRoutes = [
   { path: '/session/application', component: SessionApplication },
   { path: '/session/applications', component: SessionApplications },
   { path: '/session/companies', component: SessionCompanies },
+  { path: '/session/approved', component: SessionsApproved },
   { path: '/company/show', component: CurrentCompanyShow },
   { path: '/company/edit', component: CurrentCompanyEdit }
 ];
@@ -217,6 +219,10 @@ class App extends Component {
                   this.restrictedMenuItem({
                     route: 'session/companies',
                     title: 'View Companies'
+                  }),
+                  this.restrictedMenuItem({
+                    route: 'session/approved',
+                    title: 'View Approved Applications'
                   })
                 ]
               })}
