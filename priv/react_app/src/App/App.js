@@ -272,7 +272,7 @@ class App extends Component {
 
 App.propTypes = {
   isLoggedIn: PropTypes.bool.isRequired,
-  currentUser: PropTypes.object.isRequired,
+  currentUser: PropTypes.shape({email: PropTypes.string, firstName: PropTypes.string, lastName: PropTypes.string}).isRequired,
   pathname: PropTypes.string.isRequired,
   redirect: PropTypes.func.isRequired
 };
