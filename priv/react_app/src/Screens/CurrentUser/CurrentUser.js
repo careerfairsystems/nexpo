@@ -7,8 +7,6 @@ import NotFound from '../NotFound';
 import CurrentUserForm from '../../Forms/CurrentUserForm';
 import StudentForm from '../../Forms/StudentForm';
 
-const { confirm } = Modal;
-
 class CurrentUser extends Component {
   static propTypes = {
     currentUser: PropTypes.shape({
@@ -36,7 +34,7 @@ class CurrentUser extends Component {
   }
 
   showConfirm = () => {
-    confirm({
+    Modal.confirm({
       title: 'Do you want to delete your account?',
       onOk: () => {
         this.destroyCurrentUser();
