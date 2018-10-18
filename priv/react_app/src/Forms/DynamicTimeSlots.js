@@ -5,63 +5,36 @@ import { Field } from 'redux-form';
 import moment from 'moment';
 import makeField from './helper';
 import DatePicker from '../Components/DatePicker';
-import TimePicker from '../Components/TimePicker';
 
 const TextInput = makeField(Input);
 const FieldCheckbox = makeField(Checkbox);
 const MyDatePicker = makeField(DatePicker);
 
-const MyTimePicker = makeField(TimePicker);
 const generateTimeSlots = (fields, values) => {
-  const {
-    starttime,
-    startdate,
-    endtime,
-    enddate,
-    timeslotLength = 10,
-    breakLength = 5,
-    location
-  } = values;
+  const { startDate, endDate, timeslotLength, breakLength, location } = values;
 
-  const startTimeString = moment.utc(starttime).format('HH:mm');
-  const startTime =
-    moment.utc(startdate).format('YYYY-MM-DD ') + startTimeString;
+  const startTime = moment.utc(startDate);
+  const endTime = moment.utc(endDate);
 
-  const endTime =
-    moment.utc(startdate).format('YYYY-MM-DD ') +
-    moment.utc(endtime).format('HH:mm'); // .format('HH:mm');
+  const totSessionTime = timeslotLength + breakLength;
 
-  let start = `${moment
-    .utc(startdate)
-    .format('YYYY-MM-DD')} ${startTimeString}`;
-  let end = moment
-    .utc(start)
-    .add(parseInt(timeslotLength, 10) + parseInt(breakLength, 10), 'minutes');
-
-  // const current = start;
-  const current = moment.utc(startTime);
-
-  while (current.isBefore(endTime)) {
-    // currentString = moment.utc(starttime).format('HH:mm');
-    start = current.format('YYYY-MM-DD HH:mm');
-    end = moment
-      .utc(start)
-      .add(parseInt(timeslotLength, 10) + parseInt(breakLength, 10), 'minutes');
-
-    fields.push({
-      start,
-      end
-    });
-    current.add(
-      parseInt(timeslotLength, 10) + parseInt(breakLength, 10),
-      'minutes'
-    );
+  while (!startTime.isAfter(endTime)) {
+    if (
+      (startTime.isSameOrAfter(moment.utc(startTime).hours(12), 'hour') &&
+        startTime.isBefore(moment.utc(startTime).hours(13), 'hour')) ||
+      startTime.isBefore(moment.utc(startTime).hours(10), 'hour') ||
+      startTime.isSameOrAfter(moment.utc(startTime).hours(16), 'hour')
+    ) {
+      startTime.add(1, 'hours');
+    } else {
+      fields.push({
+        start: moment.utc(startTime),
+        end: moment.utc(startTime).add(totSessionTime, 'minutes'),
+        location
+      });
+      startTime.add(totSessionTime, 'minutes');
+    }
   }
-  fields.push({
-    start,
-    end
-  });
-  return { start: 'Lul', end: 'Lul', location };
 };
 
 const renderTimeSlot = (timeSlot, index) => (
@@ -96,30 +69,17 @@ const renderTimeSlot = (timeSlot, index) => (
 const DynamicTimeSlots = ({ fields, fieldValues, ...rest }) => (
   <Form.Item>
     <Field
-      name="startdate"
+      name="startDate"
       type="text"
-      label="Sessions start date"
+      label="Sessions start date and time"
       component={MyDatePicker}
     />
     <Field
-      name="enddate"
+      name="endDate"
       type="text"
-      label="Sessions end date"
+      label="Sessions end date and time"
       component={MyDatePicker}
     />
-    <Field
-      name="starttime"
-      type="text"
-      label="Timeslots start"
-      component={MyTimePicker}
-    />
-    <Field
-      name="endtime"
-      type="text"
-      label="Timeslots end"
-      component={MyTimePicker}
-    />
-
     <Field
       name="timeslotLength"
       type="number"
@@ -128,7 +88,6 @@ const DynamicTimeSlots = ({ fields, fieldValues, ...rest }) => (
       label="Timeslot length"
       addonAfter="minutes"
     />
-
     <Field
       name="breakLength"
       type="number"
