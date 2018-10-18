@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Table, Input, Checkbox, Button } from 'antd';
 import { Field } from 'redux-form';
 import moment from 'moment';
-import makeField from './helper';
+import makeField, { required } from './helper';
 import DatePicker from '../Components/DatePicker';
 
 const TextInput = makeField(Input);
@@ -42,21 +42,39 @@ const columns = [
     title: 'Start Time',
     key: 'start',
     render: timeSlot => (
-      <Field name={`${timeSlot}.start`} type="text" component={MyDatePicker} />
+      <Field
+        name={`${timeSlot}.start`}
+        type="text"
+        component={MyDatePicker}
+        validate={required}
+        required
+      />
     )
   },
   {
     title: 'End Time',
     key: 'end',
     render: timeSlot => (
-      <Field name={`${timeSlot}.end`} type="text" component={MyDatePicker} />
+      <Field
+        name={`${timeSlot}.end`}
+        type="text"
+        component={MyDatePicker}
+        validate={required}
+        required
+      />
     )
   },
   {
     title: 'Location',
     key: 'location',
     render: timeSlot => (
-      <Field name={`${timeSlot}.location`} type="text" component={TextInput} />
+      <Field
+        name={`${timeSlot}.location`}
+        type="text"
+        component={TextInput}
+        validate={required}
+        required
+      />
     )
   },
   {
