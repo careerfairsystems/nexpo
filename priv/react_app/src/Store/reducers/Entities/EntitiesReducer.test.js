@@ -2,7 +2,7 @@
 *   This file tests the reducers handling incoming actions.
 *   See http://redux.js.org/docs/recipes/WritingTests.html for writing action and reducer tests.
 */
-import {  omit } from 'lodash/fp';
+import { omit } from 'lodash/fp';
 import { Actions } from '../..';
 import testData from './entitiesTestData';
 import { EntitiesReducer } from './EntitiesReducer';
@@ -16,6 +16,7 @@ describe('Entities reducer', () => {
       entries: {},
       deadlines: {},
       mailtemplates: {},
+      programmes: {},
       roles: {},
       users: {},
       studentSessionApplications: {},
@@ -320,7 +321,9 @@ describe('Entities reducer', () => {
       ...testData.studentSessions[id],
       studentConfirmed: true
     };
-    const action = Actions.studentSessions.updateStudentSessionSuccess(sessionApplication);
+    const action = Actions.studentSessions.updateStudentSessionSuccess(
+      sessionApplication
+    );
     const state = EntitiesReducer(testData.studentSessions, action);
     expect(state).toMatchObject({
       studentSessions: {

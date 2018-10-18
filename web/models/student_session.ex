@@ -5,8 +5,10 @@ defmodule Nexpo.StudentSession do
     field :start, :naive_datetime
     field :end, :naive_datetime
     field :student_confirmed, :boolean, default: false
+
     belongs_to :company, Nexpo.Company
     belongs_to :student, Nexpo.Student
+    belongs_to :student_session_time_slot, Nexpo.StudentSessionTimeSlot
 
     timestamps()
   end

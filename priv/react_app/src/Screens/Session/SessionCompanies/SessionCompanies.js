@@ -56,7 +56,6 @@ class SessionCompanies extends Component {
           size="large"
           dataSource={sortBy('name', filter('studentSessionDays', companies))}
           renderItem={this.renderCompany}
-          style={{ whiteSpace: 'pre-wrap' }}
         />
       </div>
     );

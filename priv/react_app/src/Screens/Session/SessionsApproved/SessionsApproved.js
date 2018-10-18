@@ -99,7 +99,7 @@ class StudentSessions extends Component {
     }
 
     return (
-      <div className="student-sessions">
+      <div className="sessions-approved">
         <HtmlTitle title="Student Session" />
         <h1>Student Sessions</h1>
         <h4>

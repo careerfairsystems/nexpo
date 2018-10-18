@@ -63,8 +63,9 @@ const state = {
         resumeEnUrl: null,
         resumeSvUrl: null,
         studentSessionApplications: [1],
-        user: 1,
-        year: 2000
+        year: 2000,
+        programme: 1,
+        user: 1
       }
     },
     representatives: {
@@ -91,6 +92,9 @@ const state = {
     roles: {
       '1': { id: 1, type: 'admin', permissions: ['read_all'], users: [1] },
       '2': { id: 2, type: 'zzz', permissions: ['read_users'], users: [1] }
+    },
+    programmes: {
+      '1': { id: 1, name: 'D-Guild', code: 'D' }
     },
     companies: {
       '1': {

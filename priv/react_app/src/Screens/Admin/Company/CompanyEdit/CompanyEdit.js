@@ -50,10 +50,10 @@ class CompanyEdit extends Component {
       .initialRepresentativeSignup({ email, companyId: toInteger(id) })
       .then(res => {
         if (res.ok) {
-          message.success(`Invitation sent to ${email}.`);
+          message.success(`Invitation sent to ${email}`);
           resetForm('invite');
         } else {
-          message.warning('Invitation could not be sent.');
+          message.warning('Invitation could not be sent');
         }
       });
   };

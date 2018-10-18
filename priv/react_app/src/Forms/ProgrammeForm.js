@@ -7,13 +7,7 @@ import makeField from './helper';
 
 const TextInput = makeField(Input);
 
-const ProgrammeForm = ({
-  handleSubmit,
-  toggleEdit,
-  disabled,
-  reset,
-  submitting
-}) => (
+const ProgrammeForm = ({ handleSubmit, disabled, submitting }) => (
   <Form onSubmit={handleSubmit}>
     <Field
       name="name"
@@ -21,21 +15,7 @@ const ProgrammeForm = ({
       component={TextInput}
       disabled={disabled}
     />
-    <Field
-      name="code"
-      label="Letter"
-      component={TextInput}
-      disabled={disabled}
-    />
-        <Button
-      type="primary"
-      onClick={() => {
-        toggleEdit();
-        if (!disabled) reset();
-      }}
-    >
-      {disabled ? 'Edit' : 'Cancel'}
-    </Button>
+    <Field name="code" label="Code" component={TextInput} disabled={disabled} />
     <Button disabled={disabled || submitting} htmlType="submit">
       Submit
     </Button>
@@ -50,8 +30,7 @@ ProgrammeForm.propTypes = {
   disabled: PropTypes.bool,
   handleSubmit: PropTypes.func.isRequired,
   reset: PropTypes.func.isRequired,
-  submitting: PropTypes.bool.isRequired,
-  toggleEdit: PropTypes.func.isRequired
+  submitting: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = state => ({

@@ -12,9 +12,7 @@ export const getCurrentUserSuccess = user => ({
 });
 
 export const getCurrentUserFailure = () => {
-  message.error(
-    'Something went wrong when trying to fetch current user, please try again later'
-  );
+  message.warning('Unauthorized, please log in');
   return {
     type: actionTypes.FETCH_CURRENT_USER_FAILURE
   };

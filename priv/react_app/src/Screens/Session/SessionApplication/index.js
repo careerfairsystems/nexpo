@@ -5,7 +5,6 @@ import SessionApplication from './SessionApplication';
 import type { State } from '../../../Store/reducers';
 
 const mapStateToProps = (state: State) => ({
-  availableCompanies: Selectors.companies.getNotAppliedTo(state),
   currentStudent: Selectors.students.getCurrentStudent(state),
   currentUser: Selectors.users.getCurrentUser(state),
   fetching: state.api.currentUser.fetching
@@ -14,10 +13,11 @@ const mapStateToProps = (state: State) => ({
 const mapDispatchToProps = {
   createStudentSessionAppl: Actions.studentSessions.createStudentSessionAppl,
   getAllCompanies: Actions.companies.getAllCompanies,
+  getAllProgrammes: Actions.programmes.getAllProgrammes,
   getCurrentUser: Actions.users.getCurrentUser,
-  resetForm: reset,
   updateCurrentStudent: Actions.users.updateCurrentStudent,
-  updateCurrentUser: Actions.users.updateCurrentUser
+  updateCurrentUser: Actions.users.updateCurrentUser,
+  resetForm: reset
 };
 
 const stateful = connect(
