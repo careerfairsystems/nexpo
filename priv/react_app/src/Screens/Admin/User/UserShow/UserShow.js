@@ -71,7 +71,7 @@ class UserShow extends Component {
         <p>Resume En: {resumeEnUrl || 'None'}</p>
         <p>Programme: {programme && programme.name}</p>
         <p>Student Session Applications: {studentSessionApplications.length}</p>
-        <p>Student Sessions: {studentSessions && studentSessions.length}</p>
+        <p>Student Sessions: {studentSessions.length}</p>
       </>
     );
   };
