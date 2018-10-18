@@ -45,14 +45,14 @@ describe('SessionApplications', () => {
     expect(wrapper.find(NotFound)).toHaveLength(1);
   });
 
-  // it('calls updateStudentSessionApplwith correct parameters', () => {
-  //   const wrapper = shallow(<SessionApplications {...props} />);
-  //   const data = { motivation: 'Lul' };
-  //   wrapper.instance().updateStudentSessionAppl(1, data);
-  //   expect(props.updateStudentSessionAppl).toHaveBeenCalledWith(1, {
-  //     studentSessionApplication: { ...data }
-  //   });
-  // });
+  it('calls confirmSession with correct parameters', () => {
+    const wrapper = shallow(<SessionApplications {...props} />);
+    const id = 1;
+    expect(props.confirmSession).toHaveBeenCalledTimes(0);
+    wrapper.instance().confirmSession(id);
+    expect(props.confirmSession).toHaveBeenCalledWith(id);
+    expect(props.confirmSession).toHaveBeenCalledTimes(1);
+  });
 
   it('can render listitems', () => {
     const wrapper = shallow(<SessionApplications {...props} />);

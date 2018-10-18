@@ -2,12 +2,33 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
-import { isNil } from 'lodash/fp';
-import { Button, Form } from 'antd';
+import { isNil, map } from 'lodash/fp';
+import { Button, Form, Input, Select } from 'antd';
+
+import makeField from './helper';
 import UploadButton from './UploadButton';
 
-const StudentForm = ({ handleSubmit, submitting }) => (
+const TextInput = makeField(Input);
+const FieldSelect = makeField(Select);
+
+const renderProgrammeItem = programme => (
+  <Select.Option key={programme.id} value={programme.id}>
+    {programme.code}
+  </Select.Option>
+);
+
+const StudentForm = ({ handleSubmit, pristine, programmes }) => (
   <Form onSubmit={handleSubmit}>
+    <Field name="year" label="Starting Year" component={TextInput} />
+    <Field
+      name="programme"
+      label="Guild:"
+      showSearch
+      optionFilterProp="children"
+      component={FieldSelect}
+    >
+      {map(renderProgrammeItem, programmes)}
+    </Field>
     <Field
       name="resumeSvUrl"
       label="Swedish CV"
@@ -21,8 +42,8 @@ const StudentForm = ({ handleSubmit, submitting }) => (
       component={UploadButton}
     />
 
-    <Button disabled={submitting} htmlType="submit">
-      Save CV(s)
+    <Button disabled={pristine} htmlType="submit">
+      Submit Student Info
     </Button>
   </Form>
 );
@@ -39,15 +60,20 @@ StudentForm.propTypes = {
     })
   }).isRequired,
   handleSubmit: PropTypes.func.isRequired,
-  submitting: PropTypes.bool.isRequired
+  programmes: PropTypes.object.isRequired,
+  pristine: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = (state, props) => {
   const { initialValues = {} } = props;
   const {
+    programme: currentProgramme,
     resumeSvUrl: currentResumeSvUrl,
     resumeEnUrl: currentResumeEnUrl
   } = initialValues;
+
+  let programme = null;
+  if (!isNil(currentProgramme)) programme = currentProgramme.id;
 
   let resumeSvUrl = null;
   if (!isNil(currentResumeSvUrl))
@@ -58,7 +84,8 @@ const mapStateToProps = (state, props) => {
     resumeEnUrl = { uid: '-1', name: 'English CV', url: currentResumeEnUrl };
 
   return {
-    initialValues: { ...initialValues, resumeSvUrl, resumeEnUrl },
+    programmes: state.entities.programmes,
+    initialValues: { ...initialValues, resumeSvUrl, resumeEnUrl, programme },
     formState: state.form.StudentForm
   };
 };

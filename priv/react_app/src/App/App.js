@@ -52,14 +52,17 @@ const privateRoutes = [
   { path: '/admin/categories', component: Categories },
   { path: '/admin/categories/:id', component: Category },
   { path: '/admin/programmes', component: Programmes },
+  { path: '/admin/programmes/new', component: Programme },
   { path: '/admin/programmes/:id', component: Programme },
   { path: '/admin/companies', component: Companies },
   { path: '/admin/companies/new', component: CompanyNew },
   { path: '/admin/companies/:id', component: CompanyShow },
   { path: '/admin/companies/:id/edit', component: CompanyEdit },
   { path: '/admin/mailtemplates', component: Mailtemplates },
+  { path: '/admin/mailtemplates/new', component: Mailtemplate },
   { path: '/admin/mailtemplates/:id', component: Mailtemplate },
   { path: '/admin/deadlines', component: Deadlines },
+  { path: '/admin/deadlines/new', component: Deadline },
   { path: '/admin/deadlines/:id', component: Deadline },
   { path: '/admin/users', component: Users },
   { path: '/admin/users/:id', component: UserShow },
@@ -69,6 +72,8 @@ const privateRoutes = [
   { path: '/admin/roles/:id', component: RoleShow },
   { path: '/admin/roles/:id/edit', component: RoleEdit },
   { path: '/admin/statistics', component: Statistics },
+  { path: '/user', component: CurrentUser },
+  { path: '/logout', component: Logout },
   { path: '/session', component: SessionHome },
   { path: '/session/application', component: SessionApplication },
   { path: '/session/applications', component: SessionApplications },
@@ -89,10 +94,8 @@ const routes = (
       <PrivateRoute key={props.path} exact {...props} />
     ))}
     <Route path="/login" component={Login} />
-    <Route path="/logout" component={Logout} />
     <Route path="/signup" component={Signup} />
     <Route path="/forgot-password" component={ForgotPassword} />
-    <Route path="/user" component={CurrentUser} />
     <Route component={NotFound} />
   </Switch>
 );
@@ -101,6 +104,13 @@ const routes = (
  * The base of the application. Defines the basic layout
  */
 class App extends Component {
+  static propTypes = {
+    isLoggedIn: PropTypes.bool.isRequired,
+    currentUser: PropTypes.shape({email: PropTypes.string, firstName: PropTypes.string, lastName: PropTypes.string}).isRequired,
+    pathname: PropTypes.string.isRequired,
+    redirect: PropTypes.func.isRequired
+  };
+
   loggedInMenuItem = () => {
     const { currentUser } = this.props;
     const { email, firstName, lastName } = currentUser;

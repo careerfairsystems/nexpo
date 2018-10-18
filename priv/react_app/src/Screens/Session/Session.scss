@@ -1,4 +1,7 @@
-.student-sessions {
+.session-applications,
+.session-companies,
+.sessions-approved {
+  .ant-list-item-content,
   .ant-list-item-meta-description {
     white-space: pre-wrap;
   }

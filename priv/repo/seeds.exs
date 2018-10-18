@@ -22,7 +22,7 @@ end
 
 alias Nexpo.Repo
 
-#Create some users
+# Create some users
 alias Nexpo.User
 Repo.insert!(%User{email: "dev@it", first_name: "Dev", last_name: "Dev", phone_number: "0707112233", food_preferences: "cake", hashed_password: "legit_hash_123"})
 Repo.insert!(%User{email: "test@it", first_name: "Test", last_name: "McTest", phone_number: "13371337", food_preferences: "Cookies", hashed_password: "legit_hash_123"})
@@ -32,11 +32,12 @@ user = Repo.get_by(User, %{email: "dev@it"}) |> Repo.preload([:roles, :student])
 test_user = Repo.get_by(User, %{email: "test@it"}) |> Repo.preload([:roles, :student])
 rep_user = Repo.get_by(User, %{email: "test@google"}) |> Repo.preload([:representative])
 
-#Create some roles
+# Create some roles
 alias Nexpo.Role
 role = Repo.insert!(%Role{type: "admin", permissions: ["read_all", "write_all"]})
 pleb_role = Repo.insert!(%Role{type: "pleb", permissions: []})
 
+# Associate roles with users
 User.changeset(user)
 |> Ecto.Changeset.put_assoc(:roles, [role])
 |> Nexpo.Repo.update!
@@ -45,13 +46,12 @@ User.changeset(test_user)
 |> Ecto.Changeset.put_assoc(:roles, [pleb_role])
 |> Nexpo.Repo.update!
 
-#Associate role with user
+# Associate students with users
 alias Nexpo.Student
-
 Student.build_assoc!(user)
 Student.build_assoc!(test_user)
 
-#Create some companies
+# Create some companies
 alias Nexpo.Company
 Repo.insert!(%Company{name: "Spotify", description: "We do music!", website: "www.spotify.com", student_session_days: 1})
 Repo.insert!(%Company{name: "Google", description: "We code!", website: "www.google.com", student_session_days: 2})
@@ -61,21 +61,19 @@ Repo.insert!(%Company{name: "Jesus wine makers", description: "We do wine!", web
 
 google = Repo.get_by!(Company, %{name: "Google"})
 
+# Associate representatives with users
 alias Nexpo.Representative
-
 Representative.build_assoc!(rep_user, google.id)
 
-#Create some Categories
+# Create some Categories
 alias Nexpo.Category
-
 Repo.insert!(%Category{title: "Logistik"})
 Repo.insert!(%Category{title: "Avtal"})
 Repo.insert!(%Category{title: "Övrigt"})
 Repo.insert!(%Category{title: "Event"})
 
-#Create some Category attributes
+# Create some Category attributes
 alias Nexpo.CategoryAttribute
-
 Repo.insert!(%CategoryAttribute{title: "Eluttag", category_id: 1})
 Repo.insert!(%CategoryAttribute{title: "Internetkoder", category_id: 1})
 Repo.insert!(%CategoryAttribute{title: "Ståbord", category_id: 1})
@@ -103,9 +101,8 @@ Repo.insert!(%StudentSessionApplication{motivation: "Im really good", company_id
 Repo.insert!(%StudentSessionApplication{motivation: "Im awesome good", company_id: 2, student_id: 2})
 Repo.insert!(%StudentSessionApplication{motivation: "Im awesome really good", company_id: 4, student_id: 2})
 
-#Create some random company entries
+# Create some random company entries
 alias Nexpo.CompanyEntry
-
 SeedEntries.seed(Repo, CompanyEntry, 100)
 
 # Create some mailtemplates
@@ -127,3 +124,14 @@ Repo.insert!(%StudentSession{start: ~N[2000-01-01 23:00:00], end: ~N[2040-01-01 
 Repo.insert!(%StudentSession{start: ~N[2000-01-01 23:00:00], end: ~N[2040-01-01 23:00:00], company_id: 2, student_id: 2})
 Repo.insert!(%StudentSession{start: ~N[2000-01-01 23:00:00], end: ~N[2040-01-01 23:00:00], company_id: 4, student_id: 1})
 Repo.insert!(%StudentSession{start: ~N[2000-01-01 23:00:00], end: ~N[2040-01-01 23:00:00], company_id: 3, student_id: 1})
+
+
+# Create some programmes
+alias Nexpo.Programme
+Repo.insert!(%Programme{name: "F-Guild", code: "F"})
+Repo.insert!(%Programme{name: "E-Guild", code: "E"})
+Repo.insert!(%Programme{name: "M-Guild", code: "M"})
+Repo.insert!(%Programme{name: "V-Guild", code: "V"})
+Repo.insert!(%Programme{name: "A-Guild", code: "A"})
+Repo.insert!(%Programme{name: "K-Guild", code: "K"})
+Repo.insert!(%Programme{name: "D-Guild", code: "D"})

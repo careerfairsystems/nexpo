@@ -2,7 +2,7 @@ defmodule Nexpo.StudentController do
   use Nexpo.Web, :controller
   use Guardian.Phoenix.Controller
 
-  alias Nexpo.Student
+  alias Nexpo.{Student, Programme}
   alias Nexpo.{CvSv, CvEn}
   alias Guardian.Plug.{EnsurePermissions}
 
@@ -39,8 +39,7 @@ defmodule Nexpo.StudentController do
   def show(conn, %{"id" => id}, _user, _claims) do
     student = Student
         |> Repo.get!(id)
-        |> Repo.preload(:student_sessions)
-        |> Repo.preload(:student_session_applications)
+        |> Repo.preload([:student_sessions, :student_session_applications])
     render(conn, "show.json", student: student)
   end
 
@@ -61,17 +60,21 @@ defmodule Nexpo.StudentController do
 
   def update_student(conn, %{"student" => student_params}, user, _claims) do
     student = Repo.get_by!(Student, %{user_id: user.id})
+              |> Repo.preload(:programme)
 
-    deleted_files = student_params
-      |> Enum.filter(fn {k, v} ->
-        k in ["resume_sv_url", "resume_en_url"] and v == "null" end)
+    # We need to set "null" to nil, since FormData can't send null values
+    null_params = student_params
+      |> Enum.filter(fn {_k, v} -> v == "null" end)
       |> Enum.map(fn {k, _v} -> {k, nil} end)
       |> Map.new
 
-    student_params = Map.merge(student_params, deleted_files)
+    student_params = Map.merge(student_params, null_params)
     changeset = Student.changeset(student, student_params)
+                |> Programme.put_assoc(student_params)
 
-    Enum.each(deleted_files, fn {k, _v} ->
+    Map.keys(student_params)
+    |> Enum.filter(fn k -> k in ["resume_sv_url", "resume_en_url"] end)
+    |> Enum.each(fn k ->
       delete_file?(student, student_params, String.to_atom(k))
     end)
 

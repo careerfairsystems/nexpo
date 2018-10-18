@@ -20,6 +20,7 @@ defmodule Nexpo.RoleController do
 
   def create(conn, %{"role" => role_params}) do
     changeset = Role.changeset(%Role{}, role_params)
+                |> User.put_assoc(role_params)
 
     case Repo.insert(changeset) do
       {:ok, role} ->

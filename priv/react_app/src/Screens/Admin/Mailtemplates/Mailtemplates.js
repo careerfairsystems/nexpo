@@ -90,7 +90,7 @@ class Mailtemplates extends Component {
             }))
           )}
         />
-        <InvisibleLink to="/mailtemplates/new">
+        <InvisibleLink to="/admin/mailtemplates/new">
           <Button onClick={() => null} type="primary">
             New mailtemplate
           </Button>

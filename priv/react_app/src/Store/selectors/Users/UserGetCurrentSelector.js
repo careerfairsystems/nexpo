@@ -2,15 +2,15 @@ import { denormalize } from 'normalizr';
 import Schema from '../../normalizr/schema';
 
 export const getCurrentUser = state => {
-  const user = state.entities.users[state.current.user] || {};
-
-  const { roles } = denormalize(
-    { roles: user.roles },
-    Schema.userSchema(),
+  const {
+    users: [user]
+  } = denormalize(
+    { users: [state.current.user] },
+    { users: Schema.usersSchema() },
     state.entities
   );
-  if (roles) return { ...user, roles };
-  return { ...user };
+
+  return user;
 };
 
 export default { getCurrentUser };

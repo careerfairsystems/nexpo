@@ -52,7 +52,13 @@ defmodule Nexpo.UserController do
   end
 
   def show_me(conn, %{}, user, _claims) do
-    user = Repo.preload(user, [:roles, [student: [student_sessions: :company, student_session_applications: :company]], [representative: :company]])
+    user = Repo.preload(user, [
+      :roles,
+      [student: [
+        :programme,
+        student_sessions: :company,
+        student_session_applications: :company]],
+      [representative: :company]])
     conn |> put_status(200) |> render("show.json", user: user)
   end
 
