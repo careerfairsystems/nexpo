@@ -73,9 +73,13 @@ StudentForm.propTypes = {
 const mapStateToProps = (state, props) => {
   const { initialValues = {} } = props;
   const {
+    programme: currentProgramme,
     resumeSvUrl: currentResumeSvUrl,
     resumeEnUrl: currentResumeEnUrl
   } = initialValues;
+
+  let programme = null;
+  if (!isNil(currentProgramme)) programme = currentProgramme.id;
 
   let resumeSvUrl = null;
   if (!isNil(currentResumeSvUrl))
@@ -87,7 +91,7 @@ const mapStateToProps = (state, props) => {
 
   return {
     programmes: state.entities.programmes,
-    initialValues: { ...initialValues, resumeSvUrl, resumeEnUrl },
+    initialValues: { ...initialValues, resumeSvUrl, resumeEnUrl, programme },
     formState: state.form.StudentForm
   };
 };
