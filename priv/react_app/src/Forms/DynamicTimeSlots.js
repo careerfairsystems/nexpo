@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Form, List, Input, Checkbox, Icon, Button } from 'antd';
+import { Table, Input, Checkbox, Button } from 'antd';
 import { Field } from 'redux-form';
 import moment from 'moment';
 import makeField from './helper';
@@ -37,37 +37,46 @@ const generateTimeSlots = (fields, values) => {
   }
 };
 
-const renderTimeSlot = (timeSlot, index) => (
-  <List.Item key={index}>
-    <Field
-      name={`${timeSlot}.start`}
-      type="text"
-      component={MyDatePicker}
-      label="Start Time"
-    />
-    <Field
-      name={`${timeSlot}.end`}
-      type="text"
-      component={MyDatePicker}
-      label="End Time"
-    />
-    <Field
-      name={`${timeSlot}.location`}
-      type="text"
-      component={TextInput}
-      label="Location"
-    />
-    <Field
-      name={`${timeSlot}.delete`}
-      type="checkbox"
-      component={FieldCheckbox}
-      label="Delete"
-    />
-  </List.Item>
-);
+const columns = [
+  {
+    title: 'Start Time',
+    key: 'start',
+    render: timeSlot => (
+      <Field name={`${timeSlot}.start`} type="text" component={MyDatePicker} />
+    )
+  },
+  {
+    title: 'End Time',
+    key: 'end',
+    render: timeSlot => (
+      <Field name={`${timeSlot}.end`} type="text" component={MyDatePicker} />
+    )
+  },
+  {
+    title: 'Location',
+    key: 'location',
+    render: timeSlot => (
+      <Field name={`${timeSlot}.location`} type="text" component={TextInput} />
+    )
+  },
+  {
+    title: 'Action',
+    key: 'action',
+    render: timeSlot => (
+      <>
+        Delete:{' '}
+        <Field
+          name={`${timeSlot}.delete`}
+          type="checkbox"
+          component={FieldCheckbox}
+        />
+      </>
+    )
+  }
+];
 
-const DynamicTimeSlots = ({ fields, fieldValues, ...rest }) => (
-  <Form.Item>
+const DynamicTimeSlots = ({ fields, fieldValues }) => (
+  <div className="student-session-time-slots">
     <Field
       name="startDate"
       type="text"
@@ -80,6 +89,8 @@ const DynamicTimeSlots = ({ fields, fieldValues, ...rest }) => (
       label="Sessions end date and time"
       component={MyDatePicker}
     />
+    <Field name="location" type="text" component={TextInput} label="Location" />
+    <br />
     <Field
       name="timeslotLength"
       type="number"
@@ -95,32 +106,35 @@ const DynamicTimeSlots = ({ fields, fieldValues, ...rest }) => (
       label="Break length"
       addonAfter="minutes"
     />
-    <Field name="location" type="text" component={TextInput} label="Location" />
+    <br />
     <Button
-      onClick={() => generateTimeSlots(fields, fieldValues)}
       type="secondary"
+      onClick={() => generateTimeSlots(fields, fieldValues)}
     >
       Generate
     </Button>
-    <List
-      size="large"
-      bordered
-      locale={{ emptyText: 'No Student Time Slots' }}
-      dataSource={fields.map(i => i)}
-      renderItem={renderTimeSlot}
-    />
-    <Button type="dashed" onClick={() => fields.push({})}>
-      <Icon type="plus" />
-      Add Date
+    <br />
+    <br />
+    <Button type="primary" onClick={() => fields.push({})}>
+      Add a row
     </Button>
-  </Form.Item>
+    <br />
+    <br />
+    <Table
+      size="small"
+      dataSource={fields.map(i => i)}
+      columns={columns}
+      locale={{ emptyText: 'No Student Time Slots' }}
+    />
+  </div>
 );
 
 DynamicTimeSlots.propTypes = {
   fields: PropTypes.shape({
     map: PropTypes.func.isRequired,
     push: PropTypes.func.isRequired
-  }).isRequired
+  }).isRequired,
+  fieldValues: PropTypes.object.isRequired
 };
 
 export default DynamicTimeSlots;

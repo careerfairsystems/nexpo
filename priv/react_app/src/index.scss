@@ -12,6 +12,10 @@ h1 {
 
 table {
   table-layout: fixed;
+  .ant-form-item {
+    display: inline-block;
+    margin: 0;
+  }
 }
 
 img {
