@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { isEmpty, isNil, map, join } from 'lodash/fp';
+import { isEmpty, isNil, map, join, getOr } from 'lodash/fp';
 import { Button } from 'antd';
 import HtmlTitle from '../../../../Components/HtmlTitle';
 import LoadingSpinner from '../../../../Components/LoadingSpinner';
@@ -52,21 +52,26 @@ class UserShow extends Component {
 
   renderStudent = () => {
     const {
-      user: { student }
+      user: { student = {} }
     } = this.props;
+    const {
+      year,
+      resumeSvUrl,
+      resumeEnUrl,
+      programme,
+      studentSessionApplications = [],
+      studentSessions = []
+    } = student;
 
     return (
       <>
-        <p>Resume Sv: {student.resumeSvUrl || 'None'}</p>
-        <p>Resume En: {student.resumeEnUrl || 'None'}</p>
-        <p>
-          Programme: {(student.programme && student.programme.name) || 'None'}
-        </p>
-        <p>Student Session: {join(', ', student.studentSessions) || 'None'}</p>
-        <p>
-          Student Session Applications:
-          {join(', ', student.studentSessionApplications) || 'None'}
-        </p>
+        <h2>Student Information</h2>
+        <p>Year: {year || 'None'}</p>
+        <p>Resume Sv: {resumeSvUrl || 'None'}</p>
+        <p>Resume En: {resumeEnUrl || 'None'}</p>
+        <p>Programme: {programme && programme.name}</p>
+        <p>Student Session Applications: {studentSessionApplications.length}</p>
+        <p>Student Sessions: {studentSessions && studentSessions.length}</p>
       </>
     );
   };
