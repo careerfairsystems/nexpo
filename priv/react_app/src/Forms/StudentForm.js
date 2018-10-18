@@ -24,6 +24,7 @@ const StudentForm = ({ handleSubmit, pristine, programmes }) => (
       name="programme"
       label="Guild:"
       showSearch
+      format={null}
       optionFilterProp="children"
       component={FieldSelect}
     >
