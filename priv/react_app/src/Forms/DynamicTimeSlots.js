@@ -152,7 +152,11 @@ DynamicTimeSlots.propTypes = {
     map: PropTypes.func.isRequired,
     push: PropTypes.func.isRequired
   }).isRequired,
-  fieldValues: PropTypes.object.isRequired
+  fieldValues: PropTypes.object
+};
+
+DynamicTimeSlots.defaultProps = {
+  fieldValues: {}
 };
 
 export default DynamicTimeSlots;
