@@ -3,24 +3,17 @@ import PropTypes from 'prop-types';
 import { Field, FieldArray, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import { isNil } from 'lodash/fp';
-import { Button, Form, Input, Radio } from 'antd';
+import { Button, Form, Input } from 'antd';
 
+import moment from 'moment';
 import makeField, { required } from './helper';
 import UploadButton from './UploadButton';
 import DynamicTimeSlots from './DynamicTimeSlots';
 
-const plainOptions = [
-  { value: 0, label: 'No days' },
-  { value: 1, label: 'First day' },
-  { value: 2, label: 'Second day' },
-  { value: 3, label: 'Both days' }
-];
-
 const TextInput = makeField(Input);
 const TextArea = makeField(Input.TextArea);
-const RadioGroup = makeField(Radio.Group);
 
-const CompanyForm = ({ handleSubmit, onCancel, submitting }) => (
+const CompanyForm = ({ handleSubmit, onCancel, submitting, formState }) => (
   <Form onSubmit={handleSubmit}>
     <Field
       name="name"
@@ -44,19 +37,17 @@ const CompanyForm = ({ handleSubmit, onCancel, submitting }) => (
       required
     />
     <Field
-      name="studentSessionDays"
-      label="Student Session Days:"
-      options={plainOptions}
-      component={RadioGroup}
-    />
-    <Field
       name="logoUrl"
       label="Logo"
       accept=".jpg,.jpeg,.gif,.png"
       component={UploadButton}
     />
     <h3>Student Session Time Slots</h3>
-    <FieldArray name="studentSessionTimeSlots" component={DynamicTimeSlots} />
+    <FieldArray
+      name="studentSessionTimeSlots"
+      component={DynamicTimeSlots}
+      fieldValues={formState.values}
+    />
     {onCancel && <Button onClick={onCancel}>Cancel</Button>}
     <Button disabled={submitting} htmlType="submit" type="primary">
       Submit
@@ -77,14 +68,20 @@ CompanyForm.propTypes = {
 const mapStateToProps = (state, props) => {
   const { initialValues = {} } = props;
   const { logoUrl: currentLogoUrl } = initialValues;
-
   let logoUrl = null;
   if (!isNil(currentLogoUrl))
     logoUrl = { uid: '-1', name: 'Logotype', url: currentLogoUrl };
 
   return {
-    initialValues: { ...initialValues, logoUrl },
-    formState: state.form.CompanyForm
+    initialValues: {
+      ...initialValues,
+      timeslotLength: 20,
+      breakLength: 10,
+      startDate: moment.utc('2018-11-14:10:00', 'YYYY-MM-DD:HH:mm'),
+      endDate: moment.utc('2018-11-15:16:00', 'YYYY-MM-DD:HH:mm'),
+      logoUrl
+    },
+    formState: state.form.company || {}
   };
 };
 
