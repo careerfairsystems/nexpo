@@ -39,14 +39,14 @@ const sessionApplicationSchema = () => {
   const company = entity(
     'companies',
     {},
-    { model: hasMany('student_session_applications') }
+    { model: hasMany('studentSessionApplications') }
   );
   const student = entity(
     'students',
     {},
-    { model: hasMany('student_session_applications') }
+    { model: hasMany('studentSessionApplications') }
   );
-  const application = entity('student_session_applications', {
+  const application = entity('studentSessionApplications', {
     company,
     student
   });
@@ -57,14 +57,10 @@ const studentSessionSchema = () => {
   const company = entity(
     'companies',
     {},
-    { model: hasMany('student_sessions') }
+    { model: hasMany('studentSessions') }
   );
-  const student = entity(
-    'students',
-    {},
-    { model: hasMany('student_sessions') }
-  );
-  const session = entity('student_sessions', {
+  const student = entity('students', {}, { model: hasMany('studentSessions') });
+  const session = entity('studentSessions', {
     company,
     student
   });
@@ -122,7 +118,12 @@ const roleSchema = () => {
 const rolesSchema = () => [roleSchema()];
 
 const studentSchema = () => {
-  const student = entity('students', {}, { model: belongsTo('user') });
+  const programme = entity('programmes', {}, { model: belongsTo('student') });
+  const student = entity(
+    'students',
+    { programme },
+    { model: belongsTo('user') }
+  );
 
   return student;
 };
@@ -132,20 +133,22 @@ const studentsSchema = () => [studentSchema()];
 const userSchema = () => {
   const company = entity('companies');
   const sessionApplication = entity(
-    'student_session_applications',
+    'studentSessionApplications',
     { company },
     { model: belongsTo('student') }
   );
   const studentSession = entity(
-    'student_sessions',
+    'studentSessions',
     { company },
     { model: belongsTo('student') }
   );
+  const programme = entity('programmes', {}, { model: belongsTo('student') });
   const student = entity(
     'students',
     {
-      student_session_applications: [sessionApplication],
-      student_sessions: [studentSession]
+      programme,
+      studentSessionApplications: [sessionApplication],
+      studentSessions: [studentSession]
     },
     { model: belongsTo('user') }
   );

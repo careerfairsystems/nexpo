@@ -5,6 +5,7 @@ import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import { Select, Input, Form, Button } from 'antd';
 import makeField from './helper';
+import { Selectors } from '../Store';
 
 const InputSelect = makeField(Select);
 const TextArea = makeField(Input.TextArea);
@@ -21,7 +22,11 @@ const requiredCompany = value =>
 const requiredMotivation = value =>
   value ? undefined : 'Please provide a motivation';
 
-const StudentSessionForm = ({ handleSubmit, companies, submitting }) => (
+const StudentSessionForm = ({
+  handleSubmit,
+  availableCompanies,
+  submitting
+}) => (
   <Form onSubmit={handleSubmit}>
     <Field
       label="Choose the company you would like to meet"
@@ -33,7 +38,7 @@ const StudentSessionForm = ({ handleSubmit, companies, submitting }) => (
       validate={requiredCompany}
       component={InputSelect}
     >
-      {map(companyOption, companies)}
+      {map(companyOption, availableCompanies)}
     </Field>
     <Field
       name="motivation"
@@ -51,12 +56,13 @@ const StudentSessionForm = ({ handleSubmit, companies, submitting }) => (
 );
 
 StudentSessionForm.propTypes = {
-  companies: PropTypes.array.isRequired,
+  availableCompanies: PropTypes.array.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   submitting: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = state => ({
+  availableCompanies: Selectors.companies.getNotAppliedTo(state),
   formState: state.form.StudentSessionForm
 });
 

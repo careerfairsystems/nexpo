@@ -1,21 +1,40 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { isEmpty, omit } from 'lodash/fp';
+import { isEmpty } from 'lodash/fp';
 import { Button, Modal } from 'antd';
 import LoadingSpinner from '../../Components/LoadingSpinner';
 import NotFound from '../NotFound';
 import CurrentUserForm from '../../Forms/CurrentUserForm';
 import StudentForm from '../../Forms/StudentForm';
 
-const { confirm } = Modal;
 class CurrentUser extends Component {
+  static propTypes = {
+    currentUser: PropTypes.shape({
+      email: PropTypes.string,
+      student: PropTypes.object
+    }),
+    currentStudent: PropTypes.object,
+    fetching: PropTypes.bool.isRequired,
+    updateCurrentUser: PropTypes.func.isRequired,
+    updateCurrentStudent: PropTypes.func.isRequired,
+    getAllProgrammes: PropTypes.func.isRequired,
+    destroyCurrentUser: PropTypes.func.isRequired,
+    logout: PropTypes.func.isRequired,
+    resetForm: PropTypes.func.isRequired
+  };
+
+  static defaultProps = {
+    currentUser: {},
+    currentStudent: {}
+  };
+
   componentWillMount() {
-    const { getCurrentUser } = this.props;
-    getCurrentUser();
+    const { getAllProgrammes } = this.props;
+    getAllProgrammes();
   }
 
   showConfirm = () => {
-    confirm({
+    Modal.confirm({
       title: 'Do you want to delete your account?',
       onOk: () => {
         this.destroyCurrentUser();
@@ -68,38 +87,25 @@ class CurrentUser extends Component {
             Delete Account
           </Button>
         </h1>
-        <h2>Email: {email}</h2>
+        <p>Email: {email}</p>
         <CurrentUserForm
           onSubmit={this.updateUser}
           initialValues={currentUser}
         />
         {!isEmpty(currentStudent) && (
-          <StudentForm
-            onSubmit={this.updateStudent}
-            onSubmitSuccess={this.resetStudentForm}
-            initialValues={omit('year', currentStudent) || {}}
-          />
+          <>
+            <br />
+            <h2>Student Information</h2>
+            <StudentForm
+              onSubmit={this.updateStudent}
+              onSubmitSuccess={this.resetStudentForm}
+              initialValues={currentStudent}
+            />
+          </>
         )}
       </div>
     );
   }
 }
-CurrentUser.propTypes = {
-  currentUser: PropTypes.shape({
-    email: PropTypes.string,
-    student: PropTypes.number
-  }).isRequired,
-  currentStudent: PropTypes.shape({
-    resumeEnUrl: PropTypes.string,
-    resumeSvUrl: PropTypes.string
-  }).isRequired,
-  fetching: PropTypes.bool.isRequired,
-  getCurrentUser: PropTypes.func.isRequired,
-  destroyCurrentUser: PropTypes.func.isRequired,
-  logout: PropTypes.func.isRequired,
-  resetForm: PropTypes.func.isRequired,
-  updateCurrentUser: PropTypes.func.isRequired,
-  updateCurrentStudent: PropTypes.func.isRequired
-};
 
 export default CurrentUser;

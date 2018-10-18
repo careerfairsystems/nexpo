@@ -48,6 +48,8 @@ defmodule Nexpo.Support.View do
         %{:student => render_one(object.student, Nexpo.StudentView, "student.json")}
       :representative ->
         %{:representative => render_one(object.representative, Nexpo.RepresentativeView, "representative.json")}
+      :programme ->
+        %{:programme => render_one(object.programme, Nexpo.ProgrammeView, "programme.json")}
       :student_session_applications ->
         %{:student_session_applications => render_many(
             object.student_session_applications,

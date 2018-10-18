@@ -18,12 +18,11 @@ describe('userform should function correctly', () => {
         lastName: 'Smith',
         phoneNumber: '11111',
         foodPreferences: 'Cake',
-        roles: [],
-        student: 1
+        roles: []
       },
-
       fetching: false,
       getCurrentUser: jest.fn(),
+      getAllProgrammes: jest.fn(),
       destroyCurrentUser: jest.fn(),
       logout: jest.fn(),
       resetForm: jest.fn(),

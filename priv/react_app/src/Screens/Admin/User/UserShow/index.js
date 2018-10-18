@@ -6,16 +6,17 @@ import UserShow from './UserShow';
 
 const mapStateToProps = (state, props) => {
   const userId = props.match.params.id;
-  const user = state.entities.users[userId] || {};
   const { fetching } = state.api.users;
 
-  const { roles } = denormalize(
-    { roles: user.roles },
-    Schema.userSchema(),
+  const {
+    users: [user]
+  } = denormalize(
+    { users: [userId] },
+    { users: Schema.usersSchema() },
     state.entities
   );
 
-  return { id: userId, user: { ...user, roles }, fetching };
+  return { id: userId, user, fetching };
 };
 
 const mapDispatchToProps = {

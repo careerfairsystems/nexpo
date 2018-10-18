@@ -9,7 +9,9 @@ defmodule Nexpo.Student do
     field :year, :integer
     field :resume_en_url, Nexpo.CvEn.Type
     field :resume_sv_url, Nexpo.CvSv.Type
+
     belongs_to :user, Nexpo.User, foreign_key: :user_id
+    belongs_to :programme, Nexpo.Programme, on_replace: :delete
 
     has_many :student_sessions, Nexpo.StudentSession, on_delete: :nilify_all
     has_many :student_session_applications, Nexpo.StudentSessionApplication, on_delete: :nilify_all
