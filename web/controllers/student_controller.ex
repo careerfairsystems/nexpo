@@ -64,8 +64,7 @@ defmodule Nexpo.StudentController do
 
     # We need to set "null" to nil, since FormData can't send null values
     null_params = student_params
-      |> Enum.filter(fn {k, v} ->
-        k in ["resume_sv_url", "resume_en_url", "programme"] and v == "null" end)
+      |> Enum.filter(fn {_k, v} -> v == "null" end)
       |> Enum.map(fn {k, _v} -> {k, nil} end)
       |> Map.new
 

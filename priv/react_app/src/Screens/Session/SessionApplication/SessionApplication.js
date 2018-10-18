@@ -10,7 +10,6 @@ import '../Session.css';
 
 class SessionApplication extends Component {
   static propTypes = {
-    programmes: PropTypes.object,
     fetching: PropTypes.bool.isRequired,
     currentUser: PropTypes.shape({
       email: PropTypes.string,
@@ -25,10 +24,6 @@ class SessionApplication extends Component {
     createStudentSessionAppl: PropTypes.func.isRequired,
     updateCurrentStudent: PropTypes.func.isRequired,
     resetForm: PropTypes.func.isRequired
-  };
-
-  static defaultProps = {
-    programmes: {}
   };
 
   componentWillMount() {

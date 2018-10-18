@@ -85,8 +85,7 @@ defmodule Nexpo.CompanyController do
 
     # We need to set "null" to nil, since FormData can't send null values
     null_params = company_params
-      |> Enum.filter(fn {k, v} ->
-        k in ["logo_url"] and v == "null" end)
+      |> Enum.filter(fn {_k, v} -> v == "null" end)
       |> Enum.map(fn {k, _v} -> {k, nil} end)
       |> Map.new
 

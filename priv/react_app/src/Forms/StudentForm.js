@@ -5,7 +5,7 @@ import { Field, reduxForm } from 'redux-form';
 import { isNil, map } from 'lodash/fp';
 import { Button, Form, Input, Select } from 'antd';
 
-import makeField, { required } from './helper';
+import makeField from './helper';
 import UploadButton from './UploadButton';
 
 const TextInput = makeField(Input);
@@ -19,13 +19,7 @@ const renderProgrammeItem = programme => (
 
 const StudentForm = ({ handleSubmit, pristine, programmes }) => (
   <Form onSubmit={handleSubmit}>
-    <Field
-      name="year"
-      label="Starting Year"
-      component={TextInput}
-      validate={required}
-      required
-    />
+    <Field name="year" label="Starting Year" component={TextInput} />
     <Field
       name="programme"
       label="Programme:"
