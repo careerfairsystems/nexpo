@@ -42,7 +42,7 @@ class Programmes extends Component {
         const { deleteProgramme } = this.props;
         return (
           <span>
-            <InvisibleLink to={`/admin/programme/${programme.id}`}>
+            <InvisibleLink to={`/admin/programmes/${programme.id}`}>
               Edit
             </InvisibleLink>
             <Divider type="vertical" />

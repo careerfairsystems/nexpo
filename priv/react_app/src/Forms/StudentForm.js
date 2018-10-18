@@ -22,7 +22,7 @@ const StudentForm = ({ handleSubmit, pristine, programmes }) => (
     <Field name="year" label="Starting Year" component={TextInput} />
     <Field
       name="programme"
-      label="Programme:"
+      label="Guild:"
       showSearch
       optionFilterProp="children"
       component={FieldSelect}

@@ -67,8 +67,8 @@ class UserShow extends Component {
       <>
         <h2>Student Information</h2>
         <p>Year: {year || 'None'}</p>
-        <p>Resume Sv: {resumeSvUrl || 'None'}</p>
-        <p>Resume En: {resumeEnUrl || 'None'}</p>
+        <p>Resume Sv: {resumeSvUrl ? 'Yes' : 'No'}</p>
+        <p>Resume En: {resumeEnUrl ? 'Yes' : 'No'}</p>
         <p>Programme: {programme && programme.name}</p>
         <p>Student Session Applications: {studentSessionApplications.length}</p>
         <p>Student Sessions: {studentSessions.length}</p>
