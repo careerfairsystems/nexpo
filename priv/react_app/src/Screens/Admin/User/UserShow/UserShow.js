@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-
-import { isEmpty, isNil, map, join, getOr } from 'lodash/fp';
+import { isEmpty, isNil, map } from 'lodash/fp';
 import { Button } from 'antd';
+
 import HtmlTitle from '../../../../Components/HtmlTitle';
 import LoadingSpinner from '../../../../Components/LoadingSpinner';
 import InvisibleLink from '../../../../Components/InvisibleLink';
