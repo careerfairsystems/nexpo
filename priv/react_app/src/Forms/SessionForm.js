@@ -5,6 +5,7 @@ import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import { Select, Input, Form, Button } from 'antd';
 import makeField from './helper';
+import { Selectors } from '../Store';
 
 const InputSelect = makeField(Select);
 const TextArea = makeField(Input.TextArea);
@@ -61,6 +62,7 @@ StudentSessionForm.propTypes = {
 };
 
 const mapStateToProps = state => ({
+  availableCompanies: Selectors.companies.getNotAppliedTo(state),
   formState: state.form.StudentSessionForm
 });
 

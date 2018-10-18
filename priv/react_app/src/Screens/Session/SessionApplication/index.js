@@ -5,7 +5,6 @@ import SessionApplication from './SessionApplication';
 import type { State } from '../../../Store/reducers';
 
 const mapStateToProps = (state: State) => ({
-  companies: Selectors.companies.getNotAppliedTo(state),
   currentStudent: Selectors.students.getCurrentStudent(state),
   currentUser: Selectors.users.getCurrentUser(state),
   fetching: state.api.currentUser.fetching
