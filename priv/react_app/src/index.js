@@ -18,7 +18,7 @@ if (process.env.NODE_ENV === 'production') {
   setupErrorTracking();
 }
 
-if (fetch) {
+if (window.fetch) {
   const store = getStore();
 
   store.dispatch(Actions.users.getCurrentUser());
