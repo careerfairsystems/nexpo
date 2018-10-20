@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { isEmpty, isNil, map } from 'lodash/fp';
+import { isEmpty, map } from 'lodash/fp';
 import { Button } from 'antd';
 
 import HtmlTitle from '../../../../Components/HtmlTitle';
@@ -16,7 +16,7 @@ import '../User.css';
 class UserShow extends Component {
   static propTypes = {
     id: PropTypes.string,
-    user: PropTypes.object.isRequired,
+    user: PropTypes.object,
     fetching: PropTypes.bool.isRequired,
     getUser: PropTypes.func.isRequired,
     match: PropTypes.shape({
@@ -26,6 +26,7 @@ class UserShow extends Component {
 
   static defaultProps = {
     id: null,
+    user: {},
     match: {
       path: ''
     }
@@ -80,7 +81,7 @@ class UserShow extends Component {
     const { user, fetching } = this.props;
 
     if (fetching) return <LoadingSpinner />;
-    if (isEmpty(user) || isNil(user)) return <NotFound />;
+    if (isEmpty(user)) return <NotFound />;
 
     return (
       <div className="user-show-view">
