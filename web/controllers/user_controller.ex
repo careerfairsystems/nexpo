@@ -25,8 +25,8 @@ defmodule Nexpo.UserController do
             :roles,
             [student: [
               :programme,
-              student_sessions: :company,
-              student_session_applications: :company]],
+              :student_sessions,
+              :student_session_applications]],
             [representative: :company]])
 
     render(conn, "show.json", user: user)
