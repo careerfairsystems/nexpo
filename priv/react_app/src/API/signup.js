@@ -1,4 +1,5 @@
 import { handleHttpResponse, authPost, fetchJson } from './utils';
+import 'whatwg-fetch'; // fetch polyfill for unsupported browsers
 
 type finalSignupBody = {
   password: string,
