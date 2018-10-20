@@ -18,17 +18,15 @@ if (process.env.NODE_ENV === 'production') {
   setupErrorTracking();
 }
 
-if (window.fetch) {
-  const store = getStore();
+const store = getStore();
 
-  store.dispatch(Actions.users.getCurrentUser());
+store.dispatch(Actions.users.getCurrentUser());
 
-  ReactDOM.render(
-    <Provider store={store}>
-      <BrowserRouter>
-        <Route component={App} />
-      </BrowserRouter>
-    </Provider>,
-    document.getElementById('root')
-  );
-}
+ReactDOM.render(
+  <Provider store={store}>
+    <BrowserRouter>
+      <Route component={App} />
+    </BrowserRouter>
+  </Provider>,
+  document.getElementById('root')
+);
