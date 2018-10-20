@@ -23,10 +23,13 @@ img {
 }
 
 .logo {
+  position: relative;
   width: 80px;
-  height: 64px;
+  top: 5px;
+  height: 54px;
   background: url('/images/arkad-blue.svg');
   background-size: contain;
+  background-repeat: no-repeat;
   margin: 0 28px 0 0;
   float: left;
 }
