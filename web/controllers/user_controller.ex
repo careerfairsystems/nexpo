@@ -20,7 +20,14 @@ defmodule Nexpo.UserController do
   end
 
   def show(conn, %{"id" => id}, _user, _claims) do
-    user = Repo.get!(User, id) |> Repo.preload([:roles, :student, :representative])
+    user = Repo.get!(User, id)
+          |> Repo.preload([
+            :roles,
+            [student: [
+              :programme,
+              :student_sessions,
+              :student_session_applications]],
+            [representative: :company]])
 
     render(conn, "show.json", user: user)
   end
@@ -101,7 +108,7 @@ defmodule Nexpo.UserController do
   """
   def forgot_password_init(conn, %{"email" => email}, _user, _claims) do
     user = Repo.get_by(User, email: email)
-    if user != nil do
+    if user != nil and user.hashed_password != nil do
       user = User.forgot_password_changeset(user) |> Repo.update!
       Email.reset_password(user) |> Mailer.deliver_later
     end
