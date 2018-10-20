@@ -101,7 +101,7 @@ defmodule Nexpo.UserController do
   """
   def forgot_password_init(conn, %{"email" => email}, _user, _claims) do
     user = Repo.get_by(User, email: email)
-    if user != nil do
+    if user != nil and user.hashed_password != nil do
       user = User.forgot_password_changeset(user) |> Repo.update!
       Email.reset_password(user) |> Mailer.deliver_later
     end
