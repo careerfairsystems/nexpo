@@ -41,8 +41,8 @@ defmodule Nexpo.Router do
     put "/me", UserController, :update_me
     delete "/me", UserController, :delete_me
     put "/me/student", StudentController, :update_student
-    delete "/me/student_session_applications/:id", StudentSessionApplicationController, :delete_me
-    put "/me/student_session_applications/:id", StudentSessionApplicationController, :update_me
+    # delete "/me/student_session_applications/:id", StudentSessionApplicationController, :delete_me
+    # put "/me/student_session_applications/:id", StudentSessionApplicationController, :update_me
     put "/me/student_sessions/:id", StudentSessionController, :update_me
     get "/me/company", CompanyController, :show_me
     put "/me/company", CompanyController, :update_me
@@ -70,7 +70,7 @@ defmodule Nexpo.Router do
     resources "/deadlines", DeadlineController
     resources "/mailtemplates", MailtemplateController
 
-    resources "/student_session_applications", StudentSessionApplicationController, only: [:create]
+    # resources "/student_session_applications", StudentSessionApplicationController, only: [:create]
   end
 
   # Not-protected endpoints
