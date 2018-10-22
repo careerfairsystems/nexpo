@@ -1,38 +1,46 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { zipWith } from 'lodash/fp';
 import { Table, Input, Checkbox, Button } from 'antd';
 import { Field } from 'redux-form';
 import moment from 'moment';
 import makeField, { required } from './helper';
 import DatePicker from '../Components/DatePicker';
+import TimePicker from '../Components/TimePicker';
 
 const TextInput = makeField(Input);
 const FieldCheckbox = makeField(Checkbox);
 const MyDatePicker = makeField(DatePicker);
+const MyTimePicker = makeField(TimePicker);
 
 const generateTimeSlots = (fields, values) => {
-  const { startDate, endDate, timeslotLength, breakLength, location } = values;
+  const {
+    date,
+    startTime,
+    endTime,
+    timeslotLength,
+    breakLength,
+    location
+  } = values;
+  if (!date || !startTime || !endTime) return;
 
-  const startTime = moment.utc(startDate);
-  const endTime = moment.utc(endDate);
+  const current = moment.utc(`${date} ${startTime}`, 'YYYY-MM-DD HH:mm');
+  const end = moment.utc(`${date} ${endTime}`, 'YYYY-MM-DD HH:mm');
+  const lunchStart = moment.utc(`${date} 12:00`, 'YYYY-MM-DD HH:mm');
+  const lunchEnd = moment.utc(`${date} 13:00`, 'YYYY-MM-DD HH:mm');
+  const sessionLength = timeslotLength + breakLength;
 
-  const totSessionTime = timeslotLength + breakLength;
-
-  while (!startTime.isAfter(endTime)) {
-    if (
-      (startTime.isSameOrAfter(moment.utc(startTime).hours(12), 'hour') &&
-        startTime.isBefore(moment.utc(startTime).hours(13), 'hour')) ||
-      startTime.isBefore(moment.utc(startTime).hours(10), 'hour') ||
-      startTime.isSameOrAfter(moment.utc(startTime).hours(16), 'hour')
-    ) {
-      startTime.add(1, 'hours');
+  while (current.isBefore(end)) {
+    if (current.isBetween(lunchStart, lunchEnd, null, '[)')) {
+      current.hours(13);
     } else {
       fields.push({
-        start: moment.utc(startTime),
-        end: moment.utc(startTime).add(totSessionTime, 'minutes'),
+        key: current.toISOString(),
+        start: moment.utc(current),
+        end: moment.utc(current).add(sessionLength, 'minutes'),
         location
       });
-      startTime.add(totSessionTime, 'minutes');
+      current.add(sessionLength, 'minutes');
     }
   }
 };
@@ -41,10 +49,13 @@ const columns = [
   {
     title: 'Start Time',
     key: 'start',
+    dataIndex: 'field',
     render: timeSlot => (
       <Field
         name={`${timeSlot}.start`}
         type="text"
+        showTime
+        props={{ format: 'YYYY-MM-DD HH:mm' }}
         component={MyDatePicker}
         validate={required}
         required
@@ -54,10 +65,13 @@ const columns = [
   {
     title: 'End Time',
     key: 'end',
+    dataIndex: 'field',
     render: timeSlot => (
       <Field
         name={`${timeSlot}.end`}
         type="text"
+        showTime
+        props={{ format: 'YYYY-MM-DD HH:mm' }}
         component={MyDatePicker}
         validate={required}
         required
@@ -67,6 +81,7 @@ const columns = [
   {
     title: 'Location',
     key: 'location',
+    dataIndex: 'field',
     render: timeSlot => (
       <Field
         name={`${timeSlot}.location`}
@@ -80,14 +95,18 @@ const columns = [
   {
     title: 'Action',
     key: 'action',
-    render: timeSlot => (
+    render: ({ id, field, fields }, timeSlot, index) => (
       <>
-        Delete:{' '}
-        <Field
-          name={`${timeSlot}.delete`}
-          type="checkbox"
-          component={FieldCheckbox}
-        />
+        {id && (
+          <Field
+            name={`${field}.delete`}
+            type="checkbox"
+            component={FieldCheckbox}
+          >
+            Mark for Delete
+          </Field>
+        )}
+        {!id && <Button onClick={() => fields.remove(index)}>Delete</Button>}
       </>
     )
   }
@@ -95,18 +114,9 @@ const columns = [
 
 const DynamicTimeSlots = ({ fields, fieldValues }) => (
   <div className="student-session-time-slots">
-    <Field
-      name="startDate"
-      type="text"
-      label="Sessions start date and time"
-      component={MyDatePicker}
-    />
-    <Field
-      name="endDate"
-      type="text"
-      label="Sessions end date and time"
-      component={MyDatePicker}
-    />
+    <Field name="date" label="Date" component={MyDatePicker} />
+    <Field name="startTime" label="Start Time" component={MyTimePicker} />
+    <Field name="endTime" label="End Time" component={MyTimePicker} />
     <Field name="location" type="text" component={TextInput} label="Location" />
     <br />
     <Field
@@ -133,14 +143,18 @@ const DynamicTimeSlots = ({ fields, fieldValues }) => (
     </Button>
     <br />
     <br />
-    <Button type="primary" onClick={() => fields.push({})}>
+    <Button type="primary" onClick={() => fields.push({ key: fields.length })}>
       Add a row
     </Button>
     <br />
     <br />
     <Table
       size="small"
-      dataSource={fields.map(i => i)}
+      dataSource={zipWith(
+        (field, obj) => ({ field, key: obj.id, ...obj, fields }),
+        fields.map(i => i),
+        fields.getAll()
+      )}
       columns={columns}
       locale={{ emptyText: 'No Student Time Slots' }}
     />

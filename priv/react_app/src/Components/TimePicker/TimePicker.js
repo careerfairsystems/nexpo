@@ -3,15 +3,14 @@ import moment from 'moment';
 import { TimePicker } from 'antd';
 
 /**
- * Custom DatePicker that handles the conversion of the moment date value
+ * Custom TimePicker that handles the conversion of the moment date value
  */
-const MyTimePicker = ({ value, onChange, ...rest }) => (
+const MyTimePicker = ({ value, onChange, format = 'HH:mm', ...rest }) => (
   <TimePicker
-    value={moment(value).isValid() ? moment.utc(value) : null}
-    showTime
-    defaultValue={moment('2018/11/14', 'HH:mm')}
-    format="HH:mm"
-    onChange={date => (date ? onChange(date.toISOString()) : onChange(null))}
+    value={moment(value, format).isValid() ? moment.utc(value, format) : null}
+    format={format}
+    onChange={time => (time ? onChange(time.format(format)) : onChange(null))}
+    minuteStep={5}
     {...rest}
   />
 );

@@ -12,6 +12,21 @@ export const ApiReducerCompanies = (
   act: Action
 ): ApiState => {
   switch (act.type) {
+    case actionTypes.FETCH_COMPANY: {
+      const stateChange: ApiState = fetching;
+      return { ...state, ...stateChange };
+    }
+
+    case actionTypes.FETCH_COMPANY_SUCCESS: {
+      const stateChange: ApiState = retrieving;
+      return { ...state, ...stateChange };
+    }
+
+    case actionTypes.FETCH_COMPANY_FAILURE: {
+      const stateChange: ApiState = failure();
+      return { ...state, ...stateChange };
+    }
+
     case actionTypes.FETCH_COMPANIES: {
       const stateChange: ApiState = fetching;
       return { ...state, ...stateChange };

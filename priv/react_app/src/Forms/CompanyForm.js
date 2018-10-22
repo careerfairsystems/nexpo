@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import { isNil } from 'lodash/fp';
 import { Button, Form, Input } from 'antd';
 
-import moment from 'moment';
 import makeField, { required } from './helper';
 import UploadButton from './UploadButton';
 import DynamicTimeSlots from './DynamicTimeSlots';
@@ -75,10 +74,11 @@ const mapStateToProps = (state, props) => {
   return {
     initialValues: {
       ...initialValues,
-      timeslotLength: 20,
-      breakLength: 10,
-      startDate: moment.utc('2018-11-14:10:00', 'YYYY-MM-DD:HH:mm'),
-      endDate: moment.utc('2018-11-15:16:00', 'YYYY-MM-DD:HH:mm'),
+      date: '2018-11-14',
+      startTime: '10:00',
+      endTime: '16:00',
+      timeslotLength: 30,
+      breakLength: 0,
       logoUrl
     },
     formState: state.form.company || {}

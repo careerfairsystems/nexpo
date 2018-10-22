@@ -11,6 +11,21 @@ export const ApiReducerProgrammes = (
   act: Action
 ): ApiState => {
   switch (act.type) {
+    case actionTypes.FETCH_PROGRAMME: {
+      const stateChange: ApiState = fetching;
+      return { ...state, ...stateChange };
+    }
+
+    case actionTypes.FETCH_PROGRAMME_SUCCESS: {
+      const stateChange: ApiState = retrieving;
+      return { ...state, ...stateChange };
+    }
+
+    case actionTypes.FETCH_PROGRAMME_FAILURE: {
+      const stateChange: ApiState = failure();
+      return { ...state, ...stateChange };
+    }
+
     case actionTypes.FETCH_PROGRAMMES: {
       const stateChange: ApiState = fetching;
       return { ...state, ...stateChange };

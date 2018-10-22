@@ -11,6 +11,21 @@ export const ApiReducerUsers = (
   act: Action
 ): ApiState => {
   switch (act.type) {
+    case actionTypes.FETCH_USER: {
+      const stateChange: ApiState = fetching;
+      return { ...state, ...stateChange };
+    }
+
+    case actionTypes.FETCH_USER_SUCCESS: {
+      const stateChange: ApiState = retrieving;
+      return { ...state, ...stateChange };
+    }
+
+    case actionTypes.FETCH_USER_FAILURE: {
+      const stateChange: ApiState = failure();
+      return { ...state, ...stateChange };
+    }
+
     case actionTypes.FETCH_USERS: {
       const stateChange: ApiState = fetching;
       return { ...state, ...stateChange };

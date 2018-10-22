@@ -29,26 +29,27 @@ defmodule Nexpo.StudentSessionTimeSlot do
   Builds an update changeset based on `company_id` and `params`
   """
   def update_changeset(%TimeSlot{company_id: nil}, params, company) do
-     Ecto.build_assoc(company, :student_session_time_slots)
-     |> cast(params, [:start, :end, :location, :company_id])
-     |> validate_required([:start, :end, :location, :company_id])
-   end
+    company
+    |> Ecto.build_assoc(:student_session_time_slots)
+    |> cast(params, [:start, :end, :location, :company_id, :delete])
+    |> validate_required([:start, :end, :location, :company_id])
+  end
 
-   @doc """
-   Builds an update changeset based on `company_id` and `params`
-   """
-   def update_changeset(%TimeSlot{} = time_slot, params, _company) do
-     time_slot
-     |> cast(params, [:start, :end, :location, :company_id, :delete])
-     |> validate_required([:start, :end, :location, :company_id])
-     |> mark_for_delete()
-   end
+  @doc """
+  Builds an update changeset based on `company_id` and `params`
+  """
+  def update_changeset(%TimeSlot{} = time_slot, params, _company) do
+    time_slot
+    |> cast(params, [:start, :end, :location, :company_id, :delete])
+    |> validate_required([:start, :end, :location, :company_id])
+    |> mark_for_delete()
+  end
 
-   defp mark_for_delete(changeset) do
-     if get_change(changeset, :delete) do
-       %{ changeset | action: :delete }
-     else
-       changeset
-     end
-   end
+  defp mark_for_delete(changeset) do
+    if get_change(changeset, :delete) do
+      %{ changeset | action: :delete }
+    else
+      changeset
+    end
+  end
 end

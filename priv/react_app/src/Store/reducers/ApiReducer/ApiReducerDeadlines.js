@@ -11,6 +11,21 @@ export const ApiReducerDeadlines = (
   act: Action
 ): ApiState => {
   switch (act.type) {
+    case actionTypes.FETCH_DEADLINE: {
+      const stateChange: ApiState = fetching;
+      return { ...state, ...stateChange };
+    }
+
+    case actionTypes.FETCH_DEADLINE_SUCCESS: {
+      const stateChange: ApiState = retrieving;
+      return { ...state, ...stateChange };
+    }
+
+    case actionTypes.FETCH_DEADLINE_FAILURE: {
+      const stateChange: ApiState = failure();
+      return { ...state, ...stateChange };
+    }
+
     case actionTypes.FETCH_DEADLINES: {
       const stateChange: ApiState = fetching;
       return { ...state, ...stateChange };

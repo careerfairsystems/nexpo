@@ -27,7 +27,7 @@ const convertKeys = (obj, convert) => {
 export const camelCaseKeys = obj => convertKeys(obj, camelCase);
 export const snakeCaseKeys = obj => convertKeys(obj, snakeCase);
 
-const dateFormats = ['YYYY-MM-DD HH:mm'];
+const dateFormats = ['YYYY-MM-DD', 'YYYY-MM-DD HH:mm'];
 
 export const toFormData = (obj, form, namespace) => {
   const fd = form || new FormData();
