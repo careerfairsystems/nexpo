@@ -8,7 +8,9 @@ import DatePicker from '../Components/DatePicker';
 import makeField from './helper';
 
 const TextInput = makeField(Input);
-const MyDatePicker = makeField(DatePicker);
+const MyDatePicker = makeField(props =>
+  DatePicker({ ...props, showTime: true, format: 'YYYY-MM-DD HH:mm' })
+);
 
 const DeadlineForm = ({ handleSubmit }) => (
   <Form onSubmit={handleSubmit}>
