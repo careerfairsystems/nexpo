@@ -26,22 +26,16 @@ const generateTimeSlots = (fields, values) => {
 
   const current = moment.utc(`${date} ${startTime}`, 'YYYY-MM-DD HH:mm');
   const end = moment.utc(`${date} ${endTime}`, 'YYYY-MM-DD HH:mm');
-  const lunchStart = moment.utc(`${date} 12:00`, 'YYYY-MM-DD HH:mm');
-  const lunchEnd = moment.utc(`${date} 13:00`, 'YYYY-MM-DD HH:mm');
   const sessionLength = timeslotLength + breakLength;
 
   while (current.isBefore(end)) {
-    if (current.isBetween(lunchStart, lunchEnd, null, '[)')) {
-      current.hours(13);
-    } else {
-      fields.push({
-        key: current.toISOString(),
-        start: moment.utc(current),
-        end: moment.utc(current).add(sessionLength, 'minutes'),
-        location
-      });
-      current.add(sessionLength, 'minutes');
-    }
+    fields.push({
+      key: current.toISOString(),
+      start: moment.utc(current),
+      end: moment.utc(current).add(sessionLength, 'minutes'),
+      location
+    });
+    current.add(sessionLength, 'minutes');
   }
 };
 
