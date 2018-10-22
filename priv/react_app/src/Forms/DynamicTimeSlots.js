@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { zipWith } from 'lodash/fp';
 import { Table, Input, Checkbox, Button } from 'antd';
 import { Field } from 'redux-form';
 import moment from 'moment';
@@ -34,6 +35,7 @@ const generateTimeSlots = (fields, values) => {
       current.hours(13);
     } else {
       fields.push({
+        key: current.toISOString(),
         start: moment.utc(current),
         end: moment.utc(current).add(sessionLength, 'minutes'),
         location
@@ -47,6 +49,7 @@ const columns = [
   {
     title: 'Start Time',
     key: 'start',
+    dataIndex: 'field',
     render: timeSlot => (
       <Field
         name={`${timeSlot}.start`}
@@ -62,6 +65,7 @@ const columns = [
   {
     title: 'End Time',
     key: 'end',
+    dataIndex: 'field',
     render: timeSlot => (
       <Field
         name={`${timeSlot}.end`}
@@ -77,6 +81,7 @@ const columns = [
   {
     title: 'Location',
     key: 'location',
+    dataIndex: 'field',
     render: timeSlot => (
       <Field
         name={`${timeSlot}.location`}
@@ -90,15 +95,18 @@ const columns = [
   {
     title: 'Action',
     key: 'action',
-    render: (timeSlot, ...rest) => (
+    render: ({ id, field, fields }, timeSlot, index) => (
       <>
-        {console.log(timeSlot, rest)}
-        Delete:{' '}
-        <Field
-          name={`${timeSlot}.delete`}
-          type="checkbox"
-          component={FieldCheckbox}
-        />
+        {id && (
+          <Field
+            name={`${field}.delete`}
+            type="checkbox"
+            component={FieldCheckbox}
+          >
+            Mark for Delete
+          </Field>
+        )}
+        {!id && <Button onClick={() => fields.remove(index)}>Delete</Button>}
       </>
     )
   }
@@ -135,14 +143,18 @@ const DynamicTimeSlots = ({ fields, fieldValues }) => (
     </Button>
     <br />
     <br />
-    <Button type="primary" onClick={() => fields.push({})}>
+    <Button type="primary" onClick={() => fields.push({ key: fields.length })}>
       Add a row
     </Button>
     <br />
     <br />
     <Table
       size="small"
-      dataSource={fields.map(field => field)}
+      dataSource={zipWith(
+        (field, obj) => ({ field, key: obj.id, ...obj, fields }),
+        fields.map(i => i),
+        fields.getAll()
+      )}
       columns={columns}
       locale={{ emptyText: 'No Student Time Slots' }}
     />
