@@ -100,7 +100,23 @@ const categoriesSchema = () => {
 const companySchema = () => {
   const user = entity('users');
   const entry = entity('entries', {}, { model: belongsTo('company') });
-  const company = entity('companies', { entries: [entry], users: [user] });
+  const student = entity('students', { user });
+  const studentSession = entity(
+    'studentSessions',
+    { student },
+    { model: belongsTo('company') }
+  );
+  const studentSessionApplication = entity(
+    'studentSessionApplications',
+    { student },
+    { model: belongsTo('company') }
+  );
+  const company = entity('companies', {
+    entries: [entry],
+    users: [user],
+    studentSessions: [studentSession],
+    studentSessionApplications: [studentSessionApplication]
+  });
 
   return company;
 };

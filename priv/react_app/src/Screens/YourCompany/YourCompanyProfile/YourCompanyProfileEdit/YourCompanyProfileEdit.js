@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { isEmpty, isNil } from 'lodash/fp';
-import NotFound from '../../NotFound';
-import CurrentCompanyForm from '../../../Forms/CurrentCompanyForm';
-import LoadingSpinner from '../../../Components/LoadingSpinner';
+import NotFound from '../../../NotFound';
+import CurrentCompanyForm from '../../../../Forms/CurrentCompanyForm';
+import LoadingSpinner from '../../../../Components/LoadingSpinner';
 
-class CurrentCompanyEdit extends Component {
+class YourCompanyProfileEdit extends Component {
   componentWillMount() {
     const { getCurrentCompany } = this.props;
     getCurrentCompany();
@@ -18,7 +18,7 @@ class CurrentCompanyEdit extends Component {
 
   onSuccess = () => {
     const { history } = this.props;
-    history.push('/company/show');
+    history.push('/company');
   };
 
   showStudentSession() {
@@ -61,7 +61,7 @@ class CurrentCompanyEdit extends Component {
   }
 }
 
-CurrentCompanyEdit.propTypes = {
+YourCompanyProfileEdit.propTypes = {
   fetching: PropTypes.bool.isRequired,
   history: PropTypes.object.isRequired,
   currentCompany: PropTypes.object.isRequired,
@@ -69,4 +69,4 @@ CurrentCompanyEdit.propTypes = {
   updateCurrentCompany: PropTypes.func.isRequired
 };
 
-export default CurrentCompanyEdit;
+export default YourCompanyProfileEdit;

@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 import SessionHome from './SessionHome';
 import InvisibleLink from '../../../Components/InvisibleLink';
 
-it('should render without crashiang', () => {
+it('should render without crashing', () => {
   shallow(<SessionHome />);
 });
 

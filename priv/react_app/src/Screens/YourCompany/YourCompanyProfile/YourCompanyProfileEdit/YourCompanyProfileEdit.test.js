@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import CurrentCompanyEdit from './CurrentCompanyEdit';
+import YourCompanyProfileEdit from './YourCompanyProfileEdit';
 
 describe('current company edit should function correctly', () => {
   let props;
@@ -15,6 +15,6 @@ describe('current company edit should function correctly', () => {
   });
 
   it('should render without crashing', () => {
-    shallow(<CurrentCompanyEdit id="1" {...props} />);
+    shallow(<YourCompanyProfileEdit id="1" {...props} />);
   });
 });

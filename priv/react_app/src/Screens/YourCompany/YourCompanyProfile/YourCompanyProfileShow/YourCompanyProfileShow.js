@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { isEmpty, isNil } from 'lodash/fp';
-import { Avatar, Button, List } from 'antd';
-import { toExternal } from '../../../Util/URLHelper';
-import { toDayFormat } from '../../../Util/FormatHelper';
-import NotFound from '../../NotFound';
-import HtmlTitle from '../../../Components/HtmlTitle';
-import InvisibleLink from '../../../Components/InvisibleLink';
-import '../../Admin/Company/Company.css';
+import { Avatar, Button} from 'antd';
+import { toExternal } from '../../../../Util/URLHelper';
+import NotFound from '../../../NotFound';
+import HtmlTitle from '../../../../Components/HtmlTitle';
+import InvisibleLink from '../../../../Components/InvisibleLink';
+import '../../YourCompany.css';
 
-class CurrentCompanyShow extends Component {
+class YourCompanyProfileShow extends Component {
   static propTypes = {
     currentCompany: PropTypes.object.isRequired,
     getCurrentCompany: PropTypes.func.isRequired
@@ -61,37 +60,8 @@ class CurrentCompanyShow extends Component {
           {name} has student sessions: {this.showStudentSession()}
         </p>
         <p>{description}</p>
-        <h3>Student Session Time Slots</h3>
-        <List
-          dataSource={currentCompany.studentSessionTimeSlots}
-          bordered
-          renderItem={({ id, start, end, location }) => (
-            <List.Item>
-              <List.Item.Meta
-                avatar={<Avatar size="large">{id}</Avatar>}
-                title={`Location: ${location}`}
-                description={`Start Time: ${toDayFormat(
-                  start
-                )}\nEnd Time: ${toDayFormat(end)}`}
-              />
-            </List.Item>
-          )}
-        />
-        <h3>Student Session applications</h3>
-        <List
-          dataSource={currentCompany.studentSessionApplications}
-          bordered
-          renderItem={({ id, motivation }) => (
-            <List.Item>
-              <List.Item.Meta
-                avatar={<Avatar size="large">{id}</Avatar>}
-                description={`Motivation: ${motivation}`}
-              />
-            </List.Item>
-          )}
-        />
         <br />
-        <InvisibleLink to="/company/edit">
+        <InvisibleLink to="/company/profile/edit">
           <Button onClick={() => null} type="primary">
             Edit
           </Button>
@@ -101,4 +71,4 @@ class CurrentCompanyShow extends Component {
   }
 }
 
-export default CurrentCompanyShow;
+export default YourCompanyProfileShow;

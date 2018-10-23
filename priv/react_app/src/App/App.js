@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Route, Switch, Link, Redirect } from 'react-router-dom';
+import { Route, Switch, Link } from 'react-router-dom';
 import { Layout, Menu, Breadcrumb, Icon } from 'antd';
 import { startCase } from 'lodash/fp';
 
@@ -23,10 +23,13 @@ import Statistics from '../Screens/Admin/Statistics';
 import CurrentUser from '../Screens/CurrentUser';
 import Companies from '../Screens/Admin/Companies';
 import { CompanyNew, CompanyEdit, CompanyShow } from '../Screens/Admin/Company';
+import YourCompanyHome from '../Screens/YourCompany/YourCompanyHome';
 import {
-  CurrentCompanyShow,
-  CurrentCompanyEdit
-} from '../Screens/CurrentCompany';
+  YourCompanyProfileShow,
+  YourCompanyProfileEdit
+} from '../Screens/YourCompany/YourCompanyProfile';
+import YourCompanyApplications from '../Screens/YourCompany/YourCompanyApplications';
+import YourCompanyTimeSlots from '../Screens/YourCompany/YourCompanyTimeSlots';
 import SessionHome from '../Screens/Session/SessionHome';
 import SessionApplication from '../Screens/Session/SessionApplication';
 import SessionApplications from '../Screens/Session/SessionApplications';
@@ -76,8 +79,11 @@ const privateRoutes = [
   { path: '/session/applications', component: SessionApplications },
   { path: '/session/companies', component: SessionCompanies },
   { path: '/session/approved', component: SessionsApproved },
-  { path: '/company/show', component: CurrentCompanyShow },
-  { path: '/company/edit', component: CurrentCompanyEdit }
+  { path: '/company', component: YourCompanyHome },
+  { path: '/company/profile', component: YourCompanyProfileShow },
+  { path: '/company/profile/edit', component: YourCompanyProfileEdit },
+  { path: '/company/applications', component: YourCompanyApplications },
+  { path: '/company/timeslots', component: YourCompanyTimeSlots }
 ];
 
 const routes = (
@@ -87,7 +93,6 @@ const routes = (
     {privateRoutes.map(props => (
       <PrivateRoute key={props.path} exact {...props} />
     ))}
-    <Route path="/company" render={() => <Redirect to="/company/show" />} />
     <Route path="/login" component={Login} />
     <Route path="/signup" component={Signup} />
     <Route path="/forgot-password" component={ForgotPassword} />
@@ -101,13 +106,13 @@ const routes = (
 class App extends Component {
   static propTypes = {
     isLoggedIn: PropTypes.bool.isRequired,
-    currentUser: PropTypes.object,
+    currentUser: PropTypes.shape({
+      email: PropTypes.string,
+      firstName: PropTypes.string,
+      lastName: PropTypes.string
+    }).isRequired,
     pathname: PropTypes.string.isRequired,
     redirect: PropTypes.func.isRequired
-  };
-
-  static defaultProps = {
-    currentUser: {}
   };
 
   loggedInMenuItem = () => {
@@ -246,9 +251,23 @@ class App extends Component {
                   })
                 ]
               })}
-              {this.restrictedMenuItem({
-                route: 'company/show',
-                title: 'Your Company'
+              {this.restrictedSubMenu({
+                route: 'company',
+                title: 'Your Company',
+                menus: [
+                  this.restrictedMenuItem({
+                    route: 'company/profile',
+                    title: 'Company Profile'
+                  }),
+                  this.restrictedMenuItem({
+                    route: 'company/applications',
+                    title: 'Applications'
+                  }),
+                  this.restrictedMenuItem({
+                    route: 'company/timeslots',
+                    title: 'Time Slots'
+                  })
+                ]
               })}
               {isLoggedIn ? this.loggedInMenuItem() : this.loggedOutMenuItem()}
             </Menu>

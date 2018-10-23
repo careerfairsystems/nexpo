@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
-import { Actions, Selectors } from '../../../Store';
-import CurrentCompanyShow from './CurrentCompanyShow';
-import { State } from '../../../Store/reducers/index';
+import { Actions, Selectors } from '../../../../Store';
+import YourCompanyProfileShow from './YourCompanyProfileShow';
+import { State } from '../../../../Store/reducers/index';
 
 const mapStateToProps = (state: State) => ({
   currentCompany: Selectors.companies.getCurrentCompany(state),
@@ -10,7 +10,6 @@ const mapStateToProps = (state: State) => ({
 
 const mapDispatchToProps = {
   getCurrentCompany: Actions.companies.getCurrentCompany
-  // destroyCurrentCompany: Actions.companies.destroyCurrentCompany
 };
 
 const stateful = connect(
@@ -18,4 +17,4 @@ const stateful = connect(
   mapDispatchToProps
 );
 
-export default stateful(CurrentCompanyShow);
+export default stateful(YourCompanyProfileShow);
