@@ -1,5 +1,6 @@
 import { fetchJson, handleHttpResponse } from './utils';
 import UnreachableCodeReachedError from '../Errors/UnreachableCodeReachedError';
+import 'whatwg-fetch'; // fetch polyfill for unsupported browsers
 
 export default {
   /**

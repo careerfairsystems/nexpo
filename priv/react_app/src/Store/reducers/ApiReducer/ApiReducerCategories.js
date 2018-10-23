@@ -11,6 +11,21 @@ export const ApiReducerCategories = (
   act: Action
 ): ApiState => {
   switch (act.type) {
+    case actionTypes.FETCH_CATEGORY: {
+      const stateChange: ApiState = fetching;
+      return { ...state, ...stateChange };
+    }
+
+    case actionTypes.FETCH_CATEGORY_SUCCESS: {
+      const stateChange: ApiState = retrieving;
+      return { ...state, ...stateChange };
+    }
+
+    case actionTypes.FETCH_CATEGORY_FAILURE: {
+      const stateChange: ApiState = failure();
+      return { ...state, ...stateChange };
+    }
+
     case actionTypes.FETCH_CATEGORIES: {
       const stateChange: ApiState = fetching;
       return { ...state, ...stateChange };

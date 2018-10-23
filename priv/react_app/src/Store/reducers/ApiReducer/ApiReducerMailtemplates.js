@@ -11,6 +11,21 @@ export const ApiReducerMailtemplates = (
   act: Action
 ): ApiState => {
   switch (act.type) {
+    case actionTypes.FETCH_MAILTEMPLATE: {
+      const stateChange: ApiState = fetching;
+      return { ...state, ...stateChange };
+    }
+
+    case actionTypes.FETCH_MAILTEMPLATE_SUCCESS: {
+      const stateChange: ApiState = retrieving;
+      return { ...state, ...stateChange };
+    }
+
+    case actionTypes.FETCH_MAILTEMPLATE_FAILURE: {
+      const stateChange: ApiState = failure();
+      return { ...state, ...stateChange };
+    }
+
     case actionTypes.FETCH_MAILTEMPLATES: {
       const stateChange: ApiState = fetching;
       return { ...state, ...stateChange };

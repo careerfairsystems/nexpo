@@ -1,6 +1,7 @@
 import { ApiError } from '../Errors/ApiError';
 import { getJwt } from '../Util/JwtHelper';
 import { snakeCaseKeys, toFormData } from '../Util/FormatHelper';
+import 'whatwg-fetch'; // fetch polyfill for unsupported browsers
 
 type Response = {
   type: string,

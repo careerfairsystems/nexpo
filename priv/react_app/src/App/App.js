@@ -125,7 +125,7 @@ class App extends Component {
     ];
   };
 
-  restrictedSubMenu = ({ route, title, menus }) => {
+  restrictedSubMenu = ({ route, title, menus, ...rest }) => {
     const { currentUser: user, isLoggedIn, redirect } = this.props;
     if (isLoggedIn && hasPermission(user, route) && hasAccess(user, route)) {
       return (
@@ -133,6 +133,7 @@ class App extends Component {
           title={title}
           key={`/${route}`}
           onTitleClick={() => redirect(`/${route}`)}
+          {...rest}
         >
           {menus}
         </Menu.SubMenu>
@@ -141,10 +142,14 @@ class App extends Component {
     return null;
   };
 
-  restrictedMenuItem = ({ route, title }) => {
+  restrictedMenuItem = ({ route, title, ...rest }) => {
     const { currentUser: user, isLoggedIn } = this.props;
     if (isLoggedIn && hasPermission(user, route) && hasAccess(user, route)) {
-      return <Menu.Item key={`/${route}`}>{title}</Menu.Item>;
+      return (
+        <Menu.Item key={`/${route}`} {...rest}>
+          {title}
+        </Menu.Item>
+      );
     }
     return null;
   };
@@ -225,7 +230,8 @@ class App extends Component {
                 menus: [
                   this.restrictedMenuItem({
                     route: 'session/application',
-                    title: 'Apply'
+                    title: 'Apply',
+                    disabled: true
                   }),
                   this.restrictedMenuItem({
                     route: 'session/applications',

@@ -115,9 +115,13 @@ defmodule Nexpo.User do
     case Repo.get_by(User, email: email) do
       nil -> {:error, "No such user"}
       user ->
-        case Comeonin.Bcrypt.checkpw(password, user.hashed_password) do
-          true -> {:ok, user}
-          false -> {:error, "Incorrect password"}
+        case user.hashed_password do
+          nil -> {:error, "User email not verified"}
+          hashed_password ->
+            case Comeonin.Bcrypt.checkpw(password, hashed_password) do
+              true -> {:ok, user}
+              false -> {:error, "Incorrect password"}
+            end
         end
     end
   end

@@ -11,6 +11,21 @@ export const ApiReducerRoles = (
   act: Action
 ): ApiState => {
   switch (act.type) {
+    case actionTypes.FETCH_ROLE: {
+      const stateChange: ApiState = fetching;
+      return { ...state, ...stateChange };
+    }
+
+    case actionTypes.FETCH_ROLE_SUCCESS: {
+      const stateChange: ApiState = retrieving;
+      return { ...state, ...stateChange };
+    }
+
+    case actionTypes.FETCH_ROLE_FAILURE: {
+      const stateChange: ApiState = failure();
+      return { ...state, ...stateChange };
+    }
+
     case actionTypes.FETCH_ROLES: {
       const stateChange: ApiState = fetching;
       return { ...state, ...stateChange };
