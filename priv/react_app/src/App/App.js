@@ -110,9 +110,13 @@ class App extends Component {
       email: PropTypes.string,
       firstName: PropTypes.string,
       lastName: PropTypes.string
-    }).isRequired,
+    }),
     pathname: PropTypes.string.isRequired,
     redirect: PropTypes.func.isRequired
+  };
+
+  static defaultProps = {
+    currentUser: {}
   };
 
   loggedInMenuItem = () => {
