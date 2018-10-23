@@ -23,13 +23,13 @@ import Statistics from '../Screens/Admin/Statistics';
 import CurrentUser from '../Screens/CurrentUser';
 import Companies from '../Screens/Admin/Companies';
 import { CompanyNew, CompanyEdit, CompanyShow } from '../Screens/Admin/Company';
-import YourCompanyHome from '../Screens/YourCompany/YourCompanyHome'
+import YourCompanyHome from '../Screens/YourCompany/YourCompanyHome';
 import {
   YourCompanyProfileShow,
   YourCompanyProfileEdit
 } from '../Screens/YourCompany/YourCompanyProfile';
-import YourCompanyApplications from '../Screens/YourCompany/YourCompanyApplications'
-import YourCompanyTimeSlots from '../Screens/YourCompany/YourCompanyTimeSlots'
+import YourCompanyApplications from '../Screens/YourCompany/YourCompanyApplications';
+import YourCompanyTimeSlots from '../Screens/YourCompany/YourCompanyTimeSlots';
 import SessionHome from '../Screens/Session/SessionHome';
 import SessionApplication from '../Screens/Session/SessionApplication';
 import SessionApplications from '../Screens/Session/SessionApplications';
@@ -82,8 +82,8 @@ const privateRoutes = [
   { path: '/company', component: YourCompanyHome },
   { path: '/company/profile', component: YourCompanyProfileShow },
   { path: '/company/profile/edit', component: YourCompanyProfileEdit },
-  { path: '/company/applications', component: YourCompanyApplications},
-  { path: '/company/timeslots', component: YourCompanyTimeSlots}
+  { path: '/company/applications', component: YourCompanyApplications },
+  { path: '/company/timeslots', component: YourCompanyTimeSlots }
 ];
 
 const routes = (
@@ -106,7 +106,11 @@ const routes = (
 class App extends Component {
   static propTypes = {
     isLoggedIn: PropTypes.bool.isRequired,
-    currentUser: PropTypes.shape({email: PropTypes.string, firstName: PropTypes.string, lastName: PropTypes.string}).isRequired,
+    currentUser: PropTypes.shape({
+      email: PropTypes.string,
+      firstName: PropTypes.string,
+      lastName: PropTypes.string
+    }).isRequired,
     pathname: PropTypes.string.isRequired,
     redirect: PropTypes.func.isRequired
   };
@@ -285,12 +289,5 @@ class App extends Component {
     );
   }
 }
-
-App.propTypes = {
-  isLoggedIn: PropTypes.bool.isRequired,
-  currentUser: PropTypes.shape({email: PropTypes.string, firstName: PropTypes.string, lastName: PropTypes.string}).isRequired,
-  pathname: PropTypes.string.isRequired,
-  redirect: PropTypes.func.isRequired
-};
 
 export default App;
