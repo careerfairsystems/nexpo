@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { isEmpty, isNil } from 'lodash/fp';
 import { List, Rate } from 'antd';
-import { toExternal } from '../../../Util/URLHelper';
 import NotFound from '../../NotFound';
 import HtmlTitle from '../../../Components/HtmlTitle';
 import '../YourCompany.css';
@@ -39,14 +38,14 @@ class YourCompanyApplications extends Component {
           />
         </>,
         <a
-          href={toExternal(application.student.resumeSvUrl)}
-          disabled={application.student.resumeSvUrl}
+          href={application.student.resumeSvUrl}
+          disabled={!application.student.resumeSvUrl}
         >
           Swedish Resume
         </a>,
         <a
-          href={toExternal(application.student.resumeEnUrl)}
-          disabled={application.student.resumeEnUrl}
+          href={application.student.resumeEnUrl}
+          disabled={!application.student.resumeEnUrl}
         >
           English Resume
         </a>
