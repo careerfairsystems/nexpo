@@ -3,5 +3,5 @@ import { shallow } from 'enzyme';
 import YourCompanyApplications from './YourCompanyApplications';
 
 it('should render without crashing', () => {
-  shallow(<YourCompanyApplications />);
+  shallow(<YourCompanyApplications getCurrentCompany={jest.fn()} />);
 });
