@@ -120,14 +120,35 @@ defmodule Nexpo.CompanyController do
 
   def show_me(conn, %{}, user, _claims) do
     representative = Repo.get_by!(Representative, %{user_id: user.id})
-    company = Ecto.assoc(representative, :company) |> Repo.one |> Repo.preload([:industries, :job_offers, :users, :entries, :representatives, :desired_programmes, :student_sessions, :student_session_applications, :student_session_time_slots])
+    company = Ecto.assoc(representative, :company) |> Repo.one
+      |> Repo.preload([
+        :industries,
+        :job_offers,
+        :users,
+        :entries,
+        :representatives,
+        :desired_programmes,
+        [student_session_applications: [student: :user]],
+        [student_sessions: [student: :user]],
+        :student_session_time_slots])
 
     conn |> put_status(200) |> render("show.json", company: company)
   end
 
   def update_me(conn, %{"company" => company_params}, user, _claims) do
     representative = Repo.get_by!(Representative, %{user_id: user.id})
-    company = Ecto.assoc(representative, :company) |> Repo.one |> Repo.preload([:industries, :job_offers, :users, :entries, :representatives, :desired_programmes, :student_sessions, :student_session_applications, :student_session_time_slots])
+    company = Ecto.assoc(representative, :company) |> Repo.one
+      |> Repo.preload([
+        :industries,
+        :job_offers,
+        :users,
+        :entries,
+        :representatives,
+        :desired_programmes,
+        [student_sessions: [student: :user]],
+        [student_session_applications: [student: :user]],
+        :student_session_time_slots])
+
     changeset = Company.representative_changeset(company, company_params)
 
     case Repo.update(changeset) do
