@@ -40,6 +40,7 @@ const state = {
     users: { fetching: false, success: false },
     currentUser: { fetching: false, success: false },
     currentCompany: { fetching: false, success: false },
+    studentSession: { fetching: false, success: false },
     forgotPassword: { fetching: false, success: false },
     login: { fetching: false, success: false },
     replacePassword: { fetching: false, success: false },

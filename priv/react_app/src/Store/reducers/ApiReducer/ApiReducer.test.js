@@ -59,6 +59,11 @@ it('should set the correct initial state', () => {
       errors: undefined,
       success: false
     },
+    studentSession: {
+      fetching: false,
+      errors: undefined,
+      success: false
+    },
     forgotPassword: {
       fetching: false,
       errors: undefined,
