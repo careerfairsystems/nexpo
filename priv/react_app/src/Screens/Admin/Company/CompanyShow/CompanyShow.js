@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { isEmpty, isNil } from 'lodash/fp';
+import { isEmpty, isNil, sortBy } from 'lodash/fp';
 import { List, Avatar, Button } from 'antd';
 import NotFound from '../../../NotFound';
 import { toExternal } from '../../../../Util/URLHelper';
@@ -80,12 +80,12 @@ class CompanyShow extends Component {
         <p>{description}</p>
         <h3>Student Session Time Slots</h3>
         <List
-          dataSource={company.studentSessionTimeSlots}
+          dataSource={sortBy('start', company.studentSessionTimeSlots)}
           bordered
-          renderItem={({ id, start, end, location }) => (
+          renderItem={({ start, end, location }, index) => (
             <List.Item>
               <List.Item.Meta
-                avatar={<Avatar size="large">{id}</Avatar>}
+                avatar={<Avatar size="large">{index + 1}</Avatar>}
                 title={`Location: ${location}`}
                 description={`Start Time: ${toDayFormat(
                   start
