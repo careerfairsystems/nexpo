@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { zipWith } from 'lodash/fp';
+import { zipWith, sortBy, flow } from 'lodash/fp';
 import { Table, Input, Checkbox, Button } from 'antd';
 import { Field } from 'redux-form';
 import moment from 'moment';
@@ -144,11 +144,13 @@ const DynamicTimeSlots = ({ fields, fieldValues }) => (
     <br />
     <Table
       size="small"
-      dataSource={zipWith(
-        (field, obj) => ({ field, key: obj.id, ...obj, fields }),
-        fields.map(i => i),
-        fields.getAll()
-      )}
+      dataSource={flow(
+        zipWith(
+          (field, obj) => ({ field, key: obj.id, ...obj, fields }),
+          fields.map(i => i)
+        ),
+        sortBy('start')
+      )(fields.getAll())}
       columns={columns}
       locale={{ emptyText: 'No Student Time Slots' }}
     />
