@@ -1,14 +1,17 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { isEmpty, isNil } from 'lodash/fp';
+import { isEmpty, isNil, orderBy } from 'lodash/fp';
 import { List, Rate } from 'antd';
 import NotFound from '../../NotFound';
 import HtmlTitle from '../../../Components/HtmlTitle';
+import LoadingSpinner from '../../../Components/LoadingSpinner';
 import '../YourCompany.css';
 
 class YourCompanyApplications extends Component {
   static propTypes = {
     currentCompany: PropTypes.object.isRequired,
+    fetching: PropTypes.bool.isRequired,
+    updating: PropTypes.bool.isRequired,
     getCurrentCompany: PropTypes.func.isRequired,
     updateStudentSessionAppl: PropTypes.func.isRequired
   };
@@ -63,19 +66,32 @@ class YourCompanyApplications extends Component {
   );
 
   render() {
-    const { currentCompany } = this.props;
+    const { currentCompany, fetching, updating } = this.props;
 
+    if (fetching) return <LoadingSpinner />;
     if (isEmpty(currentCompany) || isNil(currentCompany)) return <NotFound />;
 
     return (
       <div className="company-show-view">
         <HtmlTitle title="Applications" />
         <h3>Student Session Applications</h3>
+        <p>
+          Please rate each student from 1 to 5 stars, the students with the
+          highest scores will be chosen to your student sessions, so rate
+          carefully. Also note that the rating will not be shown to the
+          students, the rating is only there for you to decide which students
+          you want to have sessions with.
+        </p>
         <List
           size="large"
           itemLayout="vertical"
           bordered
-          dataSource={currentCompany.studentSessionApplications}
+          loading={updating}
+          dataSource={orderBy(
+            ['score', 'student_id'],
+            ['desc', 'asc'],
+            currentCompany.studentSessionApplications
+          )}
           renderItem={this.renderSessionApplication}
           locale={{ emptyText: 'No Session Applications' }}
         />
