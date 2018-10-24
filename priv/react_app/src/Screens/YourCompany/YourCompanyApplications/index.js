@@ -5,7 +5,8 @@ import { State } from '../../../Store/reducers/index';
 
 const mapStateToProps = (state: State) => ({
   currentCompany: Selectors.companies.getCurrentCompany(state),
-  fetching: state.api.currentCompany.fetching
+  fetching: state.api.currentCompany.fetching,
+  updating: state.api.studentSession.fetching
 });
 
 const mapDispatchToProps = {

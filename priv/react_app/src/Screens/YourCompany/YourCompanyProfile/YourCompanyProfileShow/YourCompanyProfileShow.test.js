@@ -6,9 +6,13 @@ describe('current company show should function correctly', () => {
   beforeEach(() => {});
 
   it('should render without crashing', () => {
-    const f = jest.fn();
     shallow(
-      <YourCompanyProfileShow id="1" getCurrentCompany={f} currentCompany={{}} />
+      <YourCompanyProfileShow
+        id="1"
+        getCurrentCompany={jest.fn()}
+        currentCompany={{}}
+        fetching={false}
+      />
     );
   });
 });

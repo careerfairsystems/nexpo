@@ -10,7 +10,7 @@ import UploadButton from './UploadButton';
 const TextInput = makeField(Input);
 const TextArea = makeField(Input.TextArea);
 
-const CompanyForm = ({ handleSubmit, onCancel, submitting }) => (
+const CurrentCompanyForm = ({ handleSubmit, onCancel, submitting }) => (
   <Form onSubmit={handleSubmit}>
     <Field
       name="website"
@@ -39,11 +39,11 @@ const CompanyForm = ({ handleSubmit, onCancel, submitting }) => (
   </Form>
 );
 
-CompanyForm.defaultProps = {
+CurrentCompanyForm.defaultProps = {
   onCancel: null
 };
 
-CompanyForm.propTypes = {
+CurrentCompanyForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   onCancel: PropTypes.func,
   submitting: PropTypes.bool.isRequired
@@ -59,10 +59,12 @@ const mapStateToProps = (state, props) => {
 
   return {
     initialValues: { ...initialValues, logoUrl },
-    formState: state.form.CompanyForm
+    formState: state.form.CurrentCompanyForm
   };
 };
 
 const stateful = connect(mapStateToProps);
 
-export default stateful(reduxForm({ form: 'company' })(CompanyForm));
+export default stateful(
+  reduxForm({ form: 'currentCompany' })(CurrentCompanyForm)
+);

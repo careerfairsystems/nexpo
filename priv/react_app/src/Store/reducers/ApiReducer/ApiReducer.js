@@ -7,6 +7,7 @@ import ApiReducerCategories from './ApiReducerCategories';
 import ApiReducerCompanies from './ApiReducerCompanies';
 import ApiReducerCurrentUser from './ApiReducerCurrentUser';
 import ApiReducerCurrentCompany from './ApiReducerCurrentCompany';
+import ApiReducerStudentSession from './ApiReducerStudentSession';
 import ApiReducerMailtemplates from './ApiReducerMailtemplates';
 import ApiReducerDeadlines from './ApiReducerDeadlines';
 import ApiReducerRoles from './ApiReducerRoles';
@@ -32,6 +33,7 @@ export type ApiState = {
   programmes: ApiStatus,
   currentUser: ApiStatus,
   currentCompany: ApiStatus,
+  studentSession: ApiStatus,
   forgotPassword: ApiStatus,
   login: ApiStatus,
   replacePassword: ApiStatus & {
@@ -72,6 +74,7 @@ export const ApiReducer: ApiState = combineReducers({
   companies: ApiReducerCompanies,
   currentUser: ApiReducerCurrentUser,
   currentCompany: ApiReducerCurrentCompany,
+  studentSession: ApiReducerStudentSession,
   deadlines: ApiReducerDeadlines,
   mailtemplates: ApiReducerMailtemplates,
   roles: ApiReducerRoles,

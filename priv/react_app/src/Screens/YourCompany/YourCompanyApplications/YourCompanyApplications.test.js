@@ -3,5 +3,13 @@ import { shallow } from 'enzyme';
 import YourCompanyApplications from './YourCompanyApplications';
 
 it('should render without crashing', () => {
-  shallow(<YourCompanyApplications getCurrentCompany={jest.fn()} />);
+  shallow(
+    <YourCompanyApplications
+      currentCompany={{}}
+      getCurrentCompany={jest.fn()}
+      updateStudentSessionAppl={jest.fn()}
+      updating={false}
+      fetching={false}
+    />
+  );
 });
