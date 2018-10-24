@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { isEmpty, isNil } from 'lodash/fp';
-import { Avatar, Button} from 'antd';
+import { Avatar, Button } from 'antd';
 import { toExternal } from '../../../../Util/URLHelper';
 import NotFound from '../../../NotFound';
 import HtmlTitle from '../../../../Components/HtmlTitle';
 import InvisibleLink from '../../../../Components/InvisibleLink';
+import LoadingSpinner from '../../../../Components/LoadingSpinner';
 import '../../YourCompany.css';
 
 class YourCompanyProfileShow extends Component {
   static propTypes = {
+    fetching: PropTypes.bool.isRequired,
     currentCompany: PropTypes.object.isRequired,
     getCurrentCompany: PropTypes.func.isRequired
   };
@@ -36,8 +38,9 @@ class YourCompanyProfileShow extends Component {
   }
 
   render() {
-    const { currentCompany } = this.props;
+    const { currentCompany, fetching } = this.props;
 
+    if (fetching) return <LoadingSpinner />;
     if (isEmpty(currentCompany) || isNil(currentCompany)) return <NotFound />;
 
     const { name, description, website, logoUrl } = currentCompany;

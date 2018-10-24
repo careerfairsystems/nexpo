@@ -18,7 +18,7 @@ class YourCompanyProfileEdit extends Component {
 
   onSuccess = () => {
     const { history } = this.props;
-    history.push('/company');
+    history.push('/company/profile');
   };
 
   showStudentSession() {
