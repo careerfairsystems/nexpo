@@ -20,7 +20,7 @@ export default {
   /**
    * Initiates a representative signup
    */
-  initialRepresentativeSignup: data =>
+  initialRepresentativeSignup: (data: {}) =>
     authPost('/api/initial_representative_signup', data),
 
   /**

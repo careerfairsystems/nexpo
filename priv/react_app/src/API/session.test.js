@@ -148,7 +148,11 @@ describe('replaceForgottenPassword', () => {
     expect.assertions(1);
 
     return API.session
-      .replaceForgottenPassword({})
+      .replaceForgottenPassword({
+        key: '1',
+        password: '',
+        passwordConfirmation: ''
+      })
       .catch(err => expect(err).toBeInstanceOf(ApiError));
   });
 });

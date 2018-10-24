@@ -14,7 +14,8 @@ export default {
   /**
    * Create a deadline
    */
-  create: data => authFormPost('/api/deadlines', data).then(handleHttpResponse),
+  create: (data: {}) =>
+    authFormPost('/api/deadlines', data).then(handleHttpResponse),
 
   /**
    * Fetches all deadlines
@@ -24,16 +25,18 @@ export default {
   /**
    * Fetches a deadline
    */
-  get: id => authFetch(`/api/deadlines/${id}`).then(handleHttpResponse),
+  get: (id: string) =>
+    authFetch(`/api/deadlines/${id}`).then(handleHttpResponse),
 
   /**
    * Updates a deadline
    */
-  update: (id, data) =>
+  update: (id: string, data: {}) =>
     authFormPut(`/api/deadlines/${id}`, data).then(handleHttpResponse),
 
   /**
    * Delete a deadline
    */
-  destroy: id => authDelete(`/api/deadlines/${id}`).then(handleHttpResponse)
+  destroy: (id: string) =>
+    authDelete(`/api/deadlines/${id}`).then(handleHttpResponse)
 };

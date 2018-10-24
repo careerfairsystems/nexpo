@@ -14,7 +14,8 @@ export default {
   /**
    * Create a mail template
    */
-  create: data => authPost('/api/mailtemplates', data).then(handleHttpResponse),
+  create: (data: {}) =>
+    authPost('/api/mailtemplates', data).then(handleHttpResponse),
 
   /**
    * Fetches all mailtemplates
@@ -24,16 +25,18 @@ export default {
   /**
    * Fetches a mail template
    */
-  get: id => authFetch(`/api/mailtemplates/${id}`).then(handleHttpResponse),
+  get: (id: string) =>
+    authFetch(`/api/mailtemplates/${id}`).then(handleHttpResponse),
 
   /**
    * Updates a mail template
    */
-  update: (id, data) =>
+  update: (id: string, data: {}) =>
     authPut(`/api/mailtemplates/${id}`, data).then(handleHttpResponse),
 
   /**
    * Delete a mail template
    */
-  destroy: id => authDelete(`/api/mailtemplates/${id}`).then(handleHttpResponse)
+  destroy: (id: string) =>
+    authDelete(`/api/mailtemplates/${id}`).then(handleHttpResponse)
 };

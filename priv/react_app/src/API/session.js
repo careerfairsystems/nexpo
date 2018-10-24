@@ -6,7 +6,7 @@ export default {
   /**
    * Tries to login
    */
-  login: ({ email, password }) =>
+  login: ({ email, password }: { email: string, password: string }) =>
     fetchJson('/api/login', { data: { email, password }, method: 'POST' }).then(
       handleHttpResponse
     ),
@@ -14,7 +14,7 @@ export default {
   /**
    * Allows development login, only while not in production
    */
-  developmentLogin: ({ email }) => {
+  developmentLogin: ({ email }: { email: string }) => {
     if (process.env.NODE_ENV === 'production') {
       throw new UnreachableCodeReachedError(
         'Development login reached in production'
@@ -30,15 +30,23 @@ export default {
   /**
    *
    */
-  forgotPassword: ({ email }) =>
+  forgotPassword: ({ email }: { email: string }) =>
     fetchJson('/api/password/forgot', { data: { email }, method: 'POST' }).then(
       handleHttpResponse
     ),
 
-  verifyForgotPasswordKey: ({ key }) =>
+  verifyForgotPasswordKey: ({ key }: { key: string }): Promise<any> =>
     fetch(`/api/password/forgot/${key}`).then(handleHttpResponse),
 
-  replaceForgottenPassword: ({ key, password, passwordConfirmation }) =>
+  replaceForgottenPassword: ({
+    key,
+    password,
+    passwordConfirmation
+  }: {
+    key: string,
+    password: string,
+    passwordConfirmation: string
+  }) =>
     fetchJson(`/api/password/new/${key}`, {
       data: { password, passwordConfirmation },
       method: 'POST'

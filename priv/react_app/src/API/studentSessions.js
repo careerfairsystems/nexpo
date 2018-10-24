@@ -8,19 +8,19 @@ export default {
   /**
    * Create a student session application
    */
-  create: data =>
+  create: (data: {}) =>
     authPost('/api/student_session_applications', data).then(
       handleHttpResponse
     ),
-  destroy: id =>
+  destroy: (id: string) =>
     authDelete(`/api/me/student_session_applications/${id}`).then(
       handleHttpResponse
     ),
-  update: (id, data) =>
+  update: (id: string, data: {}) =>
     authPut(`/api/me/student_session_applications/${id}`, data).then(
       handleHttpResponse
     ),
-  confirmSession: id =>
+  confirmSession: (id: string) =>
     authPut(`/api/me/student_sessions/${id}`, {
       studentSession: { studentConfirmed: true }
     }).then(handleHttpResponse)

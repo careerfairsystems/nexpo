@@ -3,17 +3,21 @@ import { getJwt } from '../Util/JwtHelper';
 import { snakeCaseKeys, toFormData } from '../Util/FormatHelper';
 import 'whatwg-fetch'; // fetch polyfill for unsupported browsers
 
-type Response = {
-  type: string,
-  error: string,
-  errors: object
-};
+// type Response = {
+//   ok: boolean,
+//   type?: string,
+//   error?: string,
+//   errors?: Error,
+//   +json: () => Promise<any>,
+//   headers: Headers,
+//   +text: () => Promise<any>
+// };
 
 /**
  * Default handler for fetch calls
  * @param {Response} response
  */
-export const handleHttpResponse = (response: Response): Promise => {
+export const handleHttpResponse = (response: Response): Promise<any> => {
   const contentType = response.headers.get('content-type');
   const isJson = contentType && contentType.includes('application/json');
   if (response.ok && isJson) {
@@ -32,7 +36,7 @@ export const handleHttpResponse = (response: Response): Promise => {
   });
 };
 
-export const authPost = (url, data) =>
+export const authPost = (url: string, data: {}): Promise<any> =>
   fetch(url, {
     method: 'POST',
     body: JSON.stringify(snakeCaseKeys(data)),
@@ -43,7 +47,7 @@ export const authPost = (url, data) =>
     })
   });
 
-export const authFormPost = (url, data) =>
+export const authFormPost = (url: string, data: {}): Promise<any> =>
   fetch(url, {
     method: 'POST',
     body: toFormData(data),
@@ -53,7 +57,7 @@ export const authFormPost = (url, data) =>
     })
   });
 
-export const authFetch = url =>
+export const authFetch = (url: string): Promise<any> =>
   fetch(url, {
     headers: new Headers({
       Authorization: `Bearer ${getJwt()}`,
@@ -61,7 +65,7 @@ export const authFetch = url =>
     })
   });
 
-export const authPut = (url, data) =>
+export const authPut = (url: string, data: {}): Promise<any> =>
   fetch(url, {
     method: 'PUT',
     body: JSON.stringify(snakeCaseKeys(data)),
@@ -72,7 +76,7 @@ export const authPut = (url, data) =>
     })
   });
 
-export const authFormPut = (url, data) =>
+export const authFormPut = (url: string, data: {}): Promise<any> =>
   fetch(url, {
     method: 'PUT',
     body: toFormData(data),
@@ -82,7 +86,7 @@ export const authFormPut = (url, data) =>
     })
   });
 
-export const authDelete = url =>
+export const authDelete = (url: string): Promise<any> =>
   fetch(url, {
     method: 'DELETE',
     headers: new Headers({
@@ -90,7 +94,10 @@ export const authDelete = url =>
     })
   });
 
-export const fetchJson = (url, { data, method }) =>
+export const fetchJson = (
+  url: string,
+  { data, method }: { data: {}, method: string }
+): Promise<any> =>
   fetch(url, {
     method,
     body: JSON.stringify(snakeCaseKeys(data)),

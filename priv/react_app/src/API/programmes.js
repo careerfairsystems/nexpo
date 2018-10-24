@@ -14,7 +14,8 @@ export default {
   /**
    * Create a Programme
    */
-  create: data => authPost('/api/programmes', data).then(handleHttpResponse),
+  create: (data: {}) =>
+    authPost('/api/programmes', data).then(handleHttpResponse),
 
   /**
    * Fetches all programmes
@@ -24,16 +25,18 @@ export default {
   /**
    * Fetches a Programme
    */
-  get: id => authFetch(`/api/programmes/${id}`).then(handleHttpResponse),
+  get: (id: string) =>
+    authFetch(`/api/programmes/${id}`).then(handleHttpResponse),
 
   /**
    * Updates a Programme
    */
-  update: (id, data) =>
+  update: (id: string, data: {}) =>
     authPut(`/api/programmes/${id}`, data).then(handleHttpResponse),
 
   /**
    * Delete a Programme
    */
-  destroy: id => authDelete(`/api/programmes/${id}`).then(handleHttpResponse)
+  destroy: (id: string) =>
+    authDelete(`/api/programmes/${id}`).then(handleHttpResponse)
 };
