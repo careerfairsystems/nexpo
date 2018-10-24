@@ -149,7 +149,20 @@ defmodule Nexpo.CompanyController do
         [student_session_applications: [student: :user]],
         :student_session_time_slots])
 
+    # We need to set "null" to nil, since FormData can't send null values
+    null_params = company_params
+      |> Enum.filter(fn {_k, v} -> v == "null" end)
+      |> Enum.map(fn {k, _v} -> {k, nil} end)
+      |> Map.new
+
+    company_params = Map.merge(company_params, null_params)
     changeset = Company.representative_changeset(company, company_params)
+
+    Map.keys(company_params)
+    |> Enum.filter(fn k -> k in ["logo_url"] end)
+    |> Enum.each(fn k ->
+      delete_file?(company, company_params, String.to_atom(k))
+    end)
 
     case Repo.update(changeset) do
       {:ok, company} ->
