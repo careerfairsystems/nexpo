@@ -12,8 +12,6 @@
 # Sass compilation output
 src/**/*.css
 
-# Flow types
-/flow-typed
 # misc
 .DS_Store
 .env.local
