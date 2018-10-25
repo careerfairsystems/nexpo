@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import { Icon } from 'antd';
 
@@ -24,7 +23,14 @@ const styles = {
     color: '#4caf50'
   }
 };
-const Message = ({ message, linkUrl, linkText, type }) => {
+type Props = {
+  type: 'error' | 'success',
+  message: string,
+  linkUrl?: ?string,
+  linkText?: ?string
+};
+
+const Message = ({ message, linkUrl, linkText, type }: Props) => {
   let icon = null;
   switch (type) {
     case 'error':
@@ -53,13 +59,6 @@ const Message = ({ message, linkUrl, linkText, type }) => {
 Message.defaultProps = {
   linkUrl: null,
   linkText: ''
-};
-
-Message.propTypes = {
-  type: PropTypes.oneOf(['error', 'success']).isRequired,
-  message: PropTypes.string.isRequired,
-  linkUrl: PropTypes.string,
-  linkText: PropTypes.string
 };
 
 export default Message;

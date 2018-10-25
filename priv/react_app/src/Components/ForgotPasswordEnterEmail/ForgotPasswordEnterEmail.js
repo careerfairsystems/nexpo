@@ -5,7 +5,8 @@ import ForgotPasswordForm from '../../Forms/ForgotPasswordForm';
 import { SuccessMessage } from '../SuccessMessage/SuccessMessage';
 
 type Props = {
-  callBackend: boolean
+  callBackend: ({ email: string }) => Promise<any>,
+  success?: boolean
 };
 
 class ForgotPasswordEnterEmail extends Component<Props> {
@@ -18,7 +19,7 @@ class ForgotPasswordEnterEmail extends Component<Props> {
     success: false
   };
 
-  queryBackend = values => {
+  queryBackend = (values: { email: string }) => {
     const { email } = values;
     const { callBackend } = this.props;
     callBackend({ email });

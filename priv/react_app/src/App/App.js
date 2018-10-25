@@ -93,8 +93,8 @@ const routes = (
   <Switch>
     <PrivateRoute exact path="/" component={Home} />
     <Route path="/info" component={Info} />
-    {privateRoutes.map(({ path, component }: RouteItem) => (
-      <PrivateRoute key={path} exact={component} />
+    {privateRoutes.map((props: RouteItem) => (
+      <PrivateRoute key={props.path} exact {...props}/>
     ))}
     <Route path="/login" component={Login} />
     <Route path="/signup" component={Signup} />
