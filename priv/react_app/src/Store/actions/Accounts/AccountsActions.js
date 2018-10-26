@@ -1,7 +1,7 @@
 import { SubmissionError } from 'redux-form';
 import { actionTypes } from '../..';
 import API from '../../../API';
-import { ApiError } from '../../../Errors/ApiError';
+import ApiError from '../../../Errors/ApiError';
 
 export function forgotPasswordRequest() {
   return {

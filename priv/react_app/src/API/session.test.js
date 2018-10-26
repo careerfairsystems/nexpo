@@ -1,7 +1,7 @@
 import API from './index';
 import { mockHttpResponse, mockEnvironment } from '../TestHelper';
 import UnreachableCodeReachedError from '../Errors/UnreachableCodeReachedError';
-import { ApiError } from '../Errors/ApiError';
+import ApiError from '../Errors/ApiError';
 
 describe('developmentLogin', () => {
   const method = () => API.session.developmentLogin({ email: 'test' });

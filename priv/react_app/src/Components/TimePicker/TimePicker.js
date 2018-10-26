@@ -5,7 +5,18 @@ import { TimePicker } from 'antd';
 /**
  * Custom TimePicker that handles the conversion of the moment date value
  */
-const MyTimePicker = ({ value, onChange, format = 'HH:mm', ...rest }) => (
+type Props = {
+  value: any,
+  onChange: any => void,
+  format: string
+};
+
+const MyTimePicker = ({
+  value,
+  onChange,
+  format = 'HH:mm',
+  ...rest
+}: Props) => (
   <TimePicker
     value={moment(value, format).isValid() ? moment.utc(value, format) : null}
     format={format}
