@@ -15,7 +15,7 @@ type Response = {
 
 type ErrorResponse = {
   error: string,
-  errors: Error
+  errors: {}
 };
 
 /**
@@ -32,12 +32,12 @@ export const handleHttpResponse = (response: Response): Promise<any> => {
     return response.text();
   }
   if (isJson) {
-    return response.json().then(res => {
-      throw new ApiError((res: ErrorResponse));
+    return response.json().then((res: ErrorResponse) => {
+      throw new ApiError(res);
     });
   }
-  return response.text().then(res => {
-    throw new ApiError((res: ErrorResponse));
+  return response.text().then((res: ErrorResponse) => {
+    throw new ApiError(res);
   });
 };
 
