@@ -1,9 +1,15 @@
-import React from 'react';
+import * as React from 'react';
+import type { FieldProps } from 'redux-form';
 import { trim } from 'lodash/fp';
 import { Form } from 'antd';
 
 const FormItem = Form.Item;
-export const validatePassword = values => {
+type PasswordValues = {
+  password?: string,
+  passwordConfirmation?: string
+};
+
+export const validatePassword = (values: PasswordValues) => {
   const errors = {};
   if (values && values.password && values.passwordConfirmation) {
     if (values.password !== values.passwordConfirmation) {
@@ -12,21 +18,17 @@ export const validatePassword = values => {
   }
   return errors;
 };
-export const required = value =>
+export const required = (value: string) =>
   trim(value) ? undefined : "Field can't be empty";
 
 type Props = {
-  input: {},
-  meta: {
-    error: string,
-    touched: boolean,
-    invalid: boolean
-  },
-  label: string,
-  hasFeedback: boolean,
-  required: boolean
+  ...FieldProps,
+  accept: string,
+  children: Node,
+  format: string,
+  label: string
 };
-const makeField = Component => ({
+const makeField = (Component: React.ComponentType<*>) => ({
   input,
   meta,
   children,

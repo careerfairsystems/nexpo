@@ -5,7 +5,7 @@ type Props = {
   roles?: Array<string>,
   permissions?: Array<string>
 };
-const AdminHome = ({ roles, permissions }: Props) => (
+const AdminHome = ({ roles = [], permissions = [] }: Props) => (
   <div>
     <h1>Congratulations you did it!</h1>
     <h2>You have admin privileges!!</h2>
@@ -24,8 +24,8 @@ const AdminHome = ({ roles, permissions }: Props) => (
 );
 
 AdminHome.defaultProps = {
-  roles: null,
-  permissions: null
+  roles: [],
+  permissions: []
 };
 
 export default AdminHome;

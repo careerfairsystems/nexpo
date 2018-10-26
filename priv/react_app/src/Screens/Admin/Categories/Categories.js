@@ -103,7 +103,7 @@ class Categories extends Component<Props> {
 
         <Table
           columns={categoryColumns}
-          dataSource={setKeys(categories)}
+          dataSource={setKeys(categories||{})}
           expandedRowRender={expandedRowRender(attributes)}
           expandRowByClick
         />

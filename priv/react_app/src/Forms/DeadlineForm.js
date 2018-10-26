@@ -1,5 +1,7 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
+import type { FieldProps } from 'redux-form'
+
 import { connect } from 'react-redux';
 import { Button, Form, Input } from 'antd';
 import DatePicker from '../Components/DatePicker';
@@ -7,7 +9,7 @@ import DatePicker from '../Components/DatePicker';
 import makeField from './helper';
 
 const TextInput = makeField(Input);
-const MyDatePicker = makeField(props =>
+const MyDatePicker = makeField((props: FieldProps) =>
   DatePicker({ ...props, showTime: true, format: 'YYYY-MM-DD HH:mm' })
 );
 

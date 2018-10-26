@@ -27,7 +27,7 @@ export function getCategoryFailure(): GetCategoryFailureAction {
   };
 }
 
-export function getCategory(id) {
+export function getCategory(id: string) {
   return dispatch => {
     dispatch(getCategoryIsLoading());
     return API.categories

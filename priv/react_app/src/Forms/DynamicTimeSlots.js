@@ -3,6 +3,7 @@ import { zipWith, sortBy, flow } from 'lodash/fp';
 import { Table, Input, Checkbox, Button } from 'antd';
 import { Field } from 'redux-form';
 import moment from 'moment';
+import type { FieldsProps } from 'redux-form';
 import makeField, { required } from './helper';
 import DatePicker from '../Components/DatePicker';
 import TimePicker from '../Components/TimePicker';
@@ -11,6 +12,11 @@ const TextInput = makeField(Input);
 const FieldCheckbox = makeField(Checkbox);
 const MyDatePicker = makeField(DatePicker);
 const MyTimePicker = makeField(TimePicker);
+
+type Props = {
+  ...FieldsProps,
+  fieldValues?: {}
+};
 
 const generateTimeSlots = (fields, values) => {
   const {
@@ -105,14 +111,6 @@ const columns = [
   }
 ];
 
-type Props = {
-  fields: {
-    map: () => Promise<any>,
-    push: () => Promise<any>,
-    getAll: () => Promise<any>
-  },
-  fieldValues?: {}
-};
 const DynamicTimeSlots = ({ fields, fieldValues }: Props) => (
   <div className="student-session-time-slots">
     <Field name="date" label="Date" component={MyDatePicker} />
@@ -153,7 +151,12 @@ const DynamicTimeSlots = ({ fields, fieldValues }: Props) => (
       size="small"
       dataSource={flow(
         zipWith(
-          (field, obj) => ({ field, key: obj.id, ...obj, fields }),
+          (field, obj: { id: number }) => ({
+            field,
+            key: obj.id,
+            ...obj,
+            fields
+          }),
           fields.map(i => i)
         ),
         sortBy('start')

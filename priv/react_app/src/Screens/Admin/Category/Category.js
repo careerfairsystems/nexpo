@@ -9,8 +9,8 @@ import HtmlTitle from '../../../Components/HtmlTitle';
  */
 type Props = {
   id: string,
-  category: {},
-  getCategory: number => Promise<any>
+  category: { attributes?: Array<any>, title?: string },
+  getCategory: string => Promise<any>
 };
 class Category extends Component<Props> {
   componentWillMount() {
@@ -37,7 +37,7 @@ class Category extends Component<Props> {
 
           <div className="paper categories">
             <h2>Attributes</h2>
-            <Attributes ids={category.attributes} />
+            <Attributes ids={category.attributes || []} />
           </div>
         </div>
       </div>
