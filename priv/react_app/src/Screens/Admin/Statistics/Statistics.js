@@ -1,6 +1,14 @@
 import React, { Component } from 'react';
 import { Col, Row, Table } from 'antd';
-import { orderBy, divide, groupBy, sortBy } from 'lodash/fp';
+import {
+  orderBy,
+  divide,
+  groupBy,
+  sortBy,
+  entries,
+  map,
+  flow
+} from 'lodash/fp';
 import {
   VictoryAxis,
   VictoryChart,
@@ -10,6 +18,7 @@ import {
   VictoryVoronoiContainer
 } from 'victory';
 import moment from 'moment';
+// import ColumnGroup from 'antd/lib/table/ColumnGroup';
 
 const columns = [
   {
@@ -29,19 +38,19 @@ const dateFormat = d => moment(d).format('YYYY-MM-DD');
 
 const getData = applicationsPerDay => {
   let countPerDay = 0;
-  return sortBy(
-    sortDates,
-    Object.entries(groupBy(dateFormat, applicationsPerDay)).map(e => ({
-      x: e[0],
-      y: e[1].length
-    }))
-  ).map(({ x, y }) => {
-    countPerDay += y;
-    return {
-      x,
-      y: countPerDay
-    };
-  });
+  return flow(
+    groupBy(dateFormat),
+    entries,
+    map(e => ({ x: e[0], y: e[1].length })),
+    sortBy(sortDates),
+    map(({ x, y }) => {
+      countPerDay += y;
+      return {
+        x,
+        y: countPerDay
+      };
+    })
+  )(applicationsPerDay);
 };
 
 type Props = {
@@ -148,9 +157,9 @@ class Statistics extends Component<Props> {
           dataSource={orderBy(
             'nbrApplications',
             'desc',
-            Object.keys(companyStats).map(i => ({
-              ...companyStats[i],
-              key: i
+            companyStats.map((stat, i) => ({
+              key: i,
+              ...stat
             }))
           )}
         />
