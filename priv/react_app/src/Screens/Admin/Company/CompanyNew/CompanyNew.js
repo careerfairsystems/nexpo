@@ -8,8 +8,19 @@ import '../Company.css';
 type Props = {
   createCompany: ({ company: {} }) => Promise<any>
 };
+
+type NewCompanyValues = {
+  name?: string,
+  website?: string,
+  description?: string,
+  logoUrl?: {
+    uid: number,
+    filename: string
+  }
+};
+
 class CompanyNew extends Component<Props> {
-  createCompany = values => {
+  createCompany = (values: NewCompanyValues) => {
     const { createCompany } = this.props;
     createCompany({ company: values });
   };

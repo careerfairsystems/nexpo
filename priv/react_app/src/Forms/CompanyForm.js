@@ -1,5 +1,6 @@
 import React from 'react';
 import { Field, FieldArray, reduxForm } from 'redux-form';
+import type { FormProps } from 'redux-form';
 import { connect } from 'react-redux';
 import { isNil } from 'lodash/fp';
 import { Button, Form, Input } from 'antd';
@@ -12,11 +13,10 @@ const TextInput = makeField(Input);
 const TextArea = makeField(Input.TextArea);
 
 type Props = {
-  handleSubmit: () => Promise<any>,
-  onCancel?: Event => any,
-  submitting: boolean,
-  formState: { values: {} }
+  ...FormProps,
+  onCancel?: Event => any
 };
+
 const CompanyForm = ({
   handleSubmit,
   onCancel,

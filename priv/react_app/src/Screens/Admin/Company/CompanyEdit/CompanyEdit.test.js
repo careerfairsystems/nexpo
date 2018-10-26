@@ -25,14 +25,14 @@ describe('CompanyEdit', () => {
     const company = {
       name: 'Test CompanyEdit',
       website: 'testcompany.com',
-      describe: 'We do testing!',
+      description: 'We do testing!',
       studentSessionDays: 0
     };
     shallow(<CompanyEdit id="1" {...props} company={company} />);
   });
 
   it('should render loading while fetching ', () => {
-    const wrapper = shallow(<CompanyEdit id="1" {...props} fetching />);
+    const wrapper = shallow(<CompanyEdit id="1" {...props} fetching website />);
 
     expect(wrapper.find(LoadingSpinner)).toHaveLength(1);
   });
@@ -47,7 +47,7 @@ describe('CompanyEdit', () => {
     const company = {
       name: 'Test CompanyEdit',
       website: 'testcompany.com',
-      describe: 'We do testing!',
+      description: 'We do testing!',
       studentSessionDays: 3
     };
     const wrapper = shallow(
@@ -61,7 +61,7 @@ describe('CompanyEdit', () => {
     const company = {
       name: 'Test CompanyEdit',
       website: 'testcompany.com',
-      describe: 'We do testing!',
+      description: 'We do testing!',
       studentSessionDays: 1
     };
     const wrapper = shallow(
@@ -76,7 +76,7 @@ describe('CompanyEdit', () => {
     const company = {
       name: 'Test CompanyEdit',
       website: 'testcompany.com',
-      describe: 'We do testing!',
+      description: 'We do testing!',
       studentSessionDays: 2
     };
     const id = '1';
