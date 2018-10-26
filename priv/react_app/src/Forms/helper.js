@@ -3,7 +3,12 @@ import { trim } from 'lodash/fp';
 import { Form } from 'antd';
 
 const FormItem = Form.Item;
-export const validatePassword = values => {
+type PasswordValues = {
+  password?: string,
+  passwordConfirmation?: string
+};
+
+export const validatePassword = (values: PasswordValues) => {
   const errors = {};
   if (values && values.password && values.passwordConfirmation) {
     if (values.password !== values.passwordConfirmation) {
@@ -12,10 +17,11 @@ export const validatePassword = values => {
   }
   return errors;
 };
-export const required = value =>
+export const required = (value: string) =>
   trim(value) ? undefined : "Field can't be empty";
 
 type Props = {
+  children: Node,
   input: {},
   meta: {
     error: string,
