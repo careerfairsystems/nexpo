@@ -6,9 +6,10 @@ import makeField from './helper';
 type Props = {
   accept: string,
   value: {} | string,
-  onChange: () => Promise<any>
+  onChange: (?File) => Promise<any>
 };
-const UploadButton = ({ accept, value, onChange }: Props) => (
+
+const UploadButton = ({ accept = '', value, onChange }: Props) => (
   <Upload
     key="uploadButton"
     accept={accept}
@@ -25,5 +26,9 @@ const UploadButton = ({ accept, value, onChange }: Props) => (
     </Button>
   </Upload>
 );
+
+// UploadButton.defaultProps = {
+//   accept: ''
+// };
 
 export default makeField(UploadButton);

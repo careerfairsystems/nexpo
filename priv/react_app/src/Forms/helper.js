@@ -1,4 +1,5 @@
-import React from 'react';
+import * as React from 'react';
+import type { FieldProps } from 'redux-form';
 import { trim } from 'lodash/fp';
 import { Form } from 'antd';
 
@@ -21,18 +22,13 @@ export const required = (value: string) =>
   trim(value) ? undefined : "Field can't be empty";
 
 type Props = {
+  ...FieldProps,
+  accept: string,
   children: Node,
-  input: {},
-  meta: {
-    error: string,
-    touched: boolean,
-    invalid: boolean
-  },
-  label: string,
-  hasFeedback: boolean,
-  required: boolean
+  format: string,
+  label: string
 };
-const makeField = Component => ({
+const makeField = (Component: React.ComponentType<*>) => ({
   input,
   meta,
   children,
