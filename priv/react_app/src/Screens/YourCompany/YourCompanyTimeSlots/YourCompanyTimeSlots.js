@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { isEmpty, isNil } from 'lodash/fp';
 import { Avatar, List } from 'antd';
 import { toDayFormat } from '../../../Util/FormatHelper';
@@ -7,12 +6,11 @@ import NotFound from '../../NotFound';
 import HtmlTitle from '../../../Components/HtmlTitle';
 import '../YourCompany.css';
 
-class YourCompanyTimeSlots extends Component {
-  static propTypes = {
-    currentCompany: PropTypes.object.isRequired,
-    getCurrentCompany: PropTypes.func.isRequired
-  };
-
+type Props = {
+  currentCompany: {},
+  getCurrentCompany: () => Promise<any>
+};
+class YourCompanyTimeSlots extends Component<Props> {
   componentWillMount() {
     const { getCurrentCompany } = this.props;
     getCurrentCompany();
@@ -26,7 +24,7 @@ class YourCompanyTimeSlots extends Component {
     // const { name } = currentCompany;
     return (
       <div className="company-show-view">
-        <HtmlTitle title='TimeSlots' />
+        <HtmlTitle title="TimeSlots" />
         <h3>Student Session Time Slots</h3>
         <List
           dataSource={currentCompany.studentSessionTimeSlots}

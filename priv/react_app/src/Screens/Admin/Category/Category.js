@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { isEmpty, isNil } from 'lodash/fp';
 import Attributes from './Attributes';
 import NotFound from '../../NotFound';
@@ -8,7 +7,12 @@ import HtmlTitle from '../../../Components/HtmlTitle';
 /**
  * Responsible for rendering a category. Category id is recieved via url
  */
-class Category extends Component {
+type Props = {
+  id: string,
+  category: {},
+  getCategory: number => Promise<any>
+};
+class Category extends Component<Props> {
   componentWillMount() {
     const { id, getCategory } = this.props;
     getCategory(id);
@@ -40,11 +44,5 @@ class Category extends Component {
     );
   }
 }
-
-Category.propTypes = {
-  id: PropTypes.string.isRequired,
-  category: PropTypes.object.isRequired,
-  getCategory: PropTypes.func.isRequired
-};
 
 export default Category;

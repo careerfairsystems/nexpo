@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { isEmpty } from 'lodash/fp';
 import NotFound from '../../NotFound';
 import LoadingSpinner from '../../../Components/LoadingSpinner';
@@ -8,24 +7,23 @@ import StudentForm from '../../../Forms/StudentForm';
 import SessionForm from '../../../Forms/SessionForm';
 import '../Session.css';
 
-class SessionApplication extends Component {
-  static propTypes = {
-    fetching: PropTypes.bool.isRequired,
-    currentUser: PropTypes.shape({
-      email: PropTypes.string,
-      student: PropTypes.object
-    }).isRequired,
-    currentStudent: PropTypes.shape({
-      resumeEnUrl: PropTypes.string,
-      resumeSvUrl: PropTypes.string
-    }).isRequired,
-    getAllCompanies: PropTypes.func.isRequired,
-    getAllProgrammes: PropTypes.func.isRequired,
-    createStudentSessionAppl: PropTypes.func.isRequired,
-    updateCurrentStudent: PropTypes.func.isRequired,
-    resetForm: PropTypes.func.isRequired
-  };
-
+type Props = {
+  fetching: boolean,
+  currentUser: {
+    email?: string,
+    student?: {}
+  },
+  currentStudent: {
+    resumeEnUrl?: string,
+    resumeSvUrl?: string
+  },
+  getAllCompanies: () => Promise<any>,
+  getAllProgrammes: () => Promise<any>,
+  createStudentSessionAppl: () => Promise<any>,
+  updateCurrentStudent: () => Promise<any>,
+  resetForm: () => Promise<any>
+};
+class SessionApplication extends Component<Props> {
   componentWillMount() {
     const { getAllCompanies, getAllProgrammes } = this.props;
     getAllCompanies();

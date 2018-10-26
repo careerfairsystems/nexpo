@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { Table, Button, Popconfirm, Divider } from 'antd';
 import { size, sortBy, toLower } from 'lodash/fp';
 
@@ -12,7 +11,13 @@ import FilterSearch, { FilterIcon } from '../../../Components/FilterSearch';
 /**
  * Responsible for rendering a list of companies
  */
-class Companies extends Component {
+type Props = {
+  companies?: {},
+  fetching: boolean,
+  getAllCompanies: () => Promise<any>,
+  deleteCompany: number => ''
+};
+class Companies extends Component<Props> {
   componentWillMount() {
     const { getAllCompanies } = this.props;
     getAllCompanies();
@@ -108,13 +113,6 @@ class Companies extends Component {
     return this.renderCompanies();
   }
 }
-
-Companies.propTypes = {
-  companies: PropTypes.object,
-  fetching: PropTypes.bool.isRequired,
-  getAllCompanies: PropTypes.func.isRequired,
-  deleteCompany: PropTypes.func.isRequired
-};
 
 Companies.defaultProps = {
   companies: {}

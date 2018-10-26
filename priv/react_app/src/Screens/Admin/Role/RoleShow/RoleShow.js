@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { isEmpty, isNil, capitalize, join } from 'lodash/fp';
 import { List, Avatar, Button } from 'antd';
 import NotFound from '../../../NotFound';
@@ -10,7 +9,12 @@ import '../Role.css';
 /**
  * Responsible for rendering a role. Role id is recieved via url
  */
-class RoleShow extends Component {
+type Props = {
+  id: string,
+  role: {},
+  getRole: () => Promise<any>
+};
+class RoleShow extends Component<Props> {
   componentWillMount() {
     const { id, getRole } = this.props;
     getRole(id);
@@ -60,11 +64,5 @@ class RoleShow extends Component {
     );
   }
 }
-
-RoleShow.propTypes = {
-  id: PropTypes.string.isRequired,
-  role: PropTypes.object.isRequired,
-  getRole: PropTypes.func.isRequired
-};
 
 export default RoleShow;

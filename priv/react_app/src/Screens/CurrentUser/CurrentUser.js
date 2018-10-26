@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { isEmpty } from 'lodash/fp';
 import { Button, Modal } from 'antd';
 import LoadingSpinner from '../../Components/LoadingSpinner';
@@ -7,22 +6,21 @@ import NotFound from '../NotFound';
 import CurrentUserForm from '../../Forms/CurrentUserForm';
 import StudentForm from '../../Forms/StudentForm';
 
-class CurrentUser extends Component {
-  static propTypes = {
-    currentUser: PropTypes.shape({
-      email: PropTypes.string,
-      student: PropTypes.object
-    }),
-    currentStudent: PropTypes.object,
-    fetching: PropTypes.bool.isRequired,
-    updateCurrentUser: PropTypes.func.isRequired,
-    updateCurrentStudent: PropTypes.func.isRequired,
-    getAllProgrammes: PropTypes.func.isRequired,
-    destroyCurrentUser: PropTypes.func.isRequired,
-    logout: PropTypes.func.isRequired,
-    resetForm: PropTypes.func.isRequired
-  };
-
+type Props = {
+  currentUser?: {
+    email?: string,
+    student?: {}
+  },
+  currentStudent?: {},
+  fetching: boolean,
+  updateCurrentUser: () => Promise<any>,
+  updateCurrentStudent: () => Promise<any>,
+  getAllProgrammes: () => Promise<any>,
+  destroyCurrentUser: () => Promise<any>,
+  logout: () => Promise<any>,
+  resetForm: () => Promise<any>
+};
+class CurrentUser extends Component<Props> {
   static defaultProps = {
     currentUser: {},
     currentStudent: {}

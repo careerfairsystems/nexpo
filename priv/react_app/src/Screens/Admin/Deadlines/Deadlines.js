@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { Table, Button, Popconfirm, Divider } from 'antd';
 import { sortBy } from 'lodash/fp';
 
@@ -10,14 +9,13 @@ import HtmlTitle from '../../../Components/HtmlTitle';
 /**
  * Responsible for rendering a list of deadlines
  */
-class Deadlines extends Component {
-  static propTypes = {
-    deadlines: PropTypes.object,
-    fetching: PropTypes.bool.isRequired,
-    getAllDeadlines: PropTypes.func.isRequired,
-    deleteDeadline: PropTypes.func.isRequired
-  };
-
+type Props = {
+  deadlines?: {},
+  fetching: boolean,
+  getAllDeadlines: () => Promise<any>,
+  deleteDeadline: () => Promise<any>
+};
+class Deadlines extends Component<Props> {
   static defaultProps = {
     deadlines: {}
   };

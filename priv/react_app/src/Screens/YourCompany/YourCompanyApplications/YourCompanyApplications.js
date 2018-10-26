@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { isEmpty, isNil, orderBy } from 'lodash/fp';
 import { List, Rate } from 'antd';
 import NotFound from '../../NotFound';
@@ -7,15 +6,14 @@ import HtmlTitle from '../../../Components/HtmlTitle';
 import LoadingSpinner from '../../../Components/LoadingSpinner';
 import '../YourCompany.css';
 
-class YourCompanyApplications extends Component {
-  static propTypes = {
-    currentCompany: PropTypes.object.isRequired,
-    fetching: PropTypes.bool.isRequired,
-    updating: PropTypes.bool.isRequired,
-    getCurrentCompany: PropTypes.func.isRequired,
-    updateStudentSessionAppl: PropTypes.func.isRequired
-  };
-
+type Props = {
+  currentCompany: {},
+  fetching: boolean,
+  updating: boolean,
+  getCurrentCompany: () => Promise<any>,
+  updateStudentSessionAppl: (number, {}) => Promise<any>
+};
+class YourCompanyApplications extends Component<Props> {
   componentWillMount() {
     const { getCurrentCompany } = this.props;
     getCurrentCompany();

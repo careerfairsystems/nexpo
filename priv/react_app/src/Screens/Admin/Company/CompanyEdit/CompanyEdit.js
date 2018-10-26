@@ -14,17 +14,16 @@ import '../Company.css';
 /**
  * Responsible for editing a company. Company id is recieved via url
  */
-class CompanyEdit extends Component {
-  static propTypes = {
-    id: PropTypes.string,
-    company: PropTypes.shape({ name: PropTypes.string }).isRequired,
-    fetching: PropTypes.bool.isRequired,
-    getCompany: PropTypes.func.isRequired,
-    history: PropTypes.shape({ push: PropTypes.func }).isRequired,
-    resetForm: PropTypes.func.isRequired,
-    updateCompany: PropTypes.func.isRequired
-  };
-
+type Props = {
+  id?: string,
+  company: { name: string },
+  fetching: boolean,
+  getCompany: number => Promise<any>,
+  history: { push: string => any },
+  resetForm: string => any,
+  updateCompany: (number, {}) => Promise<any>
+};
+class CompanyEdit extends Component<Props> {
   static defaultProps = {
     id: null
   };

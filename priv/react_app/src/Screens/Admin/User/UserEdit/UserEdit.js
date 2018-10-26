@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 
 import { isEmpty, isNil } from 'lodash/fp';
 import HtmlTitle from '../../../../Components/HtmlTitle';
@@ -12,16 +11,15 @@ import '../User.css';
 /**
  * Responsible for rendering a user. User id is recieved via url
  */
-class UserEdit extends Component {
-  static propTypes = {
-    id: PropTypes.string,
-    user: PropTypes.shape({ name: PropTypes.string }).isRequired,
-    fetching: PropTypes.bool.isRequired,
-    getUser: PropTypes.func.isRequired,
-    history: PropTypes.shape({ push: PropTypes.func }).isRequired,
-    updateUser: PropTypes.func.isRequired
-  };
-
+type Props = {
+  id?: string,
+  user: { name?: string },
+  fetching: boolean,
+  getUser: () => Promise<any>,
+  history: { push: string => any },
+  updateUser: () => Promise<any>
+};
+class UserEdit extends Component<Props> {
   static defaultProps = {
     id: null
   };

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { isEmpty, isNil } from 'lodash/fp';
 import { Avatar, Button } from 'antd';
 import { toExternal } from '../../../../Util/URLHelper';
@@ -9,13 +8,12 @@ import InvisibleLink from '../../../../Components/InvisibleLink';
 import LoadingSpinner from '../../../../Components/LoadingSpinner';
 import '../../YourCompany.css';
 
-class YourCompanyProfileShow extends Component {
-  static propTypes = {
-    fetching: PropTypes.bool.isRequired,
-    currentCompany: PropTypes.object.isRequired,
-    getCurrentCompany: PropTypes.func.isRequired
-  };
-
+type Props = {
+  fetching: boolean,
+  currentCompany: {},
+  getCurrentCompany: () => Promise<any>
+};
+class YourCompanyProfileShow extends Component<Props> {
   componentWillMount() {
     const { getCurrentCompany } = this.props;
     getCurrentCompany();

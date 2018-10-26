@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { sortBy } from 'lodash/fp';
 import { Popconfirm, Table, Button, Divider } from 'antd';
 
@@ -10,7 +9,13 @@ import HtmlTitle from '../../../Components/HtmlTitle';
 /**
  * Responsible for rendering a list of roles
  */
-class Roles extends Component {
+type Props = {
+  roles: {},
+  fetching: boolean,
+  getAllRoles: () => Promise<any>,
+  deleteRole: () => Promise<any>
+};
+class Roles extends Component<Props> {
   componentWillMount() {
     const { getAllRoles } = this.props;
     getAllRoles();
@@ -90,12 +95,5 @@ class Roles extends Component {
     );
   }
 }
-
-Roles.propTypes = {
-  roles: PropTypes.object.isRequired,
-  fetching: PropTypes.bool.isRequired,
-  getAllRoles: PropTypes.func.isRequired,
-  deleteRole: PropTypes.func.isRequired
-};
 
 export default Roles;

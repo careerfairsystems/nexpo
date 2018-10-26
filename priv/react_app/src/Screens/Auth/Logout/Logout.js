@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 
-class Logout extends Component {
+type Props = {
+  logout: () => Promise<any>
+};
+class Logout extends Component<Props> {
   componentWillMount() {
     const { logout } = this.props;
     logout();
@@ -12,9 +14,5 @@ class Logout extends Component {
     return <Redirect to="/" />;
   }
 }
-
-Logout.propTypes = {
-  logout: PropTypes.func.isRequired
-};
 
 export default Logout;

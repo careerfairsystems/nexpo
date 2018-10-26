@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { isEmpty, map } from 'lodash/fp';
 import { Button } from 'antd';
 
@@ -13,17 +12,16 @@ import '../User.css';
 /**
  * Responsible for rendering a user. User id is recieved via url
  */
-class UserShow extends Component {
-  static propTypes = {
-    id: PropTypes.string,
-    user: PropTypes.object,
-    fetching: PropTypes.bool.isRequired,
-    getUser: PropTypes.func.isRequired,
-    match: PropTypes.shape({
-      path: PropTypes.string
-    })
-  };
-
+type Props = {
+  id?: string,
+  user?: {},
+  fetching: boolean,
+  getUser: () => Promise<any>,
+  match?: {
+    path?: string
+  }
+};
+class UserShow extends Component<Props> {
   static defaultProps = {
     id: null,
     user: {},

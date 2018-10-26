@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { isEmpty, isNil, capitalize } from 'lodash/fp';
 
 import NotFound from '../../../NotFound';
@@ -11,7 +10,17 @@ import '../Role.css';
 /**
  * Responsible for rendering a role. Role id is recieved via url
  */
-class RoleEdit extends Component {
+type Props = {
+  id: string,
+  role: { type?: string },
+  getRole: () => Promise<any>,
+  getAllUsers: () => Promise<any>,
+  fetchingRoles: boolean,
+  fetchingUsers: boolean,
+  updateRole: () => Promise<any>,
+  history: { push: string => any }
+};
+class RoleEdit extends Component<Props> {
   componentWillMount() {
     const { id, getRole, getAllUsers } = this.props;
     getRole(id);
@@ -41,16 +50,5 @@ class RoleEdit extends Component {
     );
   }
 }
-
-RoleEdit.propTypes = {
-  id: PropTypes.string.isRequired,
-  role: PropTypes.shape({ type: PropTypes.string }).isRequired,
-  getRole: PropTypes.func.isRequired,
-  getAllUsers: PropTypes.func.isRequired,
-  fetchingRoles: PropTypes.bool.isRequired,
-  fetchingUsers: PropTypes.bool.isRequired,
-  updateRole: PropTypes.func.isRequired,
-  history: PropTypes.shape({ push: PropTypes.func }).isRequired
-};
 
 export default RoleEdit;

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { Icon } from 'antd';
 import { Redirect } from 'react-router-dom';
 import './DevelopmentLogin.css';
@@ -17,7 +16,12 @@ const styles = {
     color: '#ffeb3b'
   }
 };
-class DevelopmentLogin extends Component {
+type Props = {
+  location: { state?: {} },
+  isLoggedIn: boolean,
+  login: () => Promise<any>
+};
+class DevelopmentLogin extends Component<Props> {
   login = values => {
     const { email } = values;
     const { login } = this.props;
@@ -44,11 +48,5 @@ class DevelopmentLogin extends Component {
     );
   }
 }
-
-DevelopmentLogin.propTypes = {
-  location: PropTypes.shape({ state: PropTypes.object }).isRequired,
-  isLoggedIn: PropTypes.bool.isRequired,
-  login: PropTypes.func.isRequired
-};
 
 export default DevelopmentLogin;

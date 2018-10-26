@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import CompanyForm from '../../../../Forms/CompanyForm';
 import '../Company.css';
 
 /**
  * Responsible for rendering a company. Company id is recieved via url
  */
-class CompanyNew extends Component {
+type Props = {
+  createCompany: ({ company: {} }) => Promise<any>
+};
+class CompanyNew extends Component<Props> {
   createCompany = values => {
     const { createCompany } = this.props;
     createCompany({ company: values });
@@ -20,9 +22,5 @@ class CompanyNew extends Component {
     );
   }
 }
-
-CompanyNew.propTypes = {
-  createCompany: PropTypes.func.isRequired
-};
 
 export default CompanyNew;

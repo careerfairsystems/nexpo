@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { Table, Button, Popconfirm, Divider } from 'antd';
 import { sortBy } from 'lodash/fp';
 
@@ -10,14 +9,13 @@ import HtmlTitle from '../../../Components/HtmlTitle';
 /**
  * Responsible for rendering a list of mailtemplates
  */
-class Mailtemplates extends Component {
-  static propTypes = {
-    mailtemplates: PropTypes.object,
-    fetching: PropTypes.bool.isRequired,
-    getAllMailtemplates: PropTypes.func.isRequired,
-    deleteMailtemplate: PropTypes.func.isRequired
-  };
-
+type Props = {
+  mailtemplates?: {},
+  fetching: boolean,
+  getAllMailtemplates: () => Promise<any>,
+  deleteMailtemplate: () => Promise<any>
+};
+class Mailtemplates extends Component<Props> {
   static defaultProps = {
     mailtemplates: {}
   };

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { isEmpty, isNil, sortBy } from 'lodash/fp';
 import { List, Avatar, Button } from 'antd';
 import NotFound from '../../../NotFound';
@@ -13,17 +12,16 @@ import '../Company.css';
 /**
  * Responsible for rendering a company. Company id is recieved via url
  */
-class CompanyShow extends Component {
-  static propTypes = {
-    id: PropTypes.string,
-    company: PropTypes.object.isRequired,
-    fetching: PropTypes.bool.isRequired,
-    getCompany: PropTypes.func.isRequired,
-    match: PropTypes.shape({
-      path: PropTypes.string
-    })
-  };
-
+type Props = {
+  id?: string,
+  company: {},
+  fetching: boolean,
+  getCompany: number => Promise<any>,
+  match?: {
+    path: string
+  }
+};
+class CompanyShow extends Component<Props> {
   static defaultProps = {
     id: null,
     match: {

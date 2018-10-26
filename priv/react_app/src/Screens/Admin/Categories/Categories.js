@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { denormalize } from 'normalizr';
 import { Table, Button, Divider } from 'antd';
 import Schema from '../../../Store/normalizr/schema';
@@ -76,14 +75,13 @@ const expandedRowRender = attributes => category => (
 /**
  * Responsible for rendering a list of categories
  */
-class Categories extends Component {
-  static propTypes = {
-    categories: PropTypes.object,
-    attributes: PropTypes.object,
-    fetching: PropTypes.bool.isRequired,
-    getAllCategories: PropTypes.func.isRequired
-  };
-
+type Props = {
+  categories?: {},
+  attributes?: {},
+  fetching: boolean,
+  getAllCategories: () => Promise<any>
+};
+class Categories extends Component<Props> {
   static defaultProps = {
     categories: {},
     attributes: {}

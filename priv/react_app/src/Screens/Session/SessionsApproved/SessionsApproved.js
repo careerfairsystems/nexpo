@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { isNil, sortBy } from 'lodash/fp';
 import { Icon, List, Avatar, Button } from 'antd';
 import NotFound from '../../NotFound';
@@ -9,28 +8,25 @@ import { toSessionTimeFormat } from '../../../Util/FormatHelper';
 
 import '../Session.css';
 
-class StudentSessions extends Component {
-  static propTypes = {
-    sessions: PropTypes.arrayOf(
-      PropTypes.shape({
-        studentId: PropTypes.number,
-        companyId: PropTypes.number,
-        studentConfirmed: PropTypes.bool,
-        start: PropTypes.string,
-        end: PropTypes.string
-      })
-    ),
-    companies: PropTypes.shape({
-      id: PropTypes.number,
-      name: PropTypes.string,
-      description: PropTypes.string,
-      website: PropTypes.string
-    }),
-    confirmSession: PropTypes.func.isRequired,
-    getAllCompanies: PropTypes.func.isRequired,
-    fetching: PropTypes.bool.isRequired
-  };
-
+type Props = {
+  sessions?: Array<{
+    studentId: number,
+    companyId: number,
+    studentConfirmed?: boolean,
+    start?: string,
+    end?: string
+  }>,
+  companies?: {
+    id: number,
+    name?: string,
+    description?: string,
+    website?: string
+  },
+  confirmSession: () => Promise<any>,
+  getAllCompanies: () => Promise<any>,
+  fetching: boolean
+};
+class StudentSessions extends Component<Props> {
   static defaultProps = {
     companies: {},
     sessions: null

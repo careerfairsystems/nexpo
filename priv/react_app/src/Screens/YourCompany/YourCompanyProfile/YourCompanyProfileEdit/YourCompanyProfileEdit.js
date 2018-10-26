@@ -1,11 +1,17 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { isEmpty, isNil } from 'lodash/fp';
 import NotFound from '../../../NotFound';
 import CurrentCompanyForm from '../../../../Forms/CurrentCompanyForm';
 import LoadingSpinner from '../../../../Components/LoadingSpinner';
 
-class YourCompanyProfileEdit extends Component {
+type Props = {
+  fetching: boolean,
+  history: {},
+  currentCompany: {},
+  getCurrentCompany: () => Promise<any>,
+  updateCurrentCompany: ({ company: {} }) => Promise<any>
+};
+class YourCompanyProfileEdit extends Component<Props> {
   componentWillMount() {
     const { getCurrentCompany } = this.props;
     getCurrentCompany();
@@ -60,13 +66,5 @@ class YourCompanyProfileEdit extends Component {
     );
   }
 }
-
-YourCompanyProfileEdit.propTypes = {
-  fetching: PropTypes.bool.isRequired,
-  history: PropTypes.object.isRequired,
-  currentCompany: PropTypes.object.isRequired,
-  getCurrentCompany: PropTypes.func.isRequired,
-  updateCurrentCompany: PropTypes.func.isRequired
-};
 
 export default YourCompanyProfileEdit;

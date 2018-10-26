@@ -1,21 +1,19 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { isEmpty } from 'lodash/fp';
 
 import MailtemplateForm from '../../../Forms/MailtemplateForm';
 import NotFound from '../../NotFound';
 import LoadingSpinner from '../../../Components/LoadingSpinner';
 
-class Mailtemplate extends Component {
-  static propTypes = {
-    id: PropTypes.string,
-    mailtemplate: PropTypes.object.isRequired,
-    createMailtemplate: PropTypes.func.isRequired,
-    fetching: PropTypes.bool.isRequired,
-    getMailtemplate: PropTypes.func.isRequired,
-    updateMailtemplate: PropTypes.func.isRequired
-  };
-
+type Props = {
+  id?: string,
+  mailtemplate: {},
+  createMailtemplate: () => Promise<any>,
+  fetching: boolean,
+  getMailtemplate: () => Promise<any>,
+  updateMailtemplate: () => Promise<any>
+};
+class Mailtemplate extends Component<Props> {
   static defaultProps = {
     id: null
   };

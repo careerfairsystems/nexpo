@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { Col, Row, Table } from 'antd';
 import { orderBy, divide, groupBy, sortBy } from 'lodash/fp';
 import {
@@ -45,22 +44,19 @@ const getData = applicationsPerDay => {
   });
 };
 
-class Statistics extends Component {
-  static propTypes = {
-    getAllStatistics: PropTypes.func.isRequired,
-    statistics: PropTypes.shape({
-      companyStats: PropTypes.arrayOf(
-        PropTypes.shape({
-          name: PropTypes.string,
-          id: PropTypes.number,
-          nbrApplications: PropTypes.number
-        })
-      ),
-      nbrStudents: PropTypes.number,
-      nbrSearchingStudents: PropTypes.number
-    }).isRequired
-  };
-
+type Props = {
+  getAllStatistics: () => Promise<any>,
+  statistics: {
+    companyStats: Array<{
+      name?: string,
+      id: number,
+      nbrApplications: number
+    }>,
+    nbrStudents: number,
+    nbrSearchingStudents: number
+  }
+};
+class Statistics extends Component<Props> {
   componentWillMount() {
     const { getAllStatistics } = this.props;
     getAllStatistics();

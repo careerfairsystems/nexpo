@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { SubmissionError } from 'redux-form';
 import { pick } from 'lodash/fp';
 import ErrorMessage from '../../../../Components/ErrorMessage';
@@ -17,7 +16,7 @@ type State = {
   passwordConfirmation: string,
   firstName: string,
   lastName: string,
-  errors: object,
+  errors: {},
   noSuchKey: boolean,
   finished: boolean
 };
@@ -96,9 +95,5 @@ class FinalizeSignup extends Component<Props, State> {
     );
   }
 }
-
-FinalizeSignup.propTypes = {
-  signupKey: PropTypes.string.isRequired
-};
 
 export default FinalizeSignup;

@@ -1,24 +1,22 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { isEmpty } from 'lodash/fp';
 
 import ProgrammeForm from '../../../Forms/ProgrammeForm';
 import LoadingSpinner from '../../../Components/LoadingSpinner';
 import NotFound from '../../NotFound';
 
-class Programme extends Component {
-  static propTypes = {
-    id: PropTypes.string.isRequired,
-    programme: PropTypes.shape({
-      email: PropTypes.string,
-      student: PropTypes.number
-    }).isRequired,
-    fetching: PropTypes.bool.isRequired,
-    getProgramme: PropTypes.func.isRequired,
-    createProgramme: PropTypes.func.isRequired,
-    updateProgramme: PropTypes.func.isRequired
-  };
-
+type Props = {
+  id: string,
+  programme: {
+    email?: string,
+    student: number
+  },
+  fetching: boolean,
+  getProgramme: () => Promise<any>,
+  createProgramme: () => Promise<any>,
+  updateProgramme: () => Promise<any>
+};
+class Programme extends Component<Props> {
   componentWillMount() {
     const { id, getProgramme } = this.props;
     if (id) getProgramme(id);

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { isNil, filter, sortBy } from 'lodash/fp';
 import { List, Avatar } from 'antd';
 import NotFound from '../../NotFound';
@@ -9,7 +8,12 @@ import HtmlTitle from '../../../Components/HtmlTitle';
 import InvisibleLink from '../../../Components/InvisibleLink';
 import '../Session.css';
 
-class SessionCompanies extends Component {
+type Props = {
+  fetching: boolean,
+  companies: {},
+  getAllCompanies: () => Promise<any>
+};
+class SessionCompanies extends Component<Props> {
   componentWillMount() {
     const { getAllCompanies } = this.props;
     getAllCompanies();
@@ -61,11 +65,5 @@ class SessionCompanies extends Component {
     );
   }
 }
-
-SessionCompanies.propTypes = {
-  fetching: PropTypes.bool.isRequired,
-  companies: PropTypes.object.isRequired,
-  getAllCompanies: PropTypes.func.isRequired
-};
 
 export default SessionCompanies;

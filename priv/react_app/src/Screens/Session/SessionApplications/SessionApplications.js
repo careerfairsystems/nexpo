@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { isNil, sortBy } from 'lodash/fp';
 import { List, Avatar, Popconfirm, Button } from 'antd';
 import NotFound from '../../NotFound';
@@ -8,16 +7,15 @@ import HtmlTitle from '../../../Components/HtmlTitle';
 import UpdateSessionApplicationForm from '../../../Forms/UpdateSessionApplicationForm';
 import '../Session.css';
 
-class SessionApplications extends Component {
-  static propTypes = {
-    applications: PropTypes.array,
-    companies: PropTypes.object,
-    getAllCompanies: PropTypes.func.isRequired,
-    destroyStudentSessionAppl: PropTypes.func.isRequired,
-    fetching: PropTypes.bool.isRequired,
-    updateStudentSessionAppl: PropTypes.func.isRequired
-  };
-
+type Props = {
+  applications?: Array<any>,
+  companies?: {},
+  getAllCompanies: () => Promise<any>,
+  destroyStudentSessionAppl: () => Promise<any>,
+  fetching: boolean,
+  updateStudentSessionAppl: () => Promise<any>
+};
+class SessionApplications extends Component<Props> {
   static defaultProps = {
     companies: {},
     applications: null

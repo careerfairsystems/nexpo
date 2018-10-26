@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { Table, Button, Divider, Popconfirm } from 'antd';
 
 import InvisibleLink from '../../../Components/InvisibleLink';
@@ -9,14 +8,13 @@ import HtmlTitle from '../../../Components/HtmlTitle';
 /**
  * Responsible for rendering a list of programmes
  */
-class Programmes extends Component {
-  static propTypes = {
-    programmes: PropTypes.object,
-    fetching: PropTypes.bool.isRequired,
-    deleteProgramme: PropTypes.func.isRequired,
-    getAllProgrammes: PropTypes.func.isRequired
-  };
-
+type Props = {
+  programmes?: {},
+  fetching: boolean,
+  deleteProgramme: () => Promise<any>,
+  getAllProgrammes: () => Promise<any>
+};
+class Programmes extends Component<Props> {
   static defaultProps = {
     programmes: {}
   };

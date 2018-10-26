@@ -1,12 +1,23 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { isEmpty } from 'lodash/fp';
 import LoadingSpinner from '../../Components/LoadingSpinner';
 import NotFound from '../NotFound';
 import RepresentativeHome from './RepresentativeHome';
 import StudentHome from './StudentHome';
 
-const Home = ({ currentUser, fetching }) => {
+type Props = {
+  currentUser?: {
+    representative: {
+      id: number
+    },
+    student: {
+      id: number
+    }
+  },
+  fetching?: boolean
+};
+
+const Home = ({ currentUser, fetching }: Props) => {
   if (fetching) {
     return <LoadingSpinner />;
   }
@@ -22,15 +33,4 @@ Home.defaultProps = {
   fetching: false
 };
 
-Home.propTypes = {
-  currentUser: PropTypes.shape({
-    representative: PropTypes.shape({
-      id: PropTypes.number
-    }),
-    student: PropTypes.shape({
-      id: PropTypes.number
-    })
-  }),
-  fetching: PropTypes.bool
-};
 export default Home;
