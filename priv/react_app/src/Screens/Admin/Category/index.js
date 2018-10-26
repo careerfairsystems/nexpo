@@ -4,7 +4,7 @@ import type { State } from '../../../Store/reducers';
 import Category from './Category';
 
 const mapStateToProps = (state: State, props) => {
-  const categoryId = props.match.params.id;
+  const categoryId: string = props.match.params.id;
 
   return {
     id: categoryId,

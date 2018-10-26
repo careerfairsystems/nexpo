@@ -15,9 +15,13 @@ type Props = {
   companies?: {},
   fetching: boolean,
   getAllCompanies: () => Promise<any>,
-  deleteCompany: number => ''
+  deleteCompany: string => Promise<any>
 };
 class Companies extends Component<Props> {
+  static defaultProps = {
+    companies: {}
+  };
+
   componentWillMount() {
     const { getAllCompanies } = this.props;
     getAllCompanies();
@@ -30,9 +34,9 @@ class Companies extends Component<Props> {
       key: 'name',
       filterDropdown: FilterSearch,
       filterIcon: FilterIcon,
-      onFilter: (value, record) =>
+      onFilter: (value: string, record: { name: string }) =>
         toLower(record.name).includes(toLower(value)),
-      render: (name, { id }) => (
+      render: (name: string, { id }: { id: string }) => (
         <InvisibleLink to={`/admin/companies/${id}`}>{name}</InvisibleLink>
       )
     },
@@ -40,19 +44,19 @@ class Companies extends Component<Props> {
       title: 'Website',
       dataIndex: 'website',
       key: 'website',
-      render: website => <a href={toExternal(website)}>{website}</a>
+      render: (website: string) => <a href={toExternal(website)}>{website}</a>
     },
     {
       title: 'Description',
       dataIndex: 'description',
       key: 'description',
-      render: description =>
+      render: (description: string) =>
         size(description) > 42 ? `${description.slice(0, 42)} ...` : description
     },
     {
       title: 'Action',
       key: 'action',
-      render: company => (
+      render: (company: { id: string }) => (
         <span>
           <InvisibleLink to={`/admin/companies/${company.id}`}>
             Show
@@ -77,7 +81,7 @@ class Companies extends Component<Props> {
   ];
 
   renderCompanies() {
-    const { companies } = this.props;
+    const { companies = {} } = this.props;
 
     return (
       <div>
@@ -113,9 +117,5 @@ class Companies extends Component<Props> {
     return this.renderCompanies();
   }
 }
-
-Companies.defaultProps = {
-  companies: {}
-};
 
 export default Companies;
