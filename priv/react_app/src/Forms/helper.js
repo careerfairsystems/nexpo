@@ -15,6 +15,17 @@ export const validatePassword = values => {
 export const required = value =>
   trim(value) ? undefined : "Field can't be empty";
 
+type Props = {
+  input: {},
+  meta: {
+    error: string,
+    touched: boolean,
+    invalid: boolean
+  },
+  label: string,
+  hasFeedback: boolean,
+  required: boolean
+};
 const makeField = Component => ({
   input,
   meta,
@@ -23,7 +34,7 @@ const makeField = Component => ({
   label,
   required,
   ...rest
-}) => {
+}: Props) => {
   const hasError = meta.touched && meta.invalid;
   return (
     <FormItem
@@ -40,9 +51,4 @@ const makeField = Component => ({
   );
 };
 
-// makeFormItem.propTypes = {
-//   input: PropTypes.func.isRequired,
-//   meta: PropTypes.func.isRequired,
-//   label: PropTypes.string.isRequired
-// };
 export default makeField;

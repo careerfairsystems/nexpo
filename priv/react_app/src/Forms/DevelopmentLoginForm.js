@@ -1,12 +1,16 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import { Button, Input, Form } from 'antd';
 import makeField from './helper';
 
 const TextInput = makeField(Input);
-const DevelopmentLoginForm = ({ handleSubmit, submitting }) => (
+
+type Props = {
+  handleSubmit: () => Promise<any>,
+  submitting: boolean
+};
+const DevelopmentLoginForm = ({ handleSubmit, submitting }: Props) => (
   <Form onSubmit={handleSubmit}>
     <Field
       name="email"
@@ -20,11 +24,6 @@ const DevelopmentLoginForm = ({ handleSubmit, submitting }) => (
     </Button>
   </Form>
 );
-
-DevelopmentLoginForm.propTypes = {
-  handleSubmit: PropTypes.func.isRequired,
-  submitting: PropTypes.bool.isRequired
-};
 
 const mapStateToProps = state => ({
   formState: state.form.DevelopmentLoginForm

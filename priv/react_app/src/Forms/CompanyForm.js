@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Field, FieldArray, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import { isNil } from 'lodash/fp';
@@ -12,7 +11,18 @@ import DynamicTimeSlots from './DynamicTimeSlots';
 const TextInput = makeField(Input);
 const TextArea = makeField(Input.TextArea);
 
-const CompanyForm = ({ handleSubmit, onCancel, submitting, formState }) => (
+type Props = {
+  handleSubmit: () => Promise<any>,
+  onCancel?: Event => any,
+  submitting: boolean,
+  formState: { values: {} }
+};
+const CompanyForm = ({
+  handleSubmit,
+  onCancel,
+  submitting,
+  formState
+}: Props) => (
   <Form onSubmit={handleSubmit}>
     <Field
       name="name"
@@ -56,12 +66,6 @@ const CompanyForm = ({ handleSubmit, onCancel, submitting, formState }) => (
 
 CompanyForm.defaultProps = {
   onCancel: null
-};
-
-CompanyForm.propTypes = {
-  handleSubmit: PropTypes.func.isRequired,
-  onCancel: PropTypes.func,
-  submitting: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = (state, props) => {

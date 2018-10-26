@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { zipWith, sortBy, flow } from 'lodash/fp';
 import { Table, Input, Checkbox, Button } from 'antd';
 import { Field } from 'redux-form';
@@ -106,7 +105,15 @@ const columns = [
   }
 ];
 
-const DynamicTimeSlots = ({ fields, fieldValues }) => (
+type Props = {
+  fields: {
+    map: () => Promise<any>,
+    push: () => Promise<any>,
+    getAll: () => Promise<any>
+  },
+  fieldValues?: {}
+};
+const DynamicTimeSlots = ({ fields, fieldValues }: Props) => (
   <div className="student-session-time-slots">
     <Field name="date" label="Date" component={MyDatePicker} />
     <Field name="startTime" label="Start Time" component={MyTimePicker} />
@@ -156,14 +163,6 @@ const DynamicTimeSlots = ({ fields, fieldValues }) => (
     />
   </div>
 );
-
-DynamicTimeSlots.propTypes = {
-  fields: PropTypes.shape({
-    map: PropTypes.func.isRequired,
-    push: PropTypes.func.isRequired
-  }).isRequired,
-  fieldValues: PropTypes.object
-};
 
 DynamicTimeSlots.defaultProps = {
   fieldValues: {}

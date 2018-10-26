@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import { Button, Input, Form } from 'antd';
@@ -7,7 +6,12 @@ import makeField from './helper';
 
 const TextInput = makeField(Input);
 
-const ProgrammeForm = ({ handleSubmit, disabled, submitting }) => (
+type Props = {
+  disabled?: boolean,
+  handleSubmit: () => Promise<any>,
+  submitting: boolean
+};
+const ProgrammeForm = ({ handleSubmit, disabled, submitting }: Props) => (
   <Form onSubmit={handleSubmit}>
     <Field
       name="name"
@@ -24,13 +28,6 @@ const ProgrammeForm = ({ handleSubmit, disabled, submitting }) => (
 
 ProgrammeForm.defaultProps = {
   disabled: false
-};
-
-ProgrammeForm.propTypes = {
-  disabled: PropTypes.bool,
-  handleSubmit: PropTypes.func.isRequired,
-  reset: PropTypes.func.isRequired,
-  submitting: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = state => ({

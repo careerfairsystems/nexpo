@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import { Button, Checkbox, Form, Input } from 'antd';
@@ -16,7 +15,11 @@ const gdprText =
 const agreeText =
   'I agree that Teknologkåren vid LTH will treat my personal data provided by this application in connection with the Student Session.';
 
-const FinalizeSignupForm = ({ handleSubmit, submitting }) => (
+type Props = {
+  handleSubmit: () => Promise<any>,
+  submitting: boolean
+};
+const FinalizeSignupForm = ({ handleSubmit, submitting }: Props) => (
   <Form onSubmit={handleSubmit} style={{ maxWidth: 600 }}>
     <Field
       name="email"
@@ -68,11 +71,6 @@ const FinalizeSignupForm = ({ handleSubmit, submitting }) => (
     </Button>
   </Form>
 );
-
-FinalizeSignupForm.propTypes = {
-  handleSubmit: PropTypes.func.isRequired,
-  submitting: PropTypes.bool.isRequired
-};
 
 const mapStateToProps = state => ({
   formState: state.form.FinalizeSignupForm

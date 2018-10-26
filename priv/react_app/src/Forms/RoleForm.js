@@ -39,7 +39,11 @@ const renderUserItem = user => (
   </Select.Option>
 );
 
-const RoleForm = ({ handleSubmit, users }) => (
+type Props = {
+  users: {},
+  handleSubmit: () => Promise<any>
+};
+const RoleForm = ({ handleSubmit, users }: Props) => (
   <Form onSubmit={handleSubmit}>
     <Field name="type" label="Type:" component={TextInput} />
     <Field
@@ -64,11 +68,6 @@ const RoleForm = ({ handleSubmit, users }) => (
     <Button htmlType="submit">Submit</Button>
   </Form>
 );
-
-RoleForm.propTypes = {
-  users: PropTypes.object.isRequired,
-  handleSubmit: PropTypes.func.isRequired
-};
 
 const mapStateToProps = state => ({
   users: state.entities.users,

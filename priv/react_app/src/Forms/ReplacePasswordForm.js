@@ -1,12 +1,16 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import { Button, Input, Form } from 'antd';
 import makeField, { required, validatePassword } from './helper';
 
 const TextInput = makeField(Input);
-const ReplacePasswordForm = ({ handleSubmit, submitting }) => (
+
+type Props = {
+  handleSubmit: () => Promise<any>,
+  submitting: boolean
+};
+const ReplacePasswordForm = ({ handleSubmit, submitting }: Props) => (
   <Form onSubmit={handleSubmit}>
     <Field
       name="password"
@@ -30,11 +34,6 @@ const ReplacePasswordForm = ({ handleSubmit, submitting }) => (
     </Button>
   </Form>
 );
-
-ReplacePasswordForm.propTypes = {
-  handleSubmit: PropTypes.func.isRequired,
-  submitting: PropTypes.bool.isRequired
-};
 
 const mapStateToProps = state => ({
   formState: state.form.ReplacePasswordForm

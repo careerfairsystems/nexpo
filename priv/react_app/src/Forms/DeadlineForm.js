@@ -12,7 +12,10 @@ const MyDatePicker = makeField(props =>
   DatePicker({ ...props, showTime: true, format: 'YYYY-MM-DD HH:mm' })
 );
 
-const DeadlineForm = ({ handleSubmit }) => (
+type Props = {
+  handleSubmit: () => Promise<any>
+};
+const DeadlineForm = ({ handleSubmit }: Props) => (
   <Form onSubmit={handleSubmit}>
     <Field name="name" label="Name:" component={TextInput} />
     <Field name="start" label="Start Time:" component={MyDatePicker} />
@@ -20,10 +23,6 @@ const DeadlineForm = ({ handleSubmit }) => (
     <Button htmlType="submit">Submit</Button>
   </Form>
 );
-
-DeadlineForm.propTypes = {
-  handleSubmit: PropTypes.func.isRequired
-};
 
 const mapStateToProps = state => ({
   formState: state.form.DeadlineForm

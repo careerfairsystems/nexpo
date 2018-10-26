@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import { isNil, map } from 'lodash/fp';
@@ -17,7 +16,22 @@ const renderProgrammeItem = programme => (
   </Select.Option>
 );
 
-const StudentForm = ({ handleSubmit, pristine, programmes }) => (
+type Props = {
+  initialValues: {
+    resumeEnUrl?: {
+      name?: string,
+      url?: string
+    },
+    resumeSvUrl: {
+      name?: string,
+      url?: string
+    }
+  },
+  handleSubmit: () => Promise<any>,
+  programmes: {},
+  pristine: boolean
+};
+const StudentForm = ({ handleSubmit, pristine, programmes }: Props) => (
   <Form onSubmit={handleSubmit}>
     <Field name="year" label="Starting Year" component={TextInput} />
     <Field
@@ -48,22 +62,6 @@ const StudentForm = ({ handleSubmit, pristine, programmes }) => (
     </Button>
   </Form>
 );
-
-StudentForm.propTypes = {
-  initialValues: PropTypes.shape({
-    resumeEnUrl: PropTypes.shape({
-      name: PropTypes.string,
-      url: PropTypes.string
-    }),
-    resumeSvUrl: PropTypes.shape({
-      name: PropTypes.string,
-      url: PropTypes.string
-    })
-  }).isRequired,
-  handleSubmit: PropTypes.func.isRequired,
-  programmes: PropTypes.object.isRequired,
-  pristine: PropTypes.bool.isRequired
-};
 
 const mapStateToProps = (state, props) => {
   const { initialValues = {} } = props;
