@@ -14,25 +14,31 @@ import '../Company.css';
  * Responsible for editing a company. Company id is recieved via url
  */
 type Props = {
-  id?: string,
-  company: { name: string },
+  id: string,
+  company: { name?: string, website?: string, description?: string },
   fetching: boolean,
-  getCompany: number => Promise<any>,
+  getCompany: string => Promise<any>,
   history: { push: string => any },
   resetForm: string => any,
-  updateCompany: (number, {}) => Promise<any>
+  updateCompany: (string, {}) => Promise<any>
+};
+
+type NewCompanyValues = {
+  name?: string,
+  website?: string,
+  description?: string,
+  logoUrl?: {
+    uid: number,
+    filename: string
+  }
 };
 class CompanyEdit extends Component<Props> {
-  static defaultProps = {
-    id: null
-  };
-
   componentWillMount() {
     const { id, getCompany } = this.props;
     getCompany(id);
   }
 
-  updateCompany = values => {
+  updateCompany = (values: NewCompanyValues) => {
     const { id, updateCompany } = this.props;
     updateCompany(id, { company: values });
   };
@@ -42,7 +48,7 @@ class CompanyEdit extends Component<Props> {
     history.push(`/admin/companies/${id}`);
   };
 
-  invite = ({ email }) => {
+  invite = ({ email }: { email: string }) => {
     const { id, resetForm } = this.props;
     API.signup
       .initialRepresentativeSignup({ email, companyId: toInteger(id) })

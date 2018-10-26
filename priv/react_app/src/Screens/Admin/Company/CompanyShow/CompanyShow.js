@@ -13,17 +13,29 @@ import '../Company.css';
  * Responsible for rendering a company. Company id is recieved via url
  */
 type Props = {
-  id?: string,
-  company: {},
+  id: string,
+  company: {
+    id?: string,
+    name?: string,
+    website?: string,
+    description?: string,
+    logoUrl?: string,
+    studentSessionDays?: number,
+    studentSessionTimeSlots?: Array<{
+      id: number,
+      start: string,
+      end: string,
+      location: string
+    }>
+  },
   fetching: boolean,
-  getCompany: number => Promise<any>,
+  getCompany: string => Promise<any>,
   match?: {
     path: string
   }
 };
 class CompanyShow extends Component<Props> {
   static defaultProps = {
-    id: null,
     match: {
       path: ''
     }
@@ -78,7 +90,7 @@ class CompanyShow extends Component<Props> {
         <p>{description}</p>
         <h3>Student Session Time Slots</h3>
         <List
-          dataSource={sortBy('start', company.studentSessionTimeSlots)}
+          dataSource={sortBy('start', company.studentSessionTimeSlots || [])}
           bordered
           renderItem={({ start, end, location }, index) => (
             <List.Item>
@@ -93,7 +105,7 @@ class CompanyShow extends Component<Props> {
           )}
         />
         <br />
-        <InvisibleLink to={`/admin/companies/${company.id}/edit`}>
+        <InvisibleLink to={`/admin/companies/${company.id || ''}/edit`}>
           <Button onClick={() => null} type="primary">
             Edit
           </Button>

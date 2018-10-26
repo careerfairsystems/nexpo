@@ -6,7 +6,7 @@ import Schema from '../../../../Store/normalizr/schema';
 import CompanyShow from './CompanyShow';
 
 const mapStateToProps = (state, props) => {
-  const companyId = props.match.params.id;
+  const companyId = props.match.params.id || '';
   const { fetching } = state.api.companies;
 
   const {
