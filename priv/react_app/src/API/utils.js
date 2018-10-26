@@ -1,17 +1,22 @@
-import { ApiError } from '../Errors/ApiError';
+import ApiError from '../Errors/ApiError';
 import { getJwt } from '../Util/JwtHelper';
 import { snakeCaseKeys, toFormData } from '../Util/FormatHelper';
 import 'whatwg-fetch'; // fetch polyfill for unsupported browsers
 
-// type Response = {
-//   ok: boolean,
-//   type?: string,
-//   error?: string,
-//   errors?: Error,
-//   +json: () => Promise<any>,
-//   headers: Headers,
-//   +text: () => Promise<any>
-// };
+type Response = {
+  ok: boolean,
+  type: any,
+  error?: string,
+  errors?: Error,
+  +json: () => Promise<any>,
+  headers: Headers,
+  +text: () => Promise<any>
+};
+
+type ErrorResponse = {
+  error: string,
+  errors: {}
+};
 
 /**
  * Default handler for fetch calls
@@ -27,11 +32,11 @@ export const handleHttpResponse = (response: Response): Promise<any> => {
     return response.text();
   }
   if (isJson) {
-    return response.json().then(res => {
+    return response.json().then((res: ErrorResponse) => {
       throw new ApiError(res);
     });
   }
-  return response.text().then(res => {
+  return response.text().then((res: ErrorResponse) => {
     throw new ApiError(res);
   });
 };

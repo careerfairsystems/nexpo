@@ -62,7 +62,7 @@
     "test-ci": "npm run build-css && CI=true npm run test-js",
     "test-coverage": "npm run test-js -- --coverage",
     "eject": "react-scripts eject",
-    "postinstall": "npx flow-typed install && npx flow-typed create-stub whatwg-fetch"
+    "postinstall": "npx flow-typed install && npx flow-typed create-stub whatwg-fetch && npx flow-typed create-stub antd && npx flow-typed create-stub redux-form"
   },
   "engines": {
     "node": "8.11.1",
