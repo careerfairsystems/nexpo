@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import type { Dispatch } from 'redux';
 import ReplaceForgottenPassword from './ReplaceForgottenPassword';
 import { Actions } from '../../Store';
 import type { State } from '../../Store/reducers';
@@ -9,7 +10,7 @@ const mapStateToProps = (state: State) => ({
   success: state.api.replacePassword.success
 });
 
-const mapDispatchToprops = (dispatch, props) => {
+const mapDispatchToprops = (dispatch: Dispatch<any>, props) => {
   const { hashKey } = props;
   const key = hashKey;
   return {
@@ -21,9 +22,7 @@ const mapDispatchToprops = (dispatch, props) => {
           passwordConfirmation
         })
       ),
-    verifyKey: () => {
-      dispatch(Actions.accounts.verifyForgotPasswordKey({ key }));
-    }
+    verifyKey: () => dispatch(Actions.accounts.verifyForgotPasswordKey({ key }))
   };
 };
 
