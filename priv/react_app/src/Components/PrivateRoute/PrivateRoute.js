@@ -1,5 +1,4 @@
 import * as React from 'react';
-import PropTypes from 'prop-types';
 import { Route, Redirect } from 'react-router-dom';
 import { hasPermission } from '../../Util/PermissionsHelper';
 import LoadingSpinner from '../LoadingSpinner';
@@ -36,9 +35,5 @@ const PrivateRoute = ({
     }}
   />
 );
-
-PrivateRoute.propTypes = {
-  isLoggedIn: PropTypes.bool.isRequired
-};
 
 export default PrivateRoute;

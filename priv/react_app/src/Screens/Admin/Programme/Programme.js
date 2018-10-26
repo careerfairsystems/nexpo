@@ -12,9 +12,9 @@ type Props = {
     student: number
   },
   fetching: boolean,
-  getProgramme: () => Promise<any>,
-  createProgramme: () => Promise<any>,
-  updateProgramme: () => Promise<any>
+  getProgramme: string => Promise<any>,
+  createProgramme: ({ programme: {} }) => Promise<any>,
+  updateProgramme: (number, { programme: {} }) => Promise<any>
 };
 class Programme extends Component<Props> {
   componentWillMount() {
