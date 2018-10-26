@@ -47,7 +47,7 @@ const { Header, Content, Footer } = Layout;
 
 type RouteItem = {
   path: string,
-  component: React$Component<{}> | (void => React$Element<any>)
+  component: React$ComponentType<{}> 
 };
 
 const privateRoutes: Array<RouteItem> = [

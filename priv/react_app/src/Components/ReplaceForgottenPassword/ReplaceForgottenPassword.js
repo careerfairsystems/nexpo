@@ -1,28 +1,26 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import ReplacePasswordForm from '../../Forms/ReplacePasswordForm';
 import { SuccessMessage } from '../SuccessMessage/SuccessMessage';
 import { NotFound } from '../../Screens/NotFound/NotFound';
 
+type PasswordObj = {|
+  password: string,
+  passwordConfirmation: string
+|};
 type Props = {
-  sendNewPasswordToBackend: func,
-  verifyKey: func,
+  sendNewPasswordToBackend: PasswordObj => Promise<{}>,
+  verifyKey: () => Promise<{}>,
   keyIsValid: boolean,
-  errors: {
-    password: string[],
-    passwordConfirmation: string[]
-  }
+  errors?: {
+    password?: string[],
+    passwordConfirmation?: string[]
+  },
+  success?: boolean
 };
 
 class ReplaceForgottenPassword extends Component<Props> {
-  static propTypes = {
-    verifyKey: PropTypes.func.isRequired,
-    sendNewPasswordToBackend: PropTypes.func.isRequired,
-    keyIsValid: PropTypes.bool.isRequired,
-    success: PropTypes.bool
-  };
-
   static defaultProps = {
+    errors: {},
     success: false
   };
 
@@ -31,7 +29,7 @@ class ReplaceForgottenPassword extends Component<Props> {
     verifyKey();
   }
 
-  sendQueryToBackend = values => {
+  sendQueryToBackend = (values: PasswordObj) => {
     const { password, passwordConfirmation } = values;
     const { sendNewPasswordToBackend } = this.props;
     return sendNewPasswordToBackend({
