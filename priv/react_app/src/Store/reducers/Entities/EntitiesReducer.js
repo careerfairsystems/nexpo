@@ -45,7 +45,7 @@ const handleMerge = (prev, next) => {
 };
 
 export const EntitiesReducer = (
-  state = initialState,
+  state: EntitiesState = initialState,
   incomingAction
 ): EntitiesState => {
   const action = camelCaseKeys(incomingAction);

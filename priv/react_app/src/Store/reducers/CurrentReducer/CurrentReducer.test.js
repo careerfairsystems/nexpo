@@ -23,10 +23,9 @@ describe('Current reducer', () => {
   });
 
   it('should handle delete current user', () => {
-    const testUser = { id: 1, name: 'Test User' };
     const state = CurrentReducer(
-      { user: testUser },
-      Actions.users.destroyCurrentUserSuccess(testUser.id)
+      { user: 1 },
+      Actions.users.destroyCurrentUserSuccess()
     );
     expect(state).toMatchObject({ user: null });
   });

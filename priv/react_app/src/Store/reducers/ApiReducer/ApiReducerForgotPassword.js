@@ -5,19 +5,20 @@
 import { Action } from 'redux';
 import { initialStatus, fetching, retrieving } from './ApiReducer';
 import actionTypes from '../../ActionTypes';
+import type { ApiStatus } from './ApiReducer';
 
 export const ApiReducerForgotPassword = (
-  state = initialStatus,
+  state: ApiStatus = initialStatus,
   act: Action
-): ApiState => {
+) => {
   switch (act.type) {
     case actionTypes.FORGOT_PASSWORD_REQUEST: {
-      const stateChange: ApiState = fetching;
+      const stateChange = fetching;
       return { ...state, ...stateChange };
     }
 
     case actionTypes.FORGOT_PASSWORD_SUCCESS: {
-      const stateChange: ApiState = retrieving;
+      const stateChange = retrieving;
       return { ...state, ...stateChange };
     }
 

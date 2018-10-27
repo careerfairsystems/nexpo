@@ -5,14 +5,17 @@
 import { actionTypes } from '../..';
 
 export type CurrentState = {
-  user: number
+  user: ?number
 };
 
 const initialState = {
   user: undefined
 };
 
-export const CurrentReducer = (state = initialState, action): CurrentState => {
+export const CurrentReducer = (
+  state: CurrentState = initialState,
+  action
+): CurrentState => {
   switch (action.type) {
     case actionTypes.FETCH_CURRENT_USER_SUCCESS:
       return { ...state, user: action.user.id };

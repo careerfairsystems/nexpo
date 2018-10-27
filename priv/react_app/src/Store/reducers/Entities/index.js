@@ -1,4 +1,5 @@
-import EntitiesReducer, { EntitiesState } from './EntitiesReducer';
+import EntitiesReducer from './EntitiesReducer';
+import type { EntitiesState } from './EntitiesReducer';
 
-export { EntitiesState };
+export type { EntitiesState };
 export default EntitiesReducer;

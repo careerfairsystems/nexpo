@@ -4,40 +4,41 @@
 
 import { Action } from 'redux';
 import { initialStatus, fetching, retrieving, failure } from './ApiReducer';
+import type { ApiStatus } from './ApiReducer';
 import actionTypes from '../../ActionTypes';
 
 export const ApiReducerCategories = (
-  state = initialStatus,
+  state: ApiStatus = initialStatus,
   act: Action
-): ApiState => {
+) => {
   switch (act.type) {
     case actionTypes.FETCH_CATEGORY: {
-      const stateChange: ApiState = fetching;
+      const stateChange = fetching;
       return { ...state, ...stateChange };
     }
 
     case actionTypes.FETCH_CATEGORY_SUCCESS: {
-      const stateChange: ApiState = retrieving;
+      const stateChange = retrieving;
       return { ...state, ...stateChange };
     }
 
     case actionTypes.FETCH_CATEGORY_FAILURE: {
-      const stateChange: ApiState = failure();
+      const stateChange = failure();
       return { ...state, ...stateChange };
     }
 
     case actionTypes.FETCH_CATEGORIES: {
-      const stateChange: ApiState = fetching;
+      const stateChange = fetching;
       return { ...state, ...stateChange };
     }
 
     case actionTypes.FETCH_CATEGORIES_SUCCESS: {
-      const stateChange: ApiState = retrieving;
+      const stateChange = retrieving;
       return { ...state, ...stateChange };
     }
 
     case actionTypes.FETCH_CATEGORIES_FAILURE: {
-      const stateChange: ApiState = failure();
+      const stateChange = failure();
       return { ...state, ...stateChange };
     }
 

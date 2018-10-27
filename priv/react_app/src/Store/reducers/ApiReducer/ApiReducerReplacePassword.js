@@ -6,25 +6,26 @@ import { Action } from 'redux';
 import { ReplaceForgottenPasswordFailureAction } from '../../actions/Accounts/AccountsActions';
 import { initialStatus, fetching, retrieving, failure } from './ApiReducer';
 import actionTypes from '../../ActionTypes';
+import type { ApiStatus } from './ApiReducer';
 
 export const ApiReducerForgotPassword = (
-  state = initialStatus,
+  state: ApiStatus = initialStatus,
   act: Action
-): ApiState => {
+) => {
   switch (act.type) {
     case actionTypes.REPLACE_FORGOTTEN_PASSWORD_REQUEST: {
-      const stateChange: ApiState = fetching;
+      const stateChange = fetching;
       return { ...state, ...stateChange };
     }
 
     case actionTypes.REPLACE_FORGOTTEN_PASSWORD_SUCCESS: {
-      const stateChange: ApiState = retrieving;
+      const stateChange = retrieving;
       return { ...state, ...stateChange };
     }
 
     case actionTypes.REPLACE_FORGOTTEN_PASSWORD_FAILURE: {
       const action: ReplaceForgottenPasswordFailureAction = act;
-      const stateChange: ApiState = failure(action.errors);
+      const stateChange = failure(action.errors);
       return { ...state, ...stateChange };
     }
 

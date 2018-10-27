@@ -6,24 +6,25 @@
 import { Action } from 'redux';
 import { initialStatus, fetching, retrieving, failure } from './ApiReducer';
 import actionTypes from '../../ActionTypes';
+import type { ApiStatus } from './ApiReducer';
 
 export const ApiReducerStudentSession = (
-  state = initialStatus,
+  state: ApiStatus = initialStatus,
   act: Action
-): ApiState => {
+) => {
   switch (act.type) {
     case actionTypes.PUT_STUDENT_SESSION_APPL: {
-      const stateChange: ApiState = fetching;
+      const stateChange = fetching;
       return { ...state, ...stateChange };
     }
 
     case actionTypes.PUT_STUDENT_SESSION_APPL_SUCCESS: {
-      const stateChange: ApiState = retrieving;
+      const stateChange = retrieving;
       return { ...state, ...stateChange };
     }
 
     case actionTypes.PUT_STUDENT_SESSION_APPL_FAILURE: {
-      const stateChange: ApiState = failure();
+      const stateChange = failure();
       return { ...state, ...stateChange };
     }
 

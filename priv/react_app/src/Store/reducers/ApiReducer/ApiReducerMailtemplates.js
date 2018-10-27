@@ -5,39 +5,40 @@
 import { Action } from 'redux';
 import { initialStatus, fetching, retrieving, failure } from './ApiReducer';
 import actionTypes from '../../ActionTypes';
+import type { ApiStatus } from './ApiReducer';
 
 export const ApiReducerMailtemplates = (
-  state = initialStatus,
+  state: ApiStatus = initialStatus,
   act: Action
-): ApiState => {
+) => {
   switch (act.type) {
     case actionTypes.FETCH_MAILTEMPLATE: {
-      const stateChange: ApiState = fetching;
+      const stateChange = fetching;
       return { ...state, ...stateChange };
     }
 
     case actionTypes.FETCH_MAILTEMPLATE_SUCCESS: {
-      const stateChange: ApiState = retrieving;
+      const stateChange = retrieving;
       return { ...state, ...stateChange };
     }
 
     case actionTypes.FETCH_MAILTEMPLATE_FAILURE: {
-      const stateChange: ApiState = failure();
+      const stateChange = failure();
       return { ...state, ...stateChange };
     }
 
     case actionTypes.FETCH_MAILTEMPLATES: {
-      const stateChange: ApiState = fetching;
+      const stateChange = fetching;
       return { ...state, ...stateChange };
     }
 
     case actionTypes.FETCH_MAILTEMPLATES_SUCCESS: {
-      const stateChange: ApiState = retrieving;
+      const stateChange = retrieving;
       return { ...state, ...stateChange };
     }
 
     case actionTypes.FETCH_MAILTEMPLATES_FAILURE: {
-      const stateChange: ApiState = failure();
+      const stateChange = failure();
       return { ...state, ...stateChange };
     }
 

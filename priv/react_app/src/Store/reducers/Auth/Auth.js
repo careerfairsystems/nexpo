@@ -17,7 +17,10 @@ const initialState = {
   }
 };
 
-export const AuthReducer = (state = initialState, action): AuthState => {
+export const AuthReducer = (
+  state: AuthState = initialState,
+  action
+): AuthState => {
   switch (action.type) {
     case actionTypes.LOGIN_SUCCESS:
       setJwt(action.jwt);

@@ -3,10 +3,14 @@
  */
 
 import { reducer as formReducer } from 'redux-form';
-import { ApiState, ApiReducer } from './ApiReducer/ApiReducer';
-import { AuthReducer, AuthState } from './Auth/Auth';
-import { CurrentState, CurrentReducer } from './CurrentReducer/CurrentReducer';
-import { EntitiesState, EntitiesReducer } from './Entities/EntitiesReducer';
+import { ApiReducer } from './ApiReducer/ApiReducer';
+import type { ApiState } from './ApiReducer/ApiReducer';
+import { AuthReducer } from './Auth/Auth';
+import type { AuthState } from './Auth/Auth';
+import { CurrentReducer } from './CurrentReducer/CurrentReducer';
+import type { CurrentState } from './CurrentReducer/CurrentReducer';
+import { EntitiesReducer } from './Entities/EntitiesReducer';
+import type { EntitiesState } from './Entities/EntitiesReducer';
 
 export type State = {
   entities: EntitiesState,
