@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { SuccessMessage } from './SuccessMessage';
+import SuccessMessage from './SuccessMessage';
 
 it('should render without crashing', () => {
   const props = {

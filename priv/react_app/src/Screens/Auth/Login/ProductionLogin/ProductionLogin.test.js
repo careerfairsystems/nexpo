@@ -7,7 +7,7 @@ it('should render without crashing', () => {
   const props = {
     isLoggedIn: false,
     login: jest.fn(),
-    location: { state: {} }
+    location: { state: {}, hash: '', pathname: '', search: '' }
   };
   shallow(
     <MemoryRouter>
@@ -20,7 +20,7 @@ it('should call login with correct values', () => {
   const props = {
     isLoggedIn: false,
     login: jest.fn(),
-    location: { state: {} }
+    location: { state: {}, hash: '', pathname: '', search: '' }
   };
   const wrapper = shallow(<ProductionLogin {...props} />);
   const email = 'dev@it';

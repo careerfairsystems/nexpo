@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import ForgotPasswordEnterEmail from './ForgotPasswordEnterEmail';
 import ForgotPasswordForm from '../../Forms/ForgotPasswordForm';
-import { SuccessMessage } from '../SuccessMessage/SuccessMessage';
+import SuccessMessage from '../SuccessMessage';
 
 it('can render without crashing', () => {
   const props = {

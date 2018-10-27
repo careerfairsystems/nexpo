@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import ForgotPasswordForm from '../../Forms/ForgotPasswordForm';
-import { SuccessMessage } from '../SuccessMessage/SuccessMessage';
+import SuccessMessage from '../SuccessMessage';
 
 type Props = {
   callBackend: ({ email: string }) => Promise<any>,

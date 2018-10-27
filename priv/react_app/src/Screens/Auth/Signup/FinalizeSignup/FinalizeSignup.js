@@ -12,11 +12,6 @@ type Props = {
 
 type State = {
   email: string,
-  password: string,
-  passwordConfirmation: string,
-  firstName: string,
-  lastName: string,
-  errors: {},
   noSuchKey: boolean,
   finished: boolean
 };
@@ -26,7 +21,7 @@ type State = {
  */
 class FinalizeSignup extends Component<Props, State> {
   state = {
-    email: undefined,
+    email: '',
     noSuchKey: false,
     finished: false
   };

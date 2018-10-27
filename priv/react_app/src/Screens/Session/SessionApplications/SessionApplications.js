@@ -15,7 +15,10 @@ type Props = {
   fetching: boolean,
   updateStudentSessionAppl: () => Promise<any>
 };
-class SessionApplications extends Component<Props> {
+type State = {
+  editing: { [number]: boolean }
+};
+class SessionApplications extends Component<Props, State> {
   static defaultProps = {
     companies: {},
     applications: null
@@ -32,7 +35,7 @@ class SessionApplications extends Component<Props> {
   }
 
   getCompany = ({ company }) => {
-    const { companies } = this.props;
+    const { companies = {} } = this.props;
     return companies[company] || {};
   };
 

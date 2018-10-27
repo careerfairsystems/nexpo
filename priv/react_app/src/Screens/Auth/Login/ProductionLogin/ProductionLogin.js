@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Redirect, Link } from 'react-router-dom';
+import type { Location } from 'react-router-dom';
+
 import HtmlTitle from '../../../../Components/HtmlTitle';
 import ProductionLoginForm from '../../../../Forms/ProductionLoginForm';
 /**
@@ -10,12 +12,12 @@ import ProductionLoginForm from '../../../../Forms/ProductionLoginForm';
  * - By passing isAuthenticated prop, this component will redirect back to where user came from
  */
 type Props = {
-  location: { state?: {} },
+  location: Location,
   isLoggedIn: boolean,
-  login: () => Promise<any>
+  login: ({ email: string, password: string }) => Promise<any>
 };
 class ProductionLogin extends Component<Props> {
-  login = values => {
+  login = (values: { email: string, password: string }) => {
     const { email, password } = values;
     const { login } = this.props;
     return login({ email, password });
