@@ -38,7 +38,13 @@ class FinalizeSignup extends Component<Props, State> {
       .catch(() => this.setState({ noSuchKey: true }));
   };
 
-  signup = values => {
+  signup = (values: {
+    password: string,
+    passwordConfirmation: string,
+    firstName: string,
+    lastName: string,
+    phoneNumber: string
+  }) => {
     const { signupKey } = this.props;
     const params = pick(
       [

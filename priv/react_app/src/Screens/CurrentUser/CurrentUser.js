@@ -6,19 +6,36 @@ import NotFound from '../NotFound';
 import CurrentUserForm from '../../Forms/CurrentUserForm';
 import StudentForm from '../../Forms/StudentForm';
 
+type UserObj = {
+  firstName: string,
+  lastName: string,
+  phoneNumber: string
+};
+type StudentObj = {
+  resumeSvUrl?: string,
+  resumeEnUrl?: string,
+  studentSessionApplications?: Array<{ companyId: number }>,
+  studentSessions?: Array<{ companyId: number }>,
+  programme?: { name: string },
+  year?: string
+};
+
 type Props = {
   currentUser?: {
     email?: string,
+    firstName?: string,
+    lastName?: string,
+    phoneNumber?: string,
     student?: {}
   },
-  currentStudent?: {},
+  currentStudent?: StudentObj,
   fetching: boolean,
-  updateCurrentUser: () => Promise<any>,
-  updateCurrentStudent: () => Promise<any>,
+  updateCurrentUser: ({ user: UserObj }) => Promise<any>,
+  updateCurrentStudent: ({ student: StudentObj }) => Promise<any>,
   getAllProgrammes: () => Promise<any>,
   destroyCurrentUser: () => Promise<any>,
   logout: () => Promise<any>,
-  resetForm: () => Promise<any>
+  resetForm: string => Promise<any>
 };
 class CurrentUser extends Component<Props> {
   static defaultProps = {
@@ -42,12 +59,12 @@ class CurrentUser extends Component<Props> {
   };
 
   destroyCurrentUser = () => {
-    const { currentUser, destroyCurrentUser, logout } = this.props;
-    destroyCurrentUser(currentUser.id);
+    const { destroyCurrentUser, logout } = this.props;
+    destroyCurrentUser();
     logout();
   };
 
-  updateStudent = values => {
+  updateStudent = (values: StudentObj) => {
     const { updateCurrentStudent } = this.props;
     return updateCurrentStudent({ student: values });
   };
@@ -57,13 +74,13 @@ class CurrentUser extends Component<Props> {
     resetForm('student');
   };
 
-  updateUser = values => {
+  updateUser = (values: UserObj) => {
     const { updateCurrentUser } = this.props;
     updateCurrentUser({ user: values });
   };
 
   render() {
-    const { currentUser, currentStudent, fetching } = this.props;
+    const { currentUser = {}, currentStudent, fetching } = this.props;
     if (fetching) {
       return <LoadingSpinner />;
     }

@@ -7,21 +7,28 @@ import StudentForm from '../../../Forms/StudentForm';
 import SessionForm from '../../../Forms/SessionForm';
 import '../Session.css';
 
+type StudentObj = {
+  resumeEnUrl?: string,
+  resumeSvUrl?: string
+};
+type Application = {
+  companyId: number,
+  motivation: string
+};
 type Props = {
   fetching: boolean,
   currentUser: {
     email?: string,
     student?: {}
   },
-  currentStudent: {
-    resumeEnUrl?: string,
-    resumeSvUrl?: string
-  },
+  currentStudent: StudentObj,
   getAllCompanies: () => Promise<any>,
   getAllProgrammes: () => Promise<any>,
-  createStudentSessionAppl: () => Promise<any>,
-  updateCurrentStudent: () => Promise<any>,
-  resetForm: () => Promise<any>
+  createStudentSessionAppl: ({
+    studentSessionApplication: Application
+  }) => Promise<any>,
+  updateCurrentStudent: ({ student: StudentObj }) => Promise<any>,
+  resetForm: string => Promise<any>
 };
 class SessionApplication extends Component<Props> {
   componentWillMount() {
@@ -30,7 +37,7 @@ class SessionApplication extends Component<Props> {
     getAllProgrammes();
   }
 
-  updateStudent = values => {
+  updateStudent = (values: StudentObj) => {
     const { updateCurrentStudent } = this.props;
     return updateCurrentStudent({ student: values });
   };
@@ -40,7 +47,7 @@ class SessionApplication extends Component<Props> {
     resetForm('student');
   };
 
-  createStudentSessionAppl = data => {
+  createStudentSessionAppl = (data: Application) => {
     const { createStudentSessionAppl } = this.props;
     createStudentSessionAppl({
       studentSessionApplication: data

@@ -32,7 +32,6 @@ describe('userform should function correctly', () => {
   });
 
   it('should render without crashing', () => {
-    props.roles = [{ type: 'host', permissions: ['read_companies'] }];
     shallow(<CurrentUser {...props} />);
   });
 
@@ -43,8 +42,7 @@ describe('userform should function correctly', () => {
   });
 
   it('should render notfound when currentUser is empty and not fetching', () => {
-    props.currentUser = {};
-    const wrapper = shallow(<CurrentUser {...props} />);
+    const wrapper = shallow(<CurrentUser {...props} currentUser={{}} />);
     expect(wrapper.find(NotFound).length).toBe(1);
   });
 

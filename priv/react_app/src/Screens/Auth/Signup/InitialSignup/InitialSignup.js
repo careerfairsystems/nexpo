@@ -10,13 +10,13 @@ import SuccessMessage from '../../../../Components/SuccessMessage';
  */
 type State = {
   finished: boolean
-}
+};
 class InitialSignup extends Component<{}, State> {
   state = {
     finished: false
   };
 
-  signup = values => {
+  signup = (values: { email: string }) => {
     const { email } = values;
     return API.signup
       .initialSignup(email)
