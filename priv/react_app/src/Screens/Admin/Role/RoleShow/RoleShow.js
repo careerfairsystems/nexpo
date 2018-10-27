@@ -11,8 +11,13 @@ import '../Role.css';
  */
 type Props = {
   id: string,
-  role: {},
-  getRole: () => Promise<any>
+  role: {
+    id?: string,
+    type?: string,
+    permissions?: Array<string>,
+    users?: Array<number>
+  },
+  getRole: string => Promise<any>
 };
 class RoleShow extends Component<Props> {
   componentWillMount() {
@@ -29,11 +34,11 @@ class RoleShow extends Component<Props> {
 
     return (
       <div className="role-show-view">
-        <HtmlTitle title={capitalize(role.type)} />
+        <HtmlTitle title={capitalize(role.type || '')} />
 
         <div>
-          <h1>{capitalize(role.type)}</h1>
-          <p>Permissions: {join(',', role.permissions)}</p>
+          <h1>{capitalize(role.type || '')}</h1>
+          <p>Permissions: {join(',', role.permissions || [])}</p>
           <h2>Users</h2>
           <List
             dataSource={role.users}
@@ -55,7 +60,7 @@ class RoleShow extends Component<Props> {
         </div>
         <br />
 
-        <InvisibleLink to={`/admin/roles/${role.id}/edit`}>
+        <InvisibleLink to={`/admin/roles/${role.id || ''}/edit`}>
           <Button onClick={() => null} type="primary">
             Edit
           </Button>

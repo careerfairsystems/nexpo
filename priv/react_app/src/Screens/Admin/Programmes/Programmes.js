@@ -11,7 +11,7 @@ import HtmlTitle from '../../../Components/HtmlTitle';
 type Props = {
   programmes?: {},
   fetching: boolean,
-  deleteProgramme: () => Promise<any>,
+  deleteProgramme: string => Promise<any>,
   getAllProgrammes: () => Promise<any>
 };
 class Programmes extends Component<Props> {
@@ -29,14 +29,14 @@ class Programmes extends Component<Props> {
       title: 'Name',
       dataIndex: 'name',
       key: 'name',
-      render: (name, { id }) => (
+      render: (name: string, { id }: { id: string }) => (
         <InvisibleLink to={`/admin/programmes/${id}`}>{name}</InvisibleLink>
       )
     },
     {
       title: 'Action',
       key: 'action',
-      render: programme => {
+      render: (programme: { id: string }) => {
         const { deleteProgramme } = this.props;
         return (
           <span>
@@ -59,7 +59,7 @@ class Programmes extends Component<Props> {
   ];
 
   renderProgrammes() {
-    const { programmes } = this.props;
+    const { programmes = {} } = this.props;
 
     return (
       <div>

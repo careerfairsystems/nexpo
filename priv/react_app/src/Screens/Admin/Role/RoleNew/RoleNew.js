@@ -6,8 +6,13 @@ import '../Role.css';
 /**
  * Responsible for rendering a role. Role id is recieved via url
  */
+type RoleObj = {
+  type: string,
+  permissions: Array<string>,
+  user: number
+};
 type Props = {
-  createRole: () => Promise<any>,
+  createRole: ({ role: RoleObj }) => Promise<any>,
   getAllUsers: () => Promise<any>
 };
 class RoleNew extends Component<Props> {
@@ -16,7 +21,7 @@ class RoleNew extends Component<Props> {
     getAllUsers();
   }
 
-  createRole = values => {
+  createRole = (values: RoleObj) => {
     const { createRole } = this.props;
     createRole({ role: values });
   };

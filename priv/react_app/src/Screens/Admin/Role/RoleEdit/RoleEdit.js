@@ -17,7 +17,7 @@ type Props = {
   getAllUsers: () => Promise<any>,
   fetchingRoles: boolean,
   fetchingUsers: boolean,
-  updateRole: (number, { role: {} }) => Promise<any>,
+  updateRole: (string, { role: {} }) => Promise<any>,
   history: { push: string => any }
 };
 class RoleEdit extends Component<Props> {
@@ -27,7 +27,11 @@ class RoleEdit extends Component<Props> {
     getAllUsers();
   }
 
-  updateRole = values => {
+  updateRole = (values: {
+    type: string,
+    permissions: Array<string>,
+    user: number
+  }) => {
     const { id, updateRole, history } = this.props;
     updateRole(id, { role: values });
     history.push(`/admin/roles/${id}`);
@@ -41,9 +45,9 @@ class RoleEdit extends Component<Props> {
 
     return (
       <div className="role-edit-view">
-        <HtmlTitle title={capitalize(role.type)} />
+        <HtmlTitle title={capitalize(role.type || '')} />
         <div>
-          <h1>Role: {capitalize(role.type)}</h1>
+          <h1>Role: {capitalize(role.type || '')}</h1>
           <RoleForm onSubmit={this.updateRole} initialValues={role} />
         </div>
       </div>

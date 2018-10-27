@@ -13,7 +13,7 @@ type Props = {
   roles: {},
   fetching: boolean,
   getAllRoles: () => Promise<any>,
-  deleteRole: () => Promise<any>
+  deleteRole: string => Promise<any>
 };
 class Roles extends Component<Props> {
   componentWillMount() {
@@ -26,7 +26,7 @@ class Roles extends Component<Props> {
       title: 'Type',
       dataIndex: 'type',
       key: 'type',
-      render: (type, { id }) => (
+      render: (type: string, { id }: { id: string }) => (
         <InvisibleLink to={`/admin/roles/${id}`}>{type}</InvisibleLink>
       )
     },
@@ -34,12 +34,14 @@ class Roles extends Component<Props> {
       title: 'Permissions',
       dataIndex: 'permissions',
       key: 'permissions',
-      render: permissions => <span>{permissions.join(', ')}</span>
+      render: (permissions: Array<string>) => (
+        <span>{permissions.join(', ')}</span>
+      )
     },
     {
       title: 'Action',
       key: 'action',
-      render: role => (
+      render: (role: { id: string }) => (
         <span>
           <InvisibleLink to={`/admin/roles/${role.id}`}>Show</InvisibleLink>
           <Divider type="vertical" />
@@ -49,7 +51,7 @@ class Roles extends Component<Props> {
           <Divider type="vertical" />
           <Popconfirm
             title="Are you sure you want to delete this role?"
-            onConfirm={() => this.deleteRole(role)}
+            onConfirm={() => this.deleteRole(role.id)}
           >
             <span style={{ color: '#ff4d4f', cursor: 'pointer' }}>Delete</span>
           </Popconfirm>
@@ -58,12 +60,7 @@ class Roles extends Component<Props> {
     }
   ];
 
-  toggleEdit = () => {
-    const { edit } = this.state;
-    this.setState({ edit: !edit });
-  };
-
-  deleteRole = ({ id }) => {
+  deleteRole = (id: string) => {
     const { deleteRole } = this.props;
     deleteRole(id);
   };

@@ -5,16 +5,21 @@ import ProgrammeForm from '../../../Forms/ProgrammeForm';
 import LoadingSpinner from '../../../Components/LoadingSpinner';
 import NotFound from '../../NotFound';
 
+type ProgrammeObj = {
+  email: string,
+  student: number
+};
+
 type Props = {
   id: string,
   programme: {
     email?: string,
-    student: number
+    student?: number
   },
   fetching: boolean,
   getProgramme: string => Promise<any>,
   createProgramme: ({ programme: {} }) => Promise<any>,
-  updateProgramme: (number, { programme: {} }) => Promise<any>
+  updateProgramme: (string, { programme: {} }) => Promise<any>
 };
 class Programme extends Component<Props> {
   componentWillMount() {
@@ -22,7 +27,7 @@ class Programme extends Component<Props> {
     if (id) getProgramme(id);
   }
 
-  updateProgramme = values => {
+  updateProgramme = (values: ProgrammeObj) => {
     const { id, programme, createProgramme, updateProgramme } = this.props;
 
     if (isEmpty(programme)) {
