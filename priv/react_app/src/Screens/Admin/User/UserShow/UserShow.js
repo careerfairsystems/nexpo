@@ -14,16 +14,32 @@ import '../User.css';
  */
 type Props = {
   id?: string,
-  user?: {},
+  user?: {
+    id?: string,
+    email?: string,
+    firstName?: string,
+    lastName?: string,
+    foodPreferences?: string,
+    phoneNumber?: string,
+    roles?: Array<{type: string}>,
+    student?: {
+      resumeSvUrl: string,
+      resumeEnUrl: string,
+      studentSessionApplications: Array<{ companyId: number }>,
+      studentSessions: Array<{ companyId: number }>,
+      programme: { name: string },
+      year: string
+    }
+  },
   fetching: boolean,
-  getUser: () => Promise<any>,
+  getUser: string => Promise<any>,
   match?: {
     path?: string
   }
 };
 class UserShow extends Component<Props> {
   static defaultProps = {
-    id: null,
+    id: '',
     user: {},
     match: {
       path: ''
@@ -32,27 +48,21 @@ class UserShow extends Component<Props> {
 
   componentWillMount() {
     const { id, getUser } = this.props;
-    getUser(id);
+    if (id) getUser(id);
   }
 
   displayName = () => {
-    const {
-      user: { email, firstName, lastName }
-    } = this.props;
+    const { user: { email, firstName, lastName } = {} } = this.props;
     return firstName ? [firstName, lastName].join(' ') : email;
   };
 
   roles = () => {
-    const {
-      user: { roles }
-    } = this.props;
+    const { user: { roles = [] } = {} } = this.props;
     return isEmpty(roles) ? 'None' : map('type', roles).join(', ');
   };
 
   renderStudent = () => {
-    const {
-      user: { student = {} }
-    } = this.props;
+    const { user: { student = {} } = {} } = this.props;
     const {
       year,
       resumeSvUrl,
@@ -76,7 +86,7 @@ class UserShow extends Component<Props> {
   };
 
   render() {
-    const { user, fetching } = this.props;
+    const { user = {}, fetching } = this.props;
 
     if (fetching) return <LoadingSpinner />;
     if (isEmpty(user)) return <NotFound />;
@@ -91,7 +101,7 @@ class UserShow extends Component<Props> {
         <p>Roles: {this.roles()}</p>
         <p>Food Preferences: {user.foodPreferences}</p>
         {user.student && this.renderStudent()}
-        <InvisibleLink to={`/admin/users/${user.id}/edit`}>
+        <InvisibleLink to={`/admin/users/${user.id || ''}/edit`}>
           <Button onClick={() => null} type="primary">
             Edit
           </Button>

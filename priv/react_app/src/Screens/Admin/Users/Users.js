@@ -14,7 +14,7 @@ type Props = {
   users?: {},
   fetching: boolean,
   getAllUsers: () => Promise<any>,
-  deleteUser: () => Promise<any>
+  deleteUser: string => Promise<any>
 };
 class Users extends Component<Props> {
   static defaultProps = {
@@ -27,7 +27,7 @@ class Users extends Component<Props> {
   }
 
   renderUsers() {
-    const { users } = this.props;
+    const { users = {} } = this.props;
     const userColumns = [
       {
         title: 'Email',
