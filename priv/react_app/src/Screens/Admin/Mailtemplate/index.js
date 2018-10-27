@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Actions } from '../../../Store';
 import Mailtemplate from './Mailtemplate';
 
-const mapStateToProps = (state: State, props) => {
+const mapStateToProps = (state, props) => {
   const mailtemplateId = props.match.params.id;
   const mailtemplate = state.entities.mailtemplates[mailtemplateId] || {};
   const { fetching } = state.api.mailtemplates;

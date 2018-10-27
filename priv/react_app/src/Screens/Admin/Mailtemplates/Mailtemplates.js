@@ -13,7 +13,7 @@ type Props = {
   mailtemplates?: {},
   fetching: boolean,
   getAllMailtemplates: () => Promise<any>,
-  deleteMailtemplate: () => Promise<any>
+  deleteMailtemplate: string => Promise<any>
 };
 class Mailtemplates extends Component<Props> {
   static defaultProps = {
@@ -30,7 +30,7 @@ class Mailtemplates extends Component<Props> {
       title: 'Name',
       dataIndex: 'name',
       key: 'name',
-      render: (name, { id }) => (
+      render: (name: string, { id }: { id: string }) => (
         <InvisibleLink to={`/admin/mailtemplates/${id}`}>{name}</InvisibleLink>
       )
     },
@@ -47,7 +47,7 @@ class Mailtemplates extends Component<Props> {
     {
       title: 'Action',
       key: 'action',
-      render: mailtemplate => {
+      render: (mailtemplate: { id: string }) => {
         const { deleteMailtemplate } = this.props;
         return (
           <span>
@@ -70,7 +70,7 @@ class Mailtemplates extends Component<Props> {
   ];
 
   renderMailtemplates() {
-    const { mailtemplates } = this.props;
+    const { mailtemplates = {} } = this.props;
 
     return (
       <div>

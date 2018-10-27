@@ -10,12 +10,12 @@ type Props = {
   deadline: {},
   createDeadline: ({ deadline: {} }) => Promise<any>,
   fetching: boolean,
-  getDeadline: number => Promise<any>,
-  updateDeadline: (number, { deadline: {} }) => Promise<any>
+  getDeadline: string => Promise<any>,
+  updateDeadline: (string, { deadline: {} }) => Promise<any>
 };
 class Deadline extends Component<Props> {
   static defaultProps = {
-    id: null
+    id: ''
   };
 
   componentWillMount() {
@@ -23,12 +23,12 @@ class Deadline extends Component<Props> {
     if (id) getDeadline(id);
   }
 
-  updateDeadline = values => {
+  updateDeadline = (values: { name: string, start: string, end: string }) => {
     const { id, deadline, createDeadline, updateDeadline } = this.props;
 
     if (isEmpty(deadline)) {
       createDeadline({ deadline: values });
-    } else {
+    } else if (id) {
       updateDeadline(id, { deadline: values });
     }
   };

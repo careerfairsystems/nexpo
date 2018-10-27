@@ -5,17 +5,28 @@ import MailtemplateForm from '../../../Forms/MailtemplateForm';
 import NotFound from '../../NotFound';
 import LoadingSpinner from '../../../Components/LoadingSpinner';
 
+type MailTemplateObj = {
+  id?: string,
+  name: string,
+  subject: string,
+  content: string,
+  signature: string
+};
+
 type Props = {
   id?: string,
-  mailtemplate: {},
-  createMailtemplate: () => Promise<any>,
+  mailtemplate: { mailtemplate: MailTemplateObj } | {},
+  createMailtemplate: ({ mailtemplate: MailTemplateObj }) => Promise<any>,
   fetching: boolean,
-  getMailtemplate: () => Promise<any>,
-  updateMailtemplate: () => Promise<any>
+  getMailtemplate: string => Promise<any>,
+  updateMailtemplate: (
+    string,
+    { mailtemplate: MailTemplateObj }
+  ) => Promise<any>
 };
 class Mailtemplate extends Component<Props> {
   static defaultProps = {
-    id: null
+    id: ''
   };
 
   componentWillMount() {
@@ -23,7 +34,7 @@ class Mailtemplate extends Component<Props> {
     if (id) getMailtemplate(id);
   }
 
-  updateMailtemplate = values => {
+  updateMailtemplate = (values: MailTemplateObj) => {
     const {
       id,
       mailtemplate,
@@ -33,7 +44,7 @@ class Mailtemplate extends Component<Props> {
 
     if (isEmpty(mailtemplate)) {
       createMailtemplate({ mailtemplate: values });
-    } else {
+    } else if (id) {
       updateMailtemplate(id, { mailtemplate: values });
     }
   };

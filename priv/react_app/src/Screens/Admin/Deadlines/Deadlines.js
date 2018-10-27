@@ -13,7 +13,7 @@ type Props = {
   deadlines?: {},
   fetching: boolean,
   getAllDeadlines: () => Promise<any>,
-  deleteDeadline: () => Promise<any>
+  deleteDeadline: string => Promise<any>
 };
 class Deadlines extends Component<Props> {
   static defaultProps = {
@@ -30,7 +30,7 @@ class Deadlines extends Component<Props> {
       title: 'Name',
       dataIndex: 'name',
       key: 'name',
-      render: (name, { id }) => (
+      render: (name: string, { id }: { id: string }) => (
         <InvisibleLink to={`/admin/deadlines/${id}`}>{name}</InvisibleLink>
       )
     },
@@ -47,7 +47,7 @@ class Deadlines extends Component<Props> {
     {
       title: 'Action',
       key: 'action',
-      render: deadline => {
+      render: (deadline: { id: string }) => {
         const { deleteDeadline } = this.props;
         return (
           <span>
@@ -70,7 +70,7 @@ class Deadlines extends Component<Props> {
   ];
 
   renderDeadlines() {
-    const { deadlines } = this.props;
+    const { deadlines = {} } = this.props;
 
     return (
       <div>
