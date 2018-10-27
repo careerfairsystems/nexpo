@@ -11,28 +11,35 @@ import '../User.css';
 /**
  * Responsible for rendering a user. User id is recieved via url
  */
+type UserObj = {
+  firstName: string,
+  lastName: string,
+  phoneNumber: string
+};
 type Props = {
   id?: string,
   user: { name?: string },
   fetching: boolean,
-  getUser: () => Promise<any>,
+  getUser: string => Promise<any>,
   history: { push: string => any },
-  updateUser: () => Promise<any>
+  updateUser: (string, { user: UserObj }) => Promise<any>
 };
 class UserEdit extends Component<Props> {
   static defaultProps = {
-    id: null
+    id: ''
   };
 
   componentWillMount() {
     const { id, getUser } = this.props;
-    getUser(id);
+    if (id) getUser(id);
   }
 
-  updateUser = values => {
+  updateUser = (values: UserObj) => {
     const { id, updateUser, history } = this.props;
-    updateUser(id, { user: values });
-    history.push(`/admin/users/${id}`);
+    if (id) {
+      updateUser(id, { user: values });
+      history.push(`/admin/users/${id}`);
+    }
   };
 
   render() {

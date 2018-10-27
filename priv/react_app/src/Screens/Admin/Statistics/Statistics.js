@@ -56,13 +56,15 @@ const getData = applicationsPerDay => {
 type Props = {
   getAllStatistics: () => Promise<any>,
   statistics: {
-    companyStats: Array<{
+    applicationsPerDay?: Array<string>,
+    companyStats?: Array<{
       name?: string,
       id: number,
       nbrApplications: number
     }>,
-    nbrStudents: number,
-    nbrSearchingStudents: number
+    nbrStudents?: number,
+    nbrSearchingStudents?: number,
+    wordsPerAppl?: number
   }
 };
 class Statistics extends Component<Props> {
@@ -75,8 +77,8 @@ class Statistics extends Component<Props> {
     const { statistics } = this.props;
     const {
       companyStats = [],
-      nbrSearchingStudents,
-      nbrStudents,
+      nbrSearchingStudents = '',
+      nbrStudents = '',
       applicationsPerDay = [],
       wordsPerAppl = 0
     } = statistics;
