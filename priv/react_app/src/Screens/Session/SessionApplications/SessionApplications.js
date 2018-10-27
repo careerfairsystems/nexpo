@@ -7,24 +7,32 @@ import HtmlTitle from '../../../Components/HtmlTitle';
 import UpdateSessionApplicationForm from '../../../Forms/UpdateSessionApplicationForm';
 import '../Session.css';
 
+type Application = {
+  id: string,
+  company: string,
+  motivation: string
+};
 type Props = {
-  applications?: Array<any>,
+  applications?: ?Array<Application>,
   companies?: {},
   getAllCompanies: () => Promise<any>,
-  destroyStudentSessionAppl: () => Promise<any>,
+  destroyStudentSessionAppl: string => Promise<any>,
   fetching: boolean,
-  updateStudentSessionAppl: () => Promise<any>
+  updateStudentSessionAppl: (
+    string,
+    { studentSessionApplication: Application }
+  ) => Promise<any>
 };
 type State = {
-  editing: { [number]: boolean }
+  editing: { [string]: boolean }
 };
 class SessionApplications extends Component<Props, State> {
   static defaultProps = {
     companies: {},
-    applications: null
+    applications: []
   };
 
-  constructor(props) {
+  constructor(props: Props) {
     super(props);
     this.state = { editing: {} };
   }
@@ -34,25 +42,25 @@ class SessionApplications extends Component<Props, State> {
     getAllCompanies();
   }
 
-  getCompany = ({ company }) => {
+  getCompany = (id: string) => {
     const { companies = {} } = this.props;
-    return companies[company] || {};
+    return companies[id] || {};
   };
 
-  toggleEditMode = id => {
+  toggleEditMode = (id: string) => {
     const { editing: stateEditing } = this.state;
     const editing = {};
     editing[id] = !stateEditing[id];
     this.setState({ editing });
   };
 
-  updateStudentSessionAppl = (id, values) => {
+  updateStudentSessionAppl = (id: string, values: Application) => {
     const { updateStudentSessionAppl } = this.props;
     updateStudentSessionAppl(id, { studentSessionApplication: values });
     this.setState({ editing: {} });
   };
 
-  renderApplication = application => {
+  renderApplication = (application: Application) => {
     const { editing } = this.state;
     const { destroyStudentSessionAppl } = this.props;
     return (
@@ -73,14 +81,14 @@ class SessionApplications extends Component<Props, State> {
         ]}
       >
         <List.Item.Meta
-          title={this.getCompany(application).name}
+          title={this.getCompany(application.company).name}
           description={this.renderMotivationField(
             application.motivation,
             application.id
           )}
           avatar={
             <Avatar
-              src={this.getCompany(application).logoUrl}
+              src={this.getCompany(application.company).logoUrl}
               size={128}
               shape="square"
               alt="Company Logotype"
@@ -91,7 +99,7 @@ class SessionApplications extends Component<Props, State> {
     );
   };
 
-  renderMotivationField = (motivation, id) => {
+  renderMotivationField = (motivation: string, id: string) => {
     const { editing } = this.state;
     if (editing[id])
       return (
@@ -122,7 +130,10 @@ class SessionApplications extends Component<Props, State> {
         <List
           size="large"
           bordered
-          dataSource={sortBy(appl => this.getCompany(appl).name, applications)}
+          dataSource={sortBy(
+            appl => this.getCompany(appl.company).name,
+            applications || []
+          )}
           renderItem={this.renderApplication}
           locale={{ emptyText: 'No Applications' }}
         />

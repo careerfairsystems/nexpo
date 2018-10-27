@@ -8,9 +8,16 @@ import HtmlTitle from '../../../Components/HtmlTitle';
 import InvisibleLink from '../../../Components/InvisibleLink';
 import '../Session.css';
 
+type CompanyObj = {
+  name: string,
+  website: string,
+  logoUrl: string,
+  description: string
+};
+
 type Props = {
   fetching: boolean,
-  companies: {},
+  companies: { [string]: CompanyObj },
   getAllCompanies: () => Promise<any>
 };
 class SessionCompanies extends Component<Props> {
@@ -19,7 +26,7 @@ class SessionCompanies extends Component<Props> {
     getAllCompanies();
   }
 
-  renderCompany = ({ name, website, logoUrl, description }) => (
+  renderCompany = ({ name, website, logoUrl, description }: CompanyObj) => (
     <List.Item
       extra={
         <Avatar
