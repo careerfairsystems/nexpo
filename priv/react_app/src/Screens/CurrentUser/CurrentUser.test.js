@@ -69,9 +69,9 @@ describe('userform should function correctly', () => {
 
   it('should destroy user properly', () => {
     const wrapper = shallow(<CurrentUser {...props} />);
-    const { currentUser, destroyCurrentUser, logout } = props;
+    const { destroyCurrentUser, logout } = props;
     wrapper.instance().destroyCurrentUser();
-    expect(destroyCurrentUser).toHaveBeenCalledWith(currentUser.id);
+    expect(destroyCurrentUser).toHaveBeenCalledTimes(1);
     expect(logout).toHaveBeenCalledTimes(1);
     wrapper.find(Button).simulate('click');
   });
