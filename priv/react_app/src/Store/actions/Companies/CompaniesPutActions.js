@@ -2,31 +2,29 @@ import { message } from 'antd';
 import { actionTypes } from '../..';
 import API from '../../../API';
 
-export function updateCompanyIsLoading() {
-  return {
-    type: actionTypes.PUT_COMPANY
-  };
-}
+export const updateCompanyIsLoading = () => ({
+  type: actionTypes.PUT_COMPANY
+});
 
-export function updateCompanySuccess(company) {
+export const updateCompanySuccess = (company: {}) => {
   message.success('Company successfully updated');
   return {
     type: actionTypes.PUT_COMPANY_SUCCESS,
     company
   };
-}
+};
 
 export type UpdateCompanyFailureAction = {
   type: string
 };
-export function updateCompanyFailure(): UpdateCompanyFailureAction {
+export const updateCompanyFailure = (): UpdateCompanyFailureAction => {
   message.error('Something went wrong, please try again later');
   return {
     type: actionTypes.PUT_COMPANY_FAILURE
   };
-}
+};
 
-export function updateCompany(id, data) {
+export function updateCompany(id: string, data: {}) {
   return dispatch => {
     dispatch(updateCompanyIsLoading());
     return API.companies

@@ -2,11 +2,9 @@ import { message } from 'antd';
 import { Actions, actionTypes } from '../..';
 import API from '../../../API';
 
-export function logout() {
-  return {
-    type: actionTypes.LOGOUT
-  };
-}
+export const logout = () => ({
+  type: actionTypes.LOGOUT
+});
 
 export const loginFailure = () => {
   message.error('That email and password combination is incorrect');

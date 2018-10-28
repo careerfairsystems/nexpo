@@ -6,7 +6,7 @@ export const updateCurrentStudentIsLoading = () => ({
   type: actionTypes.PUT_CURRENT_STUDENT
 });
 
-export const updateCurrentStudentSuccess = student => {
+export const updateCurrentStudentSuccess = (student: {}) => {
   message.success('Your profile was succefully updated');
   return {
     type: actionTypes.PUT_CURRENT_STUDENT_SUCCESS,
@@ -21,7 +21,7 @@ export const updateCurrentStudentFailure = () => {
   };
 };
 
-export function updateCurrentStudent(data) {
+export function updateCurrentStudent(data: {}) {
   return dispatch => {
     dispatch(updateCurrentStudentIsLoading());
     return API.users

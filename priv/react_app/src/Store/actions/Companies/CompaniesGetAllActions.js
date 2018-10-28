@@ -2,30 +2,26 @@ import { message } from 'antd';
 import { actionTypes } from '../..';
 import API from '../../../API';
 
-export function getAllCompaniesIsLoading() {
-  return {
-    type: actionTypes.FETCH_COMPANIES
-  };
-}
+export const getAllCompaniesIsLoading = () => ({
+  type: actionTypes.FETCH_COMPANIES
+});
 
-export function getAllCompaniesSuccess(companies) {
-  return {
-    type: actionTypes.FETCH_COMPANIES_SUCCESS,
-    companies
-  };
-}
+export const getAllCompaniesSuccess = (companies: {}) => ({
+  type: actionTypes.FETCH_COMPANIES_SUCCESS,
+  companies
+});
 
 export type GetAllCompaniesFailureAction = {
   type: string
 };
-export function getAllCompaniesFailure(): GetAllCompaniesFailureAction {
+export const getAllCompaniesFailure = (): GetAllCompaniesFailureAction => {
   message.error(
     'Something went wrong when trying to fetch all companies, please try again later'
   );
   return {
     type: actionTypes.FETCH_COMPANIES_FAILURE
   };
-}
+};
 
 export function getAllCompanies() {
   return dispatch => {

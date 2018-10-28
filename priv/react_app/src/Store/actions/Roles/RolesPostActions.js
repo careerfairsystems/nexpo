@@ -3,31 +3,29 @@ import { message } from 'antd';
 import { actionTypes } from '../..';
 import API from '../../../API';
 
-export function createRoleIsLoading() {
-  return {
-    type: actionTypes.POST_ROLE
-  };
-}
+export const createRoleIsLoading = () => ({
+  type: actionTypes.POST_ROLE
+});
 
-export function createRoleSuccess(role) {
+export const createRoleSuccess = (role: {}) => {
   message.success('Role successfully created');
   return {
     type: actionTypes.POST_ROLE_SUCCESS,
     role
   };
-}
+};
 
 export type CreateRoleFailureAction = {
   type: string
 };
-export function createRoleFailure(): CreateRoleFailureAction {
+export const createRoleFailure = (): CreateRoleFailureAction => {
   message.error('Something went wrong, please try again later');
   return {
     type: actionTypes.POST_ROLE_FAILURE
   };
-}
+};
 
-export function createRole(data) {
+export function createRole(data: {}) {
   return dispatch => {
     dispatch(createRoleIsLoading());
     return API.roles

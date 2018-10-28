@@ -2,13 +2,13 @@ import { message } from 'antd';
 import { actionTypes } from '../..';
 import API from '../../../API';
 
-export function destroyDeadlineIsLoading() {
+export const destroyDeadlineIsLoading = () => {
   return {
     type: actionTypes.DELETE_DEADLINE
   };
 }
 
-export function destroyDeadlineSuccess(id) {
+export const destroyDeadlineSuccess = (id: string) => {
   message.success('Deadline successfully deleted');
   return {
     type: actionTypes.DELETE_DEADLINE_SUCCESS,
@@ -19,14 +19,14 @@ export function destroyDeadlineSuccess(id) {
 export type DestroyDeadlineFailureAction = {
   type: string
 };
-export function destroyDeadlineFailure(): DestroyDeadlineFailureAction {
+export const destroyDeadlineFailure = (): DestroyDeadlineFailureAction => {
   message.error('Something went wrong, please try again later');
   return {
     type: actionTypes.DELETE_DEADLINE_FAILURE
   };
 }
 
-export function destroyDeadline(id) {
+export function destroyDeadline(id: string) {
   return dispatch => {
     dispatch(destroyDeadlineIsLoading());
     return API.deadlines

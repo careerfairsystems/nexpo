@@ -3,17 +3,13 @@ import { actionTypes } from '../..';
 import API from '../../../API';
 import ApiError from '../../../Errors/ApiError';
 
-export function forgotPasswordRequest() {
-  return {
-    type: actionTypes.FORGOT_PASSWORD_REQUEST
-  };
-}
+export const forgotPasswordRequest = () => ({
+  type: actionTypes.FORGOT_PASSWORD_REQUEST
+});
 
-export function forgotPasswordSuccess() {
-  return {
-    type: actionTypes.FORGOT_PASSWORD_SUCCESS
-  };
-}
+export const forgotPasswordSuccess = () => ({
+  type: actionTypes.FORGOT_PASSWORD_SUCCESS
+});
 
 export function forgotPassword({ email }) {
   return dispatch => {
@@ -30,17 +26,13 @@ export function verifyForgotPasswordKeyRequest() {
   };
 }
 
-export function verifyForgotPasswordKeySuccess() {
-  return {
-    type: actionTypes.VERIFY_FORGOT_PASSWORD_KEY_SUCCESS
-  };
-}
+export const verifyForgotPasswordKeySuccess = () => ({
+  type: actionTypes.VERIFY_FORGOT_PASSWORD_KEY_SUCCESS
+});
 
-export function verifyForgotPasswordKeyFailure() {
-  return {
-    type: actionTypes.VERIFY_FORGOT_PASSWORD_KEY_FAILURE
-  };
-}
+export const verifyForgotPasswordKeyFailure = () => ({
+  type: actionTypes.VERIFY_FORGOT_PASSWORD_KEY_FAILURE
+});
 
 export function verifyForgotPasswordKey({ key }) {
   return dispatch => {
@@ -56,30 +48,24 @@ export function verifyForgotPasswordKey({ key }) {
   };
 }
 
-export function replaceForgottenPasswordRequest() {
-  return {
-    type: actionTypes.REPLACE_FORGOTTEN_PASSWORD_REQUEST
-  };
-}
+export const replaceForgottenPasswordRequest = () => ({
+  type: actionTypes.REPLACE_FORGOTTEN_PASSWORD_REQUEST
+});
 
-export function replaceForgottenPasswordSuccess() {
-  return {
-    type: actionTypes.REPLACE_FORGOTTEN_PASSWORD_SUCCESS
-  };
-}
+export const replaceForgottenPasswordSuccess = () => ({
+  type: actionTypes.REPLACE_FORGOTTEN_PASSWORD_SUCCESS
+});
 
 export type ReplaceForgottenPasswordFailureAction = {
   type: string,
   errors: object
 };
-export function replaceForgottenPasswordFailure(
+export const replaceForgottenPasswordFailure = (
   errors
-): ReplaceForgottenPasswordFailureAction {
-  return {
-    type: actionTypes.REPLACE_FORGOTTEN_PASSWORD_FAILURE,
-    errors
-  };
-}
+): ReplaceForgottenPasswordFailureAction => ({
+  type: actionTypes.REPLACE_FORGOTTEN_PASSWORD_FAILURE,
+  errors
+});
 
 export function replaceForgottenPassword({
   key,

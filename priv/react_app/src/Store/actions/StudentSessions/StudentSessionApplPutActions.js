@@ -2,31 +2,29 @@ import { message } from 'antd';
 import { actionTypes } from '../..';
 import API from '../../../API';
 
-export function updateStudentSessionApplIsLoading() {
-  return {
-    type: actionTypes.PUT_STUDENT_SESSION_APPL
-  };
-}
+export const updateStudentSessionApplIsLoading = () => ({
+  type: actionTypes.PUT_STUDENT_SESSION_APPL
+});
 
-export function updateStudentSessionApplSuccess(sessionApplication) {
+export const updateStudentSessionApplSuccess = (sessionApplication: {}) => {
   message.success('Your Application was successfully updated.');
   return {
     type: actionTypes.PUT_STUDENT_SESSION_APPL_SUCCESS,
     sessionApplication
   };
-}
+};
 
 export type UpdateStudentSessionApplFailureAction = {
   type: string
 };
-export function updateStudentSessionApplFailure(): UpdateStudentSessionApplFailureAction {
+export const updateStudentSessionApplFailure = (): UpdateStudentSessionApplFailureAction => {
   message.warning('Your Application could not be saved');
   return {
     type: actionTypes.PUT_STUDENT_SESSION_APPL_FAILURE
   };
-}
+};
 
-export function updateStudentSessionAppl(id, data) {
+export function updateStudentSessionAppl(id: string, data: {}) {
   return dispatch => {
     dispatch(updateStudentSessionApplIsLoading());
     return API.studentSessions

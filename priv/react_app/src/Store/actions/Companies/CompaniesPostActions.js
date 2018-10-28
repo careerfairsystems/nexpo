@@ -4,31 +4,29 @@ import { actionTypes } from '../..';
 
 import API from '../../../API';
 
-export function createCompanyIsLoading() {
-  return {
-    type: actionTypes.POST_COMPANY
-  };
-}
+export const createCompanyIsLoading = () => ({
+  type: actionTypes.POST_COMPANY
+});
 
-export function createCompanySuccess(company) {
+export const createCompanySuccess = (company: {}) => {
   message.success('Company successfully created');
   return {
     type: actionTypes.POST_COMPANY_SUCCESS,
     company
   };
-}
+};
 
 export type CreateCompanyFailureAction = {
   type: string
 };
-export function createCompanyFailure(): CreateCompanyFailureAction {
+export const createCompanyFailure = (): CreateCompanyFailureAction => {
   message.error('Something went wrong, please try again later');
   return {
     type: actionTypes.POST_COMPANY_FAILURE
   };
-}
+};
 
-export function createCompany(data) {
+export function createCompany(data: {}) {
   return dispatch => {
     dispatch(createCompanyIsLoading());
     return API.companies

@@ -2,13 +2,13 @@ import { message } from 'antd';
 import { actionTypes } from '../..';
 import API from '../../../API';
 
-export function createProgrammeIsLoading() {
+export const createProgrammeIsLoading = () => {
   return {
     type: actionTypes.POST_PROGRAMME
   };
 }
 
-export function createProgrammeSuccess(programme) {
+export const createProgrammeSuccess = (programme: string) => {
   message.success('Programme successfully created');
   return {
     type: actionTypes.POST_PROGRAMME_SUCCESS,
@@ -19,14 +19,14 @@ export function createProgrammeSuccess(programme) {
 export type CreateProgrammeFailureAction = {
   type: string
 };
-export function createProgrammeFailure(): CreateProgrammeFailureAction {
+export const createProgrammeFailure = (): CreateProgrammeFailureAction => {
   message.error('Something went wrong, please try again later');
   return {
     type: actionTypes.POST_PROGRAMME_FAILURE
   };
 }
 
-export function createProgramme(data) {
+export function createProgramme(data: {}) {
   return dispatch => {
     dispatch(createProgrammeIsLoading());
     return API.programmes

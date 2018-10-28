@@ -5,7 +5,7 @@ export const getCurrentCompanyIsLoading = () => ({
   type: actionTypes.FETCH_CURRENT_COMPANY
 });
 
-export const getCurrentCompanySuccess = company => ({
+export const getCurrentCompanySuccess = (company: {}) => ({
   type: actionTypes.FETCH_CURRENT_COMPANY_SUCCESS,
   company
 });

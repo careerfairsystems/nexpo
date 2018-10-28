@@ -2,32 +2,28 @@ import { message } from 'antd';
 import { actionTypes } from '../..';
 import API from '../../../API';
 
-export function getRoleIsLoading() {
-  return {
-    type: actionTypes.FETCH_ROLE
-  };
-}
+export const getRoleIsLoading = () => ({
+  type: actionTypes.FETCH_ROLE
+});
 
-export function getRoleSuccess(role) {
-  return {
-    type: actionTypes.FETCH_ROLE_SUCCESS,
-    role
-  };
-}
+export const getRoleSuccess = (role: {}) => ({
+  type: actionTypes.FETCH_ROLE_SUCCESS,
+  role
+});
 
 export type GetRoleFailureAction = {
   type: string
 };
-export function getRoleFailure(): GetRoleFailureAction {
+export const getRoleFailure = (): GetRoleFailureAction => {
   message.error(
     'Something went wrong when trying to fetch role, please try again later'
   );
   return {
     type: actionTypes.FETCH_ROLE_FAILURE
   };
-}
+};
 
-export function getRole(id) {
+export function getRole(id: string) {
   return dispatch => {
     dispatch(getRoleIsLoading());
     return API.roles

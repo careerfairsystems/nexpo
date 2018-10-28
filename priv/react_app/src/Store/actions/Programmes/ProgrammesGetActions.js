@@ -2,13 +2,13 @@ import { message } from 'antd';
 import { actionTypes } from '../..';
 import API from '../../../API';
 
-export function getProgrammeIsLoading() {
+export const getProgrammeIsLoading = () => {
   return {
     type: actionTypes.FETCH_PROGRAMME
   };
 }
 
-export function getProgrammeSuccess(programme) {
+export const getProgrammeSuccess = (programme: string) => {
   return {
     type: actionTypes.FETCH_PROGRAMME_SUCCESS,
     programme
@@ -18,7 +18,7 @@ export function getProgrammeSuccess(programme) {
 export type GetProgrammeFailureAction = {
   type: string
 };
-export function getProgrammeFailure(): GetProgrammeFailureAction {
+export const getProgrammeFailure = (): GetProgrammeFailureAction => {
   message.error(
     'Something went wrong when trying to fetch Programme, please try again later'
   );
@@ -27,7 +27,7 @@ export function getProgrammeFailure(): GetProgrammeFailureAction {
   };
 }
 
-export function getProgramme(id) {
+export function getProgramme(id: string) {
   return dispatch => {
     dispatch(getProgrammeIsLoading());
     return API.programmes

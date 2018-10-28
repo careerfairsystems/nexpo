@@ -2,31 +2,29 @@ import { message } from 'antd';
 import { actionTypes } from '../..';
 import API from '../../../API';
 
-export function updateRoleIsLoading() {
-  return {
+export const updateRoleIsLoading = () => ({
     type: actionTypes.PUT_ROLE
-  };
-}
+  });
 
-export function updateRoleSuccess(role) {
+export const updateRoleSuccess = (role: {}) => {
   message.success('Role successfully updated');
   return {
     type: actionTypes.PUT_ROLE_SUCCESS,
     role
   };
-}
+};
 
 export type UpdateRoleFailureAction = {
   type: string
 };
-export function updateRoleFailure(): UpdateRoleFailureAction {
+export const updateRoleFailure = (): UpdateRoleFailureAction => {
   message.error('Something went wrong, please try again later');
   return {
     type: actionTypes.PUT_ROLE_FAILURE
   };
-}
+};
 
-export function updateRole(id, data) {
+export function updateRole(id: string, data: {}) {
   return dispatch => {
     dispatch(updateRoleIsLoading());
     return API.roles

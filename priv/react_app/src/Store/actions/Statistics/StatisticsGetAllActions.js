@@ -2,30 +2,26 @@ import { message } from 'antd';
 import { actionTypes } from '../..';
 import API from '../../../API';
 
-export function getAllStatisticsIsLoading() {
-  return {
-    type: actionTypes.FETCH_STATISTICS
-  };
-}
+export const getAllStatisticsIsLoading = () => ({
+  type: actionTypes.FETCH_STATISTICS
+});
 
-export function getAllStatisticsSuccess(statistics) {
-  return {
-    type: actionTypes.FETCH_STATISTICS_SUCCESS,
-    statistics
-  };
-}
+export const getAllStatisticsSuccess = (statistics: {}) => ({
+  type: actionTypes.FETCH_STATISTICS_SUCCESS,
+  statistics
+});
 
 export type GetAllStatisticsFailureAction = {
   type: string
 };
-export function getAllStatisticsFailure(): GetAllStatisticsFailureAction {
+export const getAllStatisticsFailure = (): GetAllStatisticsFailureAction => {
   message.error(
     'Something went wrong when trying to fetch all statistics, please try again later'
   );
   return {
     type: actionTypes.FETCH_STATISTICS_FAILURE
   };
-}
+};
 
 export function getAllStatistics() {
   return dispatch => {
