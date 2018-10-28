@@ -47,7 +47,7 @@ const { Header, Content, Footer } = Layout;
 
 type RouteItem = {
   path: string,
-  component: React$ComponentType<{}> 
+  component: React$ComponentType<{}>
 };
 
 const privateRoutes: Array<RouteItem> = [
@@ -105,7 +105,12 @@ const routes = (
 
 type Props = {
   isLoggedIn: boolean,
-  currentUser?: { email?: ?string, firstName?: ?string, lastName?: ?string },
+  currentUser?: { 
+    email?: ?string, 
+    firstName?: ?string, 
+    lastName?: ?string, 
+    roles?: Array<{ type: string, permissions: Array<string>}> 
+  },
   logout: (void) => void,
   redirect: (string) => void,
   pathname: string

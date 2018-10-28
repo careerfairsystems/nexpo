@@ -11,7 +11,12 @@ import LoadingSpinner from '../LoadingSpinner';
 
 type Props = {
   component: React.ComponentType<{}>,
-  currentUser: {},
+  currentUser: {
+    email?: ?string,
+    firstName?: ?string,
+    lastName?: ?string,
+    roles?: Array<{ type: string, permissions: Array<string> }>
+  },
   fetching: boolean,
   isLoggedIn: boolean
 };
