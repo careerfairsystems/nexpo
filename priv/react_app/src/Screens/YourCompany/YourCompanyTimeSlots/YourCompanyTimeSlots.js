@@ -7,7 +7,18 @@ import HtmlTitle from '../../../Components/HtmlTitle';
 import '../YourCompany.css';
 
 type Props = {
-  currentCompany: {},
+  currentCompany: {
+    studentSessionDays?: number,
+    studentSessionTimeSlots?: {
+      start: string,
+      end: string,
+      location: string
+    },
+    name?: string,
+    description?: string,
+    website?: string,
+    logoUrl?: string
+  },
   getCurrentCompany: () => Promise<any>
 };
 class YourCompanyTimeSlots extends Component<Props> {
