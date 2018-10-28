@@ -8,8 +8,9 @@ import testData from './entitiesTestData';
 import { EntitiesReducer } from './EntitiesReducer';
 
 describe('Entities reducer', () => {
-  it('should return the empty initial state', () => {
-    const initialState = {
+  let initialState;
+  beforeEach(() => {
+    initialState = {
       categories: {},
       attributes: {},
       companies: {},
@@ -24,6 +25,8 @@ describe('Entities reducer', () => {
       statistics: {},
       students: {}
     };
+  });
+  it('should return the empty initial state', () => {
     expect(EntitiesReducer(undefined, {})).toEqual(initialState);
   });
 
@@ -211,7 +214,7 @@ describe('Entities reducer', () => {
 
     expect(state).toMatchObject({
       users: {
-        1: testUser
+        '1': testUser
       }
     });
   });
@@ -222,29 +225,35 @@ describe('Entities reducer', () => {
 
     expect(state).toMatchObject({
       users: {
-        1: testUser
+        '1': testUser
       }
     });
   });
 
   it('should handle delete current user success', () => {
-    const testUser = { id: 1, name: 'Test User' };
-    const action = Actions.users.destroyCurrentUserSuccess(testUser.id);
-    const state = EntitiesReducer(undefined, action);
+    const testUser = { id: '1', name: 'Test User' };
+    const action = Actions.users.destroyCurrentUserSuccess();
+    const state = EntitiesReducer(
+      { ...initialState, currentUser: testUser },
+      action
+    );
 
     expect(state).toMatchObject({
-      users: {}
+      currentUser: {}
     });
   });
 
   it('should handle delete session application', () => {
-    const sessionApplicationId = 1;
+    const sessionApplicationId = '1';
     const action = Actions.studentSessions.destroyStudentSessionAppl(
       sessionApplicationId
     );
     const state = EntitiesReducer(
       {
-        studentSessionApplications: { 1: { id: 1, companyId: 1, studentId: 1 } }
+        ...initialState,
+        studentSessionApplications: {
+          '1': { id: 1, companyId: 1, studentId: 1 }
+        }
       },
       action
     );
@@ -267,11 +276,17 @@ describe('Entities reducer', () => {
       ...oldAppl,
       ...data
     });
-    const state = EntitiesReducer(testData.studentSessionApplications, action);
+    const state = EntitiesReducer(
+      {
+        ...initialState,
+        studentSessionApplications: testData.studentSessionApplications
+      },
+      action
+    );
 
     expect(state).toMatchObject({
       studentSessionApplications: {
-        1: { id: 1, companyId: 1, studentId: 1, motivation: 'New Motivation' }
+        '1': { id: 1, companyId: 1, studentId: 1, motivation: 'New Motivation' }
       }
     });
   });
@@ -280,7 +295,10 @@ describe('Entities reducer', () => {
     const statistics = { nbrApplicatons: 10 };
 
     const action = Actions.statistics.getAllStatisticsSuccess(statistics);
-    const state = EntitiesReducer(testData.statistics, action);
+    const state = EntitiesReducer(
+      { ...initialState, statistics: testData.statistics },
+      action
+    );
 
     expect(state).toMatchObject({
       statistics: { nbrApplicatons: 10 }
@@ -288,35 +306,61 @@ describe('Entities reducer', () => {
   });
 
   it('should handle DELETE_COMPANY_SUCCESS', () => {
-    const id = 1;
+    const id = '1';
     const action = Actions.companies.destroyCompanySuccess(id);
-    const state = EntitiesReducer(testData.companies, action);
-    expect(state).toMatchObject(omit(id, testData.companies));
+    const state = EntitiesReducer(
+      { ...initialState, companies: testData.companies },
+      action
+    );
+    expect(state).toMatchObject({
+      ...initialState,
+      companies: omit([id], testData.companies)
+    });
   });
 
   it('should handle DELETE_ROLES_SUCCESS', () => {
-    const id = 1;
+    const id = '1';
     const action = Actions.roles.destroyRoleSuccess(id);
-    const state = EntitiesReducer(testData.roles, action);
-    expect(state).toMatchObject(omit(id, testData.roles));
+    const state = EntitiesReducer(
+      { ...initialState, roles: testData.roles },
+      action
+    );
+    expect(state).toMatchObject({
+      ...initialState,
+      roles: omit([id], testData.roles)
+    });
   });
 
   it('should handle DELETE_USER_SUCCESS', () => {
-    const id = 1;
+    const id = '1';
     const action = Actions.users.destroyUserSuccess(id);
-    const state = EntitiesReducer(testData.users, action);
-    expect(state).toMatchObject(omit(id, testData.users));
+    const state = EntitiesReducer(
+      { ...initialState, users: testData.users },
+      action
+    );
+    expect(state).toMatchObject({
+      ...initialState,
+      users: omit([id], testData.users)
+    });
   });
 
   it('should handle DELETE_STUDENT_SESSION_APPL_SUCCESS', () => {
-    const id = 1;
+    const id = '1';
     const action = Actions.studentSessions.destroyStudentSessionApplSuccess(id);
-    const state = EntitiesReducer(testData.studentSessionApplications, action);
-    expect(state).toMatchObject(omit(id, testData.studentSessionApplications));
+    const state = EntitiesReducer(
+      {
+        ...initialState,
+        studentSessionApplications: testData.studentSessionApplications
+      },
+      action
+    );
+    expect(state).toMatchObject(
+      omit([id], testData.studentSessionApplications)
+    );
   });
 
   it('should handle PUT_STUDENT_SESSION_SUCCESS', () => {
-    const id = 1;
+    const id = '1';
     const sessionApplication = {
       ...testData.studentSessions[id],
       studentConfirmed: true
@@ -324,7 +368,10 @@ describe('Entities reducer', () => {
     const action = Actions.studentSessions.updateStudentSessionSuccess(
       sessionApplication
     );
-    const state = EntitiesReducer(testData.studentSessions, action);
+    const state = EntitiesReducer(
+      { ...initialState, studentSessions: testData.studentSessions },
+      action
+    );
     expect(state).toMatchObject({
       studentSessions: {
         '1': sessionApplication
