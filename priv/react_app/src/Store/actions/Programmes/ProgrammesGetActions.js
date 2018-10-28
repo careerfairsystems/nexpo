@@ -2,18 +2,14 @@ import { message } from 'antd';
 import { actionTypes } from '../..';
 import API from '../../../API';
 
-export const getProgrammeIsLoading = () => {
-  return {
-    type: actionTypes.FETCH_PROGRAMME
-  };
-}
+export const getProgrammeIsLoading = () => ({
+  type: actionTypes.FETCH_PROGRAMME
+});
 
-export const getProgrammeSuccess = (programme: string) => {
-  return {
-    type: actionTypes.FETCH_PROGRAMME_SUCCESS,
-    programme
-  };
-}
+export const getProgrammeSuccess = (programme: {}) => ({
+  type: actionTypes.FETCH_PROGRAMME_SUCCESS,
+  programme
+});
 
 export type GetProgrammeFailureAction = {
   type: string
@@ -25,7 +21,7 @@ export const getProgrammeFailure = (): GetProgrammeFailureAction => {
   return {
     type: actionTypes.FETCH_PROGRAMME_FAILURE
   };
-}
+};
 
 export function getProgramme(id: string) {
   return dispatch => {

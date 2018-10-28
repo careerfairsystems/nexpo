@@ -365,7 +365,7 @@ describe('destroyProgrammeIsLoading', () => {
 
 describe('destroyProgrammeSuccess', () => {
   it('should create the correct action', () => {
-    const testProgrammeId = 1;
+    const testProgrammeId = '1';
 
     const expectedAction = {
       type: actionTypes.DELETE_PROGRAMME_SUCCESS,

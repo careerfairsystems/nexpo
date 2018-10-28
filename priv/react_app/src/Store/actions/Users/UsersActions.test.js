@@ -293,7 +293,7 @@ describe('destroyCurrentUser', () => {
   });
 
   it('should call success action on success', () => {
-    const userId = 1;
+    const userId = '1';
     mockHttpResponse({ status: 200, body: { data: userId } });
 
     const expectedActions = [

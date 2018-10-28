@@ -353,7 +353,7 @@ describe('destroyRoleIsLoading', () => {
 
 describe('destroyRoleSuccess', () => {
   it('should create the correct action', () => {
-    const testRoleId = 1;
+    const testRoleId = '1';
 
     const expectedAction = {
       type: actionTypes.DELETE_ROLE_SUCCESS,
@@ -386,7 +386,7 @@ describe('destroyRole', () => {
   });
 
   it('should call success action on success', () => {
-    const roleId = 1;
+    const roleId = '1';
     mockHttpResponse({ status: 200, body: { data: roleId } });
 
     const expectedActions = [

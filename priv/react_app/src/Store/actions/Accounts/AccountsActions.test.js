@@ -187,7 +187,7 @@ describe('replaceForgottenPassword', () => {
 
     const expected = [
       Actions.accounts.replaceForgottenPasswordRequest(),
-      Actions.accounts.replaceForgottenPasswordFailure()
+      Actions.accounts.replaceForgottenPasswordFailure({ errors: {} })
     ];
     const params = {
       key: 'random-string',

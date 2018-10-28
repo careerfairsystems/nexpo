@@ -2,19 +2,17 @@ import { message } from 'antd';
 import { actionTypes } from '../..';
 import API from '../../../API';
 
-export const createProgrammeIsLoading = () => {
-  return {
-    type: actionTypes.POST_PROGRAMME
-  };
-}
+export const createProgrammeIsLoading = () => ({
+  type: actionTypes.POST_PROGRAMME
+});
 
-export const createProgrammeSuccess = (programme: string) => {
+export const createProgrammeSuccess = (programme: {}) => {
   message.success('Programme successfully created');
   return {
     type: actionTypes.POST_PROGRAMME_SUCCESS,
     programme
   };
-}
+};
 
 export type CreateProgrammeFailureAction = {
   type: string
@@ -24,7 +22,7 @@ export const createProgrammeFailure = (): CreateProgrammeFailureAction => {
   return {
     type: actionTypes.POST_PROGRAMME_FAILURE
   };
-}
+};
 
 export function createProgramme(data: {}) {
   return dispatch => {

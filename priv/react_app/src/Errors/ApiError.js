@@ -7,7 +7,10 @@ type ErrorResponse = {
   errors: {}
 };
 class ApiError extends Error {
-  errors: {};
+  errors: {
+    password?: string,
+    passwordConfirmation?: string
+  };
 
   constructor(response: ErrorResponse, ...params: Array<any>) {
     super(...params);
