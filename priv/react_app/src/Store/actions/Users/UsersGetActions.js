@@ -6,7 +6,7 @@ export const getUserIsLoading = () => ({
   type: actionTypes.FETCH_USER
 });
 
-export const getUserSuccess = (user: string) => ({
+export const getUserSuccess = (user: {}) => ({
   type: actionTypes.FETCH_USER_SUCCESS,
   user
 });

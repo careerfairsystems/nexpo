@@ -6,7 +6,7 @@ export const updateUserIsLoading = () => ({
   type: actionTypes.PUT_USER
 });
 
-export const updateUserSuccess = (user: string) => {
+export const updateUserSuccess = (user: {}) => {
   message.success('User successfully updated');
   return {
     type: actionTypes.PUT_USER_SUCCESS,

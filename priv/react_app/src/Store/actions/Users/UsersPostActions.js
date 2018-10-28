@@ -6,7 +6,7 @@ export const createUserIsLoading = () => ({
   type: actionTypes.POST_USER
 });
 
-export const createUserSuccess = (user: string) => {
+export const createUserSuccess = (user: {}) => {
   message.success('User successfully created');
   return {
     type: actionTypes.POST_USER_SUCCESS,
