@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import { isEmpty, isNil } from 'lodash/fp';
+import type { RouterHistory } from 'react-router-dom';
 import NotFound from '../../../NotFound';
 import CurrentCompanyForm from '../../../../Forms/CurrentCompanyForm';
 import LoadingSpinner from '../../../../Components/LoadingSpinner';
 
 type Props = {
   fetching: boolean,
-  history: {},
-  currentCompany: {},
+  history: RouterHistory,
+  currentCompany: { name?: string, studentSessionDays?: number },
   getCurrentCompany: () => Promise<any>,
   updateCurrentCompany: ({ company: {} }) => Promise<any>
 };
@@ -17,7 +18,11 @@ class YourCompanyProfileEdit extends Component<Props> {
     getCurrentCompany();
   }
 
-  updateCurrentCompany = values => {
+  updateCurrentCompany = (values: {
+    website: string,
+    description: string,
+    logoUrl: File
+  }) => {
     const { updateCurrentCompany } = this.props;
     return updateCurrentCompany({ company: values });
   };

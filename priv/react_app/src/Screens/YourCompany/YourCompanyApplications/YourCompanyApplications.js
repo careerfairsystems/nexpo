@@ -6,8 +6,23 @@ import HtmlTitle from '../../../Components/HtmlTitle';
 import LoadingSpinner from '../../../Components/LoadingSpinner';
 import '../YourCompany.css';
 
+type StudentObj = {
+  user: {
+    email: string,
+    firstName: string,
+    lastName: string
+  },
+  resumeSvUrl: string,
+  resumeEnUrl: string
+};
+type Application = {
+  id: number,
+  score: number,
+  motivation: string,
+  student: StudentObj
+};
 type Props = {
-  currentCompany: {},
+  currentCompany: { studentSessionApplications?: Array<Application> },
   fetching: boolean,
   updating: boolean,
   getCurrentCompany: () => Promise<any>,
@@ -19,14 +34,14 @@ class YourCompanyApplications extends Component<Props> {
     getCurrentCompany();
   }
 
-  scoreSessionApplication = (id, value) => {
+  scoreSessionApplication = (id: number, value: number) => {
     const { updateStudentSessionAppl } = this.props;
     updateStudentSessionAppl(id, {
       studentSessionApplication: { score: value }
     });
   };
 
-  renderSessionApplication = application => (
+  renderSessionApplication = (application: Application) => (
     <List.Item
       actions={[
         <>
@@ -88,7 +103,7 @@ class YourCompanyApplications extends Component<Props> {
           dataSource={orderBy(
             ['score', 'student_id'],
             ['desc', 'asc'],
-            currentCompany.studentSessionApplications
+            currentCompany.studentSessionApplications || []
           )}
           renderItem={this.renderSessionApplication}
           locale={{ emptyText: 'No Session Applications' }}

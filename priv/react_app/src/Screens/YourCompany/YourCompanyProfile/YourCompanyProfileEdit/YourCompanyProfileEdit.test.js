@@ -8,7 +8,18 @@ describe('current company edit should function correctly', () => {
     props = {
       currentCompany: {},
       fetching: false,
-      history: { push: jest.fn() },
+      history: {
+        action: 'PUSH',
+        block: jest.fn(),
+        push: jest.fn(),
+        go: jest.fn(),
+        goBack: jest.fn(),
+        goForward: jest.fn(),
+        length: 0,
+        listen: jest.fn(),
+        replace: jest.fn(),
+        location: { hash: '', pathname: '', search: '' }
+      },
       getCurrentCompany: jest.fn(),
       updateCurrentCompany: jest.fn()
     };
