@@ -160,7 +160,7 @@ describe('updateStudentSessionAppl', () => {
   it('should call start action', () => {
     mockHttpResponse({ status: 200, body: {} });
     const store = createMockStore();
-    const id = 1;
+    const id = '1';
     const data = { motivation: 'New motivation' };
 
     return store
@@ -175,7 +175,7 @@ describe('updateStudentSessionAppl', () => {
 
   it('should call failure action on failure', () => {
     mockHttpResponse({ status: 401, body: {} });
-    const id = 1;
+    const id = '1';
     const data = { motivation: 'New motivation' };
     const expectedActions = [
       Actions.studentSessions.updateStudentSessionApplIsLoading(),
@@ -193,7 +193,7 @@ describe('updateStudentSessionAppl', () => {
   });
 
   it('should call success action on success', () => {
-    const id = 1;
+    const id = '1';
     const data = { motivation: 'New motivation' };
 
     const appl = {
@@ -235,7 +235,7 @@ describe('updateStudentSession', () => {
   it('should call start action', () => {
     mockHttpResponse({ status: 200, body: {} });
     const store = createMockStore();
-    const id = 1;
+    const id = '1';
 
     return store
       .dispatch(Actions.studentSessions.updateStudentSession(id))
@@ -249,7 +249,7 @@ describe('updateStudentSession', () => {
 
   it('should call failure action on failure', () => {
     mockHttpResponse({ status: 401, body: {} });
-    const id = 1;
+    const id = '1';
     const expectedActions = [
       Actions.studentSessions.updateStudentSessionIsLoading(),
       Actions.studentSessions.updateStudentSessionFailure()
@@ -266,7 +266,7 @@ describe('updateStudentSession', () => {
   });
 
   it('should call success action on success', () => {
-    const id = 1;
+    const id = '1';
     const data = { motivation: 'New motivation' };
 
     const appl = {
