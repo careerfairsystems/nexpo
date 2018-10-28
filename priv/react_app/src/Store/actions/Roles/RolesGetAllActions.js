@@ -6,7 +6,7 @@ export const getAllRolesIsLoading = () => ({
   type: actionTypes.FETCH_ROLES
 });
 
-export const getAllRolesSuccess = (roles: {}) => ({
+export const getAllRolesSuccess = (roles: Array<{}>) => ({
   type: actionTypes.FETCH_ROLES_SUCCESS,
   roles
 });

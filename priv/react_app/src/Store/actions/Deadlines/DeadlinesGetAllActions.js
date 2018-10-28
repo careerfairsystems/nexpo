@@ -6,7 +6,7 @@ export const getAllDeadlinesIsLoading = () => ({
   type: actionTypes.FETCH_DEADLINES
 });
 
-export const getAllDeadlinesSuccess = (deadlines: {}) => ({
+export const getAllDeadlinesSuccess = (deadlines: Array<{}>) => ({
   type: actionTypes.FETCH_DEADLINES_SUCCESS,
   deadlines
 });
