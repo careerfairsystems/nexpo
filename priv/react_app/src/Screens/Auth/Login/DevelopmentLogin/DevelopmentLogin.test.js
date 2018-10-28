@@ -27,5 +27,5 @@ it('should call login with correct parameters', () => {
   const email = 'dev@it';
   wrapper.instance().login({ email });
   expect(props.login).toHaveBeenCalledTimes(1);
-  expect(props.login).lastCalledWith(email);
+  expect(props.login).lastCalledWith({ email });
 });

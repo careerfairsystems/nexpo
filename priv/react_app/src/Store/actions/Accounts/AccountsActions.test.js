@@ -180,14 +180,14 @@ describe('replaceForgottenPassword', () => {
 
   it('should call request and failure on http failure', () => {
     mockHttpResponse({
-      status: 400
+      status: 400,
     });
     const store = createMockStore();
     expect.assertions(1);
 
     const expected = [
       Actions.accounts.replaceForgottenPasswordRequest(),
-      Actions.accounts.replaceForgottenPasswordFailure({ errors: {} })
+      Actions.accounts.replaceForgottenPasswordFailure()
     ];
     const params = {
       key: 'random-string',

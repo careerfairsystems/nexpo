@@ -43,7 +43,7 @@ const testData = {
       logoUrl: null,
       id: 5,
       description: 'We do wine!',
-      entries: [{ id: 9, value: 'JA' }, { id: '1'0, value: '100' }]
+      entries: [{ id: 9, value: 'JA' }, { id: 10, value: '100' }]
     }
   },
   company: {
@@ -108,7 +108,12 @@ const testData = {
     ]
   },
   studentSessionApplications: {
-    '1': { id: '1', companyid: '1', studentid: '1', motivation: 'Old motivation' }
+    '1': {
+      id: '1',
+      companyid: '1',
+      studentid: '1',
+      motivation: 'Old motivation'
+    }
   },
   studentSessions: {
     '1': {
@@ -155,19 +160,19 @@ const testData = {
       id: 3,
       attributes: [
         { title: 'Udda beställning', id: 9 },
-        { title: 'Extra ketchup', id: '1'0 },
-        { title: 'Trevligthetsskala', id: '1'1 },
-        { title: 'Länk till podio', id: '1'2 }
+        { title: 'Extra ketchup', id: 10 },
+        { title: 'Trevligthetsskala', id: 11 },
+        { title: 'Länk till podio', id: 12 }
       ]
     },
     {
       title: 'Event',
       id: 4,
       attributes: [
-        { title: 'Lunchföreläsning', id: '1'3 },
-        { title: 'Pub', id: '1'4 },
-        { title: 'Yrkesvaskning', id: '1'5 },
-        { title: 'Sabrering för nybörjare', id: '1'6 }
+        { title: 'Lunchföreläsning', id: 13 },
+        { title: 'Pub', id: 14 },
+        { title: 'Yrkesvaskning', id: 15 },
+        { title: 'Sabrering för nybörjare', id: 16 }
       ]
     }
   ],
@@ -178,7 +183,9 @@ const testData = {
       {
         title: 'Eluttag',
         id: '1',
-        entries: [{ id: '1', value: '1', company: { id: '1', name: 'Spotify' } }]
+        entries: [
+          { id: '1', value: '1', company: { id: '1', name: 'Spotify' } }
+        ]
       },
       {
         title: 'Internetkoder',
