@@ -6,7 +6,7 @@ export const getAllCategoriesIsLoading = () => ({
   type: actionTypes.FETCH_CATEGORIES
 });
 
-export const getAllCategoriesSuccess = (categories: {}) => ({
+export const getAllCategoriesSuccess = (categories: Array<{}>) => ({
   type: actionTypes.FETCH_CATEGORIES_SUCCESS,
   categories
 });
