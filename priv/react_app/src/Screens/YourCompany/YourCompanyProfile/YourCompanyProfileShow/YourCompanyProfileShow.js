@@ -10,7 +10,13 @@ import '../../YourCompany.css';
 
 type Props = {
   fetching: boolean,
-  currentCompany: {},
+  currentCompany: {
+    studentSessionDays?: number,
+    name?: string,
+    description?: string,
+    website?: string,
+    logoUrl?: string
+  },
   getCurrentCompany: () => Promise<any>
 };
 class YourCompanyProfileShow extends Component<Props> {
