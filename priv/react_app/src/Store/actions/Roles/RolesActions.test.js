@@ -214,7 +214,7 @@ describe('getRole', () => {
     mockHttpResponse({ status: 200, body: {} });
     const store = createMockStore();
 
-    return store.dispatch(Actions.roles.getRole()).then(() => {
+    return store.dispatch(Actions.roles.getRole('1')).then(() => {
       const calledActions = store.getActions();
       expect(calledActions[0]).toEqual(Actions.roles.getRoleIsLoading());
     });
@@ -233,7 +233,7 @@ describe('getRole', () => {
 
     const store = createMockStore();
 
-    return store.dispatch(Actions.roles.getRole()).then(() => {
+    return store.dispatch(Actions.roles.getRole('1')).then(() => {
       const calledActions = store.getActions();
       expect(calledActions).toEqual(expectedActions);
     });
@@ -249,7 +249,7 @@ describe('getRole', () => {
 
     const store = createMockStore();
 
-    return store.dispatch(Actions.roles.getRole()).then(() => {
+    return store.dispatch(Actions.roles.getRole('1')).then(() => {
       const calledActions = store.getActions();
       expect(calledActions).toEqual(expectedActions);
     });
@@ -297,7 +297,7 @@ describe('updateRole', () => {
     const store = createMockStore();
     const data = { role: { name: 'Test Role' } };
 
-    return store.dispatch(Actions.roles.updateRole(1, data)).then(() => {
+    return store.dispatch(Actions.roles.updateRole('1', data)).then(() => {
       const calledActions = store.getActions();
       expect(calledActions[0]).toEqual(Actions.roles.updateRoleIsLoading());
     });
@@ -317,7 +317,7 @@ describe('updateRole', () => {
     const store = createMockStore();
     const data = { role };
 
-    return store.dispatch(Actions.roles.updateRole(1, data)).then(() => {
+    return store.dispatch(Actions.roles.updateRole('1', data)).then(() => {
       const calledActions = store.getActions();
       expect(calledActions).toEqual(expectedActions);
     });
@@ -334,7 +334,7 @@ describe('updateRole', () => {
 
     const store = createMockStore();
 
-    return store.dispatch(Actions.roles.updateRole(1, data)).then(() => {
+    return store.dispatch(Actions.roles.updateRole('1', data)).then(() => {
       const calledActions = store.getActions();
       expect(calledActions).toEqual(expectedActions);
     });
@@ -379,7 +379,7 @@ describe('destroyRole', () => {
     mockHttpResponse({ status: 200, body: {} });
     const store = createMockStore();
 
-    return store.dispatch(Actions.roles.destroyRole(1)).then(() => {
+    return store.dispatch(Actions.roles.destroyRole('1')).then(() => {
       const calledActions = store.getActions();
       expect(calledActions[0]).toEqual(Actions.roles.destroyRoleIsLoading());
     });
@@ -396,7 +396,7 @@ describe('destroyRole', () => {
 
     const store = createMockStore();
 
-    return store.dispatch(Actions.roles.destroyRole(1)).then(() => {
+    return store.dispatch(Actions.roles.destroyRole('1')).then(() => {
       const calledActions = store.getActions();
       expect(calledActions).toEqual(expectedActions);
     });
@@ -411,7 +411,7 @@ describe('destroyRole', () => {
 
     const store = createMockStore();
 
-    return store.dispatch(Actions.roles.destroyRole(1)).then(() => {
+    return store.dispatch(Actions.roles.destroyRole('1')).then(() => {
       const calledActions = store.getActions();
       expect(calledActions).toEqual(expectedActions);
     });

@@ -62,7 +62,7 @@ export type ReplaceForgottenPasswordFailureAction = {
   type: string,
   errors: {}
 };
-export const replaceForgottenPasswordFailure = (errors: {}): ReplaceForgottenPasswordFailureAction => ({
+export const replaceForgottenPasswordFailure = (errors?: {}): ReplaceForgottenPasswordFailureAction => ({
   type: actionTypes.REPLACE_FORGOTTEN_PASSWORD_FAILURE,
   errors
 });

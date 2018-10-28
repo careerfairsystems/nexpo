@@ -18,7 +18,8 @@ export const loginSuccess = (jwt: string) => ({
   jwt
 });
 
-export const login = ({ email, password }) => dispatch =>
+export type LoginAction = { email: string, password: string };
+export const login = ({ email, password }: LoginAction) => dispatch =>
   API.session
     .login({ email, password })
     .then(res => {
@@ -30,7 +31,8 @@ export const login = ({ email, password }) => dispatch =>
       dispatch(loginFailure());
     });
 
-export const developmentLogin = email => dispatch =>
+export type DevLoginAction = { email: string };
+export const developmentLogin = ({ email }: DevLoginAction) => dispatch =>
   API.session
     .developmentLogin({ email })
     .then(res => {

@@ -216,7 +216,7 @@ describe('getProgramme', () => {
     mockHttpResponse({ status: 200, body: {} });
     const store = createMockStore();
 
-    return store.dispatch(Actions.programmes.getProgramme()).then(() => {
+    return store.dispatch(Actions.programmes.getProgramme('1')).then(() => {
       const calledActions = store.getActions();
       expect(calledActions[0]).toEqual(
         Actions.programmes.getProgrammeIsLoading()
@@ -237,7 +237,7 @@ describe('getProgramme', () => {
 
     const store = createMockStore();
 
-    return store.dispatch(Actions.programmes.getProgramme()).then(() => {
+    return store.dispatch(Actions.programmes.getProgramme('1')).then(() => {
       const calledActions = store.getActions();
       expect(calledActions).toEqual(expectedActions);
     });
@@ -253,7 +253,7 @@ describe('getProgramme', () => {
 
     const store = createMockStore();
 
-    return store.dispatch(Actions.programmes.getProgramme()).then(() => {
+    return store.dispatch(Actions.programmes.getProgramme('1')).then(() => {
       const calledActions = store.getActions();
       expect(calledActions).toEqual(expectedActions);
     });
@@ -302,7 +302,7 @@ describe('updateProgramme', () => {
     const data = { programme: { name: 'Test Programme' } };
 
     return store
-      .dispatch(Actions.programmes.updateProgramme(1, data))
+      .dispatch(Actions.programmes.updateProgramme('1', data))
       .then(() => {
         const calledActions = store.getActions();
         expect(calledActions[0]).toEqual(
@@ -326,7 +326,7 @@ describe('updateProgramme', () => {
     const data = { programme };
 
     return store
-      .dispatch(Actions.programmes.updateProgramme(1, data))
+      .dispatch(Actions.programmes.updateProgramme('1', data))
       .then(() => {
         const calledActions = store.getActions();
         expect(calledActions).toEqual(expectedActions);
@@ -345,7 +345,7 @@ describe('updateProgramme', () => {
     const store = createMockStore();
 
     return store
-      .dispatch(Actions.programmes.updateProgramme(1, data))
+      .dispatch(Actions.programmes.updateProgramme('1', data))
       .then(() => {
         const calledActions = store.getActions();
         expect(calledActions).toEqual(expectedActions);
@@ -391,7 +391,7 @@ describe('destroyProgramme', () => {
     mockHttpResponse({ status: 200, body: {} });
     const store = createMockStore();
 
-    return store.dispatch(Actions.programmes.destroyProgramme(1)).then(() => {
+    return store.dispatch(Actions.programmes.destroyProgramme('1')).then(() => {
       const calledActions = store.getActions();
       expect(calledActions[0]).toEqual(
         Actions.programmes.destroyProgrammeIsLoading()
@@ -401,7 +401,7 @@ describe('destroyProgramme', () => {
 
   it('should call success action on success', () => {
     const programme = {
-      id: 1
+      id: '1'
     };
     mockHttpResponse({ status: 200, body: { data: programme.id } });
 
@@ -412,7 +412,7 @@ describe('destroyProgramme', () => {
 
     const store = createMockStore();
 
-    return store.dispatch(Actions.programmes.destroyProgramme(1)).then(() => {
+    return store.dispatch(Actions.programmes.destroyProgramme('1')).then(() => {
       const calledActions = store.getActions();
       expect(calledActions).toEqual(expectedActions);
     });
@@ -427,7 +427,7 @@ describe('destroyProgramme', () => {
 
     const store = createMockStore();
 
-    return store.dispatch(Actions.programmes.destroyProgramme(1)).then(() => {
+    return store.dispatch(Actions.programmes.destroyProgramme('1')).then(() => {
       const calledActions = store.getActions();
       expect(calledActions).toEqual(expectedActions);
     });

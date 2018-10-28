@@ -5,9 +5,9 @@ const testData = {
       studentSessionDays: 0,
       name: 'Spotify',
       logoUrl: null,
-      id: 1,
+      id: '1',
       description: 'We do music!',
-      entries: [{ id: 1, value: 'JA' }, { id: 2, value: '20' }]
+      entries: [{ id: '1', value: 'JA' }, { id: 2, value: '20' }]
     },
     '2': {
       website: 'www.google.com',
@@ -43,7 +43,7 @@ const testData = {
       logoUrl: null,
       id: 5,
       description: 'We do wine!',
-      entries: [{ id: 9, value: 'JA' }, { id: 10, value: '100' }]
+      entries: [{ id: 9, value: 'JA' }, { id: '1'0, value: '100' }]
     }
   },
   company: {
@@ -51,13 +51,13 @@ const testData = {
     studentSessionDays: 0,
     name: 'Spotify',
     logoUrl: null,
-    id: 1,
+    id: '1',
     description: 'We do music!',
-    entries: [{ id: 1, value: 'JA' }, { id: 2, value: '20' }]
+    entries: [{ id: '1', value: 'JA' }, { id: 2, value: '20' }]
   },
   users: {
     '1': {
-      id: 1,
+      id: '1',
       email: 'dev@it.now',
       firstName: 'Dev',
       lastName: 'User'
@@ -70,13 +70,13 @@ const testData = {
     }
   },
   user: {
-    id: 1,
+    id: '1',
     email: 'dev@it.now',
     firstName: 'Dev',
     lastName: 'User',
     roles: [
       {
-        id: 1,
+        id: '1',
         type: 'admin',
         permissions: ['read_all', 'write_all']
       }
@@ -84,7 +84,7 @@ const testData = {
   },
   roles: {
     '1': {
-      id: 1,
+      id: '1',
       type: 'admin',
       permissions: ['read_all', 'write_all']
     },
@@ -95,12 +95,12 @@ const testData = {
     }
   },
   role: {
-    id: 1,
+    id: '1',
     type: 'admin',
     permissions: ['read_all', 'write_all'],
     users: [
       {
-        id: 1,
+        id: '1',
         email: 'dev@it.now',
         firstName: 'Dev',
         lastName: 'User'
@@ -108,13 +108,13 @@ const testData = {
     ]
   },
   studentSessionApplications: {
-    '1': { id: 1, companyId: 1, studentId: 1, motivation: 'Old motivation' }
+    '1': { id: '1', companyid: '1', studentid: '1', motivation: 'Old motivation' }
   },
   studentSessions: {
     '1': {
       id: '1',
-      companyId: 1,
-      studentId: 1,
+      companyid: '1',
+      studentid: '1',
       start: '2018-01-01',
       end: '2018-01-01',
       studentConfirmed: false
@@ -122,9 +122,9 @@ const testData = {
   },
   studentSessionDays: {
     '1': {
-      id: 1,
-      companyId: 1,
-      studentId: 1,
+      id: '1',
+      companyid: '1',
+      studentid: '1',
       start: '2018-01-01',
       end: '2018-01-01'
     }
@@ -132,9 +132,9 @@ const testData = {
   categories: [
     {
       title: 'Logistik',
-      id: 1,
+      id: '1',
       attributes: [
-        { title: 'Eluttag', id: 1 },
+        { title: 'Eluttag', id: '1' },
         { title: 'Internetkoder', id: 2 },
         { title: 'Ståbord', id: 3 },
         { title: 'Koli', id: 4 }
@@ -155,30 +155,30 @@ const testData = {
       id: 3,
       attributes: [
         { title: 'Udda beställning', id: 9 },
-        { title: 'Extra ketchup', id: 10 },
-        { title: 'Trevligthetsskala', id: 11 },
-        { title: 'Länk till podio', id: 12 }
+        { title: 'Extra ketchup', id: '1'0 },
+        { title: 'Trevligthetsskala', id: '1'1 },
+        { title: 'Länk till podio', id: '1'2 }
       ]
     },
     {
       title: 'Event',
       id: 4,
       attributes: [
-        { title: 'Lunchföreläsning', id: 13 },
-        { title: 'Pub', id: 14 },
-        { title: 'Yrkesvaskning', id: 15 },
-        { title: 'Sabrering för nybörjare', id: 16 }
+        { title: 'Lunchföreläsning', id: '1'3 },
+        { title: 'Pub', id: '1'4 },
+        { title: 'Yrkesvaskning', id: '1'5 },
+        { title: 'Sabrering för nybörjare', id: '1'6 }
       ]
     }
   ],
   category: {
     title: 'Logistik',
-    id: 1,
+    id: '1',
     attributes: [
       {
         title: 'Eluttag',
-        id: 1,
-        entries: [{ id: 1, value: '1', company: { id: 1, name: 'Spotify' } }]
+        id: '1',
+        entries: [{ id: '1', value: '1', company: { id: '1', name: 'Spotify' } }]
       },
       {
         title: 'Internetkoder',

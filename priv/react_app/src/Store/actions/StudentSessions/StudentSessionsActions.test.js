@@ -102,7 +102,7 @@ describe('destroyStudentSessionAppl', () => {
   it('should call start action', () => {
     mockHttpResponse({ status: 200, body: {} });
     const store = createMockStore();
-    const data = { id: 1 };
+    const data = { id: '1' };
 
     return store
       .dispatch(Actions.studentSessions.destroyStudentSessionAppl(data.id))
@@ -116,7 +116,7 @@ describe('destroyStudentSessionAppl', () => {
 
   it('should call failure action on failure', () => {
     mockHttpResponse({ status: 401, body: {} });
-    const data = { id: 1 };
+    const data = { id: '1' };
 
     const expectedActions = [
       Actions.studentSessions.destroyStudentSessionApplIsLoading(),
@@ -134,7 +134,7 @@ describe('destroyStudentSessionAppl', () => {
   });
 
   it('should call success action on success', () => {
-    const application = { id: 1 };
+    const application = { id: '1' };
     mockHttpResponse({ status: 200, body: {} });
 
     const expectedActions = [
@@ -198,9 +198,9 @@ describe('updateStudentSessionAppl', () => {
 
     const appl = {
       motivation: 'Old motivation',
-      id: 1,
-      companyId: 1,
-      studentId: 1
+      id: '1',
+      companyid: '1',
+      studentid: '1'
     };
     mockHttpResponse({
       status: 200,
@@ -271,9 +271,9 @@ describe('updateStudentSession', () => {
 
     const appl = {
       motivation: 'Old motivation',
-      id: 1,
-      companyId: 1,
-      studentId: 1
+      id: '1',
+      companyid: '1',
+      studentid: '1'
     };
     mockHttpResponse({
       status: 200,

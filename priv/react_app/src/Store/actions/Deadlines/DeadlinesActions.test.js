@@ -216,7 +216,7 @@ describe('getDeadline', () => {
     mockHttpResponse({ status: 200, body: {} });
     const store = createMockStore();
 
-    return store.dispatch(Actions.deadlines.getDeadline()).then(() => {
+    return store.dispatch(Actions.deadlines.getDeadline('1')).then(() => {
       const calledActions = store.getActions();
       expect(calledActions[0]).toEqual(
         Actions.deadlines.getDeadlineIsLoading()
@@ -237,7 +237,7 @@ describe('getDeadline', () => {
 
     const store = createMockStore();
 
-    return store.dispatch(Actions.deadlines.getDeadline()).then(() => {
+    return store.dispatch(Actions.deadlines.getDeadline('1')).then(() => {
       const calledActions = store.getActions();
       expect(calledActions).toEqual(expectedActions);
     });
@@ -253,7 +253,7 @@ describe('getDeadline', () => {
 
     const store = createMockStore();
 
-    return store.dispatch(Actions.deadlines.getDeadline()).then(() => {
+    return store.dispatch(Actions.deadlines.getDeadline('1')).then(() => {
       const calledActions = store.getActions();
       expect(calledActions).toEqual(expectedActions);
     });
@@ -302,7 +302,7 @@ describe('updateDeadline', () => {
     const data = { deadline: { name: 'Test Deadline' } };
 
     return store
-      .dispatch(Actions.deadlines.updateDeadline(1, data))
+      .dispatch(Actions.deadlines.updateDeadline('1', data))
       .then(() => {
         const calledActions = store.getActions();
         expect(calledActions[0]).toEqual(
@@ -326,7 +326,7 @@ describe('updateDeadline', () => {
     const data = { deadline };
 
     return store
-      .dispatch(Actions.deadlines.updateDeadline(1, data))
+      .dispatch(Actions.deadlines.updateDeadline('1', data))
       .then(() => {
         const calledActions = store.getActions();
         expect(calledActions).toEqual(expectedActions);
@@ -345,7 +345,7 @@ describe('updateDeadline', () => {
     const store = createMockStore();
 
     return store
-      .dispatch(Actions.deadlines.updateDeadline(1, data))
+      .dispatch(Actions.deadlines.updateDeadline('1', data))
       .then(() => {
         const calledActions = store.getActions();
         expect(calledActions).toEqual(expectedActions);
@@ -366,7 +366,7 @@ describe('destroyDeadlineIsLoading', () => {
 describe('destroyDeadlineSuccess', () => {
   it('should create the correct action', () => {
     const testDeadline = {
-      id: 1,
+      id: '1',
       name: 'Deadline1'
     };
 
@@ -394,7 +394,7 @@ describe('destroyDeadline', () => {
     mockHttpResponse({ status: 200, body: {} });
     const store = createMockStore();
 
-    return store.dispatch(Actions.deadlines.destroyDeadline(1)).then(() => {
+    return store.dispatch(Actions.deadlines.destroyDeadline('1')).then(() => {
       const calledActions = store.getActions();
       expect(calledActions[0]).toEqual(
         Actions.deadlines.destroyDeadlineIsLoading()
@@ -404,7 +404,7 @@ describe('destroyDeadline', () => {
 
   it('should call success action on success', () => {
     const deadline = {
-      id: 1,
+      id: '1',
       name: 'Deadline1'
     };
     mockHttpResponse({ status: 200, body: '' });
@@ -416,7 +416,7 @@ describe('destroyDeadline', () => {
 
     const store = createMockStore();
 
-    return store.dispatch(Actions.deadlines.destroyDeadline(1)).then(() => {
+    return store.dispatch(Actions.deadlines.destroyDeadline('1')).then(() => {
       const calledActions = store.getActions();
       expect(calledActions).toEqual(expectedActions);
     });
@@ -431,7 +431,7 @@ describe('destroyDeadline', () => {
 
     const store = createMockStore();
 
-    return store.dispatch(Actions.deadlines.destroyDeadline(1)).then(() => {
+    return store.dispatch(Actions.deadlines.destroyDeadline('1')).then(() => {
       const calledActions = store.getActions();
       expect(calledActions).toEqual(expectedActions);
     });

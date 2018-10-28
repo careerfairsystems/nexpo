@@ -14,7 +14,7 @@ describe('Current reducer', () => {
   });
 
   it('should handle current user', () => {
-    const testUser = { id: 1, name: 'Test User' };
+    const testUser = { id: '1', name: 'Test User' };
     const state = CurrentReducer(
       undefined,
       Actions.users.getCurrentUserSuccess(testUser)

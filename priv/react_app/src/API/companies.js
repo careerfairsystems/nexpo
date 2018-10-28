@@ -25,7 +25,7 @@ export default {
   /**
    * Removes the current company
    */
-  destoryMyCompany: () =>
+  destroyMyCompany: () =>
     authDelete('/api/me/company').then(handleHttpResponse),
 
   /**

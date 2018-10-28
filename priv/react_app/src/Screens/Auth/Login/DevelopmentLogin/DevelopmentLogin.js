@@ -25,7 +25,7 @@ class DevelopmentLogin extends Component<Props> {
   login = (values: { email: string }) => {
     const { email } = values;
     const { login } = this.props;
-    login(email);
+    login({ email });
   };
 
   render() {

@@ -208,7 +208,7 @@ describe('Entities reducer', () => {
   });
 
   it('should handle fetch current user success', () => {
-    const testUser = { id: 1, name: 'Test User' };
+    const testUser = { id: '1', name: 'Test User' };
     const action = Actions.users.getCurrentUserSuccess(testUser);
     const state = EntitiesReducer(undefined, action);
 
@@ -219,7 +219,7 @@ describe('Entities reducer', () => {
     });
   });
   it('should handle fetch current user success', () => {
-    const testUser = { id: 1, name: 'Test User' };
+    const testUser = { id: '1', name: 'Test User' };
     const action = Actions.users.getCurrentUserSuccess(testUser);
     const state = EntitiesReducer(undefined, action);
 
@@ -252,7 +252,7 @@ describe('Entities reducer', () => {
       {
         ...initialState,
         studentSessionApplications: {
-          '1': { id: 1, companyId: 1, studentId: 1 }
+          '1': { id: '1', companyid: '1', studentid: '1' }
         }
       },
       action
@@ -266,9 +266,9 @@ describe('Entities reducer', () => {
   it('should handle update session application', () => {
     const data = { motivation: 'New Motivation' };
     const oldAppl = {
-      id: 1,
-      companyId: 1,
-      studentId: 1,
+      id: '1',
+      companyid: '1',
+      studentid: '1',
       motivation: 'Old motivation'
     };
 
@@ -286,7 +286,7 @@ describe('Entities reducer', () => {
 
     expect(state).toMatchObject({
       studentSessionApplications: {
-        '1': { id: 1, companyId: 1, studentId: 1, motivation: 'New Motivation' }
+        '1': { id: '1', companyid: '1', studentid: '1', motivation: 'New Motivation' }
       }
     });
   });
