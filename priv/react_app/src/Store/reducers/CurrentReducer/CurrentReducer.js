@@ -14,7 +14,7 @@ const initialState = {
 
 export const CurrentReducer = (
   state: CurrentState = initialState,
-  action
+  action: { type: string }
 ): CurrentState => {
   switch (action.type) {
     case actionTypes.FETCH_CURRENT_USER_SUCCESS:

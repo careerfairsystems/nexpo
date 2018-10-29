@@ -15,7 +15,7 @@ it('should return initial state', () => {
 
 describe('get current user success', () => {
   it('should change state so it is logged in', () => {
-    const action = Actions.users.getCurrentUserSuccess();
+    const action = Actions.users.getCurrentUserSuccess({});
     const state = AuthReducer(undefined, action);
     expect(state).toMatchObject({ isLoggedIn: true });
   });

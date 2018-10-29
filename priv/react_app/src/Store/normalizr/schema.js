@@ -20,7 +20,12 @@ const hasMany = key => (value, parent) => ({
   [key]: [parent.id]
 });
 
-const entity = (key, definition = {}, options = {}) =>
+type Entity = (
+  key: string,
+  definition?: {},
+  options?: { merge?: {}, model?: {} }
+) => void;
+const entity: Entity = (key, definition = {}, options = {}) =>
   new schema.Entity(key, definition, {
     mergeStrategy: options.merge,
     processStrategy: options.model
