@@ -3,6 +3,7 @@
  */
 
 import { createStore, combineReducers, applyMiddleware } from 'redux';
+import type { Store as ReduxStore } from 'redux';
 import thunk from 'redux-thunk';
 import reducers from './reducers';
 import Actions from './actions';
@@ -12,7 +13,6 @@ import type { State } from './reducers';
 /**
  * Manage creation of store
  */
-
 let store;
 
 const middlewares = [thunk];
@@ -30,7 +30,7 @@ const createStoreIfNotExist = () => {
   }
 };
 
-const getStore = (): State => {
+const getStore = (): ReduxStore<State, any> => {
   createStoreIfNotExist();
   return store;
 };

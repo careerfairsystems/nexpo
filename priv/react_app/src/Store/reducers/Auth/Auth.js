@@ -17,7 +17,7 @@ type OtherActions = {
     | typeof actionTypes.VERIFY_FORGOT_PASSWORD_KEY_FAILURE
 };
 
-type Action = LOGIN_SUCCESS_ACTION | OtherActions;
+export type AuthActions = LOGIN_SUCCESS_ACTION | OtherActions;
 export type AuthState = {
   error: boolean,
   isLoggedIn: boolean,
@@ -36,7 +36,7 @@ const initialState = {
 
 export const AuthReducer = (
   state: AuthState = initialState,
-  action: Action
+  action: AuthActions
 ): AuthState => {
   switch (action.type) {
     case actionTypes.LOGIN_SUCCESS:

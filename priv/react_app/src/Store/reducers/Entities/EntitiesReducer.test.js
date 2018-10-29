@@ -27,7 +27,7 @@ describe('Entities reducer', () => {
     };
   });
   it('should return the empty initial state', () => {
-    expect(EntitiesReducer(undefined, {})).toEqual(initialState);
+    expect(EntitiesReducer(undefined, { type: 'NONE' })).toEqual(initialState);
   });
 
   it('should handle FETCH_COMPANIES_SUCCESS', () => {
@@ -286,13 +286,18 @@ describe('Entities reducer', () => {
 
     expect(state).toMatchObject({
       studentSessionApplications: {
-        '1': { id: '1', companyid: '1', studentid: '1', motivation: 'New Motivation' }
+        '1': {
+          id: '1',
+          companyid: '1',
+          studentid: '1',
+          motivation: 'New Motivation'
+        }
       }
     });
   });
 
   it('should handle fetch statistics success', () => {
-    const statistics = { nbrApplicatons: 10 };
+    const statistics = [{ nbrApplicatons: 10 }];
 
     const action = Actions.statistics.getAllStatisticsSuccess(statistics);
     const state = EntitiesReducer(
