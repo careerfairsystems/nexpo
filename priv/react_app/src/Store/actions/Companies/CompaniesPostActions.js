@@ -1,3 +1,4 @@
+import type { Dispatch } from 'redux';
 import { reset } from 'redux-form';
 import { message } from 'antd';
 import { actionTypes } from '../..';
@@ -27,7 +28,7 @@ export const createCompanyFailure = (): CreateCompanyFailureAction => {
 };
 
 export function createCompany(data: {}) {
-  return dispatch => {
+  return (dispatch: Dispatch<{ type: string }>) => {
     dispatch(createCompanyIsLoading());
     return API.companies
       .create(data)

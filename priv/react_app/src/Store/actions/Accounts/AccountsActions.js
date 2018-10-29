@@ -1,3 +1,4 @@
+import type { Dispatch } from 'redux';
 import { SubmissionError } from 'redux-form';
 import { actionTypes } from '../..';
 import API from '../../../API';
@@ -14,7 +15,9 @@ export const forgotPasswordSuccess = () => ({
 export type ForgotPasswordAction = {
   email: string
 };
-export const forgotPassword = ({ email }: ForgotPasswordAction) => dispatch => {
+export const forgotPassword = ({ email }: ForgotPasswordAction) => (
+  dispatch: Dispatch<{ type: string }>
+) => {
   dispatch(forgotPasswordRequest());
   return API.session.forgotPassword({ email }).then(() => {
     dispatch(forgotPasswordSuccess());
@@ -38,7 +41,7 @@ export type VerifyForgotPasswordKeyAction = {
 };
 export const verifyForgotPasswordKey = ({
   key
-}: VerifyForgotPasswordKeyAction) => dispatch => {
+}: VerifyForgotPasswordKeyAction) => (dispatch: Dispatch<{ type: string }>) => {
   dispatch(verifyForgotPasswordKeyRequest());
   return API.session
     .verifyForgotPasswordKey({ key })
@@ -78,7 +81,9 @@ export const replaceForgottenPassword = ({
   key,
   password,
   passwordConfirmation
-}: ReplaceForgottenPasswordAction) => dispatch => {
+}: ReplaceForgottenPasswordAction) => (
+  dispatch: Dispatch<{ type: string }>
+) => {
   dispatch(replaceForgottenPasswordRequest());
   return API.session
     .replaceForgottenPassword({

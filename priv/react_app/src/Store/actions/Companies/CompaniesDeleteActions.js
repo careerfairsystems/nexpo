@@ -1,3 +1,4 @@
+import type { Dispatch } from 'redux';
 import { message } from 'antd';
 import { actionTypes } from '../..';
 import API from '../../../API';
@@ -25,7 +26,7 @@ export const destroyCompanyFailure = (): DestroyCompanyFailureAction => {
 };
 
 export function destroyCompany(id: string) {
-  return dispatch => {
+  return (dispatch: Dispatch<{ type: string }>) => {
     dispatch(destroyCompanyIsLoading());
     return API.companies
       .destroy(id)

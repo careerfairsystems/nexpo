@@ -1,3 +1,4 @@
+import type { Dispatch } from 'redux';
 import { message } from 'antd';
 import { Actions, actionTypes } from '../..';
 import API from '../../../API';
@@ -19,7 +20,9 @@ export const loginSuccess = (jwt: string) => ({
 });
 
 export type LoginAction = { email: string, password: string };
-export const login = ({ email, password }: LoginAction) => dispatch =>
+export const login = ({ email, password }: LoginAction) => (
+  dispatch: Dispatch<{ type: string }>
+) =>
   API.session
     .login({ email, password })
     .then(res => {
@@ -32,7 +35,9 @@ export const login = ({ email, password }: LoginAction) => dispatch =>
     });
 
 export type DevLoginAction = { email: string };
-export const developmentLogin = ({ email }: DevLoginAction) => dispatch =>
+export const developmentLogin = ({ email }: DevLoginAction) => (
+  dispatch: Dispatch<{ type: string }>
+) =>
   API.session
     .developmentLogin({ email })
     .then(res => {

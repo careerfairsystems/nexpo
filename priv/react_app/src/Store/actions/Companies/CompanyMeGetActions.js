@@ -1,3 +1,4 @@
+import type { Dispatch } from 'redux';
 import { actionTypes } from '../..';
 import API from '../../../API';
 
@@ -15,7 +16,7 @@ export const getCurrentCompanyFailure = () => ({
 });
 
 export function getCurrentCompany() {
-  return dispatch => {
+  return (dispatch: Dispatch<{ type: string }>) => {
     dispatch(getCurrentCompanyIsLoading());
     return API.companies
       .getMyCompany()

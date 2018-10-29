@@ -1,3 +1,4 @@
+import type { Dispatch } from 'redux';
 import { message } from 'antd';
 import { actionTypes } from '../..';
 import API from '../../../API';
@@ -25,7 +26,7 @@ export const destroyMailtemplateFailure = (): DestroyMailtemplateFailureAction =
 };
 
 export function destroyMailtemplate(id: string) {
-  return dispatch => {
+  return (dispatch: Dispatch<{ type: string }>) => {
     dispatch(destroyMailtemplateIsLoading());
     return API.mailtemplates
       .destroy(id)

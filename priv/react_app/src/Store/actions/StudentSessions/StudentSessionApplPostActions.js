@@ -1,3 +1,4 @@
+import type { Dispatch } from 'redux';
 import { reset } from 'redux-form';
 import { message } from 'antd';
 import { actionTypes } from '../..';
@@ -29,7 +30,7 @@ export const createStudentSessionApplFailure = (): CreateStudentSessionApplFailu
 };
 
 export function createStudentSessionAppl(data: {}) {
-  return dispatch => {
+  return (dispatch: Dispatch<{ type: string }>) => {
     dispatch(createStudentSessionApplIsLoading());
     return API.studentSessions
       .create(data)

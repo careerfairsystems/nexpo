@@ -1,3 +1,4 @@
+import type { Dispatch } from 'redux';
 import { message } from 'antd';
 import { actionTypes } from '../..';
 import API from '../../../API';
@@ -27,7 +28,7 @@ export const destroyDeadlineFailure = (): DestroyDeadlineFailureAction => {
 }
 
 export function destroyDeadline(id: string) {
-  return dispatch => {
+  return (dispatch: Dispatch<{ type: string }>) => {
     dispatch(destroyDeadlineIsLoading());
     return API.deadlines
       .destroy(id)

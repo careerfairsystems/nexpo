@@ -1,10 +1,11 @@
+import type { Dispatch } from 'redux';
 import { message } from 'antd';
 import { actionTypes } from '../..';
 import API from '../../../API';
 
 export const destroyRoleIsLoading = () => ({
-    type: actionTypes.DELETE_ROLE
-  });
+  type: actionTypes.DELETE_ROLE
+});
 
 export const destroyRoleSuccess = (id: string) => {
   message.success('Role successfully deleted');
@@ -25,7 +26,7 @@ export const destroyRoleFailure = (): DestroyRoleFailureAction => {
 };
 
 export function destroyRole(id: string) {
-  return dispatch => {
+  return (dispatch: Dispatch<{ type: string }>) => {
     dispatch(destroyRoleIsLoading());
     return API.roles
       .destroy(id)

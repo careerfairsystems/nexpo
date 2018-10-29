@@ -1,10 +1,11 @@
+import type { Dispatch } from 'redux';
 import { message } from 'antd';
 import { actionTypes } from '../..';
 import API from '../../../API';
 
 export const updateRoleIsLoading = () => ({
-    type: actionTypes.PUT_ROLE
-  });
+  type: actionTypes.PUT_ROLE
+});
 
 export const updateRoleSuccess = (role: {}) => {
   message.success('Role successfully updated');
@@ -25,7 +26,7 @@ export const updateRoleFailure = (): UpdateRoleFailureAction => {
 };
 
 export function updateRole(id: string, data: {}) {
-  return dispatch => {
+  return (dispatch: Dispatch<{ type: string }>) => {
     dispatch(updateRoleIsLoading());
     return API.roles
       .update(id, data)

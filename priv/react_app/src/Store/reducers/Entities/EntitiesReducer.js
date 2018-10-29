@@ -23,6 +23,10 @@ export type EntitiesState = {
   students: {}
 };
 
+export type EntitiesAction = {
+  type: string
+};
+
 const initialState = {
   categories: {},
   attributes: {},
@@ -46,9 +50,9 @@ const handleMerge = (prev, next) => {
 
 export const EntitiesReducer = (
   state: EntitiesState = initialState,
-  incomingAction
+  incomingAction: EntitiesAction
 ): EntitiesState => {
-  const action = camelCaseKeys(incomingAction);
+  const action: EntitiesAction = camelCaseKeys(incomingAction);
   let normalized;
 
   switch (action.type) {

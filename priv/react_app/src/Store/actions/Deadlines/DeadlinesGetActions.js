@@ -1,3 +1,4 @@
+import type { Dispatch } from 'redux';
 import { message } from 'antd';
 import { actionTypes } from '../..';
 import API from '../../../API';
@@ -24,7 +25,7 @@ export const getDeadlineFailure = (): GetDeadlineFailureAction => {
 };
 
 export function getDeadline(id: string) {
-  return dispatch => {
+  return (dispatch: Dispatch<{ type: string }>) => {
     dispatch(getDeadlineIsLoading());
     return API.deadlines
       .get(id)

@@ -1,12 +1,11 @@
+import type { Dispatch } from 'redux';
 import { message } from 'antd';
 import { actionTypes } from '../..';
 import API from '../../../API';
 
-export const destroyProgrammeIsLoading = () => {
-  return {
+export const destroyProgrammeIsLoading = () => ({
     type: actionTypes.DELETE_PROGRAMME
-  };
-}
+  });
 
 export const destroyProgrammeSuccess = (id: string) => {
   message.success('Programme successfully deleted');
@@ -14,7 +13,7 @@ export const destroyProgrammeSuccess = (id: string) => {
     type: actionTypes.DELETE_PROGRAMME_SUCCESS,
     id
   };
-}
+};
 
 export type DestroyProgrammeFailureAction = {
   type: string
@@ -24,10 +23,10 @@ export const destroyProgrammeFailure = (): DestroyProgrammeFailureAction => {
   return {
     type: actionTypes.DELETE_PROGRAMME_FAILURE
   };
-}
+};
 
 export function destroyProgramme(id: string) {
-  return dispatch => {
+  return (dispatch: Dispatch<{ type: string }>) => {
     dispatch(destroyProgrammeIsLoading());
     return API.programmes
       .destroy(id)

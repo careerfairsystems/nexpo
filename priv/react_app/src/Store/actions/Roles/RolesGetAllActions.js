@@ -1,3 +1,4 @@
+import type { Dispatch } from 'redux';
 import { message } from 'antd';
 import { actionTypes } from '../..';
 import API from '../../../API';
@@ -24,7 +25,7 @@ export const getAllRolesFailure = (): GetAllRolesFailureAction => {
 };
 
 export function getAllRoles() {
-  return dispatch => {
+  return (dispatch: Dispatch<{ type: string }>) => {
     dispatch(getAllRolesIsLoading());
     return API.roles
       .getAll()

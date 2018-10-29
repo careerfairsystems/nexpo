@@ -1,3 +1,4 @@
+import type { Dispatch } from 'redux';
 import { message } from 'antd';
 import { actionTypes } from '../..';
 import API from '../../../API';
@@ -24,7 +25,7 @@ export const getAllCompaniesFailure = (): GetAllCompaniesFailureAction => {
 };
 
 export function getAllCompanies() {
-  return dispatch => {
+  return (dispatch: Dispatch<{ type: string }>) => {
     dispatch(getAllCompaniesIsLoading());
     return API.companies
       .getAll()

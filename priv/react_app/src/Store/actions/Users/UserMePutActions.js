@@ -1,3 +1,4 @@
+import type { Dispatch } from 'redux';
 import { message } from 'antd';
 import { actionTypes } from '../..';
 import API from '../../../API';
@@ -22,7 +23,7 @@ export const updateCurrentUserFailure = () => {
 };
 
 export function updateCurrentUser(data: {}) {
-  return dispatch => {
+  return (dispatch: Dispatch<{ type: string }>) => {
     dispatch(updateCurrentUserIsLoading());
     return API.users
       .updateMe(data)

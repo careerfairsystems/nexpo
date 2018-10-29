@@ -1,3 +1,4 @@
+import type { Dispatch } from 'redux';
 import { message } from 'antd';
 import { actionTypes } from '../..';
 import API from '../../../API';
@@ -24,7 +25,7 @@ export const getMailtemplateFailure = (): GetMailtemplateFailureAction => {
 };
 
 export function getMailtemplate(id: string) {
-  return dispatch => {
+  return (dispatch: Dispatch<{ type: string }>) => {
     dispatch(getMailtemplateIsLoading());
     return API.mailtemplates
       .get(id)

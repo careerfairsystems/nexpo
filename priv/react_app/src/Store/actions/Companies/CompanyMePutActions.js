@@ -1,3 +1,4 @@
+import type { Dispatch } from 'redux';
 import { message } from 'antd';
 
 import { actionTypes } from '../..';
@@ -23,7 +24,7 @@ export const updateCurrentCompanyFailure = () => {
 };
 
 export function updateCurrentCompany(data: {}) {
-  return dispatch => {
+  return (dispatch: Dispatch<{ type: string }>) => {
     dispatch(updateCurrentCompanyIsLoading());
     return API.companies
       .updateMyCompany(data)

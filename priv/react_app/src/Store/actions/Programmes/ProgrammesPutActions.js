@@ -1,3 +1,4 @@
+import type { Dispatch } from 'redux';
 import { message } from 'antd';
 import { actionTypes } from '../..';
 import API from '../../../API';
@@ -25,7 +26,7 @@ export const updateProgrammeFailure = (): UpdateProgrammeFailureAction => {
 };
 
 export function updateProgramme(id: string, data: {}) {
-  return dispatch => {
+  return (dispatch: Dispatch<{ type: string }>) => {
     dispatch(updateProgrammeIsLoading());
     return API.programmes
       .update(id, data)
