@@ -4,7 +4,7 @@
 
 import { initialStatus, fetching, retrieving, failure } from './ApiReducer';
 import type { ApiStatus } from './ApiReducer';
-import actionTypes from '../../ActionTypes';
+import * as actionTypes from '../../ActionTypes';
 
 export const ApiReducerCategories = (
   state: ApiStatus = initialStatus,
