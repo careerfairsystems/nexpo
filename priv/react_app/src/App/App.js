@@ -111,7 +111,7 @@ type Props = {
     lastName?: ?string, 
     roles?: Array<{ type: string, permissions: Array<string>}> 
   },
-  logout: (void) => void,
+  logout: () => void,
   redirect: (string) => void,
   pathname: string
 };

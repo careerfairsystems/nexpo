@@ -2,15 +2,14 @@
  * Defines a reducer updates the state based on the action created after a call to the server.
  */
 
-import { Action } from 'redux';
-import { ReplaceForgottenPasswordFailureAction } from '../../actions/Accounts/AccountsActions';
+import type { ReplaceForgottenPasswordFailureAction } from '../../actions/Accounts/AccountsActions';
 import { initialStatus, fetching, retrieving, failure } from './ApiReducer';
 import actionTypes from '../../ActionTypes';
 import type { ApiStatus } from './ApiReducer';
 
 export const ApiReducerForgotPassword = (
   state: ApiStatus = initialStatus,
-  act: Action
+  act: { type: string }
 ) => {
   switch (act.type) {
     case actionTypes.REPLACE_FORGOTTEN_PASSWORD_REQUEST: {

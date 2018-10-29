@@ -3,14 +3,13 @@
  * Defines a reducer updates the state based on the action created after a call to the server.
  */
 
-import { Action } from 'redux';
 import { initialStatus, fetching, retrieving, failure } from './ApiReducer';
 import actionTypes from '../../ActionTypes';
 import type { ApiStatus } from './ApiReducer';
 
 export const ApiReducerCompanies = (
   state: ApiStatus = initialStatus,
-  act: Action
+  act: { type: string }
 ) => {
   switch (act.type) {
     case actionTypes.FETCH_COMPANY: {

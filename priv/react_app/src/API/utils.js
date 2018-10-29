@@ -24,7 +24,7 @@ type ErrorResponse = {
  */
 export const handleHttpResponse = (
   response: Response
-): Promise<{ data: void }> => {
+): Promise<{ data: any }> => {
   const contentType = response.headers.get('content-type');
   const isJson = contentType && contentType.includes('application/json');
   if (response.ok && isJson) {

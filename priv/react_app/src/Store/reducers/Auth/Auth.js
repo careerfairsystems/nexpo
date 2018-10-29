@@ -19,7 +19,7 @@ const initialState = {
 
 export const AuthReducer = (
   state: AuthState = initialState,
-  action
+  action: { type: string }
 ): AuthState => {
   switch (action.type) {
     case actionTypes.LOGIN_SUCCESS:

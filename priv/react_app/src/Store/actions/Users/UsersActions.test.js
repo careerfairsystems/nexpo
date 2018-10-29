@@ -262,7 +262,7 @@ describe('destroyCurrentUserIsLoading', () => {
 describe('destroyCurrentUserSuccess', () => {
   it('should create the correct action', () => {
     const expectedAction = {
-      type: actionTypes.DELETE_CURRENT_USER_SUCCESS,
+      type: actionTypes.DELETE_CURRENT_USER_SUCCESS
     };
     const action = Actions.users.destroyCurrentUserSuccess();
     expect(action).toEqual(expectedAction);
@@ -337,12 +337,12 @@ describe('getAllUsersIsLoading', () => {
 
 describe('getAllUsersSuccess', () => {
   it('should create the correct action', () => {
-    const testUsers = {
-      '1': {
-      id: 1,
-      name: 'User1'
-    }
-  }
+    const testUsers = [
+      {
+        id: 1,
+        name: 'User1'
+      }
+    ];
 
     const expectedAction = {
       type: actionTypes.FETCH_USERS_SUCCESS,
@@ -375,12 +375,11 @@ describe('getAllUsers', () => {
   });
 
   it('should call success action on success', () => {
-    const users = {
-      '1':
+    const users = [
       {
         name: 'User1'
       }
-    }
+    ];
     mockHttpResponse({ status: 200, body: { data: users } });
 
     const expectedActions = [

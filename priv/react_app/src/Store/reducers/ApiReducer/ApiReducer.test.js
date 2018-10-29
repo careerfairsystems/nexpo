@@ -130,7 +130,7 @@ describe('fetch companies', () => {
     };
     const state = ApiReducer(
       startState,
-      Actions.companies.getAllCompaniesSuccess()
+      Actions.companies.getAllCompaniesSuccess([])
     );
     expect(state).toMatchObject(expected);
   });
@@ -193,7 +193,7 @@ describe('fetch users', () => {
         success: true
       }
     };
-    const state = ApiReducer(startState, Actions.users.getAllUsersSuccess());
+    const state = ApiReducer(startState, Actions.users.getAllUsersSuccess([]));
     expect(state).toMatchObject(expected);
   });
 
@@ -252,7 +252,7 @@ describe('fetch roles', () => {
         success: true
       }
     };
-    const state = ApiReducer(startState, Actions.roles.getAllRolesSuccess());
+    const state = ApiReducer(startState, Actions.roles.getAllRolesSuccess([]));
     expect(state).toMatchObject(expected);
   });
 
@@ -316,7 +316,7 @@ describe('fetch categories', () => {
     };
     const state = ApiReducer(
       startState,
-      Actions.categories.getAllCategoriesSuccess()
+      Actions.categories.getAllCategoriesSuccess([])
     );
     expect(state).toMatchObject(expected);
   });
