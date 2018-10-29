@@ -297,7 +297,7 @@ describe('Entities reducer', () => {
   });
 
   it('should handle fetch statistics success', () => {
-    const statistics = [{ nbrApplicatons: 10 }];
+    const statistics = { nbrApplicatons: 10 };
 
     const action = Actions.statistics.getAllStatisticsSuccess(statistics);
     const state = EntitiesReducer(
