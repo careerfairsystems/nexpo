@@ -32,7 +32,7 @@ type Props = {
     }
   },
   fetching: boolean,
-  getUser: string => Promise<any>,
+  getUser: string => Promise<void>,
   match?: {
     path?: string
   }

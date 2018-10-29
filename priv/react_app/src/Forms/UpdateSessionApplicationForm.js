@@ -10,7 +10,7 @@ const requiredMotivation = value =>
   value ? undefined : 'Please provide a motivation';
 
 type Props = {
-  handleSubmit: () => Promise<any>,
+  handleSubmit: () => Promise<void>,
   invalid: boolean,
   pristine: boolean,
   submitting: boolean

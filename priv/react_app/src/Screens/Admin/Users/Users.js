@@ -13,8 +13,8 @@ import FilterSearch, { FilterIcon } from '../../../Components/FilterSearch';
 type Props = {
   users?: {},
   fetching: boolean,
-  getAllUsers: () => Promise<any>,
-  deleteUser: string => Promise<any>
+  getAllUsers: () => Promise<void>,
+  deleteUser: string => Promise<void>
 };
 class Users extends Component<Props> {
   static defaultProps = {

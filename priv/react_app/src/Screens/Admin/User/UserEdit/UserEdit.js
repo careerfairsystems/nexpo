@@ -20,9 +20,9 @@ type Props = {
   id?: string,
   user: { name?: string },
   fetching: boolean,
-  getUser: string => Promise<any>,
+  getUser: string => Promise<void>,
   history: { push: string => any },
-  updateUser: (string, { user: UserObj }) => Promise<any>
+  updateUser: (string, { user: UserObj }) => Promise<void>
 };
 class UserEdit extends Component<Props> {
   static defaultProps = {

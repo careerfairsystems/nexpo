@@ -25,8 +25,8 @@ type Props = {
   currentCompany: { studentSessionApplications?: Array<Application> },
   fetching: boolean,
   updating: boolean,
-  getCurrentCompany: () => Promise<any>,
-  updateStudentSessionAppl: (number, {}) => Promise<any>
+  getCurrentCompany: () => Promise<void>,
+  updateStudentSessionAppl: (number, {}) => Promise<void>
 };
 class YourCompanyApplications extends Component<Props> {
   componentWillMount() {

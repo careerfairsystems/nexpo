@@ -9,8 +9,8 @@ type Props = {
   fetching: boolean,
   history: RouterHistory,
   currentCompany: { name?: string, studentSessionDays?: number },
-  getCurrentCompany: () => Promise<any>,
-  updateCurrentCompany: ({ company: {} }) => Promise<any>
+  getCurrentCompany: () => Promise<void>,
+  updateCurrentCompany: ({ company: {} }) => Promise<void>
 };
 class YourCompanyProfileEdit extends Component<Props> {
   componentWillMount() {

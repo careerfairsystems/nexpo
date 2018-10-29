@@ -23,7 +23,7 @@ const requiredMotivation = value =>
 
 type Props = {
   availableCompanies: Array<any>,
-  handleSubmit: () => Promise<any>,
+  handleSubmit: () => Promise<void>,
   submitting: boolean
 };
 const StudentSessionForm = ({

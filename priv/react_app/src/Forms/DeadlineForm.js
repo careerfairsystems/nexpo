@@ -14,7 +14,7 @@ const MyDatePicker = makeField((props: FieldProps) =>
 );
 
 type Props = {
-  handleSubmit: () => Promise<any>
+  handleSubmit: () => Promise<void>
 };
 const DeadlineForm = ({ handleSubmit }: Props) => (
   <Form onSubmit={handleSubmit}>

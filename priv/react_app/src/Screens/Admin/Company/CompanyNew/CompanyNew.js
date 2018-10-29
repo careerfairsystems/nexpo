@@ -6,7 +6,7 @@ import '../Company.css';
  * Responsible for rendering a company. Company id is recieved via url
  */
 type Props = {
-  createCompany: ({ company: {} }) => Promise<any>
+  createCompany: ({ company: {} }) => Promise<void>
 };
 
 type NewCompanyValues = {

@@ -12,8 +12,8 @@ import HtmlTitle from '../../../Components/HtmlTitle';
 type Props = {
   roles: {},
   fetching: boolean,
-  getAllRoles: () => Promise<any>,
-  deleteRole: string => Promise<any>
+  getAllRoles: () => Promise<void>,
+  deleteRole: string => Promise<void>
 };
 class Roles extends Component<Props> {
   componentWillMount() {

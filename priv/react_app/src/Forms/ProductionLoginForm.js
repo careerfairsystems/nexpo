@@ -7,7 +7,7 @@ import makeField, { required } from './helper';
 const TextInput = makeField(Input);
 
 type Props = {
-  handleSubmit: () => Promise<any>,
+  handleSubmit: () => Promise<void>,
   submitting: boolean
 };
 const ProductionLoginForm = ({ handleSubmit, submitting }: Props) => (

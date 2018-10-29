@@ -17,7 +17,7 @@ type Props = {
     website?: string,
     logoUrl?: string
   },
-  getCurrentCompany: () => Promise<any>
+  getCurrentCompany: () => Promise<void>
 };
 class YourCompanyProfileShow extends Component<Props> {
   componentWillMount() {

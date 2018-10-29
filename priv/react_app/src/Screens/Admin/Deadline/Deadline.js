@@ -8,10 +8,10 @@ import LoadingSpinner from '../../../Components/LoadingSpinner';
 type Props = {
   id?: string,
   deadline: {},
-  createDeadline: ({ deadline: {} }) => Promise<any>,
+  createDeadline: ({ deadline: {} }) => Promise<void>,
   fetching: boolean,
-  getDeadline: string => Promise<any>,
-  updateDeadline: (string, { deadline: {} }) => Promise<any>
+  getDeadline: string => Promise<void>,
+  updateDeadline: (string, { deadline: {} }) => Promise<void>
 };
 class Deadline extends Component<Props> {
   static defaultProps = {

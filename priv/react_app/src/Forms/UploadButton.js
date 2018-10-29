@@ -6,7 +6,7 @@ import makeField from './helper';
 type Props = {
   accept: string,
   value: {} | string,
-  onChange: (?File) => Promise<any>
+  onChange: (?File) => Promise<void>
 };
 
 const UploadButton = ({ accept = '', value, onChange }: Props) => (

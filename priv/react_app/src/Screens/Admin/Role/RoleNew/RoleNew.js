@@ -12,8 +12,8 @@ type RoleObj = {
   user: number
 };
 type Props = {
-  createRole: ({ role: RoleObj }) => Promise<any>,
-  getAllUsers: () => Promise<any>
+  createRole: ({ role: RoleObj }) => Promise<void>,
+  getAllUsers: () => Promise<void>
 };
 class RoleNew extends Component<Props> {
   componentWillMount() {

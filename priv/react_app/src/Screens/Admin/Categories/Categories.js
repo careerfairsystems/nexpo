@@ -79,7 +79,7 @@ type Props = {
   categories?: {},
   attributes?: {},
   fetching: boolean,
-  getAllCategories: () => Promise<any>
+  getAllCategories: () => Promise<void>
 };
 class Categories extends Component<Props> {
   static defaultProps = {

@@ -54,7 +54,7 @@ const getData = applicationsPerDay => {
 };
 
 type Props = {
-  getAllStatistics: () => Promise<any>,
+  getAllStatistics: () => Promise<void>,
   statistics: {
     applicationsPerDay?: Array<string>,
     companyStats?: Array<{

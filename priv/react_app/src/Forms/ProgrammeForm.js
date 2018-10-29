@@ -8,7 +8,7 @@ const TextInput = makeField(Input);
 
 type Props = {
   disabled?: boolean,
-  handleSubmit: () => Promise<any>,
+  handleSubmit: () => Promise<void>,
   submitting: boolean
 };
 const ProgrammeForm = ({ handleSubmit, disabled, submitting }: Props) => (

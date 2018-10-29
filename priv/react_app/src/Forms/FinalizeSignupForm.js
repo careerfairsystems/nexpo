@@ -16,7 +16,7 @@ const agreeText =
   'I agree that Teknologkåren vid LTH will treat my personal data provided by this application in connection with the Student Session.';
 
 type Props = {
-  handleSubmit: () => Promise<any>,
+  handleSubmit: () => Promise<void>,
   submitting: boolean
 };
 const FinalizeSignupForm = ({ handleSubmit, submitting }: Props) => (

@@ -13,11 +13,11 @@ import '../Role.css';
 type Props = {
   id: string,
   role: { type?: string },
-  getRole: string => Promise<any>,
-  getAllUsers: () => Promise<any>,
+  getRole: string => Promise<void>,
+  getAllUsers: () => Promise<void>,
   fetchingRoles: boolean,
   fetchingUsers: boolean,
-  updateRole: (string, { role: {} }) => Promise<any>,
+  updateRole: (string, { role: {} }) => Promise<void>,
   history: { push: string => any }
 };
 class RoleEdit extends Component<Props> {

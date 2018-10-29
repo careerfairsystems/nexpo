@@ -7,7 +7,7 @@ import makeField from './helper';
 const TextInput = makeField(Input);
 
 type Props = {
-  handleSubmit: () => Promise<any>,
+  handleSubmit: () => Promise<void>,
   pristine: boolean,
   submitting: boolean
 };

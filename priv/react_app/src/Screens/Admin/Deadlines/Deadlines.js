@@ -12,8 +12,8 @@ import HtmlTitle from '../../../Components/HtmlTitle';
 type Props = {
   deadlines?: {},
   fetching: boolean,
-  getAllDeadlines: () => Promise<any>,
-  deleteDeadline: string => Promise<any>
+  getAllDeadlines: () => Promise<void>,
+  deleteDeadline: string => Promise<void>
 };
 class Deadlines extends Component<Props> {
   static defaultProps = {

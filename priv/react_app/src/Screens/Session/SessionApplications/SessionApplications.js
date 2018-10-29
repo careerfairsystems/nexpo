@@ -15,13 +15,13 @@ type Application = {
 type Props = {
   applications?: ?Array<Application>,
   companies?: {},
-  getAllCompanies: () => Promise<any>,
-  destroyStudentSessionAppl: string => Promise<any>,
+  getAllCompanies: () => Promise<void>,
+  destroyStudentSessionAppl: string => Promise<void>,
   fetching: boolean,
   updateStudentSessionAppl: (
     string,
     { studentSessionApplication: Application }
-  ) => Promise<any>
+  ) => Promise<void>
 };
 type State = {
   editing: { [string]: boolean }

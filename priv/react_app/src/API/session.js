@@ -1,3 +1,4 @@
+import type { Response } from './utils';
 import { fetchJson, handleHttpResponse } from './utils';
 import UnreachableCodeReachedError from '../Errors/UnreachableCodeReachedError';
 import 'whatwg-fetch'; // fetch polyfill for unsupported browsers
@@ -35,7 +36,7 @@ export default {
       handleHttpResponse
     ),
 
-  verifyForgotPasswordKey: ({ key }: { key: string }): Promise<any> =>
+  verifyForgotPasswordKey: ({ key }: { key: string }): Promise<Response> =>
     fetch(`/api/password/forgot/${key}`).then(handleHttpResponse),
 
   replaceForgottenPassword: ({

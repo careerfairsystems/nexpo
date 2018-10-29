@@ -7,7 +7,7 @@ import makeField, { required, validatePassword } from './helper';
 const TextInput = makeField(Input);
 
 type Props = {
-  handleSubmit: () => Promise<any>,
+  handleSubmit: () => Promise<void>,
   submitting: boolean
 };
 const ReplacePasswordForm = ({ handleSubmit, submitting }: Props) => (

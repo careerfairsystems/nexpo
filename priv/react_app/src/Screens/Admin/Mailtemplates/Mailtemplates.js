@@ -12,8 +12,8 @@ import HtmlTitle from '../../../Components/HtmlTitle';
 type Props = {
   mailtemplates?: {},
   fetching: boolean,
-  getAllMailtemplates: () => Promise<any>,
-  deleteMailtemplate: string => Promise<any>
+  getAllMailtemplates: () => Promise<void>,
+  deleteMailtemplate: string => Promise<void>
 };
 class Mailtemplates extends Component<Props> {
   static defaultProps = {

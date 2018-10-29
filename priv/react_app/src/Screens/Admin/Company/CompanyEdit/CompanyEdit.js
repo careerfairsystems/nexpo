@@ -17,10 +17,10 @@ type Props = {
   id: string,
   company: { name?: string, website?: string, description?: string },
   fetching: boolean,
-  getCompany: string => Promise<any>,
+  getCompany: string => Promise<void>,
   history: { push: string => any },
   resetForm: string => any,
-  updateCompany: (string, {}) => Promise<any>
+  updateCompany: (string, {}) => Promise<void>
 };
 
 type NewCompanyValues = {

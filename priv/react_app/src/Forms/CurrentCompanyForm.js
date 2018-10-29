@@ -10,7 +10,7 @@ const TextInput = makeField(Input);
 const TextArea = makeField(Input.TextArea);
 
 type Props = {
-  handleSubmit: () => Promise<any>,
+  handleSubmit: () => Promise<void>,
   onCancel?: Event => any,
   submitting: boolean
 };

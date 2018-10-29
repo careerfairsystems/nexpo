@@ -22,13 +22,13 @@ type Props = {
     student?: {}
   },
   currentStudent: StudentObj,
-  getAllCompanies: () => Promise<any>,
-  getAllProgrammes: () => Promise<any>,
+  getAllCompanies: () => Promise<void>,
+  getAllProgrammes: () => Promise<void>,
   createStudentSessionAppl: ({
     studentSessionApplication: Application
-  }) => Promise<any>,
-  updateCurrentStudent: ({ student: StudentObj }) => Promise<any>,
-  resetForm: string => Promise<any>
+  }) => Promise<void>,
+  updateCurrentStudent: ({ student: StudentObj }) => Promise<void>,
+  resetForm: string => Promise<void>
 };
 class SessionApplication extends Component<Props> {
   componentWillMount() {

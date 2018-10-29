@@ -14,8 +14,8 @@ import FilterSearch, { FilterIcon } from '../../../Components/FilterSearch';
 type Props = {
   companies?: {},
   fetching: boolean,
-  getAllCompanies: () => Promise<any>,
-  deleteCompany: string => Promise<any>
+  getAllCompanies: () => Promise<void>,
+  deleteCompany: string => Promise<void>
 };
 class Companies extends Component<Props> {
   static defaultProps = {

@@ -16,13 +16,13 @@ type MailTemplateObj = {
 type Props = {
   id?: string,
   mailtemplate: { mailtemplate: MailTemplateObj } | {},
-  createMailtemplate: ({ mailtemplate: MailTemplateObj }) => Promise<any>,
+  createMailtemplate: ({ mailtemplate: MailTemplateObj }) => Promise<void>,
   fetching: boolean,
-  getMailtemplate: string => Promise<any>,
+  getMailtemplate: string => Promise<void>,
   updateMailtemplate: (
     string,
     { mailtemplate: MailTemplateObj }
-  ) => Promise<any>
+  ) => Promise<void>
 };
 class Mailtemplate extends Component<Props> {
   static defaultProps = {

@@ -6,7 +6,7 @@ import makeField, { required, validatePassword } from './helper';
 
 const TextInput = makeField(Input);
 type Props = {
-  handleSubmit: () => Promise<any>,
+  handleSubmit: () => Promise<void>,
   submitting: boolean
 };
 const ForgotPasswordForm = ({ handleSubmit, submitting }: Props) => (

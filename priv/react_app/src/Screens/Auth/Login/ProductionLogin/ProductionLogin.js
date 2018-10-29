@@ -14,7 +14,7 @@ import ProductionLoginForm from '../../../../Forms/ProductionLoginForm';
 type Props = {
   location: Location,
   isLoggedIn: boolean,
-  login: ({ email: string, password: string }) => Promise<any>
+  login: ({ email: string, password: string }) => Promise<void>
 };
 class ProductionLogin extends Component<Props> {
   login = (values: { email: string, password: string }) => {

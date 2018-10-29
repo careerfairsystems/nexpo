@@ -29,7 +29,7 @@ type Props = {
     }>
   },
   fetching: boolean,
-  getCompany: string => Promise<any>,
+  getCompany: string => Promise<void>,
   match?: {
     path: string
   }

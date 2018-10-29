@@ -27,7 +27,7 @@ type Props = {
       url?: string
     }
   },
-  handleSubmit: () => Promise<any>,
+  handleSubmit: () => Promise<void>,
   programmes: {},
   pristine: boolean
 };

@@ -11,8 +11,8 @@ import HtmlTitle from '../../../Components/HtmlTitle';
 type Props = {
   programmes?: {},
   fetching: boolean,
-  deleteProgramme: string => Promise<any>,
-  getAllProgrammes: () => Promise<any>
+  deleteProgramme: string => Promise<void>,
+  getAllProgrammes: () => Promise<void>
 };
 class Programmes extends Component<Props> {
   static defaultProps = {

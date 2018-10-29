@@ -30,12 +30,12 @@ type Props = {
   },
   currentStudent?: StudentObj,
   fetching: boolean,
-  updateCurrentUser: ({ user: UserObj }) => Promise<any>,
-  updateCurrentStudent: ({ student: StudentObj }) => Promise<any>,
-  getAllProgrammes: () => Promise<any>,
-  destroyCurrentUser: () => Promise<any>,
-  logout: () => Promise<any>,
-  resetForm: string => Promise<any>
+  updateCurrentUser: ({ user: UserObj }) => Promise<void>,
+  updateCurrentStudent: ({ student: StudentObj }) => Promise<void>,
+  getAllProgrammes: () => Promise<void>,
+  destroyCurrentUser: () => Promise<void>,
+  logout: () => Promise<void>,
+  resetForm: string => Promise<void>
 };
 class CurrentUser extends Component<Props> {
   static defaultProps = {

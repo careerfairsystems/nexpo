@@ -24,8 +24,8 @@ type Props = {
     description?: string,
     website?: string
   },
-  confirmSession: number => Promise<any>,
-  getAllCompanies: () => Promise<any>,
+  confirmSession: number => Promise<void>,
+  getAllCompanies: () => Promise<void>,
   fetching: boolean
 };
 class StudentSessions extends Component<Props> {

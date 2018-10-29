@@ -19,7 +19,7 @@ const styles = {
 type Props = {
   location: Location,
   isLoggedIn: boolean,
-  login: ({ email: string }) => Promise<any>
+  login: ({ email: string }) => Promise<void>
 };
 class DevelopmentLogin extends Component<Props> {
   login = (values: { email: string }) => {

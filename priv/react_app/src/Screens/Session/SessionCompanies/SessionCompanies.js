@@ -18,7 +18,7 @@ type CompanyObj = {
 type Props = {
   fetching: boolean,
   companies: { [string]: CompanyObj },
-  getAllCompanies: () => Promise<any>
+  getAllCompanies: () => Promise<void>
 };
 class SessionCompanies extends Component<Props> {
   componentWillMount() {
