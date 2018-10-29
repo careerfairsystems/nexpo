@@ -4,7 +4,13 @@
 
 const defaultBody = { defaultBodyUsed: true };
 
-export const mockHttpResponse = ({ status, body = defaultBody }) => {
+export const mockHttpResponse = ({
+  status,
+  body = defaultBody
+}: {
+  status: number,
+  body?: {} | string
+}) => {
   // Build the response we want
   const response = new window.Response(JSON.stringify(body), {
     status,

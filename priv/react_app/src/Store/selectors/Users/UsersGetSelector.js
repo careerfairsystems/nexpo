@@ -1,9 +1,10 @@
 import { denormalize } from 'normalizr';
 import Schema from '../../normalizr/schema';
+import type { State } from '../../reducers';
 
-export const getUserId = (state, props) => props.match.params.id;
+export const getUserId = (state: State, props) => props.match.params.id;
 
-export const getUser = (state, props) => {
+export const getUser = (state: State, props) => {
   const userId = getUserId(state, props);
 
   const {
