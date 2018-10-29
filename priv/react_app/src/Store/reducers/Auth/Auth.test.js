@@ -10,7 +10,7 @@ it('should return initial state', () => {
       validKey: false
     }
   };
-  expect(AuthReducer(undefined, {})).toEqual(expected);
+  expect(AuthReducer(undefined, { type: 'NONE' })).toEqual(expected);
 });
 
 describe('get current user success', () => {

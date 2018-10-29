@@ -1,6 +1,6 @@
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import { Store } from 'redux';
+import type { Store } from 'redux';
 
 /**
  * Creates a mockstore that can be used while testing

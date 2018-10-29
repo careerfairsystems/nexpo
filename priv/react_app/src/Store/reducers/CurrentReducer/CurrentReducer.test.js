@@ -10,7 +10,7 @@ describe('Current reducer', () => {
     const initialState = {
       user: undefined
     };
-    expect(CurrentReducer(undefined, {})).toEqual(initialState);
+    expect(CurrentReducer(undefined, { type: 'NONE' })).toEqual(initialState);
   });
 
   it('should handle current user', () => {

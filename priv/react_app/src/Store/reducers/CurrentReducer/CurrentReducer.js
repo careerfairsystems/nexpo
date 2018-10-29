@@ -4,6 +4,17 @@
 
 import { actionTypes } from '../..';
 
+type FETCH_CURRENT_USER_SUCCESS = {
+  type: typeof actionTypes.FETCH_CURRENT_USER_SUCCESS,
+  user: { id: number }
+};
+
+type DELETE_CURRENT_USER_SUCCESS = {
+  type: typeof actionTypes.DELETE_CURRENT_USER_SUCCESS
+};
+
+type Action = FETCH_CURRENT_USER_SUCCESS | DELETE_CURRENT_USER_SUCCESS;
+
 export type CurrentState = {
   user: ?number
 };
@@ -14,7 +25,7 @@ const initialState = {
 
 export const CurrentReducer = (
   state: CurrentState = initialState,
-  action: { type: string }
+  action: Action
 ): CurrentState => {
   switch (action.type) {
     case actionTypes.FETCH_CURRENT_USER_SUCCESS:
