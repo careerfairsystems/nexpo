@@ -19,6 +19,7 @@ export type EntitiesState = {
   users: {},
   statistics: {},
   studentSessions: {},
+  studentSessionTimeSlots: {},
   studentSessionApplications: {},
   students: {}
 };
@@ -35,6 +36,7 @@ const initialState = {
   users: {},
   statistics: {},
   studentSessions: {},
+  studentSessionTimeSlots: {},
   studentSessionApplications: {},
   students: {}
 };

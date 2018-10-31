@@ -59,6 +59,13 @@ class CompanyShow extends Component {
     if (isEmpty(company) || isNil(company)) return <NotFound />;
 
     const { name, website, description } = company;
+
+    const studentConfirmed = studentSession => {
+      if (studentSession) {
+        return studentSession.studentConfirmed ? 'Confirmed' : 'Not confirmed';
+      }
+      return 'Not assigned';
+    };
     return (
       <div className="company-show-view">
         <HtmlTitle title={name} />
@@ -85,8 +92,8 @@ class CompanyShow extends Component {
         <List
           dataSource={sortBy('start', company.studentSessionTimeSlots)}
           bordered
-          renderItem={({ start, end, location }, index) => (
-            <List.Item>
+          renderItem={({ start, end, location, studentSession }, index) => (
+            <List.Item actions={[studentConfirmed(studentSession)]}>
               <List.Item.Meta
                 avatar={<Avatar size="large">{index + 1}</Avatar>}
                 title={`Location: ${location}`}

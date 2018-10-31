@@ -54,7 +54,9 @@ class StudentSessions extends Component {
   renderSession = session => (
     <List.Item
       actions={[
-        !session.studentConfirmed && (
+        session.studentConfirmed ? (
+          <Icon type="check-circle" theme="filled" />
+        ) : (
           <Button
             type="primary"
             onClick={() => this.confirmSession(session.id)}
@@ -80,7 +82,6 @@ class StudentSessions extends Component {
           />
         }
       />
-      {session.studentConfirmed && <Icon type="check-circle" theme="filled" />}
     </List.Item>
   );
 
