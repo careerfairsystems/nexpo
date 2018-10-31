@@ -1,7 +1,7 @@
 /*
 *		This class contains normalisation methods for the data recived by the server
 */
-
+import type { Schema } from 'normalizr';
 import { schema } from 'normalizr';
 
 const merge = key => (entityA, entityB) => ({
@@ -24,7 +24,7 @@ type Entity = (
   key: string,
   definition?: {},
   options?: { merge?: {}, model?: {} }
-) => void;
+) => Schema.Entity;
 const entity: Entity = (key, definition = {}, options = {}) =>
   new schema.Entity(key, definition, {
     mergeStrategy: options.merge,

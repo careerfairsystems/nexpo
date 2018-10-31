@@ -8,11 +8,12 @@ import {
 } from 'lodash/fp';
 import moment from 'moment';
 
-const convertKeys = (obj, convert) => {
+type Convert = <T: {} | Array<{}>>(param: T, func: (string) => string) => T;
+const convertKeys: Convert = (obj, convert) => {
   if (!isObject(obj)) {
     return obj;
   }
-  if (isArray(obj)) {
+  if (Array.isArray(obj)) {
     return obj.map(v => convertKeys(v, convert));
   }
 
@@ -24,8 +25,9 @@ const convertKeys = (obj, convert) => {
   return reduce(convertKey, {}, Object.keys(obj));
 };
 
-export const camelCaseKeys = (obj: {}): {} => convertKeys(obj, camelCase);
-export const snakeCaseKeys = (obj: {}): {} => convertKeys(obj, snakeCase);
+type Identity = <T: {} | Array<{}>>(param: T) => T;
+export const camelCaseKeys: Identity = obj => convertKeys(obj, camelCase);
+export const snakeCaseKeys: Identity = obj => convertKeys(obj, snakeCase);
 
 const dateFormats = ['YYYY-MM-DD', 'YYYY-MM-DD HH:mm'];
 
