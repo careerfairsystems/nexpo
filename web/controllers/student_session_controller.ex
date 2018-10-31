@@ -23,6 +23,7 @@ defmodule Nexpo.StudentSessionController do
       on: student.id == session.student_id and session.company_id == ^company.id,
       left_join: slot in assoc(session, :student_session_time_slot),
       where: is_nil(slot.id) or slot.company_id != ^company.id,
+      limit: 1,
       select: student))
 
     prev_session = Ecto.assoc(time_slot, :student_session) |> Repo.one
