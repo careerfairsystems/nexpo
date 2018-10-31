@@ -3,6 +3,7 @@ defmodule Nexpo.StudentSessionController do
   use Guardian.Phoenix.Controller
 
   alias Nexpo.{Student, Company, StudentSession}
+  alias Nexpo.StudentSessionTimeSlot, as: TimeSlot
   alias Guardian.Plug.{EnsurePermissions}
 
   plug EnsurePermissions, [handler: Nexpo.SessionController,
@@ -12,16 +13,39 @@ defmodule Nexpo.StudentSessionController do
 
   def create(conn, %{"student_session" => student_sessions_params}, _user, _claims) do
     company = Repo.get(Company, student_sessions_params["company_id"])
-    changeset = StudentSession.changeset(%StudentSession{}, student_sessions_params)
+    time_slot = Repo.get(TimeSlot, student_sessions_params["student_session_time_slot_id"])
 
-    case Repo.insert(changeset) do
-      {:ok, _student_session} ->
-        conn
+    student = Repo.one(from(
+      appl in Ecto.assoc(company, :student_session_applications),
+      join: student in assoc(appl, :student),
+      order_by: [desc: appl.score, asc: student.id],
+      left_join: session in StudentSession,
+      on: student.id == session.student_id and session.company_id == ^company.id,
+      left_join: slot in assoc(session, :student_session_time_slot),
+      where: is_nil(slot.id) or slot.company_id != ^company.id,
+      select: student))
+
+    prev_session = Ecto.assoc(time_slot, :student_session) |> Repo.one
+    if prev_session do
+      Repo.delete!(prev_session)
+    end
+
+    case student do
+      nil -> conn
         |> redirect(to: company_path(conn, :show, company))
-      {:error, changeset} ->
-        conn
-        |> put_status(:unprocessable_entity)
-        |> render(Nexpo.ChangesetView, "error.json", changeset: changeset)
+      student ->
+        data = Map.put(student_sessions_params, "student_id", student.id)
+        changeset = StudentSession.changeset(%StudentSession{}, data)
+
+        case Repo.insert(changeset) do
+          {:ok, _student_session} ->
+            conn
+            |> redirect(to: company_path(conn, :show, company))
+          {:error, changeset} ->
+            conn
+            |> put_status(:unprocessable_entity)
+            |> render(Nexpo.ChangesetView, "error.json", changeset: changeset)
+        end
     end
   end
 
