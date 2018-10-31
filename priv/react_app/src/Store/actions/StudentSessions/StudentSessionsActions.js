@@ -1,11 +1,15 @@
-import * as StudentSessionApplDeleteActions from './StudentSessionApplDeleteActions';
+import * as StudentSessionPostActions from './StudentSessionPostActions';
+import * as StudentSessionPutActions from './StudentSessionPutActions';
+import * as StudentSessionDeleteActions from './StudentSessionDeleteActions';
 import * as StudentSessionApplPostActions from './StudentSessionApplPostActions';
 import * as StudentSessionApplPutActions from './StudentSessionApplPutActions';
-import * as StudentSessionPutActions from './StudentSessionPutActions';
+import * as StudentSessionApplDeleteActions from './StudentSessionApplDeleteActions';
 
 export default {
-  ...StudentSessionApplDeleteActions,
+  ...StudentSessionPostActions,
+  ...StudentSessionPutActions,
+  ...StudentSessionDeleteActions,
   ...StudentSessionApplPostActions,
   ...StudentSessionApplPutActions,
-  ...StudentSessionPutActions
+  ...StudentSessionApplDeleteActions
 };

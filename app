@@ -1,1 +1,0 @@
-priv/react_app

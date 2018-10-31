@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { isEmpty, isNil, sortBy, filter } from 'lodash/fp';
-import { List, Avatar, Button, Tag } from 'antd';
+import { List, Avatar, Button, Tag, Popconfirm } from 'antd';
 import NotFound from '../../../NotFound';
 import { toExternal } from '../../../../Util/URLHelper';
 import { toDayFormat } from '../../../../Util/FormatHelper';
@@ -19,6 +19,7 @@ class CompanyShow extends Component {
     company: PropTypes.object.isRequired,
     fetching: PropTypes.bool.isRequired,
     getCompany: PropTypes.func.isRequired,
+    createStudentSession: PropTypes.func.isRequired,
     match: PropTypes.shape({
       path: PropTypes.string
     })
@@ -108,8 +109,27 @@ class CompanyShow extends Component {
           itemLayout="vertical"
           dataSource={sortBy('start', company.studentSessionTimeSlots)}
           bordered
-          renderItem={({ start, end, location, studentSession }, index) => (
-            <List.Item>
+          renderItem={({ id, start, end, location, studentSession }, index) => (
+            <List.Item
+              actions={[
+                <Popconfirm
+                  title={`Sure to ${studentSession ? 'reassign' : 'assign'}?`}
+                  onConfirm={() => {
+                    const { createStudentSession } = this.props;
+                    createStudentSession({
+                      studentSession: {
+                        companyId: company.id,
+                        studentSessionTimeSlotId: id
+                      }
+                    });
+                  }}
+                >
+                  <span style={{ color: '#1890ff', cursor: 'pointer' }}>
+                    {studentSession ? 'Reassign' : 'Assign'}
+                  </span>
+                </Popconfirm>
+              ]}
+            >
               <List.Item.Meta
                 avatar={<Avatar size="large">{index + 1}</Avatar>}
                 title={`Location: ${location}`}

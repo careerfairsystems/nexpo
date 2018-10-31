@@ -189,6 +189,9 @@ export const EntitiesReducer = (
     case actionTypes.FETCH_STATISTICS_SUCCESS: {
       return { ...state, statistics: action.statistics };
     }
+    case actionTypes.LOGOUT: {
+      return initialState;
+    }
     default:
       return state;
   }

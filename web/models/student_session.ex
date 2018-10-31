@@ -18,8 +18,13 @@ defmodule Nexpo.StudentSession do
   """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:start, :end, :student_confirmed, :student_id, :student_session_time_slot_id])
-    |> validate_required([:start, :end, :student_confirmed, :student_id, :student_session_time_slot_id])
+    |> cast(params, [:start, :end, :student_confirmed, :company_id, :student_id, :student_session_time_slot_id])
+    |> validate_required([:student_confirmed, :company_id, :student_id, :student_session_time_slot_id])
     |> unique_constraint(:unique, message: "Student has already a session with that company", name: :unique_session_id)
+  end
+
+  def student_changeset(struct, params \\ %{}) do
+    struct
+    |> cast(params, [:student_confirmed])
   end
 end

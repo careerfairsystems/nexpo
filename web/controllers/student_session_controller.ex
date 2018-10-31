@@ -1,19 +1,23 @@
 defmodule Nexpo.StudentSessionController do
   use Nexpo.Web, :controller
   use Guardian.Phoenix.Controller
-  alias Nexpo.{Student, StudentSession}
 
-  def create(conn, %{"student_session" => student_sessions_params, "student_id" => student_id}, _user, _claims) do
-    data = Map.put(student_sessions_params, "student_id", student_id)
-    student = Repo.get(Student, student_id)
-    changeset = student
-                |> Ecto.build_assoc(:student_sessions)
-                |> StudentSession.changeset(data)
+  alias Nexpo.{Student, Company, StudentSession}
+  alias Guardian.Plug.{EnsurePermissions}
+
+  plug EnsurePermissions, [handler: Nexpo.SessionController,
+                           one_of: [%{default: ["write_all"]},
+                                    %{default: ["write_companies"]}]
+                          ] when action in [:create]
+
+  def create(conn, %{"student_session" => student_sessions_params}, _user, _claims) do
+    company = Repo.get(Company, student_sessions_params["company_id"])
+    changeset = StudentSession.changeset(%StudentSession{}, student_sessions_params)
 
     case Repo.insert(changeset) do
       {:ok, _student_session} ->
         conn
-        |> redirect(to: student_path(conn, :show, student))
+        |> redirect(to: company_path(conn, :show, company))
       {:error, changeset} ->
         conn
         |> put_status(:unprocessable_entity)
@@ -28,7 +32,7 @@ defmodule Nexpo.StudentSessionController do
         |> put_status(400)
         |> render(Nexpo.ErrorView, "400.json")
       session ->
-        changeset = StudentSession.changeset(session, student_sessions_params)
+        changeset = StudentSession.student_changeset(session, student_sessions_params)
         case Repo.update(changeset) do
           {:ok, sess} ->
             render(conn, "show.json", student_session: sess)
