@@ -5,12 +5,8 @@ import '../Company.css';
 /**
  * Responsible for rendering a company. Company id is recieved via url
  */
-type Props = {
-  createCompany: ({ company: {} }) => Promise<void>
-};
-
-type NewCompanyValues = {
-  name?: string,
+type Company = {
+  name: string,
   website?: string,
   description?: string,
   logoUrl?: {
@@ -19,8 +15,12 @@ type NewCompanyValues = {
   }
 };
 
+type Props = {
+  createCompany: ({ company: Company }) => Promise<void>
+};
+
 class CompanyNew extends Component<Props> {
-  createCompany = (values: NewCompanyValues) => {
+  createCompany = (values: Company) => {
     const { createCompany } = this.props;
     createCompany({ company: values });
   };
@@ -28,7 +28,7 @@ class CompanyNew extends Component<Props> {
   render() {
     return (
       <div className="company-new-view">
-        <CompanyForm onSubmit={this.createCompany} />
+        <CompanyForm onSubmit={this.createCompany} initialValues={{}} />
       </div>
     );
   }

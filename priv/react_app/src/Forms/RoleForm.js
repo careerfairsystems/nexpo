@@ -3,6 +3,7 @@ import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import { map } from 'lodash/fp';
 import { Button, Form, Input, Select } from 'antd';
+import type { FormProps } from 'redux-form';
 
 import makeField from './helper';
 
@@ -39,6 +40,7 @@ const renderUserItem = user => (
 );
 
 type Props = {
+  ...FormProps,
   users: {},
   handleSubmit: () => Promise<void>
 };
