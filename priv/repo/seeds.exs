@@ -95,6 +95,13 @@ Repo.insert!(%CategoryAttribute{title: "Yrkesvaskning", category_id: 4})
 Repo.insert!(%CategoryAttribute{title: "Sabrering för nybörjare", category_id: 4})
 Repo.insert!(%CategoryAttribute{title: "Sabrering för nybörjare", category_id: 4})
 
+# Create some student-session time slots
+alias Nexpo.StudentSessionTimeSlot
+Repo.insert(%StudentSessionTimeSlot{start: ~N[2000-01-01 08:00:00], end: ~N[2000-01-01 08:15:00], location: "Albatraoz", company_id: 2})
+Repo.insert(%StudentSessionTimeSlot{start: ~N[2000-01-01 08:15:00], end: ~N[2000-01-01 08:30:00], location: "Albatraoz", company_id: 2})
+Repo.insert(%StudentSessionTimeSlot{start: ~N[2000-01-01 08:30:00], end: ~N[2000-01-01 08:45:00], location: "Bjerhammar", company_id: 2})
+Repo.insert(%StudentSessionTimeSlot{start: ~N[2000-01-01 08:45:00], end: ~N[2000-01-01 09:00:00], location: "Chalmers", company_id: 2})
+
 # Create some student-session applications
 alias Nexpo.StudentSessionApplication
 Repo.insert!(%StudentSessionApplication{motivation: "Im really good", company_id: 1, student_id: 2})
@@ -121,10 +128,10 @@ Repo.insert!(%Deadline{name: "Gasque Reservations", start: ~N[2010-11-14 08:00:0
 
 # Create som student sessions
 alias Nexpo.StudentSession
-Repo.insert!(%StudentSession{start: ~N[2000-01-01 23:00:00], end: ~N[2040-01-01 23:00:00], company_id: 1, student_id: 2})
-Repo.insert!(%StudentSession{start: ~N[2000-01-01 23:00:00], end: ~N[2040-01-01 23:00:00], company_id: 2, student_id: 2})
-Repo.insert!(%StudentSession{start: ~N[2000-01-01 23:00:00], end: ~N[2040-01-01 23:00:00], company_id: 4, student_id: 1})
-Repo.insert!(%StudentSession{start: ~N[2000-01-01 23:00:00], end: ~N[2040-01-01 23:00:00], company_id: 3, student_id: 1})
+Repo.insert!(%StudentSession{start: ~N[2000-01-01 23:00:00], end: ~N[2040-01-01 23:00:00], company_id: 1, student_id: 2, student_session_time_slot_id: 1})
+Repo.insert!(%StudentSession{start: ~N[2000-01-01 23:00:00], end: ~N[2040-01-01 23:00:00], company_id: 2, student_id: 2, student_session_time_slot_id: 2})
+Repo.insert!(%StudentSession{start: ~N[2000-01-01 23:00:00], end: ~N[2040-01-01 23:00:00], company_id: 4, student_id: 1, student_session_time_slot_id: 4})
+Repo.insert!(%StudentSession{start: ~N[2000-01-01 23:00:00], end: ~N[2040-01-01 23:00:00], company_id: 3, student_id: 1, student_session_time_slot_id: 3})
 
 
 # Create some programmes

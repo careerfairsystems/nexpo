@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { isEmpty, isNil } from 'lodash/fp';
+import { isEmpty, isNil, sortBy } from 'lodash/fp';
 import { Avatar, List } from 'antd';
 import { toDayFormat } from '../../../Util/FormatHelper';
 import NotFound from '../../NotFound';
@@ -23,18 +23,17 @@ class YourCompanyTimeSlots extends Component {
 
     if (isEmpty(currentCompany) || isNil(currentCompany)) return <NotFound />;
 
-    // const { name } = currentCompany;
     return (
       <div className="company-show-view">
-        <HtmlTitle title='TimeSlots' />
+        <HtmlTitle title="TimeSlots" />
         <h3>Student Session Time Slots</h3>
         <List
-          dataSource={currentCompany.studentSessionTimeSlots}
+          dataSource={sortBy('start', currentCompany.studentSessionTimeSlots)}
           bordered
-          renderItem={({ id, start, end, location }) => (
+          renderItem={({ start, end, location }, index) => (
             <List.Item>
               <List.Item.Meta
-                avatar={<Avatar size="large">{id}</Avatar>}
+                avatar={<Avatar size="large">{index + 1}</Avatar>}
                 title={`Location: ${location}`}
                 description={`Start Time: ${toDayFormat(
                   start

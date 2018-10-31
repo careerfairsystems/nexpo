@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { isEmpty, isNil, sortBy } from 'lodash/fp';
+import { isEmpty, isNil, sortBy, filter } from 'lodash/fp';
 import { List, Avatar, Button } from 'antd';
 import NotFound from '../../../NotFound';
 import { toExternal } from '../../../../Util/URLHelper';
@@ -62,7 +62,6 @@ class CompanyShow extends Component {
     return (
       <div className="company-show-view">
         <HtmlTitle title={name} />
-
         <div className="centering">
           <Avatar
             src={company.logoUrl}
@@ -73,7 +72,11 @@ class CompanyShow extends Component {
           <h1>{name}</h1>
           <a href={toExternal(website)}>{website}</a>
         </div>
-
+        <h4>
+          {`Student Session Application Scored: ${
+            filter('score', company.studentSessionApplications).length
+          }`}
+        </h4>
         <p>
           {name} has student sessions: {this.showStudentSession()}
         </p>
