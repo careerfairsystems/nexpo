@@ -5,15 +5,15 @@ import API from '../../../API';
 
 export function createStudentSessionIsLoading() {
   return {
-    type: actionTypes.POST_STUDENT_SESSION_APPL
+    type: actionTypes.POST_STUDENT_SESSION
   };
 }
 
-export function createStudentSessionSuccess(user) {
+export function createStudentSessionSuccess(company) {
   message.success('Student Session was successfully created.');
   return {
-    type: actionTypes.POST_STUDENT_SESSION_APPL_SUCCESS,
-    user
+    type: actionTypes.POST_STUDENT_SESSION_SUCCESS,
+    company
   };
 }
 
@@ -24,7 +24,7 @@ export function createStudentSessionFailure(): CreateStudentSessionFailureAction
   message.warning('Student Session could not be created');
 
   return {
-    type: actionTypes.POST_STUDENT_SESSION_APPL_FAILURE
+    type: actionTypes.POST_STUDENT_SESSION_FAILURE
   };
 }
 
@@ -33,8 +33,8 @@ export function createStudentSession(data) {
     dispatch(createStudentSessionIsLoading());
     return API.studentSessions
       .create(data)
-      .then(user => {
-        dispatch(createStudentSessionSuccess(user.data));
+      .then(company => {
+        dispatch(createStudentSessionSuccess(company.data));
         dispatch(reset('studentSession'));
       })
       .catch(() => {

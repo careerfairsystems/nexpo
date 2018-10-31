@@ -4,14 +4,14 @@ import API from '../../../API';
 
 export function destroyStudentSessionIsLoading() {
   return {
-    type: actionTypes.DELETE_STUDENT_SESSION_APPL
+    type: actionTypes.DELETE_STUDENT_SESSION
   };
 }
 
 export function destroyStudentSessionSuccess(id) {
   message.success('Student Session was successfully deleted.');
   return {
-    type: actionTypes.DELETE_STUDENT_SESSION_APPL_SUCCESS,
+    type: actionTypes.DELETE_STUDENT_SESSION_SUCCESS,
     id
   };
 }
@@ -22,7 +22,7 @@ export type destroyStudentSessionFailureAction = {
 export function destroyStudentSessionFailure(): destroyStudentSessionFailureAction {
   message.warning('Something went wrong, please try again later');
   return {
-    type: actionTypes.DELETE_STUDENT_SESSION_APPL_FAILURE
+    type: actionTypes.DELETE_STUDENT_SESSION_FAILURE
   };
 }
 
