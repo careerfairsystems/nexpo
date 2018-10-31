@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { isEmpty, isNil, sortBy, filter } from 'lodash/fp';
-import { List, Avatar, Button } from 'antd';
+import { List, Avatar, Button, Tag } from 'antd';
 import NotFound from '../../../NotFound';
 import { toExternal } from '../../../../Util/URLHelper';
 import { toDayFormat } from '../../../../Util/FormatHelper';
@@ -62,10 +62,25 @@ class CompanyShow extends Component {
 
     const studentConfirmed = studentSession => {
       if (studentSession) {
-        return studentSession.studentConfirmed ? 'Confirmed' : 'Not confirmed';
+        return studentSession.studentConfirmed ? 'Confirmed' : 'Not Confirmed';
       }
       return 'Not assigned';
     };
+    const studentConfirmedColor = studentSession => {
+      if (studentSession) {
+        return studentSession.studentConfirmed ? 'green' : 'gold';
+      }
+      return 'red';
+    };
+    const studentInfo = ({ student: { user } }) => (
+      <>
+        Name: {[user.firstName, user.lastName].join(' ')}
+        <br />
+        Email: {user.email}
+        <br />
+      </>
+    );
+
     return (
       <div className="company-show-view">
         <HtmlTitle title={name} />
@@ -90,10 +105,11 @@ class CompanyShow extends Component {
         <p>{description}</p>
         <h3>Student Session Time Slots</h3>
         <List
+          itemLayout="vertical"
           dataSource={sortBy('start', company.studentSessionTimeSlots)}
           bordered
           renderItem={({ start, end, location, studentSession }, index) => (
-            <List.Item actions={[studentConfirmed(studentSession)]}>
+            <List.Item>
               <List.Item.Meta
                 avatar={<Avatar size="large">{index + 1}</Avatar>}
                 title={`Location: ${location}`}
@@ -101,6 +117,11 @@ class CompanyShow extends Component {
                   start
                 )}\nEnd Time: ${toDayFormat(end)}`}
               />
+              {studentSession && studentInfo(studentSession)}
+              Student:{' '}
+              <Tag color={studentConfirmedColor(studentSession)}>
+                {studentConfirmed(studentSession)}
+              </Tag>
             </List.Item>
           )}
         />
