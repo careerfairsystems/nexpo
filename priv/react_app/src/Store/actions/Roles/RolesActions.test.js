@@ -187,6 +187,7 @@ describe('getRoleIsLoading', () => {
 describe('getRoleSuccess', () => {
   it('should create the correct action', () => {
     const testRole = {
+      id: 1,
       name: 'Role1'
     };
 
@@ -222,6 +223,7 @@ describe('getRole', () => {
 
   it('should call success action on success', () => {
     const role = {
+    id: 1,
       name: 'Role1'
     };
     mockHttpResponse({ status: 200, body: { data: role } });

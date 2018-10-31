@@ -3,9 +3,12 @@
 *   See http://redux.js.org/docs/recipes/WritingTests.html for writing action and reducer tests.
 */
 import { omit } from 'lodash/fp';
+import { normalize } from 'normalizr';
+
 import { Actions } from '../..';
 import testData from './entitiesTestData';
 import { EntitiesReducer } from './EntitiesReducer';
+import Schema from '../../normalizr/schema';
 
 describe('Entities reducer', () => {
   let initialState;
@@ -313,39 +316,42 @@ describe('Entities reducer', () => {
   it('should handle DELETE_COMPANY_SUCCESS', () => {
     const id = '1';
     const action = Actions.companies.destroyCompanySuccess(id);
+    const normalized = normalize(testData.companies, Schema.companiesSchema());
     const state = EntitiesReducer(
-      { ...initialState, companies: testData.companies },
+      { ...initialState, companies: normalized },
       action
     );
     expect(state).toMatchObject({
       ...initialState,
-      companies: omit([id], testData.companies)
+      companies: omit([id], normalized)
     });
   });
 
   it('should handle DELETE_ROLES_SUCCESS', () => {
     const id = '1';
     const action = Actions.roles.destroyRoleSuccess(id);
+    const normalized = normalize(testData.roles, Schema.rolesSchema());
     const state = EntitiesReducer(
-      { ...initialState, roles: testData.roles },
+      { ...initialState, roles: normalized },
       action
     );
     expect(state).toMatchObject({
       ...initialState,
-      roles: omit([id], testData.roles)
+      roles: omit([id], normalized)
     });
   });
 
   it('should handle DELETE_USER_SUCCESS', () => {
     const id = '1';
     const action = Actions.users.destroyUserSuccess(id);
+    const normalized = normalize(testData.users, Schema.usersSchema());
     const state = EntitiesReducer(
-      { ...initialState, users: testData.users },
+      { ...initialState, users: normalized },
       action
     );
     expect(state).toMatchObject({
       ...initialState,
-      users: omit([id], testData.users)
+      users: omit([id], normalized)
     });
   });
 

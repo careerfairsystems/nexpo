@@ -1,6 +1,6 @@
 const testData = {
-  companies: {
-    '1': {
+  companies: [
+    {
       website: 'www.spotify.com',
       studentSessionDays: 0,
       name: 'Spotify',
@@ -9,7 +9,7 @@ const testData = {
       description: 'We do music!',
       entries: [{ id: '1', value: 'JA' }, { id: 2, value: '20' }]
     },
-    '2': {
+    {
       website: 'www.google.com',
       studentSessionDays: 0,
       name: 'Google',
@@ -18,7 +18,7 @@ const testData = {
       description: 'We code!',
       entries: [{ id: 3, value: 'JA' }, { id: 4, value: '40' }]
     },
-    '3': {
+    {
       website: 'www.ibm.com',
       studentSessionDays: 0,
       name: 'IBM',
@@ -27,7 +27,7 @@ const testData = {
       description: 'We make things!',
       entries: [{ id: 5, value: 'NEJ' }, { id: 6, value: '60' }]
     },
-    '4': {
+    {
       website: 'www.intel.com',
       studentSessionDays: 0,
       name: 'Intel',
@@ -36,7 +36,7 @@ const testData = {
       description: 'We do stuff!',
       entries: [{ id: 7, value: 'NEJ' }, { id: 8, value: '80' }]
     },
-    '5': {
+    {
       website: 'www.jesus.com',
       studentSessionDays: 0,
       name: 'Jesus wine makers',
@@ -45,7 +45,7 @@ const testData = {
       description: 'We do wine!',
       entries: [{ id: 9, value: 'JA' }, { id: 10, value: '100' }]
     }
-  },
+  ],
   company: {
     website: 'www.spotify.com',
     studentSessionDays: 0,
@@ -55,20 +55,20 @@ const testData = {
     description: 'We do music!',
     entries: [{ id: '1', value: 'JA' }, { id: 2, value: '20' }]
   },
-  users: {
-    '1': {
+  users: [
+    {
       id: '1',
       email: 'dev@it.now',
       firstName: 'Dev',
       lastName: 'User'
     },
-    '2': {
+    {
       id: 2,
       email: 'test@it.later',
       firstName: 'Test',
       lastName: 'User'
     }
-  },
+  ],
   user: {
     id: '1',
     email: 'dev@it.now',
@@ -82,20 +82,21 @@ const testData = {
       }
     ]
   },
-  roles: {
-    '1': {
-      id: '1',
+  roles: [
+    {
+      id: 1,
       type: 'admin',
       permissions: ['read_all', 'write_all']
     },
-    '2': {
+    {
       id: 2,
       type: 'manager',
       permissions: ['read_users', 'write_users']
     }
-  },
+  ],
   role: {
-    id: '1',
+    id: 1,
+    name: 'Role1',
     type: 'admin',
     permissions: ['read_all', 'write_all'],
     users: [

@@ -63,7 +63,7 @@ export const retrieving = {
   success: true
 };
 
-export const failure = (error: ?Array<string>) => ({
+export const failure = (error: ?{ [key: string]: string }) => ({
   fetching: false,
   errors: error || ['There was an error'],
   success: false
