@@ -15,6 +15,7 @@ import '../Company.css';
 type Props = {
   id: string,
   createStudentSession: ({}) => Promise<void>,
+  createBulkStudentSessions: ({}) => Promise<void>,,
   deleteStudentSession: string => Promise<void>,
   company: {
     id?: string,
@@ -117,6 +118,23 @@ class CompanyShow extends Component<Props> {
         </p>
         <p>{description}</p>
         <h3>Student Session Time Slots</h3>
+        <Popconfirm
+          title="Sure to assign empty and non-confirmed time slots?"
+          onConfirm={() => {
+            const { createBulkStudentSessions } = this.props;
+            createBulkStudentSessions({
+              studentSessions: {
+                companyId: company.id
+              }
+            });
+          }}
+        >
+          <Button onClick={() => null} type="primary">
+            Assign all
+          </Button>
+        </Popconfirm>
+        <br />
+        <br />
         <List
           itemLayout="vertical"
           dataSource={sortBy('start', company.studentSessionTimeSlots || [])}

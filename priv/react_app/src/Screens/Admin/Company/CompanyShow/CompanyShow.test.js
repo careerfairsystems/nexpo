@@ -11,6 +11,7 @@ describe('CompanyShow', () => {
     props = {
       company: {},
       createStudentSession: jest.fn(),
+      createBulkStudentSessions: jest.fn(),
       deleteStudentSession: jest.fn(),
       fetching: false,
       getCompany: jest.fn(),
