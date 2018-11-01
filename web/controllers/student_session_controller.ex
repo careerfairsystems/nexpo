@@ -13,8 +13,8 @@ defmodule Nexpo.StudentSessionController do
   def create(conn, %{"student_session" => student_sessions_params}, _user, _claims) do
     company = Repo.get(Company, student_sessions_params["company_id"])
 
-    student = Repo.one(from(
-      appl in Ecto.assoc(company, :student_session_applications),
+    student = Repo.one(
+      from appl in Ecto.assoc(company, :student_session_applications),
       join: student in assoc(appl, :student),
       order_by: [desc: appl.score, asc: student.id],
       left_join: session in StudentSession,
@@ -22,7 +22,7 @@ defmodule Nexpo.StudentSessionController do
       left_join: slot in assoc(session, :student_session_time_slot),
       where: is_nil(slot.id) or slot.company_id != ^company.id,
       limit: 1,
-      select: student))
+      select: student)
 
     case student do
       nil -> conn
