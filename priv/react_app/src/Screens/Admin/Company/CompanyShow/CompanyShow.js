@@ -20,6 +20,7 @@ class CompanyShow extends Component {
     fetching: PropTypes.bool.isRequired,
     getCompany: PropTypes.func.isRequired,
     createStudentSession: PropTypes.func.isRequired,
+    deleteStudentSession: PropTypes.func.isRequired,
     match: PropTypes.shape({
       path: PropTypes.string
     })
@@ -113,19 +114,26 @@ class CompanyShow extends Component {
             <List.Item
               actions={[
                 <Popconfirm
-                  title={`Sure to ${studentSession ? 'reassign' : 'assign'}?`}
+                  title={`Sure to ${studentSession ? 'remove' : 'assign'}?`}
                   onConfirm={() => {
-                    const { createStudentSession } = this.props;
-                    createStudentSession({
-                      studentSession: {
-                        companyId: company.id,
-                        studentSessionTimeSlotId: id
-                      }
-                    });
+                    const {
+                      createStudentSession,
+                      deleteStudentSession
+                    } = this.props;
+                    if (studentSession) {
+                      deleteStudentSession(studentSession.id);
+                    } else {
+                      createStudentSession({
+                        studentSession: {
+                          companyId: company.id,
+                          studentSessionTimeSlotId: id
+                        }
+                      });
+                    }
                   }}
                 >
                   <span style={{ color: '#1890ff', cursor: 'pointer' }}>
-                    {studentSession ? 'Reassign' : 'Assign'}
+                    {studentSession ? 'Remove' : 'Assign'}
                   </span>
                 </Popconfirm>
               ]}

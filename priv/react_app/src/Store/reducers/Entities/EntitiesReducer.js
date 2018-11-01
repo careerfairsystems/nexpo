@@ -97,6 +97,12 @@ export const EntitiesReducer = (
       normalized = normalize(action.company, Schema.companySchema());
       return mergeWith(handleMerge, state, normalized.entities);
     }
+    case actionTypes.DELETE_STUDENT_SESSION_SUCCESS: {
+      return {
+        ...state,
+        studentSessions: omit(action.id, state.studentSessions)
+      };
+    }
     case actionTypes.POST_STUDENT_SESSION_APPL_SUCCESS: {
       normalized = normalize(action.user, Schema.userSchema());
       return mergeWith(handleMerge, state, normalized.entities);

@@ -23,6 +23,7 @@ const mapStateToProps = (state, props) => {
 const mapDispatchToProps = {
   getCompany: Actions.companies.getCompany,
   createStudentSession: Actions.studentSessions.createStudentSession,
+  deleteStudentSession: Actions.studentSessions.destroyStudentSession,
   resetForm: reset
 };
 

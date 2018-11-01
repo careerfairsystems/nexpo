@@ -3,17 +3,15 @@ defmodule Nexpo.StudentSessionController do
   use Guardian.Phoenix.Controller
 
   alias Nexpo.{Student, Company, StudentSession}
-  alias Nexpo.StudentSessionTimeSlot, as: TimeSlot
   alias Guardian.Plug.{EnsurePermissions}
 
   plug EnsurePermissions, [handler: Nexpo.SessionController,
                            one_of: [%{default: ["write_all"]},
                                     %{default: ["write_companies"]}]
-                          ] when action in [:create]
+                          ] when action in [:create, :delete]
 
   def create(conn, %{"student_session" => student_sessions_params}, _user, _claims) do
     company = Repo.get(Company, student_sessions_params["company_id"])
-    time_slot = Repo.get(TimeSlot, student_sessions_params["student_session_time_slot_id"])
 
     student = Repo.one(from(
       appl in Ecto.assoc(company, :student_session_applications),
@@ -25,11 +23,6 @@ defmodule Nexpo.StudentSessionController do
       where: is_nil(slot.id) or slot.company_id != ^company.id,
       limit: 1,
       select: student))
-
-    prev_session = Ecto.assoc(time_slot, :student_session) |> Repo.one
-    if prev_session do
-      Repo.delete!(prev_session)
-    end
 
     case student do
       nil -> conn
@@ -48,6 +41,16 @@ defmodule Nexpo.StudentSessionController do
             |> render(Nexpo.ChangesetView, "error.json", changeset: changeset)
         end
     end
+  end
+
+  def delete(conn, %{"id" => id}, _user, _claims) do
+    session = Repo.get!(StudentSession, id)
+
+    # Here we use delete! (with a bang) because we expect
+    # it to always work (and if it does not, it will raise).
+    Repo.delete!(session)
+
+    send_resp(conn, :no_content, "")
   end
 
   def update_me(conn, %{"id" => id,"student_session" => student_sessions_params }, user, _claims) do
