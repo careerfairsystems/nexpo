@@ -88,7 +88,7 @@ class YourCompanyApplications extends Component {
           bordered
           loading={updating}
           dataSource={orderBy(
-            ['score', 'student_id'],
+            ['score', 'studentId'],
             ['desc', 'asc'],
             currentCompany.studentSessionApplications
           )}

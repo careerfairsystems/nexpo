@@ -52,7 +52,6 @@ defmodule Nexpo.Router do
     resources "/roles", RoleController
     get "/statistics", StatisticsController, :index
     resources "/students", StudentController do
-      # resources "/student_sessions", StudentSessionController
       # resources "/student_session_applications", StudentSessionApplicationController
     end
 
@@ -69,6 +68,7 @@ defmodule Nexpo.Router do
     resources "/programmes", ProgrammeController
     resources "/deadlines", DeadlineController
     resources "/mailtemplates", MailtemplateController
+    resources "/student_sessions", StudentSessionController, only: [:create, :delete]
 
     # resources "/student_session_applications", StudentSessionApplicationController, only: [:create]
   end

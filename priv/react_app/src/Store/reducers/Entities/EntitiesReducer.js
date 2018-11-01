@@ -19,6 +19,7 @@ export type EntitiesState = {
   users: {},
   statistics: {},
   studentSessions: {},
+  studentSessionTimeSlots: {},
   studentSessionApplications: {},
   students: {}
 };
@@ -35,6 +36,7 @@ const initialState = {
   users: {},
   statistics: {},
   studentSessions: {},
+  studentSessionTimeSlots: {},
   studentSessionApplications: {},
   students: {}
 };
@@ -90,6 +92,16 @@ export const EntitiesReducer = (
     }
     case actionTypes.DELETE_USER_SUCCESS: {
       return { ...state, users: omit(action.id, state.users) };
+    }
+    case actionTypes.POST_STUDENT_SESSION_SUCCESS: {
+      normalized = normalize(action.company, Schema.companySchema());
+      return mergeWith(handleMerge, state, normalized.entities);
+    }
+    case actionTypes.DELETE_STUDENT_SESSION_SUCCESS: {
+      return {
+        ...state,
+        studentSessions: omit(action.id, state.studentSessions)
+      };
     }
     case actionTypes.POST_STUDENT_SESSION_APPL_SUCCESS: {
       normalized = normalize(action.user, Schema.userSchema());
@@ -186,6 +198,9 @@ export const EntitiesReducer = (
     }
     case actionTypes.FETCH_STATISTICS_SUCCESS: {
       return { ...state, statistics: action.statistics };
+    }
+    case actionTypes.LOGOUT: {
+      return initialState;
     }
     default:
       return state;

@@ -56,6 +56,12 @@ defmodule Nexpo.Support.View do
             Nexpo.StudentSessionApplicationView,
             "student_session_application.json"
           )}
+      :student_session ->
+        %{:student_session => render_one(
+            object.student_session,
+            Nexpo.StudentSessionView,
+            "student_session.json"
+          )}
       :student_sessions ->
         %{:student_sessions => render_many(
             object.student_sessions,
