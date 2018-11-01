@@ -29,7 +29,6 @@ defmodule Nexpo.CompanyControllerTest do
       "entries" => [],
       "users" => [],
       "student_session_applications" => [],
-      "student_sessions" => [],
       "student_session_time_slots" => []}
   end
 

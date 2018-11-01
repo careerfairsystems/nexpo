@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { isEmpty, isNil, sortBy } from 'lodash/fp';
-import { List, Avatar, Button } from 'antd';
+import { isEmpty, isNil, sortBy, filter } from 'lodash/fp';
+import { List, Avatar, Button, Tag, Popconfirm } from 'antd';
 import NotFound from '../../../NotFound';
 import { toExternal } from '../../../../Util/URLHelper';
 import { toDayFormat } from '../../../../Util/FormatHelper';
@@ -14,6 +14,8 @@ import '../Company.css';
  */
 type Props = {
   id: string,
+  createStudentSession: ({}) => Promise<void>,
+  deleteStudentSession: string => Promise<void>,
   company: {
     id?: string,
     name?: string,
@@ -21,6 +23,7 @@ type Props = {
     description?: string,
     logoUrl?: string,
     studentSessionDays?: number,
+    studentSessionApplications?: Array<*>,
     studentSessionTimeSlots?: Array<{
       id: number,
       start: string,
@@ -69,10 +72,31 @@ class CompanyShow extends Component<Props> {
     if (isEmpty(company) || isNil(company)) return <NotFound />;
 
     const { name, website, description } = company;
+
+    const studentConfirmed = studentSession => {
+      if (studentSession) {
+        return studentSession.studentConfirmed ? 'Confirmed' : 'Not Confirmed';
+      }
+      return 'Not assigned';
+    };
+    const studentConfirmedColor = studentSession => {
+      if (studentSession) {
+        return studentSession.studentConfirmed ? 'green' : 'gold';
+      }
+      return 'red';
+    };
+    const studentInfo = ({ student: { user } }) => (
+      <>
+        Name: {[user.firstName, user.lastName].join(' ')}
+        <br />
+        Email: {user.email}
+        <br />
+      </>
+    );
+
     return (
       <div className="company-show-view">
         <HtmlTitle title={name} />
-
         <div className="centering">
           <Avatar
             src={company.logoUrl}
@@ -83,17 +107,48 @@ class CompanyShow extends Component<Props> {
           <h1>{name}</h1>
           <a href={toExternal(website)}>{website}</a>
         </div>
-
+        <h4>
+          {`Student Session Application Scored: ${
+            filter('score', company.studentSessionApplications || []).length
+          }`}
+        </h4>
         <p>
           {name} has student sessions: {this.showStudentSession()}
         </p>
         <p>{description}</p>
         <h3>Student Session Time Slots</h3>
         <List
+          itemLayout="vertical"
           dataSource={sortBy('start', company.studentSessionTimeSlots || [])}
           bordered
-          renderItem={({ start, end, location }, index) => (
-            <List.Item>
+          renderItem={({ id, start, end, location, studentSession }, index) => (
+            <List.Item
+              actions={[
+                <Popconfirm
+                  title={`Sure to ${studentSession ? 'remove' : 'assign'}?`}
+                  onConfirm={() => {
+                    const {
+                      createStudentSession,
+                      deleteStudentSession
+                    } = this.props;
+                    if (studentSession) {
+                      deleteStudentSession(studentSession.id);
+                    } else {
+                      createStudentSession({
+                        studentSession: {
+                          companyId: company.id,
+                          studentSessionTimeSlotId: id
+                        }
+                      });
+                    }
+                  }}
+                >
+                  <span style={{ color: '#1890ff', cursor: 'pointer' }}>
+                    {studentSession ? 'Remove' : 'Assign'}
+                  </span>
+                </Popconfirm>
+              ]}
+            >
               <List.Item.Meta
                 avatar={<Avatar size="large">{index + 1}</Avatar>}
                 title={`Location: ${location}`}
@@ -101,6 +156,11 @@ class CompanyShow extends Component<Props> {
                   start
                 )}\nEnd Time: ${toDayFormat(end)}`}
               />
+              {studentSession && studentInfo(studentSession)}
+              Student:{' '}
+              <Tag color={studentConfirmedColor(studentSession)}>
+                {studentConfirmed(studentSession)}
+              </Tag>
             </List.Item>
           )}
         />

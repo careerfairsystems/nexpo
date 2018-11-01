@@ -10,7 +10,8 @@ describe('CompanyShow', () => {
   beforeEach(() => {
     props = {
       company: {},
-      createCompany: jest.fn(),
+      createStudentSession: jest.fn(),
+      deleteStudentSession: jest.fn(),
       fetching: false,
       getCompany: jest.fn(),
       resetForm: jest.fn(),

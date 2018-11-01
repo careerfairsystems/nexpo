@@ -23,8 +23,9 @@ describe('Entities reducer', () => {
       programmes: {},
       roles: {},
       users: {},
-      studentSessionApplications: {},
       studentSessions: {},
+      studentSessionTimeSlots: {},
+      studentSessionApplications: {},
       statistics: {},
       students: {}
     };

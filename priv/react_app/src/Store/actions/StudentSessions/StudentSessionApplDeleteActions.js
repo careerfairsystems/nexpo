@@ -29,7 +29,7 @@ export function destroyStudentSessionAppl(id: string) {
   return (dispatch: Dispatch<{ type: string }>) => {
     dispatch(destroyStudentSessionApplIsLoading());
     return API.studentSessions
-      .destroy(id)
+      .destroyAppl(id)
       .then(() => {
         dispatch(destroyStudentSessionApplSuccess(id));
       })

@@ -29,7 +29,7 @@ export function updateStudentSessionAppl(id: string, data: {}) {
   return (dispatch: Dispatch<{ type: string }>) => {
     dispatch(updateStudentSessionApplIsLoading());
     return API.studentSessions
-      .update(id, data)
+      .updateAppl(id, data)
       .then(application => {
         dispatch(updateStudentSessionApplSuccess(application.data));
       })

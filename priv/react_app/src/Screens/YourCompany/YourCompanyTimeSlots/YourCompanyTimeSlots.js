@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { isEmpty, isNil } from 'lodash/fp';
-import { Avatar, List } from 'antd';
+import { isEmpty, isNil, sortBy } from 'lodash/fp';
+import { Avatar, List, Tag } from 'antd';
 import { toDayFormat } from '../../../Util/FormatHelper';
 import NotFound from '../../NotFound';
 import HtmlTitle from '../../../Components/HtmlTitle';
@@ -32,23 +32,52 @@ class YourCompanyTimeSlots extends Component<Props> {
 
     if (isEmpty(currentCompany) || isNil(currentCompany)) return <NotFound />;
 
-    // const { name } = currentCompany;
+    const studentConfirmed = studentSession => {
+      if (studentSession) {
+        return studentSession.studentConfirmed ? 'Confirmed' : 'Not Confirmed';
+      }
+      return 'Not assigned';
+    };
+    const studentConfirmedColor = studentSession => {
+      if (studentSession) {
+        return studentSession.studentConfirmed ? 'green' : 'gold';
+      }
+      return 'red';
+    };
+    const studentInfo = ({ student: { user } }) => (
+      <>
+        Name: {[user.firstName, user.lastName].join(' ')}
+        <br />
+        Email: {user.email}
+        <br />
+      </>
+    );
+
     return (
       <div className="company-show-view">
         <HtmlTitle title="TimeSlots" />
         <h3>Student Session Time Slots</h3>
         <List
-          dataSource={currentCompany.studentSessionTimeSlots}
+          itemLayout="vertical"
+          dataSource={sortBy(
+            'start',
+            currentCompany.studentSessionTimeSlots || []
+          )}
           bordered
-          renderItem={({ id, start, end, location }) => (
+          renderItem={({ start, end, location, studentSession }, index) => (
             <List.Item>
               <List.Item.Meta
-                avatar={<Avatar size="large">{id}</Avatar>}
+                avatar={<Avatar size="large">{index + 1}</Avatar>}
                 title={`Location: ${location}`}
                 description={`Start Time: ${toDayFormat(
                   start
                 )}\nEnd Time: ${toDayFormat(end)}`}
               />
+              {studentSession && studentInfo(studentSession)}
+              Student:{' '}
+              <Tag color={studentConfirmedColor(studentSession)}>
+                {studentConfirmed(studentSession)}
+              </Tag>
             </List.Item>
           )}
         />

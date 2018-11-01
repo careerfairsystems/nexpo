@@ -23,5 +23,22 @@ export default {
   confirmSession: (id: string) =>
     authPut(`/api/me/student_sessions/${id}`, {
       studentSession: { studentConfirmed: true }
-    }).then(handleHttpResponse)
+    }).then(handleHttpResponse),
+  /** Create a student session application */
+  createAppl: (data: {}) =>
+    authPost('/api/student_session_applications', data).then(
+      handleHttpResponse
+    ),
+
+  /** Update a student session application */
+  updateAppl: (id: string, data: {}) =>
+    authPut(`/api/me/student_session_applications/${id}`, data).then(
+      handleHttpResponse
+    ),
+
+  /** Delete a student session application */
+  destroyAppl: (id: string) =>
+    authDelete(`/api/me/student_session_applications/${id}`).then(
+      handleHttpResponse
+    )
 };

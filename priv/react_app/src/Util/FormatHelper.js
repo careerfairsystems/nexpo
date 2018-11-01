@@ -1,11 +1,4 @@
-import {
-  isObject,
-  isArray,
-  reduce,
-  camelCase,
-  snakeCase,
-  has
-} from 'lodash/fp';
+import { isObject, reduce, camelCase, snakeCase, has } from 'lodash/fp';
 import moment from 'moment';
 
 const convertKeys: Function = (obj, convert) => {

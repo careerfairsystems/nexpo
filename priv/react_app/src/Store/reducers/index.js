@@ -25,6 +25,6 @@ type $ExtractFunctionReturn = <V>(v: (...args: any) => V) => V;
 export type Reducers = typeof RootReducer;
 export type State = $ObjMap<Reducers, $ExtractFunctionReturn>;
 export type GetState = () => State;
-export type Thunk<A> = ((Dispatch, GetState) => Promise<void> | void) => A;
+export type Thunk<A> = ((Dispatch, GetState) => Promise<void> | void) => A; // eslint-disable-line no-use-before-define
 export type Dispatch = ReduxDispatch<any> & Thunk<any>;
 export default RootReducer;

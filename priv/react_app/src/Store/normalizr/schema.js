@@ -110,6 +110,11 @@ const companySchema = () => {
     { student },
     { model: belongsTo('company') }
   );
+  const studentSessionTimeSlot = entity(
+    'studentSessionTimeSlots',
+    { studentSession },
+    { model: belongsTo('company') }
+  );
   const studentSessionApplication = entity(
     'studentSessionApplications',
     { student },
@@ -118,7 +123,7 @@ const companySchema = () => {
   const company = entity('companies', {
     entries: [entry],
     users: [user],
-    studentSessions: [studentSession],
+    studentSessionTimeSlots: [studentSessionTimeSlot],
     studentSessionApplications: [studentSessionApplication]
   });
 
