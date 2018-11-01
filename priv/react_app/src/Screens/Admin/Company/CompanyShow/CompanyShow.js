@@ -15,7 +15,7 @@ import '../Company.css';
 type Props = {
   id: string,
   createStudentSession: ({}) => Promise<void>,
-  createBulkStudentSessions: ({}) => Promise<void>,,
+  createBulkStudentSessions: ({}) => Promise<void>,
   deleteStudentSession: string => Promise<void>,
   company: {
     id?: string,
