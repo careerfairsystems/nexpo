@@ -53,6 +53,17 @@ export const authFormPost = (url, data) =>
     })
   });
 
+export const authPatch = (url, data) =>
+  fetch(url, {
+    method: 'PATCH',
+    body: JSON.stringify(snakeCaseKeys(data)),
+    headers: new Headers({
+      Authorization: `Bearer ${getJwt()}`,
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
+    })
+  });
+
 export const authFetch = url =>
   fetch(url, {
     headers: new Headers({

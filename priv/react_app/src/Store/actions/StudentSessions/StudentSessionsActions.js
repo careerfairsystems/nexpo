@@ -1,4 +1,5 @@
 import * as StudentSessionPostActions from './StudentSessionPostActions';
+import * as StudentSessionPatchActions from './StudentSessionPatchActions';
 import * as StudentSessionPutActions from './StudentSessionPutActions';
 import * as StudentSessionDeleteActions from './StudentSessionDeleteActions';
 import * as StudentSessionApplPostActions from './StudentSessionApplPostActions';
@@ -7,6 +8,7 @@ import * as StudentSessionApplDeleteActions from './StudentSessionApplDeleteActi
 
 export default {
   ...StudentSessionPostActions,
+  ...StudentSessionPatchActions,
   ...StudentSessionPutActions,
   ...StudentSessionDeleteActions,
   ...StudentSessionApplPostActions,
