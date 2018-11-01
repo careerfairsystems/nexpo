@@ -1,19 +1,30 @@
-import { ApiError } from '../Errors/ApiError';
+import ApiError from '../Errors/ApiError';
 import { getJwt } from '../Util/JwtHelper';
 import { snakeCaseKeys, toFormData } from '../Util/FormatHelper';
 import 'whatwg-fetch'; // fetch polyfill for unsupported browsers
 
-type Response = {
-  type: string,
+export type Response = {
+  ok: boolean,
+  type: any,
+  error?: string,
+  errors?: Error,
+  +json: () => Promise<*>,
+  headers: Headers,
+  +text: () => Promise<any>
+};
+
+type ErrorResponse = {
   error: string,
-  errors: object
+  errors: { password?: string, passwordConfirmation?: string }
 };
 
 /**
  * Default handler for fetch calls
  * @param {Response} response
  */
-export const handleHttpResponse = (response: Response): Promise => {
+export const handleHttpResponse = (
+  response: Response
+): Promise<{ data: any }> => {
   const contentType = response.headers.get('content-type');
   const isJson = contentType && contentType.includes('application/json');
   if (response.ok && isJson) {
@@ -23,16 +34,16 @@ export const handleHttpResponse = (response: Response): Promise => {
     return response.text();
   }
   if (isJson) {
-    return response.json().then(res => {
+    return response.json().then((res: ErrorResponse) => {
       throw new ApiError(res);
     });
   }
-  return response.text().then(res => {
+  return response.text().then((res: ErrorResponse) => {
     throw new ApiError(res);
   });
 };
 
-export const authPost = (url, data) =>
+export const authPost = (url: string, data: {}): Promise<Response> =>
   fetch(url, {
     method: 'POST',
     body: JSON.stringify(snakeCaseKeys(data)),
@@ -43,7 +54,7 @@ export const authPost = (url, data) =>
     })
   });
 
-export const authFormPost = (url, data) =>
+export const authFormPost = (url: string, data: {}): Promise<Response> =>
   fetch(url, {
     method: 'POST',
     body: toFormData(data),
@@ -53,7 +64,7 @@ export const authFormPost = (url, data) =>
     })
   });
 
-export const authPatch = (url, data) =>
+export const authPatch = (url: string, data: {}): Promise<Response> =>
   fetch(url, {
     method: 'PATCH',
     body: JSON.stringify(snakeCaseKeys(data)),
@@ -64,7 +75,7 @@ export const authPatch = (url, data) =>
     })
   });
 
-export const authFetch = url =>
+export const authFetch = (url: string): Promise<Response> =>
   fetch(url, {
     headers: new Headers({
       Authorization: `Bearer ${getJwt()}`,
@@ -72,7 +83,7 @@ export const authFetch = url =>
     })
   });
 
-export const authPut = (url, data) =>
+export const authPut = (url: string, data: {}): Promise<Response> =>
   fetch(url, {
     method: 'PUT',
     body: JSON.stringify(snakeCaseKeys(data)),
@@ -83,7 +94,7 @@ export const authPut = (url, data) =>
     })
   });
 
-export const authFormPut = (url, data) =>
+export const authFormPut = (url: string, data: {}): Promise<Response> =>
   fetch(url, {
     method: 'PUT',
     body: toFormData(data),
@@ -93,7 +104,7 @@ export const authFormPut = (url, data) =>
     })
   });
 
-export const authDelete = url =>
+export const authDelete = (url: string): Promise<Response> =>
   fetch(url, {
     method: 'DELETE',
     headers: new Headers({
@@ -101,7 +112,10 @@ export const authDelete = url =>
     })
   });
 
-export const fetchJson = (url, { data, method }) =>
+export const fetchJson = (
+  url: string,
+  { data, method }: { data: {}, method: string }
+): Promise<Response> =>
   fetch(url, {
     method,
     body: JSON.stringify(snakeCaseKeys(data)),

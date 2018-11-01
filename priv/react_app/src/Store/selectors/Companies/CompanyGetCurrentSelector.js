@@ -1,8 +1,9 @@
 import { denormalize } from 'normalizr';
 import Schema from '../../normalizr/schema';
 import users from '../Users';
+import type { State } from '../../reducers';
 
-export const getCurrentCompany = state => {
+export const getCurrentCompany = (state: State) => {
   const currentUser = users.getCurrentUser(state);
 
   const {

@@ -3,7 +3,8 @@
 *   See http://redux.js.org/docs/recipes/WritingTests.html for writing action and reducer tests.
 */
 import { Actions } from '../..';
-import { ApiReducer, ApiState } from './ApiReducer';
+import { ApiReducer } from './ApiReducer';
+import type { ApiState } from './ApiReducer';
 import {
   forgotPasswordRequest,
   forgotPasswordSuccess,
@@ -16,72 +17,72 @@ it('should set the correct initial state', () => {
   const initialState: ApiState = {
     categories: {
       fetching: false,
-      errors: undefined,
+      errors: {},
       success: false
     },
     companies: {
       fetching: false,
-      errors: undefined,
+      errors: {},
       success: false
     },
     deadlines: {
       fetching: false,
-      errors: undefined,
+      errors: {},
       success: false
     },
     mailtemplates: {
       fetching: false,
-      errors: undefined,
+      errors: {},
       success: false
     },
     users: {
       fetching: false,
-      errors: undefined,
+      errors: {},
       success: false
     },
     roles: {
       fetching: false,
-      errors: undefined,
+      errors: {},
       success: false
     },
     programmes: {
       fetching: false,
-      errors: undefined,
+      errors: {},
       success: false
     },
     currentUser: {
       fetching: false,
-      errors: undefined,
+      errors: {},
       success: false
     },
     currentCompany: {
       fetching: false,
-      errors: undefined,
+      errors: {},
       success: false
     },
     studentSession: {
       fetching: false,
-      errors: undefined,
+      errors: {},
       success: false
     },
     forgotPassword: {
       fetching: false,
-      errors: undefined,
+      errors: {},
       success: false
     },
     login: {
       fetching: false,
-      errors: undefined,
+      errors: {},
       success: false
     },
     replacePassword: {
       fetching: false,
-      errors: undefined,
+      errors: {},
       success: false
     },
     verifyForgotPasswordKey: {
       fetching: false,
-      errors: undefined,
+      errors: {},
       success: false
     }
   };
@@ -91,17 +92,17 @@ it('should set the correct initial state', () => {
 
 describe('fetch companies', () => {
   it('should handle request start', () => {
-    const startState: ApiState = {
+    const startState = {
       companies: {
         fetching: false,
         errors: {},
         success: true
       }
     };
-    const expected: ApiState = {
+    const expected = {
       companies: {
         fetching: true,
-        errors: undefined,
+        errors: {},
         success: false
       }
     };
@@ -113,36 +114,36 @@ describe('fetch companies', () => {
   });
 
   it('should handle success', () => {
-    const startState: ApiState = {
+    const startState = {
       companies: {
         fetching: true,
-        errors: undefined,
+        errors: {},
         success: false
       }
     };
-    const expected: ApiState = {
+    const expected = {
       companies: {
         fetching: false,
-        errors: undefined,
+        errors: {},
         success: true
       }
     };
     const state = ApiReducer(
       startState,
-      Actions.companies.getAllCompaniesSuccess()
+      Actions.companies.getAllCompaniesSuccess([])
     );
     expect(state).toMatchObject(expected);
   });
 
   it('should handle failure', () => {
-    const startState: ApiState = {
+    const startState = {
       companies: {
         fetching: true,
         errors: undefined,
         success: true
       }
     };
-    const expected: ApiState = {
+    const expected = {
       companies: {
         fetching: false,
         errors: ['There was an error'],
@@ -159,17 +160,17 @@ describe('fetch companies', () => {
 
 describe('fetch users', () => {
   it('should handle request start', () => {
-    const startState: ApiState = {
+    const startState = {
       users: {
         fetching: false,
         errors: {},
         success: true
       }
     };
-    const expected: ApiState = {
+    const expected = {
       users: {
         fetching: true,
-        errors: undefined,
+        errors: {},
         success: false
       }
     };
@@ -178,33 +179,33 @@ describe('fetch users', () => {
   });
 
   it('should handle success', () => {
-    const startState: ApiState = {
+    const startState = {
       users: {
         fetching: true,
-        errors: undefined,
+        errors: {},
         success: false
       }
     };
-    const expected: ApiState = {
+    const expected = {
       users: {
         fetching: false,
-        errors: undefined,
+        errors: {},
         success: true
       }
     };
-    const state = ApiReducer(startState, Actions.users.getAllUsersSuccess());
+    const state = ApiReducer(startState, Actions.users.getAllUsersSuccess([]));
     expect(state).toMatchObject(expected);
   });
 
   it('should handle failure', () => {
-    const startState: ApiState = {
+    const startState = {
       users: {
         fetching: true,
-        errors: undefined,
+        errors: {},
         success: true
       }
     };
-    const expected: ApiState = {
+    const expected = {
       users: {
         fetching: false,
         errors: ['There was an error'],
@@ -218,17 +219,17 @@ describe('fetch users', () => {
 
 describe('fetch roles', () => {
   it('should handle request start', () => {
-    const startState: ApiState = {
+    const startState = {
       roles: {
         fetching: false,
         errors: {},
         success: true
       }
     };
-    const expected: ApiState = {
+    const expected = {
       roles: {
         fetching: true,
-        errors: undefined,
+        errors: {},
         success: false
       }
     };
@@ -237,33 +238,33 @@ describe('fetch roles', () => {
   });
 
   it('should handle success', () => {
-    const startState: ApiState = {
+    const startState = {
       roles: {
         fetching: true,
-        errors: undefined,
+        errors: {},
         success: false
       }
     };
-    const expected: ApiState = {
+    const expected = {
       roles: {
         fetching: false,
-        errors: undefined,
+        errors: {},
         success: true
       }
     };
-    const state = ApiReducer(startState, Actions.roles.getAllRolesSuccess());
+    const state = ApiReducer(startState, Actions.roles.getAllRolesSuccess([]));
     expect(state).toMatchObject(expected);
   });
 
   it('should handle failure', () => {
-    const startState: ApiState = {
+    const startState = {
       roles: {
         fetching: true,
         errors: undefined,
         success: true
       }
     };
-    const expected: ApiState = {
+    const expected = {
       roles: {
         fetching: false,
         errors: ['There was an error'],
@@ -277,17 +278,17 @@ describe('fetch roles', () => {
 
 describe('fetch categories', () => {
   it('should handle request start', () => {
-    const startState: ApiState = {
+    const startState = {
       categories: {
         fetching: false,
         errors: {},
         success: true
       }
     };
-    const expected: ApiState = {
+    const expected = {
       categories: {
         fetching: true,
-        errors: undefined,
+        errors: {},
         success: false
       }
     };
@@ -299,36 +300,36 @@ describe('fetch categories', () => {
   });
 
   it('should handle success', () => {
-    const startState: ApiState = {
+    const startState = {
       categories: {
         fetching: true,
-        errors: undefined,
+        errors: {},
         success: false
       }
     };
-    const expected: ApiState = {
+    const expected = {
       categories: {
         fetching: false,
-        errors: undefined,
+        errors: {},
         success: true
       }
     };
     const state = ApiReducer(
       startState,
-      Actions.categories.getAllCategoriesSuccess()
+      Actions.categories.getAllCategoriesSuccess([])
     );
     expect(state).toMatchObject(expected);
   });
 
   it('should handle failure', () => {
-    const startState: ApiState = {
+    const startState = {
       categories: {
         fetching: true,
         errors: undefined,
         success: true
       }
     };
-    const expected: ApiState = {
+    const expected = {
       categories: {
         fetching: false,
         errors: ['There was an error'],
@@ -345,22 +346,22 @@ describe('fetch categories', () => {
 
 describe('forgotPassword action', () => {
   it('should handle request action', () => {
-    const startState: ApiState = {
-      forgotPassword: { fetching: false, errors: undefined, success: true }
+    const startState = {
+      forgotPassword: { fetching: false, errors: {}, success: true }
     };
-    const expected: ApiState = {
-      forgotPassword: { fetching: true, errors: undefined, success: false }
+    const expected = {
+      forgotPassword: { fetching: true, errors: {}, success: false }
     };
     const state = ApiReducer(startState, forgotPasswordRequest());
     expect(state).toMatchObject(expected);
   });
 
   it('should handle success action', () => {
-    const startState: ApiState = {
+    const startState = {
       forgotPassword: { fetching: true, errors: {}, success: false }
     };
-    const expected: ApiState = {
-      forgotPassword: { fetching: false, errors: undefined, success: true }
+    const expected = {
+      forgotPassword: { fetching: false, errors: {}, success: true }
     };
     const state = ApiReducer(startState, forgotPasswordSuccess());
     expect(state).toMatchObject(expected);
@@ -369,17 +370,17 @@ describe('forgotPassword action', () => {
 
 describe('replace forgotten password action', () => {
   it('should handle request action', () => {
-    const startState: ApiState = {
+    const startState = {
       replacePassword: {
         fetching: false,
         errors: {},
         success: true
       }
     };
-    const expected: ApiState = {
+    const expected = {
       replacePassword: {
         fetching: true,
-        errors: undefined,
+        errors: {},
         success: false
       }
     };
@@ -388,17 +389,17 @@ describe('replace forgotten password action', () => {
   });
 
   it('should handle success action', () => {
-    const startState: ApiState = {
+    const startState = {
       replacePassword: {
         fetching: true,
         errors: {},
         success: false
       }
     };
-    const expected: ApiState = {
+    const expected = {
       replacePassword: {
         fetching: false,
-        errors: undefined,
+        errors: {},
         success: true
       }
     };
@@ -407,7 +408,7 @@ describe('replace forgotten password action', () => {
   });
 
   it('should handle failure action', () => {
-    const startState: ApiState = {
+    const startState = {
       replacePassword: {
         fetching: true,
         errors: {},
@@ -418,7 +419,7 @@ describe('replace forgotten password action', () => {
     const errors = {
       password: ['some-error']
     };
-    const expected: ApiState = {
+    const expected = {
       replacePassword: {
         fetching: false,
         errors,

@@ -1,34 +1,31 @@
+import type { Dispatch } from 'redux';
 import { message } from 'antd';
 import { actionTypes } from '../..';
 import API from '../../../API';
 
-export function getAllRolesIsLoading() {
-  return {
-    type: actionTypes.FETCH_ROLES
-  };
-}
+export const getAllRolesIsLoading = () => ({
+  type: actionTypes.FETCH_ROLES
+});
 
-export function getAllRolesSuccess(roles) {
-  return {
-    type: actionTypes.FETCH_ROLES_SUCCESS,
-    roles
-  };
-}
+export const getAllRolesSuccess = (roles: Array<{}>) => ({
+  type: actionTypes.FETCH_ROLES_SUCCESS,
+  roles
+});
 
 export type GetAllRolesFailureAction = {
   type: string
 };
-export function getAllRolesFailure(): GetAllRolesFailureAction {
+export const getAllRolesFailure = (): GetAllRolesFailureAction => {
   message.error(
     'Something went wrong when trying to fetch all roles, please try again later'
   );
   return {
     type: actionTypes.FETCH_ROLES_FAILURE
   };
-}
+};
 
 export function getAllRoles() {
-  return dispatch => {
+  return (dispatch: Dispatch<{ type: string }>) => {
     dispatch(getAllRolesIsLoading());
     return API.roles
       .getAll()

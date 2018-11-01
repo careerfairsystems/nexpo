@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { Table, Button, Popconfirm, Divider } from 'antd';
 import { sortBy } from 'lodash/fp';
 
@@ -10,14 +9,13 @@ import HtmlTitle from '../../../Components/HtmlTitle';
 /**
  * Responsible for rendering a list of deadlines
  */
-class Deadlines extends Component {
-  static propTypes = {
-    deadlines: PropTypes.object,
-    fetching: PropTypes.bool.isRequired,
-    getAllDeadlines: PropTypes.func.isRequired,
-    deleteDeadline: PropTypes.func.isRequired
-  };
-
+type Props = {
+  deadlines?: {},
+  fetching: boolean,
+  getAllDeadlines: () => Promise<void>,
+  deleteDeadline: string => Promise<void>
+};
+class Deadlines extends Component<Props> {
   static defaultProps = {
     deadlines: {}
   };
@@ -32,7 +30,7 @@ class Deadlines extends Component {
       title: 'Name',
       dataIndex: 'name',
       key: 'name',
-      render: (name, { id }) => (
+      render: (name: string, { id }: { id: string }) => (
         <InvisibleLink to={`/admin/deadlines/${id}`}>{name}</InvisibleLink>
       )
     },
@@ -49,7 +47,7 @@ class Deadlines extends Component {
     {
       title: 'Action',
       key: 'action',
-      render: deadline => {
+      render: (deadline: { id: string }) => {
         const { deleteDeadline } = this.props;
         return (
           <span>
@@ -72,7 +70,7 @@ class Deadlines extends Component {
   ];
 
   renderDeadlines() {
-    const { deadlines } = this.props;
+    const { deadlines = {} } = this.props;
 
     return (
       <div>

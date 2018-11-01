@@ -38,8 +38,8 @@ export type ApiState = {
   login: ApiStatus,
   replacePassword: ApiStatus & {
     errors: {
-      password: string[],
-      passwordConfirmation: string[]
+      password?: string[],
+      passwordConfirmation?: string[]
     }
   },
   verifyForgotPasswordKey: ApiStatus
@@ -47,29 +47,29 @@ export type ApiState = {
 
 export const initialStatus: ApiStatus = {
   fetching: false,
-  errors: undefined,
+  errors: {},
   success: false
 };
 
 export const fetching = {
   fetching: true,
-  errors: undefined,
+  errors: {},
   success: false
 };
 
 export const retrieving = {
   fetching: false,
-  errors: undefined,
+  errors: {},
   success: true
 };
 
-export const failure = error => ({
+export const failure = (error: ?{ [key: string]: string }) => ({
   fetching: false,
   errors: error || ['There was an error'],
   success: false
 });
 
-export const ApiReducer: ApiState = combineReducers({
+export const ApiReducer = combineReducers({
   categories: ApiReducerCategories,
   companies: ApiReducerCompanies,
   currentUser: ApiReducerCurrentUser,

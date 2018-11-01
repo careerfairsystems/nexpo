@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+// import type { Element } from 'react';
 import { Route, Switch, Link } from 'react-router-dom';
-import { Layout, Menu, Breadcrumb, Icon } from 'antd';
+import { Breadcrumb, Icon, Menu, Layout } from 'antd';
 import { startCase } from 'lodash/fp';
-
 import Home from '../Screens/Home';
 import Info from '../Screens/Info';
 import AdminHome from '../Screens/Admin/AdminHome';
@@ -40,14 +39,18 @@ import Logout from '../Screens/Auth/Logout';
 import Signup from '../Screens/Auth/Signup';
 import ForgotPassword from '../Screens/Auth/ForgotPassword';
 import NotFound from '../Screens/NotFound';
-
 import PrivateRoute from '../Components/PrivateRoute';
 import HtmlTitle from '../Components/HtmlTitle';
 import { hasAccess, hasPermission } from '../Util/PermissionsHelper';
 
 const { Header, Content, Footer } = Layout;
 
-const privateRoutes = [
+type RouteItem = {
+  path: string,
+  component: React$ComponentType<{}>
+};
+
+const privateRoutes: Array<RouteItem> = [
   { path: '/admin', component: AdminHome },
   { path: '/admin/categories', component: Categories },
   { path: '/admin/categories/:id', component: Category },
@@ -90,8 +93,8 @@ const routes = (
   <Switch>
     <PrivateRoute exact path="/" component={Home} />
     <Route path="/info" component={Info} />
-    {privateRoutes.map(props => (
-      <PrivateRoute key={props.path} exact {...props} />
+    {privateRoutes.map((props: RouteItem) => (
+      <PrivateRoute key={props.path} exact {...props}/>
     ))}
     <Route path="/login" component={Login} />
     <Route path="/signup" component={Signup} />
@@ -100,30 +103,34 @@ const routes = (
   </Switch>
 );
 
+type Props = {
+  isLoggedIn: boolean,
+  currentUser?: { 
+    email?: ?string, 
+    firstName?: ?string, 
+    lastName?: ?string, 
+    roles?: Array<{ type: string, permissions: Array<string>}> 
+  },
+  logout: () => void,
+  redirect: (string) => void,
+  pathname: string
+};
+
 /**
  * The base of the application. Defines the basic layout
  */
-class App extends Component {
-  static propTypes = {
-    isLoggedIn: PropTypes.bool.isRequired,
-    currentUser: PropTypes.shape({
-      email: PropTypes.string,
-      firstName: PropTypes.string,
-      lastName: PropTypes.string
-    }),
-    pathname: PropTypes.string.isRequired,
-    redirect: PropTypes.func.isRequired
-  };
-
+class App extends Component<Props> {
   static defaultProps = {
     currentUser: {}
   };
 
   loggedInMenuItem = () => {
-    const { currentUser } = this.props;
+    const { currentUser = {} } = this.props;
     const { email, firstName, lastName } = currentUser;
 
-    const displayName = firstName ? [firstName, lastName].join(' ') : email;
+    const displayName: ?string = firstName
+      ? [firstName, lastName].join(' ')
+      : email;
 
     return [
       <Menu.Item key="/user">
@@ -133,7 +140,16 @@ class App extends Component {
     ];
   };
 
-  restrictedSubMenu = ({ route, title, menus, ...rest }) => {
+  restrictedSubMenu = ({
+    route,
+    title,
+    menus,
+    ...rest
+  }: {
+    route: string,
+    title: string,
+    menus: Array<?React$Element<any>>
+  }) => {
     const { currentUser: user, isLoggedIn, redirect } = this.props;
     if (isLoggedIn && hasPermission(user, route) && hasAccess(user, route)) {
       return (
@@ -150,7 +166,15 @@ class App extends Component {
     return null;
   };
 
-  restrictedMenuItem = ({ route, title, ...rest }) => {
+  restrictedMenuItem = ({
+    route,
+    title,
+    ...rest
+  }: {
+    route: string,
+    title: string,
+    disabled?: boolean
+  }) => {
     const { currentUser: user, isLoggedIn } = this.props;
     if (isLoggedIn && hasPermission(user, route) && hasAccess(user, route)) {
       return (
@@ -169,15 +193,17 @@ class App extends Component {
 
   render() {
     const { isLoggedIn, redirect, pathname } = this.props;
-    const paths = pathname.split('/').filter(i => i);
-    const breadcrumbItems = paths.map((item, index) => {
-      const url = `/${paths.slice(0, index + 1).join('/')}`;
-      return (
-        <Breadcrumb.Item key={url}>
-          <Link to={url}>{startCase(item)}</Link>
-        </Breadcrumb.Item>
-      );
-    });
+    const paths: Array<string> = pathname.split('/').filter((i: string) => i);
+    const breadcrumbItems: Array<React$Element<any>> = paths.map(
+      (item: string, index: number) => {
+        const url: string = `/${paths.slice(0, index + 1).join('/')}`;
+        return (
+          <Breadcrumb.Item key={url}>
+            <Link to={url}>{startCase(item)}</Link>
+          </Breadcrumb.Item>
+        );
+      }
+    );
 
     return (
       <div>

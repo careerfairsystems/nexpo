@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import { isNil } from 'lodash/fp';
@@ -10,7 +9,12 @@ import UploadButton from './UploadButton';
 const TextInput = makeField(Input);
 const TextArea = makeField(Input.TextArea);
 
-const CurrentCompanyForm = ({ handleSubmit, onCancel, submitting }) => (
+type Props = {
+  handleSubmit: () => Promise<void>,
+  onCancel?: Event => any,
+  submitting: boolean
+};
+const CurrentCompanyForm = ({ handleSubmit, onCancel, submitting }: Props) => (
   <Form onSubmit={handleSubmit}>
     <Field
       name="website"
@@ -41,12 +45,6 @@ const CurrentCompanyForm = ({ handleSubmit, onCancel, submitting }) => (
 
 CurrentCompanyForm.defaultProps = {
   onCancel: null
-};
-
-CurrentCompanyForm.propTypes = {
-  handleSubmit: PropTypes.func.isRequired,
-  onCancel: PropTypes.func,
-  submitting: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = (state, props) => {

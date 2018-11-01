@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { isEmpty, map } from 'lodash/fp';
 import { Button } from 'antd';
 
@@ -13,19 +12,34 @@ import '../User.css';
 /**
  * Responsible for rendering a user. User id is recieved via url
  */
-class UserShow extends Component {
-  static propTypes = {
-    id: PropTypes.string,
-    user: PropTypes.object,
-    fetching: PropTypes.bool.isRequired,
-    getUser: PropTypes.func.isRequired,
-    match: PropTypes.shape({
-      path: PropTypes.string
-    })
-  };
-
+type Props = {
+  id?: string,
+  user?: {
+    id?: string,
+    email?: string,
+    firstName?: string,
+    lastName?: string,
+    foodPreferences?: string,
+    phoneNumber?: string,
+    roles?: Array<{type: string}>,
+    student?: {
+      resumeSvUrl: string,
+      resumeEnUrl: string,
+      studentSessionApplications: Array<{ companyId: number }>,
+      studentSessions: Array<{ companyId: number }>,
+      programme: { name: string },
+      year: string
+    }
+  },
+  fetching: boolean,
+  getUser: string => Promise<void>,
+  match?: {
+    path?: string
+  }
+};
+class UserShow extends Component<Props> {
   static defaultProps = {
-    id: null,
+    id: '',
     user: {},
     match: {
       path: ''
@@ -34,27 +48,21 @@ class UserShow extends Component {
 
   componentWillMount() {
     const { id, getUser } = this.props;
-    getUser(id);
+    if (id) getUser(id);
   }
 
   displayName = () => {
-    const {
-      user: { email, firstName, lastName }
-    } = this.props;
+    const { user: { email, firstName, lastName } = {} } = this.props;
     return firstName ? [firstName, lastName].join(' ') : email;
   };
 
   roles = () => {
-    const {
-      user: { roles }
-    } = this.props;
+    const { user: { roles = [] } = {} } = this.props;
     return isEmpty(roles) ? 'None' : map('type', roles).join(', ');
   };
 
   renderStudent = () => {
-    const {
-      user: { student = {} }
-    } = this.props;
+    const { user: { student = {} } = {} } = this.props;
     const {
       year,
       resumeSvUrl,
@@ -78,7 +86,7 @@ class UserShow extends Component {
   };
 
   render() {
-    const { user, fetching } = this.props;
+    const { user = {}, fetching } = this.props;
 
     if (fetching) return <LoadingSpinner />;
     if (isEmpty(user)) return <NotFound />;
@@ -93,7 +101,7 @@ class UserShow extends Component {
         <p>Roles: {this.roles()}</p>
         <p>Food Preferences: {user.foodPreferences}</p>
         {user.student && this.renderStudent()}
-        <InvisibleLink to={`/admin/users/${user.id}/edit`}>
+        <InvisibleLink to={`/admin/users/${user.id || ''}/edit`}>
           <Button onClick={() => null} type="primary">
             Edit
           </Button>

@@ -1,23 +1,21 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { isEmpty } from 'lodash/fp';
 
 import DeadlineForm from '../../../Forms/DeadlineForm';
 import NotFound from '../../NotFound';
 import LoadingSpinner from '../../../Components/LoadingSpinner';
 
-class Deadline extends Component {
-  static propTypes = {
-    id: PropTypes.string,
-    deadline: PropTypes.object.isRequired,
-    createDeadline: PropTypes.func.isRequired,
-    fetching: PropTypes.bool.isRequired,
-    getDeadline: PropTypes.func.isRequired,
-    updateDeadline: PropTypes.func.isRequired
-  };
-
+type Props = {
+  id?: string,
+  deadline: {},
+  createDeadline: ({ deadline: {} }) => Promise<void>,
+  fetching: boolean,
+  getDeadline: string => Promise<void>,
+  updateDeadline: (string, { deadline: {} }) => Promise<void>
+};
+class Deadline extends Component<Props> {
   static defaultProps = {
-    id: null
+    id: ''
   };
 
   componentWillMount() {
@@ -25,12 +23,12 @@ class Deadline extends Component {
     if (id) getDeadline(id);
   }
 
-  updateDeadline = values => {
+  updateDeadline = (values: { name: string, start: string, end: string }) => {
     const { id, deadline, createDeadline, updateDeadline } = this.props;
 
     if (isEmpty(deadline)) {
       createDeadline({ deadline: values });
-    } else {
+    } else if (id) {
       updateDeadline(id, { deadline: values });
     }
   };

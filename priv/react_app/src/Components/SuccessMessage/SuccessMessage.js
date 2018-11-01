@@ -3,13 +3,18 @@ import Message from '../Message';
 
 type Props = {
   message: string,
-  linkUrl: string,
-  linkText: string
+  linkUrl?: string,
+  linkText?: string
 };
 
 /**
  * Higher order component for delivering a successful message
  */
-export const SuccessMessage = (props: Props) => (
-  <Message type="success" {...props} />
-);
+const SuccessMessage = (props: Props) => <Message type="success" {...props} />;
+
+SuccessMessage.defaultProps = {
+  linkUrl: '',
+  linkText: ''
+};
+
+export default SuccessMessage;

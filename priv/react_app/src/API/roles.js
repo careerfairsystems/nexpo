@@ -14,7 +14,7 @@ export default {
   /**
    * Create a role
    */
-  create: data => authPost('/api/roles', data).then(handleHttpResponse),
+  create: (data: {}) => authPost('/api/roles', data).then(handleHttpResponse),
 
   /**
    * Fetches all roles
@@ -24,16 +24,17 @@ export default {
   /**
    * Fetches a role
    */
-  get: id => authFetch(`/api/roles/${id}`).then(handleHttpResponse),
+  get: (id: string) => authFetch(`/api/roles/${id}`).then(handleHttpResponse),
 
   /**
    * Updates a role
    */
-  update: (id, data) =>
+  update: (id: string, data: {}) =>
     authPut(`/api/roles/${id}`, data).then(handleHttpResponse),
 
   /**
    * Delete a role
    */
-  destroy: id => authDelete(`/api/roles/${id}`).then(handleHttpResponse)
+  destroy: (id: string) =>
+    authDelete(`/api/roles/${id}`).then(handleHttpResponse)
 };

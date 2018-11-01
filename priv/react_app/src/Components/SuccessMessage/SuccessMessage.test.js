@@ -1,7 +1,12 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { SuccessMessage } from './SuccessMessage';
+import SuccessMessage from './SuccessMessage';
 
 it('should render without crashing', () => {
-  shallow(<SuccessMessage message="success" />);
+  const props = {
+    message: 'success',
+    linkText: 'Wow',
+    linkUrl: 'placeholder.com'
+  };
+  shallow(<SuccessMessage {...props} />);
 });

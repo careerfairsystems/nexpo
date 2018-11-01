@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 import Statistics from './Statistics';
 
 it('should render without crashing', () => {
-  const func = () => 'a';
+  const func = jest.fn();
   const statistics = {};
   shallow(<Statistics statistics={statistics} getAllStatistics={func} />);
 });
@@ -33,10 +33,11 @@ it('can render data', () => {
     ],
     companyStats: [
       {
+        id: 1,
         name: 'Google',
         nbrApplications: 5
       },
-      { name: 'Apple', nbrApplications: 10 }
+      { id: 2, name: 'Apple', nbrApplications: 10 }
     ]
   };
 

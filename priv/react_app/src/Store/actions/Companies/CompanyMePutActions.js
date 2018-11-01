@@ -1,3 +1,4 @@
+import type { Dispatch } from 'redux';
 import { message } from 'antd';
 
 import { actionTypes } from '../..';
@@ -7,7 +8,7 @@ export const updateCurrentCompanyIsLoading = () => ({
   type: actionTypes.PUT_CURRENT_COMPANY
 });
 
-export const updateCurrentCompanySuccess = company => {
+export const updateCurrentCompanySuccess = (company: {}) => {
   message.success('Your company was successfully updated');
   return {
     type: actionTypes.PUT_CURRENT_COMPANY_SUCCESS,
@@ -22,8 +23,8 @@ export const updateCurrentCompanyFailure = () => {
   };
 };
 
-export function updateCurrentCompany(data) {
-  return dispatch => {
+export function updateCurrentCompany(data: {}) {
+  return (dispatch: Dispatch<{ type: string }>) => {
     dispatch(updateCurrentCompanyIsLoading());
     return API.companies
       .updateMyCompany(data)

@@ -234,7 +234,7 @@ describe('getMailtemplate', () => {
     mockHttpResponse({ status: 200, body: {} });
     const store = createMockStore();
 
-    return store.dispatch(Actions.mailtemplates.getMailtemplate()).then(() => {
+    return store.dispatch(Actions.mailtemplates.getMailtemplate('1')).then(() => {
       const calledActions = store.getActions();
       expect(calledActions[0]).toEqual(
         Actions.mailtemplates.getMailtemplateIsLoading()
@@ -255,7 +255,7 @@ describe('getMailtemplate', () => {
 
     const store = createMockStore();
 
-    return store.dispatch(Actions.mailtemplates.getMailtemplate()).then(() => {
+    return store.dispatch(Actions.mailtemplates.getMailtemplate('1')).then(() => {
       const calledActions = store.getActions();
       expect(calledActions).toEqual(expectedActions);
     });
@@ -271,7 +271,7 @@ describe('getMailtemplate', () => {
 
     const store = createMockStore();
 
-    return store.dispatch(Actions.mailtemplates.getMailtemplate()).then(() => {
+    return store.dispatch(Actions.mailtemplates.getMailtemplate('1')).then(() => {
       const calledActions = store.getActions();
       expect(calledActions).toEqual(expectedActions);
     });
@@ -322,7 +322,7 @@ describe('updateMailtemplate', () => {
     const data = { mailtemplate: { name: 'Test Mailtemplate' } };
 
     return store
-      .dispatch(Actions.mailtemplates.updateMailtemplate(1, data))
+      .dispatch(Actions.mailtemplates.updateMailtemplate('1', data))
       .then(() => {
         const calledActions = store.getActions();
         expect(calledActions[0]).toEqual(
@@ -346,7 +346,7 @@ describe('updateMailtemplate', () => {
     const data = { mailtemplate };
 
     return store
-      .dispatch(Actions.mailtemplates.updateMailtemplate(1, data))
+      .dispatch(Actions.mailtemplates.updateMailtemplate('1', data))
       .then(() => {
         const calledActions = store.getActions();
         expect(calledActions).toEqual(expectedActions);
@@ -365,7 +365,7 @@ describe('updateMailtemplate', () => {
     const store = createMockStore();
 
     return store
-      .dispatch(Actions.mailtemplates.updateMailtemplate(1, data))
+      .dispatch(Actions.mailtemplates.updateMailtemplate('1', data))
       .then(() => {
         const calledActions = store.getActions();
         expect(calledActions).toEqual(expectedActions);
@@ -386,7 +386,7 @@ describe('destroyMailtemplateIsLoading', () => {
 describe('destroyMailtemplateSuccess', () => {
   it('should create the correct action', () => {
     const testMailtemplate = {
-      id: 1,
+      id: '1',
       name: 'Mailtemplate1'
     };
 
@@ -417,7 +417,7 @@ describe('destroyMailtemplate', () => {
     const store = createMockStore();
 
     return store
-      .dispatch(Actions.mailtemplates.destroyMailtemplate(1))
+      .dispatch(Actions.mailtemplates.destroyMailtemplate('1'))
       .then(() => {
         const calledActions = store.getActions();
         expect(calledActions[0]).toEqual(
@@ -428,7 +428,7 @@ describe('destroyMailtemplate', () => {
 
   it('should call success action on success', () => {
     const mailtemplate = {
-      id: 1,
+      id: '1',
       name: 'Mailtemplate1'
     };
     mockHttpResponse({ status: 200, body: { data: '' } });
@@ -441,7 +441,7 @@ describe('destroyMailtemplate', () => {
     const store = createMockStore();
 
     return store
-      .dispatch(Actions.mailtemplates.destroyMailtemplate(1))
+      .dispatch(Actions.mailtemplates.destroyMailtemplate('1'))
       .then(() => {
         const calledActions = store.getActions();
         expect(calledActions).toEqual(expectedActions);
@@ -458,7 +458,7 @@ describe('destroyMailtemplate', () => {
     const store = createMockStore();
 
     return store
-      .dispatch(Actions.mailtemplates.destroyMailtemplate(1))
+      .dispatch(Actions.mailtemplates.destroyMailtemplate('1'))
       .then(() => {
         const calledActions = store.getActions();
         expect(calledActions).toEqual(expectedActions);

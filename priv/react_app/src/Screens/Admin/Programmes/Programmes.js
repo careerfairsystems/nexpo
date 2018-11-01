@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { Table, Button, Divider, Popconfirm } from 'antd';
 
 import InvisibleLink from '../../../Components/InvisibleLink';
@@ -9,14 +8,13 @@ import HtmlTitle from '../../../Components/HtmlTitle';
 /**
  * Responsible for rendering a list of programmes
  */
-class Programmes extends Component {
-  static propTypes = {
-    programmes: PropTypes.object,
-    fetching: PropTypes.bool.isRequired,
-    deleteProgramme: PropTypes.func.isRequired,
-    getAllProgrammes: PropTypes.func.isRequired
-  };
-
+type Props = {
+  programmes?: {},
+  fetching: boolean,
+  deleteProgramme: string => Promise<void>,
+  getAllProgrammes: () => Promise<void>
+};
+class Programmes extends Component<Props> {
   static defaultProps = {
     programmes: {}
   };
@@ -31,14 +29,14 @@ class Programmes extends Component {
       title: 'Name',
       dataIndex: 'name',
       key: 'name',
-      render: (name, { id }) => (
+      render: (name: string, { id }: { id: string }) => (
         <InvisibleLink to={`/admin/programmes/${id}`}>{name}</InvisibleLink>
       )
     },
     {
       title: 'Action',
       key: 'action',
-      render: programme => {
+      render: (programme: { id: string }) => {
         const { deleteProgramme } = this.props;
         return (
           <span>
@@ -61,7 +59,7 @@ class Programmes extends Component {
   ];
 
   renderProgrammes() {
-    const { programmes } = this.props;
+    const { programmes = {} } = this.props;
 
     return (
       <div>

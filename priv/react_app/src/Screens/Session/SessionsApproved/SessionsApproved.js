@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { isNil, sortBy } from 'lodash/fp';
 import { Icon, List, Avatar, Button } from 'antd';
 import NotFound from '../../NotFound';
@@ -9,31 +8,30 @@ import { toSessionTimeFormat } from '../../../Util/FormatHelper';
 
 import '../Session.css';
 
-class StudentSessions extends Component {
-  static propTypes = {
-    sessions: PropTypes.arrayOf(
-      PropTypes.shape({
-        studentId: PropTypes.number,
-        companyId: PropTypes.number,
-        studentConfirmed: PropTypes.bool,
-        start: PropTypes.string,
-        end: PropTypes.string
-      })
-    ),
-    companies: PropTypes.shape({
-      id: PropTypes.number,
-      name: PropTypes.string,
-      description: PropTypes.string,
-      website: PropTypes.string
-    }),
-    confirmSession: PropTypes.func.isRequired,
-    getAllCompanies: PropTypes.func.isRequired,
-    fetching: PropTypes.bool.isRequired
-  };
-
+type SessionObj = {
+  id?: number,
+  studentId: number,
+  companyId: number,
+  studentConfirmed?: boolean,
+  start?: string,
+  end?: string
+};
+type Props = {
+  sessions?: ?Array<SessionObj>,
+  companies?: {
+    id?: string,
+    name?: string,
+    description?: string,
+    website?: string
+  },
+  confirmSession: number => Promise<void>,
+  getAllCompanies: () => Promise<void>,
+  fetching: boolean
+};
+class StudentSessions extends Component<Props> {
   static defaultProps = {
     companies: {},
-    sessions: null
+    sessions: []
   };
 
   componentWillMount() {
@@ -41,17 +39,18 @@ class StudentSessions extends Component {
     getAllCompanies();
   }
 
-  getCompany = ({ company }) => {
-    const { companies } = this.props;
-    return companies[company] || {};
+  getCompany = (companyId: number) => {
+    const { companies = {} } = this.props;
+
+    return companies[`${companyId}`] || {};
   };
 
-  confirmSession = id => {
+  confirmSession = (id: ?number) => {
     const { confirmSession } = this.props;
-    confirmSession(id);
+    if (id) confirmSession(id);
   };
 
-  renderSession = session => (
+  renderSession = (session: SessionObj) => (
     <List.Item
       actions={[
         session.studentConfirmed ? (
@@ -67,15 +66,11 @@ class StudentSessions extends Component {
       ]}
     >
       <List.Item.Meta
-        title={this.getCompany(session).name}
-        description={this.renderTimeField(
-          session.start,
-          session.end,
-          session.studentConfirmed
-        )}
+        title={this.getCompany(session.companyId).name}
+        description={this.renderTimeField(session.start, session.end)}
         avatar={
           <Avatar
-            src={this.getCompany(session).logoUrl}
+            src={this.getCompany(session.companyId).logoUrl}
             size={128}
             shape="square"
             alt="Company Logotype"
@@ -85,7 +80,7 @@ class StudentSessions extends Component {
     </List.Item>
   );
 
-  renderTimeField = (start, end) =>
+  renderTimeField = (start: ?string = '', end: ?string = '') =>
     `Start: ${toSessionTimeFormat(start)}\nEnd: ${toSessionTimeFormat(end)}`;
 
   render() {
@@ -111,7 +106,10 @@ class StudentSessions extends Component {
         <List
           size="large"
           bordered
-          dataSource={sortBy(appl => this.getCompany(appl).name, sessions)}
+          dataSource={sortBy(
+            appl => this.getCompany(appl.companyId).name,
+            sessions || []
+          )}
           renderItem={this.renderSession}
           locale={{ emptyText: 'No Sessions' }}
         />

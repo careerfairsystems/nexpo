@@ -2,6 +2,8 @@
  * Mocks localStorage so we can use it in testing
  */
 class LocalStorageMock {
+  store: {};
+
   constructor() {
     this.store = {};
   }

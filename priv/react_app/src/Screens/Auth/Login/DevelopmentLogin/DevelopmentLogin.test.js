@@ -7,7 +7,7 @@ it('should render without crashing', () => {
   const props = {
     isLoggedIn: false,
     login: jest.fn(),
-    location: { state: {} }
+    location: { state: {}, hash: '', pathname: '', search: '' }
   };
   // MemoryRouter should give location? But gives prop-type error `location`
   shallow(
@@ -20,12 +20,12 @@ it('should call login with correct parameters', () => {
   const props = {
     isLoggedIn: false,
     login: jest.fn(),
-    location: { state: {} }
+    location: { state: {}, hash: '', pathname: '', search: '' }
   };
   const wrapper = shallow(<DevelopmentLogin {...props} />);
   expect(props.login).toHaveBeenCalledTimes(0);
   const email = 'dev@it';
   wrapper.instance().login({ email });
   expect(props.login).toHaveBeenCalledTimes(1);
-  expect(props.login).lastCalledWith(email);
+  expect(props.login).lastCalledWith({ email });
 });

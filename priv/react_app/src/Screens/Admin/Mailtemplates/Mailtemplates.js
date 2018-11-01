@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { Table, Button, Popconfirm, Divider } from 'antd';
 import { sortBy } from 'lodash/fp';
 
@@ -10,14 +9,13 @@ import HtmlTitle from '../../../Components/HtmlTitle';
 /**
  * Responsible for rendering a list of mailtemplates
  */
-class Mailtemplates extends Component {
-  static propTypes = {
-    mailtemplates: PropTypes.object,
-    fetching: PropTypes.bool.isRequired,
-    getAllMailtemplates: PropTypes.func.isRequired,
-    deleteMailtemplate: PropTypes.func.isRequired
-  };
-
+type Props = {
+  mailtemplates?: {},
+  fetching: boolean,
+  getAllMailtemplates: () => Promise<void>,
+  deleteMailtemplate: string => Promise<void>
+};
+class Mailtemplates extends Component<Props> {
   static defaultProps = {
     mailtemplates: {}
   };
@@ -32,7 +30,7 @@ class Mailtemplates extends Component {
       title: 'Name',
       dataIndex: 'name',
       key: 'name',
-      render: (name, { id }) => (
+      render: (name: string, { id }: { id: string }) => (
         <InvisibleLink to={`/admin/mailtemplates/${id}`}>{name}</InvisibleLink>
       )
     },
@@ -49,7 +47,7 @@ class Mailtemplates extends Component {
     {
       title: 'Action',
       key: 'action',
-      render: mailtemplate => {
+      render: (mailtemplate: { id: string }) => {
         const { deleteMailtemplate } = this.props;
         return (
           <span>
@@ -72,7 +70,7 @@ class Mailtemplates extends Component {
   ];
 
   renderMailtemplates() {
-    const { mailtemplates } = this.props;
+    const { mailtemplates = {} } = this.props;
 
     return (
       <div>

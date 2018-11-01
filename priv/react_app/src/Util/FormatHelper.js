@@ -1,18 +1,11 @@
-import {
-  isObject,
-  isArray,
-  reduce,
-  camelCase,
-  snakeCase,
-  has
-} from 'lodash/fp';
+import { isObject, reduce, camelCase, snakeCase, has } from 'lodash/fp';
 import moment from 'moment';
 
-const convertKeys = (obj, convert) => {
+const convertKeys: Function = (obj, convert) => {
   if (!isObject(obj)) {
     return obj;
   }
-  if (isArray(obj)) {
+  if (Array.isArray(obj)) {
     return obj.map(v => convertKeys(v, convert));
   }
 
@@ -24,12 +17,12 @@ const convertKeys = (obj, convert) => {
   return reduce(convertKey, {}, Object.keys(obj));
 };
 
-export const camelCaseKeys = obj => convertKeys(obj, camelCase);
-export const snakeCaseKeys = obj => convertKeys(obj, snakeCase);
+export const camelCaseKeys: Function = obj => convertKeys(obj, camelCase);
+export const snakeCaseKeys: Function = obj => convertKeys(obj, snakeCase);
 
 const dateFormats = ['YYYY-MM-DD', 'YYYY-MM-DD HH:mm'];
 
-export const toFormData = (obj, form, namespace) => {
+export const toFormData = (obj: {}, form: ?FormData, namespace: ?string) => {
   const fd = form || new FormData();
   let formKey;
 
@@ -55,10 +48,10 @@ export const toFormData = (obj, form, namespace) => {
   return fd;
 };
 
-export const toDayFormat = time =>
+export const toDayFormat = (time: ?string) =>
   moment.utc(time).format('dddd D MMMM YYYY HH:mm');
 
-export const toSessionTimeFormat = time =>
+export const toSessionTimeFormat = (time: ?string) =>
   moment.utc(time).format('dddd D MMM HH:mm');
 
 export default {

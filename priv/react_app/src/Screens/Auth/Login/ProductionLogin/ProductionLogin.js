@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { Redirect, Link } from 'react-router-dom';
+import type { Location } from 'react-router-dom';
+
 import HtmlTitle from '../../../../Components/HtmlTitle';
 import ProductionLoginForm from '../../../../Forms/ProductionLoginForm';
 /**
@@ -10,8 +11,13 @@ import ProductionLoginForm from '../../../../Forms/ProductionLoginForm';
  * - It can authenticate a user, it simply needs to be integrated into global state
  * - By passing isAuthenticated prop, this component will redirect back to where user came from
  */
-class ProductionLogin extends Component {
-  login = values => {
+type Props = {
+  location: Location,
+  isLoggedIn: boolean,
+  login: ({ email: string, password: string }) => Promise<void>
+};
+class ProductionLogin extends Component<Props> {
+  login = (values: { email: string, password: string }) => {
     const { email, password } = values;
     const { login } = this.props;
     return login({ email, password });
@@ -49,9 +55,4 @@ class ProductionLogin extends Component {
   }
 }
 
-ProductionLogin.propTypes = {
-  location: PropTypes.shape({ state: PropTypes.object }).isRequired,
-  isLoggedIn: PropTypes.bool.isRequired,
-  login: PropTypes.func.isRequired
-};
 export default ProductionLogin;

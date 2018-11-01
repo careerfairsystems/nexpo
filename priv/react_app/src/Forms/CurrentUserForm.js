@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import { Button, Input, Form } from 'antd';
@@ -7,7 +6,12 @@ import makeField from './helper';
 
 const TextInput = makeField(Input);
 
-const CurrentUserForm = ({ handleSubmit, pristine, submitting }) => (
+type Props = {
+  handleSubmit: () => Promise<void>,
+  pristine: boolean,
+  submitting: boolean
+};
+const CurrentUserForm = ({ handleSubmit, pristine, submitting }: Props) => (
   <Form onSubmit={handleSubmit}>
     <Field
       name="phoneNumber"
@@ -20,12 +24,6 @@ const CurrentUserForm = ({ handleSubmit, pristine, submitting }) => (
     </Button>
   </Form>
 );
-
-CurrentUserForm.propTypes = {
-  handleSubmit: PropTypes.func.isRequired,
-  pristine: PropTypes.bool.isRequired,
-  submitting: PropTypes.bool.isRequired
-};
 
 const mapStateToProps = state => ({
   formState: state.form.CurrentUserForm

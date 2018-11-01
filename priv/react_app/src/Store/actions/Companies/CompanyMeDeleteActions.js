@@ -1,3 +1,4 @@
+import type { Dispatch } from 'redux';
 import { actionTypes } from '../..';
 import API from '../../../API';
 
@@ -14,7 +15,7 @@ export const destroyCurrentCompanyFailure = () => ({
 });
 
 export function destroyCurrentCompany() {
-  return dispatch => {
+  return (dispatch: Dispatch<{ type: string }>) => {
     dispatch(destroyCurrentCompanyIsLoading());
     return API.companies
       .destroyMyCompany()

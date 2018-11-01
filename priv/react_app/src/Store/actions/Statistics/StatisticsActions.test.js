@@ -13,9 +13,7 @@ describe('getAllStatisticsIsLoading', () => {
 
 describe('getAllStatisticsSuccess', () => {
   it('should create the correct action', () => {
-    const testStatistic = {
-      numberApplications: 10
-    };
+    const testStatistic = { numberApplications: 10 };
 
     const expectedAction = {
       type: actionTypes.FETCH_STATISTICS_SUCCESS,

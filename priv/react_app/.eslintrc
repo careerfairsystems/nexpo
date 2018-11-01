@@ -4,7 +4,7 @@
     "browser": true,
     "jest": true,
     "es6": true,
-    "node" :true
+    "node": true
   },
   "extends": [
     "eslint:recommended",
@@ -16,19 +16,22 @@
     "prettier/react",
     "prettier/standard"
   ],
-  "plugins": ["react","flowtype" ],
+  "plugins": ["react", "flowtype"],
   "rules": {
     "import/no-named-as-default": 0,
     "react/jsx-filename-extension": [
       "error",
-      {"extensions": [".js", ".jsx"]}
+      { "extensions": [".js", ".jsx"] }
     ],
     "quotes": ["error", "single", { "avoidEscape": true }],
     "flowtype/no-types-missing-file-annotation": 0,
-    "jsx-a11y/anchor-is-valid": [ "error", {
-      "components": [ "Link" ],
-      "specialLink": [ "to" ]
-    }]
+    "jsx-a11y/anchor-is-valid": [
+      "error",
+      {
+        "components": ["Link"],
+        "specialLink": ["to"]
+      }
+    ]
   },
   "settings": {
     "import/resolver": {

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Actions } from '../../../Store';
 import Deadline from './Deadline';
 
-const mapStateToProps = (state: State, props) => {
+const mapStateToProps = (state, props) => {
   const deadlineId = props.match.params.id;
   const deadline = state.entities.deadlines[deadlineId] || {};
   const { fetching } = state.api.deadlines;

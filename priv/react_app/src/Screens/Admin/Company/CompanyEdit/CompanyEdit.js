@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { isEmpty, isNil, toInteger } from 'lodash/fp';
 import { message } from 'antd';
 
@@ -14,27 +13,32 @@ import '../Company.css';
 /**
  * Responsible for editing a company. Company id is recieved via url
  */
-class CompanyEdit extends Component {
-  static propTypes = {
-    id: PropTypes.string,
-    company: PropTypes.shape({ name: PropTypes.string }).isRequired,
-    fetching: PropTypes.bool.isRequired,
-    getCompany: PropTypes.func.isRequired,
-    history: PropTypes.shape({ push: PropTypes.func }).isRequired,
-    resetForm: PropTypes.func.isRequired,
-    updateCompany: PropTypes.func.isRequired
-  };
+type Props = {
+  id: string,
+  company: { name?: string, website?: string, description?: string },
+  fetching: boolean,
+  getCompany: string => Promise<void>,
+  history: { push: string => any },
+  resetForm: string => any,
+  updateCompany: (string, {}) => Promise<void>
+};
 
-  static defaultProps = {
-    id: null
-  };
-
+type NewCompanyValues = {
+  name?: string,
+  website?: string,
+  description?: string,
+  logoUrl?: {
+    uid: number,
+    filename: string
+  }
+};
+class CompanyEdit extends Component<Props> {
   componentWillMount() {
     const { id, getCompany } = this.props;
     getCompany(id);
   }
 
-  updateCompany = values => {
+  updateCompany = (values: NewCompanyValues) => {
     const { id, updateCompany } = this.props;
     updateCompany(id, { company: values });
   };
@@ -44,7 +48,7 @@ class CompanyEdit extends Component {
     history.push(`/admin/companies/${id}`);
   };
 
-  invite = ({ email }) => {
+  invite = ({ email }: { email: string }) => {
     const { id, resetForm } = this.props;
     API.signup
       .initialRepresentativeSignup({ email, companyId: toInteger(id) })

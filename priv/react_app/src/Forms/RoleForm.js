@@ -1,9 +1,9 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import { map } from 'lodash/fp';
 import { Button, Form, Input, Select } from 'antd';
+import type { FormProps } from 'redux-form';
 
 import makeField from './helper';
 
@@ -39,7 +39,12 @@ const renderUserItem = user => (
   </Select.Option>
 );
 
-const RoleForm = ({ handleSubmit, users }) => (
+type Props = {
+  ...FormProps,
+  users: {},
+  handleSubmit: () => Promise<void>
+};
+const RoleForm = ({ handleSubmit, users }: Props) => (
   <Form onSubmit={handleSubmit}>
     <Field name="type" label="Type:" component={TextInput} />
     <Field
@@ -64,11 +69,6 @@ const RoleForm = ({ handleSubmit, users }) => (
     <Button htmlType="submit">Submit</Button>
   </Form>
 );
-
-RoleForm.propTypes = {
-  users: PropTypes.object.isRequired,
-  handleSubmit: PropTypes.func.isRequired
-};
 
 const mapStateToProps = state => ({
   users: state.entities.users,

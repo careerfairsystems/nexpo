@@ -1,6 +1,7 @@
 import { message } from 'antd';
 import { actionTypes } from '../..';
 import API from '../../../API';
+import type { Dispatch } from '../../reducers';
 
 export function destroyStudentSessionIsLoading() {
   return {
@@ -8,7 +9,7 @@ export function destroyStudentSessionIsLoading() {
   };
 }
 
-export function destroyStudentSessionSuccess(id) {
+export function destroyStudentSessionSuccess(id: string) {
   message.success('Student Session was successfully deleted.');
   return {
     type: actionTypes.DELETE_STUDENT_SESSION_SUCCESS,
@@ -26,8 +27,8 @@ export function destroyStudentSessionFailure(): destroyStudentSessionFailureActi
   };
 }
 
-export function destroyStudentSession(id) {
-  return dispatch => {
+export function destroyStudentSession(id: string) {
+  return (dispatch: Dispatch) => {
     dispatch(destroyStudentSessionIsLoading());
     return API.studentSessions
       .destroy(id)

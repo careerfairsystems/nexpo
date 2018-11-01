@@ -1,5 +1,4 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { hasPermission } from '../../Util/PermissionsHelper';
 import LoadingSpinner from '../LoadingSpinner';
@@ -9,13 +8,26 @@ import LoadingSpinner from '../LoadingSpinner';
  * - Protects the route so only logged-in users can reach it
  * - It redirects to login if user is not logged in
  */
+
+type Props = {
+  component: React.ComponentType<{}>,
+  currentUser: {
+    email?: ?string,
+    firstName?: ?string,
+    lastName?: ?string,
+    roles?: Array<{ type: string, permissions: Array<string> }>
+  },
+  fetching: boolean,
+  isLoggedIn: boolean
+};
+
 const PrivateRoute = ({
   component: Component,
   currentUser,
   isLoggedIn,
   fetching,
   ...rest
-}) => (
+}: Props) => (
   <Route
     {...rest}
     render={props => {
@@ -28,9 +40,5 @@ const PrivateRoute = ({
     }}
   />
 );
-
-PrivateRoute.propTypes = {
-  isLoggedIn: PropTypes.bool.isRequired
-};
 
 export default PrivateRoute;

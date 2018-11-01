@@ -3,7 +3,7 @@
  * should be unreachable, is reached
  */
 class UnreachableCodeReachedError extends Error {
-  constructor(...params) {
+  constructor(...params: Array<any>) {
     super(...params);
 
     if (Error.captureStackTrace) {

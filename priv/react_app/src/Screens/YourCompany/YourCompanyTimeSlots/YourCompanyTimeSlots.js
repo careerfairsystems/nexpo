@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { isEmpty, isNil, sortBy } from 'lodash/fp';
 import { Avatar, List, Tag } from 'antd';
 import { toDayFormat } from '../../../Util/FormatHelper';
@@ -7,12 +6,22 @@ import NotFound from '../../NotFound';
 import HtmlTitle from '../../../Components/HtmlTitle';
 import '../YourCompany.css';
 
-class YourCompanyTimeSlots extends Component {
-  static propTypes = {
-    currentCompany: PropTypes.object.isRequired,
-    getCurrentCompany: PropTypes.func.isRequired
-  };
-
+type Props = {
+  currentCompany: {
+    studentSessionDays?: number,
+    studentSessionTimeSlots?: {
+      start: string,
+      end: string,
+      location: string
+    },
+    name?: string,
+    description?: string,
+    website?: string,
+    logoUrl?: string
+  },
+  getCurrentCompany: () => Promise<void>
+};
+class YourCompanyTimeSlots extends Component<Props> {
   componentWillMount() {
     const { getCurrentCompany } = this.props;
     getCurrentCompany();
@@ -50,7 +59,10 @@ class YourCompanyTimeSlots extends Component {
         <h3>Student Session Time Slots</h3>
         <List
           itemLayout="vertical"
-          dataSource={sortBy('start', currentCompany.studentSessionTimeSlots)}
+          dataSource={sortBy(
+            'start',
+            currentCompany.studentSessionTimeSlots || []
+          )}
           bordered
           renderItem={({ start, end, location, studentSession }, index) => (
             <List.Item>

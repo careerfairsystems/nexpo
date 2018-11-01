@@ -1,7 +1,14 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { Col, Row, Table } from 'antd';
-import { orderBy, divide, groupBy, sortBy } from 'lodash/fp';
+import {
+  orderBy,
+  divide,
+  groupBy,
+  sortBy,
+  entries,
+  map,
+  flow
+} from 'lodash/fp';
 import {
   VictoryAxis,
   VictoryChart,
@@ -11,6 +18,7 @@ import {
   VictoryVoronoiContainer
 } from 'victory';
 import moment from 'moment';
+// import ColumnGroup from 'antd/lib/table/ColumnGroup';
 
 const columns = [
   {
@@ -30,37 +38,36 @@ const dateFormat = d => moment(d).format('YYYY-MM-DD');
 
 const getData = applicationsPerDay => {
   let countPerDay = 0;
-  return sortBy(
-    sortDates,
-    Object.entries(groupBy(dateFormat, applicationsPerDay)).map(e => ({
-      x: e[0],
-      y: e[1].length
-    }))
-  ).map(({ x, y }) => {
-    countPerDay += y;
-    return {
-      x,
-      y: countPerDay
-    };
-  });
+  return flow(
+    groupBy(dateFormat),
+    entries,
+    map(e => ({ x: e[0], y: e[1].length })),
+    sortBy(sortDates),
+    map(({ x, y }) => {
+      countPerDay += y;
+      return {
+        x,
+        y: countPerDay
+      };
+    })
+  )(applicationsPerDay);
 };
 
-class Statistics extends Component {
-  static propTypes = {
-    getAllStatistics: PropTypes.func.isRequired,
-    statistics: PropTypes.shape({
-      companyStats: PropTypes.arrayOf(
-        PropTypes.shape({
-          name: PropTypes.string,
-          id: PropTypes.number,
-          nbrApplications: PropTypes.number
-        })
-      ),
-      nbrStudents: PropTypes.number,
-      nbrSearchingStudents: PropTypes.number
-    }).isRequired
-  };
-
+type Props = {
+  getAllStatistics: () => Promise<void>,
+  statistics: {
+    applicationsPerDay?: Array<string>,
+    companyStats?: Array<{
+      name?: string,
+      id: number,
+      nbrApplications: number
+    }>,
+    nbrStudents?: number,
+    nbrSearchingStudents?: number,
+    wordsPerAppl?: number
+  }
+};
+class Statistics extends Component<Props> {
   componentWillMount() {
     const { getAllStatistics } = this.props;
     getAllStatistics();
@@ -70,8 +77,8 @@ class Statistics extends Component {
     const { statistics } = this.props;
     const {
       companyStats = [],
-      nbrSearchingStudents,
-      nbrStudents,
+      nbrSearchingStudents = '',
+      nbrStudents = '',
       applicationsPerDay = [],
       wordsPerAppl = 0
     } = statistics;
@@ -152,9 +159,9 @@ class Statistics extends Component {
           dataSource={orderBy(
             'nbrApplications',
             'desc',
-            Object.keys(companyStats).map(i => ({
-              ...companyStats[i],
-              key: i
+            companyStats.map((stat, i) => ({
+              key: i,
+              ...stat
             }))
           )}
         />

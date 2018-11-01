@@ -12,41 +12,40 @@ import {
 
 export default {
   /** Create a student session */
-  create: data =>
+  create: (data: {}) =>
     authPost('/api/student_sessions', data).then(handleHttpResponse),
 
   /** Creates multiple student sessions */
-  createBulk: data =>
+  createBulk: (data: {}) =>
     authPatch('/api/student_sessions/', data).then(handleHttpResponse),
 
   /** Updates a student session */
-  update: (id, data) =>
+  update: (id: string, data: {}) =>
     authPut(`/api/student_sessions/${id}`, data).then(handleHttpResponse),
 
   /** Delete a student session */
-  destroy: id =>
+  destroy: (id: string) =>
     authDelete(`/api/student_sessions/${id}`).then(handleHttpResponse),
 
   /** Confirms a student session */
-  confirmSession: id =>
+  confirmSession: (id: string) =>
     authPut(`/api/me/student_sessions/${id}`, {
       studentSession: { studentConfirmed: true }
     }).then(handleHttpResponse),
-
   /** Create a student session application */
-  createAppl: data =>
+  createAppl: (data: {}) =>
     authPost('/api/student_session_applications', data).then(
       handleHttpResponse
     ),
 
   /** Update a student session application */
-  updateAppl: (id, data) =>
+  updateAppl: (id: string, data: {}) =>
     authPut(`/api/me/student_session_applications/${id}`, data).then(
       handleHttpResponse
     ),
 
   /** Delete a student session application */
-  destroyAppl: id =>
+  destroyAppl: (id: string) =>
     authDelete(`/api/me/student_session_applications/${id}`).then(
       handleHttpResponse
     )

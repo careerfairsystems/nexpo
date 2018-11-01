@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import { Button, Form, Input, Icon } from 'antd';
@@ -8,7 +7,11 @@ import makeField from './helper';
 const TextInput = makeField(Input);
 const TextArea = makeField(Input.TextArea);
 
-const MailtemplateForm = ({ handleSubmit }) => (
+type Props = {
+  handleSubmit: () => Promise<void>
+};
+
+const MailtemplateForm = ({ handleSubmit }: Props) => (
   <Form onSubmit={handleSubmit}>
     <Field name="name" label="Name:" component={TextInput} />
     <Field
@@ -22,10 +25,6 @@ const MailtemplateForm = ({ handleSubmit }) => (
     <Button htmlType="submit">Create template</Button>
   </Form>
 );
-
-MailtemplateForm.propTypes = {
-  handleSubmit: PropTypes.func.isRequired
-};
 
 const mapStateToProps = state => ({
   formState: state.form.MailtemplateForm

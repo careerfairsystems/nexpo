@@ -1,23 +1,32 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { isEmpty } from 'lodash/fp';
 
 import MailtemplateForm from '../../../Forms/MailtemplateForm';
 import NotFound from '../../NotFound';
 import LoadingSpinner from '../../../Components/LoadingSpinner';
 
-class Mailtemplate extends Component {
-  static propTypes = {
-    id: PropTypes.string,
-    mailtemplate: PropTypes.object.isRequired,
-    createMailtemplate: PropTypes.func.isRequired,
-    fetching: PropTypes.bool.isRequired,
-    getMailtemplate: PropTypes.func.isRequired,
-    updateMailtemplate: PropTypes.func.isRequired
-  };
+type MailTemplateObj = {
+  id?: string,
+  name: string,
+  subject: string,
+  content: string,
+  signature: string
+};
 
+type Props = {
+  id?: string,
+  mailtemplate: { mailtemplate: MailTemplateObj } | {},
+  createMailtemplate: ({ mailtemplate: MailTemplateObj }) => Promise<void>,
+  fetching: boolean,
+  getMailtemplate: string => Promise<void>,
+  updateMailtemplate: (
+    string,
+    { mailtemplate: MailTemplateObj }
+  ) => Promise<void>
+};
+class Mailtemplate extends Component<Props> {
   static defaultProps = {
-    id: null
+    id: ''
   };
 
   componentWillMount() {
@@ -25,7 +34,7 @@ class Mailtemplate extends Component {
     if (id) getMailtemplate(id);
   }
 
-  updateMailtemplate = values => {
+  updateMailtemplate = (values: MailTemplateObj) => {
     const {
       id,
       mailtemplate,
@@ -35,7 +44,7 @@ class Mailtemplate extends Component {
 
     if (isEmpty(mailtemplate)) {
       createMailtemplate({ mailtemplate: values });
-    } else {
+    } else if (id) {
       updateMailtemplate(id, { mailtemplate: values });
     }
   };

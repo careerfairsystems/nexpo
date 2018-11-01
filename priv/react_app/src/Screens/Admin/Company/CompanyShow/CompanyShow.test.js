@@ -22,6 +22,7 @@ describe('CompanyShow', () => {
 
   it('should render without crashing', () => {
     const company = {
+      id: '1',
       name: 'Test CompanyShow',
       website: 'testcompany.com',
       describe: 'We do testing!',
@@ -52,6 +53,7 @@ describe('CompanyShow', () => {
 
   it('should set html title', () => {
     const company = {
+      id: '1',
       name: 'Test CompanyShow',
       website: 'testcompany.com',
       describe: 'We do testing!',
@@ -66,6 +68,7 @@ describe('CompanyShow', () => {
 
   it('should render company information', () => {
     const company = {
+      id: '1',
       name: 'Test CompanyShow',
       website: 'testcompany.com',
       describe: 'We do testing!',

@@ -30,7 +30,7 @@ function runInEnvironment(env, func) {
  * Build the mocks
  */
 export const mockEnvironment = {
-  runInProduction: func => runInEnvironment('production', func),
-  runInDevelopment: func => runInEnvironment('development', func),
-  runInTest: func => runInEnvironment('test', func)
+  runInProduction: (func: *) => runInEnvironment('production', func),
+  runInDevelopment: (func: *) => runInEnvironment('development', func),
+  runInTest: (func: *) => runInEnvironment('test', func)
 };

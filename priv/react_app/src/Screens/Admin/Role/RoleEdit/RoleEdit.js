@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { isEmpty, isNil, capitalize } from 'lodash/fp';
 
 import NotFound from '../../../NotFound';
@@ -11,14 +10,28 @@ import '../Role.css';
 /**
  * Responsible for rendering a role. Role id is recieved via url
  */
-class RoleEdit extends Component {
+type Props = {
+  id: string,
+  role: { type?: string },
+  getRole: string => Promise<void>,
+  getAllUsers: () => Promise<void>,
+  fetchingRoles: boolean,
+  fetchingUsers: boolean,
+  updateRole: (string, { role: {} }) => Promise<void>,
+  history: { push: string => any }
+};
+class RoleEdit extends Component<Props> {
   componentWillMount() {
     const { id, getRole, getAllUsers } = this.props;
     getRole(id);
     getAllUsers();
   }
 
-  updateRole = values => {
+  updateRole = (values: {
+    type: string,
+    permissions: Array<string>,
+    user: number
+  }) => {
     const { id, updateRole, history } = this.props;
     updateRole(id, { role: values });
     history.push(`/admin/roles/${id}`);
@@ -32,25 +45,14 @@ class RoleEdit extends Component {
 
     return (
       <div className="role-edit-view">
-        <HtmlTitle title={capitalize(role.type)} />
+        <HtmlTitle title={capitalize(role.type || '')} />
         <div>
-          <h1>Role: {capitalize(role.type)}</h1>
+          <h1>Role: {capitalize(role.type || '')}</h1>
           <RoleForm onSubmit={this.updateRole} initialValues={role} />
         </div>
       </div>
     );
   }
 }
-
-RoleEdit.propTypes = {
-  id: PropTypes.string.isRequired,
-  role: PropTypes.shape({ type: PropTypes.string }).isRequired,
-  getRole: PropTypes.func.isRequired,
-  getAllUsers: PropTypes.func.isRequired,
-  fetchingRoles: PropTypes.bool.isRequired,
-  fetchingUsers: PropTypes.bool.isRequired,
-  updateRole: PropTypes.func.isRequired,
-  history: PropTypes.shape({ push: PropTypes.func }).isRequired
-};
 
 export default RoleEdit;

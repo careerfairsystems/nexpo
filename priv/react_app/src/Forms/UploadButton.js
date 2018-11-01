@@ -1,10 +1,15 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { isEmpty } from 'lodash/fp';
 import { Button, Icon, Upload } from 'antd';
 import makeField from './helper';
 
-const UploadButton = ({ accept, value, onChange }) => (
+type Props = {
+  accept: string,
+  value: {} | string,
+  onChange: (?File) => Promise<void>
+};
+
+const UploadButton = ({ accept = '', value, onChange }: Props) => (
   <Upload
     key="uploadButton"
     accept={accept}
@@ -22,10 +27,8 @@ const UploadButton = ({ accept, value, onChange }) => (
   </Upload>
 );
 
-UploadButton.propTypes = {
-  accept: PropTypes.string.isRequired,
-  value: PropTypes.oneOfType([PropTypes.object, PropTypes.string]).isRequired,
-  onChange: PropTypes.func.isRequired
-};
+// UploadButton.defaultProps = {
+//   accept: ''
+// };
 
 export default makeField(UploadButton);

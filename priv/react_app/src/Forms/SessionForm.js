@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { map } from 'lodash/fp';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
@@ -22,11 +21,16 @@ const requiredCompany = value =>
 const requiredMotivation = value =>
   value ? undefined : 'Please provide a motivation';
 
+type Props = {
+  availableCompanies: Array<any>,
+  handleSubmit: () => Promise<void>,
+  submitting: boolean
+};
 const StudentSessionForm = ({
   handleSubmit,
   availableCompanies,
   submitting
-}) => (
+}: Props) => (
   <Form onSubmit={handleSubmit}>
     <Field
       label="Choose the company you would like to meet"
@@ -54,12 +58,6 @@ const StudentSessionForm = ({
     </Button>
   </Form>
 );
-
-StudentSessionForm.propTypes = {
-  availableCompanies: PropTypes.array.isRequired,
-  handleSubmit: PropTypes.func.isRequired,
-  submitting: PropTypes.bool.isRequired
-};
 
 const mapStateToProps = state => ({
   availableCompanies: Selectors.companies.getNotAppliedTo(state),

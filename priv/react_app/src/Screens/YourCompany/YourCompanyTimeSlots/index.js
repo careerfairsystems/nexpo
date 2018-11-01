@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { Actions, Selectors } from '../../../Store';
 import YourCompanyTimeSlots from './YourCompanyTimeSlots';
-import { State } from '../../../Store/reducers/index';
+import type { State } from '../../../Store/reducers/index';
 
 const mapStateToProps = (state: State) => ({
   currentCompany: Selectors.companies.getCurrentCompany(state),

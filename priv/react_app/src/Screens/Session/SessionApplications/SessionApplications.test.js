@@ -9,8 +9,18 @@ describe('SessionApplications', () => {
   beforeEach(() => {
     props = {
       applications: [
-        { id: 1, companyId: 1, studentId: 1, motivation: 'Really motivating' },
-        { id: 2, companyId: 1, studentId: 1, motivation: 'Really motivating' }
+        {
+          id: '1',
+          company: '1',
+          studentId: '1',
+          motivation: 'Really motivating'
+        },
+        {
+          id: '2',
+          company: '1',
+          studentId: '1',
+          motivation: 'Really motivating'
+        }
       ],
       companies: {},
       fetching: false,
@@ -40,9 +50,9 @@ describe('SessionApplications', () => {
     const wrapper = shallow(<SessionApplications {...props} />);
     expect(wrapper.state().editing).toEqual({});
     wrapper.instance().toggleEditMode(1);
-    expect(wrapper.state().editing).toEqual({ 1: true });
+    expect(wrapper.state().editing).toEqual({ '1': true });
     wrapper.instance().toggleEditMode(2);
-    expect(wrapper.state().editing).toEqual({ 2: true });
+    expect(wrapper.state().editing).toEqual({ '2': true });
   });
   it('calls updateStudentSessionApplwith correct parameters', () => {
     const wrapper = shallow(<SessionApplications {...props} />);

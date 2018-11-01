@@ -2,6 +2,7 @@ import { reset } from 'redux-form';
 import { message } from 'antd';
 import { actionTypes } from '../..';
 import API from '../../../API';
+import type { Dispatch } from '../../reducers';
 
 export function createStudentSessionIsLoading() {
   return {
@@ -9,7 +10,7 @@ export function createStudentSessionIsLoading() {
   };
 }
 
-export function createStudentSessionSuccess(company) {
+export function createStudentSessionSuccess(company: {}) {
   message.success('Student Session was successfully created.');
   return {
     type: actionTypes.POST_STUDENT_SESSION_SUCCESS,
@@ -28,8 +29,8 @@ export function createStudentSessionFailure(): CreateStudentSessionFailureAction
   };
 }
 
-export function createStudentSession(data) {
-  return dispatch => {
+export function createStudentSession(data: {}) {
+  return (dispatch: Dispatch) => {
     dispatch(createStudentSessionIsLoading());
     return API.studentSessions
       .create(data)

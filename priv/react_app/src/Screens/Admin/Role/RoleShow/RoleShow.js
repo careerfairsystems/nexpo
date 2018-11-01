@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { isEmpty, isNil, capitalize, join } from 'lodash/fp';
 import { List, Avatar, Button } from 'antd';
 import NotFound from '../../../NotFound';
@@ -10,7 +9,17 @@ import '../Role.css';
 /**
  * Responsible for rendering a role. Role id is recieved via url
  */
-class RoleShow extends Component {
+type Props = {
+  id: string,
+  role: {
+    id?: string,
+    type?: string,
+    permissions?: Array<string>,
+    users?: Array<number>
+  },
+  getRole: string => Promise<void>
+};
+class RoleShow extends Component<Props> {
   componentWillMount() {
     const { id, getRole } = this.props;
     getRole(id);
@@ -25,11 +34,11 @@ class RoleShow extends Component {
 
     return (
       <div className="role-show-view">
-        <HtmlTitle title={capitalize(role.type)} />
+        <HtmlTitle title={capitalize(role.type || '')} />
 
         <div>
-          <h1>{capitalize(role.type)}</h1>
-          <p>Permissions: {join(',', role.permissions)}</p>
+          <h1>{capitalize(role.type || '')}</h1>
+          <p>Permissions: {join(',', role.permissions || [])}</p>
           <h2>Users</h2>
           <List
             dataSource={role.users}
@@ -51,7 +60,7 @@ class RoleShow extends Component {
         </div>
         <br />
 
-        <InvisibleLink to={`/admin/roles/${role.id}/edit`}>
+        <InvisibleLink to={`/admin/roles/${role.id || ''}/edit`}>
           <Button onClick={() => null} type="primary">
             Edit
           </Button>
@@ -60,11 +69,5 @@ class RoleShow extends Component {
     );
   }
 }
-
-RoleShow.propTypes = {
-  id: PropTypes.string.isRequired,
-  role: PropTypes.object.isRequired,
-  getRole: PropTypes.func.isRequired
-};
 
 export default RoleShow;

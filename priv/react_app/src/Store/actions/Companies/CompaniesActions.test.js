@@ -218,7 +218,7 @@ describe('getCompany', () => {
     mockHttpResponse({ status: 200, body: {} });
     const store = createMockStore();
 
-    return store.dispatch(Actions.companies.getCompany()).then(() => {
+    return store.dispatch(Actions.companies.getCompany('1')).then(() => {
       const calledActions = store.getActions();
       expect(calledActions[0]).toEqual(Actions.companies.getCompanyIsLoading());
     });
@@ -237,7 +237,7 @@ describe('getCompany', () => {
 
     const store = createMockStore();
 
-    return store.dispatch(Actions.companies.getCompany()).then(() => {
+    return store.dispatch(Actions.companies.getCompany('1')).then(() => {
       const calledActions = store.getActions();
       expect(calledActions).toEqual(expectedActions);
     });
@@ -253,7 +253,7 @@ describe('getCompany', () => {
 
     const store = createMockStore();
 
-    return store.dispatch(Actions.companies.getCompany()).then(() => {
+    return store.dispatch(Actions.companies.getCompany('1')).then(() => {
       const calledActions = store.getActions();
       expect(calledActions).toEqual(expectedActions);
     });
@@ -301,7 +301,7 @@ describe('updateCompany', () => {
     const store = createMockStore();
     const data = { company: { name: 'Test Company' } };
 
-    return store.dispatch(Actions.companies.updateCompany(1, data)).then(() => {
+    return store.dispatch(Actions.companies.updateCompany('1', data)).then(() => {
       const calledActions = store.getActions();
       expect(calledActions[0]).toEqual(
         Actions.companies.updateCompanyIsLoading()
@@ -323,7 +323,7 @@ describe('updateCompany', () => {
     const store = createMockStore();
     const data = { company };
 
-    return store.dispatch(Actions.companies.updateCompany(1, data)).then(() => {
+    return store.dispatch(Actions.companies.updateCompany('1', data)).then(() => {
       const calledActions = store.getActions();
       expect(calledActions).toEqual(expectedActions);
     });
@@ -340,7 +340,7 @@ describe('updateCompany', () => {
 
     const store = createMockStore();
 
-    return store.dispatch(Actions.companies.updateCompany(1, data)).then(() => {
+    return store.dispatch(Actions.companies.updateCompany('1', data)).then(() => {
       const calledActions = store.getActions();
       expect(calledActions).toEqual(expectedActions);
     });
@@ -360,7 +360,7 @@ describe('destroyCompanyIsLoading', () => {
 describe('destroyCompanySuccess', () => {
   it('should create the correct action', () => {
     const testCompany = {
-      id: 1
+      id: '1'
     };
 
     const expectedAction = {
@@ -387,7 +387,7 @@ describe('destroyCompany', () => {
     mockHttpResponse({ status: 200, body: {} });
     const store = createMockStore();
 
-    return store.dispatch(Actions.companies.destroyCompany(1)).then(() => {
+    return store.dispatch(Actions.companies.destroyCompany('1')).then(() => {
       const calledActions = store.getActions();
       expect(calledActions[0]).toEqual(
         Actions.companies.destroyCompanyIsLoading()
@@ -397,7 +397,7 @@ describe('destroyCompany', () => {
 
   it('should call success action on success', () => {
     const company = {
-      id: 1
+      id: '1'
     };
 
     mockHttpResponse({ status: 200, body: { data: company } });
@@ -409,7 +409,7 @@ describe('destroyCompany', () => {
 
     const store = createMockStore();
 
-    return store.dispatch(Actions.companies.destroyCompany(1)).then(() => {
+    return store.dispatch(Actions.companies.destroyCompany('1')).then(() => {
       const calledActions = store.getActions();
       expect(calledActions).toEqual(expectedActions);
     });
@@ -424,7 +424,7 @@ describe('destroyCompany', () => {
 
     const store = createMockStore();
 
-    return store.dispatch(Actions.companies.destroyCompany(1)).then(() => {
+    return store.dispatch(Actions.companies.destroyCompany('1')).then(() => {
       const calledActions = store.getActions();
       expect(calledActions).toEqual(expectedActions);
     });

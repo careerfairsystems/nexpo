@@ -1,3 +1,4 @@
+import type { Dispatch } from 'redux';
 import { message } from 'antd';
 import { actionTypes } from '../..';
 import API from '../../../API';
@@ -6,7 +7,7 @@ export const getCurrentUserIsLoading = () => ({
   type: actionTypes.FETCH_CURRENT_USER
 });
 
-export const getCurrentUserSuccess = user => ({
+export const getCurrentUserSuccess = (user: {}) => ({
   type: actionTypes.FETCH_CURRENT_USER_SUCCESS,
   user
 });
@@ -19,7 +20,7 @@ export const getCurrentUserFailure = () => {
 };
 
 export function getCurrentUser() {
-  return dispatch => {
+  return (dispatch: Dispatch<{ type: string }>) => {
     dispatch(getCurrentUserIsLoading());
     return API.users
       .getMe()

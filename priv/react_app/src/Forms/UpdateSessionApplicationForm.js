@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import { Input, Form, Button } from 'antd';
@@ -10,12 +9,18 @@ const TextArea = makeField(Input.TextArea);
 const requiredMotivation = value =>
   value ? undefined : 'Please provide a motivation';
 
+type Props = {
+  handleSubmit: () => Promise<void>,
+  invalid: boolean,
+  pristine: boolean,
+  submitting: boolean
+};
 const UpdateSessionApplicationForm = ({
   handleSubmit,
   invalid,
   pristine,
   submitting
-}) => (
+}: Props) => (
   <Form onSubmit={handleSubmit}>
     <Field
       name="motivation"
@@ -34,13 +39,6 @@ const UpdateSessionApplicationForm = ({
     </Button>
   </Form>
 );
-
-UpdateSessionApplicationForm.propTypes = {
-  handleSubmit: PropTypes.func.isRequired,
-  invalid: PropTypes.bool.isRequired,
-  pristine: PropTypes.bool.isRequired,
-  submitting: PropTypes.bool.isRequired
-};
 
 const mapStateToProps = (state, props) => ({
   formState: state.form.UpdateSessionApplicationForm,

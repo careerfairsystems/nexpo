@@ -1,33 +1,32 @@
+import type { Dispatch } from 'redux';
 import { message } from 'antd';
 import { actionTypes } from '../..';
 import API from '../../../API';
 
-export function destroyMailtemplateIsLoading() {
-  return {
-    type: actionTypes.DELETE_MAILTEMPLATE
-  };
-}
+export const destroyMailtemplateIsLoading = () => ({
+  type: actionTypes.DELETE_MAILTEMPLATE
+});
 
-export function destroyMailtemplateSuccess(id) {
+export const destroyMailtemplateSuccess = (id: string) => {
   message.success('Mailtemplate successfully deleted');
   return {
     type: actionTypes.DELETE_MAILTEMPLATE_SUCCESS,
     id
   };
-}
+};
 
 export type DestroyMailtemplateFailureAction = {
   type: string
 };
-export function destroyMailtemplateFailure(): DestroyMailtemplateFailureAction {
+export const destroyMailtemplateFailure = (): DestroyMailtemplateFailureAction => {
   message.error('Something went wrong, please try again later');
   return {
     type: actionTypes.DELETE_MAILTEMPLATE_FAILURE
   };
-}
+};
 
-export function destroyMailtemplate(id) {
-  return dispatch => {
+export function destroyMailtemplate(id: string) {
+  return (dispatch: Dispatch<{ type: string }>) => {
     dispatch(destroyMailtemplateIsLoading());
     return API.mailtemplates
       .destroy(id)

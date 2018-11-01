@@ -8,12 +8,15 @@ import SuccessMessage from '../../../../Components/SuccessMessage';
 /**
  * Component which allows user to initiate a sign up process
  */
-class InitialSignup extends Component {
+type State = {
+  finished: boolean
+};
+class InitialSignup extends Component<{}, State> {
   state = {
     finished: false
   };
 
-  signup = values => {
+  signup = (values: { email: string }) => {
     const { email } = values;
     return API.signup
       .initialSignup(email)

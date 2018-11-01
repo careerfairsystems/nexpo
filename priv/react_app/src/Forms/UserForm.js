@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import { Button, Input, Form } from 'antd';
@@ -8,7 +7,11 @@ import makeField, { required } from './helper';
 const TextInput = makeField(Input);
 const TextArea = makeField(Input.TextArea);
 
-const UserForm = ({ handleSubmit, pristine }) => (
+type Props = {
+  handleSubmit: () => Promise<void>,
+  pristine: boolean
+};
+const UserForm = ({ handleSubmit, pristine }: Props) => (
   <Form onSubmit={handleSubmit}>
     <Field
       name="firstName"
@@ -41,11 +44,6 @@ const UserForm = ({ handleSubmit, pristine }) => (
     </Button>
   </Form>
 );
-
-UserForm.propTypes = {
-  handleSubmit: PropTypes.func.isRequired,
-  pristine: PropTypes.bool.isRequired
-};
 
 const mapStateToProps = state => ({
   formState: state.form.UserForm

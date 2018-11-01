@@ -1,33 +1,32 @@
+import type { Dispatch } from 'redux';
 import { message } from 'antd';
 import { actionTypes } from '../..';
 import API from '../../../API';
 
-export function createDeadlineIsLoading() {
-  return {
-    type: actionTypes.POST_DEADLINE
-  };
-}
+export const createDeadlineIsLoading = () => ({
+  type: actionTypes.POST_DEADLINE
+});
 
-export function createDeadlineSuccess(deadline) {
+export const createDeadlineSuccess = (deadline: {}) => {
   message.success('Deadline successfully created');
   return {
     type: actionTypes.POST_DEADLINE_SUCCESS,
     deadline
   };
-}
+};
 
 export type CreateDeadlineFailureAction = {
   type: string
 };
-export function createDeadlineFailure(): CreateDeadlineFailureAction {
+export const createDeadlineFailure = (): CreateDeadlineFailureAction => {
   message.error('Something went wrong, please try again later');
   return {
     type: actionTypes.POST_DEADLINE_FAILURE
   };
-}
+};
 
-export function createDeadline(data) {
-  return dispatch => {
+export function createDeadline(data: {}) {
+  return (dispatch: Dispatch<{ type: string }>) => {
     dispatch(createDeadlineIsLoading());
     return API.deadlines
       .create(data)

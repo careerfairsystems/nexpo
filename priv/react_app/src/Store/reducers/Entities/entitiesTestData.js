@@ -5,9 +5,9 @@ const testData = {
       studentSessionDays: 0,
       name: 'Spotify',
       logoUrl: null,
-      id: 1,
+      id: '1',
       description: 'We do music!',
-      entries: [{ id: 1, value: 'JA' }, { id: 2, value: '20' }]
+      entries: [{ id: '1', value: 'JA' }, { id: 2, value: '20' }]
     },
     {
       website: 'www.google.com',
@@ -51,13 +51,13 @@ const testData = {
     studentSessionDays: 0,
     name: 'Spotify',
     logoUrl: null,
-    id: 1,
+    id: '1',
     description: 'We do music!',
-    entries: [{ id: 1, value: 'JA' }, { id: 2, value: '20' }]
+    entries: [{ id: '1', value: 'JA' }, { id: 2, value: '20' }]
   },
   users: [
     {
-      id: 1,
+      id: '1',
       email: 'dev@it.now',
       firstName: 'Dev',
       lastName: 'User'
@@ -70,13 +70,13 @@ const testData = {
     }
   ],
   user: {
-    id: 1,
+    id: '1',
     email: 'dev@it.now',
     firstName: 'Dev',
     lastName: 'User',
     roles: [
       {
-        id: 1,
+        id: '1',
         type: 'admin',
         permissions: ['read_all', 'write_all']
       }
@@ -96,11 +96,12 @@ const testData = {
   ],
   role: {
     id: 1,
+    name: 'Role1',
     type: 'admin',
     permissions: ['read_all', 'write_all'],
     users: [
       {
-        id: 1,
+        id: '1',
         email: 'dev@it.now',
         firstName: 'Dev',
         lastName: 'User'
@@ -108,23 +109,28 @@ const testData = {
     ]
   },
   studentSessionApplications: {
-    1: { id: 1, companyId: 1, studentId: 1, motivation: 'Old motivation' }
+    '1': {
+      id: '1',
+      companyid: '1',
+      studentid: '1',
+      motivation: 'Old motivation'
+    }
   },
   studentSessions: {
-    1: {
-      id: 1,
-      companyId: 1,
-      studentId: 1,
+    '1': {
+      id: '1',
+      companyid: '1',
+      studentid: '1',
       start: '2018-01-01',
       end: '2018-01-01',
       studentConfirmed: false
     }
   },
   studentSessionDays: {
-    1: {
-      id: 1,
-      companyId: 1,
-      studentId: 1,
+    '1': {
+      id: '1',
+      companyid: '1',
+      studentid: '1',
       start: '2018-01-01',
       end: '2018-01-01'
     }
@@ -132,9 +138,9 @@ const testData = {
   categories: [
     {
       title: 'Logistik',
-      id: 1,
+      id: '1',
       attributes: [
-        { title: 'Eluttag', id: 1 },
+        { title: 'Eluttag', id: '1' },
         { title: 'Internetkoder', id: 2 },
         { title: 'Ståbord', id: 3 },
         { title: 'Koli', id: 4 }
@@ -173,12 +179,14 @@ const testData = {
   ],
   category: {
     title: 'Logistik',
-    id: 1,
+    id: '1',
     attributes: [
       {
         title: 'Eluttag',
-        id: 1,
-        entries: [{ id: 1, value: '1', company: { id: 1, name: 'Spotify' } }]
+        id: '1',
+        entries: [
+          { id: '1', value: '1', company: { id: '1', name: 'Spotify' } }
+        ]
       },
       {
         title: 'Internetkoder',

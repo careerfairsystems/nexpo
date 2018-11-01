@@ -34,10 +34,12 @@ describe('forgotPassword', () => {
     const store = createMockStore();
 
     expect.assertions(1);
-    return store.dispatch(Actions.accounts.forgotPassword({})).then(() => {
-      const calledActions = store.getActions();
-      expect(calledActions).toEqual(expectedActions);
-    });
+    return store
+      .dispatch(Actions.accounts.forgotPassword({ email: '' }))
+      .then(() => {
+        const calledActions = store.getActions();
+        expect(calledActions).toEqual(expectedActions);
+      });
   });
 });
 
@@ -178,7 +180,7 @@ describe('replaceForgottenPassword', () => {
 
   it('should call request and failure on http failure', () => {
     mockHttpResponse({
-      status: 400
+      status: 400,
     });
     const store = createMockStore();
     expect.assertions(1);

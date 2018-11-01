@@ -1,3 +1,4 @@
+import type { Dispatch } from 'redux';
 import { message } from 'antd';
 import { actionTypes } from '../..';
 import API from '../../../API';
@@ -6,7 +7,7 @@ export const updateCurrentStudentIsLoading = () => ({
   type: actionTypes.PUT_CURRENT_STUDENT
 });
 
-export const updateCurrentStudentSuccess = student => {
+export const updateCurrentStudentSuccess = (student: {}) => {
   message.success('Your profile was succefully updated');
   return {
     type: actionTypes.PUT_CURRENT_STUDENT_SUCCESS,
@@ -21,8 +22,8 @@ export const updateCurrentStudentFailure = () => {
   };
 };
 
-export function updateCurrentStudent(data) {
-  return dispatch => {
+export function updateCurrentStudent(data: {}) {
+  return (dispatch: Dispatch<{ type: string }>) => {
     dispatch(updateCurrentStudentIsLoading());
     return API.users
       .updateMyStudent(data)

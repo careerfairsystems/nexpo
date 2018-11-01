@@ -44,7 +44,7 @@ describe('get current user', () => {
   });
 
   it('should call success action on success', () => {
-    const testUser = { id: 1, name: 'Test User' };
+    const testUser = { id: '1', name: 'Test User' };
     const httpResponseBody = {
       data: testUser
     };
@@ -203,7 +203,7 @@ describe('updateCurrentUser', () => {
     const store = createMockStore();
     const data = { user: { name: 'Test CurrentUser' } };
 
-    return store.dispatch(Actions.users.updateCurrentUser(1, data)).then(() => {
+    return store.dispatch(Actions.users.updateCurrentUser(data)).then(() => {
       const calledActions = store.getActions();
       expect(calledActions[0]).toEqual(
         Actions.users.updateCurrentUserIsLoading()
@@ -225,7 +225,7 @@ describe('updateCurrentUser', () => {
     const store = createMockStore();
     const data = { user };
 
-    return store.dispatch(Actions.users.updateCurrentUser(1, data)).then(() => {
+    return store.dispatch(Actions.users.updateCurrentUser(data)).then(() => {
       const calledActions = store.getActions();
       expect(calledActions).toEqual(expectedActions);
     });
@@ -242,7 +242,7 @@ describe('updateCurrentUser', () => {
 
     const store = createMockStore();
 
-    return store.dispatch(Actions.users.updateCurrentUser(1, data)).then(() => {
+    return store.dispatch(Actions.users.updateCurrentUser(data)).then(() => {
       const calledActions = store.getActions();
       expect(calledActions).toEqual(expectedActions);
     });
@@ -262,7 +262,7 @@ describe('destroyCurrentUserIsLoading', () => {
 describe('destroyCurrentUserSuccess', () => {
   it('should create the correct action', () => {
     const expectedAction = {
-      type: actionTypes.DELETE_CURRENT_USER_SUCCESS,
+      type: actionTypes.DELETE_CURRENT_USER_SUCCESS
     };
     const action = Actions.users.destroyCurrentUserSuccess();
     expect(action).toEqual(expectedAction);
@@ -284,7 +284,7 @@ describe('destroyCurrentUser', () => {
     mockHttpResponse({ status: 200, body: {} });
     const store = createMockStore();
 
-    return store.dispatch(Actions.users.destroyCurrentUser(1)).then(() => {
+    return store.dispatch(Actions.users.destroyCurrentUser()).then(() => {
       const calledActions = store.getActions();
       expect(calledActions[0]).toEqual(
         Actions.users.destroyCurrentUserIsLoading()
@@ -293,17 +293,17 @@ describe('destroyCurrentUser', () => {
   });
 
   it('should call success action on success', () => {
-    const userId = 1;
+    const userId = '1';
     mockHttpResponse({ status: 200, body: { data: userId } });
 
     const expectedActions = [
       Actions.users.destroyCurrentUserIsLoading(),
-      Actions.users.destroyCurrentUserSuccess(userId)
+      Actions.users.destroyCurrentUserSuccess()
     ];
 
     const store = createMockStore();
 
-    return store.dispatch(Actions.users.destroyCurrentUser(1)).then(() => {
+    return store.dispatch(Actions.users.destroyCurrentUser()).then(() => {
       const calledActions = store.getActions();
       expect(calledActions).toEqual(expectedActions);
     });
@@ -318,7 +318,7 @@ describe('destroyCurrentUser', () => {
 
     const store = createMockStore();
 
-    return store.dispatch(Actions.users.destroyCurrentUser(1)).then(() => {
+    return store.dispatch(Actions.users.destroyCurrentUser()).then(() => {
       const calledActions = store.getActions();
       expect(calledActions).toEqual(expectedActions);
     });
@@ -339,6 +339,7 @@ describe('getAllUsersSuccess', () => {
   it('should create the correct action', () => {
     const testUsers = [
       {
+        id: 1,
         name: 'User1'
       }
     ];
@@ -536,7 +537,7 @@ describe('getUser', () => {
     mockHttpResponse({ status: 200, body: {} });
     const store = createMockStore();
 
-    return store.dispatch(Actions.users.getUser()).then(() => {
+    return store.dispatch(Actions.users.getUser('1')).then(() => {
       const calledActions = store.getActions();
       expect(calledActions[0]).toEqual(Actions.users.getUserIsLoading());
     });
@@ -555,7 +556,7 @@ describe('getUser', () => {
 
     const store = createMockStore();
 
-    return store.dispatch(Actions.users.getUser()).then(() => {
+    return store.dispatch(Actions.users.getUser('1')).then(() => {
       const calledActions = store.getActions();
       expect(calledActions).toEqual(expectedActions);
     });
@@ -571,7 +572,7 @@ describe('getUser', () => {
 
     const store = createMockStore();
 
-    return store.dispatch(Actions.users.getUser()).then(() => {
+    return store.dispatch(Actions.users.getUser('1')).then(() => {
       const calledActions = store.getActions();
       expect(calledActions).toEqual(expectedActions);
     });
@@ -619,7 +620,7 @@ describe('updateUser', () => {
     const store = createMockStore();
     const data = { user: { name: 'Test User' } };
 
-    return store.dispatch(Actions.users.updateUser(1, data)).then(() => {
+    return store.dispatch(Actions.users.updateUser('1', data)).then(() => {
       const calledActions = store.getActions();
       expect(calledActions[0]).toEqual(Actions.users.updateUserIsLoading());
     });
@@ -639,7 +640,7 @@ describe('updateUser', () => {
     const store = createMockStore();
     const data = { user };
 
-    return store.dispatch(Actions.users.updateUser(1, data)).then(() => {
+    return store.dispatch(Actions.users.updateUser('1', data)).then(() => {
       const calledActions = store.getActions();
       expect(calledActions).toEqual(expectedActions);
     });
@@ -656,7 +657,7 @@ describe('updateUser', () => {
 
     const store = createMockStore();
 
-    return store.dispatch(Actions.users.updateUser(1, data)).then(() => {
+    return store.dispatch(Actions.users.updateUser('1', data)).then(() => {
       const calledActions = store.getActions();
       expect(calledActions).toEqual(expectedActions);
     });
@@ -676,7 +677,7 @@ describe('destroyUserIsLoading', () => {
 describe('destroyUserSuccess', () => {
   it('should create the correct action', () => {
     const testUser = {
-      id: 1,
+      id: '1',
       name: 'User1'
     };
 
@@ -704,7 +705,7 @@ describe('destroyUser', () => {
     mockHttpResponse({ status: 200, body: {} });
     const store = createMockStore();
 
-    return store.dispatch(Actions.users.destroyUser(1)).then(() => {
+    return store.dispatch(Actions.users.destroyUser('1')).then(() => {
       const calledActions = store.getActions();
       expect(calledActions[0]).toEqual(Actions.users.destroyUserIsLoading());
     });
@@ -712,7 +713,7 @@ describe('destroyUser', () => {
 
   it('should call success action on success', () => {
     const user = {
-      id: 1,
+      id: '1',
       name: 'User1'
     };
     mockHttpResponse({ status: 200, body: '' });
@@ -724,7 +725,7 @@ describe('destroyUser', () => {
 
     const store = createMockStore();
 
-    return store.dispatch(Actions.users.destroyUser(1)).then(() => {
+    return store.dispatch(Actions.users.destroyUser('1')).then(() => {
       const calledActions = store.getActions();
       expect(calledActions).toEqual(expectedActions);
     });
@@ -739,7 +740,7 @@ describe('destroyUser', () => {
 
     const store = createMockStore();
 
-    return store.dispatch(Actions.users.destroyUser(1)).then(() => {
+    return store.dispatch(Actions.users.destroyUser('1')).then(() => {
       const calledActions = store.getActions();
       expect(calledActions).toEqual(expectedActions);
     });

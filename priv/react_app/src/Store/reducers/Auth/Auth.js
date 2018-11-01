@@ -1,6 +1,23 @@
 import { actionTypes } from '../..';
+import type {} from '../..';
 import { setJwt, deleteJwt } from '../../../Util/JwtHelper';
 
+type LOGIN_SUCCESS_ACTION = {
+  type: typeof actionTypes.LOGIN_SUCCESS,
+  jwt: string
+};
+
+type OtherActions = {
+  type:
+    | typeof actionTypes.LOGIN_FAILURE
+    | typeof actionTypes.FETCH_CURRENT_USER_SUCCESS
+    | typeof actionTypes.LOGOUT
+    | typeof actionTypes.FETCH_CURRENT_USER_FAILURE
+    | typeof actionTypes.VERIFY_FORGOT_PASSWORD_KEY_SUCCESS
+    | typeof actionTypes.VERIFY_FORGOT_PASSWORD_KEY_FAILURE
+};
+
+export type AuthActions = LOGIN_SUCCESS_ACTION | OtherActions;
 export type AuthState = {
   error: boolean,
   isLoggedIn: boolean,
@@ -17,7 +34,10 @@ const initialState = {
   }
 };
 
-export const AuthReducer = (state = initialState, action): AuthState => {
+export const AuthReducer = (
+  state: AuthState = initialState,
+  action: AuthActions
+): AuthState => {
   switch (action.type) {
     case actionTypes.LOGIN_SUCCESS:
       setJwt(action.jwt);

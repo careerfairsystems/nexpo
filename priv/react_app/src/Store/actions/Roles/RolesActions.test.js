@@ -187,6 +187,7 @@ describe('getRoleIsLoading', () => {
 describe('getRoleSuccess', () => {
   it('should create the correct action', () => {
     const testRole = {
+      id: 1,
       name: 'Role1'
     };
 
@@ -214,7 +215,7 @@ describe('getRole', () => {
     mockHttpResponse({ status: 200, body: {} });
     const store = createMockStore();
 
-    return store.dispatch(Actions.roles.getRole()).then(() => {
+    return store.dispatch(Actions.roles.getRole('1')).then(() => {
       const calledActions = store.getActions();
       expect(calledActions[0]).toEqual(Actions.roles.getRoleIsLoading());
     });
@@ -222,6 +223,7 @@ describe('getRole', () => {
 
   it('should call success action on success', () => {
     const role = {
+    id: 1,
       name: 'Role1'
     };
     mockHttpResponse({ status: 200, body: { data: role } });
@@ -233,7 +235,7 @@ describe('getRole', () => {
 
     const store = createMockStore();
 
-    return store.dispatch(Actions.roles.getRole()).then(() => {
+    return store.dispatch(Actions.roles.getRole('1')).then(() => {
       const calledActions = store.getActions();
       expect(calledActions).toEqual(expectedActions);
     });
@@ -249,7 +251,7 @@ describe('getRole', () => {
 
     const store = createMockStore();
 
-    return store.dispatch(Actions.roles.getRole()).then(() => {
+    return store.dispatch(Actions.roles.getRole('1')).then(() => {
       const calledActions = store.getActions();
       expect(calledActions).toEqual(expectedActions);
     });
@@ -297,7 +299,7 @@ describe('updateRole', () => {
     const store = createMockStore();
     const data = { role: { name: 'Test Role' } };
 
-    return store.dispatch(Actions.roles.updateRole(1, data)).then(() => {
+    return store.dispatch(Actions.roles.updateRole('1', data)).then(() => {
       const calledActions = store.getActions();
       expect(calledActions[0]).toEqual(Actions.roles.updateRoleIsLoading());
     });
@@ -317,7 +319,7 @@ describe('updateRole', () => {
     const store = createMockStore();
     const data = { role };
 
-    return store.dispatch(Actions.roles.updateRole(1, data)).then(() => {
+    return store.dispatch(Actions.roles.updateRole('1', data)).then(() => {
       const calledActions = store.getActions();
       expect(calledActions).toEqual(expectedActions);
     });
@@ -334,7 +336,7 @@ describe('updateRole', () => {
 
     const store = createMockStore();
 
-    return store.dispatch(Actions.roles.updateRole(1, data)).then(() => {
+    return store.dispatch(Actions.roles.updateRole('1', data)).then(() => {
       const calledActions = store.getActions();
       expect(calledActions).toEqual(expectedActions);
     });
@@ -353,7 +355,7 @@ describe('destroyRoleIsLoading', () => {
 
 describe('destroyRoleSuccess', () => {
   it('should create the correct action', () => {
-    const testRoleId = 1;
+    const testRoleId = '1';
 
     const expectedAction = {
       type: actionTypes.DELETE_ROLE_SUCCESS,
@@ -379,14 +381,14 @@ describe('destroyRole', () => {
     mockHttpResponse({ status: 200, body: {} });
     const store = createMockStore();
 
-    return store.dispatch(Actions.roles.destroyRole(1)).then(() => {
+    return store.dispatch(Actions.roles.destroyRole('1')).then(() => {
       const calledActions = store.getActions();
       expect(calledActions[0]).toEqual(Actions.roles.destroyRoleIsLoading());
     });
   });
 
   it('should call success action on success', () => {
-    const roleId = 1;
+    const roleId = '1';
     mockHttpResponse({ status: 200, body: { data: roleId } });
 
     const expectedActions = [
@@ -396,7 +398,7 @@ describe('destroyRole', () => {
 
     const store = createMockStore();
 
-    return store.dispatch(Actions.roles.destroyRole(1)).then(() => {
+    return store.dispatch(Actions.roles.destroyRole('1')).then(() => {
       const calledActions = store.getActions();
       expect(calledActions).toEqual(expectedActions);
     });
@@ -411,7 +413,7 @@ describe('destroyRole', () => {
 
     const store = createMockStore();
 
-    return store.dispatch(Actions.roles.destroyRole(1)).then(() => {
+    return store.dispatch(Actions.roles.destroyRole('1')).then(() => {
       const calledActions = store.getActions();
       expect(calledActions).toEqual(expectedActions);
     });

@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import ReplaceForgottenPassword from './ReplaceForgottenPassword';
 import { NotFound } from '../../Screens/NotFound/NotFound';
-import { SuccessMessage } from '../SuccessMessage/SuccessMessage';
+import SuccessMessage from '../SuccessMessage';
 
 describe('ReplaceForgottenPassword', () => {
   let props;

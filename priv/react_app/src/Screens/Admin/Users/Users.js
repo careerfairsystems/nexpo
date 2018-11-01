@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { toLower } from 'lodash/fp';
 import { Table, Divider, Popconfirm } from 'antd';
 
@@ -11,14 +10,13 @@ import FilterSearch, { FilterIcon } from '../../../Components/FilterSearch';
 /**
  * Responsible for rendering a list of users
  */
-class Users extends Component {
-  static propTypes = {
-    users: PropTypes.object,
-    fetching: PropTypes.bool.isRequired,
-    getAllUsers: PropTypes.func.isRequired,
-    deleteUser: PropTypes.func.isRequired
-  };
-
+type Props = {
+  users?: {},
+  fetching: boolean,
+  getAllUsers: () => Promise<void>,
+  deleteUser: string => Promise<void>
+};
+class Users extends Component<Props> {
   static defaultProps = {
     users: {}
   };
@@ -29,7 +27,7 @@ class Users extends Component {
   }
 
   renderUsers() {
-    const { users } = this.props;
+    const { users = {} } = this.props;
     const userColumns = [
       {
         title: 'Email',

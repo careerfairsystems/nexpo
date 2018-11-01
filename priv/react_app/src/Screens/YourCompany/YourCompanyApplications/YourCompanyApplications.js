@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { isEmpty, isNil, orderBy } from 'lodash/fp';
 import { List, Rate } from 'antd';
 import NotFound from '../../NotFound';
@@ -7,28 +6,42 @@ import HtmlTitle from '../../../Components/HtmlTitle';
 import LoadingSpinner from '../../../Components/LoadingSpinner';
 import '../YourCompany.css';
 
-class YourCompanyApplications extends Component {
-  static propTypes = {
-    currentCompany: PropTypes.object.isRequired,
-    fetching: PropTypes.bool.isRequired,
-    updating: PropTypes.bool.isRequired,
-    getCurrentCompany: PropTypes.func.isRequired,
-    updateStudentSessionAppl: PropTypes.func.isRequired
-  };
-
+type StudentObj = {
+  user: {
+    email: string,
+    firstName: string,
+    lastName: string
+  },
+  resumeSvUrl: string,
+  resumeEnUrl: string
+};
+type Application = {
+  id: number,
+  score: number,
+  motivation: string,
+  student: StudentObj
+};
+type Props = {
+  currentCompany: { studentSessionApplications?: Array<Application> },
+  fetching: boolean,
+  updating: boolean,
+  getCurrentCompany: () => Promise<void>,
+  updateStudentSessionAppl: (number, {}) => Promise<void>
+};
+class YourCompanyApplications extends Component<Props> {
   componentWillMount() {
     const { getCurrentCompany } = this.props;
     getCurrentCompany();
   }
 
-  scoreSessionApplication = (id, value) => {
+  scoreSessionApplication = (id: number, value: number) => {
     const { updateStudentSessionAppl } = this.props;
     updateStudentSessionAppl(id, {
       studentSessionApplication: { score: value }
     });
   };
 
-  renderSessionApplication = application => (
+  renderSessionApplication = (application: Application) => (
     <List.Item
       actions={[
         <>
@@ -90,7 +103,7 @@ class YourCompanyApplications extends Component {
           dataSource={orderBy(
             ['score', 'studentId'],
             ['desc', 'asc'],
-            currentCompany.studentSessionApplications
+            currentCompany.studentSessionApplications || []
           )}
           renderItem={this.renderSessionApplication}
           locale={{ emptyText: 'No Session Applications' }}

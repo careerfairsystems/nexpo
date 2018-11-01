@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import { Button, Form, Input, Icon } from 'antd';
@@ -7,7 +6,10 @@ import makeField from './helper';
 
 const TextInput = makeField(Input);
 
-const InviteForm = ({ handleSubmit }) => (
+type Props = {
+  handleSubmit: () => Promise<void>
+};
+const InviteForm = ({ handleSubmit }: Props) => (
   <Form onSubmit={handleSubmit} layout="inline">
     <Field
       name="email"
@@ -19,10 +21,6 @@ const InviteForm = ({ handleSubmit }) => (
     <Button htmlType="submit">Invite</Button>
   </Form>
 );
-
-InviteForm.propTypes = {
-  handleSubmit: PropTypes.func.isRequired
-};
 
 const mapStateToProps = state => ({
   formState: state.form.InviteForm

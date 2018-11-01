@@ -1,4 +1,5 @@
-import Auth, { AuthState } from './Auth';
+import Auth from './Auth';
+import type { AuthState } from './Auth';
 
-export { AuthState };
+export type { AuthState };
 export default Auth;

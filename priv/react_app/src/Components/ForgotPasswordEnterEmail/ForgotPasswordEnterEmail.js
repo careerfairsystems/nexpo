@@ -1,24 +1,19 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import ForgotPasswordForm from '../../Forms/ForgotPasswordForm';
-import { SuccessMessage } from '../SuccessMessage/SuccessMessage';
+import SuccessMessage from '../SuccessMessage';
 
 type Props = {
-  callBackend: boolean
+  callBackend: ({ email: string }) => () => Promise<void>,
+  success?: boolean
 };
 
 class ForgotPasswordEnterEmail extends Component<Props> {
-  static propTypes = {
-    callBackend: PropTypes.func.isRequired,
-    success: PropTypes.bool
-  };
-
   static defaultProps = {
     success: false
   };
 
-  queryBackend = values => {
+  queryBackend = (values: { email: string }) => {
     const { email } = values;
     const { callBackend } = this.props;
     callBackend({ email });

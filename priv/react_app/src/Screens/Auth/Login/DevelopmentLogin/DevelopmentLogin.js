@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { Icon } from 'antd';
 import { Redirect } from 'react-router-dom';
 import './DevelopmentLogin.css';
+import type { Location } from 'react-router-dom';
 import HtmlTitle from '../../../../Components/HtmlTitle';
 import DevelopmentLoginForm from '../../../../Forms/DevelopmentLoginForm';
-
 /**
  * Handles authorization in development
  * - Allows login by only specifying email
@@ -17,11 +16,16 @@ const styles = {
     color: '#ffeb3b'
   }
 };
-class DevelopmentLogin extends Component {
-  login = values => {
+type Props = {
+  location: Location,
+  isLoggedIn: boolean,
+  login: ({ email: string }) => Promise<void>
+};
+class DevelopmentLogin extends Component<Props> {
+  login = (values: { email: string }) => {
     const { email } = values;
     const { login } = this.props;
-    login(email);
+    login({ email });
   };
 
   render() {
@@ -44,11 +48,5 @@ class DevelopmentLogin extends Component {
     );
   }
 }
-
-DevelopmentLogin.propTypes = {
-  location: PropTypes.shape({ state: PropTypes.object }).isRequired,
-  isLoggedIn: PropTypes.bool.isRequired,
-  login: PropTypes.func.isRequired
-};
 
 export default DevelopmentLogin;

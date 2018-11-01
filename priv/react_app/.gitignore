@@ -12,13 +12,12 @@
 # Sass compilation output
 src/**/*.css
 
-# Flow types
-/flow-typed
 # misc
 .DS_Store
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
-
+# flow-types
+/flow-typed
 npm-debug.log*

@@ -1,12 +1,11 @@
 import { message } from 'antd';
 import { Actions, actionTypes } from '../..';
 import API from '../../../API';
+import type { Dispatch } from '../../reducers';
 
-export function logout() {
-  return {
-    type: actionTypes.LOGOUT
-  };
-}
+export const logout = () => ({
+  type: actionTypes.LOGOUT
+});
 
 export const loginFailure = () => {
   message.error('That email and password combination is incorrect');
@@ -20,7 +19,10 @@ export const loginSuccess = (jwt: string) => ({
   jwt
 });
 
-export const login = ({ email, password }) => dispatch =>
+export type LoginAction = { email: string, password: string };
+export const login = ({ email, password }: LoginAction) => (
+  dispatch: Dispatch
+) =>
   API.session
     .login({ email, password })
     .then(res => {
@@ -32,7 +34,10 @@ export const login = ({ email, password }) => dispatch =>
       dispatch(loginFailure());
     });
 
-export const developmentLogin = email => dispatch =>
+export type DevLoginAction = { email: string };
+export const developmentLogin = ({ email }: DevLoginAction) => (
+  dispatch: Dispatch
+) =>
   API.session
     .developmentLogin({ email })
     .then(res => {

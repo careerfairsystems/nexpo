@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { isEmpty } from 'lodash/fp';
 import NotFound from '../../NotFound';
 import LoadingSpinner from '../../../Components/LoadingSpinner';
@@ -8,31 +7,37 @@ import StudentForm from '../../../Forms/StudentForm';
 import SessionForm from '../../../Forms/SessionForm';
 import '../Session.css';
 
-class SessionApplication extends Component {
-  static propTypes = {
-    fetching: PropTypes.bool.isRequired,
-    currentUser: PropTypes.shape({
-      email: PropTypes.string,
-      student: PropTypes.object
-    }).isRequired,
-    currentStudent: PropTypes.shape({
-      resumeEnUrl: PropTypes.string,
-      resumeSvUrl: PropTypes.string
-    }).isRequired,
-    getAllCompanies: PropTypes.func.isRequired,
-    getAllProgrammes: PropTypes.func.isRequired,
-    createStudentSessionAppl: PropTypes.func.isRequired,
-    updateCurrentStudent: PropTypes.func.isRequired,
-    resetForm: PropTypes.func.isRequired
-  };
-
+type StudentObj = {
+  resumeEnUrl?: string,
+  resumeSvUrl?: string
+};
+type Application = {
+  companyId: number,
+  motivation: string
+};
+type Props = {
+  fetching: boolean,
+  currentUser: {
+    email?: string,
+    student?: {}
+  },
+  currentStudent: StudentObj,
+  getAllCompanies: () => Promise<void>,
+  getAllProgrammes: () => Promise<void>,
+  createStudentSessionAppl: ({
+    studentSessionApplication: Application
+  }) => Promise<void>,
+  updateCurrentStudent: ({ student: StudentObj }) => Promise<void>,
+  resetForm: string => Promise<void>
+};
+class SessionApplication extends Component<Props> {
   componentWillMount() {
     const { getAllCompanies, getAllProgrammes } = this.props;
     getAllCompanies();
     getAllProgrammes();
   }
 
-  updateStudent = values => {
+  updateStudent = (values: StudentObj) => {
     const { updateCurrentStudent } = this.props;
     return updateCurrentStudent({ student: values });
   };
@@ -42,7 +47,7 @@ class SessionApplication extends Component {
     resetForm('student');
   };
 
-  createStudentSessionAppl = data => {
+  createStudentSessionAppl = (data: Application) => {
     const { createStudentSessionAppl } = this.props;
     createStudentSessionAppl({
       studentSessionApplication: data

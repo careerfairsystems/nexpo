@@ -3,5 +3,11 @@ import { shallow } from 'enzyme';
 import PrivateRoute from './PrivateRoute';
 
 it('renders without crashing', () => {
-  shallow(<PrivateRoute isLoggedIn={false} />);
+  const props = {
+    component: () => <div>Test</div>,
+    currentUser: {},
+    fetching: false,
+    isLoggedIn: false
+  };
+  shallow(<PrivateRoute {...props} />);
 });

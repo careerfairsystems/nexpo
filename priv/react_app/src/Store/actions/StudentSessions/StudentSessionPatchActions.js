@@ -1,6 +1,7 @@
 import { message } from 'antd';
 import { actionTypes } from '../..';
 import API from '../../../API';
+import type { Dispatch } from '../../reducers';
 
 export function createBulkStudentSessionsIsLoading() {
   return {
@@ -8,7 +9,7 @@ export function createBulkStudentSessionsIsLoading() {
   };
 }
 
-export function createBulkStudentSessionsSuccess(company) {
+export function createBulkStudentSessionsSuccess(company: {}) {
   message.success('Student Sessions was successfully bulk created.');
   return {
     type: actionTypes.POST_STUDENT_SESSION_SUCCESS,
@@ -27,8 +28,8 @@ export function createBulkStudentSessionsFailure(): CreateBulkStudentSessionsFai
   };
 }
 
-export function createBulkStudentSessions(data) {
-  return dispatch => {
+export function createBulkStudentSessions(data: {}) {
+  return (dispatch: Dispatch) => {
     dispatch(createBulkStudentSessionsIsLoading());
     return API.studentSessions
       .createBulk(data)

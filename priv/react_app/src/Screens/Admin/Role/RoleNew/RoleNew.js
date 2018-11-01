@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 
 import RoleForm from '../../../../Forms/RoleForm';
 import '../Role.css';
@@ -7,18 +6,22 @@ import '../Role.css';
 /**
  * Responsible for rendering a role. Role id is recieved via url
  */
-class RoleNew extends Component {
-  static propTypes = {
-    createRole: PropTypes.func.isRequired,
-    getAllUsers: PropTypes.func.isRequired
-  };
-
+type RoleObj = {
+  type: string,
+  permissions: Array<string>,
+  user: number
+};
+type Props = {
+  createRole: ({ role: RoleObj }) => Promise<void>,
+  getAllUsers: () => Promise<void>
+};
+class RoleNew extends Component<Props> {
   componentWillMount() {
     const { getAllUsers } = this.props;
     getAllUsers();
   }
 
-  createRole = values => {
+  createRole = (values: RoleObj) => {
     const { createRole } = this.props;
     createRole({ role: values });
   };

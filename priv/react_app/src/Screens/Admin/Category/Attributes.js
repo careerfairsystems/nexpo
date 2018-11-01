@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { filter, isEmpty } from 'lodash/fp';
 import { Table } from 'antd';
@@ -9,18 +8,17 @@ import type { State } from '../../../Store/reducers';
 /**
  * Responsible for rendering a table of attributes and entries
  */
-export const Attributes = ({ fetching, attributes, entries }) => (
+type Props = {
+  fetching: boolean,
+  attributes?: Array<any>,
+  entries?: Array<any>
+};
+export const Attributes = ({ fetching, attributes, entries }: Props) => (
   <div>
     {fetching && <LoadingSpinner />}
     {!fetching && <Table columns={attributes} dataSource={entries} />}
   </div>
 );
-
-Attributes.propTypes = {
-  fetching: PropTypes.bool.isRequired,
-  attributes: PropTypes.array,
-  entries: PropTypes.array
-};
 
 Attributes.defaultProps = {
   attributes: [],

@@ -1,7 +1,6 @@
 /*
 *		This class contains normalisation methods for the data recived by the server
 */
-
 import { schema } from 'normalizr';
 
 const merge = key => (entityA, entityB) => ({
@@ -20,7 +19,12 @@ const hasMany = key => (value, parent) => ({
   [key]: [parent.id]
 });
 
-const entity = (key, definition = {}, options = {}) =>
+type Entity = (
+  key: string,
+  definition?: {},
+  options?: { model?: Function, merge?: Function }
+) => schema.Entity;
+const entity: Entity = (key, definition = {}, options = {}) =>
   new schema.Entity(key, definition, {
     mergeStrategy: options.merge,
     processStrategy: options.model

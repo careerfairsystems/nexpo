@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 
 import { isEmpty, isNil } from 'lodash/fp';
 import HtmlTitle from '../../../../Components/HtmlTitle';
@@ -12,29 +11,35 @@ import '../User.css';
 /**
  * Responsible for rendering a user. User id is recieved via url
  */
-class UserEdit extends Component {
-  static propTypes = {
-    id: PropTypes.string,
-    user: PropTypes.shape({ name: PropTypes.string }).isRequired,
-    fetching: PropTypes.bool.isRequired,
-    getUser: PropTypes.func.isRequired,
-    history: PropTypes.shape({ push: PropTypes.func }).isRequired,
-    updateUser: PropTypes.func.isRequired
-  };
-
+type UserObj = {
+  firstName: string,
+  lastName: string,
+  phoneNumber: string
+};
+type Props = {
+  id?: string,
+  user: { name?: string },
+  fetching: boolean,
+  getUser: string => Promise<void>,
+  history: { push: string => any },
+  updateUser: (string, { user: UserObj }) => Promise<void>
+};
+class UserEdit extends Component<Props> {
   static defaultProps = {
-    id: null
+    id: ''
   };
 
   componentWillMount() {
     const { id, getUser } = this.props;
-    getUser(id);
+    if (id) getUser(id);
   }
 
-  updateUser = values => {
+  updateUser = (values: UserObj) => {
     const { id, updateUser, history } = this.props;
-    updateUser(id, { user: values });
-    history.push(`/admin/users/${id}`);
+    if (id) {
+      updateUser(id, { user: values });
+      history.push(`/admin/users/${id}`);
+    }
   };
 
   render() {

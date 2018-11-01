@@ -1,34 +1,31 @@
+import type { Dispatch } from 'redux';
 import { message } from 'antd';
 import { actionTypes } from '../..';
 import API from '../../../API';
 
-export function getProgrammeIsLoading() {
-  return {
-    type: actionTypes.FETCH_PROGRAMME
-  };
-}
+export const getProgrammeIsLoading = () => ({
+  type: actionTypes.FETCH_PROGRAMME
+});
 
-export function getProgrammeSuccess(programme) {
-  return {
-    type: actionTypes.FETCH_PROGRAMME_SUCCESS,
-    programme
-  };
-}
+export const getProgrammeSuccess = (programme: {}) => ({
+  type: actionTypes.FETCH_PROGRAMME_SUCCESS,
+  programme
+});
 
 export type GetProgrammeFailureAction = {
   type: string
 };
-export function getProgrammeFailure(): GetProgrammeFailureAction {
+export const getProgrammeFailure = (): GetProgrammeFailureAction => {
   message.error(
     'Something went wrong when trying to fetch Programme, please try again later'
   );
   return {
     type: actionTypes.FETCH_PROGRAMME_FAILURE
   };
-}
+};
 
-export function getProgramme(id) {
-  return dispatch => {
+export function getProgramme(id: string) {
+  return (dispatch: Dispatch<{ type: string }>) => {
     dispatch(getProgrammeIsLoading());
     return API.programmes
       .get(id)

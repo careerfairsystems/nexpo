@@ -1,7 +1,7 @@
 import API from './index';
 import { mockHttpResponse, mockEnvironment } from '../TestHelper';
 import UnreachableCodeReachedError from '../Errors/UnreachableCodeReachedError';
-import { ApiError } from '../Errors/ApiError';
+import ApiError from '../Errors/ApiError';
 
 describe('developmentLogin', () => {
   const method = () => API.session.developmentLogin({ email: 'test' });
@@ -148,7 +148,11 @@ describe('replaceForgottenPassword', () => {
     expect.assertions(1);
 
     return API.session
-      .replaceForgottenPassword({})
+      .replaceForgottenPassword({
+        key: '1',
+        password: '',
+        passwordConfirmation: ''
+      })
       .catch(err => expect(err).toBeInstanceOf(ApiError));
   });
 });

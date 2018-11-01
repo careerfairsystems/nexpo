@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { isEmpty, isNil, sortBy, filter } from 'lodash/fp';
 import { List, Avatar, Button, Tag, Popconfirm } from 'antd';
 import NotFound from '../../../NotFound';
@@ -13,22 +12,34 @@ import '../Company.css';
 /**
  * Responsible for rendering a company. Company id is recieved via url
  */
-class CompanyShow extends Component {
-  static propTypes = {
-    id: PropTypes.string,
-    company: PropTypes.object.isRequired,
-    fetching: PropTypes.bool.isRequired,
-    getCompany: PropTypes.func.isRequired,
-    createStudentSession: PropTypes.func.isRequired,
-    createBulkStudentSessions: PropTypes.func.isRequired,
-    deleteStudentSession: PropTypes.func.isRequired,
-    match: PropTypes.shape({
-      path: PropTypes.string
-    })
-  };
-
+type Props = {
+  id: string,
+  createStudentSession: ({}) => Promise<void>,
+  createBulkStudentSessions: ({}) => Promise<void>,
+  deleteStudentSession: string => Promise<void>,
+  company: {
+    id?: string,
+    name?: string,
+    website?: string,
+    description?: string,
+    logoUrl?: string,
+    studentSessionDays?: number,
+    studentSessionApplications?: Array<*>,
+    studentSessionTimeSlots?: Array<{
+      id: number,
+      start: string,
+      end: string,
+      location: string
+    }>
+  },
+  fetching: boolean,
+  getCompany: string => Promise<void>,
+  match?: {
+    path: string
+  }
+};
+class CompanyShow extends Component<Props> {
   static defaultProps = {
-    id: null,
     match: {
       path: ''
     }
@@ -99,7 +110,7 @@ class CompanyShow extends Component {
         </div>
         <h4>
           {`Student Session Application Scored: ${
-            filter('score', company.studentSessionApplications).length
+            filter('score', company.studentSessionApplications || []).length
           }`}
         </h4>
         <p>
@@ -126,7 +137,7 @@ class CompanyShow extends Component {
         <br />
         <List
           itemLayout="vertical"
-          dataSource={sortBy('start', company.studentSessionTimeSlots)}
+          dataSource={sortBy('start', company.studentSessionTimeSlots || [])}
           bordered
           renderItem={({ id, start, end, location, studentSession }, index) => (
             <List.Item
@@ -172,7 +183,7 @@ class CompanyShow extends Component {
           )}
         />
         <br />
-        <InvisibleLink to={`/admin/companies/${company.id}/edit`}>
+        <InvisibleLink to={`/admin/companies/${company.id || ''}/edit`}>
           <Button onClick={() => null} type="primary">
             Edit
           </Button>

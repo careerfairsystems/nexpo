@@ -19,19 +19,20 @@ export default {
   /**
    * Updates the current company
    */
-  updateMyCompany: data =>
+  updateMyCompany: (data: {}) =>
     authFormPut('/api/me/company', data).then(handleHttpResponse),
 
   /**
    * Removes the current company
    */
-  destoryMyCompany: data =>
-    authDelete('/api/me/company', data).then(handleHttpResponse),
+  destroyMyCompany: () =>
+    authDelete('/api/me/company').then(handleHttpResponse),
 
   /**
    * Create a company
    */
-  create: data => authFormPost('/api/companies', data).then(handleHttpResponse),
+  create: (data: {}) =>
+    authFormPost('/api/companies', data).then(handleHttpResponse),
 
   /**
    * Fetches all companies
@@ -41,16 +42,18 @@ export default {
   /**
    * Fetches a company
    */
-  get: id => authFetch(`/api/companies/${id}`).then(handleHttpResponse),
+  get: (id: string) =>
+    authFetch(`/api/companies/${id}`).then(handleHttpResponse),
 
   /**
    * Updates a company
    */
-  update: (id, data) =>
+  update: (id: string, data: {}) =>
     authFormPut(`/api/companies/${id}`, data).then(handleHttpResponse),
 
   /**
    * Delete a company
    */
-  destroy: id => authDelete(`/api/companies/${id}`).then(handleHttpResponse)
+  destroy: (id: string) =>
+    authDelete(`/api/companies/${id}`).then(handleHttpResponse)
 };

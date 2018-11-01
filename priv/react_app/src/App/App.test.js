@@ -12,10 +12,10 @@ it('renders without crashing', () => {
   shallow(
     <App
       isLoggedIn={false}
-      currentUser={{}}
+      currentUser={{ email: '', firstName: '', lastName: '' }}
       pathname="/"
-      logout={() => 'a'}
-      redirect={() => 'a'}
+      logout={() => undefined}
+      redirect={() => undefined}
     />
   );
 });
@@ -26,8 +26,8 @@ it('renders isLoggedIn without crashing', () => {
       isLoggedIn
       currentUser={{ email: 'test@it', firstName: 'Tester', lastName: 'AB' }}
       pathname="/"
-      logout={() => 'a'}
-      redirect={() => 'a'}
+      logout={() => undefined}
+      redirect={() => undefined}
     />
   );
 });

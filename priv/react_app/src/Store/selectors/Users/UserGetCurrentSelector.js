@@ -1,7 +1,8 @@
 import { denormalize } from 'normalizr';
 import Schema from '../../normalizr/schema';
+import type { State } from '../../reducers';
 
-export const getCurrentUser = state => {
+export const getCurrentUser = (state: State) => {
   const {
     users: [user]
   } = denormalize(

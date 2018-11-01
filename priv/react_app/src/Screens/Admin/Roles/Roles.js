@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { sortBy } from 'lodash/fp';
 import { Popconfirm, Table, Button, Divider } from 'antd';
 
@@ -10,7 +9,13 @@ import HtmlTitle from '../../../Components/HtmlTitle';
 /**
  * Responsible for rendering a list of roles
  */
-class Roles extends Component {
+type Props = {
+  roles: {},
+  fetching: boolean,
+  getAllRoles: () => Promise<void>,
+  deleteRole: string => Promise<void>
+};
+class Roles extends Component<Props> {
   componentWillMount() {
     const { getAllRoles } = this.props;
     getAllRoles();
@@ -21,7 +26,7 @@ class Roles extends Component {
       title: 'Type',
       dataIndex: 'type',
       key: 'type',
-      render: (type, { id }) => (
+      render: (type: string, { id }: { id: string }) => (
         <InvisibleLink to={`/admin/roles/${id}`}>{type}</InvisibleLink>
       )
     },
@@ -29,12 +34,14 @@ class Roles extends Component {
       title: 'Permissions',
       dataIndex: 'permissions',
       key: 'permissions',
-      render: permissions => <span>{permissions.join(', ')}</span>
+      render: (permissions: Array<string>) => (
+        <span>{permissions.join(', ')}</span>
+      )
     },
     {
       title: 'Action',
       key: 'action',
-      render: role => (
+      render: (role: { id: string }) => (
         <span>
           <InvisibleLink to={`/admin/roles/${role.id}`}>Show</InvisibleLink>
           <Divider type="vertical" />
@@ -44,7 +51,7 @@ class Roles extends Component {
           <Divider type="vertical" />
           <Popconfirm
             title="Are you sure you want to delete this role?"
-            onConfirm={() => this.deleteRole(role)}
+            onConfirm={() => this.deleteRole(role.id)}
           >
             <span style={{ color: '#ff4d4f', cursor: 'pointer' }}>Delete</span>
           </Popconfirm>
@@ -53,12 +60,7 @@ class Roles extends Component {
     }
   ];
 
-  toggleEdit = () => {
-    const { edit } = this.state;
-    this.setState({ edit: !edit });
-  };
-
-  deleteRole = ({ id }) => {
+  deleteRole = (id: string) => {
     const { deleteRole } = this.props;
     deleteRole(id);
   };
@@ -90,12 +92,5 @@ class Roles extends Component {
     );
   }
 }
-
-Roles.propTypes = {
-  roles: PropTypes.object.isRequired,
-  fetching: PropTypes.bool.isRequired,
-  getAllRoles: PropTypes.func.isRequired,
-  deleteRole: PropTypes.func.isRequired
-};
 
 export default Roles;

@@ -1,4 +1,5 @@
-import CurrentReducer, { CurrentState } from './CurrentReducer';
+import CurrentReducer from './CurrentReducer';
+import type { CurrentState } from './CurrentReducer';
 
-export { CurrentState };
+export type { CurrentState };
 export default CurrentReducer;
