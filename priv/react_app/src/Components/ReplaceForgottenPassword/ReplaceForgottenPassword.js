@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ReplacePasswordForm from '../../Forms/ReplacePasswordForm';
-import  SuccessMessage  from '../SuccessMessage/';
+import SuccessMessage from '../SuccessMessage';
 import { NotFound } from '../../Screens/NotFound/NotFound';
 
 type PasswordObj = {|

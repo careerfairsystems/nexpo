@@ -4,7 +4,7 @@ import ForgotPasswordForm from '../../Forms/ForgotPasswordForm';
 import SuccessMessage from '../SuccessMessage';
 
 type Props = {
-  callBackend: ({ email: string }) => Promise<void>,
+  callBackend: ({ email: string }) => () => Promise<void>,
   success?: boolean
 };
 

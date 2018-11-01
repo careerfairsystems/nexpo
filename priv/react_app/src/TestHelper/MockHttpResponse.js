@@ -9,7 +9,7 @@ export const mockHttpResponse = ({
   body = defaultBody
 }: {
   status: number,
-  body?: {} | string
+  body?: any
 }) => {
   // Build the response we want
   const response = new window.Response(JSON.stringify(body), {

@@ -1,10 +1,14 @@
 import { denormalize } from 'normalizr';
+import type { Match } from 'react-router-dom';
 import Schema from '../../normalizr/schema';
 import type { State } from '../../reducers';
 
-export const getUserId = (state: State, props) => props.match.params.id;
+type Props = {
+  match: Match
+};
+export const getUserId = (state: State, props: Props) => props.match.params.id;
 
-export const getUser = (state: State, props) => {
+export const getUser = (state: State, props: Props) => {
   const userId = getUserId(state, props);
 
   const {

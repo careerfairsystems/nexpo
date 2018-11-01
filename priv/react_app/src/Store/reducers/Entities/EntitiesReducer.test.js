@@ -248,7 +248,7 @@ describe('Entities reducer', () => {
 
   it('should handle delete session application', () => {
     const sessionApplicationId = '1';
-    const action = Actions.studentSessions.destroyStudentSessionAppl(
+    const action = Actions.studentSessions.destroyStudentSessionApplSuccess(
       sessionApplicationId
     );
     const state = EntitiesReducer(

@@ -1,7 +1,7 @@
-import type { Dispatch } from 'redux';
 import { message } from 'antd';
 import { Actions, actionTypes } from '../..';
 import API from '../../../API';
+import type { Dispatch } from '../../reducers';
 
 export const logout = () => ({
   type: actionTypes.LOGOUT
@@ -21,7 +21,7 @@ export const loginSuccess = (jwt: string) => ({
 
 export type LoginAction = { email: string, password: string };
 export const login = ({ email, password }: LoginAction) => (
-  dispatch: Dispatch<{ type: string }>
+  dispatch: Dispatch
 ) =>
   API.session
     .login({ email, password })
@@ -36,7 +36,7 @@ export const login = ({ email, password }: LoginAction) => (
 
 export type DevLoginAction = { email: string };
 export const developmentLogin = ({ email }: DevLoginAction) => (
-  dispatch: Dispatch<{ type: string }>
+  dispatch: Dispatch
 ) =>
   API.session
     .developmentLogin({ email })

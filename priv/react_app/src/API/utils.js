@@ -8,14 +8,14 @@ export type Response = {
   type: any,
   error?: string,
   errors?: Error,
-  +json: () => Promise<void>,
+  +json: () => Promise<*>,
   headers: Headers,
-  +text: () => Promise<void>
+  +text: () => Promise<any>
 };
 
 type ErrorResponse = {
   error: string,
-  errors: {}
+  errors: { password?: string, passwordConfirmation?: string }
 };
 
 /**
