@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { isEmpty, isNil, sortBy } from 'lodash/fp';
-import { Avatar, List } from 'antd';
+import { Avatar, List, Tag } from 'antd';
 import { toDayFormat } from '../../../Util/FormatHelper';
 import NotFound from '../../NotFound';
 import HtmlTitle from '../../../Components/HtmlTitle';
@@ -23,14 +23,36 @@ class YourCompanyTimeSlots extends Component {
 
     if (isEmpty(currentCompany) || isNil(currentCompany)) return <NotFound />;
 
+    const studentConfirmed = studentSession => {
+      if (studentSession) {
+        return studentSession.studentConfirmed ? 'Confirmed' : 'Not Confirmed';
+      }
+      return 'Not assigned';
+    };
+    const studentConfirmedColor = studentSession => {
+      if (studentSession) {
+        return studentSession.studentConfirmed ? 'green' : 'gold';
+      }
+      return 'red';
+    };
+    const studentInfo = ({ student: { user } }) => (
+      <>
+        Name: {[user.firstName, user.lastName].join(' ')}
+        <br />
+        Email: {user.email}
+        <br />
+      </>
+    );
+
     return (
       <div className="company-show-view">
         <HtmlTitle title="TimeSlots" />
         <h3>Student Session Time Slots</h3>
         <List
+          itemLayout="vertical"
           dataSource={sortBy('start', currentCompany.studentSessionTimeSlots)}
           bordered
-          renderItem={({ start, end, location }, index) => (
+          renderItem={({ start, end, location, studentSession }, index) => (
             <List.Item>
               <List.Item.Meta
                 avatar={<Avatar size="large">{index + 1}</Avatar>}
@@ -39,6 +61,11 @@ class YourCompanyTimeSlots extends Component {
                   start
                 )}\nEnd Time: ${toDayFormat(end)}`}
               />
+              {studentSession && studentInfo(studentSession)}
+              Student:{' '}
+              <Tag color={studentConfirmedColor(studentSession)}>
+                {studentConfirmed(studentSession)}
+              </Tag>
             </List.Item>
           )}
         />

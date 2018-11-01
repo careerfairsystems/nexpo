@@ -132,7 +132,9 @@ defmodule Nexpo.CompanyController do
         :desired_programmes,
         [student_session_applications: [student: :user]],
         [student_sessions: [student: :user]],
-        :student_session_time_slots])
+        [student_session_time_slots: [
+          student_session: [student: [:user]]
+          ]]])
 
     conn |> put_status(200) |> render("show.json", company: company)
   end
