@@ -28,6 +28,10 @@ type Props = {
   getAllCompanies: () => Promise<void>,
   fetching: boolean
 };
+type Time = {
+  start: ?string,
+  end: ?string
+};
 class StudentSessions extends Component<Props> {
   static defaultProps = {
     companies: {},
@@ -38,12 +42,6 @@ class StudentSessions extends Component<Props> {
     const { getAllCompanies } = this.props;
     getAllCompanies();
   }
-
-  getCompany = (companyId: number) => {
-    const { companies = {} } = this.props;
-
-    return companies[`${companyId}`] || {};
-  };
 
   confirmSession = (id: ?number) => {
     const { confirmSession } = this.props;
@@ -66,11 +64,11 @@ class StudentSessions extends Component<Props> {
       ]}
     >
       <List.Item.Meta
-        title={this.getCompany(session.companyId).name}
-        description={this.renderTimeField(session.start, session.end)}
+        title={session.company.name}
+        description={this.renderTimeField(session.studentSessionTimeSlot)}
         avatar={
           <Avatar
-            src={this.getCompany(session.companyId).logoUrl}
+            src={session.company.logoUrl}
             size={128}
             shape="square"
             alt="Company Logotype"
@@ -80,7 +78,7 @@ class StudentSessions extends Component<Props> {
     </List.Item>
   );
 
-  renderTimeField = (start: ?string = '', end: ?string = '') =>
+  renderTimeField = ({ start = '', end = '' }: Time) =>
     `Start: ${toSessionTimeFormat(start)}\nEnd: ${toSessionTimeFormat(end)}`;
 
   render() {
@@ -106,10 +104,7 @@ class StudentSessions extends Component<Props> {
         <List
           size="large"
           bordered
-          dataSource={sortBy(
-            appl => this.getCompany(appl.companyId).name,
-            sessions || []
-          )}
+          dataSource={sortBy('studentSessionTimeSlot.start', sessions)}
           renderItem={this.renderSession}
           locale={{ emptyText: 'No Sessions' }}
         />
