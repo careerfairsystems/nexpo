@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { isNil, sortBy } from 'lodash/fp';
+import { sortBy } from 'lodash/fp';
 import { Icon, List, Avatar, Button } from 'antd';
-import NotFound from '../../NotFound';
 import LoadingSpinner from '../../../Components/LoadingSpinner';
 import HtmlTitle from '../../../Components/HtmlTitle';
 import { toSessionTimeFormat } from '../../../Util/FormatHelper';
@@ -86,14 +85,10 @@ class StudentSessions extends Component<Props> {
     `Start: ${toSessionTimeFormat(start)}\nEnd: ${toSessionTimeFormat(end)}`;
 
   render() {
-    const { sessions, fetching } = this.props;
+    const { sessions = [], fetching } = this.props;
 
     if (fetching) {
       return <LoadingSpinner />;
-    }
-
-    if (isNil(sessions)) {
-      return <NotFound />;
     }
 
     return (
@@ -108,7 +103,7 @@ class StudentSessions extends Component<Props> {
         <List
           size="large"
           bordered
-          dataSource={sortBy('studentSessionTimeSlot.start', sessions)}
+          dataSource={sortBy('studentSessionTimeSlot.start', sessions )}
           renderItem={this.renderSession}
           locale={{ emptyText: 'No Sessions' }}
         />
