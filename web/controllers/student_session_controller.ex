@@ -20,14 +20,15 @@ defmodule Nexpo.StudentSessionController do
       join: student in assoc(appl, :student),
       where: not is_nil(appl.score) and appl.score > 0,
       order_by: [desc: appl.score, asc: student.id],
-      # Check that student doesn't already have session with given company
+      # Check that student does not already have session with given company
       left_join: co_session in StudentSession,
       on: student.id == co_session.student_id and co_session.company_id == ^company.id,
       where: is_nil(co_session.id),
-      # Check that student doesn't already have session at the time of the given time slot
+      # Check that student does not already have session at the time of the given time slot
       left_join: session in assoc(student, :student_sessions),
       left_join: slot in TimeSlot,
-      on: slot.id == session.student_session_time_slot_id and slot.start == ^time_slot.start and slot.end == ^time_slot.end,
+      on: slot.id == session.student_session_time_slot_id and
+          slot.start == ^time_slot.start and slot.end == ^time_slot.end,
       where: is_nil(slot.id),
       limit: 1,
       select: student)
@@ -64,6 +65,7 @@ defmodule Nexpo.StudentSessionController do
       from appl in Ecto.assoc(company, :student_session_applications),
       join: student in assoc(appl, :student),
       order_by: [desc: appl.score, asc: student.id],
+      # Check that student does not already have session with given company
       left_join: session in StudentSession,
       on: student.id == session.student_id and session.company_id == ^company.id,
       where: is_nil(session.id),
@@ -88,13 +90,22 @@ defmodule Nexpo.StudentSessionController do
         end)
 
         insert_bulk = students
-        |> Enum.reduce({[], time_slots}, fn student, {acc, slots} ->
-          index = Enum.find_index(slots, fn x ->
-            IO.inspect(x)
-            IO.inspect(student)
-            true
+        |> Enum.reduce({[], Enum.shuffle(time_slots)}, fn student, {acc, slots} ->
+          # Not sure how to handle when it couldn't find index, but I think we want to throw error
+          index = Enum.find_index(slots, fn time_slot ->
+            case Repo.one(
+              from session in Ecto.assoc(student, :student_sessions),
+              # Check that student does not already have session at the time of the given time slot
+              left_join: slot in TimeSlot,
+              on: slot.id == session.student_session_time_slot_id and
+                  slot.start == ^time_slot.start and slot.end == ^time_slot.end,
+              select: slot
+            ) do
+              nil -> true
+              _ -> false
+            end
           end)
-          {time_slot, new_slots} = List.pop_at(slots, 0)
+          {time_slot, new_slots} = List.pop_at(slots, index)
           data = student_sessions_params
           |> Map.put("student_session_time_slot_id", time_slot.id)
           |> Map.put("student_id", student.id)
