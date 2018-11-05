@@ -3,6 +3,7 @@ defmodule Nexpo.StudentSessionController do
   use Guardian.Phoenix.Controller
 
   alias Nexpo.{Student, Company, StudentSession}
+  alias Nexpo.StudentSessionTimeSlot, as: TimeSlot
   alias Guardian.Plug.{EnsurePermissions}
 
   plug EnsurePermissions, [handler: Nexpo.SessionController,
@@ -12,14 +13,22 @@ defmodule Nexpo.StudentSessionController do
 
   def create(conn, %{"student_session" => student_sessions_params}, _user, _claims) do
     company = Repo.get(Company, student_sessions_params["company_id"])
+    time_slot = Repo.get(TimeSlot, student_sessions_params["student_session_time_slot_id"])
 
     student = Repo.one(
       from appl in Ecto.assoc(company, :student_session_applications),
       join: student in assoc(appl, :student),
+      where: not is_nil(appl.score) and appl.score > 0,
       order_by: [desc: appl.score, asc: student.id],
-      left_join: session in StudentSession,
-      on: student.id == session.student_id and session.company_id == ^company.id,
-      where: is_nil(session.id),
+      # Check that student doesn't already have session with given company
+      left_join: co_session in StudentSession,
+      on: student.id == co_session.student_id and co_session.company_id == ^company.id,
+      where: is_nil(co_session.id),
+      # Check that student doesn't already have session at the time of the given time slot
+      left_join: session in assoc(student, :student_sessions),
+      left_join: slot in TimeSlot,
+      on: slot.id == session.student_session_time_slot_id and slot.start == ^time_slot.start and slot.end == ^time_slot.end,
+      where: is_nil(slot.id),
       limit: 1,
       select: student)
 
@@ -78,16 +87,22 @@ defmodule Nexpo.StudentSessionController do
           Ecto.Multi.delete(multi, Integer.to_string(index), changeset)
         end)
 
-        insert_bulk = time_slots
-        |> Enum.shuffle
-        |> Enum.zip(students)
-        |> Enum.map(fn {time_slot, student} ->
+        insert_bulk = students
+        |> Enum.reduce({[], time_slots}, fn student, {acc, slots} ->
+          index = Enum.find_index(slots, fn x ->
+            IO.inspect(x)
+            IO.inspect(student)
+            true
+          end)
+          {time_slot, new_slots} = List.pop_at(slots, 0)
           data = student_sessions_params
           |> Map.put("student_session_time_slot_id", time_slot.id)
           |> Map.put("student_id", student.id)
 
-          StudentSession.changeset(%StudentSession{}, data)
+          new_acc = [StudentSession.changeset(%StudentSession{}, data) | acc]
+          {new_acc, new_slots}
         end)
+        |> elem(0)
         |> Enum.with_index()
         |> Enum.reduce(Ecto.Multi.new(), fn ({changeset, index}, multi) ->
           Ecto.Multi.insert(multi, Integer.to_string(index + length(delete_bulk.operations)), changeset)
