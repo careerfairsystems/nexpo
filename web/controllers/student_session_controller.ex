@@ -61,7 +61,7 @@ defmodule Nexpo.StudentSessionController do
       left_join: session in assoc(slot, :student_session),
       where: is_nil(session.id) or session.student_confirmed != true)
 
-    students = Repo.all(
+    student_ids = Repo.all(
       from appl in Ecto.assoc(company, :student_session_applications),
       join: student in assoc(appl, :student),
       order_by: [desc: appl.score, asc: student.id],
@@ -70,6 +70,14 @@ defmodule Nexpo.StudentSessionController do
       on: student.id == session.student_id and session.company_id == ^company.id,
       where: is_nil(session.id),
       limit: ^length(time_slots),
+      select: student.id)
+
+    students = Repo.all(
+      from student in Student,
+      where: student.id in ^student_ids,
+      left_join: session in assoc(student, :student_sessions),
+      group_by: student.id,
+      order_by: count(session.id),
       select: student)
 
     case students do
@@ -91,8 +99,7 @@ defmodule Nexpo.StudentSessionController do
 
         insert_bulk = students
         |> Enum.reduce({[], Enum.shuffle(time_slots)}, fn student, {acc, slots} ->
-          # Not sure how to handle when it couldn't find index, but I think we want to throw error
-          index = Enum.find_index(slots, fn time_slot ->
+          case Enum.find_index(slots, fn time_slot ->
             case Repo.all(
               from session in Ecto.assoc(student, :student_sessions),
               # Check that student does not already have session at the time of the given time slot
@@ -105,14 +112,19 @@ defmodule Nexpo.StudentSessionController do
               [] -> true
               _ -> false
             end
-          end)
-          {time_slot, new_slots} = List.pop_at(slots, index)
-          data = student_sessions_params
-          |> Map.put("student_session_time_slot_id", time_slot.id)
-          |> Map.put("student_id", student.id)
+          end) do
+            nil -> conn
+              |> put_status(404)
+              |> render(Nexpo.ErrorView, "404.json")
+            index ->
+              {time_slot, new_slots} = List.pop_at(slots, index)
+              data = student_sessions_params
+              |> Map.put("student_session_time_slot_id", time_slot.id)
+              |> Map.put("student_id", student.id)
 
-          new_acc = [StudentSession.changeset(%StudentSession{}, data) | acc]
-          {new_acc, new_slots}
+              new_acc = [StudentSession.changeset(%StudentSession{}, data) | acc]
+              {new_acc, new_slots}
+          end
         end)
         |> elem(0)
         |> Enum.with_index()
@@ -150,7 +162,7 @@ defmodule Nexpo.StudentSessionController do
   def update_me(conn, %{"id" => id,"student_session" => student_sessions_params }, user, _claims) do
     student = Repo.get_by!(Student, %{user_id: user.id})
     case Repo.get_by(StudentSession, %{id: id, student_id: student.id}) do
-      nil ->  conn
+      nil -> conn
         |> put_status(400)
         |> render(Nexpo.ErrorView, "400.json")
       session ->
