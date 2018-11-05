@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
-import { isNil, filter, sortBy } from 'lodash/fp';
+import { filter, sortBy } from 'lodash/fp';
 import { List, Avatar } from 'antd';
-import NotFound from '../../NotFound';
 import { toExternal } from '../../../Util/URLHelper';
 import LoadingSpinner from '../../../Components/LoadingSpinner';
 import HtmlTitle from '../../../Components/HtmlTitle';
 import InvisibleLink from '../../../Components/InvisibleLink';
 import '../Session.css';
 
-type CompanyObj = {
+type Company = {
   name: string,
   website: string,
   logoUrl: string,
@@ -17,7 +16,7 @@ type CompanyObj = {
 
 type Props = {
   fetching: boolean,
-  companies: { [string]: CompanyObj },
+  companies: { [string]: Company },
   getAllCompanies: () => Promise<void>
 };
 class SessionCompanies extends Component<Props> {
@@ -26,7 +25,7 @@ class SessionCompanies extends Component<Props> {
     getAllCompanies();
   }
 
-  renderCompany = ({ name, website, logoUrl, description }: CompanyObj) => (
+  renderCompany = ({ name, website, logoUrl, description }: Company) => (
     <List.Item
       extra={
         <Avatar
@@ -54,9 +53,6 @@ class SessionCompanies extends Component<Props> {
     if (fetching) {
       return <LoadingSpinner />;
     }
-    if (isNil(companies)) {
-      return <NotFound />;
-    }
 
     return (
       <div className="session-companies">
@@ -67,6 +63,7 @@ class SessionCompanies extends Component<Props> {
           size="large"
           dataSource={sortBy('name', filter('studentSessionDays', companies))}
           renderItem={this.renderCompany}
+          locale={{ emptyText: 'No Companies' }}
         />
       </div>
     );

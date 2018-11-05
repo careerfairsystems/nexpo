@@ -1,7 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import LoadingSpinner from '../../../Components/LoadingSpinner';
-import NotFound from '../../NotFound';
 import SessionApplications from './SessionApplications';
 
 describe('SessionApplications', () => {
@@ -11,13 +10,19 @@ describe('SessionApplications', () => {
       applications: [
         {
           id: '1',
-          company: '1',
+          company: {
+            name: 'Google',
+            logoUrl: 'www.google.com/profile.jpg'
+          },
           studentId: '1',
           motivation: 'Really motivating'
         },
         {
           id: '2',
-          company: '1',
+          company: {
+            name: 'Victor AB',
+            logoUrl: 'www.victorab.com/profile.jpg'
+          },
           studentId: '1',
           motivation: 'Really motivating'
         }
@@ -37,13 +42,6 @@ describe('SessionApplications', () => {
   it('renders loadingspinner when fetching', () => {
     const wrapper = shallow(<SessionApplications {...props} fetching />);
     expect(wrapper.find(LoadingSpinner)).toHaveLength(1);
-  });
-
-  it('renders NotFound when not fetching and applications are empty', () => {
-    const wrapper = shallow(
-      <SessionApplications {...props} applications={null} />
-    );
-    expect(wrapper.find(NotFound)).toHaveLength(1);
   });
 
   it('renders toggles edit correctly', () => {
