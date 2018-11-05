@@ -8,16 +8,24 @@ import { toSessionTimeFormat } from '../../../Util/FormatHelper';
 
 import '../Session.css';
 
-type SessionObj = {
+type Company = {
+  name: string,
+  logoUrl: string
+};
+type TimeSlot = {
+  start?: string,
+  end?: string
+};
+type Session = {
   id?: number,
   studentId: number,
   companyId: number,
   studentConfirmed?: boolean,
-  start?: string,
-  end?: string
+  company: Company,
+  studentSessionTimeSlot: TimeSlot
 };
 type Props = {
-  sessions?: ?Array<SessionObj>,
+  sessions?: ?Array<Session>,
   companies?: {
     id?: string,
     name?: string,
@@ -27,10 +35,6 @@ type Props = {
   confirmSession: number => Promise<void>,
   getAllCompanies: () => Promise<void>,
   fetching: boolean
-};
-type Time = {
-  start: ?string,
-  end: ?string
 };
 class StudentSessions extends Component<Props> {
   static defaultProps = {
@@ -48,7 +52,7 @@ class StudentSessions extends Component<Props> {
     if (id) confirmSession(id);
   };
 
-  renderSession = (session: SessionObj) => (
+  renderSession = (session: Session) => (
     <List.Item
       actions={[
         session.studentConfirmed ? (
@@ -78,7 +82,7 @@ class StudentSessions extends Component<Props> {
     </List.Item>
   );
 
-  renderTimeField = ({ start = '', end = '' }: Time) =>
+  renderTimeField = ({ start = '', end = '' }: TimeSlot) =>
     `Start: ${toSessionTimeFormat(start)}\nEnd: ${toSessionTimeFormat(end)}`;
 
   render() {

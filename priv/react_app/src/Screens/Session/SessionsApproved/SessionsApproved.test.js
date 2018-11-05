@@ -13,15 +13,27 @@ describe('SessionApplications', () => {
           id: 1,
           companyId: 1,
           studentId: 1,
-          start: '2018-01-01',
-          end: '2018-01-01'
+          company: {
+            name: 'Google',
+            logoUrl: 'www.google.com/profile.jpg'
+          },
+          studentSessionTimeSlot: {
+            start: '2018-01-01',
+            end: '2018-01-01'
+          }
         },
         {
           id: 2,
           companyId: 2,
           studentId: 1,
-          start: '2018-01-01',
-          end: '2018-01-01'
+          company: {
+            name: 'Victor AB',
+            logoUrl: 'www.victorab.com/profile.jpg'
+          },
+          studentSessionTimeSlot: {
+            start: '2018-01-01',
+            end: '2018-01-01'
+          }
         }
       ],
       companies: {},
