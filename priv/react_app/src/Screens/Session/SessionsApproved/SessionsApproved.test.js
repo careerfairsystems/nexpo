@@ -1,7 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import LoadingSpinner from '../../../Components/LoadingSpinner';
-import NotFound from '../../NotFound';
 import SessionApplications from './SessionsApproved';
 
 describe('SessionApplications', () => {
@@ -50,11 +49,6 @@ describe('SessionApplications', () => {
   it('renders loadingspinner when fetching', () => {
     const wrapper = shallow(<SessionApplications {...props} fetching />);
     expect(wrapper.find(LoadingSpinner)).toHaveLength(1);
-  });
-
-  it('renders NotFound when not fetching and applications are empty', () => {
-    const wrapper = shallow(<SessionApplications {...props} sessions={null} />);
-    expect(wrapper.find(NotFound)).toHaveLength(1);
   });
 
   it('calls confirmSession with correct parameters', () => {
