@@ -85,7 +85,7 @@ class StudentSessions extends Component<Props> {
     `Start: ${toSessionTimeFormat(start)}\nEnd: ${toSessionTimeFormat(end)}`;
 
   render() {
-    const { sessions = [], fetching } = this.props;
+    const { sessions, fetching } = this.props;
 
     if (fetching) {
       return <LoadingSpinner />;
@@ -103,7 +103,7 @@ class StudentSessions extends Component<Props> {
         <List
           size="large"
           bordered
-          dataSource={sortBy('studentSessionTimeSlot.start', sessions )}
+          dataSource={sortBy('studentSessionTimeSlot.start', sessions || [])}
           renderItem={this.renderSession}
           locale={{ emptyText: 'No Sessions' }}
         />
