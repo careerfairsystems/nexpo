@@ -92,6 +92,8 @@ class CompanyShow extends Component<Props> {
         <br />
         Email: {user.email}
         <br />
+        Phone Number: {user.phoneNumber}
+        <br />
       </>
     );
 
