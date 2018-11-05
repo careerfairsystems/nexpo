@@ -93,15 +93,16 @@ defmodule Nexpo.StudentSessionController do
         |> Enum.reduce({[], Enum.shuffle(time_slots)}, fn student, {acc, slots} ->
           # Not sure how to handle when it couldn't find index, but I think we want to throw error
           index = Enum.find_index(slots, fn time_slot ->
-            case Repo.one(
+            case Repo.all(
               from session in Ecto.assoc(student, :student_sessions),
               # Check that student does not already have session at the time of the given time slot
               left_join: slot in TimeSlot,
               on: slot.id == session.student_session_time_slot_id and
                   slot.start == ^time_slot.start and slot.end == ^time_slot.end,
+              where: not is_nil(slot.id),
               select: slot
             ) do
-              nil -> true
+              [] -> true
               _ -> false
             end
           end)
