@@ -1,15 +1,18 @@
 import React, { Component } from 'react';
-import { isNil, sortBy } from 'lodash/fp';
+import { sortBy } from 'lodash/fp';
 import { List, Avatar, Popconfirm, Button } from 'antd';
-import NotFound from '../../NotFound';
 import LoadingSpinner from '../../../Components/LoadingSpinner';
 import HtmlTitle from '../../../Components/HtmlTitle';
 import UpdateSessionApplicationForm from '../../../Forms/UpdateSessionApplicationForm';
 import '../Session.css';
 
+type Company = {
+  name: string,
+  logoUrl: string
+};
 type Application = {
   id: string,
-  company: string,
+  company: Company,
   motivation: string
 };
 type Props = {
@@ -41,11 +44,6 @@ class SessionApplications extends Component<Props, State> {
     const { getAllCompanies } = this.props;
     getAllCompanies();
   }
-
-  getCompany = (id: string) => {
-    const { companies = {} } = this.props;
-    return companies[id] || {};
-  };
 
   toggleEditMode = (id: string) => {
     const { editing: stateEditing } = this.state;
@@ -81,14 +79,14 @@ class SessionApplications extends Component<Props, State> {
         ]}
       >
         <List.Item.Meta
-          title={this.getCompany(application.company).name}
+          title={application.company.name}
           description={this.renderMotivationField(
             application.motivation,
             application.id
           )}
           avatar={
             <Avatar
-              src={this.getCompany(application.company).logoUrl}
+              src={application.company.logoUrl}
               size={128}
               shape="square"
               alt="Company Logotype"
@@ -119,10 +117,6 @@ class SessionApplications extends Component<Props, State> {
       return <LoadingSpinner />;
     }
 
-    if (isNil(applications)) {
-      return <NotFound />;
-    }
-
     return (
       <div className="session-applications">
         <HtmlTitle title="Student Session Application" />
@@ -130,10 +124,7 @@ class SessionApplications extends Component<Props, State> {
         <List
           size="large"
           bordered
-          dataSource={sortBy(
-            appl => this.getCompany(appl.company).name,
-            applications || []
-          )}
+          dataSource={sortBy('company.name', applications || [])}
           renderItem={this.renderApplication}
           locale={{ emptyText: 'No Applications' }}
         />

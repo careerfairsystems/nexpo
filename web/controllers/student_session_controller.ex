@@ -3,6 +3,7 @@ defmodule Nexpo.StudentSessionController do
   use Guardian.Phoenix.Controller
 
   alias Nexpo.{Student, Company, StudentSession}
+  alias Nexpo.StudentSessionTimeSlot, as: TimeSlot
   alias Guardian.Plug.{EnsurePermissions}
 
   plug EnsurePermissions, [handler: Nexpo.SessionController,
@@ -12,14 +13,23 @@ defmodule Nexpo.StudentSessionController do
 
   def create(conn, %{"student_session" => student_sessions_params}, _user, _claims) do
     company = Repo.get(Company, student_sessions_params["company_id"])
+    time_slot = Repo.get(TimeSlot, student_sessions_params["student_session_time_slot_id"])
 
     student = Repo.one(
       from appl in Ecto.assoc(company, :student_session_applications),
       join: student in assoc(appl, :student),
+      where: not is_nil(appl.score) and appl.score > 0,
       order_by: [desc: appl.score, asc: student.id],
-      left_join: session in StudentSession,
-      on: student.id == session.student_id and session.company_id == ^company.id,
-      where: is_nil(session.id),
+      # Check that student does not already have session with given company
+      left_join: co_session in StudentSession,
+      on: student.id == co_session.student_id and co_session.company_id == ^company.id,
+      where: is_nil(co_session.id),
+      # Check that student does not already have session at the time of the given time slot
+      left_join: session in assoc(student, :student_sessions),
+      left_join: slot in TimeSlot,
+      on: slot.id == session.student_session_time_slot_id and
+          slot.start == ^time_slot.start and slot.end == ^time_slot.end,
+      where: is_nil(slot.id),
       limit: 1,
       select: student)
 
@@ -51,14 +61,23 @@ defmodule Nexpo.StudentSessionController do
       left_join: session in assoc(slot, :student_session),
       where: is_nil(session.id) or session.student_confirmed != true)
 
-    students = Repo.all(
+    student_ids = Repo.all(
       from appl in Ecto.assoc(company, :student_session_applications),
       join: student in assoc(appl, :student),
       order_by: [desc: appl.score, asc: student.id],
+      # Check that student does not already have session with given company
       left_join: session in StudentSession,
       on: student.id == session.student_id and session.company_id == ^company.id,
       where: is_nil(session.id),
       limit: ^length(time_slots),
+      select: student.id)
+
+    students = Repo.all(
+      from student in Student,
+      where: student.id in ^student_ids,
+      left_join: session in assoc(student, :student_sessions),
+      group_by: student.id,
+      order_by: count(session.id),
       select: student)
 
     case students do
@@ -78,16 +97,36 @@ defmodule Nexpo.StudentSessionController do
           Ecto.Multi.delete(multi, Integer.to_string(index), changeset)
         end)
 
-        insert_bulk = time_slots
-        |> Enum.shuffle
-        |> Enum.zip(students)
-        |> Enum.map(fn {time_slot, student} ->
-          data = student_sessions_params
-          |> Map.put("student_session_time_slot_id", time_slot.id)
-          |> Map.put("student_id", student.id)
+        insert_bulk = students
+        |> Enum.reduce({[], Enum.shuffle(time_slots)}, fn student, {acc, slots} ->
+          case Enum.find_index(slots, fn time_slot ->
+            case Repo.all(
+              from session in Ecto.assoc(student, :student_sessions),
+              # Check that student does not already have session at the time of the given time slot
+              left_join: slot in TimeSlot,
+              on: slot.id == session.student_session_time_slot_id and
+                  slot.start == ^time_slot.start and slot.end == ^time_slot.end,
+              where: not is_nil(slot.id),
+              select: slot
+            ) do
+              [] -> true
+              _ -> false
+            end
+          end) do
+            nil -> conn
+              |> put_status(404)
+              |> render(Nexpo.ErrorView, "404.json")
+            index ->
+              {time_slot, new_slots} = List.pop_at(slots, index)
+              data = student_sessions_params
+              |> Map.put("student_session_time_slot_id", time_slot.id)
+              |> Map.put("student_id", student.id)
 
-          StudentSession.changeset(%StudentSession{}, data)
+              new_acc = [StudentSession.changeset(%StudentSession{}, data) | acc]
+              {new_acc, new_slots}
+          end
         end)
+        |> elem(0)
         |> Enum.with_index()
         |> Enum.reduce(Ecto.Multi.new(), fn ({changeset, index}, multi) ->
           Ecto.Multi.insert(multi, Integer.to_string(index + length(delete_bulk.operations)), changeset)
@@ -123,7 +162,7 @@ defmodule Nexpo.StudentSessionController do
   def update_me(conn, %{"id" => id,"student_session" => student_sessions_params }, user, _claims) do
     student = Repo.get_by!(Student, %{user_id: user.id})
     case Repo.get_by(StudentSession, %{id: id, student_id: student.id}) do
-      nil ->  conn
+      nil -> conn
         |> put_status(400)
         |> render(Nexpo.ErrorView, "400.json")
       session ->

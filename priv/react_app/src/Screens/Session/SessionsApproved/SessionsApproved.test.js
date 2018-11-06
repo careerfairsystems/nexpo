@@ -1,7 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import LoadingSpinner from '../../../Components/LoadingSpinner';
-import NotFound from '../../NotFound';
 import SessionApplications from './SessionsApproved';
 
 describe('SessionApplications', () => {
@@ -13,15 +12,27 @@ describe('SessionApplications', () => {
           id: 1,
           companyId: 1,
           studentId: 1,
-          start: '2018-01-01',
-          end: '2018-01-01'
+          company: {
+            name: 'Google',
+            logoUrl: 'www.google.com/profile.jpg'
+          },
+          studentSessionTimeSlot: {
+            start: '2018-01-01',
+            end: '2018-01-01'
+          }
         },
         {
           id: 2,
           companyId: 2,
           studentId: 1,
-          start: '2018-01-01',
-          end: '2018-01-01'
+          company: {
+            name: 'Victor AB',
+            logoUrl: 'www.victorab.com/profile.jpg'
+          },
+          studentSessionTimeSlot: {
+            start: '2018-01-01',
+            end: '2018-01-01'
+          }
         }
       ],
       companies: {},
@@ -38,11 +49,6 @@ describe('SessionApplications', () => {
   it('renders loadingspinner when fetching', () => {
     const wrapper = shallow(<SessionApplications {...props} fetching />);
     expect(wrapper.find(LoadingSpinner)).toHaveLength(1);
-  });
-
-  it('renders NotFound when not fetching and applications are empty', () => {
-    const wrapper = shallow(<SessionApplications {...props} sessions={null} />);
-    expect(wrapper.find(NotFound)).toHaveLength(1);
   });
 
   it('calls confirmSession with correct parameters', () => {

@@ -1,23 +1,30 @@
 import React, { Component } from 'react';
-import { isNil, sortBy } from 'lodash/fp';
+import { sortBy } from 'lodash/fp';
 import { Icon, List, Avatar, Button } from 'antd';
-import NotFound from '../../NotFound';
 import LoadingSpinner from '../../../Components/LoadingSpinner';
 import HtmlTitle from '../../../Components/HtmlTitle';
 import { toSessionTimeFormat } from '../../../Util/FormatHelper';
 
 import '../Session.css';
 
-type SessionObj = {
+type Company = {
+  name: string,
+  logoUrl: string
+};
+type TimeSlot = {
+  start?: string,
+  end?: string
+};
+type Session = {
   id?: number,
   studentId: number,
   companyId: number,
   studentConfirmed?: boolean,
-  start?: string,
-  end?: string
+  company: Company,
+  studentSessionTimeSlot: TimeSlot
 };
 type Props = {
-  sessions?: ?Array<SessionObj>,
+  sessions?: ?Array<Session>,
   companies?: {
     id?: string,
     name?: string,
@@ -39,18 +46,12 @@ class StudentSessions extends Component<Props> {
     getAllCompanies();
   }
 
-  getCompany = (companyId: number) => {
-    const { companies = {} } = this.props;
-
-    return companies[`${companyId}`] || {};
-  };
-
   confirmSession = (id: ?number) => {
     const { confirmSession } = this.props;
     if (id) confirmSession(id);
   };
 
-  renderSession = (session: SessionObj) => (
+  renderSession = (session: Session) => (
     <List.Item
       actions={[
         session.studentConfirmed ? (
@@ -66,11 +67,11 @@ class StudentSessions extends Component<Props> {
       ]}
     >
       <List.Item.Meta
-        title={this.getCompany(session.companyId).name}
-        description={this.renderTimeField(session.start, session.end)}
+        title={session.company.name}
+        description={this.renderTimeField(session.studentSessionTimeSlot)}
         avatar={
           <Avatar
-            src={this.getCompany(session.companyId).logoUrl}
+            src={session.company.logoUrl}
             size={128}
             shape="square"
             alt="Company Logotype"
@@ -80,7 +81,7 @@ class StudentSessions extends Component<Props> {
     </List.Item>
   );
 
-  renderTimeField = (start: ?string = '', end: ?string = '') =>
+  renderTimeField = ({ start = '', end = '' }: TimeSlot) =>
     `Start: ${toSessionTimeFormat(start)}\nEnd: ${toSessionTimeFormat(end)}`;
 
   render() {
@@ -88,10 +89,6 @@ class StudentSessions extends Component<Props> {
 
     if (fetching) {
       return <LoadingSpinner />;
-    }
-
-    if (isNil(sessions)) {
-      return <NotFound />;
     }
 
     return (
@@ -106,10 +103,7 @@ class StudentSessions extends Component<Props> {
         <List
           size="large"
           bordered
-          dataSource={sortBy(
-            appl => this.getCompany(appl.companyId).name,
-            sessions || []
-          )}
+          dataSource={sortBy('studentSessionTimeSlot.start', sessions || [])}
           renderItem={this.renderSession}
           locale={{ emptyText: 'No Sessions' }}
         />

@@ -26,6 +26,7 @@ defmodule Nexpo.Support.View do
 
   # Defines how to render all possible relations in database
   # Both in plural and singular
+  # TODO: Make it more dynamic
   defp render_relation(object, relation) do
     case relation do
       :entries ->
@@ -67,6 +68,12 @@ defmodule Nexpo.Support.View do
             object.student_sessions,
             Nexpo.StudentSessionView,
             "student_session.json"
+          )}
+      :student_session_time_slot ->
+        %{:student_session_time_slot => render_one(
+            object.student_session_time_slot,
+            Nexpo.StudentSessionTimeSlotView,
+            "student_session_time_slot.json"
           )}
       :student_session_time_slots ->
         %{:student_session_time_slots => render_many(
