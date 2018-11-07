@@ -64,6 +64,7 @@ defmodule Nexpo.StudentSessionController do
     student_ids = Repo.all(
       from appl in Ecto.assoc(company, :student_session_applications),
       join: student in assoc(appl, :student),
+      where: not is_nil(appl.score) and appl.score > 0,
       order_by: [desc: appl.score, asc: student.id],
       # Check that student does not already have session with given company
       left_join: session in StudentSession,
