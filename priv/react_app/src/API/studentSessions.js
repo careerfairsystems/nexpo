@@ -6,8 +6,9 @@ import {
   authPost,
   authPatch,
   authDelete,
-  handleHttpResponse,
-  authPut
+  authPut,
+  download,
+  handleHttpResponse
 } from './utils';
 
 export default {
@@ -32,6 +33,11 @@ export default {
     authPut(`/api/me/student_sessions/${id}`, {
       studentSession: { studentConfirmed: true }
     }).then(handleHttpResponse),
+
+  /** Fetches all reserves for student sessions */
+  downloadReserves: () =>
+    download('/api/student_session_reserves', 'reserves.csv'),
+
   /** Create a student session application */
   createAppl: (data: {}) =>
     authPost('/api/student_session_applications', data).then(

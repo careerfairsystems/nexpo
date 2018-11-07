@@ -2,9 +2,15 @@ defmodule Nexpo.StudentSessionController do
   use Nexpo.Web, :controller
   use Guardian.Phoenix.Controller
 
+  alias Nexpo.Repo
   alias Nexpo.{Student, Company, StudentSession}
   alias Nexpo.StudentSessionTimeSlot, as: TimeSlot
   alias Guardian.Plug.{EnsurePermissions}
+
+  plug EnsurePermissions, [handler: Nexpo.SessionController,
+                           one_of: [%{default: ["read_all"]},
+                                    %{default: ["read_companies"]}]
+                          ] when action in [:show_reserves]
 
   plug EnsurePermissions, [handler: Nexpo.SessionController,
                            one_of: [%{default: ["write_all"]},
@@ -148,6 +154,43 @@ defmodule Nexpo.StudentSessionController do
             |> render(Nexpo.ChangesetView, "error.json", changeset: changeset)
         end
     end
+  end
+
+  def show_reserves(conn, %{}, _user, _claims) do
+    reserves = Repo.all(from(
+      company in Company,
+      join: appl in assoc(company, :student_session_applications),
+      join: student in assoc(appl, :student),
+      join: user in assoc(student, :user),
+      where: not is_nil(appl.score) and appl.score > 0,
+      order_by: [desc: appl.score, asc: student.id],
+      # Check that student does not already have session with given company
+      left_join: session in StudentSession,
+      on: student.id == session.student_id and session.company_id == company.id,
+      where: is_nil(session.id),
+      preload: [student_session_applications: {appl, student: {student, user: user}}]
+    ))
+    |> Enum.map(fn company ->
+        reserve = company.student_session_applications
+          |> Enum.map(fn appl ->
+            ~s"""
+            #{appl.student.user.first_name} #{appl.student.user.last_name},\
+            #{appl.student.user.email},\
+            #{appl.student.user.phone_number}\
+            """
+          end)
+          |> Enum.take(6)
+          |> Enum.join("\n")
+
+        ~s"""
+        #{company.name}
+        name,email,phone number
+        #{reserve}
+
+        """
+    end)
+
+    conn |> send_resp(200, reserves)
   end
 
   def delete(conn, %{"id" => id}, _user, _claims) do
