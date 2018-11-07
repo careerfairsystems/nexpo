@@ -112,6 +112,19 @@ export const authDelete = (url: string): Promise<Response> =>
     })
   });
 
+export const download = async (url: string, filename: string) => {
+  const response = await fetch(url, {
+    headers: new Headers({
+      Authorization: `Bearer ${getJwt()}`
+    })
+  });
+  const blob = await response.blob();
+  const element = document.createElement('a');
+  element.href = URL.createObjectURL(blob);
+  element.download = filename;
+  element.click();
+};
+
 export const fetchJson = (
   url: string,
   { data, method }: { data: {}, method: string }

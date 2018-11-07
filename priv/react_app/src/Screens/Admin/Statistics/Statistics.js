@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Col, Row, Table } from 'antd';
+import { Col, Row, Table, Button } from 'antd';
 import {
   orderBy,
   divide,
@@ -19,6 +19,8 @@ import {
 } from 'victory';
 import moment from 'moment';
 // import ColumnGroup from 'antd/lib/table/ColumnGroup';
+
+import API from '../../../API';
 
 const columns = [
   {
@@ -148,10 +150,12 @@ class Statistics extends Component<Props> {
             </VictoryChart>
           </Col>
         </Row>
-
         <br />
         <br />
         <br />
+        <Button icon="download" onClick={API.studentSessions.downloadReserves}>
+          Download reserves
+        </Button>
         <br />
         <br />
         <Table
