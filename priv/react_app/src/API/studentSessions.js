@@ -38,6 +38,9 @@ export default {
   downloadReserves: () =>
     download('/api/student_session_reserves', 'reserves.csv'),
 
+  /** Fetches company schema for student sessions */
+  downloadSchema: () => download(/* TODO */ '', 'schema.csv'),
+
   /** Create a student session application */
   createAppl: (data: {}) =>
     authPost('/api/student_session_applications', data).then(

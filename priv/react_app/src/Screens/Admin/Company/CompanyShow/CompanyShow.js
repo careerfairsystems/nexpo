@@ -8,7 +8,7 @@ import InvisibleLink from '../../../../Components/InvisibleLink';
 import HtmlTitle from '../../../../Components/HtmlTitle';
 import LoadingSpinner from '../../../../Components/LoadingSpinner';
 import '../Company.css';
-
+import API from '../../../../API';
 /**
  * Responsible for rendering a company. Company id is recieved via url
  */
@@ -190,6 +190,11 @@ class CompanyShow extends Component<Props> {
             Edit
           </Button>
         </InvisibleLink>
+        <br />
+        <br />
+        <Button icon="download" onClick={API.studentSessions.downloadSchema}>
+          Download schema
+        </Button>
       </div>
     );
   }
