@@ -353,17 +353,17 @@ describe('updateProgramme', () => {
   });
 });
 
-describe('destroyProgrammeIsLoading', () => {
+describe('deleteProgrammeIsLoading', () => {
   it('should create the correct action', () => {
     const expectedAction = {
       type: actionTypes.DELETE_PROGRAMME
     };
-    const action = Actions.programmes.destroyProgrammeIsLoading();
+    const action = Actions.programmes.deleteProgrammeIsLoading();
     expect(action).toEqual(expectedAction);
   });
 });
 
-describe('destroyProgrammeSuccess', () => {
+describe('deleteProgrammeSuccess', () => {
   it('should create the correct action', () => {
     const testProgrammeId = '1';
 
@@ -371,30 +371,30 @@ describe('destroyProgrammeSuccess', () => {
       type: actionTypes.DELETE_PROGRAMME_SUCCESS,
       id: testProgrammeId
     };
-    const action = Actions.programmes.destroyProgrammeSuccess(testProgrammeId);
+    const action = Actions.programmes.deleteProgrammeSuccess(testProgrammeId);
     expect(action).toEqual(expectedAction);
   });
 });
 
-describe('destroyProgrammeFailure', () => {
-  it('should destroy the correct action', () => {
+describe('deleteProgrammeFailure', () => {
+  it('should delete the correct action', () => {
     const expectedAction = {
       type: actionTypes.DELETE_PROGRAMME_FAILURE
     };
-    const action = Actions.programmes.destroyProgrammeFailure();
+    const action = Actions.programmes.deleteProgrammeFailure();
     expect(action).toEqual(expectedAction);
   });
 });
 
-describe('destroyProgramme', () => {
+describe('deleteProgramme', () => {
   it('should call start action', () => {
     mockHttpResponse({ status: 200, body: {} });
     const store = createMockStore();
 
-    return store.dispatch(Actions.programmes.destroyProgramme('1')).then(() => {
+    return store.dispatch(Actions.programmes.deleteProgramme('1')).then(() => {
       const calledActions = store.getActions();
       expect(calledActions[0]).toEqual(
-        Actions.programmes.destroyProgrammeIsLoading()
+        Actions.programmes.deleteProgrammeIsLoading()
       );
     });
   });
@@ -406,13 +406,13 @@ describe('destroyProgramme', () => {
     mockHttpResponse({ status: 200, body: { data: programme.id } });
 
     const expectedActions = [
-      Actions.programmes.destroyProgrammeIsLoading(),
-      Actions.programmes.destroyProgrammeSuccess(programme.id)
+      Actions.programmes.deleteProgrammeIsLoading(),
+      Actions.programmes.deleteProgrammeSuccess(programme.id)
     ];
 
     const store = createMockStore();
 
-    return store.dispatch(Actions.programmes.destroyProgramme('1')).then(() => {
+    return store.dispatch(Actions.programmes.deleteProgramme('1')).then(() => {
       const calledActions = store.getActions();
       expect(calledActions).toEqual(expectedActions);
     });
@@ -421,13 +421,13 @@ describe('destroyProgramme', () => {
   it('should call failure action on failure', () => {
     mockHttpResponse({ status: 401, body: {} });
     const expectedActions = [
-      Actions.programmes.destroyProgrammeIsLoading(),
-      Actions.programmes.destroyProgrammeFailure()
+      Actions.programmes.deleteProgrammeIsLoading(),
+      Actions.programmes.deleteProgrammeFailure()
     ];
 
     const store = createMockStore();
 
-    return store.dispatch(Actions.programmes.destroyProgramme('1')).then(() => {
+    return store.dispatch(Actions.programmes.deleteProgramme('1')).then(() => {
       const calledActions = store.getActions();
       expect(calledActions).toEqual(expectedActions);
     });

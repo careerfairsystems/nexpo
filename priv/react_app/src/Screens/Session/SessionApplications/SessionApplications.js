@@ -19,7 +19,7 @@ type Props = {
   applications?: ?Array<Application>,
   companies?: {},
   getAllCompanies: () => Promise<void>,
-  destroyStudentSessionAppl: string => Promise<void>,
+  deleteStudentSessionAppl: string => Promise<void>,
   fetching: boolean,
   updateStudentSessionAppl: (
     string,
@@ -60,7 +60,7 @@ class SessionApplications extends Component<Props, State> {
 
   renderApplication = (application: Application) => {
     const { editing } = this.state;
-    const { destroyStudentSessionAppl } = this.props;
+    const { deleteStudentSessionAppl } = this.props;
     return (
       <List.Item
         actions={[
@@ -72,7 +72,7 @@ class SessionApplications extends Component<Props, State> {
           </Button>,
           <Popconfirm
             title="Sure to delete?"
-            onConfirm={() => destroyStudentSessionAppl(application.id)}
+            onConfirm={() => deleteStudentSessionAppl(application.id)}
           >
             <span style={{ color: '#ff4d4f', cursor: 'pointer' }}>Delete</span>
           </Popconfirm>

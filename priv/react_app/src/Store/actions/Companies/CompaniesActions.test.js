@@ -347,17 +347,17 @@ describe('updateCompany', () => {
   });
 });
 
-describe('destroyCompanyIsLoading', () => {
+describe('deleteCompanyIsLoading', () => {
   it('should create the correct action', () => {
     const expectedAction = {
       type: actionTypes.DELETE_COMPANY
     };
-    const action = Actions.companies.destroyCompanyIsLoading();
+    const action = Actions.companies.deleteCompanyIsLoading();
     expect(action).toEqual(expectedAction);
   });
 });
 
-describe('destroyCompanySuccess', () => {
+describe('deleteCompanySuccess', () => {
   it('should create the correct action', () => {
     const testCompany = {
       id: '1'
@@ -367,30 +367,30 @@ describe('destroyCompanySuccess', () => {
       type: actionTypes.DELETE_COMPANY_SUCCESS,
       id: testCompany.id
     };
-    const action = Actions.companies.destroyCompanySuccess(testCompany.id);
+    const action = Actions.companies.deleteCompanySuccess(testCompany.id);
     expect(action).toEqual(expectedAction);
   });
 });
 
-describe('destroyCompanyFailure', () => {
-  it('should destroy the correct action', () => {
+describe('deleteCompanyFailure', () => {
+  it('should delete the correct action', () => {
     const expectedAction = {
       type: actionTypes.DELETE_COMPANY_FAILURE
     };
-    const action = Actions.companies.destroyCompanyFailure();
+    const action = Actions.companies.deleteCompanyFailure();
     expect(action).toEqual(expectedAction);
   });
 });
 
-describe('destroyCompany', () => {
+describe('deleteCompany', () => {
   it('should call start action', () => {
     mockHttpResponse({ status: 200, body: {} });
     const store = createMockStore();
 
-    return store.dispatch(Actions.companies.destroyCompany('1')).then(() => {
+    return store.dispatch(Actions.companies.deleteCompany('1')).then(() => {
       const calledActions = store.getActions();
       expect(calledActions[0]).toEqual(
-        Actions.companies.destroyCompanyIsLoading()
+        Actions.companies.deleteCompanyIsLoading()
       );
     });
   });
@@ -403,13 +403,13 @@ describe('destroyCompany', () => {
     mockHttpResponse({ status: 200, body: { data: company } });
 
     const expectedActions = [
-      Actions.companies.destroyCompanyIsLoading(),
-      Actions.companies.destroyCompanySuccess(company.id)
+      Actions.companies.deleteCompanyIsLoading(),
+      Actions.companies.deleteCompanySuccess(company.id)
     ];
 
     const store = createMockStore();
 
-    return store.dispatch(Actions.companies.destroyCompany('1')).then(() => {
+    return store.dispatch(Actions.companies.deleteCompany('1')).then(() => {
       const calledActions = store.getActions();
       expect(calledActions).toEqual(expectedActions);
     });
@@ -418,13 +418,13 @@ describe('destroyCompany', () => {
   it('should call failure action on failure', () => {
     mockHttpResponse({ status: 401, body: {} });
     const expectedActions = [
-      Actions.companies.destroyCompanyIsLoading(),
-      Actions.companies.destroyCompanyFailure()
+      Actions.companies.deleteCompanyIsLoading(),
+      Actions.companies.deleteCompanyFailure()
     ];
 
     const store = createMockStore();
 
-    return store.dispatch(Actions.companies.destroyCompany('1')).then(() => {
+    return store.dispatch(Actions.companies.deleteCompany('1')).then(() => {
       const calledActions = store.getActions();
       expect(calledActions).toEqual(expectedActions);
     });

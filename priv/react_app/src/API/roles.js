@@ -35,6 +35,6 @@ export default {
   /**
    * Delete a role
    */
-  destroy: (id: string) =>
+  delete: (id: string) =>
     authDelete(`/api/roles/${id}`).then(handleHttpResponse)
 };

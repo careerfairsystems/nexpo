@@ -98,18 +98,18 @@ describe('createStudentSessionAppl', () => {
   });
 });
 
-describe('destroyStudentSessionAppl', () => {
+describe('deleteStudentSessionAppl', () => {
   it('should call start action', () => {
     mockHttpResponse({ status: 200, body: {} });
     const store = createMockStore();
     const data = { id: '1' };
 
     return store
-      .dispatch(Actions.studentSessions.destroyStudentSessionAppl(data.id))
+      .dispatch(Actions.studentSessions.deleteStudentSessionAppl(data.id))
       .then(() => {
         const calledActions = store.getActions();
         expect(calledActions[0]).toEqual(
-          Actions.studentSessions.destroyStudentSessionApplIsLoading()
+          Actions.studentSessions.deleteStudentSessionApplIsLoading()
         );
       });
   });
@@ -119,14 +119,14 @@ describe('destroyStudentSessionAppl', () => {
     const data = { id: '1' };
 
     const expectedActions = [
-      Actions.studentSessions.destroyStudentSessionApplIsLoading(),
-      Actions.studentSessions.destroyStudentSessionApplFailure()
+      Actions.studentSessions.deleteStudentSessionApplIsLoading(),
+      Actions.studentSessions.deleteStudentSessionApplFailure()
     ];
 
     const store = createMockStore();
 
     return store
-      .dispatch(Actions.studentSessions.destroyStudentSessionAppl(data.id))
+      .dispatch(Actions.studentSessions.deleteStudentSessionAppl(data.id))
       .then(() => {
         const calledActions = store.getActions();
         expect(calledActions).toEqual(expectedActions);
@@ -138,8 +138,8 @@ describe('destroyStudentSessionAppl', () => {
     mockHttpResponse({ status: 200, body: {} });
 
     const expectedActions = [
-      Actions.studentSessions.destroyStudentSessionApplIsLoading(),
-      Actions.studentSessions.destroyStudentSessionApplSuccess(application.id)
+      Actions.studentSessions.deleteStudentSessionApplIsLoading(),
+      Actions.studentSessions.deleteStudentSessionApplSuccess(application.id)
     ];
 
     const store = createMockStore();
@@ -147,7 +147,7 @@ describe('destroyStudentSessionAppl', () => {
 
     return store
       .dispatch(
-        Actions.studentSessions.destroyStudentSessionAppl(data.application.id)
+        Actions.studentSessions.deleteStudentSessionAppl(data.application.id)
       )
       .then(() => {
         const calledActions = store.getActions();

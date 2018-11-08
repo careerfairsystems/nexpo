@@ -23,7 +23,7 @@ describe('userform should function correctly', () => {
       fetching: false,
       getCurrentUser: jest.fn(),
       getAllProgrammes: jest.fn(),
-      destroyCurrentUser: jest.fn(),
+      deleteCurrentUser: jest.fn(),
       logout: jest.fn(),
       resetForm: jest.fn(),
       updateCurrentUser: jest.fn(),
@@ -67,11 +67,11 @@ describe('userform should function correctly', () => {
     });
   });
 
-  it('should destroy user properly', () => {
+  it('should delete user properly', () => {
     const wrapper = shallow(<CurrentUser {...props} />);
-    const { destroyCurrentUser, logout } = props;
-    wrapper.instance().destroyCurrentUser();
-    expect(destroyCurrentUser).toHaveBeenCalledTimes(1);
+    const { deleteCurrentUser, logout } = props;
+    wrapper.instance().deleteCurrentUser();
+    expect(deleteCurrentUser).toHaveBeenCalledTimes(1);
     expect(logout).toHaveBeenCalledTimes(1);
     wrapper.find(Button).simulate('click');
   });

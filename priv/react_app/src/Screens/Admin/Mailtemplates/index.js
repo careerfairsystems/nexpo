@@ -9,7 +9,7 @@ const mapStateToProps = (state: State) => ({
 });
 
 const mapDispatchToProps = {
-  deleteMailtemplate: Actions.mailtemplates.destroyMailtemplate,
+  deleteMailtemplate: Actions.mailtemplates.deleteMailtemplate,
   getAllMailtemplates: Actions.mailtemplates.getAllMailtemplates
 };
 

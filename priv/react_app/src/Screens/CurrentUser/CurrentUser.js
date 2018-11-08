@@ -33,7 +33,7 @@ type Props = {
   updateCurrentUser: ({ user: UserObj }) => Promise<void>,
   updateCurrentStudent: ({ student: StudentObj }) => Promise<void>,
   getAllProgrammes: () => Promise<void>,
-  destroyCurrentUser: () => Promise<void>,
+  deleteCurrentUser: () => Promise<void>,
   logout: () => Promise<void>,
   resetForm: string => Promise<void>
 };
@@ -52,15 +52,15 @@ class CurrentUser extends Component<Props> {
     Modal.confirm({
       title: 'Do you want to delete your account?',
       onOk: () => {
-        this.destroyCurrentUser();
+        this.deleteCurrentUser();
       },
       onCancel() {}
     });
   };
 
-  destroyCurrentUser = () => {
-    const { destroyCurrentUser, logout } = this.props;
-    destroyCurrentUser();
+  deleteCurrentUser = () => {
+    const { deleteCurrentUser, logout } = this.props;
+    deleteCurrentUser();
     logout();
   };
 
