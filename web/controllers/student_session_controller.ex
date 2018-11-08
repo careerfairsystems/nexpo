@@ -42,7 +42,7 @@ defmodule Nexpo.StudentSessionController do
     case student do
       nil -> conn
         |> put_status(404)
-        |> render(ErrorView, "404.json")
+        |> render(Nexpo.ErrorView, "404.json")
       student ->
         data = Map.put(student_sessions_params, "student_id", student.id)
         changeset = StudentSession.changeset(%StudentSession{}, data)

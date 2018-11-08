@@ -95,6 +95,10 @@ Repo.insert!(%CategoryAttribute{title: "Yrkesvaskning", category_id: 4})
 Repo.insert!(%CategoryAttribute{title: "Sabrering för nybörjare", category_id: 4})
 Repo.insert!(%CategoryAttribute{title: "Sabrering för nybörjare", category_id: 4})
 
+# Create some random company entries
+alias Nexpo.CompanyEntry
+SeedEntries.seed(Repo, CompanyEntry, 100)
+
 # Create some student-session time slots
 alias Nexpo.StudentSessionTimeSlot
 Repo.insert(%StudentSessionTimeSlot{start: ~N[2000-01-01 08:00:00], end: ~N[2000-01-01 08:15:00], location: "Albatraoz", company_id: 1})
@@ -104,14 +108,16 @@ Repo.insert(%StudentSessionTimeSlot{start: ~N[2000-01-01 08:45:00], end: ~N[2000
 
 # Create some student-session applications
 alias Nexpo.StudentSessionApplication
-Repo.insert!(%StudentSessionApplication{motivation: "Im really good", company_id: 1, student_id: 2})
-Repo.insert!(%StudentSessionApplication{motivation: "I love Google!", company_id: 2, student_id: 1})
-Repo.insert!(%StudentSessionApplication{motivation: "Im awesome good", company_id: 2, student_id: 2})
-Repo.insert!(%StudentSessionApplication{motivation: "Im awesome really good", company_id: 4, student_id: 2})
+Repo.insert!(%StudentSessionApplication{motivation: "Im really good", company_id: 1, student_id: 2, score: 1})
+Repo.insert!(%StudentSessionApplication{motivation: "I love Google!", company_id: 2, student_id: 1, score: 1})
+Repo.insert!(%StudentSessionApplication{motivation: "Im awesome good", company_id: 2, student_id: 2, score: 3})
+Repo.insert!(%StudentSessionApplication{motivation: "Im awesome really good", company_id: 4, student_id: 2, score: 3})
 
-# Create some random company entries
-alias Nexpo.CompanyEntry
-SeedEntries.seed(Repo, CompanyEntry, 100)
+# Create som student sessions
+alias Nexpo.StudentSession
+Repo.insert!(%StudentSession{student_id: 2, student_session_time_slot_id: 1})
+Repo.insert!(%StudentSession{student_id: 1, student_session_time_slot_id: 2})
+Repo.insert!(%StudentSession{student_id: 2, student_session_time_slot_id: 3})
 
 # Create some mailtemplates
 alias Nexpo.Mailtemplate
@@ -125,12 +131,6 @@ alias Nexpo.Deadline
 Repo.insert!(%Deadline{name: "Host Applications", start: ~N[2000-01-01 23:00:00], end: ~N[2040-01-01 23:00:00]})
 Repo.insert!(%Deadline{name: "Company Registration", start: ~N[2040-01-01 08:00:00], end: ~N[2060-01-01 23:59:00]})
 Repo.insert!(%Deadline{name: "Gasque Reservations", start: ~N[2010-11-14 08:00:07], end: ~N[2040-01-01 10:00:00]})
-
-# Create som student sessions
-alias Nexpo.StudentSession
-Repo.insert!(%StudentSession{start: ~N[2000-01-01 23:00:00], end: ~N[2040-01-01 23:00:00], student_id: 2, student_session_time_slot_id: 1})
-Repo.insert!(%StudentSession{start: ~N[2000-01-01 23:00:00], end: ~N[2040-01-01 23:00:00], student_id: 1, student_session_time_slot_id: 2})
-Repo.insert!(%StudentSession{start: ~N[2000-01-02 23:00:00], end: ~N[2040-01-02 23:00:00], student_id: 2, student_session_time_slot_id: 3})
 
 # Create some programmes
 alias Nexpo.Programme
