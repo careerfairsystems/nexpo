@@ -7,16 +7,11 @@ import makeField from './helper';
 
 const FieldSelect = makeField(Select);
 
-type Props = {
-  ...FormProps,
-  onCancel?: Event => any
-};
-
 const CompanyStudentSessionForm = ({
   handleSubmit,
   submitting,
   options
-}: Props) => (
+}: FormProps) => (
   <Form onSubmit={handleSubmit} layout="inline">
     <Field
       name="studentId"
@@ -40,10 +35,6 @@ const CompanyStudentSessionForm = ({
     </Button>
   </Form>
 );
-
-CompanyStudentSessionForm.defaultProps = {
-  onCancel: null
-};
 
 const mapStateToProps = (state, props) => ({
   formState: state.form[`CompanyStudentSession${props.id}`] || {},
