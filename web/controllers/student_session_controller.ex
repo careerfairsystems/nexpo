@@ -181,10 +181,10 @@ defmodule Nexpo.StudentSessionController do
     # Here we use delete! (with a bang) because we expect
     # it to always work (and if it does not, it will raise).
     Repo.delete!(session)
+
     conn
     |> put_status(303)
     |> redirect(to: company_path(conn, :show, company))
-    # send_resp(conn, :no_content, "")
   end
 
   def delete_bulk(conn, %{}, _user, _claims) do
