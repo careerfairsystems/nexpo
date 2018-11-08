@@ -110,7 +110,7 @@ class Companies extends Component<Props> {
         <br />
         <Popconfirm
           title="Sure to delete all non confirmed student sessions?"
-          onConfirm={API.studentSessions.destroyNonConfirmed}
+          onConfirm={API.studentSessions.deleteNonConfirmed}
         >
           <Button onClick={() => null}>Remove non-confirmed sessions</Button>
         </Popconfirm>
