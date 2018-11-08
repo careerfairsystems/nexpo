@@ -79,7 +79,25 @@ defmodule Nexpo.CompanyController do
             student_session_time_slots: [
               student_session: [student: [:user]]
             ]])
+        |> append_top_students
     render(conn, "show.json", company: company)
+  end
+
+  defp append_top_students(company) do
+    query = Repo.all(
+      from appl in Ecto.assoc(company, :student_session_applications),
+      join: student in assoc(appl, :student),
+      join: user in assoc(student, :user),
+      where: not is_nil(appl.score) and appl.score > 0,
+      order_by: [desc: appl.score, asc: student.id],
+      # Check that student does not already have session with given company
+      left_join: co_session in Nexpo.StudentSession,
+      on: student.id == co_session.student_id and co_session.company_id == ^company.id,
+      where: is_nil(co_session.id),
+      select: %{id: student.id, first_name: user.first_name, last_name: user.last_name}
+    )
+
+    %{company | top_students: query }
   end
 
   def update(conn, %{"id" => id, "company" => company_params}, _user, _claims) do

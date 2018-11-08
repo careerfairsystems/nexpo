@@ -9,11 +9,11 @@ export function deleteStudentSessionIsLoading() {
   };
 }
 
-export function deleteStudentSessionSuccess(id: string) {
+export function deleteStudentSessionSuccess(company: {}) {
   message.success('Student Session was successfully deleted.');
   return {
     type: actionTypes.DELETE_STUDENT_SESSION_SUCCESS,
-    id
+    company
   };
 }
 
@@ -32,8 +32,8 @@ export function deleteStudentSession(id: string) {
     dispatch(deleteStudentSessionIsLoading());
     return API.studentSessions
       .delete(id)
-      .then(() => {
-        dispatch(deleteStudentSessionSuccess(id));
+      .then(company => {
+        dispatch(deleteStudentSessionSuccess(company.data));
       })
       .catch(() => {
         dispatch(deleteStudentSessionFailure());

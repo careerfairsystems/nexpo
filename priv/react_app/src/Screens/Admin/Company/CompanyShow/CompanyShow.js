@@ -13,7 +13,7 @@ import {
   flatten,
   flow
 } from 'lodash/fp';
-import { List, Avatar, Button, Tag, Popconfirm } from 'antd';
+import { List, Avatar, Button, Tag, Popconfirm, Select } from 'antd';
 import { CSVLink } from 'react-csv';
 import moment from 'moment';
 import NotFound from '../../../NotFound';
@@ -23,7 +23,7 @@ import InvisibleLink from '../../../../Components/InvisibleLink';
 import HtmlTitle from '../../../../Components/HtmlTitle';
 import LoadingSpinner from '../../../../Components/LoadingSpinner';
 import '../Company.css';
-
+import CompanyStudentSessionForm from '../../../../Forms/CompanyStudentSessionForm';
 /**
  * Responsible for rendering a company. Company id is recieved via url
  */
@@ -45,7 +45,8 @@ type Props = {
       start: string,
       end: string,
       location: string
-    }>
+    }>,
+    topStudents?: Array<{ id: number, firstName: string, lastName: string }>
   },
   fetching: boolean,
   getCompany: string => Promise<void>,
@@ -64,6 +65,17 @@ class CompanyShow extends Component<Props> {
     const { id, getCompany } = this.props;
     getCompany(id);
   }
+
+  handleSubmit = (values: { studentId: string }, id: number) => {
+    const { company, createStudentSession } = this.props;
+    createStudentSession({
+      studentSession: {
+        companyId: company.id,
+        studentId: values.studentId,
+        studentSessionTimeSlotId: id
+      }
+    });
+  };
 
   showStudentSession() {
     const { company } = this.props;
@@ -87,7 +99,7 @@ class CompanyShow extends Component<Props> {
     if (fetching) return <LoadingSpinner />;
     if (isEmpty(company) || isNil(company)) return <NotFound />;
 
-    const { name, website, description } = company;
+    const { name, website, description, topStudents = [] } = company;
 
     const studentConfirmed = studentSession => {
       if (studentSession) {
@@ -110,6 +122,14 @@ class CompanyShow extends Component<Props> {
         Phone Number: {user.phoneNumber}
         <br />
       </>
+    );
+    const options = map(
+      s => (
+        <Select.Option key={s.id}>{`${s.firstName} ${
+          s.lastName
+        }`}</Select.Option>
+      ),
+      topStudents
     );
 
     const data = flow(
@@ -215,29 +235,30 @@ class CompanyShow extends Component<Props> {
           renderItem={({ id, start, end, location, studentSession }, index) => (
             <List.Item
               actions={[
-                <Popconfirm
-                  title={`Sure to ${studentSession ? 'remove' : 'assign'}?`}
-                  onConfirm={() => {
-                    const {
-                      createStudentSession,
-                      deleteStudentSession
-                    } = this.props;
-                    if (studentSession) {
-                      deleteStudentSession(studentSession.id);
-                    } else {
-                      createStudentSession({
-                        studentSession: {
-                          companyId: company.id,
-                          studentSessionTimeSlotId: id
-                        }
-                      });
-                    }
-                  }}
-                >
-                  <span style={{ color: '#1890ff', cursor: 'pointer' }}>
-                    {studentSession ? 'Remove' : 'Assign'}
-                  </span>
-                </Popconfirm>
+                <>
+                  {studentSession ? (
+                    <Popconfirm
+                      title={`Sure to ${'remove'}?`}
+                      onConfirm={() => {
+                        const { deleteStudentSession } = this.props;
+                        deleteStudentSession(studentSession.id);
+                      }}
+                    >
+                      <Button onClick={() => null} type="danger">
+                        Remove
+                      </Button>
+                    </Popconfirm>
+                  ) : (
+                    <CompanyStudentSessionForm
+                      options={options}
+                      id={id}
+                      onSubmit={values => this.handleSubmit(values, id)}
+                      initialValues={{
+                        studentId: options[0] ? options[0].key : null
+                      }}
+                    />
+                  )}
+                </>
               ]}
             >
               <List.Item.Meta
