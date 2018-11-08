@@ -37,6 +37,6 @@ export default {
   /**
    * Delete a mail template
    */
-  destroy: (id: string) =>
+  delete: (id: string) =>
     authDelete(`/api/mailtemplates/${id}`).then(handleHttpResponse)
 };

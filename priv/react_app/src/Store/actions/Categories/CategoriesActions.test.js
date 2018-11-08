@@ -353,17 +353,17 @@ describe('updateCategory', () => {
   });
 });
 
-describe('destroyCategoryIsLoading', () => {
+describe('deleteCategoryIsLoading', () => {
   it('should create the correct action', () => {
     const expectedAction = {
       type: actionTypes.DELETE_CATEGORY
     };
-    const action = Actions.categories.destroyCategoryIsLoading();
+    const action = Actions.categories.deleteCategoryIsLoading();
     expect(action).toEqual(expectedAction);
   });
 });
 
-describe('destroyCategorySuccess', () => {
+describe('deleteCategorySuccess', () => {
   it('should create the correct action', () => {
     const testCategoryId = '1';
 
@@ -371,30 +371,30 @@ describe('destroyCategorySuccess', () => {
       type: actionTypes.DELETE_CATEGORY_SUCCESS,
       id: testCategoryId
     };
-    const action = Actions.categories.destroyCategorySuccess(testCategoryId);
+    const action = Actions.categories.deleteCategorySuccess(testCategoryId);
     expect(action).toEqual(expectedAction);
   });
 });
 
-describe('destroyCategoryFailure', () => {
-  it('should destroy the correct action', () => {
+describe('deleteCategoryFailure', () => {
+  it('should delete the correct action', () => {
     const expectedAction = {
       type: actionTypes.DELETE_CATEGORY_FAILURE
     };
-    const action = Actions.categories.destroyCategoryFailure();
+    const action = Actions.categories.deleteCategoryFailure();
     expect(action).toEqual(expectedAction);
   });
 });
 
-describe('destroyCategory', () => {
+describe('deleteCategory', () => {
   it('should call start action', () => {
     mockHttpResponse({ status: 200, body: {} });
     const store = createMockStore();
 
-    return store.dispatch(Actions.categories.destroyCategory('1')).then(() => {
+    return store.dispatch(Actions.categories.deleteCategory('1')).then(() => {
       const calledActions = store.getActions();
       expect(calledActions[0]).toEqual(
-        Actions.categories.destroyCategoryIsLoading()
+        Actions.categories.deleteCategoryIsLoading()
       );
     });
   });
@@ -406,13 +406,13 @@ describe('destroyCategory', () => {
     mockHttpResponse({ status: 200, body: { data: category.id } });
 
     const expectedActions = [
-      Actions.categories.destroyCategoryIsLoading(),
-      Actions.categories.destroyCategorySuccess(category.id)
+      Actions.categories.deleteCategoryIsLoading(),
+      Actions.categories.deleteCategorySuccess(category.id)
     ];
 
     const store = createMockStore();
 
-    return store.dispatch(Actions.categories.destroyCategory('1')).then(() => {
+    return store.dispatch(Actions.categories.deleteCategory('1')).then(() => {
       const calledActions = store.getActions();
       expect(calledActions).toEqual(expectedActions);
     });
@@ -421,13 +421,13 @@ describe('destroyCategory', () => {
   it('should call failure action on failure', () => {
     mockHttpResponse({ status: 401, body: {} });
     const expectedActions = [
-      Actions.categories.destroyCategoryIsLoading(),
-      Actions.categories.destroyCategoryFailure()
+      Actions.categories.deleteCategoryIsLoading(),
+      Actions.categories.deleteCategoryFailure()
     ];
 
     const store = createMockStore();
 
-    return store.dispatch(Actions.categories.destroyCategory('1')).then(() => {
+    return store.dispatch(Actions.categories.deleteCategory('1')).then(() => {
       const calledActions = store.getActions();
       expect(calledActions).toEqual(expectedActions);
     });

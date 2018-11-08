@@ -25,7 +25,7 @@ export default {
   /**
    * Delete the current user
    */
-  destroyMe: () => authDelete('/api/me').then(handleHttpResponse),
+  deleteMe: () => authDelete('/api/me').then(handleHttpResponse),
 
   /**
    * Updates the current user's student
@@ -57,6 +57,6 @@ export default {
   /**
    * Delete a user
    */
-  destroy: (id: string) =>
+  delete: (id: string) =>
     authDelete(`/api/users/${id}`).then(handleHttpResponse)
 };

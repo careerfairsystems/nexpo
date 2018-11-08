@@ -10,7 +10,7 @@ const mapStateToProps = (state: State) => ({
 
 const mapDispatchToProps = {
   getAllUsers: Actions.users.getAllUsers,
-  deleteUser: Actions.users.destroyUser
+  deleteUser: Actions.users.deleteUser
 };
 
 const stateful = connect(

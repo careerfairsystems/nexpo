@@ -343,17 +343,17 @@ describe('updateRole', () => {
   });
 });
 
-describe('destroyRoleIsLoading', () => {
+describe('deleteRoleIsLoading', () => {
   it('should create the correct action', () => {
     const expectedAction = {
       type: actionTypes.DELETE_ROLE
     };
-    const action = Actions.roles.destroyRoleIsLoading();
+    const action = Actions.roles.deleteRoleIsLoading();
     expect(action).toEqual(expectedAction);
   });
 });
 
-describe('destroyRoleSuccess', () => {
+describe('deleteRoleSuccess', () => {
   it('should create the correct action', () => {
     const testRoleId = '1';
 
@@ -361,29 +361,29 @@ describe('destroyRoleSuccess', () => {
       type: actionTypes.DELETE_ROLE_SUCCESS,
       id: testRoleId
     };
-    const action = Actions.roles.destroyRoleSuccess(testRoleId);
+    const action = Actions.roles.deleteRoleSuccess(testRoleId);
     expect(action).toEqual(expectedAction);
   });
 });
 
-describe('destroyRoleFailure', () => {
-  it('should destroy the correct action', () => {
+describe('deleteRoleFailure', () => {
+  it('should delete the correct action', () => {
     const expectedAction = {
       type: actionTypes.DELETE_ROLE_FAILURE
     };
-    const action = Actions.roles.destroyRoleFailure();
+    const action = Actions.roles.deleteRoleFailure();
     expect(action).toEqual(expectedAction);
   });
 });
 
-describe('destroyRole', () => {
+describe('deleteRole', () => {
   it('should call start action', () => {
     mockHttpResponse({ status: 200, body: {} });
     const store = createMockStore();
 
-    return store.dispatch(Actions.roles.destroyRole('1')).then(() => {
+    return store.dispatch(Actions.roles.deleteRole('1')).then(() => {
       const calledActions = store.getActions();
-      expect(calledActions[0]).toEqual(Actions.roles.destroyRoleIsLoading());
+      expect(calledActions[0]).toEqual(Actions.roles.deleteRoleIsLoading());
     });
   });
 
@@ -392,13 +392,13 @@ describe('destroyRole', () => {
     mockHttpResponse({ status: 200, body: { data: roleId } });
 
     const expectedActions = [
-      Actions.roles.destroyRoleIsLoading(),
-      Actions.roles.destroyRoleSuccess(roleId)
+      Actions.roles.deleteRoleIsLoading(),
+      Actions.roles.deleteRoleSuccess(roleId)
     ];
 
     const store = createMockStore();
 
-    return store.dispatch(Actions.roles.destroyRole('1')).then(() => {
+    return store.dispatch(Actions.roles.deleteRole('1')).then(() => {
       const calledActions = store.getActions();
       expect(calledActions).toEqual(expectedActions);
     });
@@ -407,13 +407,13 @@ describe('destroyRole', () => {
   it('should call failure action on failure', () => {
     mockHttpResponse({ status: 401, body: {} });
     const expectedActions = [
-      Actions.roles.destroyRoleIsLoading(),
-      Actions.roles.destroyRoleFailure()
+      Actions.roles.deleteRoleIsLoading(),
+      Actions.roles.deleteRoleFailure()
     ];
 
     const store = createMockStore();
 
-    return store.dispatch(Actions.roles.destroyRole('1')).then(() => {
+    return store.dispatch(Actions.roles.deleteRole('1')).then(() => {
       const calledActions = store.getActions();
       expect(calledActions).toEqual(expectedActions);
     });

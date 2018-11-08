@@ -25,7 +25,7 @@ export default {
     authPut(`/api/student_sessions/${id}`, data).then(handleHttpResponse),
 
   /** Delete a student session */
-  destroy: (id: string) =>
+  delete: (id: string) =>
     authDelete(`/api/student_sessions/${id}`).then(handleHttpResponse),
 
   /** Deletes all student session that is not student confirmed */
@@ -55,7 +55,7 @@ export default {
     ),
 
   /** Delete a student session application */
-  destroyAppl: (id: string) =>
+  deleteAppl: (id: string) =>
     authDelete(`/api/me/student_session_applications/${id}`).then(
       handleHttpResponse
     )
