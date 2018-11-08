@@ -353,17 +353,17 @@ describe('updateDeadline', () => {
   });
 });
 
-describe('destroyDeadlineIsLoading', () => {
+describe('deleteDeadlineIsLoading', () => {
   it('should create the correct action', () => {
     const expectedAction = {
       type: actionTypes.DELETE_DEADLINE
     };
-    const action = Actions.deadlines.destroyDeadlineIsLoading();
+    const action = Actions.deadlines.deleteDeadlineIsLoading();
     expect(action).toEqual(expectedAction);
   });
 });
 
-describe('destroyDeadlineSuccess', () => {
+describe('deleteDeadlineSuccess', () => {
   it('should create the correct action', () => {
     const testDeadline = {
       id: '1',
@@ -374,30 +374,30 @@ describe('destroyDeadlineSuccess', () => {
       type: actionTypes.DELETE_DEADLINE_SUCCESS,
       id: testDeadline.id
     };
-    const action = Actions.deadlines.destroyDeadlineSuccess(testDeadline.id);
+    const action = Actions.deadlines.deleteDeadlineSuccess(testDeadline.id);
     expect(action).toEqual(expectedAction);
   });
 });
 
-describe('destroyDeadlineFailure', () => {
-  it('should destroy the correct action', () => {
+describe('deleteDeadlineFailure', () => {
+  it('should delete the correct action', () => {
     const expectedAction = {
       type: actionTypes.DELETE_DEADLINE_FAILURE
     };
-    const action = Actions.deadlines.destroyDeadlineFailure();
+    const action = Actions.deadlines.deleteDeadlineFailure();
     expect(action).toEqual(expectedAction);
   });
 });
 
-describe('destroyDeadline', () => {
+describe('deleteDeadline', () => {
   it('should call start action', () => {
     mockHttpResponse({ status: 200, body: {} });
     const store = createMockStore();
 
-    return store.dispatch(Actions.deadlines.destroyDeadline('1')).then(() => {
+    return store.dispatch(Actions.deadlines.deleteDeadline('1')).then(() => {
       const calledActions = store.getActions();
       expect(calledActions[0]).toEqual(
-        Actions.deadlines.destroyDeadlineIsLoading()
+        Actions.deadlines.deleteDeadlineIsLoading()
       );
     });
   });
@@ -410,13 +410,13 @@ describe('destroyDeadline', () => {
     mockHttpResponse({ status: 200, body: '' });
 
     const expectedActions = [
-      Actions.deadlines.destroyDeadlineIsLoading(),
-      Actions.deadlines.destroyDeadlineSuccess(deadline.id)
+      Actions.deadlines.deleteDeadlineIsLoading(),
+      Actions.deadlines.deleteDeadlineSuccess(deadline.id)
     ];
 
     const store = createMockStore();
 
-    return store.dispatch(Actions.deadlines.destroyDeadline('1')).then(() => {
+    return store.dispatch(Actions.deadlines.deleteDeadline('1')).then(() => {
       const calledActions = store.getActions();
       expect(calledActions).toEqual(expectedActions);
     });
@@ -425,13 +425,13 @@ describe('destroyDeadline', () => {
   it('should call failure action on failure', () => {
     mockHttpResponse({ status: 401, body: {} });
     const expectedActions = [
-      Actions.deadlines.destroyDeadlineIsLoading(),
-      Actions.deadlines.destroyDeadlineFailure()
+      Actions.deadlines.deleteDeadlineIsLoading(),
+      Actions.deadlines.deleteDeadlineFailure()
     ];
 
     const store = createMockStore();
 
-    return store.dispatch(Actions.deadlines.destroyDeadline('1')).then(() => {
+    return store.dispatch(Actions.deadlines.deleteDeadline('1')).then(() => {
       const calledActions = store.getActions();
       expect(calledActions).toEqual(expectedActions);
     });

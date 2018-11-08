@@ -37,6 +37,6 @@ export default {
   /**
    * Delete a deadline
    */
-  destroy: (id: string) =>
+  delete: (id: string) =>
     authDelete(`/api/deadlines/${id}`).then(handleHttpResponse)
 };

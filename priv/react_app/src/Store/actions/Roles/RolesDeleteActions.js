@@ -3,11 +3,11 @@ import { message } from 'antd';
 import { actionTypes } from '../..';
 import API from '../../../API';
 
-export const destroyRoleIsLoading = () => ({
+export const deleteRoleIsLoading = () => ({
   type: actionTypes.DELETE_ROLE
 });
 
-export const destroyRoleSuccess = (id: string) => {
+export const deleteRoleSuccess = (id: string) => {
   message.success('Role successfully deleted');
   return {
     type: actionTypes.DELETE_ROLE_SUCCESS,
@@ -18,23 +18,23 @@ export const destroyRoleSuccess = (id: string) => {
 export type DestroyRoleFailureAction = {
   type: string
 };
-export const destroyRoleFailure = (): DestroyRoleFailureAction => {
+export const deleteRoleFailure = (): DestroyRoleFailureAction => {
   message.error('Something went wrong, please try again later');
   return {
     type: actionTypes.DELETE_ROLE_FAILURE
   };
 };
 
-export function destroyRole(id: string) {
+export function deleteRole(id: string) {
   return (dispatch: Dispatch<{ type: string }>) => {
-    dispatch(destroyRoleIsLoading());
+    dispatch(deleteRoleIsLoading());
     return API.roles
-      .destroy(id)
+      .delete(id)
       .then(() => {
-        dispatch(destroyRoleSuccess(id));
+        dispatch(deleteRoleSuccess(id));
       })
       .catch(() => {
-        dispatch(destroyRoleFailure());
+        dispatch(deleteRoleFailure());
       });
   };
 }

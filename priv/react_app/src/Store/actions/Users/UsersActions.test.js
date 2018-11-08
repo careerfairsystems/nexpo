@@ -249,45 +249,45 @@ describe('updateCurrentUser', () => {
   });
 });
 
-describe('destroyCurrentUserIsLoading', () => {
+describe('deleteCurrentUserIsLoading', () => {
   it('should create the correct action', () => {
     const expectedAction = {
       type: actionTypes.DELETE_CURRENT_USER
     };
-    const action = Actions.users.destroyCurrentUserIsLoading();
+    const action = Actions.users.deleteCurrentUserIsLoading();
     expect(action).toEqual(expectedAction);
   });
 });
 
-describe('destroyCurrentUserSuccess', () => {
+describe('deleteCurrentUserSuccess', () => {
   it('should create the correct action', () => {
     const expectedAction = {
       type: actionTypes.DELETE_CURRENT_USER_SUCCESS
     };
-    const action = Actions.users.destroyCurrentUserSuccess();
+    const action = Actions.users.deleteCurrentUserSuccess();
     expect(action).toEqual(expectedAction);
   });
 });
 
-describe('destroyCurrentUserFailure', () => {
-  it('should destroy the correct action', () => {
+describe('deleteCurrentUserFailure', () => {
+  it('should delete the correct action', () => {
     const expectedAction = {
       type: actionTypes.DELETE_CURRENT_USER_FAILURE
     };
-    const action = Actions.users.destroyCurrentUserFailure();
+    const action = Actions.users.deleteCurrentUserFailure();
     expect(action).toEqual(expectedAction);
   });
 });
 
-describe('destroyCurrentUser', () => {
+describe('deleteCurrentUser', () => {
   it('should call start action', () => {
     mockHttpResponse({ status: 200, body: {} });
     const store = createMockStore();
 
-    return store.dispatch(Actions.users.destroyCurrentUser()).then(() => {
+    return store.dispatch(Actions.users.deleteCurrentUser()).then(() => {
       const calledActions = store.getActions();
       expect(calledActions[0]).toEqual(
-        Actions.users.destroyCurrentUserIsLoading()
+        Actions.users.deleteCurrentUserIsLoading()
       );
     });
   });
@@ -297,13 +297,13 @@ describe('destroyCurrentUser', () => {
     mockHttpResponse({ status: 200, body: { data: userId } });
 
     const expectedActions = [
-      Actions.users.destroyCurrentUserIsLoading(),
-      Actions.users.destroyCurrentUserSuccess()
+      Actions.users.deleteCurrentUserIsLoading(),
+      Actions.users.deleteCurrentUserSuccess()
     ];
 
     const store = createMockStore();
 
-    return store.dispatch(Actions.users.destroyCurrentUser()).then(() => {
+    return store.dispatch(Actions.users.deleteCurrentUser()).then(() => {
       const calledActions = store.getActions();
       expect(calledActions).toEqual(expectedActions);
     });
@@ -312,13 +312,13 @@ describe('destroyCurrentUser', () => {
   it('should call failure action on failure', () => {
     mockHttpResponse({ status: 401, body: {} });
     const expectedActions = [
-      Actions.users.destroyCurrentUserIsLoading(),
-      Actions.users.destroyCurrentUserFailure()
+      Actions.users.deleteCurrentUserIsLoading(),
+      Actions.users.deleteCurrentUserFailure()
     ];
 
     const store = createMockStore();
 
-    return store.dispatch(Actions.users.destroyCurrentUser()).then(() => {
+    return store.dispatch(Actions.users.deleteCurrentUser()).then(() => {
       const calledActions = store.getActions();
       expect(calledActions).toEqual(expectedActions);
     });
@@ -664,17 +664,17 @@ describe('updateUser', () => {
   });
 });
 
-describe('destroyUserIsLoading', () => {
+describe('deleteUserIsLoading', () => {
   it('should create the correct action', () => {
     const expectedAction = {
       type: actionTypes.DELETE_USER
     };
-    const action = Actions.users.destroyUserIsLoading();
+    const action = Actions.users.deleteUserIsLoading();
     expect(action).toEqual(expectedAction);
   });
 });
 
-describe('destroyUserSuccess', () => {
+describe('deleteUserSuccess', () => {
   it('should create the correct action', () => {
     const testUser = {
       id: '1',
@@ -685,29 +685,29 @@ describe('destroyUserSuccess', () => {
       type: actionTypes.DELETE_USER_SUCCESS,
       id: testUser.id
     };
-    const action = Actions.users.destroyUserSuccess(testUser.id);
+    const action = Actions.users.deleteUserSuccess(testUser.id);
     expect(action).toEqual(expectedAction);
   });
 });
 
-describe('destroyUserFailure', () => {
-  it('should destroy the correct action', () => {
+describe('deleteUserFailure', () => {
+  it('should delete the correct action', () => {
     const expectedAction = {
       type: actionTypes.DELETE_USER_FAILURE
     };
-    const action = Actions.users.destroyUserFailure();
+    const action = Actions.users.deleteUserFailure();
     expect(action).toEqual(expectedAction);
   });
 });
 
-describe('destroyUser', () => {
+describe('deleteUser', () => {
   it('should call start action', () => {
     mockHttpResponse({ status: 200, body: {} });
     const store = createMockStore();
 
-    return store.dispatch(Actions.users.destroyUser('1')).then(() => {
+    return store.dispatch(Actions.users.deleteUser('1')).then(() => {
       const calledActions = store.getActions();
-      expect(calledActions[0]).toEqual(Actions.users.destroyUserIsLoading());
+      expect(calledActions[0]).toEqual(Actions.users.deleteUserIsLoading());
     });
   });
 
@@ -719,13 +719,13 @@ describe('destroyUser', () => {
     mockHttpResponse({ status: 200, body: '' });
 
     const expectedActions = [
-      Actions.users.destroyUserIsLoading(),
-      Actions.users.destroyUserSuccess(user.id)
+      Actions.users.deleteUserIsLoading(),
+      Actions.users.deleteUserSuccess(user.id)
     ];
 
     const store = createMockStore();
 
-    return store.dispatch(Actions.users.destroyUser('1')).then(() => {
+    return store.dispatch(Actions.users.deleteUser('1')).then(() => {
       const calledActions = store.getActions();
       expect(calledActions).toEqual(expectedActions);
     });
@@ -734,13 +734,13 @@ describe('destroyUser', () => {
   it('should call failure action on failure', () => {
     mockHttpResponse({ status: 401, body: {} });
     const expectedActions = [
-      Actions.users.destroyUserIsLoading(),
-      Actions.users.destroyUserFailure()
+      Actions.users.deleteUserIsLoading(),
+      Actions.users.deleteUserFailure()
     ];
 
     const store = createMockStore();
 
-    return store.dispatch(Actions.users.destroyUser('1')).then(() => {
+    return store.dispatch(Actions.users.deleteUser('1')).then(() => {
       const calledActions = store.getActions();
       expect(calledActions).toEqual(expectedActions);
     });

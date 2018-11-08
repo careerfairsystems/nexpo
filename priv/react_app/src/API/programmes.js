@@ -37,6 +37,6 @@ export default {
   /**
    * Delete a Programme
    */
-  destroy: (id: string) =>
+  delete: (id: string) =>
     authDelete(`/api/programmes/${id}`).then(handleHttpResponse)
 };

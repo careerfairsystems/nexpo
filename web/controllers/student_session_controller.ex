@@ -203,6 +203,36 @@ defmodule Nexpo.StudentSessionController do
     send_resp(conn, :no_content, "")
   end
 
+  def delete_bulk(conn, %{}, _user, _claims) do
+    time_slots = Repo.all(
+      from slot in TimeSlot,
+      left_join: session in assoc(slot, :student_session),
+      where: is_nil(session.id) or session.student_confirmed != true)
+
+    result = time_slots
+    |> Repo.preload(:student_session)
+    |> Enum.filter(fn time_slot -> not is_nil(time_slot.student_session) end)
+    |> Enum.map(fn time_slot ->
+      Repo.get!(StudentSession, time_slot.student_session.id)
+    end)
+    |> Enum.with_index()
+    |> Enum.reduce(Ecto.Multi.new(), fn ({changeset, index}, multi) ->
+      Ecto.Multi.delete(multi, Integer.to_string(index), changeset)
+    end)
+    |> Repo.transaction
+
+    case result do
+      {:ok, _} ->
+        conn
+        |> put_status(303) # Status Code 303 See Other, that uses GET
+        |> redirect(to: company_path(conn, :index))
+      {:error, _, changeset, _ } ->
+        conn
+        |> put_status(:unprocessable_entity)
+        |> render(Nexpo.ChangesetView, "error.json", changeset: changeset)
+    end
+  end
+
   def update_me(conn, %{"id" => id,"student_session" => student_sessions_params }, user, _claims) do
     student = Repo.get_by!(Student, %{user_id: user.id})
     case Repo.get_by(StudentSession, %{id: id, student_id: student.id}) do

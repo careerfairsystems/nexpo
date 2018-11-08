@@ -30,7 +30,7 @@ describe('SessionApplications', () => {
       companies: {},
       fetching: false,
       getAllCompanies: jest.fn(),
-      destroyStudentSessionAppl: jest.fn(),
+      deleteStudentSessionAppl: jest.fn(),
       updateStudentSessionAppl: jest.fn()
     };
   });

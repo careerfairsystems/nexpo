@@ -9,7 +9,7 @@ const mapStateToProps = (state: State) => ({
 });
 
 const mapDispatchToProps = {
-  deleteCompany: Actions.companies.destroyCompany,
+  deleteCompany: Actions.companies.deleteCompany,
   getAllCompanies: Actions.companies.getAllCompanies
 };
 

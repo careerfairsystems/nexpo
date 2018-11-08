@@ -373,17 +373,17 @@ describe('updateMailtemplate', () => {
   });
 });
 
-describe('destroyMailtemplateIsLoading', () => {
+describe('deleteMailtemplateIsLoading', () => {
   it('should create the correct action', () => {
     const expectedAction = {
       type: actionTypes.DELETE_MAILTEMPLATE
     };
-    const action = Actions.mailtemplates.destroyMailtemplateIsLoading();
+    const action = Actions.mailtemplates.deleteMailtemplateIsLoading();
     expect(action).toEqual(expectedAction);
   });
 });
 
-describe('destroyMailtemplateSuccess', () => {
+describe('deleteMailtemplateSuccess', () => {
   it('should create the correct action', () => {
     const testMailtemplate = {
       id: '1',
@@ -394,34 +394,34 @@ describe('destroyMailtemplateSuccess', () => {
       type: actionTypes.DELETE_MAILTEMPLATE_SUCCESS,
       id: testMailtemplate.id
     };
-    const action = Actions.mailtemplates.destroyMailtemplateSuccess(
+    const action = Actions.mailtemplates.deleteMailtemplateSuccess(
       testMailtemplate.id
     );
     expect(action).toEqual(expectedAction);
   });
 });
 
-describe('destroyMailtemplateFailure', () => {
-  it('should destroy the correct action', () => {
+describe('deleteMailtemplateFailure', () => {
+  it('should delete the correct action', () => {
     const expectedAction = {
       type: actionTypes.DELETE_MAILTEMPLATE_FAILURE
     };
-    const action = Actions.mailtemplates.destroyMailtemplateFailure();
+    const action = Actions.mailtemplates.deleteMailtemplateFailure();
     expect(action).toEqual(expectedAction);
   });
 });
 
-describe('destroyMailtemplate', () => {
+describe('deleteMailtemplate', () => {
   it('should call start action', () => {
     mockHttpResponse({ status: 200, body: {} });
     const store = createMockStore();
 
     return store
-      .dispatch(Actions.mailtemplates.destroyMailtemplate('1'))
+      .dispatch(Actions.mailtemplates.deleteMailtemplate('1'))
       .then(() => {
         const calledActions = store.getActions();
         expect(calledActions[0]).toEqual(
-          Actions.mailtemplates.destroyMailtemplateIsLoading()
+          Actions.mailtemplates.deleteMailtemplateIsLoading()
         );
       });
   });
@@ -434,14 +434,14 @@ describe('destroyMailtemplate', () => {
     mockHttpResponse({ status: 200, body: { data: '' } });
 
     const expectedActions = [
-      Actions.mailtemplates.destroyMailtemplateIsLoading(),
-      Actions.mailtemplates.destroyMailtemplateSuccess(mailtemplate.id)
+      Actions.mailtemplates.deleteMailtemplateIsLoading(),
+      Actions.mailtemplates.deleteMailtemplateSuccess(mailtemplate.id)
     ];
 
     const store = createMockStore();
 
     return store
-      .dispatch(Actions.mailtemplates.destroyMailtemplate('1'))
+      .dispatch(Actions.mailtemplates.deleteMailtemplate('1'))
       .then(() => {
         const calledActions = store.getActions();
         expect(calledActions).toEqual(expectedActions);
@@ -451,14 +451,14 @@ describe('destroyMailtemplate', () => {
   it('should call failure action on failure', () => {
     mockHttpResponse({ status: 401, body: {} });
     const expectedActions = [
-      Actions.mailtemplates.destroyMailtemplateIsLoading(),
-      Actions.mailtemplates.destroyMailtemplateFailure()
+      Actions.mailtemplates.deleteMailtemplateIsLoading(),
+      Actions.mailtemplates.deleteMailtemplateFailure()
     ];
 
     const store = createMockStore();
 
     return store
-      .dispatch(Actions.mailtemplates.destroyMailtemplate('1'))
+      .dispatch(Actions.mailtemplates.deleteMailtemplate('1'))
       .then(() => {
         const calledActions = store.getActions();
         expect(calledActions).toEqual(expectedActions);

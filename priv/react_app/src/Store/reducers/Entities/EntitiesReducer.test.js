@@ -236,7 +236,7 @@ describe('Entities reducer', () => {
 
   it('should handle delete current user success', () => {
     const testUser = { id: '1', name: 'Test User' };
-    const action = Actions.users.destroyCurrentUserSuccess();
+    const action = Actions.users.deleteCurrentUserSuccess();
     const state = EntitiesReducer(
       { ...initialState, currentUser: testUser },
       action
@@ -249,7 +249,7 @@ describe('Entities reducer', () => {
 
   it('should handle delete session application', () => {
     const sessionApplicationId = '1';
-    const action = Actions.studentSessions.destroyStudentSessionApplSuccess(
+    const action = Actions.studentSessions.deleteStudentSessionApplSuccess(
       sessionApplicationId
     );
     const state = EntitiesReducer(
@@ -316,7 +316,7 @@ describe('Entities reducer', () => {
 
   it('should handle DELETE_COMPANY_SUCCESS', () => {
     const id = '1';
-    const action = Actions.companies.destroyCompanySuccess(id);
+    const action = Actions.companies.deleteCompanySuccess(id);
     const normalized = normalize(testData.companies, Schema.companiesSchema());
     const state = EntitiesReducer(
       { ...initialState, companies: normalized },
@@ -330,7 +330,7 @@ describe('Entities reducer', () => {
 
   it('should handle DELETE_ROLES_SUCCESS', () => {
     const id = '1';
-    const action = Actions.roles.destroyRoleSuccess(id);
+    const action = Actions.roles.deleteRoleSuccess(id);
     const normalized = normalize(testData.roles, Schema.rolesSchema());
     const state = EntitiesReducer(
       { ...initialState, roles: normalized },
@@ -344,7 +344,7 @@ describe('Entities reducer', () => {
 
   it('should handle DELETE_USER_SUCCESS', () => {
     const id = '1';
-    const action = Actions.users.destroyUserSuccess(id);
+    const action = Actions.users.deleteUserSuccess(id);
     const normalized = normalize(testData.users, Schema.usersSchema());
     const state = EntitiesReducer(
       { ...initialState, users: normalized },
@@ -358,7 +358,7 @@ describe('Entities reducer', () => {
 
   it('should handle DELETE_STUDENT_SESSION_APPL_SUCCESS', () => {
     const id = '1';
-    const action = Actions.studentSessions.destroyStudentSessionApplSuccess(id);
+    const action = Actions.studentSessions.deleteStudentSessionApplSuccess(id);
     const state = EntitiesReducer(
       {
         ...initialState,
