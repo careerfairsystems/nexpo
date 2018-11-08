@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { isEmpty, isNil, sortBy, filter } from 'lodash/fp';
 import { List, Avatar, Button, Tag, Popconfirm } from 'antd';
+import { CSVLink } from 'react-csv';
 import NotFound from '../../../NotFound';
 import { toExternal } from '../../../../Util/URLHelper';
 import { toDayFormat } from '../../../../Util/FormatHelper';
@@ -8,7 +9,13 @@ import InvisibleLink from '../../../../Components/InvisibleLink';
 import HtmlTitle from '../../../../Components/HtmlTitle';
 import LoadingSpinner from '../../../../Components/LoadingSpinner';
 import '../Company.css';
-import API from '../../../../API';
+
+const schemaHeaders = [
+  { label: 'Start Time', key: 'starttime' },
+  { label: 'Wednesday', key: 'entryday1' },
+  { label: 'Thursday', key: 'entryday2' }
+];
+
 /**
  * Responsible for rendering a company. Company id is recieved via url
  */
@@ -192,9 +199,18 @@ class CompanyShow extends Component<Props> {
         </InvisibleLink>
         <br />
         <br />
-        <Button icon="download" onClick={API.studentSessions.downloadSchema}>
-          Download schema
-        </Button>
+        <CSVLink
+          data={[
+            {
+              starttime: '10:00',
+              entryday1: 'Victor Vernet\nvigge@edu.gov.com\n0515152512',
+              entryday2: 'Antonia Goransson\nangopango@google.com\n7043032402'
+            }
+          ]}
+          headers={schemaHeaders}
+        >
+          <Button icon="download">Download schema</Button>
+        </CSVLink>
       </div>
     );
   }
