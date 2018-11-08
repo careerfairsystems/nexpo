@@ -1,6 +1,21 @@
 import React, { Component } from 'react';
-import { isEmpty, isNil, sortBy, map, filter } from 'lodash/fp';
-import { Select, List, Avatar, Button, Tag, Popconfirm } from 'antd';
+import {
+  isEmpty,
+  isNil,
+  sortBy,
+  groupBy,
+  filter,
+  last,
+  map,
+  toPairs,
+  reduce,
+  getOr,
+  flatten,
+  flow
+} from 'lodash/fp';
+import { List, Avatar, Button, Tag, Popconfirm, Select } from 'antd';
+import { CSVLink } from 'react-csv';
+import moment from 'moment';
 import NotFound from '../../../NotFound';
 import { toExternal } from '../../../../Util/URLHelper';
 import { toDayFormat } from '../../../../Util/FormatHelper';
@@ -117,6 +132,51 @@ class CompanyShow extends Component<Props> {
       topStudents
     );
 
+    const data = flow(
+      sortBy(['location', 'start']),
+      map(({ studentSession, ...rest }) => ({
+        ...getOr({}, 'student.user', studentSession),
+        ...rest
+      })),
+      reduce((acc, curr) => {
+        const prev = last(acc) || {};
+        const start = prev.end;
+        const end = curr.start;
+
+        const sameLocation = prev.location === curr.location;
+        const sameDay = moment(start).isSame(end, 'day');
+
+        if (start !== end && sameDay && sameLocation) {
+          const breaktime = moment(end).diff(start, 'minutes');
+          acc.push({
+            start,
+            end,
+            location: curr.location,
+            firstName: `Break (${breaktime} min)`
+          });
+        }
+
+        return acc.concat([curr]);
+      }, []),
+      groupBy(
+        ({ start, location }) => `${moment(start).format('dddd')} - ${location}`
+      ),
+      toPairs,
+      map(([key, values]) => [
+        ['', key],
+        ...flatten(
+          values.map(({ start, firstName, lastName, email, phoneNumber }) => [
+            [moment(start).format('HH:mm'), [firstName, lastName].join(' ')],
+            ['', email],
+            ['', phoneNumber && `=""${phoneNumber}""`]
+          ])
+        ),
+        [],
+        []
+      ]),
+      flatten
+    )(company.studentSessionTimeSlots);
+
     return (
       <div className="company-show-view">
         <HtmlTitle title={name} />
@@ -140,6 +200,14 @@ class CompanyShow extends Component<Props> {
         </p>
         <p>{description}</p>
         <h3>Student Session Time Slots</h3>
+        <CSVLink
+          data={data}
+          filename={`${company.name} - Student Sessions.csv`}
+        >
+          <Button icon="download">Download Schema</Button>
+        </CSVLink>
+        <br />
+        <br />
         <Popconfirm
           title="Sure to assign empty and non-confirmed time slots?"
           onConfirm={() => {
@@ -159,7 +227,10 @@ class CompanyShow extends Component<Props> {
         <br />
         <List
           itemLayout="vertical"
-          dataSource={sortBy('start', company.studentSessionTimeSlots || [])}
+          dataSource={sortBy(
+            ['location', 'start'],
+            company.studentSessionTimeSlots || []
+          )}
           bordered
           renderItem={({ id, start, end, location, studentSession }, index) => (
             <List.Item
