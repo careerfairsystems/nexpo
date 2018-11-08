@@ -3,11 +3,11 @@ import { message } from 'antd';
 import { actionTypes } from '../..';
 import API from '../../../API';
 
-export const destroyUserIsLoading = () => ({
+export const deleteUserIsLoading = () => ({
   type: actionTypes.DELETE_USER
 });
 
-export const destroyUserSuccess = (id: string) => {
+export const deleteUserSuccess = (id: string) => {
   message.success('User successfully deleted');
   return {
     type: actionTypes.DELETE_USER_SUCCESS,
@@ -18,23 +18,23 @@ export const destroyUserSuccess = (id: string) => {
 export type DestroyUserFailureAction = {
   type: string
 };
-export const destroyUserFailure = (): DestroyUserFailureAction => {
+export const deleteUserFailure = (): DestroyUserFailureAction => {
   message.error('Something went wrong, please try again later');
   return {
     type: actionTypes.DELETE_USER_FAILURE
   };
 };
 
-export function destroyUser(id: string) {
+export function deleteUser(id: string) {
   return (dispatch: Dispatch<{ type: string }>) => {
-    dispatch(destroyUserIsLoading());
+    dispatch(deleteUserIsLoading());
     return API.users
-      .destroy(id)
+      .delete(id)
       .then(() => {
-        dispatch(destroyUserSuccess(id));
+        dispatch(deleteUserSuccess(id));
       })
       .catch(() => {
-        dispatch(destroyUserFailure());
+        dispatch(deleteUserFailure());
       });
   };
 }

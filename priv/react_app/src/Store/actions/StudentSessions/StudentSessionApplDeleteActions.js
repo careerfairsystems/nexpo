@@ -3,11 +3,11 @@ import { message } from 'antd';
 import { actionTypes } from '../..';
 import API from '../../../API';
 
-export const destroyStudentSessionApplIsLoading = () => ({
+export const deleteStudentSessionApplIsLoading = () => ({
   type: actionTypes.DELETE_STUDENT_SESSION_APPL
 });
 
-export const destroyStudentSessionApplSuccess = (id: string) => {
+export const deleteStudentSessionApplSuccess = (id: string) => {
   message.success('Your Application was successfully deleted.');
   return {
     type: actionTypes.DELETE_STUDENT_SESSION_APPL_SUCCESS,
@@ -15,26 +15,26 @@ export const destroyStudentSessionApplSuccess = (id: string) => {
   };
 };
 
-export type destroyStudentSessionApplFailureAction = {
+export type deleteStudentSessionApplFailureAction = {
   type: string
 };
-export const destroyStudentSessionApplFailure = (): destroyStudentSessionApplFailureAction => {
+export const deleteStudentSessionApplFailure = (): deleteStudentSessionApplFailureAction => {
   message.warning('Something went wrong, please try again later');
   return {
     type: actionTypes.DELETE_STUDENT_SESSION_APPL_FAILURE
   };
 };
 
-export function destroyStudentSessionAppl(id: string) {
+export function deleteStudentSessionAppl(id: string) {
   return (dispatch: Dispatch<{ type: string }>) => {
-    dispatch(destroyStudentSessionApplIsLoading());
+    dispatch(deleteStudentSessionApplIsLoading());
     return API.studentSessions
-      .destroyAppl(id)
+      .deleteAppl(id)
       .then(() => {
-        dispatch(destroyStudentSessionApplSuccess(id));
+        dispatch(deleteStudentSessionApplSuccess(id));
       })
       .catch(() => {
-        dispatch(destroyStudentSessionApplFailure());
+        dispatch(deleteStudentSessionApplFailure());
       });
   };
 }

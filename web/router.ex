@@ -68,8 +68,9 @@ defmodule Nexpo.Router do
     resources "/programmes", ProgrammeController
     resources "/deadlines", DeadlineController
     resources "/mailtemplates", MailtemplateController
-    patch "/student_sessions", StudentSessionController, :create_bulk
     resources "/student_sessions", StudentSessionController, only: [:create, :delete]
+    patch "/student_sessions", StudentSessionController, :create_bulk
+    delete "/student_sessions", StudentSessionController, :delete_bulk
     get "/student_session_reserves", StudentSessionController, :show_reserves
 
     # resources "/student_session_applications", StudentSessionApplicationController, only: [:create]

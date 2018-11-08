@@ -25,7 +25,7 @@ export default {
   /**
    * Removes the current company
    */
-  destroyMyCompany: () =>
+  deleteMyCompany: () =>
     authDelete('/api/me/company').then(handleHttpResponse),
 
   /**
@@ -54,6 +54,6 @@ export default {
   /**
    * Delete a company
    */
-  destroy: (id: string) =>
+  delete: (id: string) =>
     authDelete(`/api/companies/${id}`).then(handleHttpResponse)
 };

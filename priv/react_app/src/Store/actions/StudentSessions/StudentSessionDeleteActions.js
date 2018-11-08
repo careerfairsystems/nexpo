@@ -3,13 +3,13 @@ import { actionTypes } from '../..';
 import API from '../../../API';
 import type { Dispatch } from '../../reducers';
 
-export function destroyStudentSessionIsLoading() {
+export function deleteStudentSessionIsLoading() {
   return {
     type: actionTypes.DELETE_STUDENT_SESSION
   };
 }
 
-export function destroyStudentSessionSuccess(company: {}) {
+export function deleteStudentSessionSuccess(company: {}) {
   message.success('Student Session was successfully deleted.');
   return {
     type: actionTypes.DELETE_STUDENT_SESSION_SUCCESS,
@@ -17,26 +17,26 @@ export function destroyStudentSessionSuccess(company: {}) {
   };
 }
 
-export type destroyStudentSessionFailureAction = {
+export type deleteStudentSessionFailureAction = {
   type: string
 };
-export function destroyStudentSessionFailure(): destroyStudentSessionFailureAction {
+export function deleteStudentSessionFailure(): deleteStudentSessionFailureAction {
   message.warning('Something went wrong, please try again later');
   return {
     type: actionTypes.DELETE_STUDENT_SESSION_FAILURE
   };
 }
 
-export function destroyStudentSession(id: string) {
+export function deleteStudentSession(id: string) {
   return (dispatch: Dispatch) => {
-    dispatch(destroyStudentSessionIsLoading());
+    dispatch(deleteStudentSessionIsLoading());
     return API.studentSessions
-      .destroy(id)
+      .delete(id)
       .then(company => {
-        dispatch(destroyStudentSessionSuccess(company.data));
+        dispatch(deleteStudentSessionSuccess(company.data));
       })
       .catch(() => {
-        dispatch(destroyStudentSessionFailure());
+        dispatch(deleteStudentSessionFailure());
       });
   };
 }

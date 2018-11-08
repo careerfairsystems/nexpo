@@ -2,28 +2,28 @@ import type { Dispatch } from 'redux';
 import { actionTypes } from '../..';
 import API from '../../../API';
 
-export const destroyCurrentCompanyIsLoading = () => ({
+export const deleteCurrentCompanyIsLoading = () => ({
   type: actionTypes.DELETE_CURRENT_COMPANY
 });
 
-export const destroyCurrentCompanySuccess = () => ({
+export const deleteCurrentCompanySuccess = () => ({
   type: actionTypes.DELETE_CURRENT_COMPANY_SUCCESS
 });
 
-export const destroyCurrentCompanyFailure = () => ({
+export const deleteCurrentCompanyFailure = () => ({
   type: actionTypes.DELETE_CURRENT_COMPANY_FAILURE
 });
 
-export function destroyCurrentCompany() {
+export function deleteCurrentCompany() {
   return (dispatch: Dispatch<{ type: string }>) => {
-    dispatch(destroyCurrentCompanyIsLoading());
+    dispatch(deleteCurrentCompanyIsLoading());
     return API.companies
-      .destroyMyCompany()
+      .deleteMyCompany()
       .then(() => {
-        dispatch(destroyCurrentCompanySuccess());
+        dispatch(deleteCurrentCompanySuccess());
       })
       .catch(() => {
-        dispatch(destroyCurrentCompanyFailure());
+        dispatch(deleteCurrentCompanyFailure());
       });
   };
 }

@@ -14,7 +14,7 @@ const mapDispatchToProps = {
   updateCurrentUser: Actions.users.updateCurrentUser,
   updateCurrentStudent: Actions.users.updateCurrentStudent,
   getAllProgrammes: Actions.programmes.getAllProgrammes,
-  destroyCurrentUser: Actions.users.destroyCurrentUser,
+  deleteCurrentUser: Actions.users.deleteCurrentUser,
   logout: Actions.auth.logout,
   resetForm: reset
 };

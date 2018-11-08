@@ -37,6 +37,6 @@ export default {
   /**
    * Delete a category
    */
-  destroy: (id: string) =>
+  delete: (id: string) =>
     authDelete(`/api/categories/${id}`).then(handleHttpResponse)
 };
