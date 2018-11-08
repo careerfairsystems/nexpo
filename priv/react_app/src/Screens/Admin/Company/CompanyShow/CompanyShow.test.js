@@ -81,4 +81,31 @@ describe('CompanyShow', () => {
     expect(wrapper.contains(<h1>{company.name}</h1>)).toBeTruthy();
     // expect(wrapper.find(MailLink)).toHaveLength(1);
   });
+
+  it('should call create student session onSubmit', () => {
+    const company = {
+      id: '1',
+      name: 'Test CompanyShow',
+      website: 'testcompany.com',
+      describe: 'We do testing!',
+      studentSessionDays: 1
+    };
+    const id = '1';
+    const studentId = 1;
+    const wrapper = shallow(
+      <CompanyShow id={id} {...props} company={company} />
+    );
+
+    const sessionId = 1;
+    expect(props.createStudentSession).toHaveBeenCalledTimes(0);
+    wrapper.instance().handleSubmit({ studentId }, sessionId);
+    expect(props.createStudentSession).toHaveBeenLastCalledWith({
+      studentSession: {
+        companyId: id,
+        studentId,
+        studentSessionTimeSlotId: sessionId
+      }
+    });
+    expect(props.createStudentSession).toHaveBeenCalledTimes(1);
+  });
 });
