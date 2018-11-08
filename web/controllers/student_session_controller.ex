@@ -19,25 +19,7 @@ defmodule Nexpo.StudentSessionController do
 
   def create(conn, %{"student_session" => student_sessions_params}, _user, _claims) do
     company = Repo.get(Company, student_sessions_params["company_id"])
-    time_slot = Repo.get(TimeSlot, student_sessions_params["student_session_time_slot_id"])
-
-    student = Repo.one(
-      from appl in Ecto.assoc(company, :student_session_applications),
-      join: student in assoc(appl, :student),
-      where: not is_nil(appl.score) and appl.score > 0,
-      order_by: [desc: appl.score, asc: student.id],
-      # Check that student does not already have session with given company
-      left_join: co_session in StudentSession,
-      on: student.id == co_session.student_id and co_session.company_id == ^company.id,
-      where: is_nil(co_session.id),
-      # Check that student does not already have session at the time of the given time slot
-      left_join: session in assoc(student, :student_sessions),
-      left_join: slot in TimeSlot,
-      on: slot.id == session.student_session_time_slot_id and
-          slot.start == ^time_slot.start and slot.end == ^time_slot.end,
-      where: is_nil(slot.id),
-      limit: 1,
-      select: student)
+    student = Repo.get(Student, student_sessions_params["student_id"])
 
     case student do
       nil -> conn
@@ -195,12 +177,14 @@ defmodule Nexpo.StudentSessionController do
 
   def delete(conn, %{"id" => id}, _user, _claims) do
     session = Repo.get!(StudentSession, id)
-
+    company = Repo.get(Company, session.company_id)
     # Here we use delete! (with a bang) because we expect
     # it to always work (and if it does not, it will raise).
     Repo.delete!(session)
 
-    send_resp(conn, :no_content, "")
+    conn
+    |> put_status(303)
+    |> redirect(to: company_path(conn, :show, company))
   end
 
   def delete_bulk(conn, %{}, _user, _claims) do
