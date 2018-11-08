@@ -8,6 +8,8 @@ import LoadingSpinner from '../../../Components/LoadingSpinner';
 import HtmlTitle from '../../../Components/HtmlTitle';
 import FilterSearch, { FilterIcon } from '../../../Components/FilterSearch';
 
+import API from '../../../API';
+
 /**
  * Responsible for rendering a list of companies
  */
@@ -104,6 +106,14 @@ class Companies extends Component<Props> {
             New company
           </Button>
         </InvisibleLink>
+        <br />
+        <br />
+        <Popconfirm
+          title="Sure to delete all non confirmed student sessions?"
+          onConfirm={API.studentSessions.destroyNonConfirmed}
+        >
+          <Button onClick={() => null}>Remove non-confirmed sessions</Button>
+        </Popconfirm>
       </div>
     );
   }

@@ -28,6 +28,10 @@ export default {
   destroy: (id: string) =>
     authDelete(`/api/student_sessions/${id}`).then(handleHttpResponse),
 
+  /** Deletes all student session that is not student confirmed */
+  destroyNonConfirmed: () =>
+    authDelete('/api/student_sessions').then(handleHttpResponse),
+
   /** Confirms a student session */
   confirmSession: (id: string) =>
     authPut(`/api/me/student_sessions/${id}`, {
