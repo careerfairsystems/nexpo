@@ -114,6 +114,10 @@ class Companies extends Component<Props> {
         >
           <Button onClick={() => null}>Remove non-confirmed sessions</Button>
         </Popconfirm>
+        <br />
+        <Button icon="download" onClick={API.studentSessions.downloadReserves}>
+          Download reserves
+        </Button>
       </div>
     );
   }
