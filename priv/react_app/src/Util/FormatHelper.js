@@ -51,8 +51,13 @@ export const toFormData = (obj: {}, form: ?FormData, namespace: ?string) => {
 export const toDayFormat = (time: ?string) =>
   moment.utc(time).format('dddd D MMMM YYYY HH:mm');
 
-export const toSessionTimeFormat = (time: ?string) =>
-  moment.utc(time).format('dddd D MMM HH:mm');
+export const toTimeFormat = (time: ?string) => moment.utc(time).format('HH:mm');
+
+export const toSessionTimeFormat = (start: ?string, end: ?string) =>
+  [
+    `Date: ${moment.utc(start).format('ddd, MMM D')}`,
+    `Time: ${toTimeFormat(start)} - ${toTimeFormat(end)}`
+  ].join('\n');
 
 export default {
   toDayFormat,

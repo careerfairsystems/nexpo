@@ -38,7 +38,7 @@ type Props = {
     website?: string,
     description?: string,
     logoUrl?: string,
-    
+
     studentSessionDays?: number,
     studentSessionApplications?: Array<*>,
     studentSessionTimeSlots?: Array<{
@@ -46,7 +46,16 @@ type Props = {
       start: string,
       end: string,
       location: string,
-      studentSession?: {}
+      studentSession: {
+        student: {
+          user: {
+            firstName?: string,
+            lastName?: string,
+            email?: string,
+            phoneNumber?: string
+          }
+        }
+      }
     }>,
     topStudents?: Array<{ id: number, firstName: string, lastName: string }>
   },
