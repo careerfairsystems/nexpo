@@ -37,8 +37,10 @@ defmodule Nexpo.Statistics do
       where: company.student_session_days != 0,
       left_join: appl in assoc(company, :student_session_applications),
       group_by: company.id,
-      select: %{id: company.id, name: company.name, nbr_applications: count(appl.id)}
-    ))
+      left_join: scored_appl in StudentSessionApplication,
+      on: scored_appl.company_id == company.id and scored_appl.score > 0,
+      select: %{id: company.id, name: company.name, nbr_applications: count(appl.id), scored_applications: count(scored_appl.id)}
+      ))
 
      %{
         nbr_searching_students: nbr_students_applied,
