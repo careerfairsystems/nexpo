@@ -38,13 +38,15 @@ type Props = {
     website?: string,
     description?: string,
     logoUrl?: string,
+    
     studentSessionDays?: number,
     studentSessionApplications?: Array<*>,
     studentSessionTimeSlots?: Array<{
       id: number,
       start: string,
       end: string,
-      location: string
+      location: string,
+      studentSession?: {}
     }>,
     topStudents?: Array<{ id: number, firstName: string, lastName: string }>
   },
@@ -99,7 +101,15 @@ class CompanyShow extends Component<Props> {
     if (fetching) return <LoadingSpinner />;
     if (isEmpty(company) || isNil(company)) return <NotFound />;
 
-    const { name, website, description, topStudents = [] } = company;
+    const {
+      name = '',
+      website,
+      logoUrl,
+      description,
+      topStudents = [],
+      studentSessionTimeSlots = [],
+      studentSessionApplications = []
+    } = company;
 
     const studentConfirmed = studentSession => {
       if (studentSession) {
@@ -175,14 +185,14 @@ class CompanyShow extends Component<Props> {
         []
       ]),
       flatten
-    )(company.studentSessionTimeSlots);
+    )(studentSessionTimeSlots);
 
     return (
       <div className="company-show-view">
         <HtmlTitle title={name} />
         <div className="centering">
           <Avatar
-            src={company.logoUrl}
+            src={logoUrl}
             size={128}
             shape="square"
             alt="Company Logotype"
@@ -192,7 +202,7 @@ class CompanyShow extends Component<Props> {
         </div>
         <h4>
           {`Student Session Application Scored: ${
-            filter('score', company.studentSessionApplications || []).length
+            filter('score', studentSessionApplications).length
           }`}
         </h4>
         <p>
@@ -200,10 +210,7 @@ class CompanyShow extends Component<Props> {
         </p>
         <p>{description}</p>
         <h3>Student Session Time Slots</h3>
-        <CSVLink
-          data={data}
-          filename={`${company.name} - Student Sessions.csv`}
-        >
+        <CSVLink data={data} filename={`${name} - Student Sessions.csv`}>
           <Button icon="download">Download Schema</Button>
         </CSVLink>
         <br />

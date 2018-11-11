@@ -22,6 +22,8 @@ import moment from 'moment';
 
 import API from '../../../API';
 
+const toPercent = (n, d, decimals = 2) =>
+  (divide(n || 0, d || 1) * 100).toFixed(decimals);
 const columns = [
   {
     title: 'Name',
@@ -32,12 +34,25 @@ const columns = [
     title: 'Number of Applications',
     dataIndex: 'nbrApplications',
     key: 'nbrApplications'
+  },
+  {
+    title: 'Number of Scored Applications (%)',
+    dataIndex: 'scoredApplications',
+    key: 'scoredApplications',
+    render: (company, { scoredApplications, nbrApplications }) => (
+      <>
+        {`${scoredApplications} (${toPercent(
+          scoredApplications,
+          nbrApplications,
+          0
+        )}%)`}
+      </>
+    )
   }
 ];
 const sortDates = date => moment(date.x).format('x');
 
 const dateFormat = d => moment(d).format('YYYY-MM-DD');
-
 const getData = applicationsPerDay => {
   let countPerDay = 0;
   return flow(
@@ -97,10 +112,11 @@ class Statistics extends Component<Props> {
             <br />
             {`Number of students that has applied: ${nbrSearchingStudents}`}
             <br />
-            {`Percentage of students that has applied: ${(
-              divide(nbrSearchingStudents || 0, nbrStudents || 1) * 100
-            ).toFixed(2)}`}
-            %<br />
+            {`Percentage of students that has applied: ${toPercent(
+              nbrSearchingStudents,
+              nbrStudents
+            )}`}
+            <br />
             {`Average number of applications per student: ${divide(
               nbrApplications || 0,
               nbrSearchingStudents || 1
