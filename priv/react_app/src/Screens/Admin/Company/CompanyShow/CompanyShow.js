@@ -44,7 +44,17 @@ type Props = {
       id: number,
       start: string,
       end: string,
-      location: string
+      location: string,
+      studentSession: {
+        student: {
+          user: {
+            firstName?: string,
+            lastName?: string,
+            email?: string,
+            phoneNumber?: string
+          }
+        }
+      }
     }>,
     topStudents?: Array<{ id: number, firstName: string, lastName: string }>
   },
@@ -175,7 +185,7 @@ class CompanyShow extends Component<Props> {
         []
       ]),
       flatten
-    )(company.studentSessionTimeSlots);
+    )(company.studentSessionTimeSlots || []);
 
     return (
       <div className="company-show-view">
@@ -202,7 +212,7 @@ class CompanyShow extends Component<Props> {
         <h3>Student Session Time Slots</h3>
         <CSVLink
           data={data}
-          filename={`${company.name} - Student Sessions.csv`}
+          filename={`${company.name || ''} - Student Sessions.csv`}
         >
           <Button icon="download">Download Schema</Button>
         </CSVLink>

@@ -32,7 +32,17 @@ describe('CompanyShow', () => {
           id: 1,
           start: '1970-01-01T00:00:00.000000',
           end: '2000-01-01T00:00:00.000000',
-          location: 'E-huset'
+          location: 'E-huset',
+          studentSession: {
+            student: {
+              user: {
+                firstName: 'Mr',
+                lastName: 'Polis',
+                email: 'potatis@polisen.se',
+                phoneNumber: '112'
+              }
+            }
+          }
         }
       ]
     };

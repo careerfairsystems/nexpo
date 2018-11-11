@@ -69,7 +69,7 @@ class StudentSessions extends Component<Props> {
     >
       <List.Item.Meta
         title={session.company.name}
-        description={this.renderTimeField(session.studentSessionTimeSlot)}
+        description={this.renderDescription(session.studentSessionTimeSlot)}
         avatar={
           <Avatar
             src={session.company.logoUrl}
@@ -82,8 +82,11 @@ class StudentSessions extends Component<Props> {
     </List.Item>
   );
 
-  renderTimeField = ({ start = '', end = '', location = 'Not defined' }: TimeSlot) =>
-    `Start: ${toSessionTimeFormat(start)}\nEnd: ${toSessionTimeFormat(end)}\nLocation: ${location}`;
+  renderDescription = ({
+    start = '',
+    end = '',
+    location = 'Not defined'
+  }: TimeSlot) => `${toSessionTimeFormat(start, end)}\nLocation: ${location}`;
 
   render() {
     const { sessions, fetching } = this.props;
