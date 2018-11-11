@@ -13,7 +13,8 @@ type Company = {
 };
 type TimeSlot = {
   start?: string,
-  end?: string
+  end?: string,
+  location?: string
 };
 type Session = {
   id?: number,
@@ -81,8 +82,8 @@ class StudentSessions extends Component<Props> {
     </List.Item>
   );
 
-  renderTimeField = ({ start = '', end = '' }: TimeSlot) =>
-    `Start: ${toSessionTimeFormat(start)}\nEnd: ${toSessionTimeFormat(end)}`;
+  renderTimeField = ({ start = '', end = '', location = 'Not defined' }: TimeSlot) =>
+    `Start: ${toSessionTimeFormat(start)}\nEnd: ${toSessionTimeFormat(end)}\nLocation: ${location}`;
 
   render() {
     const { sessions, fetching } = this.props;
