@@ -5,15 +5,15 @@ import type { Dispatch } from '../../reducers';
 
 export function createBulkStudentSessionsIsLoading() {
   return {
-    type: actionTypes.POST_STUDENT_SESSION
+    type: actionTypes.POST_BULK_STUDENT_SESSION
   };
 }
 
-export function createBulkStudentSessionsSuccess(company: {}) {
+export function createBulkStudentSessionsSuccess(studentSessions: {}) {
   message.success('Student Sessions was successfully bulk created.');
   return {
-    type: actionTypes.POST_STUDENT_SESSION_SUCCESS,
-    company
+    type: actionTypes.POST_BULK_STUDENT_SESSION_SUCCESS,
+    studentSessions
   };
 }
 
@@ -24,17 +24,17 @@ export function createBulkStudentSessionsFailure(): CreateBulkStudentSessionsFai
   message.warning('Student Sessions could not be bulk created');
 
   return {
-    type: actionTypes.POST_STUDENT_SESSION_FAILURE
+    type: actionTypes.POST_BULK_STUDENT_SESSION_FAILURE
   };
 }
 
-export function createBulkStudentSessions(data: {}) {
+export function createBulkStudentSessions() {
   return (dispatch: Dispatch) => {
     dispatch(createBulkStudentSessionsIsLoading());
     return API.studentSessions
-      .createBulk(data)
-      .then(company => {
-        dispatch(createBulkStudentSessionsSuccess(company.data));
+      .createBulk()
+      .then(studentSessions => {
+        dispatch(createBulkStudentSessionsSuccess(studentSessions.data));
       })
       .catch(() => {
         dispatch(createBulkStudentSessionsFailure());

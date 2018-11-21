@@ -30,7 +30,6 @@ import CompanyStudentSessionForm from '../../../../Forms/CompanyStudentSessionFo
 type Props = {
   id: string,
   createStudentSession: ({}) => Promise<void>,
-  createBulkStudentSessions: ({}) => Promise<void>,
   deleteStudentSession: string => Promise<void>,
   company: {
     id?: string,
@@ -222,23 +221,6 @@ class CompanyShow extends Component<Props> {
         <CSVLink data={data} filename={`${name} - Student Sessions.csv`}>
           <Button icon="download">Download Schema</Button>
         </CSVLink>
-        <br />
-        <br />
-        <Popconfirm
-          title="Sure to assign empty and non-confirmed time slots?"
-          onConfirm={() => {
-            const { createBulkStudentSessions } = this.props;
-            createBulkStudentSessions({
-              studentSessions: {
-                companyId: company.id
-              }
-            });
-          }}
-        >
-          <Button onClick={() => null} type="primary">
-            Assign all
-          </Button>
-        </Popconfirm>
         <br />
         <br />
         <List

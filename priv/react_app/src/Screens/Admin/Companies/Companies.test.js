@@ -11,7 +11,8 @@ describe('companies', () => {
     props = {
       fetching: false,
       getAllCompanies: jest.fn(),
-      deleteCompany: jest.fn()
+      deleteCompany: jest.fn(),
+      createBulkStudentSessions: jest.fn()
     };
   });
 
