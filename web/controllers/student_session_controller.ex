@@ -41,7 +41,7 @@ defmodule Nexpo.StudentSessionController do
     end
   end
 
-  def create_bulk(conn, %{"student_sessions" => student_sessions_params}, _user, _claims) do
+  def create_bulk(conn, %{}, _user, _claims) do
     Repo.all(
       from company in Company,
       join: slot in assoc(company, :student_session_time_slots),
@@ -93,7 +93,7 @@ defmodule Nexpo.StudentSessionController do
     render(conn, "index.json", student_sessions: student_sessions)
   end
 
-  defp greedy_assign(students, time_slots, company, tries) when tries <= 0 do [] end
+  defp greedy_assign(_students, _time_slots, _company, tries) when tries <= 0 do [] end
   defp greedy_assign(students, time_slots, company, tries) when tries > 0 do
     case get_student_sessions(students, time_slots, company) do
       [] -> greedy_assign(students, time_slots, company, tries - 1)
