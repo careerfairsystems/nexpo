@@ -21,6 +21,7 @@ import Programme from '../Screens/Admin/Programme';
 import Statistics from '../Screens/Admin/Statistics';
 import CurrentUser from '../Screens/CurrentUser';
 import Companies from '../Screens/Admin/Companies';
+import StudentSession from '../Screens/Admin/StudentSession';
 import { CompanyNew, CompanyEdit, CompanyShow } from '../Screens/Admin/Company';
 import YourCompanyHome from '../Screens/YourCompany/YourCompanyHome';
 import {
@@ -58,6 +59,7 @@ const privateRoutes: Array<RouteItem> = [
   { path: '/admin/programmes/new', component: Programme },
   { path: '/admin/programmes/:id', component: Programme },
   { path: '/admin/companies', component: Companies },
+  { path: '/admin/studentSessions', component: StudentSession },
   { path: '/admin/companies/new', component: CompanyNew },
   { path: '/admin/companies/:id', component: CompanyShow },
   { path: '/admin/companies/:id/edit', component: CompanyEdit },
@@ -94,7 +96,7 @@ const routes = (
     <PrivateRoute exact path="/" component={Home} />
     <Route path="/info" component={Info} />
     {privateRoutes.map((props: RouteItem) => (
-      <PrivateRoute key={props.path} exact {...props}/>
+      <PrivateRoute key={props.path} exact {...props} />
     ))}
     <Route path="/login" component={Login} />
     <Route path="/signup" component={Signup} />
@@ -105,14 +107,14 @@ const routes = (
 
 type Props = {
   isLoggedIn: boolean,
-  currentUser?: { 
-    email?: ?string, 
-    firstName?: ?string, 
-    lastName?: ?string, 
-    roles?: Array<{ type: string, permissions: Array<string>}> 
+  currentUser?: {
+    email?: ?string,
+    firstName?: ?string,
+    lastName?: ?string,
+    roles?: Array<{ type: string, permissions: Array<string> }>
   },
   logout: () => void,
-  redirect: (string) => void,
+  redirect: string => void,
   pathname: string
 };
 
@@ -227,6 +229,10 @@ class App extends Component<Props> {
                   this.restrictedMenuItem({
                     route: 'admin/companies',
                     title: 'Companies'
+                  }),
+                  this.restrictedMenuItem({
+                    route: 'admin/studentSessions',
+                    title: 'StudentSession'
                   }),
                   this.restrictedMenuItem({
                     route: 'admin/categories',
