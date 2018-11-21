@@ -10,18 +10,17 @@ import API from '../../../API';
  */
 type Props = {
   companies?: {},
-  fetching: boolean,
   createBulkStudentSessions: () => Promise<void>
 };
-class StudentSession extends Component<Props> {
+class StudentSessions extends Component<Props> {
   static defaultProps = {
     companies: {}
   };
 
-  renderCompanies() {
+  render() {
     return (
       <div>
-        <HtmlTitle title="StudentSession" />
+        <HtmlTitle title="StudentSessions" />
 
         <h1>Student Session</h1>
         <Popconfirm
@@ -47,15 +46,6 @@ class StudentSession extends Component<Props> {
       </div>
     );
   }
-
-  render() {
-    const { fetching } = this.props;
-
-    if (fetching) {
-      return <LoadingSpinner />;
-    }
-    return this.renderCompanies();
-  }
 }
 
-export default StudentSession;
+export default StudentSessions;

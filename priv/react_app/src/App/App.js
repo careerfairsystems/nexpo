@@ -21,7 +21,7 @@ import Programme from '../Screens/Admin/Programme';
 import Statistics from '../Screens/Admin/Statistics';
 import CurrentUser from '../Screens/CurrentUser';
 import Companies from '../Screens/Admin/Companies';
-import StudentSession from '../Screens/Admin/StudentSession';
+import StudentSessions from '../Screens/Admin/StudentSessions';
 import { CompanyNew, CompanyEdit, CompanyShow } from '../Screens/Admin/Company';
 import YourCompanyHome from '../Screens/YourCompany/YourCompanyHome';
 import {
@@ -59,7 +59,7 @@ const privateRoutes: Array<RouteItem> = [
   { path: '/admin/programmes/new', component: Programme },
   { path: '/admin/programmes/:id', component: Programme },
   { path: '/admin/companies', component: Companies },
-  { path: '/admin/studentSessions', component: StudentSession },
+  { path: '/admin/studentSessions', component: StudentSessions },
   { path: '/admin/companies/new', component: CompanyNew },
   { path: '/admin/companies/:id', component: CompanyShow },
   { path: '/admin/companies/:id/edit', component: CompanyEdit },
