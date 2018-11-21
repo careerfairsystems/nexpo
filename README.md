@@ -214,6 +214,14 @@ The frontend is configured with [Create React App](https://github.com/facebookin
 |   |       |-- NAME.js       # Defines the reducer
 |   |       |-- NAME.test.js  # Tests for reducer
 |   |
+|   |-- selectors/            # Contains all selector creators
+|   |   |-- index.js          # Exposes all selector creators as module
+|   |   |
+|   |   |-- NAME/             # Contains selector creators for NAME
+|   |       |-- index.js      # Exposes all selectors creators as a module
+|   |       |-- NAME.js       # Defines all selectors creators for NAME
+|   |       |-- NAME.test.js  # Tests for selectors creators
+|   |
 |   |-- ActionTypes.js        # Defines all action types
 |
 |-- TestHelper/               # Defines helpers that are helpful in tests
