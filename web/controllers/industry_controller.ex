@@ -5,12 +5,12 @@ defmodule Nexpo.IndustryController do
   alias Guardian.Plug.{EnsurePermissions}
 
   plug EnsurePermissions, [handler: Nexpo.SessionController,
-                            one_of: [%{default: ["read_all"]},
-                                     %{default: ["read_roles"]}]
+                           one_of: [%{default: ["read_all"]},
+                                    %{default: ["read_companies"]}]
                           ] when action in [:index, :show]
   plug EnsurePermissions, [handler: Nexpo.SessionController,
-                            one_of: [%{default: ["write_all"]},
-                                     %{default: ["write_roles"]}]
+                           one_of: [%{default: ["write_all"]},
+                                    %{default: ["write_companies"]}]
                           ] when action in [:create, :update, :delete]
 
   def index(conn, _params) do
@@ -35,7 +35,7 @@ defmodule Nexpo.IndustryController do
   end
 
   def show(conn, %{"id" => id}) do
-    industry = Repo.get!(Industry, id) 
+    industry = Repo.get!(Industry, id)
                 |> Repo.preload([:companies])
     render(conn, "show.json", industry: industry)
   end
