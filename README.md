@@ -10,7 +10,7 @@ This project aims to to supply [ARKAD](https://arkad.tlth.se) with an inhouse pr
 <!-- To update table of contents: npm run update-toc-readme -->
 
 <details>
- <summary>Table of Contents</summary>
+ <summary>Expand</summary>
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
