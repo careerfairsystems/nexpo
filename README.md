@@ -50,8 +50,6 @@ The system requires these programs to be installed. The project intends to alway
 - Node 8.11.1 [Installation instructions](https://nodejs.org/en/download/)
 - PostgreSQL 9.6.2 [Installation instruction](https://wiki.postgresql.org/wiki/Detailed_installation_guides)
 
-We recommend installing ```node``` with nenv. [Installation instructions](https://github.com/ryuone/nenv)
-
 > When updating system requirements, make sure you update accordingly the following locations
 - Node
   - [phoenix_static_buildpack.config](phoenix_static_buildpack.config)
@@ -70,6 +68,9 @@ Nexpo consists of two parts
 - [React frontend](priv/react_app)
 
 ## Backend
+The backend is configured with [Phoenix Framework](https://phoenixframework.org/). Phoenix Framework has a fantastic [User Guide](https://hexdocs.pm/phoenix/overview.html) and we made a full [Phoenix Project Example](https://github.com/VictorWinberg/elixir-krusty).
+
+#### Mailing
 Mailing is configured with [Bamboo](https://github.com/thoughtbot/bamboo).
 
 ### Folder structure backend
@@ -248,20 +249,19 @@ If you at any time need to reset your environment do the following: (NOTE THAT T
 3. Grab a cup of coffee!
 4. Start the stack with ```npm run dev```
 
-- Windows
-```sh
-# You are on your own my friend. Install Linux or macOS
-```
-
 ## Implement things
 
 ### Development lifecycle
-1. Make a local branch
-2. Create your feature with [TDD](#recap-of-tdd)
-3. Commit, and make a pull request
-4. Wait for pull request to be accepted by someone
+1. Checkout and pull latest from master
+2. Make a local branch with `git checkout -b featurename`
+3. Install dependencies (if necessary) with `npm run install-deps`
+4. Migrate or Reset database (if necessary) with `mix ecto.migrate` or `mix ecto.reset`
+5. Start the frontend and backend with `npm run dev`
+6. Create your feature with [TDD](#recap-of-tdd)
+7. Commit, and make a pull request
+8. Wait for pull request to be accepted by someone
     - Review others pull requests
-5. If pull request is merged, and all tests pass, your feature is automatically deployed to production
+9. If pull request is merged, and all tests pass, your feature is automatically deployed to production
 
 ### Testing
 This project is developed with [TDD](https://en.wikipedia.org/wiki/Test-driven_development). \
