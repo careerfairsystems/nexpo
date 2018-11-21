@@ -9,6 +9,8 @@ This project aims to to supply [ARKAD](https://arkad.tlth.se) with an inhouse pr
 # Table of Contents
 <!-- To update table of contents: npm run update-toc-readme -->
 
+<details>
+ <summary>Expand</summary>
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
@@ -42,6 +44,7 @@ This project aims to to supply [ARKAD](https://arkad.tlth.se) with an inhouse pr
 - [Who do I contact?](#who-do-i-contact)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
+</details>
 
 # System Requirements
 The system requires these programs to be installed. The project intends to always follow stable releases. The system is verified to work with the following setup
@@ -49,8 +52,6 @@ The system requires these programs to be installed. The project intends to alway
 - Erlang OTP 19.3 - Installed automatically with Elixir
 - Node 8.11.1 [Installation instructions](https://nodejs.org/en/download/)
 - PostgreSQL 9.6.2 [Installation instruction](https://wiki.postgresql.org/wiki/Detailed_installation_guides)
-
-We recommend installing ```node``` with nenv. [Installation instructions](https://github.com/ryuone/nenv)
 
 > When updating system requirements, make sure you update accordingly the following locations
 - Node
@@ -70,10 +71,16 @@ Nexpo consists of two parts
 - [React frontend](priv/react_app)
 
 ## Backend
+The backend is configured with [Phoenix Framework](https://phoenixframework.org/). Phoenix Framework has a fantastic [User Guide](https://hexdocs.pm/phoenix/overview.html), there is a full [Phoenix Project Example](https://github.com/VictorWinberg/elixir-krusty) and there exists two nice issues for learning [Issue 81 - Posts](https://github.com/careerfairsystems/nexpo/issues/81) and [Issue 82 - Post Comments](https://github.com/careerfairsystems/nexpo/issues/82).
+
+#### Mailing
 Mailing is configured with [Bamboo](https://github.com/thoughtbot/bamboo).
 
 ### Folder structure backend
 The folder structure follows default Phoenix structure
+<details>
+ <summary>Structure</summary>
+
 ```
 .
 |-- config/                           # Config for all environments
@@ -161,11 +168,15 @@ The folder structure follows default Phoenix structure
 |-- Procfile                          # Defines processes on Heroku
 |-- README.md                         # Project README (this file)
 ```
+</details>
 
 ## Frontend
 The frontend is configured with [Create React App](https://github.com/facebookincubator/create-react-app). It handles all build configuration which makes our lifes much easier. Do not eject from the default configuration. Create React App has a fantastic [User Guide](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md).
 
 ### Folder structure frontend
+<details>
+ <summary>Structure</summary>
+
 ```
 ./priv/react_app/src/
 |-- API/                      # Contains everything related to API
@@ -206,6 +217,14 @@ The frontend is configured with [Create React App](https://github.com/facebookin
 |   |       |-- NAME.js       # Defines the reducer
 |   |       |-- NAME.test.js  # Tests for reducer
 |   |
+|   |-- selectors/            # Contains all selector creators
+|   |   |-- index.js          # Exposes all selector creators as module
+|   |   |
+|   |   |-- NAME/             # Contains selector creators for NAME
+|   |       |-- index.js      # Exposes all selectors creators as a module
+|   |       |-- NAME.js       # Defines all selectors creators for NAME
+|   |       |-- NAME.test.js  # Tests for selectors creators
+|   |
 |   |-- ActionTypes.js        # Defines all action types
 |
 |-- TestHelper/               # Defines helpers that are helpful in tests
@@ -221,10 +240,10 @@ The frontend is configured with [Create React App](https://github.com/facebookin
 |-- package.json
 |-- README.md
 ```
+</details>
 
 # Development
 ## Setup environment
-- Unix (Mac/Linux)
 1. Make sure you have installed all [system requirements](#system-requirements). Then open a terminal and do the following steps
 2. Install the following programs
     - ```npm``` - version 5 or higher. [Installation instructions](https://www.npmjs.com/get-npm)
@@ -248,20 +267,19 @@ If you at any time need to reset your environment do the following: (NOTE THAT T
 3. Grab a cup of coffee!
 4. Start the stack with ```npm run dev```
 
-- Windows
-```sh
-# You are on your own my friend. Install Linux or macOS
-```
-
 ## Implement things
 
 ### Development lifecycle
-1. Make a local branch
-2. Create your feature with [TDD](#recap-of-tdd)
-3. Commit, and make a pull request
-4. Wait for pull request to be accepted by someone
+1. Checkout and pull latest from master
+2. Make a local branch with `git checkout -b featurename`
+3. Install dependencies (if necessary) with `npm run install-deps`
+4. Migrate or Reset database (if necessary) with `mix ecto.migrate` or `mix ecto.reset`
+5. Start the frontend and backend with `npm run dev`
+6. Create your feature with [TDD](#recap-of-tdd)
+7. Commit, and make a pull request
+8. Wait for pull request to be accepted by someone
     - Review others pull requests
-5. If pull request is merged, and all tests pass, your feature is automatically deployed to production
+9. If pull request is merged, and all tests pass, your feature is automatically deployed to production
 
 ### Testing
 This project is developed with [TDD](https://en.wikipedia.org/wiki/Test-driven_development). \
