@@ -20,12 +20,13 @@ defmodule Nexpo.StudentSessionController do
   def create(conn, %{"student_session" => student_sessions_params}, _user, _claims) do
     company = Repo.get(Company, student_sessions_params["company_id"])
     student = Repo.get(Student, student_sessions_params["student_id"])
+    time_slot = Repo.get(TimeSlot, student_sessions_params["student_session_time_slot_id"])
 
-    case student do
-      nil -> conn
+    case Student.is_available?(student, time_slot) do
+      false -> conn
         |> put_status(404)
         |> render(Nexpo.ErrorView, "404.json")
-      student ->
+      true ->
         data = Map.put(student_sessions_params, "student_id", student.id)
         changeset = StudentSession.changeset(%StudentSession{}, data)
 
@@ -78,7 +79,7 @@ defmodule Nexpo.StudentSessionController do
 
   defp get_student_sessions(students, time_slots, company) do
     Enum.reduce(students, {[], Enum.shuffle(time_slots)}, fn student, {acc, slots} ->
-      case Enum.find_index(slots, fn time_slot -> TimeSlot.is_available?(student, time_slot) end) do
+      case Enum.find_index(slots, fn time_slot -> Student.is_available?(student, time_slot) end) do
         nil -> {[], []}
         index ->
           {time_slot, new_slots} = List.pop_at(slots, index)

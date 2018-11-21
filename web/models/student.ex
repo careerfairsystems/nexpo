@@ -40,6 +40,19 @@ defmodule Nexpo.Student do
     |> Repo.update!
   end
 
+  def is_available?(student, time_slot) do
+    Repo.one(
+      from session in Ecto.assoc(student, :student_sessions),
+      # Check that student does not already have session at the time of the given time slot
+      left_join: slot in Nexpo.StudentSessionTimeSlot,
+      on: slot.id == session.student_session_time_slot_id and
+          slot.start == ^time_slot.start and slot.end == ^time_slot.end,
+      where: not is_nil(slot.id),
+      limit: 1,
+      select: slot)
+    |> is_nil()
+  end
+
   def get_available(company, time_slots) do
     ids = Repo.all(
       from appl in Ecto.assoc(company, :student_session_applications),
