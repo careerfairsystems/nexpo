@@ -8,15 +8,12 @@ import LoadingSpinner from '../../../Components/LoadingSpinner';
 import HtmlTitle from '../../../Components/HtmlTitle';
 import FilterSearch, { FilterIcon } from '../../../Components/FilterSearch';
 
-import API from '../../../API';
-
 /**
  * Responsible for rendering a list of companies
  */
 type Props = {
   companies?: {},
   fetching: boolean,
-  createBulkStudentSessions: () => Promise<void>,
   getAllCompanies: () => Promise<void>,
   deleteCompany: string => Promise<void>
 };
@@ -109,26 +106,6 @@ class Companies extends Component<Props> {
         </InvisibleLink>
         <br />
         <br />
-        <Popconfirm
-          title="Sure to assign empty and non-confirmed time slots?"
-          onConfirm={() => {
-            const { createBulkStudentSessions } = this.props;
-            createBulkStudentSessions();
-          }}
-        >
-          <Button onClick={() => null}>Assign all</Button>
-        </Popconfirm>
-        <br />
-        <Popconfirm
-          title="Sure to delete all non confirmed student sessions?"
-          onConfirm={API.studentSessions.deleteNonConfirmed}
-        >
-          <Button onClick={() => null}>Remove non-confirmed sessions</Button>
-        </Popconfirm>
-        <br />
-        <Button icon="download" onClick={API.studentSessions.downloadReserves}>
-          Download reserves
-        </Button>
       </div>
     );
   }
