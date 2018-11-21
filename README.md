@@ -244,7 +244,6 @@ The frontend is configured with [Create React App](https://github.com/facebookin
 
 # Development
 ## Setup environment
-- Unix (Mac/Linux)
 1. Make sure you have installed all [system requirements](#system-requirements). Then open a terminal and do the following steps
 2. Install the following programs
     - ```npm``` - version 5 or higher. [Installation instructions](https://www.npmjs.com/get-npm)
