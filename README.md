@@ -9,6 +9,8 @@ This project aims to to supply [ARKAD](https://arkad.tlth.se) with an inhouse pr
 # Table of Contents
 <!-- To update table of contents: npm run update-toc-readme -->
 
+<details>
+ <summary>Table of Contents</summary>
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
@@ -42,6 +44,7 @@ This project aims to to supply [ARKAD](https://arkad.tlth.se) with an inhouse pr
 - [Who do I contact?](#who-do-i-contact)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
+</details>
 
 # System Requirements
 The system requires these programs to be installed. The project intends to always follow stable releases. The system is verified to work with the following setup
