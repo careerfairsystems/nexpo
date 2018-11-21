@@ -42,16 +42,9 @@ defmodule Nexpo.StudentSessionController do
   end
 
   def create_bulk(conn, %{}, _user, _claims) do
-    Repo.all(
-      from company in Company,
-      join: slot in assoc(company, :student_session_time_slots),
-      group_by: company.id)
+    Company.get_available()
     |> Enum.each(fn company ->
-      time_slots = Repo.all(
-        from slot in Ecto.assoc(company, :student_session_time_slots),
-        left_join: session in assoc(slot, :student_session),
-        where: is_nil(session.id))
-
+      time_slots = TimeSlot.get_available(company)
       students = Student.get_available(company, time_slots)
 
       if not Enum.empty?(students) do
@@ -85,20 +78,7 @@ defmodule Nexpo.StudentSessionController do
 
   defp get_student_sessions(students, time_slots, company) do
     Enum.reduce(students, {[], Enum.shuffle(time_slots)}, fn student, {acc, slots} ->
-      case Enum.find_index(slots, fn time_slot ->
-        case Repo.all(
-          from session in Ecto.assoc(student, :student_sessions),
-          # Check that student does not already have session at the time of the given time slot
-          left_join: slot in TimeSlot,
-          on: slot.id == session.student_session_time_slot_id and
-              slot.start == ^time_slot.start and slot.end == ^time_slot.end,
-          where: not is_nil(slot.id),
-          select: slot
-        ) do
-          [] -> true
-          _ -> false
-        end
-      end) do
+      case Enum.find_index(slots, fn time_slot -> TimeSlot.is_available?(student, time_slot) end) do
         nil -> {[], []}
         index ->
           {time_slot, new_slots} = List.pop_at(slots, index)
@@ -153,10 +133,7 @@ defmodule Nexpo.StudentSessionController do
   end
 
   def delete_bulk(conn, %{}, _user, _claims) do
-    time_slots = Repo.all(
-      from slot in TimeSlot,
-      left_join: session in assoc(slot, :student_session),
-      where: is_nil(session.id) or session.student_confirmed != true)
+    time_slots = TimeSlot.get_available_and_non_confirmed()
 
     result = time_slots
     |> Repo.preload(:student_session)

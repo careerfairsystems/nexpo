@@ -1,6 +1,7 @@
 defmodule Nexpo.StudentSessionTimeSlot do
   use Nexpo.Web, :model
 
+  alias Nexpo.Repo
   alias Nexpo.StudentSessionTimeSlot, as: TimeSlot
 
   schema "student_session_time_slots" do
@@ -51,5 +52,32 @@ defmodule Nexpo.StudentSessionTimeSlot do
     else
       changeset
     end
+  end
+
+  def get_available(company) do
+    Repo.all(
+      from slot in Ecto.assoc(company, :student_session_time_slots),
+      left_join: session in assoc(slot, :student_session),
+      where: is_nil(session.id))
+  end
+
+  def get_available_and_non_confirmed() do
+    Repo.all(
+      from slot in TimeSlot,
+      left_join: session in assoc(slot, :student_session),
+      where: is_nil(session.id) or session.student_confirmed != true)
+  end
+
+  def is_available?(student, time_slot) do
+    Repo.one(
+      from session in Ecto.assoc(student, :student_sessions),
+      # Check that student does not already have session at the time of the given time slot
+      left_join: slot in TimeSlot,
+      on: slot.id == session.student_session_time_slot_id and
+          slot.start == ^time_slot.start and slot.end == ^time_slot.end,
+      where: not is_nil(slot.id),
+      limit: 1,
+      select: slot)
+    |> is_nil()
   end
 end
