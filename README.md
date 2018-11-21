@@ -15,11 +15,10 @@ This project aims to to supply [ARKAD](https://arkad.tlth.se) with an inhouse pr
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 
-- [Welcome](#welcome)
-- [Table of Contents](#table-of-contents)
 - [System Requirements](#system-requirements)
 - [Technical Description](#technical-description)
   - [Backend](#backend)
+      - [Mailing](#mailing)
     - [Folder structure backend](#folder-structure-backend)
   - [Frontend](#frontend)
     - [Folder structure frontend](#folder-structure-frontend)
