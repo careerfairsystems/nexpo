@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Table, Button, Popconfirm, Divider } from 'antd';
-import { size, sortBy, toLower } from 'lodash/fp';
-
+import { size, sortBy, toLower, isEmpty, isNil } from 'lodash/fp';
+import NotFound from '../../NotFound';
 import { toExternal } from '../../../Util/URLHelper';
 import InvisibleLink from '../../../Components/InvisibleLink';
 import LoadingSpinner from '../../../Components/LoadingSpinner';
@@ -17,7 +17,35 @@ type Props = {
   companies?: {},
   fetching: boolean,
   getAllCompanies: () => Promise<void>,
-  deleteCompany: string => Promise<void>
+  deleteCompany: string => Promise<void>,
+  createBulkStudentSessions: ({}) => Promise<void>,
+  company: {
+    id?: string,
+    name?: string,
+    website?: string,
+    description?: string,
+    logoUrl?: string,
+
+    studentSessionDays?: number,
+    studentSessionApplications?: Array<*>,
+    studentSessionTimeSlots?: Array<{
+      id: number,
+      start: string,
+      end: string,
+      location: string,
+      studentSession: {
+        student: {
+          user: {
+            firstName?: string,
+            lastName?: string,
+            email?: string,
+            phoneNumber?: string
+          }
+        }
+      }
+    }>,
+    topStudents?: Array<{ id: number, firstName: string, lastName: string }>
+  }
 };
 class StudentSession extends Component<Props> {
   static defaultProps = {
@@ -83,31 +111,27 @@ class StudentSession extends Component<Props> {
   ];
 
   renderCompanies() {
-    const { companies = {} } = this.props;
+    const { fetching } = this.props;
 
+    if (fetching) return <LoadingSpinner />;
     return (
       <div>
         <HtmlTitle title="Student Session" />
 
         <h1>Student Session</h1>
-
-        <Table
-          columns={this.companyColumns()}
-          dataSource={sortBy(
-            'name',
-            Object.keys(companies).map(i => ({
-              ...companies[i],
-              key: i
-            }))
-          )}
-        />
-        <InvisibleLink to="companies/new">
-          <Button onClick={() => null} type="primary">
-            New company
-          </Button>
-        </InvisibleLink>
-        <br />
-        <br />
+        <div>
+          <Popconfirm
+            title="Sure to assign empty and non-confirmed time slots?"
+            onConfirm={() => {
+              const { createBulkStudentSessions } = this.props;
+              createBulkStudentSessions();
+            }}
+          >
+            <Button onClick={() => null} type="primary">
+              Assign all
+            </Button>
+          </Popconfirm>
+        </div>
         <Popconfirm
           title="Sure to delete all non confirmed student sessions?"
           onConfirm={API.studentSessions.deleteNonConfirmed}

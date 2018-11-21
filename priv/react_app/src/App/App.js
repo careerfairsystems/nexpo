@@ -232,7 +232,7 @@ class App extends Component<Props> {
                   }),
                   this.restrictedMenuItem({
                     route: 'admin/studentSessions',
-                    title: 'StudentSession'
+                    title: 'Student Session'
                   }),
                   this.restrictedMenuItem({
                     route: 'admin/categories',
