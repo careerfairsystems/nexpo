@@ -2,6 +2,16 @@ defmodule Nexpo.JobOfferController do
   use Nexpo.Web, :controller
 
   alias Nexpo.JobOffer
+  alias Guardian.Plug.{EnsurePermissions}
+
+  plug EnsurePermissions, [handler: Nexpo.SessionController,
+                           one_of: [%{default: ["read_all"]},
+                                    %{default: ["read_companies"]}]
+                          ] when action in [:show]
+  plug EnsurePermissions, [handler: Nexpo.SessionController,
+                           one_of: [%{default: ["write_all"]},
+                                    %{default: ["write_companies"]}]
+                          ] when action in [:create, :update, :delete]
 
   def index(conn, _params) do
     job_offers = Repo.all(JobOffer)

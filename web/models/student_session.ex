@@ -1,6 +1,8 @@
 defmodule Nexpo.StudentSession do
   use Nexpo.Web, :model
 
+  alias Nexpo.Repo
+
   schema "student_sessions" do
     field :start, :naive_datetime
     field :end, :naive_datetime
@@ -26,5 +28,21 @@ defmodule Nexpo.StudentSession do
   def student_changeset(struct, params \\ %{}) do
     struct
     |> cast(params, [:student_confirmed])
+  end
+
+  def get_reserves() do
+    Repo.all(from(
+      company in Nexpo.Company,
+      join: appl in assoc(company, :student_session_applications),
+      join: student in assoc(appl, :student),
+      join: user in assoc(student, :user),
+      where: not is_nil(appl.score) and appl.score > 0,
+      order_by: [desc: appl.score, asc: student.id],
+      # Check that student does not already have session with given company
+      left_join: session in Nexpo.StudentSession,
+      on: student.id == session.student_id and session.company_id == company.id,
+      where: is_nil(session.id),
+      preload: [student_session_applications: {appl, student: {student, user: user}}]
+    ))
   end
 end

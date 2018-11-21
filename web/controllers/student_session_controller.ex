@@ -9,12 +9,12 @@ defmodule Nexpo.StudentSessionController do
 
   plug EnsurePermissions, [handler: Nexpo.SessionController,
                            one_of: [%{default: ["read_all"]},
-                                    %{default: ["read_companies"]}]
+                                    %{default: ["read_sessions"]}]
                           ] when action in [:show_reserves]
 
   plug EnsurePermissions, [handler: Nexpo.SessionController,
                            one_of: [%{default: ["write_all"]},
-                                    %{default: ["write_companies"]}]
+                                    %{default: ["write_sessions"]}]
                           ] when action in [:create, :create_bulk, :delete]
 
   def create(conn, %{"student_session" => student_sessions_params}, _user, _claims) do
@@ -139,19 +139,7 @@ defmodule Nexpo.StudentSessionController do
   end
 
   def show_reserves(conn, %{}, _user, _claims) do
-    reserves = Repo.all(from(
-      company in Company,
-      join: appl in assoc(company, :student_session_applications),
-      join: student in assoc(appl, :student),
-      join: user in assoc(student, :user),
-      where: not is_nil(appl.score) and appl.score > 0,
-      order_by: [desc: appl.score, asc: student.id],
-      # Check that student does not already have session with given company
-      left_join: session in StudentSession,
-      on: student.id == session.student_id and session.company_id == company.id,
-      where: is_nil(session.id),
-      preload: [student_session_applications: {appl, student: {student, user: user}}]
-    ))
+    reserves = StudentSession.get_reserves()
     |> Enum.map(fn company ->
         reserve = company.student_session_applications
           |> Enum.map(fn appl ->

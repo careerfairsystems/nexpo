@@ -11,7 +11,7 @@ defmodule Nexpo.Statistics do
     timestamps()
   end
 
-  def getAll() do
+  def get_all() do
     nbr_students_applied = length(Repo.all(
       from student in Student,
       join: appl in assoc(student, :student_session_applications),
