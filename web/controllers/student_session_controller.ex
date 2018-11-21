@@ -52,25 +52,7 @@ defmodule Nexpo.StudentSessionController do
         left_join: session in assoc(slot, :student_session),
         where: is_nil(session.id))
 
-      student_ids = Repo.all(
-        from appl in Ecto.assoc(company, :student_session_applications),
-        join: student in assoc(appl, :student),
-        where: not is_nil(appl.score) and appl.score > 0,
-        order_by: [desc: appl.score, asc: student.id],
-        # Check that student does not already have session with given company
-        left_join: session in StudentSession,
-        on: student.id == session.student_id and session.company_id == ^company.id,
-        where: is_nil(session.id),
-        limit: ^length(time_slots),
-        select: student.id)
-
-      students = Repo.all(
-        from student in Student,
-        where: student.id in ^student_ids,
-        left_join: session in assoc(student, :student_sessions),
-        group_by: student.id,
-        order_by: count(session.id),
-        select: student)
+      students = Student.get_available(company, time_slots)
 
       if not Enum.empty?(students) do
           result = students

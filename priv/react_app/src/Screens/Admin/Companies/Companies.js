@@ -16,6 +16,7 @@ import API from '../../../API';
 type Props = {
   companies?: {},
   fetching: boolean,
+  createBulkStudentSessions: () => Promise<void>,
   getAllCompanies: () => Promise<void>,
   deleteCompany: string => Promise<void>
 };
@@ -107,6 +108,16 @@ class Companies extends Component<Props> {
           </Button>
         </InvisibleLink>
         <br />
+        <br />
+        <Popconfirm
+          title="Sure to assign empty and non-confirmed time slots?"
+          onConfirm={() => {
+            const { createBulkStudentSessions } = this.props;
+            createBulkStudentSessions();
+          }}
+        >
+          <Button onClick={() => null}>Assign all</Button>
+        </Popconfirm>
         <br />
         <Popconfirm
           title="Sure to delete all non confirmed student sessions?"
