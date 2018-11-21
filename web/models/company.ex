@@ -66,4 +66,11 @@ defmodule Nexpo.Company do
     )
   end
 
+  def get_available() do
+    Repo.all(
+      from company in Company,
+      join: slot in assoc(company, :student_session_time_slots),
+      group_by: company.id)
+  end
+
 end

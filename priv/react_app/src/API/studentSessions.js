@@ -17,8 +17,8 @@ export default {
     authPost('/api/student_sessions', data).then(handleHttpResponse),
 
   /** Creates multiple student sessions */
-  createBulk: (data: {}) =>
-    authPatch('/api/student_sessions/', data).then(handleHttpResponse),
+  createBulk: () =>
+    authPatch('/api/student_sessions/', {}).then(handleHttpResponse),
 
   /** Updates a student session */
   update: (id: string, data: {}) =>

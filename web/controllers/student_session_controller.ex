@@ -20,12 +20,13 @@ defmodule Nexpo.StudentSessionController do
   def create(conn, %{"student_session" => student_sessions_params}, _user, _claims) do
     company = Repo.get(Company, student_sessions_params["company_id"])
     student = Repo.get(Student, student_sessions_params["student_id"])
+    time_slot = Repo.get(TimeSlot, student_sessions_params["student_session_time_slot_id"])
 
-    case student do
-      nil -> conn
+    case Student.is_available?(student, time_slot) do
+      false -> conn
         |> put_status(404)
         |> render(Nexpo.ErrorView, "404.json")
-      student ->
+      true ->
         data = Map.put(student_sessions_params, "student_id", student.id)
         changeset = StudentSession.changeset(%StudentSession{}, data)
 
@@ -42,35 +43,10 @@ defmodule Nexpo.StudentSessionController do
   end
 
   def create_bulk(conn, %{}, _user, _claims) do
-    Repo.all(
-      from company in Company,
-      join: slot in assoc(company, :student_session_time_slots),
-      group_by: company.id)
+    Company.get_available()
     |> Enum.each(fn company ->
-      time_slots = Repo.all(
-        from slot in Ecto.assoc(company, :student_session_time_slots),
-        left_join: session in assoc(slot, :student_session),
-        where: is_nil(session.id))
-
-      student_ids = Repo.all(
-        from appl in Ecto.assoc(company, :student_session_applications),
-        join: student in assoc(appl, :student),
-        where: not is_nil(appl.score) and appl.score > 0,
-        order_by: [desc: appl.score, asc: student.id],
-        # Check that student does not already have session with given company
-        left_join: session in StudentSession,
-        on: student.id == session.student_id and session.company_id == ^company.id,
-        where: is_nil(session.id),
-        limit: ^length(time_slots),
-        select: student.id)
-
-      students = Repo.all(
-        from student in Student,
-        where: student.id in ^student_ids,
-        left_join: session in assoc(student, :student_sessions),
-        group_by: student.id,
-        order_by: count(session.id),
-        select: student)
+      time_slots = TimeSlot.get_available(company)
+      students = Student.get_available(company, time_slots)
 
       if not Enum.empty?(students) do
           result = students
@@ -103,20 +79,7 @@ defmodule Nexpo.StudentSessionController do
 
   defp get_student_sessions(students, time_slots, company) do
     Enum.reduce(students, {[], Enum.shuffle(time_slots)}, fn student, {acc, slots} ->
-      case Enum.find_index(slots, fn time_slot ->
-        case Repo.all(
-          from session in Ecto.assoc(student, :student_sessions),
-          # Check that student does not already have session at the time of the given time slot
-          left_join: slot in TimeSlot,
-          on: slot.id == session.student_session_time_slot_id and
-              slot.start == ^time_slot.start and slot.end == ^time_slot.end,
-          where: not is_nil(slot.id),
-          select: slot
-        ) do
-          [] -> true
-          _ -> false
-        end
-      end) do
+      case Enum.find_index(slots, fn time_slot -> Student.is_available?(student, time_slot) end) do
         nil -> {[], []}
         index ->
           {time_slot, new_slots} = List.pop_at(slots, index)
@@ -171,10 +134,7 @@ defmodule Nexpo.StudentSessionController do
   end
 
   def delete_bulk(conn, %{}, _user, _claims) do
-    time_slots = Repo.all(
-      from slot in TimeSlot,
-      left_join: session in assoc(slot, :student_session),
-      where: is_nil(session.id) or session.student_confirmed != true)
+    time_slots = TimeSlot.get_available_and_non_confirmed()
 
     result = time_slots
     |> Repo.preload(:student_session)
