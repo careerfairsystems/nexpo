@@ -68,13 +68,16 @@ Nexpo consists of two parts
 - [React frontend](priv/react_app)
 
 ## Backend
-The backend is configured with [Phoenix Framework](https://phoenixframework.org/). Phoenix Framework has a fantastic [User Guide](https://hexdocs.pm/phoenix/overview.html) and we made a full [Phoenix Project Example](https://github.com/VictorWinberg/elixir-krusty).
+The backend is configured with [Phoenix Framework](https://phoenixframework.org/). Phoenix Framework has a fantastic [User Guide](https://hexdocs.pm/phoenix/overview.html), there is a full [Phoenix Project Example](https://github.com/VictorWinberg/elixir-krusty) and there exists two nice issues for learning [Issue 81 - Posts](https://github.com/careerfairsystems/nexpo/issues/81) and [Issue 82 - Post Comments](https://github.com/careerfairsystems/nexpo/issues/82).
 
 #### Mailing
 Mailing is configured with [Bamboo](https://github.com/thoughtbot/bamboo).
 
 ### Folder structure backend
 The folder structure follows default Phoenix structure
+<details>
+ <summary>Structure</summary>
+
 ```
 .
 |-- config/                           # Config for all environments
@@ -162,11 +165,15 @@ The folder structure follows default Phoenix structure
 |-- Procfile                          # Defines processes on Heroku
 |-- README.md                         # Project README (this file)
 ```
+</details>
 
 ## Frontend
 The frontend is configured with [Create React App](https://github.com/facebookincubator/create-react-app). It handles all build configuration which makes our lifes much easier. Do not eject from the default configuration. Create React App has a fantastic [User Guide](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md).
 
 ### Folder structure frontend
+<details>
+ <summary>Structure</summary>
+
 ```
 ./priv/react_app/src/
 |-- API/                      # Contains everything related to API
@@ -222,6 +229,7 @@ The frontend is configured with [Create React App](https://github.com/facebookin
 |-- package.json
 |-- README.md
 ```
+</details>
 
 # Development
 ## Setup environment
