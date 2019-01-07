@@ -59,7 +59,7 @@ const privateRoutes: Array<RouteItem> = [
   { path: '/admin/programmes/new', component: Programme },
   { path: '/admin/programmes/:id', component: Programme },
   { path: '/admin/companies', component: Companies },
-  { path: '/admin/studentSessions', component: StudentSessions },
+  { path: '/admin/sessions', component: StudentSessions },
   { path: '/admin/companies/new', component: CompanyNew },
   { path: '/admin/companies/:id', component: CompanyShow },
   { path: '/admin/companies/:id/edit', component: CompanyEdit },
@@ -231,7 +231,7 @@ class App extends Component<Props> {
                     title: 'Companies'
                   }),
                   this.restrictedMenuItem({
-                    route: 'admin/studentSessions',
+                    route: 'admin/sessions',
                     title: 'Student Session'
                   }),
                   this.restrictedMenuItem({
