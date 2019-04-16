@@ -400,3 +400,4 @@ Deployment is automatic from master branch. To deploy, you need only merge code 
 - [Anton Göransson](mailto:anton.goransson95@gmail.com) (Developer 2018)
 - [Emma Asklund](mailto:emma.asklund@gmail.com) (Developer 2018)
 - [Martin Johansson](mailto:martin.johansson1993@gmail.com) (Developer 2018)
+- [Viktor Claesson](mailto:claesson.viktor@gmail.com) (Developer 2018, Internal Systems Manager 2019)
