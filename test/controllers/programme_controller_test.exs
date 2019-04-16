@@ -11,58 +11,61 @@ defmodule Nexpo.ProgrammeControllerTest do
 
   @tag :logged_in
   test "lists all entries on index", %{conn: conn} do
-    conn = get conn, programme_path(conn, :index)
+    conn = get(conn, programme_path(conn, :index))
     assert json_response(conn, 200)["data"] == []
   end
 
   @tag :logged_in
   test "shows chosen resource", %{conn: conn} do
-    programme = Repo.insert! %Programme{}
-    conn = get conn, programme_path(conn, :show, programme)
-    assert json_response(conn, 200)["data"] == %{"id" => programme.id,
-      "code" => programme.code,
-      "name" => programme.name}
+    programme = Repo.insert!(%Programme{})
+    conn = get(conn, programme_path(conn, :show, programme))
+
+    assert json_response(conn, 200)["data"] == %{
+             "id" => programme.id,
+             "code" => programme.code,
+             "name" => programme.name
+           }
   end
 
   @tag :logged_in
   test "renders page not found when id is nonexistent", %{conn: conn} do
-    assert_error_sent 404, fn ->
-      get conn, programme_path(conn, :show, -1)
-    end
+    assert_error_sent(404, fn ->
+      get(conn, programme_path(conn, :show, -1))
+    end)
   end
 
   @tag :logged_in
   test "creates and renders resource when data is valid", %{conn: conn} do
-    conn = post conn, programme_path(conn, :create), programme: @valid_attrs
+    conn = post(conn, programme_path(conn, :create), programme: @valid_attrs)
     assert json_response(conn, 201)["data"]["id"]
     assert Repo.get_by(Programme, @valid_attrs)
   end
 
   @tag :logged_in
   test "does not create resource and renders errors when data is invalid", %{conn: conn} do
-    conn = post conn, programme_path(conn, :create), programme: @invalid_attrs
+    conn = post(conn, programme_path(conn, :create), programme: @invalid_attrs)
     assert json_response(conn, 422)["errors"] != %{}
   end
 
   @tag :logged_in
   test "updates and renders chosen resource when data is valid", %{conn: conn} do
-    programme = Repo.insert! %Programme{}
-    conn = put conn, programme_path(conn, :update, programme), programme: @valid_attrs
+    programme = Repo.insert!(%Programme{})
+    conn = put(conn, programme_path(conn, :update, programme), programme: @valid_attrs)
     assert json_response(conn, 200)["data"]["id"]
     assert Repo.get_by(Programme, @valid_attrs)
   end
 
   @tag :logged_in
   test "does not update chosen resource and renders errors when data is invalid", %{conn: conn} do
-    programme = Repo.insert! %Programme{}
-    conn = put conn, programme_path(conn, :update, programme), programme: @invalid_attrs
+    programme = Repo.insert!(%Programme{})
+    conn = put(conn, programme_path(conn, :update, programme), programme: @invalid_attrs)
     assert json_response(conn, 422)["errors"] != %{}
   end
 
   @tag :logged_in
   test "deletes chosen resource", %{conn: conn} do
-    programme = Repo.insert! %Programme{}
-    conn = delete conn, programme_path(conn, :delete, programme)
+    programme = Repo.insert!(%Programme{})
+    conn = delete(conn, programme_path(conn, :delete, programme))
     assert response(conn, 204)
     refute Repo.get(Programme, programme.id)
   end

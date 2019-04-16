@@ -15,5 +15,4 @@ defmodule Nexpo.CategoryView do
 
     Nexpo.Support.View.render_object(category, base)
   end
-
 end

@@ -2,9 +2,9 @@ defmodule Nexpo.DesiredProgramme do
   use Nexpo.Web, :model
 
   schema "desired_programme" do
-    field :score, :integer
-    belongs_to :company, Nexpo.Company
-    belongs_to :programme, Nexpo.Programme
+    field(:score, :integer)
+    belongs_to(:company, Nexpo.Company)
+    belongs_to(:programme, Nexpo.Programme)
 
     timestamps()
   end

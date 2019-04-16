@@ -5,9 +5,12 @@ defmodule Nexpo.Industry do
   alias Nexpo.Industry
 
   schema "industries" do
-    field :name, :string
+    field(:name, :string)
 
-    many_to_many :companies, Nexpo.Company, join_through: "companies_industries", on_replace: :delete
+    many_to_many(:companies, Nexpo.Company,
+      join_through: "companies_industries",
+      on_replace: :delete
+    )
 
     timestamps()
   end
@@ -25,17 +28,20 @@ defmodule Nexpo.Industry do
     case Map.get(params, "industry_ids") do
       nil ->
         changeset
+
       industry_ids ->
         industries = get_assoc(industry_ids)
+
         changeset
         |> Ecto.Changeset.put_assoc(:industries, industries)
     end
   end
 
   defp get_assoc(industry_ids) do
-    Repo.all(from(
-      industry in Industry,
-      where: industry.id in ^industry_ids)
+    Repo.all(
+      from(industry in Industry,
+        where: industry.id in ^industry_ids
+      )
     )
   end
 end

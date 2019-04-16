@@ -3,10 +3,9 @@ defmodule Nexpo.Repo.Migrations.CreateCompany do
 
   def change do
     create table(:companies) do
-      add :name, :string
+      add(:name, :string)
 
       timestamps()
     end
-
   end
 end

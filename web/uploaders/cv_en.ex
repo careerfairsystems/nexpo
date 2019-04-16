@@ -25,11 +25,11 @@ defmodule Nexpo.CvEn do
   # end
 
   # Override the persisted filenames:
-   # We use this so other file name can't be guessed
-   def filename(version, {_, scope}) do
+  # We use this so other file name can't be guessed
+  def filename(version, {_, scope}) do
     :crypto.hash(:sha256, "a_very_long_string_#{scope.id}_#{version}")
-    |> Base.encode16
-    |> String.downcase
+    |> Base.encode16()
+    |> String.downcase()
   end
 
   # Override the storage directory:

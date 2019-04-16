@@ -3,7 +3,12 @@ defmodule Nexpo.StudentTest do
 
   alias Nexpo.Student
 
-  @valid_attrs %{resume_en_url: "some content", resume_sv_url: "some content", year: 42, user_id: 1}
+  @valid_attrs %{
+    resume_en_url: "some content",
+    resume_sv_url: "some content",
+    year: 42,
+    user_id: 1
+  }
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do

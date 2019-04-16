@@ -25,13 +25,15 @@ defmodule Nexpo.SessionController do
     case User.authenticate(%{email: email, password: password}) do
       {:ok, user} ->
         permissions = User.get_permissions(user)
-        perms = %{ default: permissions }
+        perms = %{default: permissions}
         {_status, jwt, _decoded_jwt} = Guardian.encode_and_sign(user, %{}, perms: perms)
-        session = %{ jwt: jwt }
+        session = %{jwt: jwt}
+
         conn
         |> put_status(200)
         |> put_resp_header("authorization", "Bearer #{jwt}")
         |> render("login.json", session: session)
+
       {:error, _} ->
         conn
         |> put_status(401)
@@ -49,12 +51,14 @@ defmodule Nexpo.SessionController do
         conn
         |> put_status(404)
         |> render(Nexpo.ErrorView, "404.json")
+
       user ->
         permissions = User.get_permissions(user)
-        perms = %{ default: permissions }
+        perms = %{default: permissions}
         new_conn = Guardian.Plug.api_sign_in(conn, user, %{}, perms: perms)
         jwt = Guardian.Plug.current_token(new_conn)
-        session = %{ jwt: jwt, user: user}
+        session = %{jwt: jwt, user: user}
+
         new_conn
         |> put_resp_header("authorization", "Bearer #{jwt}")
         |> render("login.json", session: session)
@@ -83,5 +87,4 @@ defmodule Nexpo.SessionController do
   end
 
   @apidoc
-
 end

@@ -5,16 +5,15 @@ defmodule Nexpo.StudentSessionTimeSlot do
   alias Nexpo.StudentSessionTimeSlot, as: TimeSlot
 
   schema "student_session_time_slots" do
-    field :start, :naive_datetime
-    field :end, :naive_datetime
-    field :location, :string
-    field :delete, :boolean, virtual: true
+    field(:start, :naive_datetime)
+    field(:end, :naive_datetime)
+    field(:location, :string)
+    field(:delete, :boolean, virtual: true)
 
-    belongs_to :company, Nexpo.Company
-    has_one :student_session, Nexpo.StudentSession, on_delete: :delete_all
+    belongs_to(:company, Nexpo.Company)
+    has_one(:student_session, Nexpo.StudentSession, on_delete: :delete_all)
 
     timestamps()
-
   end
 
   @doc """
@@ -48,7 +47,7 @@ defmodule Nexpo.StudentSessionTimeSlot do
 
   defp mark_for_delete(changeset) do
     if get_change(changeset, :delete) do
-      %{ changeset | action: :delete }
+      %{changeset | action: :delete}
     else
       changeset
     end
@@ -56,15 +55,19 @@ defmodule Nexpo.StudentSessionTimeSlot do
 
   def get_available(company) do
     Repo.all(
-      from slot in Ecto.assoc(company, :student_session_time_slots),
-      left_join: session in assoc(slot, :student_session),
-      where: is_nil(session.id))
+      from(slot in Ecto.assoc(company, :student_session_time_slots),
+        left_join: session in assoc(slot, :student_session),
+        where: is_nil(session.id)
+      )
+    )
   end
 
   def get_available_and_non_confirmed() do
     Repo.all(
-      from slot in TimeSlot,
-      left_join: session in assoc(slot, :student_session),
-      where: is_nil(session.id) or session.student_confirmed != true)
+      from(slot in TimeSlot,
+        left_join: session in assoc(slot, :student_session),
+        where: is_nil(session.id) or session.student_confirmed != true
+      )
+    )
   end
 end

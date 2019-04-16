@@ -3,11 +3,10 @@ defmodule Nexpo.Repo.Migrations.CreateProgramme do
 
   def change do
     create table(:programmes) do
-      add :code, :string
-      add :name, :string
+      add(:code, :string)
+      add(:name, :string)
 
       timestamps()
     end
-
   end
 end

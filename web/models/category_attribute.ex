@@ -2,12 +2,12 @@ defmodule Nexpo.CategoryAttribute do
   use Nexpo.Web, :model
 
   schema "category_attributes" do
-    field :title, :string
-    field :type, :string
-    field :value, :string
+    field(:title, :string)
+    field(:type, :string)
+    field(:value, :string)
 
-    belongs_to :category, Nexpo.Category, foreign_key: :category_id
-    has_many :entries, Nexpo.CompanyEntry
+    belongs_to(:category, Nexpo.Category, foreign_key: :category_id)
+    has_many(:entries, Nexpo.CompanyEntry)
 
     timestamps()
   end

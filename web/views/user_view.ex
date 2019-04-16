@@ -15,5 +15,4 @@ defmodule Nexpo.UserView do
 
     Nexpo.Support.View.render_object(user, base)
   end
-
 end

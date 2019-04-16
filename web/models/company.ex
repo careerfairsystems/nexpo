@@ -7,23 +7,23 @@ defmodule Nexpo.Company do
   alias Nexpo.StudentSessionTimeSlot, as: TimeSlot
 
   schema "companies" do
-    field :name, :string
-    field :logo_url, Nexpo.ProfileImage.Type
-    field :description, :string
-    field :website, :string
-    field :student_session_days, :integer, default: 0
-    field :top_students, {:array, :map}, default: [], virtual: true
+    field(:name, :string)
+    field(:logo_url, Nexpo.ProfileImage.Type)
+    field(:description, :string)
+    field(:website, :string)
+    field(:student_session_days, :integer, default: 0)
+    field(:top_students, {:array, :map}, default: [], virtual: true)
 
-    has_many :entries, Nexpo.CompanyEntry, on_delete: :delete_all
-    has_many :representatives, Nexpo.Representative
-    has_many :desired_programmes, Nexpo.DesiredProgramme
-    has_many :student_sessions, Nexpo.StudentSession
-    has_many :student_session_applications, Nexpo.StudentSessionApplication
-    has_many :student_session_time_slots, Nexpo.StudentSessionTimeSlot
+    has_many(:entries, Nexpo.CompanyEntry, on_delete: :delete_all)
+    has_many(:representatives, Nexpo.Representative)
+    has_many(:desired_programmes, Nexpo.DesiredProgramme)
+    has_many(:student_sessions, Nexpo.StudentSession)
+    has_many(:student_session_applications, Nexpo.StudentSessionApplication)
+    has_many(:student_session_time_slots, Nexpo.StudentSessionTimeSlot)
 
-    many_to_many :industries, Nexpo.Industry, join_through: "companies_industries"
-    many_to_many :job_offers, Nexpo.JobOffer, join_through: "companies_job_offers"
-    many_to_many :users, Nexpo.User, join_through: "representatives", on_replace: :delete
+    many_to_many(:industries, Nexpo.Industry, join_through: "companies_industries")
+    many_to_many(:job_offers, Nexpo.JobOffer, join_through: "companies_job_offers")
+    many_to_many(:users, Nexpo.User, join_through: "representatives", on_replace: :delete)
 
     timestamps()
   end
@@ -52,25 +52,29 @@ defmodule Nexpo.Company do
     case Map.get(params, "company_ids") do
       nil ->
         changeset
+
       company_ids ->
         companies = get_assoc(company_ids)
+
         changeset
         |> Ecto.Changeset.put_assoc(:companies, companies)
     end
   end
 
   defp get_assoc(company_ids) do
-    Repo.all(from(
-      company in Company,
-      where: company.id in ^company_ids)
+    Repo.all(
+      from(company in Company,
+        where: company.id in ^company_ids
+      )
     )
   end
 
   def get_available() do
     Repo.all(
-      from company in Company,
-      join: slot in assoc(company, :student_session_time_slots),
-      group_by: company.id)
+      from(company in Company,
+        join: slot in assoc(company, :student_session_time_slots),
+        group_by: company.id
+      )
+    )
   end
-
 end

@@ -7,5 +7,4 @@ defmodule Nexpo.MessageView do
       data: message
     }
   end
-
 end

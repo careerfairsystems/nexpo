@@ -31,18 +31,20 @@ defmodule Nexpo.CategoriesAcceptanceTest do
     assert json_response(conn, 200)
     response = Poison.decode!(conn.resp_body)["data"]
 
-    schema = %{
-      "type" => "object",
-      "additionalProperties" => false,
-      "properties" => %{
-        "id" => %{"type" => "number"},
-        "title" => %{"type" => "string"},
-        "attributes" => %{
-          "type" => "array",
-          "maxItems" => 0
+    schema =
+      %{
+        "type" => "object",
+        "additionalProperties" => false,
+        "properties" => %{
+          "id" => %{"type" => "number"},
+          "title" => %{"type" => "string"},
+          "attributes" => %{
+            "type" => "array",
+            "maxItems" => 0
+          }
         }
       }
-    } |> ExJsonSchema.Schema.resolve
+      |> ExJsonSchema.Schema.resolve()
 
     assert ExJsonSchema.Validator.validate(schema, response) == :ok
   end
@@ -56,22 +58,24 @@ defmodule Nexpo.CategoriesAcceptanceTest do
     assert json_response(conn, 200)
     response = Poison.decode!(conn.resp_body)["data"]
 
-    schema = %{
-      "type" => "array",
-      "minItems" => 2,
-      "items" => %{
-        "type" => "object",
-        "additionalProperties" => false,
-        "properties" => %{
-          "id" => %{"type" => "number"},
-          "title" => %{"type" => "string"},
-          "attributes" => %{
-            "type" => "array",
-            "minItems" => 3
+    schema =
+      %{
+        "type" => "array",
+        "minItems" => 2,
+        "items" => %{
+          "type" => "object",
+          "additionalProperties" => false,
+          "properties" => %{
+            "id" => %{"type" => "number"},
+            "title" => %{"type" => "string"},
+            "attributes" => %{
+              "type" => "array",
+              "minItems" => 3
+            }
           }
         }
       }
-    } |> ExJsonSchema.Schema.resolve
+      |> ExJsonSchema.Schema.resolve()
 
     assert ExJsonSchema.Validator.validate(schema, response) == :ok
   end
@@ -84,18 +88,20 @@ defmodule Nexpo.CategoriesAcceptanceTest do
     assert json_response(conn, 200)
     response = Poison.decode!(conn.resp_body)["data"]
 
-    schema = %{
-      "type" => "object",
-      "additionalProperties" => false,
-      "properties" => %{
-        "id" => %{"type" => "number"},
-        "title" => %{"type" => "string"},
-        "attributes" => %{
-          "type" => "array",
-          "minItems" => 3
+    schema =
+      %{
+        "type" => "object",
+        "additionalProperties" => false,
+        "properties" => %{
+          "id" => %{"type" => "number"},
+          "title" => %{"type" => "string"},
+          "attributes" => %{
+            "type" => "array",
+            "minItems" => 3
+          }
         }
       }
-    } |> ExJsonSchema.Schema.resolve
+      |> ExJsonSchema.Schema.resolve()
 
     assert ExJsonSchema.Validator.validate(schema, response) == :ok
   end
@@ -109,7 +115,6 @@ defmodule Nexpo.CategoriesAcceptanceTest do
 
     new_company = Nexpo.Repo.get_by(Nexpo.Category, params)
     assert new_company != nil
-
   end
 
   @tag :logged_in
@@ -128,16 +133,17 @@ defmodule Nexpo.CategoriesAcceptanceTest do
     assert json_response(conn, 201)
     response = Poison.decode!(conn.resp_body)["data"]
 
-    schema = %{
-      "type" => "object",
-      "additionalProperties" => false,
-      "properties" => %{
-        "id" => %{"type" => "number"},
-        "title" => %{"type" => "string"}
+    schema =
+      %{
+        "type" => "object",
+        "additionalProperties" => false,
+        "properties" => %{
+          "id" => %{"type" => "number"},
+          "title" => %{"type" => "string"}
+        }
       }
-    } |> ExJsonSchema.Schema.resolve
+      |> ExJsonSchema.Schema.resolve()
 
     assert ExJsonSchema.Validator.validate(schema, response) == :ok
   end
-
 end

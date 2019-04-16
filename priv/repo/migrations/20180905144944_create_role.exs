@@ -3,10 +3,9 @@ defmodule Nexpo.Repo.Migrations.CreateRole do
 
   def change do
     create table(:roles) do
-      add :type, :string
+      add(:type, :string)
 
       timestamps()
     end
-
   end
 end

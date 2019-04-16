@@ -3,8 +3,7 @@ defmodule Nexpo.Repo.Migrations.RemoveEmailToCompany do
 
   def change do
     alter table(:companies) do
-      remove :email
+      remove(:email)
     end
-
   end
 end

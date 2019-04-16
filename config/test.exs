@@ -12,8 +12,7 @@ config :nexpo, Nexpo.Endpoint,
 # Print only warnings and errors during test
 config :logger, level: :warn
 
-config :nexpo, Nexpo.Mailer,
-  adapter: Bamboo.TestAdapter
+config :nexpo, Nexpo.Mailer, adapter: Bamboo.TestAdapter
 
 # Set less rounds in test for faster hashing
 config :bcrypt_elixir, :log_rounds, 4
@@ -25,9 +24,11 @@ config :nexpo, Nexpo.Repo,
   pool: Ecto.Adapters.SQL.Sandbox
 
 config :arc,
-  storage: Arc.Storage.S3, # or Arc.Storage.Local
+  # or Arc.Storage.Local
+  storage: Arc.Storage.S3,
   bucket: "nexpo-test",
-  virtual_host: true # if using Amazon S3
+  # if using Amazon S3
+  virtual_host: true
 
 config :ex_aws,
   access_key_id: "test",

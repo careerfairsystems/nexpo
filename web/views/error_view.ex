@@ -40,7 +40,7 @@ defmodule Nexpo.ErrorView do
   # In case no render clause matches or no
   # template is found, let's render it as 500
   def template_not_found(_template, _assigns) do
-    render "500.json"
+    render("500.json")
   end
 
   defp generate_error(message) do
@@ -51,5 +51,4 @@ defmodule Nexpo.ErrorView do
   end
 
   @apidoc
-
 end

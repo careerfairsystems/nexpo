@@ -10,5 +10,4 @@ defmodule Nexpo.PageController do
     |> put_resp_header("content-type", "text/html; charset=utf-8")
     |> Plug.Conn.send_file(200, "priv/react_app/build/index.html")
   end
-
 end

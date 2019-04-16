@@ -6,16 +6,15 @@ defmodule Nexpo.EmailView do
   end
 
   def signup_url(user) do
-    application_url() <> "/signup?key="<> user.signup_key
+    application_url() <> "/signup?key=" <> user.signup_key
   end
 
   def reset_password_url(user) do
-    application_url()
-    <> "/forgot-password?key="
-    <> case user.forgot_password_key do
-      nil -> ""
-      key -> key
-    end
+    application_url() <>
+      "/forgot-password?key=" <>
+      case user.forgot_password_key do
+        nil -> ""
+        key -> key
+      end
   end
-
 end

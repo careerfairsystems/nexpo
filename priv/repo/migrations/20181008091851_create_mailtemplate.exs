@@ -3,14 +3,14 @@ defmodule Nexpo.Repo.Migrations.CreateMailtemplate do
 
   def change do
     create table(:mailtemplates) do
-      add :name, :string
-      add :subject, :string
-      add :content, :text
-      add :signature, :string
+      add(:name, :string)
+      add(:subject, :string)
+      add(:content, :text)
+      add(:signature, :string)
 
       timestamps()
     end
-    create unique_index(:mailtemplates, [:name])
 
+    create(unique_index(:mailtemplates, [:name]))
   end
 end

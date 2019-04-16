@@ -2,10 +2,10 @@ defmodule Nexpo.CompanyEntry do
   use Nexpo.Web, :model
 
   schema "company_entries" do
-    field :value, :string
+    field(:value, :string)
 
-    belongs_to :company, Nexpo.Company
-    belongs_to :attribute, Nexpo.CategoryAttribute, foreign_key: :category_attribute_id
+    belongs_to(:company, Nexpo.Company)
+    belongs_to(:attribute, Nexpo.CategoryAttribute, foreign_key: :category_attribute_id)
 
     timestamps()
   end

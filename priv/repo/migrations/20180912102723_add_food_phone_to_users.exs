@@ -3,8 +3,8 @@ defmodule Nexpo.Repo.Migrations.AddFoodPhoneToUsers do
 
   def change do
     alter table(:users) do
-      add :food_preferences, :string
-      add :phone_number, :string
+      add(:food_preferences, :string)
+      add(:phone_number, :string)
     end
   end
 end

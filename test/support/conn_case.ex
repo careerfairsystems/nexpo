@@ -42,19 +42,21 @@ defmodule Nexpo.ConnCase do
       Ecto.Adapters.SQL.Sandbox.mode(Nexpo.Repo, {:shared, self()})
     end
 
-    conn = Phoenix.ConnTest.build_conn()
-    |> Plug.Conn.put_req_header("accept", "application/json")
+    conn =
+      Phoenix.ConnTest.build_conn()
+      |> Plug.Conn.put_req_header("accept", "application/json")
 
     # Defines default parameters for tests
     case tags[:logged_in] do
       true ->
         user = Nexpo.Factory.create_user()
-        perms = %{ default: ["read_all", "write_all"] }
+        perms = %{default: ["read_all", "write_all"]}
 
         {_status, jwt, _decoded_jwt} = Guardian.encode_and_sign(user, %{}, perms: perms)
         conn = Plug.Conn.put_req_header(conn, "authorization", "Bearer #{jwt}")
 
         {:ok, conn: conn, user: user}
+
       _ ->
         {:ok, conn: conn}
     end

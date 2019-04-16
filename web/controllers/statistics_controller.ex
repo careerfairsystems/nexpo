@@ -7,5 +7,4 @@ defmodule Nexpo.StatisticsController do
     statistics = Statistics.get_all()
     render(conn, "index.json", statistics: statistics)
   end
-
 end

@@ -4,12 +4,16 @@ defmodule Nexpo.DeadlineController do
   alias Nexpo.Deadline
   alias Guardian.Plug.{EnsurePermissions}
 
-  plug EnsurePermissions, [handler: Nexpo.SessionController,
-                            default: ["read_all"]
-                          ] when action in [:index, :show]
-  plug EnsurePermissions, [handler: Nexpo.SessionController,
-                            default: ["write_all"]
-                          ] when action in [:create, :update, :delete]
+  plug(
+    EnsurePermissions,
+    [handler: Nexpo.SessionController, default: ["read_all"]] when action in [:index, :show]
+  )
+
+  plug(
+    EnsurePermissions,
+    [handler: Nexpo.SessionController, default: ["write_all"]]
+    when action in [:create, :update, :delete]
+  )
 
   def index(conn, _params) do
     deadlines = Repo.all(Deadline)
@@ -25,6 +29,7 @@ defmodule Nexpo.DeadlineController do
         |> put_status(:created)
         |> put_resp_header("location", deadline_path(conn, :show, deadline))
         |> render("show.json", deadline: deadline)
+
       {:error, changeset} ->
         conn
         |> put_status(:unprocessable_entity)
@@ -44,6 +49,7 @@ defmodule Nexpo.DeadlineController do
     case Repo.update(changeset) do
       {:ok, deadline} ->
         render(conn, "show.json", deadline: deadline)
+
       {:error, changeset} ->
         conn
         |> put_status(:unprocessable_entity)

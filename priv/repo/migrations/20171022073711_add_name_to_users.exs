@@ -3,8 +3,8 @@ defmodule Nexpo.Repo.Migrations.AddNameToUsers do
 
   def change do
     alter table(:users) do
-      add :first_name, :string
-      add :last_name, :string
+      add(:first_name, :string)
+      add(:last_name, :string)
     end
   end
 end

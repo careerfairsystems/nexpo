@@ -30,7 +30,7 @@ config :sentry,
   dsn: System.get_env("SENTRY_DSN"),
   environment_name: :prod,
   enable_source_code_context: true,
-  root_source_code_path: File.cwd!,
+  root_source_code_path: File.cwd!(),
   tags: %{
     env: "production"
   },
@@ -42,15 +42,18 @@ config :nexpo, Nexpo.Mailer,
   hostname: System.get_env("SMTP_SERVER_NAME"),
   port: System.get_env("SMTP_SERVER_PORT"),
   username: System.get_env("SMTP_USERNAME"),
-  password: System.get_env("SMTP_PASSWORD"), # or {:system, "SMTP_PASSWORD"}
-  tls: :if_available, # can be `:always` or `:never`
-  allowed_tls_versions: [:"tlsv1", :"tlsv1.1", :"tlsv1.2"], # or {":system", ALLOWED_TLS_VERSIONS"} w/ comma seprated values (e.g. "tlsv1.1,tlsv1.2")
-  ssl: false, # can be `true`
+  # or {:system, "SMTP_PASSWORD"}
+  password: System.get_env("SMTP_PASSWORD"),
+  # can be `:always` or `:never`
+  tls: :if_available,
+  # or {":system", ALLOWED_TLS_VERSIONS"} w/ comma seprated values (e.g. "tlsv1.1,tlsv1.2")
+  allowed_tls_versions: [:tlsv1, :"tlsv1.1", :"tlsv1.2"],
+  # can be `true`
+  ssl: false,
   retries: 1
 
 # Config prod specific settings for guardin
-config :guardian, Guardian,
-  secret_key: System.get_env("SECRET_KEY_BASE")
+config :guardian, Guardian, secret_key: System.get_env("SECRET_KEY_BASE")
 
 # ## SSL Support
 #
@@ -102,9 +105,11 @@ config :nexpo, Nexpo.Repo,
   ssl: true
 
 config :arc,
-  storage: Arc.Storage.S3, # or Arc.Storage.Local
+  # or Arc.Storage.Local
+  storage: Arc.Storage.S3,
   bucket: "nexpo",
-  virtual_host: true # if using Amazon S3
+  # if using Amazon S3
+  virtual_host: true
 
 config :ex_aws,
   access_key_id: System.get_env("S3_ACCESS_KEY_ID"),
@@ -115,10 +120,8 @@ config :ex_aws,
     scheme: "https://",
     host: "s3.eu-central-1.amazonaws.com",
     region: "eu-central-1"
-    ]
+  ]
 
 if System.get_env("STAGING") != nil do
   import_config "staging.exs"
 end
-
-

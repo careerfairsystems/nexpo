@@ -4,14 +4,23 @@ defmodule Nexpo.RoleController do
   alias Nexpo.{Role, User}
   alias Guardian.Plug.{EnsurePermissions}
 
-  plug EnsurePermissions, [handler: Nexpo.SessionController,
-                           one_of: [%{default: ["read_all"]},
-                                    %{default: ["read_roles"]}]
-                          ] when action in [:index, :show]
-  plug EnsurePermissions, [handler: Nexpo.SessionController,
-                           one_of: [%{default: ["write_all"]},
-                                    %{default: ["write_roles"]}]
-                          ] when action in [:create, :update, :delete]
+  plug(
+    EnsurePermissions,
+    [
+      handler: Nexpo.SessionController,
+      one_of: [%{default: ["read_all"]}, %{default: ["read_roles"]}]
+    ]
+    when action in [:index, :show]
+  )
+
+  plug(
+    EnsurePermissions,
+    [
+      handler: Nexpo.SessionController,
+      one_of: [%{default: ["write_all"]}, %{default: ["write_roles"]}]
+    ]
+    when action in [:create, :update, :delete]
+  )
 
   def index(conn, _params) do
     roles = Repo.all(Role)
@@ -19,8 +28,9 @@ defmodule Nexpo.RoleController do
   end
 
   def create(conn, %{"role" => role_params}) do
-    changeset = Role.changeset(%Role{}, role_params)
-                |> User.put_assoc(role_params)
+    changeset =
+      Role.changeset(%Role{}, role_params)
+      |> User.put_assoc(role_params)
 
     case Repo.insert(changeset) do
       {:ok, role} ->
@@ -28,6 +38,7 @@ defmodule Nexpo.RoleController do
         |> put_status(:created)
         |> put_resp_header("location", role_path(conn, :show, role))
         |> render("show.json", role: role)
+
       {:error, changeset} ->
         conn
         |> put_status(:unprocessable_entity)
@@ -36,22 +47,26 @@ defmodule Nexpo.RoleController do
   end
 
   def show(conn, %{"id" => id}) do
-    role = Repo.get!(Role, id)
-           |> Repo.preload(:users)
+    role =
+      Repo.get!(Role, id)
+      |> Repo.preload(:users)
 
     render(conn, "show.json", role: role)
   end
 
   def update(conn, %{"id" => id, "role" => role_params}) do
-    role = Repo.get!(Role, id)
-           |> Repo.preload(:users)
+    role =
+      Repo.get!(Role, id)
+      |> Repo.preload(:users)
 
-    changeset = Role.changeset(role, role_params)
-                |> User.put_assoc(role_params)
+    changeset =
+      Role.changeset(role, role_params)
+      |> User.put_assoc(role_params)
 
     case Repo.update(changeset) do
       {:ok, role} ->
         render(conn, "show.json", role: role)
+
       {:error, changeset} ->
         conn
         |> put_status(:unprocessable_entity)

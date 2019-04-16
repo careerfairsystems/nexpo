@@ -10,7 +10,6 @@ defmodule Nexpo.IndustryView do
   end
 
   def render("industry.json", %{industry: industry}) do
-    %{id: industry.id,
-      name: industry.name}
+    %{id: industry.id, name: industry.name}
   end
 end
