@@ -14,7 +14,8 @@ install-deps:
 	mix local.hex --force && \
 	mix archive.install --force https://github.com/phoenixframework/archives/raw/master/phoenix_new.ez && \
 	npm run install-deps && \
-	mkdir -p $(HOME)/.s3bucket/nexpo-test && \ # Creates s3 bucket for nexpo-test
+  # Creates s3 bucket for nexpo-test
+	mkdir -p $(HOME)/.s3bucket/nexpo-test && \
 	mix ecto.create && \
 	mix ecto.migrate
 
