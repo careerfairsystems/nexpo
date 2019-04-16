@@ -273,12 +273,13 @@ If you at any time need to reset your environment do the following: (NOTE THAT T
 2. Make a local branch with `git checkout -b featurename`
 3. Install dependencies (if necessary) with `npm run install-deps`
 4. Migrate or Reset database (if necessary) with `mix ecto.migrate` or `mix ecto.reset`
-5. Start the frontend and backend with `npm run dev`
-6. Create your feature with [TDD](#recap-of-tdd)
-7. Commit, and make a pull request
-8. Wait for pull request to be accepted by someone
+5. Populate database with mock data with `mix run priv/repo/seeds.exs`
+6. Start the frontend and backend with `npm run dev`
+7. Create your feature with [TDD](#recap-of-tdd)
+8. Commit, and make a pull request
+9. Wait for pull request to be accepted by someone
     - Review others pull requests
-9. If pull request is merged, and all tests pass, your feature is automatically deployed to production
+10. If pull request is merged, and all tests pass, your feature is automatically deployed to production
 
 ### Testing
 This project is developed with [TDD](https://en.wikipedia.org/wiki/Test-driven_development). \
