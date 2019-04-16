@@ -5,14 +5,23 @@ defmodule Nexpo.UserController do
   alias Nexpo.{User, Email, Mailer}
   alias Guardian.Plug.{EnsurePermissions}
 
-  plug EnsurePermissions, [handler: Nexpo.SessionController,
-                           one_of: [%{default: ["read_all"]},
-                                    %{default: ["read_users"]}]
-                          ] when action in [:index, :show]
-  plug EnsurePermissions, [handler: Nexpo.SessionController,
-                           one_of: [%{default: ["write_all"]},
-                                    %{default: ["write_users"]}]
-                          ] when action in [:update, :delete]
+  plug(
+    EnsurePermissions,
+    [
+      handler: Nexpo.SessionController,
+      one_of: [%{default: ["read_all"]}, %{default: ["read_users"]}]
+    ]
+    when action in [:index, :show]
+  )
+
+  plug(
+    EnsurePermissions,
+    [
+      handler: Nexpo.SessionController,
+      one_of: [%{default: ["write_all"]}, %{default: ["write_users"]}]
+    ]
+    when action in [:update, :delete]
+  )
 
   def index(conn, %{}, _user, _claims) do
     users = Repo.all(User)
@@ -20,27 +29,28 @@ defmodule Nexpo.UserController do
   end
 
   def show(conn, %{"id" => id}, _user, _claims) do
-    user = Repo.get!(User, id)
-          |> Repo.preload([
-            :roles,
-            [student: [
-              :programme,
-              :student_sessions,
-              :student_session_applications]],
-            [representative: :company]])
+    user =
+      Repo.get!(User, id)
+      |> Repo.preload([
+        :roles,
+        [student: [:programme, :student_sessions, :student_session_applications]],
+        [representative: :company]
+      ])
 
     render(conn, "show.json", user: user)
   end
 
   def update(conn, %{"id" => id, "user" => user_params}, _user, _claims) do
-    user = Repo.get!(User, id)
-           |> Repo.preload([:roles, :student])
+    user =
+      Repo.get!(User, id)
+      |> Repo.preload([:roles, :student])
 
     changeset = User.changeset(user, user_params)
 
     case Repo.update(changeset) do
       {:ok, user} ->
         render(conn, "show.json", user: user)
+
       {:error, changeset} ->
         conn
         |> put_status(:unprocessable_entity)
@@ -59,13 +69,19 @@ defmodule Nexpo.UserController do
   end
 
   def show_me(conn, %{}, user, _claims) do
-    user = Repo.preload(user, [
-      :roles,
-      [student: [
-        :programme,
-        student_sessions: [:company, :student_session_time_slot],
-        student_session_applications: :company]],
-      [representative: :company]])
+    user =
+      Repo.preload(user, [
+        :roles,
+        [
+          student: [
+            :programme,
+            student_sessions: [:company, :student_session_time_slot],
+            student_session_applications: :company
+          ]
+        ],
+        [representative: :company]
+      ])
+
     conn |> put_status(200) |> render("show.json", user: user)
   end
 
@@ -76,6 +92,7 @@ defmodule Nexpo.UserController do
     case Repo.update(changeset) do
       {:ok, user} ->
         render(conn, "show.json", user: user)
+
       {:error, changeset} ->
         conn
         |> put_status(:unprocessable_entity)
@@ -108,9 +125,10 @@ defmodule Nexpo.UserController do
   """
   def forgot_password_init(conn, %{"email" => email}, _user, _claims) do
     user = Repo.get_by(User, email: email)
+
     if user != nil and user.hashed_password != nil do
-      user = User.forgot_password_changeset(user) |> Repo.update!
-      Email.reset_password(user) |> Mailer.deliver_later
+      user = User.forgot_password_changeset(user) |> Repo.update!()
+      Email.reset_password(user) |> Mailer.deliver_later()
     end
 
     conn
@@ -136,10 +154,16 @@ defmodule Nexpo.UserController do
   @apiUse NotFoundError
   @apiUse BadRequestError
   """
-  def replace_forgotten_password(conn, %{"password" => password, "password_confirmation" => password_confirmation, "key" => key}, _user, _claims) do
+  def replace_forgotten_password(
+        conn,
+        %{"password" => password, "password_confirmation" => password_confirmation, "key" => key},
+        _user,
+        _claims
+      ) do
     case Repo.get_by(User, forgot_password_key: key) do
       nil ->
         replace_forgotten_password(conn, nil, nil, nil)
+
       user ->
         case User.forgot_password_key_valid(user) do
           true ->
@@ -149,18 +173,24 @@ defmodule Nexpo.UserController do
             }
 
             changeset = User.replace_forgotten_password_changeset(user, params)
+
             case Repo.update(changeset) do
               {:ok, _user} ->
-                conn |> put_status(200)
-                |> render(Nexpo.MessageView, "message.json", message: "Successfully changed password")
+                conn
+                |> put_status(200)
+                |> render(Nexpo.MessageView, "message.json",
+                  message: "Successfully changed password"
+                )
+
               {:error, changeset} ->
-                conn |> put_status(400)
+                conn
+                |> put_status(400)
                 |> render(Nexpo.ChangesetView, "error.json", %{changeset: changeset})
             end
+
           false ->
             replace_forgotten_password(conn, nil, nil, nil)
         end
-
     end
   end
 
@@ -188,10 +218,14 @@ defmodule Nexpo.UserController do
     case Repo.get_by(User, forgot_password_key: key) do
       nil ->
         forgot_password_verification(conn, nil, nil, nil)
+
       user ->
         case User.forgot_password_key_valid(user) do
           true ->
-            conn |> put_status(200) |> render(Nexpo.MessageView, "message.json", message: "Exists")
+            conn
+            |> put_status(200)
+            |> render(Nexpo.MessageView, "message.json", message: "Exists")
+
           false ->
             forgot_password_verification(conn, nil, nil, nil)
         end
@@ -203,5 +237,4 @@ defmodule Nexpo.UserController do
   end
 
   @apidoc
-
 end

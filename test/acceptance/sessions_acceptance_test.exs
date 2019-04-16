@@ -8,10 +8,9 @@ defmodule Nexpo.SessionsAcceptanceTest do
   end
 
   describe "production" do
-
     test "POST /login is successful and returns JWT given valid params", %{conn: conn} do
       params = Factory.params_for(:user)
-      User.changeset(%User{}, params) |> Repo.insert!
+      User.changeset(%User{}, params) |> Repo.insert!()
       conn = post(conn, "/api/login", params)
 
       assert json_response(conn, 200)
@@ -20,9 +19,11 @@ defmodule Nexpo.SessionsAcceptanceTest do
       assert Map.get(response, "jwt") != nil
     end
 
-    test "POST /login is unsuccessful and does not return a JWT given invalid params", %{conn: conn} do
+    test "POST /login is unsuccessful and does not return a JWT given invalid params", %{
+      conn: conn
+    } do
       params = Factory.params_for(:user)
-      User.changeset(%User{}, params) |> Repo.insert!
+      User.changeset(%User{}, params) |> Repo.insert!()
       params = Map.put(params, :password, params.password <> "invalid")
       conn = post(conn, "/api/login", params)
 
@@ -31,13 +32,12 @@ defmodule Nexpo.SessionsAcceptanceTest do
 
       assert Map.has_key?(response, "error")
     end
-
   end
 
   describe "development" do
     test "POST /login is successful and returns JWT given valid params", %{conn: conn} do
       params = Factory.params_for(:user)
-      User.changeset(%User{}, params) |> Repo.insert!
+      User.changeset(%User{}, params) |> Repo.insert!()
 
       params = params |> Map.take([:email])
       conn = post(conn, "/api/development_login", params)
@@ -48,13 +48,17 @@ defmodule Nexpo.SessionsAcceptanceTest do
       assert Map.get(response, "jwt") != nil
     end
 
-    test "POST /login is unsuccessful and does not return a JWT given invalid params", %{conn: conn} do
+    test "POST /login is unsuccessful and does not return a JWT given invalid params", %{
+      conn: conn
+    } do
       params = Factory.params_for(:user)
-      User.changeset(%User{}, params) |> Repo.insert!
+      User.changeset(%User{}, params) |> Repo.insert!()
 
-      params = params
+      params =
+        params
         |> Map.take([:email])
         |> Map.put(:email, params.email <> "invalid")
+
       conn = post(conn, "/api/development_login", params)
 
       assert json_response(conn, 404)
@@ -63,6 +67,4 @@ defmodule Nexpo.SessionsAcceptanceTest do
       assert Map.has_key?(response, "error")
     end
   end
-
-
 end

@@ -3,8 +3,7 @@ defmodule Nexpo.Repo.Migrations.AddEmailToCompany do
 
   def change do
     alter table(:companies) do
-      add :email, :string
+      add(:email, :string)
     end
-
   end
 end

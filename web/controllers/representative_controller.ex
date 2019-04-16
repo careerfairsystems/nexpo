@@ -4,14 +4,23 @@ defmodule Nexpo.RepresentativeController do
   alias Nexpo.Representative
   alias Guardian.Plug.{EnsurePermissions}
 
-  plug EnsurePermissions, [handler: Nexpo.SessionController,
-                           one_of: [%{default: ["read_all"]},
-                                    %{default: ["read_users"]}]
-                          ] when action in [:index, :show]
-  plug EnsurePermissions, [handler: Nexpo.SessionController,
-                           one_of: [%{default: ["write_all"]},
-                                    %{default: ["write_users"]}]
-                          ] when action in [:create, :update, :delete]
+  plug(
+    EnsurePermissions,
+    [
+      handler: Nexpo.SessionController,
+      one_of: [%{default: ["read_all"]}, %{default: ["read_users"]}]
+    ]
+    when action in [:index, :show]
+  )
+
+  plug(
+    EnsurePermissions,
+    [
+      handler: Nexpo.SessionController,
+      one_of: [%{default: ["write_all"]}, %{default: ["write_users"]}]
+    ]
+    when action in [:create, :update, :delete]
+  )
 
   def index(conn, _params) do
     representatives = Repo.all(Representative)
@@ -27,6 +36,7 @@ defmodule Nexpo.RepresentativeController do
         |> put_status(:created)
         |> put_resp_header("location", representative_path(conn, :show, representative))
         |> render("show.json", representative: representative)
+
       {:error, changeset} ->
         conn
         |> put_status(:unprocessable_entity)
@@ -46,6 +56,7 @@ defmodule Nexpo.RepresentativeController do
     case Repo.update(changeset) do
       {:ok, representative} ->
         render(conn, "show.json", representative: representative)
+
       {:error, changeset} ->
         conn
         |> put_status(:unprocessable_entity)

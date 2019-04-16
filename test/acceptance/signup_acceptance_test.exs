@@ -22,7 +22,6 @@ defmodule Nexpo.SignupAcceptanceTest do
   end
 
   test "GET /initial_signup/:key returns 404 given an invalid key", %{conn: conn} do
-
     conn = get(conn, "/api/initial_signup/invalid key")
 
     assert json_response(conn, 404)
@@ -40,7 +39,7 @@ defmodule Nexpo.SignupAcceptanceTest do
 
     incorrect_email = String.upcase(params.email)
 
-    correct_email = params.email |> String.trim |> String.downcase
+    correct_email = params.email |> String.trim() |> String.downcase()
     email = correct_email
 
     params = Map.put(params, :email, incorrect_email)
@@ -60,7 +59,7 @@ defmodule Nexpo.SignupAcceptanceTest do
 
     incorrect_emails = "  " <> params.email <> "  "
 
-    correct_emails = params.email |> String.trim |> String.downcase
+    correct_emails = params.email |> String.trim() |> String.downcase()
     email = correct_emails
 
     params = Map.put(params, :email, incorrect_emails)
@@ -100,7 +99,7 @@ defmodule Nexpo.SignupAcceptanceTest do
     email = params.email
     user = Repo.get_by!(User, email: email)
 
-    assert_delivered_email Nexpo.Email.pre_signup_email(user)
+    assert_delivered_email(Nexpo.Email.pre_signup_email(user))
   end
 
   test "POST /final_signup/:key fails given no passwords", %{conn: conn} do
@@ -118,9 +117,10 @@ defmodule Nexpo.SignupAcceptanceTest do
     params = Factory.params_for(:initial_signup)
     user = User.initial_signup!(params)
 
-    params = Factory.params_for(:final_signup)
-    |> Map.put(:password, "short")
-    |> Map.put(:password_confirmation, "short")
+    params =
+      Factory.params_for(:final_signup)
+      |> Map.put(:password, "short")
+      |> Map.put(:password_confirmation, "short")
 
     conn = post(conn, "/api/final_signup/#{user.signup_key}", params)
 
@@ -176,7 +176,6 @@ defmodule Nexpo.SignupAcceptanceTest do
     # Assert sign_up key has been destroyed
     assert user.signup_key == nil
 
-    assert_delivered_email Nexpo.Email.completed_sign_up_mail(user)
+    assert_delivered_email(Nexpo.Email.completed_sign_up_mail(user))
   end
-
 end

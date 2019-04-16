@@ -10,5 +10,4 @@ defmodule Nexpo.SessionView do
 
     Nexpo.Support.View.render_object(session, base)
   end
-
 end

@@ -4,14 +4,23 @@ defmodule Nexpo.JobOfferController do
   alias Nexpo.JobOffer
   alias Guardian.Plug.{EnsurePermissions}
 
-  plug EnsurePermissions, [handler: Nexpo.SessionController,
-                           one_of: [%{default: ["read_all"]},
-                                    %{default: ["read_companies"]}]
-                          ] when action in [:show]
-  plug EnsurePermissions, [handler: Nexpo.SessionController,
-                           one_of: [%{default: ["write_all"]},
-                                    %{default: ["write_companies"]}]
-                          ] when action in [:create, :update, :delete]
+  plug(
+    EnsurePermissions,
+    [
+      handler: Nexpo.SessionController,
+      one_of: [%{default: ["read_all"]}, %{default: ["read_companies"]}]
+    ]
+    when action in [:show]
+  )
+
+  plug(
+    EnsurePermissions,
+    [
+      handler: Nexpo.SessionController,
+      one_of: [%{default: ["write_all"]}, %{default: ["write_companies"]}]
+    ]
+    when action in [:create, :update, :delete]
+  )
 
   def index(conn, _params) do
     job_offers = Repo.all(JobOffer)
@@ -27,6 +36,7 @@ defmodule Nexpo.JobOfferController do
         |> put_status(:created)
         |> put_resp_header("location", job_offer_path(conn, :show, job_offer))
         |> render("show.json", job_offer: job_offer)
+
       {:error, changeset} ->
         conn
         |> put_status(:unprocessable_entity)
@@ -46,6 +56,7 @@ defmodule Nexpo.JobOfferController do
     case Repo.update(changeset) do
       {:ok, job_offer} ->
         render(conn, "show.json", job_offer: job_offer)
+
       {:error, changeset} ->
         conn
         |> put_status(:unprocessable_entity)

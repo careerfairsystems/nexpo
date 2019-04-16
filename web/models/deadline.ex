@@ -2,9 +2,9 @@ defmodule Nexpo.Deadline do
   use Nexpo.Web, :model
 
   schema "deadlines" do
-    field :name, :string
-    field :start, :naive_datetime
-    field :end, :naive_datetime
+    field(:name, :string)
+    field(:start, :naive_datetime)
+    field(:end, :naive_datetime)
 
     timestamps()
   end

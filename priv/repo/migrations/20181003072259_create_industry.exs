@@ -3,12 +3,11 @@ defmodule Nexpo.Repo.Migrations.CreateIndustry do
 
   def change do
     create table(:industries) do
-      add :name, :string
+      add(:name, :string)
 
       timestamps()
     end
 
-    create unique_index(:industries, [:name])
-
+    create(unique_index(:industries, [:name]))
   end
 end

@@ -7,15 +7,23 @@ defmodule Nexpo.StudentSessionController do
   alias Nexpo.StudentSessionTimeSlot, as: TimeSlot
   alias Guardian.Plug.{EnsurePermissions}
 
-  plug EnsurePermissions, [handler: Nexpo.SessionController,
-                           one_of: [%{default: ["read_all"]},
-                                    %{default: ["read_sessions"]}]
-                          ] when action in [:show_reserves]
+  plug(
+    EnsurePermissions,
+    [
+      handler: Nexpo.SessionController,
+      one_of: [%{default: ["read_all"]}, %{default: ["read_sessions"]}]
+    ]
+    when action in [:show_reserves]
+  )
 
-  plug EnsurePermissions, [handler: Nexpo.SessionController,
-                           one_of: [%{default: ["write_all"]},
-                                    %{default: ["write_sessions"]}]
-                          ] when action in [:create, :create_bulk, :delete]
+  plug(
+    EnsurePermissions,
+    [
+      handler: Nexpo.SessionController,
+      one_of: [%{default: ["write_all"]}, %{default: ["write_sessions"]}]
+    ]
+    when action in [:create, :create_bulk, :delete]
+  )
 
   def create(conn, %{"student_session" => student_sessions_params}, _user, _claims) do
     company = Repo.get(Company, student_sessions_params["company_id"])
@@ -23,9 +31,11 @@ defmodule Nexpo.StudentSessionController do
     time_slot = Repo.get(TimeSlot, student_sessions_params["student_session_time_slot_id"])
 
     case Student.is_available?(student, time_slot) do
-      false -> conn
+      false ->
+        conn
         |> put_status(404)
         |> render(Nexpo.ErrorView, "404.json")
+
       true ->
         data = Map.put(student_sessions_params, "student_id", student.id)
         changeset = StudentSession.changeset(%StudentSession{}, data)
@@ -34,6 +44,7 @@ defmodule Nexpo.StudentSessionController do
           {:ok, _student_session} ->
             conn
             |> redirect(to: company_path(conn, :show, company))
+
           {:error, changeset} ->
             conn
             |> put_status(:unprocessable_entity)
@@ -49,19 +60,20 @@ defmodule Nexpo.StudentSessionController do
       students = Student.get_available(company, time_slots)
 
       if not Enum.empty?(students) do
-          result = students
+        result =
+          students
           |> greedy_assign(time_slots, company, 5)
           |> Enum.with_index()
-          |> Enum.reduce(Ecto.Multi.new(), fn ({changeset, index}, multi) ->
+          |> Enum.reduce(Ecto.Multi.new(), fn {changeset, index}, multi ->
             Ecto.Multi.insert(multi, Integer.to_string(index), changeset)
           end)
-          |> Repo.transaction
+          |> Repo.transaction()
 
-          with {:error, _, changeset, _ } <- result do
-            conn
-            |> put_status(:unprocessable_entity)
-            |> render(Nexpo.ChangesetView, "error.json", changeset: changeset)
-          end
+        with {:error, _, changeset, _} <- result do
+          conn
+          |> put_status(:unprocessable_entity)
+          |> render(Nexpo.ChangesetView, "error.json", changeset: changeset)
+        end
       end
     end)
 
@@ -69,7 +81,10 @@ defmodule Nexpo.StudentSessionController do
     render(conn, "index.json", student_sessions: student_sessions)
   end
 
-  defp greedy_assign(_students, _time_slots, _company, tries) when tries <= 0 do [] end
+  defp greedy_assign(_students, _time_slots, _company, tries) when tries <= 0 do
+    []
+  end
+
   defp greedy_assign(students, time_slots, company, tries) when tries > 0 do
     case get_student_sessions(students, time_slots, company) do
       [] -> greedy_assign(students, time_slots, company, tries - 1)
@@ -80,9 +95,12 @@ defmodule Nexpo.StudentSessionController do
   defp get_student_sessions(students, time_slots, company) do
     Enum.reduce(students, {[], Enum.shuffle(time_slots)}, fn student, {acc, slots} ->
       case Enum.find_index(slots, fn time_slot -> Student.is_available?(student, time_slot) end) do
-        nil -> {[], []}
+        nil ->
+          {[], []}
+
         index ->
           {time_slot, new_slots} = List.pop_at(slots, index)
+
           data = %{
             student_session_time_slot_id: time_slot.id,
             student_id: student.id,
@@ -97,9 +115,11 @@ defmodule Nexpo.StudentSessionController do
   end
 
   def show_reserves(conn, %{}, _user, _claims) do
-    reserves = StudentSession.get_reserves()
-    |> Enum.map(fn company ->
-        reserve = company.student_session_applications
+    reserves =
+      StudentSession.get_reserves()
+      |> Enum.map(fn company ->
+        reserve =
+          company.student_session_applications
           |> Enum.map(fn appl ->
             ~s"""
             #{appl.student.user.first_name} #{appl.student.user.last_name},\
@@ -116,7 +136,7 @@ defmodule Nexpo.StudentSessionController do
         #{reserve}
 
         """
-    end)
+      end)
 
     conn |> send_resp(200, reserves)
   end
@@ -136,41 +156,49 @@ defmodule Nexpo.StudentSessionController do
   def delete_bulk(conn, %{}, _user, _claims) do
     time_slots = TimeSlot.get_available_and_non_confirmed()
 
-    result = time_slots
-    |> Repo.preload(:student_session)
-    |> Enum.filter(fn time_slot -> not is_nil(time_slot.student_session) end)
-    |> Enum.map(fn time_slot ->
-      Repo.get!(StudentSession, time_slot.student_session.id)
-    end)
-    |> Enum.with_index()
-    |> Enum.reduce(Ecto.Multi.new(), fn ({changeset, index}, multi) ->
-      Ecto.Multi.delete(multi, Integer.to_string(index), changeset)
-    end)
-    |> Repo.transaction
+    result =
+      time_slots
+      |> Repo.preload(:student_session)
+      |> Enum.filter(fn time_slot -> not is_nil(time_slot.student_session) end)
+      |> Enum.map(fn time_slot ->
+        Repo.get!(StudentSession, time_slot.student_session.id)
+      end)
+      |> Enum.with_index()
+      |> Enum.reduce(Ecto.Multi.new(), fn {changeset, index}, multi ->
+        Ecto.Multi.delete(multi, Integer.to_string(index), changeset)
+      end)
+      |> Repo.transaction()
 
     case result do
       {:ok, _} ->
         conn
-        |> put_status(303) # Status Code 303 See Other, that uses GET
+        # Status Code 303 See Other, that uses GET
+        |> put_status(303)
         |> redirect(to: company_path(conn, :index))
-      {:error, _, changeset, _ } ->
+
+      {:error, _, changeset, _} ->
         conn
         |> put_status(:unprocessable_entity)
         |> render(Nexpo.ChangesetView, "error.json", changeset: changeset)
     end
   end
 
-  def update_me(conn, %{"id" => id,"student_session" => student_sessions_params }, user, _claims) do
+  def update_me(conn, %{"id" => id, "student_session" => student_sessions_params}, user, _claims) do
     student = Repo.get_by!(Student, %{user_id: user.id})
+
     case Repo.get_by(StudentSession, %{id: id, student_id: student.id}) do
-      nil -> conn
+      nil ->
+        conn
         |> put_status(400)
         |> render(Nexpo.ErrorView, "400.json")
+
       session ->
         changeset = StudentSession.student_changeset(session, student_sessions_params)
+
         case Repo.update(changeset) do
           {:ok, sess} ->
             render(conn, "show.json", student_session: sess)
+
           {:error, changeset} ->
             conn
             |> put_status(:unprocessable_entity)

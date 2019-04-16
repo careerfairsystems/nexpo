@@ -3,7 +3,7 @@ defmodule Nexpo.Repo.Migrations.AddProgrammeToStudent do
 
   def change do
     alter table(:students) do
-      add :programme_id, references(:programmes, on_delete: :nilify_all)
+      add(:programme_id, references(:programmes, on_delete: :nilify_all))
     end
   end
 end

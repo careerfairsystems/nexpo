@@ -10,10 +10,14 @@ defmodule Nexpo.SignupController do
 
   alias Guardian.Plug.{EnsurePermissions}
 
-  plug EnsurePermissions, [handler: Nexpo.SessionController,
-                           one_of: [%{default: ["write_all"]},
-                                    %{default: ["write_users"]}]
-                          ] when action in [:create_representative]
+  plug(
+    EnsurePermissions,
+    [
+      handler: Nexpo.SessionController,
+      one_of: [%{default: ["write_all"]}, %{default: ["write_users"]}]
+    ]
+    when action in [:create_representative]
+  )
 
   @apidoc """
   @api {POST} /initial_signup Initiate sign up
@@ -37,11 +41,13 @@ defmodule Nexpo.SignupController do
   def create(conn, %{"email" => email}) do
     case User.initial_signup(%{email: email}) do
       {:ok, user} ->
-        Email.pre_signup_email(user) |> Mailer.deliver_later
+        Email.pre_signup_email(user) |> Mailer.deliver_later()
         Student.build_assoc!(user)
+
         conn
         |> put_status(201)
         |> render(UserView, "show.json", %{user: user})
+
       {:error, changeset} ->
         conn
         |> put_status(400)
@@ -52,11 +58,13 @@ defmodule Nexpo.SignupController do
   def create_representative(conn, %{"email" => email, "company_id" => company_id}) do
     case User.initial_signup(%{email: email}) do
       {:ok, user} ->
-        Email.pre_signup_email(user) |> Mailer.deliver_later
+        Email.pre_signup_email(user) |> Mailer.deliver_later()
         Representative.build_assoc!(user, company_id)
+
         conn
         |> put_status(201)
         |> render(UserView, "show.json", %{user: user})
+
       {:error, changeset} ->
         conn
         |> put_status(400)
@@ -89,6 +97,7 @@ defmodule Nexpo.SignupController do
         conn
         |> put_status(404)
         |> render(ErrorView, "404.json")
+
       user ->
         conn
         |> put_status(200)
@@ -129,16 +138,20 @@ defmodule Nexpo.SignupController do
       last_name: params["last_name"],
       phone_number: params["phone_number"]
     }
+
     case User.final_signup(params) do
       {:ok, user} ->
-        Email.completed_sign_up_mail(user) |> Mailer.deliver_later
+        Email.completed_sign_up_mail(user) |> Mailer.deliver_later()
+
         conn
         |> put_status(200)
         |> render(UserView, "show.json", %{user: user})
+
       {:error, changeset} ->
         conn
         |> put_status(400)
         |> render(ChangesetView, "error.json", changeset: changeset)
+
       :no_such_user ->
         conn
         |> put_status(404)
@@ -147,5 +160,4 @@ defmodule Nexpo.SignupController do
   end
 
   @apidoc
-
 end

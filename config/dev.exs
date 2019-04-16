@@ -1,7 +1,7 @@
 use Mix.Config
 
 # Configure test watcher
-if Mix.env == :dev do
+if Mix.env() == :dev do
   config :mix_test_watch,
     clear: true
 end
@@ -20,9 +20,9 @@ config :nexpo, Nexpo.Endpoint,
   debug_errors: true,
   code_reloader: true,
   check_origin: false
-  # watchers: [node: ["node_modules/brunch/bin/brunch", "watch", "--stdin",
-                    # cd: Path.expand("../", __DIR__)]]
 
+# watchers: [node: ["node_modules/brunch/bin/brunch", "watch", "--stdin",
+# cd: Path.expand("../", __DIR__)]]
 
 # Watch static and templates for browser reloading.
 config :nexpo, Nexpo.Endpoint,
@@ -45,8 +45,7 @@ config :bcrypt_elixir, :log_rounds, 4
 # in production as building large stacktraces may be expensive.
 config :phoenix, :stacktrace_depth, 20
 
-config :nexpo, Nexpo.Mailer,
-  adapter: Bamboo.LocalAdapter
+config :nexpo, Nexpo.Mailer, adapter: Bamboo.LocalAdapter
 
 # Configure your database
 config :nexpo, Nexpo.Repo,
@@ -55,4 +54,5 @@ config :nexpo, Nexpo.Repo,
   pool_size: 10
 
 config :arc,
-  storage: Arc.Storage.Local # or Arc.Storage.Local
+  # or Arc.Storage.Local
+  storage: Arc.Storage.Local

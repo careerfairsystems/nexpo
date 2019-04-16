@@ -10,9 +10,6 @@ defmodule Nexpo.DeadlineView do
   end
 
   def render("deadline.json", %{deadline: deadline}) do
-    %{id: deadline.id,
-      name: deadline.name,
-      start: deadline.start,
-      end: deadline.end}
+    %{id: deadline.id, name: deadline.name, start: deadline.start, end: deadline.end}
   end
 end

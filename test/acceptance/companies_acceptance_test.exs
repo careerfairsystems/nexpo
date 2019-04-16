@@ -32,27 +32,29 @@ defmodule Nexpo.CompaniesAcceptanceTest do
 
     response = Poison.decode!(conn.resp_body)["data"]
 
-    schema = %{
-      "type" => "array",
-      "minItems" => 2,
-      "items" => %{
-        "type" => "object",
-        "additionalProperties" => false,
-        "properties" => %{
-          "id" => %{"type" => "integer"},
-          "name" => %{"type" => "string"},
-          "logo_url" => %{"type" => "string"},
-          "top_students" => %{"type" => "array"},
-          "description" => %{"type" => "string"},
-          "website" => %{"type" => "string"},
-          "student_session_days" => %{"type" => "integer"},
-          "entries" => %{
-            "type" => "array",
-            "minItems" => 2
+    schema =
+      %{
+        "type" => "array",
+        "minItems" => 2,
+        "items" => %{
+          "type" => "object",
+          "additionalProperties" => false,
+          "properties" => %{
+            "id" => %{"type" => "integer"},
+            "name" => %{"type" => "string"},
+            "logo_url" => %{"type" => "string"},
+            "top_students" => %{"type" => "array"},
+            "description" => %{"type" => "string"},
+            "website" => %{"type" => "string"},
+            "student_session_days" => %{"type" => "integer"},
+            "entries" => %{
+              "type" => "array",
+              "minItems" => 2
+            }
           }
         }
       }
-    } |> ExJsonSchema.Schema.resolve
+      |> ExJsonSchema.Schema.resolve()
 
     assert ExJsonSchema.Validator.validate(schema, response) == :ok
   end
@@ -64,29 +66,30 @@ defmodule Nexpo.CompaniesAcceptanceTest do
 
     response = Poison.decode!(conn.resp_body)["data"]
 
-    schema = %{
-      "type" => "object",
-      "additionalProperties" => false,
-      "properties" => %{
-        "id" => %{"type" => "integer"},
-        "name" => %{"type" => "string"},
-        "logo_url" => %{"type" => "string"},
-        "description" => %{"type" => "string"},
-        "website" => %{"type" => "string"},
-        "student_session_days" => %{"type" => "integer"},
-        "top_students" => %{"type" => "array"},
-        "entries" => %{
-          "type" => "array",
-          "minItems" => 2
-        },
-        "users" => %{"type" => "array"},
-        "student_session_applications" => %{"type" => "array"},
-        "student_sessions" => %{"type" => "array"},
-        "student_session_time_slots" => %{"type" => "array"}
+    schema =
+      %{
+        "type" => "object",
+        "additionalProperties" => false,
+        "properties" => %{
+          "id" => %{"type" => "integer"},
+          "name" => %{"type" => "string"},
+          "logo_url" => %{"type" => "string"},
+          "description" => %{"type" => "string"},
+          "website" => %{"type" => "string"},
+          "student_session_days" => %{"type" => "integer"},
+          "top_students" => %{"type" => "array"},
+          "entries" => %{
+            "type" => "array",
+            "minItems" => 2
+          },
+          "users" => %{"type" => "array"},
+          "student_session_applications" => %{"type" => "array"},
+          "student_sessions" => %{"type" => "array"},
+          "student_session_time_slots" => %{"type" => "array"}
+        }
       }
-    } |> ExJsonSchema.Schema.resolve
+      |> ExJsonSchema.Schema.resolve()
 
     assert ExJsonSchema.Validator.validate(schema, response) == :ok
   end
-
 end

@@ -3,7 +3,7 @@ defmodule Nexpo.Repo.Migrations.AddUserProfileImage do
 
   def change do
     alter table(:users) do
-      add :profile_image, :string
+      add(:profile_image, :string)
     end
   end
 end

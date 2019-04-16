@@ -15,5 +15,4 @@ defmodule Nexpo.CompanyEntryView do
 
     Nexpo.Support.View.render_object(company_entry, base)
   end
-
 end

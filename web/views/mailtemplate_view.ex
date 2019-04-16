@@ -10,10 +10,12 @@ defmodule Nexpo.MailtemplateView do
   end
 
   def render("mailtemplate.json", %{mailtemplate: mailtemplate}) do
-    %{id: mailtemplate.id,
+    %{
+      id: mailtemplate.id,
       name: mailtemplate.name,
       subject: mailtemplate.subject,
       content: mailtemplate.content,
-      signature: mailtemplate.signature}
+      signature: mailtemplate.signature
+    }
   end
 end

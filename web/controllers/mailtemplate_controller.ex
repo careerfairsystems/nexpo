@@ -4,12 +4,16 @@ defmodule Nexpo.MailtemplateController do
   alias Nexpo.Mailtemplate
   alias Guardian.Plug.{EnsurePermissions}
 
-  plug EnsurePermissions, [handler: Nexpo.SessionController,
-                            default: ["read_all"]
-                          ] when action in [:index, :show]
-  plug EnsurePermissions, [handler: Nexpo.SessionController,
-                            default: ["write_all"]
-                          ] when action in [:create, :update, :delete]
+  plug(
+    EnsurePermissions,
+    [handler: Nexpo.SessionController, default: ["read_all"]] when action in [:index, :show]
+  )
+
+  plug(
+    EnsurePermissions,
+    [handler: Nexpo.SessionController, default: ["write_all"]]
+    when action in [:create, :update, :delete]
+  )
 
   def index(conn, _params) do
     mailtemplates = Repo.all(Mailtemplate)
@@ -25,6 +29,7 @@ defmodule Nexpo.MailtemplateController do
         |> put_status(:created)
         |> put_resp_header("location", mailtemplate_path(conn, :show, mailtemplate))
         |> render("show.json", mailtemplate: mailtemplate)
+
       {:error, changeset} ->
         conn
         |> put_status(:unprocessable_entity)
@@ -44,6 +49,7 @@ defmodule Nexpo.MailtemplateController do
     case Repo.update(changeset) do
       {:ok, mailtemplate} ->
         render(conn, "show.json", mailtemplate: mailtemplate)
+
       {:error, changeset} ->
         conn
         |> put_status(:unprocessable_entity)

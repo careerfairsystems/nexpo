@@ -5,10 +5,14 @@ defmodule Nexpo.ProgrammeController do
 
   alias Guardian.Plug.{EnsurePermissions}
 
-  plug EnsurePermissions, [handler: Nexpo.SessionController,
-                           one_of: [%{default: ["write_all"]},
-                                    %{default: ["write_users"]}]
-                          ] when action in [:create, :update, :delete]
+  plug(
+    EnsurePermissions,
+    [
+      handler: Nexpo.SessionController,
+      one_of: [%{default: ["write_all"]}, %{default: ["write_users"]}]
+    ]
+    when action in [:create, :update, :delete]
+  )
 
   def index(conn, _params) do
     programmes = Repo.all(Programme)
@@ -24,6 +28,7 @@ defmodule Nexpo.ProgrammeController do
         |> put_status(:created)
         |> put_resp_header("location", programme_path(conn, :show, programme))
         |> render("show.json", programme: programme)
+
       {:error, changeset} ->
         conn
         |> put_status(:unprocessable_entity)
@@ -32,9 +37,11 @@ defmodule Nexpo.ProgrammeController do
   end
 
   def show(conn, %{"id" => id}) do
-    programme = Programme
-        |> Repo.get!(id)
-        |> Repo.preload(:desired_programmes)
+    programme =
+      Programme
+      |> Repo.get!(id)
+      |> Repo.preload(:desired_programmes)
+
     render(conn, "show.json", programme: programme)
   end
 
@@ -45,6 +52,7 @@ defmodule Nexpo.ProgrammeController do
     case Repo.update(changeset) do
       {:ok, programme} ->
         render(conn, "show.json", programme: programme)
+
       {:error, changeset} ->
         conn
         |> put_status(:unprocessable_entity)

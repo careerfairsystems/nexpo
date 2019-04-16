@@ -10,7 +10,6 @@ defmodule Nexpo.JobOfferView do
   end
 
   def render("job_offer.json", %{job_offer: job_offer}) do
-    %{id: job_offer.id,
-      type: job_offer.type}
+    %{id: job_offer.id, type: job_offer.type}
   end
 end

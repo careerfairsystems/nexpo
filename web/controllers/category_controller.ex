@@ -4,14 +4,23 @@ defmodule Nexpo.CategoryController do
   alias Nexpo.Category
   alias Guardian.Plug.{EnsurePermissions}
 
-  plug EnsurePermissions, [handler: Nexpo.SessionController,
-                           one_of: [%{default: ["read_all"]},
-                                    %{default: ["read_categories"]}]
-                          ] when action in [:index, :show]
-  plug EnsurePermissions, [handler: Nexpo.SessionController,
-                           one_of: [%{default: ["write_all"]},
-                                    %{default: ["write_categories"]}]
-                          ] when action in [:create, :update, :delete]
+  plug(
+    EnsurePermissions,
+    [
+      handler: Nexpo.SessionController,
+      one_of: [%{default: ["read_all"]}, %{default: ["read_categories"]}]
+    ]
+    when action in [:index, :show]
+  )
+
+  plug(
+    EnsurePermissions,
+    [
+      handler: Nexpo.SessionController,
+      one_of: [%{default: ["write_all"]}, %{default: ["write_categories"]}]
+    ]
+    when action in [:create, :update, :delete]
+  )
 
   @apidoc """
   @api {GET} /categories List categories
@@ -57,12 +66,14 @@ defmodule Nexpo.CategoryController do
   """
   def create(conn, %{"category" => category_params}) do
     changeset = Category.changeset(%Category{}, category_params)
+
     case Repo.insert(changeset) do
       {:ok, category} ->
         conn
         |> put_status(:created)
         |> put_resp_header("location", category_path(conn, :show, category))
         |> render("show.json", category: category)
+
       {:error, changeset} ->
         conn
         |> put_status(:unprocessable_entity)
@@ -93,35 +104,37 @@ defmodule Nexpo.CategoryController do
   @apiUse InternalServerError
   """
   def show(conn, %{"id" => id}) do
-    category = Repo.get!(Category, id)
-               |> Repo.preload([attributes: [entries: :company]])
+    category =
+      Repo.get!(Category, id)
+      |> Repo.preload(attributes: [entries: :company])
+
     render(conn, "show.json", category: category)
   end
-#
-#  def update(conn, %{"id" => id, "category" => category_params}) do
-#    category = Repo.get!(Category, id)
-#    changeset = Category.changeset(category, category_params)
-#
-#    case Repo.update(changeset) do
-#      {:ok, category} ->
-#        render(conn, "show.json", category: category)
-#      {:error, changeset} ->
-#        conn
-#        |> put_status(:unprocessable_entity)
-#        |> render(Nexpo.ChangesetView, "error.json", changeset: changeset)
-#    end
-#  end
-#
-#  def delete(conn, %{"id" => id}) do
-#    category = Repo.get!(Category, id)
-#
-#    # Here we use delete! (with a bang) because we expect
-#    # it to always work (and if it does not, it will raise).
-#    Repo.delete!(category)
-#
-#    send_resp(conn, :no_content, "")
-#  end
+
+  #
+  #  def update(conn, %{"id" => id, "category" => category_params}) do
+  #    category = Repo.get!(Category, id)
+  #    changeset = Category.changeset(category, category_params)
+  #
+  #    case Repo.update(changeset) do
+  #      {:ok, category} ->
+  #        render(conn, "show.json", category: category)
+  #      {:error, changeset} ->
+  #        conn
+  #        |> put_status(:unprocessable_entity)
+  #        |> render(Nexpo.ChangesetView, "error.json", changeset: changeset)
+  #    end
+  #  end
+  #
+  #  def delete(conn, %{"id" => id}) do
+  #    category = Repo.get!(Category, id)
+  #
+  #    # Here we use delete! (with a bang) because we expect
+  #    # it to always work (and if it does not, it will raise).
+  #    Repo.delete!(category)
+  #
+  #    send_resp(conn, :no_content, "")
+  #  end
 
   @apidoc
-
 end

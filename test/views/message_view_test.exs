@@ -9,5 +9,4 @@ defmodule Nexpo.MessageViewTest do
     result = render(Nexpo.MessageView, "message.json", message: m)
     assert result == %{type: "message", data: m}
   end
-
 end

@@ -25,7 +25,6 @@ defmodule Nexpo.ModelCase do
 
       # Make factory work in tests
       alias Nexpo.Factory
-
     end
   end
 

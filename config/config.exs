@@ -14,8 +14,7 @@ config :nexpo, Nexpo.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "GU7Agc62MhexCUPeQfbPD0emB9G9/TUF4vOU+FRi4mIayqZ5h1uhce3RMNWiZDOV",
   render_errors: [view: Nexpo.ErrorView, accepts: ~w(html json)],
-  pubsub: [name: Nexpo.PubSub,
-           adapter: Phoenix.PubSub.PG2]
+  pubsub: [name: Nexpo.PubSub, adapter: Phoenix.PubSub.PG2]
 
 # Configures Elixir's Logger
 config :logger, :console,
@@ -24,12 +23,15 @@ config :logger, :console,
 
 # Config Guardian
 config :guardian, Guardian,
-  allowed_algos: ["HS512"], # optional
-  verify_module: Guardian.JWT,  # optional
+  # optional
+  allowed_algos: ["HS512"],
+  # optional
+  verify_module: Guardian.JWT,
   issuer: "nexpo",
-  ttl: { 30, :days },
+  ttl: {30, :days},
   allowed_drift: 2000,
-  verify_issuer: true, # optional
+  # optional
+  verify_issuer: true,
   # Secret key is overridden in prod config
   secret_key: "vbk9Zrn5w1D7U2zUPey37NX9DZygy1lFXMSyLCYu/VorzxFzal7dcwsqp9UU6JZC",
   serializer: Nexpo.GuardianSerializer,
@@ -50,10 +52,10 @@ config :guardian, Guardian,
       "read_sessions",
       "write_sessions",
       "read_hosts",
-      "write_hosts",
+      "write_hosts"
     ]
   }
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
-import_config "#{Mix.env}.exs"
+import_config "#{Mix.env()}.exs"

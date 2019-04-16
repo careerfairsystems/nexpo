@@ -2,10 +2,10 @@ defmodule Nexpo.Mailtemplate do
   use Nexpo.Web, :model
 
   schema "mailtemplates" do
-    field :name, :string
-    field :subject, :string
-    field :content, :string
-    field :signature, :string
+    field(:name, :string)
+    field(:subject, :string)
+    field(:content, :string)
+    field(:signature, :string)
 
     timestamps()
   end

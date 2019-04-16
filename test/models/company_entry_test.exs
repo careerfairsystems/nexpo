@@ -18,9 +18,9 @@ defmodule Nexpo.CompanyEntryTest do
 
   test "compulsory parameters must exist" do
     errors =
-    CompanyEntry.changeset(%CompanyEntry{}, %{})
-    |> Map.get(:errors)
-    |> Enum.map(&Tuple.to_list(&1))
+      CompanyEntry.changeset(%CompanyEntry{}, %{})
+      |> Map.get(:errors)
+      |> Enum.map(&Tuple.to_list(&1))
 
     # Test that all errors exists
     assert Enum.any?(errors, &(List.first(&1) == :value))
@@ -32,7 +32,7 @@ defmodule Nexpo.CompanyEntryTest do
     # Create params
     params = Factory.params_with_assocs(:company_entry)
     # Delete the corresponding company
-    Repo.get(Nexpo.Company, params.company_id) |> Repo.delete!
+    Repo.get(Nexpo.Company, params.company_id) |> Repo.delete!()
 
     changeset = CompanyEntry.changeset(%CompanyEntry{}, params)
 
@@ -45,7 +45,7 @@ defmodule Nexpo.CompanyEntryTest do
     # Create params
     params = Factory.params_with_assocs(:company_entry)
     # Delete corresponding company attribute
-    Repo.get(Nexpo.CategoryAttribute, params.category_attribute_id) |> Repo.delete!
+    Repo.get(Nexpo.CategoryAttribute, params.category_attribute_id) |> Repo.delete!()
 
     changeset = CompanyEntry.changeset(%CompanyEntry{}, params)
 
@@ -56,22 +56,21 @@ defmodule Nexpo.CompanyEntryTest do
 
   test "company foreign_key can not be null on db level" do
     params =
-    Factory.params_with_assocs(:company_entry)
-    |> Map.drop([:company_id])
+      Factory.params_with_assocs(:company_entry)
+      |> Map.drop([:company_id])
 
     assert_raise Postgrex.Error, fn ->
-      %CompanyEntry{} |> Map.merge(params) |> Repo.insert
+      %CompanyEntry{} |> Map.merge(params) |> Repo.insert()
     end
   end
 
   test "category_attribute foreign_key can not be null on db level" do
     params =
-    Factory.params_with_assocs(:company_entry)
-    |> Map.drop([:category_attribute_id])
+      Factory.params_with_assocs(:company_entry)
+      |> Map.drop([:category_attribute_id])
 
     assert_raise Postgrex.Error, fn ->
-      %CompanyEntry{} |> Map.merge(params) |> Repo.insert
+      %CompanyEntry{} |> Map.merge(params) |> Repo.insert()
     end
   end
-
 end

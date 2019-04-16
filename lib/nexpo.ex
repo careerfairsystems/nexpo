@@ -13,7 +13,7 @@ defmodule Nexpo do
     opts = [strategy: :one_for_one, name: Nexpo.Supervisor]
 
     # Configure Sentry to catch all errors in prod
-    if Mix.env == :prod do
+    if Mix.env() == :prod do
       :ok = :error_logger.add_report_handler(Sentry.Logger)
     end
 
@@ -30,9 +30,12 @@ defmodule Nexpo do
   # Defines workers and child supervisors to be supervised
   defp get_children() do
     import Supervisor.Spec
+
     [
-      supervisor(Nexpo.Repo, []), # Start the Ecto repository
-      supervisor(Nexpo.Endpoint, []), # Start the endpoint when the application starts
+      # Start the Ecto repository
+      supervisor(Nexpo.Repo, []),
+      # Start the endpoint when the application starts
+      supervisor(Nexpo.Endpoint, [])
       # Start your own worker by calling: Nexpo.Worker.start_link(arg1, arg2, arg3)
       # worker(Nexpo.Worker, [arg1, arg2, arg3]),
     ]

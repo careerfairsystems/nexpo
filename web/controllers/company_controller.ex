@@ -5,14 +5,23 @@ defmodule Nexpo.CompanyController do
   alias Nexpo.{Company, ProfileImage, Representative}
   alias Guardian.Plug.{EnsurePermissions}
 
-  plug EnsurePermissions, [handler: Nexpo.SessionController,
-                           one_of: [%{default: ["read_all"]},
-                                    %{default: ["read_companies"]}]
-                          ] when action in [:show]
-  plug EnsurePermissions, [handler: Nexpo.SessionController,
-                           one_of: [%{default: ["write_all"]},
-                                    %{default: ["write_companies"]}]
-                          ] when action in [:create, :update, :delete]
+  plug(
+    EnsurePermissions,
+    [
+      handler: Nexpo.SessionController,
+      one_of: [%{default: ["read_all"]}, %{default: ["read_companies"]}]
+    ]
+    when action in [:show]
+  )
+
+  plug(
+    EnsurePermissions,
+    [
+      handler: Nexpo.SessionController,
+      one_of: [%{default: ["write_all"]}, %{default: ["write_companies"]}]
+    ]
+    when action in [:create, :update, :delete]
+  )
 
   @apidoc """
   @api {GET} /companies List companies
@@ -49,6 +58,7 @@ defmodule Nexpo.CompanyController do
         |> put_status(:created)
         |> put_resp_header("location", company_path(conn, :show, company))
         |> render("show.json", company: company)
+
       {:error, changeset} ->
         conn
         |> put_status(:unprocessable_entity)
@@ -73,41 +83,48 @@ defmodule Nexpo.CompanyController do
   @apiUse InternalServerError
   """
   def show(conn, %{"id" => id}, _user, _claims) do
-    company = Repo.get!(Company, id)
-        |> Repo.preload([:users, :entries, :desired_programmes])
-        |> Repo.preload([:student_session_applications,
-            student_session_time_slots: [
-              student_session: [student: [:user]]
-            ]])
-        |> append_top_students
+    company =
+      Repo.get!(Company, id)
+      |> Repo.preload([:users, :entries, :desired_programmes])
+      |> Repo.preload([
+        :student_session_applications,
+        student_session_time_slots: [
+          student_session: [student: [:user]]
+        ]
+      ])
+      |> append_top_students
+
     render(conn, "show.json", company: company)
   end
 
   defp append_top_students(company) do
-    query = Repo.all(
-      from appl in Ecto.assoc(company, :student_session_applications),
-      join: student in assoc(appl, :student),
-      join: user in assoc(student, :user),
-      where: not is_nil(appl.score) and appl.score > 0,
-      order_by: [desc: appl.score, asc: student.id],
-      # Check that student does not already have session with given company
-      left_join: co_session in Nexpo.StudentSession,
-      on: student.id == co_session.student_id and co_session.company_id == ^company.id,
-      where: is_nil(co_session.id),
-      select: %{id: student.id, first_name: user.first_name, last_name: user.last_name}
-    )
+    query =
+      Repo.all(
+        from(appl in Ecto.assoc(company, :student_session_applications),
+          join: student in assoc(appl, :student),
+          join: user in assoc(student, :user),
+          where: not is_nil(appl.score) and appl.score > 0,
+          order_by: [desc: appl.score, asc: student.id],
+          # Check that student does not already have session with given company
+          left_join: co_session in Nexpo.StudentSession,
+          on: student.id == co_session.student_id and co_session.company_id == ^company.id,
+          where: is_nil(co_session.id),
+          select: %{id: student.id, first_name: user.first_name, last_name: user.last_name}
+        )
+      )
 
-    %{company | top_students: query }
+    %{company | top_students: query}
   end
 
   def update(conn, %{"id" => id, "company" => company_params}, _user, _claims) do
-    company = Repo.get!(Company, id)|> Repo.preload(:student_session_time_slots)
+    company = Repo.get!(Company, id) |> Repo.preload(:student_session_time_slots)
 
     # We need to set "null" to nil, since FormData can't send null values
-    null_params = company_params
+    null_params =
+      company_params
       |> Enum.filter(fn {_k, v} -> v == "null" end)
       |> Enum.map(fn {k, _v} -> {k, nil} end)
-      |> Map.new
+      |> Map.new()
 
     company_params = Map.merge(company_params, null_params)
     changeset = Company.changeset(company, company_params)
@@ -121,6 +138,7 @@ defmodule Nexpo.CompanyController do
     case Repo.update(changeset) do
       {:ok, company} ->
         render(conn, "show.json", company: company)
+
       {:error, changeset} ->
         conn
         |> put_status(:unprocessable_entity)
@@ -140,7 +158,10 @@ defmodule Nexpo.CompanyController do
 
   def show_me(conn, %{}, user, _claims) do
     representative = Repo.get_by!(Representative, %{user_id: user.id})
-    company = Ecto.assoc(representative, :company) |> Repo.one
+
+    company =
+      Ecto.assoc(representative, :company)
+      |> Repo.one()
       |> Repo.preload([
         :industries,
         :job_offers,
@@ -150,16 +171,22 @@ defmodule Nexpo.CompanyController do
         :desired_programmes,
         [student_session_applications: [student: :user]],
         [student_sessions: [student: :user]],
-        [student_session_time_slots: [
-          student_session: [student: [:user]]
-          ]]])
+        [
+          student_session_time_slots: [
+            student_session: [student: [:user]]
+          ]
+        ]
+      ])
 
     conn |> put_status(200) |> render("show.json", company: company)
   end
 
   def update_me(conn, %{"company" => company_params}, user, _claims) do
     representative = Repo.get_by!(Representative, %{user_id: user.id})
-    company = Ecto.assoc(representative, :company) |> Repo.one
+
+    company =
+      Ecto.assoc(representative, :company)
+      |> Repo.one()
       |> Repo.preload([
         :industries,
         :job_offers,
@@ -169,13 +196,15 @@ defmodule Nexpo.CompanyController do
         :desired_programmes,
         [student_sessions: [student: :user]],
         [student_session_applications: [student: :user]],
-        :student_session_time_slots])
+        :student_session_time_slots
+      ])
 
     # We need to set "null" to nil, since FormData can't send null values
-    null_params = company_params
+    null_params =
+      company_params
       |> Enum.filter(fn {_k, v} -> v == "null" end)
       |> Enum.map(fn {k, _v} -> {k, nil} end)
-      |> Map.new
+      |> Map.new()
 
     company_params = Map.merge(company_params, null_params)
     changeset = Company.representative_changeset(company, company_params)
@@ -189,6 +218,7 @@ defmodule Nexpo.CompanyController do
     case Repo.update(changeset) do
       {:ok, company} ->
         render(conn, "show.json", company: company)
+
       {:error, changeset} ->
         conn
         |> put_status(:unprocessable_entity)
@@ -218,7 +248,9 @@ defmodule Nexpo.CompanyController do
         case attr do
           :logo_url -> ProfileImage.delete({file, model})
         end
-      _ -> nil
+
+      _ ->
+        nil
     end
   end
 

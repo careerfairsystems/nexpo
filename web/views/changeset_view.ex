@@ -35,5 +35,4 @@ defmodule Nexpo.ChangesetView do
   """
 
   @apidoc
-
 end

@@ -3,7 +3,12 @@ defmodule Nexpo.MailtemplateTest do
 
   alias Nexpo.Mailtemplate
 
-  @valid_attrs %{content: "some content", name: "some content", signature: "some content", subject: "some content"}
+  @valid_attrs %{
+    content: "some content",
+    name: "some content",
+    signature: "some content",
+    subject: "some content"
+  }
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do
