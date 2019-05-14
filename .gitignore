@@ -32,6 +32,7 @@ cover/
 # Editor stuff
 .idea
 .vscode
+.elixir_ls/
 
 # Files uploaded locally in dev
 uploads/
