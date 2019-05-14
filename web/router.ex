@@ -97,6 +97,9 @@ defmodule Nexpo.Router do
     post("/password/new/:key", UserController, :replace_forgotten_password)
 
     get("/me/representatives/", MockController, :get_reps)
+    #    get("/me/reviews/", MockController, :list_companies)
+    # get("/me/reviews/:company_id", MockController, :get_company)
+    # post("/me/reviews/:company_id", MockController, :review_company)
   end
 
   scope "/", Nexpo do
