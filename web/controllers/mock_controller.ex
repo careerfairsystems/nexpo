@@ -14,8 +14,8 @@ defmodule Nexpo.MockController do
       "first_name": "Lisa",
       "last_name": "Svensson",
       "phone_number": "555123456",
-      "email": "lisa@hotmail.com
-    "}]
+      "email": "lisa@hotmail.com"
+    }]
   }
 
   @apiUse NotFoundError
