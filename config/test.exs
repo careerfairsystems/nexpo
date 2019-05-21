@@ -21,6 +21,8 @@ config :bcrypt_elixir, :log_rounds, 4
 config :nexpo, Nexpo.Repo,
   adapter: Ecto.Adapters.Postgres,
   database: "nexpo_test",
+  username: "nexpo",
+  password: "nexpo",
   pool: Ecto.Adapters.SQL.Sandbox
 
 config :arc,

@@ -51,6 +51,8 @@ config :nexpo, Nexpo.Mailer, adapter: Bamboo.LocalAdapter
 config :nexpo, Nexpo.Repo,
   adapter: Ecto.Adapters.Postgres,
   database: "nexpo_dev",
+  username: "nexpo",
+  password: "nexpo",
   pool_size: 10
 
 config :arc,

@@ -43,12 +43,20 @@ class Users extends Component<Props> {
       {
         title: 'First Name',
         dataIndex: 'firstName',
-        key: 'firstName'
+        key: 'firstName',
+        filterDropdown: FilterSearch,
+        filterIcon: FilterIcon,
+        onFilter: (value, user) =>
+          toLower(user.firstName).includes(toLower(value))
       },
       {
         title: 'Last Name',
         dataIndex: 'lastName',
-        key: 'lastName'
+        key: 'lastName',
+        filterDropdown: FilterSearch,
+        filterIcon: FilterIcon,
+        onFilter: (value, user) =>
+          toLower(user.lastName).includes(toLower(value))
       },
       {
         title: 'Action',
