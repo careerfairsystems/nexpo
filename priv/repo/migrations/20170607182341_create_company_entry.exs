@@ -9,8 +9,5 @@ defmodule Nexpo.Repo.Migrations.CreateCompanyEntry do
 
       timestamps()
     end
-
-    create(index(:company_entries, [:company_id]))
-    create(index(:company_entries, [:company_attribute_id]))
   end
 end
