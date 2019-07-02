@@ -34,8 +34,10 @@ class Companies extends Component<Props> {
       key: 'name',
       filterDropdown: FilterSearch,
       filterIcon: FilterIcon,
-      onFilter: (value: string, record: { name: string }) =>
-        toLower(record.name).includes(toLower(value)),
+      onFilter: (value, record) =>
+        toLower(record.name).includes(toLower(value)) ||
+        toLower(record.website).includes(toLower(value)) ||
+        toLower(record.description).includes(toLower(value)),
       render: (name: string, { id }: { id: string }) => (
         <InvisibleLink to={`/admin/companies/${id}`}>{name}</InvisibleLink>
       )

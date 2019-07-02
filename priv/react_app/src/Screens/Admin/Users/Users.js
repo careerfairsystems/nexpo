@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { toLower } from 'lodash/fp';
 import { Table, Divider, Popconfirm } from 'antd';
 
+import ColumnGroup from 'antd/lib/table/ColumnGroup';
 import InvisibleLink from '../../../Components/InvisibleLink';
 import LoadingSpinner from '../../../Components/LoadingSpinner';
 import HtmlTitle from '../../../Components/HtmlTitle';
@@ -35,7 +36,10 @@ class Users extends Component<Props> {
         key: 'email',
         filterDropdown: FilterSearch,
         filterIcon: FilterIcon,
-        onFilter: (value, user) => toLower(user.email).includes(toLower(value)),
+        onFilter: (value, user) =>
+          toLower(user.firstName).includes(toLower(value)) ||
+          toLower(user.lastName).includes(toLower(value)) ||
+          toLower(user.email).includes(toLower(value)),
         render: (email, { id }) => (
           <InvisibleLink to={`/admin/users/${id}`}>{email}</InvisibleLink>
         )
@@ -43,20 +47,12 @@ class Users extends Component<Props> {
       {
         title: 'First Name',
         dataIndex: 'firstName',
-        key: 'firstName',
-        filterDropdown: FilterSearch,
-        filterIcon: FilterIcon,
-        onFilter: (value, user) =>
-          toLower(user.firstName).includes(toLower(value))
+        key: 'firstName'
       },
       {
         title: 'Last Name',
         dataIndex: 'lastName',
-        key: 'lastName',
-        filterDropdown: FilterSearch,
-        filterIcon: FilterIcon,
-        onFilter: (value, user) =>
-          toLower(user.lastName).includes(toLower(value))
+        key: 'lastName'
       },
       {
         title: 'Action',
@@ -92,12 +88,13 @@ class Users extends Component<Props> {
         <h1>Users</h1>
 
         <Table
+          dataSource={Object.keys(users).map(i => ({ ...users[i], key: i }))}
           columns={userColumns}
-          dataSource={Object.keys(users).map(i => ({
-            ...users[i],
-            key: i
-          }))}
-        />
+          filterDropdown={FilterSearch}
+          filterIcon={FilterIcon}
+        >
+          <ColumnGroup title="Search" />
+        </Table>
       </div>
     );
   }
