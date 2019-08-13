@@ -3,12 +3,12 @@
 .PHONY: fresh-install-linux install-mac install-linux install-deps reset-db create-db-user
 
 create-db-user:
-	sudo -u postgres psql -c "CREATE USER nexpo PASSWORD 'nexpo' CREATEDB;"
+	psql -d postgres -c "CREATE USER nexpo PASSWORD 'nexpo' CREATEDB;"
 
 reset-db:
-	sudo -u postgres psql -c "DROP DATABASE IF EXISTS nexpo_dev;"
-	sudo -u postgres psql -c "DROP DATABASE IF EXISTS nexpo_test;"
-	sudo -u postgres psql -c "DROP USER IF EXISTS nexpo;"
+	psql -d postgres -c "DROP DATABASE IF EXISTS nexpo_dev;"
+	psql -d postgres -c "DROP DATABASE IF EXISTS nexpo_test;"
+	psql -d postgres -c "DROP USER IF EXISTS nexpo;"
 
 install-deps:
 	mix local.hex --force && \
