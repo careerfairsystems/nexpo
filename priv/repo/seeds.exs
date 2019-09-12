@@ -274,7 +274,10 @@ Repo.insert!(%Deadline{
   end: ~N[2040-01-01 10:00:00]
 })
 
-Repo.insert!(%Nexpo.Blip{
+# Create a blip
+alias Nexpo.Blip
+
+Repo.insert!(%Blip{
   rating: 1,
   comment: "First Blip",
   user_id: 1,
