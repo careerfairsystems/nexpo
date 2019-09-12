@@ -97,10 +97,15 @@ defmodule Nexpo.Router do
     post("/password/new/:key", UserController, :replace_forgotten_password)
 
     # MOCKS
-    get("/me/company/blips", MockController, :get_blips)
-    get("/me/company/representatives", MockController, :get_reps)
+    get("/me/company/blips", MockController, :get_company_blips)
+    get("/me/student/blips", MockController, :get_student_blips)
+    post("/me/company/blips", MockController, :do_blip)
+    delete("/me/company/blips/: student_id", MockController, :remove_blip)
+    get("/me/company/representatives ", MockController, :get_reps)
     get("/me/company/comments/:student_id", MockController, :get_student_comment)
     post("/me/company/comments/:student_id", MockController, :comment_student)
+
+    # get /me bör documenteras och täcka get own info usecaset
   end
 
   scope "/", Nexpo do

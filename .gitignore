@@ -4,6 +4,7 @@
 /deps
 /*.ez
 
+
 # Generated on crash by the VM
 erl_crash.dump
 
@@ -33,6 +34,8 @@ cover/
 .idea
 .vscode
 .elixir_ls/
+*.swp
+.DS_STORE
 
 # Files uploaded locally in dev
 uploads/

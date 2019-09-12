@@ -91,7 +91,7 @@ defmodule Nexpo.MockController do
   end
 
   @apidoc """
-  @api {GET} /api/me/company/comment/:student_id Student Info & Comment
+  @api {GET} /api/me/company/comments/:student_id Student Info & Comment
   @apiGroup Comment
   @apiDescription Gets information about a student and your comments about them
   @apiSuccessExample {json} Success
@@ -150,7 +150,7 @@ defmodule Nexpo.MockController do
   @apiParamExample {json} Request-Example:
                  { "rating": 1, "comment": "Student was actually a bird"}
 
-  @apiUse UnprocessableEntity 
+  @apiUse UnprocessableEntity
   @apiUse NotFoundError
   @apiUse BadRequestError
   """
