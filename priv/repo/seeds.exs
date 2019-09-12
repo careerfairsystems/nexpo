@@ -274,6 +274,13 @@ Repo.insert!(%Deadline{
   end: ~N[2040-01-01 10:00:00]
 })
 
+Repo.insert!(%Nexpo.Blip{
+  rating: 1,
+  comment: "First Blip",
+  user_id: 1,
+  company_id: 1
+})
+
 # Create some programmes
 alias Nexpo.Programme
 Repo.insert!(%Programme{name: "F-Guild", code: "F"})
