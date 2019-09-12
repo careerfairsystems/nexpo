@@ -15,7 +15,6 @@ defmodule Nexpo.BlipController do
       {:ok, blip} ->
         conn
         |> put_status(:created)
-        |> put_resp_header("location", blip_path(conn, :show, blip))
         |> render("show.json", blip: blip)
       {:error, changeset} ->
         conn

@@ -101,6 +101,8 @@ defmodule Nexpo.Router do
     get("/me/company/representatives", MockController, :get_reps)
     get("/me/company/comments/:student_id", MockController, :get_student_comment)
     post("/me/company/comments/:student_id", MockController, :comment_student)
+    resources "/blips", BlipController, except: [:new, :edit]
+
   end
 
   scope "/", Nexpo do
