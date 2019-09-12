@@ -284,6 +284,20 @@ Repo.insert!(%Blip{
   company_id: 1
 })
 
+Repo.insert!(%Blip{
+  rating: 3,
+  comment: "Average company",
+  user_id: 2,
+  company_id: 1
+})
+
+Repo.insert!(%Blip{
+  rating: 5,
+  comment: "Google level",
+  user_id: 1,
+  company_id: 2
+})
+
 # Create some programmes
 alias Nexpo.Programme
 Repo.insert!(%Programme{name: "F-Guild", code: "F"})
