@@ -99,8 +99,8 @@ defmodule Nexpo.Router do
     # MOCKS
     get("/me/company/blips", MockController, :get_company_blips)
     get("/me/student/blips", MockController, :get_student_blips)
-    post("/me/company/blips", MockController, :do_blip)
-    delete("/me/company/blips/: student_id", MockController, :remove_blip)
+    post("/me/company/blips", BlipController, :create)
+    delete("/me/company/blips/:student_id", MockController, :remove_blip)
     get("/me/company/representatives ", MockController, :get_reps)
     get("/me/company/comments/:student_id", MockController, :get_student_comment)
     post("/me/company/comments/:student_id", MockController, :comment_student)
