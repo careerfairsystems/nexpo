@@ -16,7 +16,7 @@ defmodule Nexpo.Blip do
   def changeset(struct = %Nexpo.Blip{}, params \\ %{}) do
     struct
     |> cast(params, [:rating, :comment, :student_id, :company_id])
-    |> validate_required([:rating, :comment, :student_id, :company_id])
+    |> validate_required([:student_id, :company_id])
     |> foreign_key_constraint(:student_id)
     |> foreign_key_constraint(:company_id)
     |> unique_constraint(:student_id, name: :company_id_student_id_index)

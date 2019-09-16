@@ -84,17 +84,20 @@ defmodule Nexpo.Factory do
   # Allows us to easly create a user with hashed password etc
   def create_user do
     user =
-      Nexpo.Factory.params_for(:initial_signup)
+      :initial_signup
+      |> Nexpo.Factory.params_for()
       |> Nexpo.User.initial_signup!()
 
     Nexpo.Student.build_assoc!(user)
 
     user =
-      Nexpo.Factory.params_for(:final_signup)
+      :final_signup
+      |> Nexpo.Factory.params_for()
       |> Map.put(:signup_key, user.signup_key)
       |> Nexpo.User.final_signup!()
 
-    Nexpo.Repo.get!(Nexpo.User, user.id)
+    Nexpo.User
+    |> Nexpo.Repo.get!(user.id)
     |> Nexpo.Repo.preload([:student, :representative])
   end
 

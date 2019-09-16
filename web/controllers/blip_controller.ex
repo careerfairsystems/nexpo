@@ -1,28 +1,38 @@
 defmodule Nexpo.BlipController do
   use Nexpo.Web, :controller
-
+  # I denna version av phoenix lägger denna raden till User och "claims" till varje request
+  use Guardian.Phoenix.Controller
   alias Nexpo.Blip
 
-  def index(conn, _params) do
+  def index(conn, _params, _user, _claims) do
     blips = Repo.all(Blip)
     render(conn, "index.json", blips: blips)
   end
 
-  # Vi bör kunna plocka ur company id ur user
-  def create(conn, %{"blip" => blip_params}) do
+  def create(conn, blip_params, user, _claims) do
     changeset = Blip.changeset(%Blip{}, blip_params)
 
-    case Repo.insert(changeset) do
-      {:ok, blip} ->
-        blip = Repo.preload(blip, [:student, :company])
+    case user |> Repo.preload(:representative) |> Map.get(:representative) do
+      %{company_id: company_id} ->
+        changeset = Ecto.Changeset.cast(changeset, %{company_id: company_id}, [:company_id])
 
-        conn
-        |> put_status(:created)
-        |> render("show.json", blip: blip)
+        case Repo.insert(changeset) do
+          {:ok, blip} ->
+            blip = Repo.preload(blip, [:student, :company])
 
-      {:error, changeset} ->
+            conn
+            |> put_status(:created)
+            |> render("show.json", blip: blip)
+
+          {:error, changeset} ->
+            conn
+            |> put_status(:unprocessable_entity)
+            |> render(Nexpo.ChangesetView, "error.json", changeset: changeset)
+        end
+
+      nil ->
         conn
-        |> put_status(:unprocessable_entity)
+        |> put_status(:forbidden)
         |> render(Nexpo.ChangesetView, "error.json", changeset: changeset)
     end
   end

@@ -75,6 +75,8 @@ defmodule Nexpo.Router do
     delete("/student_sessions", StudentSessionController, :delete_bulk)
     get("/student_session_reserves", StudentSessionController, :show_reserves)
 
+    post("/me/company/blips", BlipController, :create)
+
     # resources "/student_session_applications", StudentSessionApplicationController, only: [:create]
   end
 
@@ -99,7 +101,6 @@ defmodule Nexpo.Router do
     # MOCKS
     get("/me/company/blips", MockController, :get_company_blips)
     get("/me/student/blips", MockController, :get_student_blips)
-    post("/me/company/blips", BlipController, :create)
     delete("/me/company/blips/:student_id", MockController, :remove_blip)
     get("/me/company/representatives ", MockController, :get_reps)
     get("/me/company/comments/:student_id", MockController, :get_student_comment)
