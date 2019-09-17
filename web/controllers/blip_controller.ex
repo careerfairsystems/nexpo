@@ -5,9 +5,44 @@ defmodule Nexpo.BlipController do
   import Ecto.Query
   alias Nexpo.Blip
 
-  def index(conn, _params, _user, _claims) do
-    blips = Repo.all(Blip)
-    render(conn, "index.json", blips: blips)
+  # TODO Lägg in company_id i alla requests istället för user
+  def index(conn, %{"student_id" => student_id}, user, _claims) do
+    company_id =
+      user
+      |> Repo.preload(:representative)
+      |> Map.get(:representative)
+      |> Map.get(:company_id)
+
+    # Move to model getter
+    %{
+      comment: comment,
+      rating: rating,
+      student_id: student_id,
+      inserted_at: blip_time,
+      student: %{
+        year: year,
+        resume_en_url: resume_en_url,
+        resume_sv_url: resume_sv_url,
+        user: %{
+          first_name: first_name,
+          last_name: last_name,
+          email: email,
+          programme: %{name: programme_name, code: programme_code}
+        }
+      }
+    } =
+      from(b in Blip,
+        where: b.company_id == ^company_id and b.student_id == ^student_id
+      )
+      # ordered by creation time
+      |> Repo.one()
+      |> Repo.preload([
+        [student: [:user, :programme]]
+      ])
+
+    student = "haj du"
+
+    render(conn, "student.json", student: student)
   end
 
   def create(conn, blip_params, user, _claims) do
@@ -53,11 +88,10 @@ defmodule Nexpo.BlipController do
       |> Map.get(:representative)
       |> Map.get(:company_id)
 
-    Repo.one(
-      from(b in Blip,
-        where: b.company_id == ^company_id and b.student_id == ^student_id
-      )
+    from(b in Blip,
+      where: b.company_id == ^company_id and b.student_id == ^student_id
     )
+    |> Repo.one()
     |> Blip.changeset(blip_params)
     |> Repo.update()
     |> case do

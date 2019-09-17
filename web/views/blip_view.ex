@@ -10,10 +10,29 @@ defmodule Nexpo.BlipView do
   end
 
   def render("blip.json", %{blip: blip}) do
-    %{id: blip.id,
+    %{
+      id: blip.id,
       rating: blip.rating,
       comment: blip.comment,
       student_id: blip.student_id,
-      company_id: blip.company_id}
+      company_id: blip.company_id
+    }
+  end
+
+  def render("student.json", %{student: student}) do
+    base = [
+      :student_id,
+      :email,
+      :first_name,
+      :last_name,
+      :comment,
+      :rating,
+      :blip_time,
+      :program
+      # :cv_url,
+      # :profile_pic_url
+    ]
+
+    Nexpo.Support.View.render_object(student, base)
   end
 end
