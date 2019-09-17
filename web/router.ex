@@ -76,6 +76,7 @@ defmodule Nexpo.Router do
     get("/student_session_reserves", StudentSessionController, :show_reserves)
 
     post("/me/company/blips", BlipController, :create)
+    post("/me/company/comments/:student_id", BlipController, :update)
 
     # resources "/student_session_applications", StudentSessionApplicationController, only: [:create]
   end
@@ -104,7 +105,6 @@ defmodule Nexpo.Router do
     delete("/me/company/blips/:student_id", MockController, :remove_blip)
     get("/me/company/representatives ", MockController, :get_reps)
     get("/me/company/comments/:student_id", MockController, :get_student_comment)
-    post("/me/company/comments/:student_id", MockController, :comment_student)
 
     # get /me bör documenteras och täcka get own info usecaset
   end

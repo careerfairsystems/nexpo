@@ -2,6 +2,7 @@ defmodule Nexpo.BlipController do
   use Nexpo.Web, :controller
   # I denna version av phoenix lägger denna raden till User och "claims" till varje request
   use Guardian.Phoenix.Controller
+  import Ecto.Query
   alias Nexpo.Blip
 
   def index(conn, _params, _user, _claims) do
@@ -42,11 +43,24 @@ defmodule Nexpo.BlipController do
     render(conn, "show.json", blip: blip)
   end
 
-  def update(conn, %{"id" => id, "blip" => blip_params}) do
-    blip = Repo.get!(Blip, id)
-    changeset = Blip.changeset(blip, blip_params)
+  # Should be protected with guardian so that only company reps can reach
+  # TODO If doesn't exist we should create it.
+  # Ska vi se till att siffran är inom 1-5 eller låta frontend
+  def update(conn, %{"student_id" => student_id} = blip_params, user, _claims) do
+    company_id =
+      user
+      |> Repo.preload(:representative)
+      |> Map.get(:representative)
+      |> Map.get(:company_id)
 
-    case Repo.update(changeset) do
+    Repo.one(
+      from(b in Blip,
+        where: b.company_id == ^company_id and b.student_id == ^student_id
+      )
+    )
+    |> Blip.changeset(blip_params)
+    |> Repo.update()
+    |> case do
       {:ok, blip} ->
         render(conn, "show.json", blip: blip)
 
