@@ -13,34 +13,23 @@ defmodule Nexpo.BlipController do
       |> Map.get(:representative)
       |> Map.get(:company_id)
 
-    # Move to model getter
-    %{
-      comment: comment,
-      rating: rating,
-      student_id: student_id,
-      inserted_at: blip_time,
-      student: %{
-        year: year,
-        resume_en_url: resume_en_url,
-        resume_sv_url: resume_sv_url,
-        user: %{
-          first_name: first_name,
-          last_name: last_name,
-          email: email,
-          programme: %{name: programme_name, code: programme_code}
-        }
-      }
-    } =
+    # TODO Move to model getter
+    blip =
       from(b in Blip,
         where: b.company_id == ^company_id and b.student_id == ^student_id
       )
-      # ordered by creation time
+      # TODO ordered by creation time
       |> Repo.one()
       |> Repo.preload([
         [student: [:user, :programme]]
       ])
 
-    student = "haj du"
+    student =
+      blip
+      |> Map.merge(blip.student)
+      |> Map.merge(blip.student.user)
+      |> Map.put(:blipped_at, blip.inserted_at)
+      |> Map.drop([:user])
 
     render(conn, "student.json", student: student)
   end

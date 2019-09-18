@@ -27,10 +27,11 @@ defmodule Nexpo.BlipView do
       :last_name,
       :comment,
       :rating,
-      :blip_time,
-      :program
-      # :cv_url,
-      # :profile_pic_url
+      :inserted_at,
+      :year,
+      :resume_en_url,
+      :resume_sv_url,
+      :programme
     ]
 
     Nexpo.Support.View.render_object(student, base)
