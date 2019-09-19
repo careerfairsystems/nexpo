@@ -110,17 +110,13 @@ defmodule Nexpo.BlipController do
   end
 
   def get_reps(conn, _params, user, _claims) do
-    # Currently send the
+    # Currently sends the rep who asked for the värd instead of the värd since we don't have'em
     rep =
       user
       |> Repo.preload(representative: [:user])
       |> Map.get(:representative)
 
     render(conn, "rep.json", rep: rep)
-  end
-
-  def secret_seeder(conn, _params) do
-    # RUn a seed file to create bois
   end
 
   defp get_blip(user, student_id) do

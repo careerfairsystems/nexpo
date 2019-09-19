@@ -106,6 +106,10 @@ defmodule Nexpo.User do
     |> unique_constraint(:email)
   end
 
+  def fake_changeset(user, params) do
+    user |> cast(params, [:password, :first_name, :last_name])
+  end
+
   def forgot_password_changeset(user, params \\ %{}) do
     changeset(user, params)
     |> generate_forgot_password_key()

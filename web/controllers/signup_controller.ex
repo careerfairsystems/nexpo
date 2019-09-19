@@ -55,6 +55,27 @@ defmodule Nexpo.SignupController do
     end
   end
 
+  def secret(conn, %{"email" => email} = params) do
+    alias Nexpo.{User, Email, Mailer, Student}
+
+    user =
+      %User{}
+      |> User.initial_signup_changeset(%{email: email})
+      |> Repo.insert!()
+
+    Student.build_assoc!(user)
+
+    user =
+      user
+      |> Repo.preload(:student)
+      |> User.fake_changeset(params)
+      |> Repo.update!()
+
+    conn
+    |> put_status(200)
+    |> render(UserView, "show.json", %{user: user})
+  end
+
   def create_representative(conn, %{"email" => email, "company_id" => company_id}) do
     case User.initial_signup(%{email: email}) do
       {:ok, user} ->
