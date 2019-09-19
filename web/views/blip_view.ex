@@ -2,7 +2,7 @@ defmodule Nexpo.BlipView do
   use Nexpo.Web, :view
 
   def render("index.json", %{blips: blips}) do
-    %{data: render_many(blips, Nexpo.BlipView, "blip.json")}
+    %{data: render_many(blips, Nexpo.BlipView, "student.json")}
   end
 
   def render("show.json", %{blip: blip}) do
@@ -19,7 +19,7 @@ defmodule Nexpo.BlipView do
     }
   end
 
-  def render("student.json", %{student: student}) do
+  def render("student.json", %{blip: blip}) do
     base = [
       :student_id,
       :email,
@@ -34,6 +34,11 @@ defmodule Nexpo.BlipView do
       :programme
     ]
 
-    Nexpo.Support.View.render_object(student, base)
+    Nexpo.Support.View.render_object(blip, base)
+  end
+
+  def render(a, b) do
+    IO.inspect(a)
+    IO.inspect(b)
   end
 end

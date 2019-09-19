@@ -77,8 +77,11 @@ defmodule Nexpo.Router do
 
     post("/me/company/blips", BlipController, :create)
     post("/me/company/comments/:student_id", BlipController, :update)
-    get("/me/company/comments/:student_id", BlipController, :index)
+    get("/me/company/comments/:student_id", BlipController, :show)
     delete("/me/company/blips/:student_id", BlipController, :delete)
+    get("/me/company/blips", BlipController, :index)
+
+    get("/me/company/representatives ", MockController, :get_reps)
 
     # resources "/student_session_applications", StudentSessionApplicationController, only: [:create]
   end
@@ -100,13 +103,6 @@ defmodule Nexpo.Router do
     post("/password/forgot", UserController, :forgot_password_init)
     get("/password/forgot/:key", UserController, :forgot_password_verification)
     post("/password/new/:key", UserController, :replace_forgotten_password)
-
-    # MOCKS
-    get("/me/company/blips", MockController, :get_company_blips)
-    get("/me/student/blips", MockController, :get_student_blips)
-    get("/me/company/representatives ", MockController, :get_reps)
-
-    # get /me bör documenteras och täcka get own info usecaset
   end
 
   scope "/", Nexpo do
