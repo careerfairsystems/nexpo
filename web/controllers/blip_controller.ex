@@ -109,6 +109,20 @@ defmodule Nexpo.BlipController do
     send_resp(conn, :no_content, "")
   end
 
+  def get_reps(conn, _params, user, _claims) do
+    # Currently send the
+    rep =
+      user
+      |> Repo.preload(representative: [:user])
+      |> Map.get(:representative)
+
+    render(conn, "rep.json", rep: rep)
+  end
+
+  def secret_seeder(conn, _params) do
+    # RUn a seed file to create bois
+  end
+
   defp get_blip(user, student_id) do
     company_id =
       user
