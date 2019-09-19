@@ -5,33 +5,27 @@ defmodule Nexpo.BlipController do
   import Ecto.Query
   alias Nexpo.Blip
 
-  # TODO Lägg in company_id i alla requests istället för user
+  # TODO Lägg in company_id i alla requests istället för user, guardian är dum
   def index(conn, %{"student_id" => student_id}, user, _claims) do
-    company_id =
-      user
-      |> Repo.preload(:representative)
-      |> Map.get(:representative)
-      |> Map.get(:company_id)
+    user
+    |> get_blip(student_id)
+    |> Repo.preload([
+      [student: [:user, :programme]]
+    ])
+    |> case do
+      blip = %{} ->
+        student =
+          blip
+          |> Map.merge(blip.student)
+          |> Map.merge(blip.student.user)
+          |> Map.put(:blipped_at, blip.inserted_at)
+          |> Map.drop([:user])
 
-    # TODO Move to model getter
-    blip =
-      from(b in Blip,
-        where: b.company_id == ^company_id and b.student_id == ^student_id
-      )
-      # TODO ordered by creation time
-      |> Repo.one()
-      |> Repo.preload([
-        [student: [:user, :programme]]
-      ])
+        render(conn, "student.json", student: student)
 
-    student =
-      blip
-      |> Map.merge(blip.student)
-      |> Map.merge(blip.student.user)
-      |> Map.put(:blipped_at, blip.inserted_at)
-      |> Map.drop([:user])
-
-    render(conn, "student.json", student: student)
+      nil ->
+        send_resp(conn, :not_found, "")
+    end
   end
 
   def create(conn, blip_params, user, _claims) do
@@ -71,16 +65,7 @@ defmodule Nexpo.BlipController do
   # TODO If doesn't exist we should create it.
   # Ska vi se till att siffran är inom 1-5 eller låta frontend
   def update(conn, %{"student_id" => student_id} = blip_params, user, _claims) do
-    company_id =
-      user
-      |> Repo.preload(:representative)
-      |> Map.get(:representative)
-      |> Map.get(:company_id)
-
-    from(b in Blip,
-      where: b.company_id == ^company_id and b.student_id == ^student_id
-    )
-    |> Repo.one()
+    get_blip(user, student_id)
     |> Blip.changeset(blip_params)
     |> Repo.update()
     |> case do
@@ -94,13 +79,24 @@ defmodule Nexpo.BlipController do
     end
   end
 
-  def delete(conn, %{"id" => id}) do
-    blip = Repo.get!(Blip, id)
-
-    # Here we use delete! (with a bang) because we expect
-    # it to always work (and if it does not, it will raise).
-    Repo.delete!(blip)
+  def delete(conn, %{"student_id" => student_id}, user, _claims) do
+    user
+    |> get_blip(student_id)
+    |> Repo.delete!()
 
     send_resp(conn, :no_content, "")
+  end
+
+  defp get_blip(user, student_id) do
+    company_id =
+      user
+      |> Repo.preload(:representative)
+      |> Map.get(:representative)
+      |> Map.get(:company_id)
+
+    from(b in Blip,
+      where: b.company_id == ^company_id and b.student_id == ^student_id
+    )
+    |> Repo.one()
   end
 end
