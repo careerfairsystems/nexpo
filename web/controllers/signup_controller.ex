@@ -55,21 +55,45 @@ defmodule Nexpo.SignupController do
     end
   end
 
-  def secret(conn, %{"email" => email} = params) do
+  def seeder(conn, _params) do
     alias Nexpo.{User, Email, Mailer, Student}
+    # make it easy to user and to create a company.
+    # create docs
+    # push
+
+    fake_email = "student@fake.com"
+
+    Nexpo.User
+    |> Nexpo.Repo.get_by(%{email: fake_email})
+    |> case do
+      %{} = user ->
+        Nexpo.Repo.delete!(user)
+
+      nil ->
+        nil
+    end
 
     user =
-      %User{}
-      |> User.initial_signup_changeset(%{email: email})
-      |> Repo.insert!()
+      %{email: "student@fake.com"}
+      |> Nexpo.User.initial_signup!()
 
-    Student.build_assoc!(user)
+    Nexpo.Student.build_assoc!(user)
+
+    password = "passsword"
 
     user =
-      user
-      |> Repo.preload(:student)
-      |> User.fake_changeset(params)
-      |> Repo.update!()
+      %{
+        password: password,
+        password_confirmation: password,
+        first_name: "Fake first_name",
+        last_name: "Fake last_name"
+      }
+      |> Map.put(:signup_key, user.signup_key)
+      |> Nexpo.User.final_signup!()
+
+    Nexpo.User
+    |> Nexpo.Repo.get!(user.id)
+    |> Nexpo.Repo.preload([:student, :representative])
 
     conn
     |> put_status(200)

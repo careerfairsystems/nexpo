@@ -101,6 +101,42 @@ defmodule Nexpo.Factory do
     |> Nexpo.Repo.preload([:student, :representative])
   end
 
+  def seed_user do
+    fake_email = "student@fake.com"
+
+    Nexpo.User
+    |> Nexpo.Repo.get_by(:email, fake_email)
+    |> case do
+      %{id: id} ->
+        Nexpo.Repo.delete!(Nexpo.User, id)
+
+      nil ->
+        nil
+    end
+
+    user =
+      %{email: "student@fake.com"}
+      |> Nexpo.User.initial_signup!()
+
+    Nexpo.Student.build_assoc!(user)
+
+    password = sequence("passsword")
+
+    user =
+      %{
+        password: password,
+        password_confirmation: password,
+        first_name: sequence("Fake first_name"),
+        last_name: sequence("Fake last_name")
+      }
+      |> Map.put(:signup_key, user.signup_key)
+      |> Nexpo.User.final_signup!()
+
+    Nexpo.User
+    |> Nexpo.Repo.get!(user.id)
+    |> Nexpo.Repo.preload([:student, :representative])
+  end
+
   @doc """
   Factory for initial_signup
   """

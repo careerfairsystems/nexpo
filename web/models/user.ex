@@ -34,11 +34,10 @@ defmodule Nexpo.User do
   end
 
   def get_permissions(user) do
-    Repo.all(
-      from(role in Ecto.assoc(user, :roles),
-        select: role.permissions
-      )
+    from(role in Ecto.assoc(user, :roles),
+      select: role.permissions
     )
+    |> Repo.all()
     |> List.flatten()
   end
 
@@ -104,10 +103,6 @@ defmodule Nexpo.User do
     |> put_change(:signup_key, nil)
     |> validate_required([:email, :hashed_password, :first_name, :last_name])
     |> unique_constraint(:email)
-  end
-
-  def fake_changeset(user, params) do
-    user |> cast(params, [:password, :first_name, :last_name])
   end
 
   def forgot_password_changeset(user, params \\ %{}) do
