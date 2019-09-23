@@ -5,7 +5,6 @@ defmodule Nexpo.BlipController do
   import Ecto.Query
   alias Nexpo.Blip
 
-  # TODO Lägg in company_id i alla requests istället för user, guardian är dum
   def index(conn, _params, user, _claims) do
     company_id =
       user
@@ -28,7 +27,6 @@ defmodule Nexpo.BlipController do
         |> Map.put(:blipped_at, blip.inserted_at)
         |> Map.drop([:user])
       end)
-      |> IO.inspect()
 
     render(conn, "index.json", blips: blips)
   end
