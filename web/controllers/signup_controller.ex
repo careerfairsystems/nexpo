@@ -2,7 +2,7 @@ defmodule Nexpo.SignupController do
   use Nexpo.Web, :controller
 
   alias Nexpo.Repo
-  alias Nexpo.{User, Student, Representative}
+  alias Nexpo.{User, Company, Student, Representative}
   alias Nexpo.{Email, Mailer}
   alias Nexpo.ErrorView
   alias Nexpo.ChangesetView
@@ -68,8 +68,6 @@ defmodule Nexpo.SignupController do
   end
 
   def seeder2(conn, params) do
-    alias Nexpo.{User, Email, Mailer, Student, Repo, Company, Represenatitve}
-
     company =
       Repo.get_by(Company, name: "fake inc") ||
         %Company{}
@@ -93,8 +91,6 @@ defmodule Nexpo.SignupController do
   end
 
   defp get_or_make_user(fake_email) do
-    alias Nexpo.{User, Email, Mailer, Student, Repo, Represenatitve}
-
     Nexpo.User
     |> Repo.get_by(email: fake_email)
     |> case do

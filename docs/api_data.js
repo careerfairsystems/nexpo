@@ -207,7 +207,7 @@ define({ "api": [
   },
   {
     "type": "GET",
-    "url": "/api/me/company/comment/:student_id",
+    "url": "/api/me/company/comments/:student_id",
     "title": "Student Info & Comment",
     "group": "Comment",
     "description": "<p>Gets information about a student and your comments about them</p>",
@@ -223,9 +223,145 @@ define({ "api": [
     "version": "0.0.0",
     "filename": "web/controllers/mock_controller.ex",
     "groupTitle": "Comment",
-    "name": "GetApiMeCompanyCommentStudent_id",
+    "name": "GetApiMeCompanyCommentsStudent_id",
     "error": {
       "examples": [
+        {
+          "title": "Not Found",
+          "content": "HTTP 404 Not Found",
+          "type": "json"
+        },
+        {
+          "title": "Bad Request",
+          "content": "HTTP 400 Bad Request",
+          "type": "json"
+        }
+      ]
+    }
+  },
+  {
+    "type": "POST",
+    "url": "/api/me/company/blips",
+    "title": "",
+    "group": "Comment",
+    "description": "<p>Create/Update a comment of a student that has blipped your company</p>",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Integer",
+            "optional": false,
+            "field": "student_id",
+            "description": "<p>The id of the user</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{ \"student_id\": 1 }",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "web/controllers/mock_controller.ex",
+    "groupTitle": "Comment",
+    "name": "PostApiMeCompanyBlips",
+    "error": {
+      "fields": {
+        "UnprocessableEntity 422": [
+          {
+            "group": "UnprocessableEntity 422",
+            "type": "Object",
+            "optional": false,
+            "field": "errors",
+            "description": "<p>Object containing errors</p>"
+          },
+          {
+            "group": "UnprocessableEntity 422",
+            "type": "String[]",
+            "optional": false,
+            "field": "errors.[unprocessable-key]",
+            "description": "<p>Array of String error messages</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "UnprocessableEntity",
+          "content": "HTTP 422 Unprocessable Entity\n{\n  \"errors\": {\n    \"title\": [\n      \"can't be blank\"\n    ]\n  }\n}",
+          "type": "json"
+        },
+        {
+          "title": "Not Found",
+          "content": "HTTP 404 Not Found",
+          "type": "json"
+        },
+        {
+          "title": "Bad Request",
+          "content": "HTTP 400 Bad Request",
+          "type": "json"
+        }
+      ]
+    }
+  },
+  {
+    "type": "POST",
+    "url": "/api/me/company/blips",
+    "title": "",
+    "group": "Comment",
+    "description": "<p>Create/Update a comment of a student that has blipped your company</p>",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Integer",
+            "optional": false,
+            "field": "student_id",
+            "description": "<p>The id of the user</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{ \"student_id\": 1 }",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "web/controllers/mock_controller.ex",
+    "groupTitle": "Comment",
+    "name": "PostApiMeCompanyBlips",
+    "error": {
+      "fields": {
+        "UnprocessableEntity 422": [
+          {
+            "group": "UnprocessableEntity 422",
+            "type": "Object",
+            "optional": false,
+            "field": "errors",
+            "description": "<p>Object containing errors</p>"
+          },
+          {
+            "group": "UnprocessableEntity 422",
+            "type": "String[]",
+            "optional": false,
+            "field": "errors.[unprocessable-key]",
+            "description": "<p>Array of String error messages</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "UnprocessableEntity",
+          "content": "HTTP 422 Unprocessable Entity\n{\n  \"errors\": {\n    \"title\": [\n      \"can't be blank\"\n    ]\n  }\n}",
+          "type": "json"
+        },
         {
           "title": "Not Found",
           "content": "HTTP 404 Not Found",
