@@ -65,8 +65,8 @@
     "postinstall": "npx flow-typed install && npx flow-typed create-stub whatwg-fetch && npx flow-typed create-stub antd && npx flow-typed create-stub redux-form"
   },
   "engines": {
-    "node": "8.11.1",
-    "npm": ">5.0.0"
+    "node": "11.9.0",
+    "npm": ">6.9.0"
   },
   "browserslist": [
     ">0.2%",
