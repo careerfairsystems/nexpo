@@ -15,7 +15,7 @@ matrix:
       after_success:
         - codecov
     - elixir: 1.8.2
-      otp_release: 19.3
+      otp_release: 22
       before_install:
         - gem install fakes3
         - fakes3 -r $HOME/.s3bucket -p 4567 --license 9806002125 &
