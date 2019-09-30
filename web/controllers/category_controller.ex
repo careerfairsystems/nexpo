@@ -22,7 +22,7 @@ defmodule Nexpo.CategoryController do
     when action in [:create, :update, :delete]
   )
 
-  @apidoc """
+ """
   @api {GET} /categories List categories
   @apiGroup Category
 
@@ -51,7 +51,7 @@ defmodule Nexpo.CategoryController do
     render(conn, "index.json", categories: categories)
   end
 
-  @apidoc """
+ """
   @api {POST} /categories/ Create category
   @apiName Create Category
   @apiGroup Category
@@ -81,7 +81,7 @@ defmodule Nexpo.CategoryController do
     end
   end
 
-  @apidoc """
+"""
   @api {GET} /categories/:id Get category
   @apiGroup Category
 
@@ -136,5 +136,4 @@ defmodule Nexpo.CategoryController do
   #    send_resp(conn, :no_content, "")
   #  end
 
-  @apidoc
 end
