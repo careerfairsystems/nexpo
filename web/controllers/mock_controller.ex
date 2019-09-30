@@ -215,10 +215,6 @@ defmodule Nexpo.MockController do
     json(conn, "nice")
   end
 
-  def do_blip(conn, _params, _user, _claims) do
-    json(Plug.Conn.put_status(conn, 422), "stuff is missing yo")
-  end
-
   """
   get("/me/company/blips", MockController, :get_company_blips)
   get("/me/student/blips", MockController, :get_student_blips)
@@ -226,6 +222,4 @@ defmodule Nexpo.MockController do
   get("/me/company/comments/:student_id", MockController, :get_student_comment)
   post("/me/company/comments/:student_id", MockController, :comment_student)
   """
-
-  @apidoc
 end
