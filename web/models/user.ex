@@ -34,11 +34,10 @@ defmodule Nexpo.User do
   end
 
   def get_permissions(user) do
-    Repo.all(
-      from(role in Ecto.assoc(user, :roles),
-        select: role.permissions
-      )
+    from(role in Ecto.assoc(user, :roles),
+      select: role.permissions
     )
+    |> Repo.all()
     |> List.flatten()
   end
 
