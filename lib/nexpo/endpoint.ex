@@ -1,5 +1,6 @@
 defmodule Nexpo.Endpoint do
   use Phoenix.Endpoint, otp_app: :nexpo
+  use Sentry.Phoenix.Endpoint
 
   socket("/socket", Nexpo.UserSocket)
 
