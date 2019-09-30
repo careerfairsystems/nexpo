@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { isEmpty } from 'lodash/fp';
 import NotFound from '../../NotFound';
 import LoadingSpinner from '../../../Components/LoadingSpinner';
-import HtmlTitle from '../../../Components/HtmlTitle';
-import StudentForm from '../../../Forms/StudentForm';
+import LinkAlert from '../../../Components/LinkAlert';
 import SessionForm from '../../../Forms/SessionForm';
+// eslint-disable-next-line import/no-unresolved
 import '../Session.css';
 
 type StudentObj = {
@@ -23,28 +23,50 @@ type Props = {
   },
   currentStudent: StudentObj,
   getAllCompanies: () => Promise<void>,
-  getAllProgrammes: () => Promise<void>,
   createStudentSessionAppl: ({
     studentSessionApplication: Application
-  }) => Promise<void>,
-  updateCurrentStudent: ({ student: StudentObj }) => Promise<void>,
-  resetForm: string => Promise<void>
+  }) => Promise<void>
 };
+
 class SessionApplication extends Component<Props> {
   componentWillMount() {
-    const { getAllCompanies, getAllProgrammes } = this.props;
+    const { getAllCompanies } = this.props;
     getAllCompanies();
-    getAllProgrammes();
   }
 
-  updateStudent = (values: StudentObj) => {
-    const { updateCurrentStudent } = this.props;
-    return updateCurrentStudent({ student: values });
-  };
+  checkStudentInformation = (user, student) => {
+    const data = {
+      'Phone number': user.phoneNumber,
+      'Start year': student.year,
+      'Programme': student.programme,
+      'English resume': student.resumeEnUrl,
+      'Swedish resume': student.resumeSvUrl
+    };
+    const fields = Object.keys(data).map(field => (data[field] && true));
+    const isMissing = fields.reduce((result, field) => (result && field), true);
+    if (isMissing) {
+      return (
+        <LinkAlert
+          message="Ready to go!"
+          description="Your profile is complete. You can click on this message to review your profile information."
+          type="success"
+          link="../user"
+          {...this.props}
+        />
+      );
+    }
 
-  resetStudentForm = () => {
-    const { resetForm } = this.props;
-    resetForm('student');
+    const missing = Object.keys(data).map(field => (data[field]) ? "" : (" " + field)).filter(el => el);
+    let message = "Your profile is curently missing the following information; " + missing.toString() + ". You can review and edit your profile by clicking on this message.";
+    return (
+      <LinkAlert
+        message="Incomplete profile!"
+        type="warning"
+	description={message}
+        link="../user"
+        {...this.props}
+      />
+    );
   };
 
   createStudentSessionAppl = (data: Application) => {
@@ -63,25 +85,15 @@ class SessionApplication extends Component<Props> {
     if (isEmpty(currentUser)) {
       return <NotFound />;
     }
-
     return (
-      <div className="session-application">
-        <HtmlTitle title="Student Session Application" />
-        <h1>Apply for student sessions</h1>
-        <SessionForm onSubmit={this.createStudentSessionAppl} />
+      <>
+        {this.checkStudentInformation(currentUser, currentStudent)}
         <br />
-        <br />
-        <h2>Make sure your Student Information is up to date!</h2>
-        <h4>
-          You only need to upload your CV(s) once. All the companies you apply
-          for will receive the same CV(s) but different motivations.
-        </h4>
-        <StudentForm
-          onSubmit={this.updateStudent}
-          onSubmitSuccess={this.resetStudentForm}
-          initialValues={currentStudent}
-        />
-      </div>
+        <div className="session-application">
+          <h1>Apply for student sessions</h1>
+          <SessionForm onSubmit={this.createStudentSessionAppl} />
+        </div>
+      </>
     );
   }
 }
