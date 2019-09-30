@@ -1,7 +1,7 @@
 {
   "scripts": {
     "install-deps": "mix deps.get && npm i && cd priv/react_app && npm i && cd ../..",
-    "dev-backend": "mix phoenix.server",
+    "dev-backend": "mix phx.server",
     "dev-frontend": "cd priv/react_app && npm start",
     "dev": "npm-run-all -p dev-backend dev-frontend",
     "testwatch-backend": "mix test.watch",
