@@ -29,7 +29,6 @@ defmodule Nexpo.Mixfile do
         :phoenix,
         :phoenix_pubsub,
         :phoenix_html,
-        :plug_cowboy,
         :sentry,
         :logger,
         :gettext,
@@ -49,7 +48,7 @@ defmodule Nexpo.Mixfile do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:phoenix, "~> 1.2.4"},
+      {:phoenix, "~> 1.3.0"},
       {:phoenix_pubsub, "~> 1.0"},
       {:phoenix_ecto, "~> 3.0"},
       {:postgrex, ">= 0.0.0"},
@@ -63,7 +62,7 @@ defmodule Nexpo.Mixfile do
       {:cors_plug, "~> 1.3"},
       {:plug_static_index_html, "~> 0.1.2"},
       {:ex_json_schema, "~> 0.5.4"},
-      {:sentry, "~> 6.0.0"},
+      {:sentry, "~> 7.0.0"},
       {:comeonin, "~> 4.0"},
       {:bcrypt_elixir, "~> 0.12"},
       {:guardian, "~> 0.14.5"},
