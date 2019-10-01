@@ -32,13 +32,17 @@ defmodule Nexpo.BlipController do
   end
 
   def create(conn, blip_params, user, _claims) do
-    changeset = Blip.changeset(%Blip{}, blip_params)
-
-    case user |> Repo.preload(:representative) |> Map.get(:representative) do
+    user
+    |> Repo.preload(:representative)
+    |> Map.get(:representative)
+    |> case do
       %{company_id: company_id} ->
-        changeset = Ecto.Changeset.cast(changeset, %{company_id: company_id}, [:company_id])
+        blip_params = Map.put(blip_params, "company_id", company_id)
 
-        case Repo.insert(changeset) do
+        %Blip{}
+        |> Blip.changeset(blip_params)
+        |> Repo.insert()
+        |> case do
           {:ok, blip} ->
             blip = Repo.preload(blip, [:student, :company])
 
@@ -55,7 +59,7 @@ defmodule Nexpo.BlipController do
       nil ->
         conn
         |> put_status(:forbidden)
-        |> render(Nexpo.ChangesetView, "error.json", changeset: changeset)
+        |> send_resp()
     end
   end
 
