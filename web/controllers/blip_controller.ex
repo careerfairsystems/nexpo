@@ -76,7 +76,7 @@ defmodule Nexpo.BlipController do
           |> Map.put(:blipped_at, blip.inserted_at)
           |> Map.drop([:user])
 
-        render(conn, "student.json", student: student)
+        render(conn, "student.json", blip: blip)
 
       nil ->
         send_resp(conn, :not_found, "")
