@@ -61,7 +61,7 @@ defmodule Nexpo.BlipController do
     end
   end
 
-  def show(conn, %{"student_id" => student_id}, user, _claims) do
+  def show(conn, %{"id" => student_id}, user, _claims) do
     user
     |> get_blip(student_id)
     |> Repo.preload([
@@ -86,7 +86,7 @@ defmodule Nexpo.BlipController do
   # Should be protected with guardian so that only company reps can reach
   # TODO If doesn't exist we should create it.
   # Ska vi se till att siffran är inom 1-5 eller låta frontend
-  def update(conn, %{"student_id" => student_id} = blip_params, user, _claims) do
+  def update(conn, %{"id" => student_id} = blip_params, user, _claims) do
     get_blip(user, student_id)
     |> Blip.changeset(blip_params)
     |> Repo.update()
@@ -101,7 +101,7 @@ defmodule Nexpo.BlipController do
     end
   end
 
-  def delete(conn, %{"student_id" => student_id}, user, _claims) do
+  def delete(conn, %{"id" => student_id}, user, _claims) do
     user
     |> get_blip(student_id)
     |> Repo.delete!()

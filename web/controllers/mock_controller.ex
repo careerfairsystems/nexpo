@@ -37,29 +37,27 @@ defmodule Nexpo.MockController do
 
   @apidoc """
   @api {GET} /api/me/company/blips List blips
-  @apiGroup Comment
+  @apiGroup Blips
   @apiDescription List all students that have blipd by your booth
   @apiSuccessExample {json} Success
 
   HTTP 200 OK
   {
-    "data": [{
-      "first_name": "Lisa",
-      "last_name": "Svensson",
-      "id": 32,
-      "blipped_at":"2019-04-16 13:50:16.300827",
-      "has_comment": true
-      "rating": 5
-      "profile_picture_url": null
-  }, {
-      "first_name": "Kalle",
-      "last_name": "Abrahamsson",
-      "id": 28,
-      "blipped_at":  "2019-04-15 13:50:16.300827",
-      "has_comment":  false,
-      "rating": 2,
-      "profile_picture_url": null
-  }]}
+    "data": [
+        {
+            "year": null,
+            "student_id": 2,
+            "resume_sv_url": null,
+            "resume_en_url": null,
+            "rating": null,
+            "programme": null,
+            "last_name": "McTest",
+            "inserted_at": "2019-09-15T14:55:43.860556",
+            "first_name": "Test",
+            "email": "test@it",
+            "comment": null
+        }
+    ]
   }
 
   @apiUse NotFoundError
@@ -91,29 +89,33 @@ defmodule Nexpo.MockController do
   end
 
   @apidoc """
-  @api {GET} /api/me/company/comments/:student_id Student Info & Comment
-  @apiGroup Comment
+  @api {GET} /api/me/company/blips/:student_id Student Info & Comment
+  @apiGroup Blips
   @apiDescription Gets information about a student and your comments about them
   @apiSuccessExample {json} Success
 
   HTTP 200 OK
   {
-    "data": {
-      "first_name": "Lisa",
-      "last_name": "Svensson",
-      "phone_number": "555123456",
-      "email": "lisa@hotmail.com",
-      "id": 32,
-      "year": 7,
-      "resume_sv_url":"www.google.se",
-      "resume_en_url":"www.google.com",
-      "programme":"C",
-      "blipped_at":"2019-04-16 13:50:16.300827",
-      "comment": "wow what a student A+\n",
-      "commented_by": "Kajsa Johansson",
-      "rating": 5,
-      "profile_picture_url": null
-    }
+    "student_id": 1,
+    "student": {
+        "year": null,
+        "user_id": 1,
+        "user": {
+            "phone_number": "0707112233",
+            "last_name": "Dev",
+            "id": 1,
+            "food_preferences": "cake",
+            "first_name": "Dev",
+            "email": "dev@it"
+        },
+        "resume_sv_url": null,
+        "resume_en_url": null,
+        "programme": null,
+        "id": 1
+    },
+    "rating": 5,
+    "inserted_at": "2019-09-19T17:08:45.126611",
+    "comment": "Actually we do need birds"
   }
 
   @apiUse NotFoundError
@@ -141,14 +143,20 @@ defmodule Nexpo.MockController do
   end
 
   @apidoc """
-  @api {POST} /api/me/company/comments/:student_id Comment a student
-  @apiGroup Comment
-  @apiDescription Create/Update a comment of a student that has blipped your company
+  @api {POST} /api/me/company/blips/:student_id Create a blip for student
+  @apiGroup Blips
+  @apiDescription Create/ a comment of a student that has blipped your company
 
-  @apiParam {Integer} rating    A rating between 1 and five
-  @apiParam {String}  comment   Your thoughts about the student
+  @apiParam {Integer} student_id    Id of student blips
+  @apiParam {Integer} rating    Optional, rating between 1 and five
+  @apiParam {String}  comment   Optional, Your thoughts about the student
   @apiParamExample {json} Request-Example:
-                 { "rating": 1, "comment": "Student was actually a bird"}
+                 { "student_id": 1}
+
+  @apiSuccessExample {json} Success
+
+  HTTP 200 OK
+  {"data":{"student_id":1,"rating":null,"id":22,"company_id":2,"comment":null}}
 
   @apiUse UnprocessableEntity
   @apiUse NotFoundError
@@ -168,9 +176,9 @@ defmodule Nexpo.MockController do
   end
 
   @apidoc """
-  @api {POST} /api/me/company/blips
-  @apiGroup Comment
-  @apiDescription Create/Update a comment of a student that has blipped your company
+  @api {Patch} /api/me/company/blips/:student_id
+  @apiGroup Blips
+  @apiDescription Update a comment of a student that has blipped your company
 
   @apiParam {Integer} student_id    The id of the user
   @apiParamExample {json} Request-Example:
@@ -195,7 +203,7 @@ defmodule Nexpo.MockController do
 
   @apidoc """
   @api {POST} /api/me/company/blips
-  @apiGroup Comment
+  @apiGroup Blips
   @apiDescription Create/Update a comment of a student that has blipped your company
 
   @apiParam {Integer} student_id    The id of the user
