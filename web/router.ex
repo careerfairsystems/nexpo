@@ -79,14 +79,8 @@ defmodule Nexpo.Router do
       only: [:create, :update, :show, :delete, :index]
     )
 
-    # post("/me/company/blips", BlipController, :create)
-    # post("/me/company/blips/:student_id", BlipController, :update)
-    # get("/me/company/blips/:student_id", BlipController, :show)
-    # delete("/me/company/blips/:student_id", BlipController, :delete)
-    # get("/me/company/blips", BlipController, :index)
-    get("/me/company/reps", BlipController, :get_reps)
-
-    # resources "/student_session_applications", StudentSessionApplicationController, only: [:create]
+    # TODO implement
+    # get("/me/company/reps", BlipController, :get_reps)
   end
 
   # Not-protected endpoints
