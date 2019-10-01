@@ -38,7 +38,7 @@ Repo.insert!(%User{
   last_name: "Dev",
   phone_number: "0707112233",
   food_preferences: "cake",
-  hashed_password: "legit_hash_123"
+  hashed_password: Comeonin.Bcrypt.hashpwsalt("password")
 })
 
 Repo.insert!(%User{
@@ -47,7 +47,7 @@ Repo.insert!(%User{
   last_name: "McTest",
   phone_number: "13371337",
   food_preferences: "Cookies",
-  hashed_password: "legit_hash_123"
+  hashed_password: Comeonin.Bcrypt.hashpwsalt("password")
 })
 
 Repo.insert!(%User{
@@ -56,7 +56,7 @@ Repo.insert!(%User{
   last_name: "Google",
   phone_number: "555123456",
   food_preferences: "User data only!",
-  hashed_password: "legit_hash_321"
+  hashed_password: Comeonin.Bcrypt.hashpwsalt("password")
 })
 
 admin_user = Repo.get_by(User, %{email: "admin@test"}) |> Repo.preload([:roles, :student])
