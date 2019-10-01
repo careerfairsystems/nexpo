@@ -57,9 +57,7 @@ defmodule Nexpo.BlipController do
         end
 
       nil ->
-        conn
-        |> put_status(:forbidden)
-        |> send_resp()
+        send_resp(conn, :forbidden, "")
     end
   end
 

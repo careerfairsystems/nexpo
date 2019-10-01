@@ -81,8 +81,6 @@ defmodule Nexpo.Router do
     delete("/me/company/blips/:student_id", BlipController, :delete)
     get("/me/company/blips", BlipController, :index)
     get("/me/company/reps", BlipController, :get_reps)
-    post("/seeds/student", SignupController, :seeder)
-    post("/seeds/rep", SignupController, :seeder2)
 
     # resources "/student_session_applications", StudentSessionApplicationController, only: [:create]
   end

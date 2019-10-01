@@ -55,68 +55,6 @@ defmodule Nexpo.SignupController do
     end
   end
 
-  def seeder(conn, params) do
-    user =
-      params
-      |> Map.get(:email, "student@fake.com")
-      |> get_or_make_user()
-      |> Repo.preload([:student, :representative])
-
-    conn
-    |> put_status(200)
-    |> render(UserView, "show.json", %{user: user})
-  end
-
-  def seeder2(conn, params) do
-    company =
-      Repo.get_by(Company, name: "fake inc") ||
-        %Company{}
-        |> Company.changeset(%{
-          name: "fake inc",
-          description: "a fake company",
-          website: "fake.com"
-        })
-        |> Repo.insert!()
-
-    user =
-      params
-      |> Map.get(:email, "rep@fake.com")
-      |> get_or_make_user()
-      |> Representative.build_assoc!(company.id)
-      |> Repo.preload([:student, :representative])
-
-    conn
-    |> put_status(200)
-    |> render(UserView, "show.json", %{user: user})
-  end
-
-  defp get_or_make_user(fake_email) do
-    Nexpo.User
-    |> Repo.get_by(email: fake_email)
-    |> case do
-      %User{} = user ->
-        user
-
-      nil ->
-        user =
-          %User{}
-          |> User.initial_signup_changeset(%{email: fake_email})
-          |> Repo.insert!()
-          |> Student.build_assoc!()
-
-        password = "passsword"
-
-        %{
-          password: password,
-          password_confirmation: password,
-          first_name: "Fake first_name",
-          last_name: "Fake last_name"
-        }
-        |> Map.put(:signup_key, user.signup_key)
-        |> User.final_signup!()
-    end
-  end
-
   def create_representative(conn, %{"email" => email, "company_id" => company_id}) do
     case User.initial_signup(%{email: email}) do
       {:ok, user} ->
