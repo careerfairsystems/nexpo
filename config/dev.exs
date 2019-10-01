@@ -45,15 +45,15 @@ config :bcrypt_elixir, :log_rounds, 4
 # in production as building large stacktraces may be expensive.
 config :phoenix, :stacktrace_depth, 20
 
-config :nexpo, Nexpo.Mailer, adapter: Bamboo.LocalAdapter
+config :nexpo, Nexpo.Mailer,
+  adapter: Bamboo.SendgridAdapter,
+  api_key: "***REMOVED***"
 
 # Configure your database
 config :nexpo, Nexpo.Repo,
   adapter: Ecto.Adapters.Postgres,
   database: "nexpo_dev",
-  pool_size: 10,
-  username: "nexpo",
-  password: "nexpo"
+  pool_size: 10
 
 config :arc,
   # or Arc.Storage.Local

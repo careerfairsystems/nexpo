@@ -75,16 +75,12 @@ defmodule Nexpo.Router do
     delete("/student_sessions", StudentSessionController, :delete_bulk)
     get("/student_session_reserves", StudentSessionController, :show_reserves)
 
-    post("/me/company/blips", BlipController, :create)
-    post("/me/company/comments/:student_id", BlipController, :update)
-    get("/me/company/comments/:student_id", BlipController, :show)
-    delete("/me/company/blips/:student_id", BlipController, :delete)
-    get("/me/company/blips", BlipController, :index)
-    get("/me/company/reps", BlipController, :get_reps)
-    post("/seeds/student", SignupController, :seeder)
-    post("/seeds/rep", SignupController, :seeder2)
+    resources("/me/company/blips", BlipController,
+      only: [:create, :update, :show, :delete, :index]
+    )
 
-    # resources "/student_session_applications", StudentSessionApplicationController, only: [:create]
+    # TODO implement
+    # get("/me/company/reps", BlipController, :get_reps)
   end
 
   # Not-protected endpoints
