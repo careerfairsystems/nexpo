@@ -48,7 +48,7 @@ This project aims to to supply [ARKAD](https://arkad.tlth.se) with an inhouse pr
 # System Requirements
 The system requires these programs to be installed. The project intends to always follow stable releases. The system is verified to work with the following setup
 - Elixir 1.8.2 [Installation instructions](https://elixir-lang.org/install.html)
-- Erlang OTP 22 - Installed automatically with Elixir
+- Erlang OTP 22.0.7 - Installed automatically with Elixir
 - Node 11.9.0 [Installation instructions](https://nodejs.org/en/download/)
 - PostgreSQL 10.10 [Installation instruction](https://wiki.postgresql.org/wiki/Detailed_installation_guides)
 
