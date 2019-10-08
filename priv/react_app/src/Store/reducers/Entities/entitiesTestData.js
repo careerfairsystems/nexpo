@@ -58,20 +58,20 @@ const testData = {
   users: [
     {
       id: '1',
-      email: 'dev@it.now',
+      email: 'admin@test.now',
       firstName: 'Dev',
       lastName: 'User'
     },
     {
       id: 2,
-      email: 'test@it.later',
+      email: 'student@test.later',
       firstName: 'Test',
       lastName: 'User'
     }
   ],
   user: {
     id: '1',
-    email: 'dev@it.now',
+    email: 'admin@test.now',
     firstName: 'Dev',
     lastName: 'User',
     roles: [
@@ -102,7 +102,7 @@ const testData = {
     users: [
       {
         id: '1',
-        email: 'dev@it.now',
+        email: 'admin@test.now',
         firstName: 'Dev',
         lastName: 'User'
       }

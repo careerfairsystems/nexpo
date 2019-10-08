@@ -33,8 +33,8 @@ it('calls callBackend on ForgotPasswordForm onSubmit', () => {
     callBackend: jest.fn()
   };
   const wrapper = shallow(<ForgotPasswordEnterEmail {...props} />);
-  const email1 = 'dev@it';
-  const email2 = 'test@it';
+  const email1 = 'admin@test';
+  const email2 = 'student@test';
   expect(props.callBackend).toHaveBeenCalledTimes(0);
   wrapper
     .find(ForgotPasswordForm)

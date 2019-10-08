@@ -12,9 +12,9 @@ import '../User.css';
  * Responsible for rendering a user. User id is recieved via url
  */
 type UserObj = {
-  firstName: string,
-  lastName: string,
-  phoneNumber: string
+  firstName?: string,
+  lastName?: string,
+  phoneNumber?: string
 };
 type Props = {
   id?: string,

@@ -1,6 +1,9 @@
 defmodule Nexpo.Endpoint do
   use Phoenix.Endpoint, otp_app: :nexpo
-  use Sentry.Phoenix.Endpoint
+
+  if Mix.env() == :prod do
+    use Sentry.Phoenix.Endpoint
+  end
 
   socket("/socket", Nexpo.UserSocket)
 

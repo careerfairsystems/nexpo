@@ -100,7 +100,7 @@ describe('CompanyShow', () => {
       studentSessionDays: 1
     };
     const id = '1';
-    const studentId = 1;
+    const studentId = '1';
     const wrapper = shallow(
       <CompanyShow id={id} {...props} company={company} />
     );

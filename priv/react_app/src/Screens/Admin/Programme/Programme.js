@@ -5,11 +5,6 @@ import ProgrammeForm from '../../../Forms/ProgrammeForm';
 import LoadingSpinner from '../../../Components/LoadingSpinner';
 import NotFound from '../../NotFound';
 
-type ProgrammeObj = {
-  email: string,
-  student: number
-};
-
 type Props = {
   id: string,
   programme: {
@@ -27,7 +22,7 @@ class Programme extends Component<Props> {
     if (id) getProgramme(id);
   }
 
-  updateProgramme = (values: ProgrammeObj) => {
+  updateProgramme = (values: { code?: string, name?: string }) => {
     const { id, programme, createProgramme, updateProgramme } = this.props;
 
     if (isEmpty(programme)) {

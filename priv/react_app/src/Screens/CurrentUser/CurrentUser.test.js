@@ -49,9 +49,9 @@ describe('userform should function correctly', () => {
   it('should only update the changed values', () => {
     const wrapper = shallow(<CurrentUser {...props} />);
     const { currentUser, updateCurrentUser } = props;
-    const { foodPreferences } = currentUser;
+    const { firstName, lastName, foodPreferences } = currentUser;
     const phoneNumber = '13371337';
-    const values = { phoneNumber, foodPreferences };
+    const values = { firstName, lastName, phoneNumber, foodPreferences };
     wrapper.instance().updateUser(values);
     expect(updateCurrentUser).toHaveBeenCalledTimes(1);
     expect(updateCurrentUser).toHaveBeenCalledWith({ user: values });

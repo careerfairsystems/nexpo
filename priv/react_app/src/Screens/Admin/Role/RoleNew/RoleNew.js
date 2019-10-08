@@ -9,7 +9,7 @@ import '../Role.css';
 type RoleObj = {
   type: string,
   permissions: Array<string>,
-  user: number
+  user?: number
 };
 type Props = {
   createRole: ({ role: RoleObj }) => Promise<void>,

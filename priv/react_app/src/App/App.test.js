@@ -24,7 +24,11 @@ it('renders isLoggedIn without crashing', () => {
   shallow(
     <App
       isLoggedIn
-      currentUser={{ email: 'test@it', firstName: 'Tester', lastName: 'AB' }}
+      currentUser={{
+        email: 'student@test',
+        firstName: 'Tester',
+        lastName: 'AB'
+      }}
       pathname="/"
       logout={() => undefined}
       redirect={() => undefined}
@@ -50,7 +54,7 @@ const state = {
     users: {
       '1': {
         id: 1,
-        email: 'dev@it',
+        email: 'admin@test',
         firstName: 'X',
         roles: [1, 2],
         student: 1,

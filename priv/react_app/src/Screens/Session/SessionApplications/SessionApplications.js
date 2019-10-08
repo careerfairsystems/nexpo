@@ -23,7 +23,7 @@ type Props = {
   fetching: boolean,
   updateStudentSessionAppl: (
     string,
-    { studentSessionApplication: Application }
+    { studentSessionApplication: { motivation: string } }
   ) => Promise<void>
 };
 type State = {
@@ -52,7 +52,7 @@ class SessionApplications extends Component<Props, State> {
     this.setState({ editing });
   };
 
-  updateStudentSessionAppl = (id: string, values: Application) => {
+  updateStudentSessionAppl = (id: string, values: { motivation: string }) => {
     const { updateStudentSessionAppl } = this.props;
     updateStudentSessionAppl(id, { studentSessionApplication: values });
     this.setState({ editing: {} });
