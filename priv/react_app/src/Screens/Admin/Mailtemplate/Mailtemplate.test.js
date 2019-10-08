@@ -60,7 +60,7 @@ describe('Mailtemplate', () => {
     const newSubject = 'Welcome!';
     wrapper.instance().updateMailtemplate({ subject: newSubject });
     expect(props.createMailtemplate).toHaveBeenCalledWith({
-      mailtemplate: { subject: newSubject }
+      mailtemplate: { id: '1', subject: newSubject }
     });
   });
 
@@ -79,7 +79,7 @@ describe('Mailtemplate', () => {
     const newSubject = 'Welcome to ARKAD!';
     wrapper.instance().updateMailtemplate({ subject: newSubject });
     expect(props.updateMailtemplate).toHaveBeenCalledWith(id, {
-      mailtemplate: { subject: newSubject }
+      mailtemplate: { id, subject: newSubject }
     });
   });
 });

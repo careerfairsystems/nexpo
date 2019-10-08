@@ -2,7 +2,7 @@ defmodule Nexpo.SignupController do
   use Nexpo.Web, :controller
 
   alias Nexpo.Repo
-  alias Nexpo.{User, Company, Student, Representative}
+  alias Nexpo.{User, Student, Representative}
   alias Nexpo.{Email, Mailer}
   alias Nexpo.ErrorView
   alias Nexpo.ChangesetView

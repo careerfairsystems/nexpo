@@ -137,4 +137,6 @@ defmodule Nexpo.CategoryController do
   #
   #    send_resp(conn, :no_content, "")
   #  end
+
+  @apidoc
 end

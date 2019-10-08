@@ -34,4 +34,6 @@ defmodule Nexpo.MockController do
       ]
     })
   end
+
+  @apidoc
 end

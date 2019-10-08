@@ -2,10 +2,10 @@ defmodule Nexpo.Blip do
   use Nexpo.Web, :model
 
   schema "blips" do
-    field :rating, :integer
-    field :comment, :string
-    belongs_to :student, Nexpo.Student
-    belongs_to :company, Nexpo.Company
+    field(:rating, :integer)
+    field(:comment, :string)
+    belongs_to(:student, Nexpo.Student)
+    belongs_to(:company, Nexpo.Company)
 
     timestamps()
   end

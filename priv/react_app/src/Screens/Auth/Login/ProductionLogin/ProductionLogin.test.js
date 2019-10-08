@@ -23,7 +23,7 @@ it('should call login with correct values', () => {
     location: { state: {}, hash: '', pathname: '', search: '' }
   };
   const wrapper = shallow(<ProductionLogin {...props} />);
-  const email = 'dev@it';
+  const email = 'admin@test';
   const password = 'plzDontHack123';
   expect(props.login).toHaveBeenCalledTimes(0);
   wrapper.instance().login({ email, password });

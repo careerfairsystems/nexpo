@@ -24,7 +24,6 @@ defmodule Nexpo.Mixfile do
       mod: {Nexpo, []},
       applications: [
         :bamboo,
-        :bamboo_smtp,
         :ex_machina,
         :phoenix,
         :phoenix_pubsub,
@@ -35,7 +34,8 @@ defmodule Nexpo.Mixfile do
         :phoenix_ecto,
         :postgrex,
         :arc_ecto,
-        :plug_cowboy
+        :plug_cowboy,
+        :cowboy
       ]
     ]
   end
@@ -56,11 +56,10 @@ defmodule Nexpo.Mixfile do
       {:phoenix_html, "~> 2.6"},
       {:phoenix_live_reload, "~> 1.0", only: :dev},
       {:gettext, "~> 0.11"},
-      {:cowboy, "~> 1.0"},
+      {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 1.0"},
       {:ex_machina, "~> 2.0"},
       {:poison, "~> 2.0"},
-      {:jason, "~> 1.1"},
       {:mix_test_watch, "~> 0.3", only: :dev, runtime: false},
       {:cors_plug, "~> 1.3"},
       {:plug_static_index_html, "~> 0.1.2"},
@@ -70,7 +69,6 @@ defmodule Nexpo.Mixfile do
       {:bcrypt_elixir, "~> 0.12"},
       {:guardian, "~> 0.14.5"},
       {:bamboo, "~> 0.8"},
-      {:bamboo_smtp, "~> 1.4.0"},
       {:excoveralls, "~> 0.7", only: :test},
       {:arc, "~> 0.10.0"},
       {:arc_ecto, "~> 0.10.0"},

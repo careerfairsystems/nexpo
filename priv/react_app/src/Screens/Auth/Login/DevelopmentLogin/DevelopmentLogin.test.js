@@ -24,7 +24,7 @@ it('should call login with correct parameters', () => {
   };
   const wrapper = shallow(<DevelopmentLogin {...props} />);
   expect(props.login).toHaveBeenCalledTimes(0);
-  const email = 'dev@it';
+  const email = 'admin@test';
   wrapper.instance().login({ email });
   expect(props.login).toHaveBeenCalledTimes(1);
   expect(props.login).lastCalledWith({ email });

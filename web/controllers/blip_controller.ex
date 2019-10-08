@@ -24,7 +24,7 @@ defmodule Nexpo.BlipController do
             "last_name": "McTest",
             "inserted_at": "2019-09-15T14:55:43.860556",
             "first_name": "Test",
-            "email": "test@it",
+            "email": "student@test",
             "comment": null
         }
     ]
@@ -134,7 +134,7 @@ defmodule Nexpo.BlipController do
             "id": 1,
             "food_preferences": "cake",
             "first_name": "Dev",
-            "email": "dev@it"
+            "email": "admin@test"
         },
         "resume_sv_url": null,
         "resume_en_url": null,
@@ -157,7 +157,7 @@ defmodule Nexpo.BlipController do
     ])
     |> case do
       blip = %{} ->
-        student =
+        _student =
           blip
           |> Map.merge(blip.student)
           |> Map.merge(blip.student.user)
