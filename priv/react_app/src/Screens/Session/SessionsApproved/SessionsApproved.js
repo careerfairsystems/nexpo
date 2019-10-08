@@ -20,6 +20,7 @@ type Session = {
   id?: number,
   studentId: number,
   companyId: number,
+  studentSessionStatus?: Number,
   studentConfirmed?: boolean,
   company: Company,
   studentSessionTimeSlot: TimeSlot
@@ -33,6 +34,7 @@ type Props = {
     website?: string
   },
   confirmSession: number => Promise<void>,
+  declineSession: number => Promise<void>,
   getAllCompanies: () => Promise<void>,
   fetching: boolean
 };
@@ -52,18 +54,36 @@ class StudentSessions extends Component<Props> {
     if (id) confirmSession(id);
   };
 
+  declineSession = (id: ?number) => {
+    const { declineSession } = this.props;
+    if (id) declineSession(id);
+  };
+
   renderSession = (session: Session) => (
     <List.Item
       actions={[
-        session.studentConfirmed ? (
+        session.studentSessionStatus ? (
           <Icon type="check-circle" theme="filled" />
         ) : (
-          <Button
-            type="primary"
-            onClick={() => this.confirmSession(session.id)}
-          >
-            Confirm
-          </Button>
+          <>
+            <div>
+              <Button
+                className="sessionButton"
+                type="primary"
+                onClick={() => this.confirmSession(session.id)}
+              >
+                Confirm
+              </Button>
+            </div>
+            <div>
+              <Button
+                type="danger"
+                onClick={() => this.declineSession(session.id)}
+              >
+                Decline
+              </Button>
+            </div>
+          </>
         )
       ]}
     >

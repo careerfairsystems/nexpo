@@ -1,6 +1,6 @@
 /*
-*   This file contains methods to access the /student_sessions resource on the server.
-*/
+ *   This file contains methods to access the /student_sessions resource on the server.
+ */
 
 import {
   authPost,
@@ -35,7 +35,13 @@ export default {
   /** Confirms a student session */
   confirmSession: (id: string) =>
     authPut(`/api/me/student_sessions/${id}`, {
-      studentSession: { studentConfirmed: true }
+      studentSession: { studentConfirmed: 1 }
+    }).then(handleHttpResponse),
+
+  /** Decline a student session */
+  declineSession: (id: string) =>
+    authPut(`/api/me/student_sessions/${id}`, {
+      studentSession: { studentSessionStatus: 2 }
     }).then(handleHttpResponse),
 
   /** Fetches all reserves for student sessions */
