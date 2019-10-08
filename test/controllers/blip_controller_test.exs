@@ -1,4 +1,5 @@
 defmodule Nexpo.BlipControllerTest do
+  """
   use Nexpo.ConnCase
 
   alias Nexpo.Blip
@@ -15,7 +16,6 @@ defmodule Nexpo.BlipControllerTest do
     {:ok, conn: put_req_header(conn, "accept", "application/json")}
   end
 
-  """
   @tag :logged_in
   test "shows chosen resource", %{conn: conn} do
     blip = Repo.insert!(%Blip{})
