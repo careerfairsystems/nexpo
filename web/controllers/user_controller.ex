@@ -120,6 +120,7 @@ defmodule Nexpo.UserController do
         [
           student: [
             :programme,
+            :interests,
             student_sessions: [:company, :student_session_time_slot],
             student_session_applications: :company
           ]
