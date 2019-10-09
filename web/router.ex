@@ -71,6 +71,7 @@ defmodule Nexpo.Router do
 
     resources("/industries", IndustryController)
     resources("/job_offers", JobOfferController)
+    resources("/interests", InterestController)
     resources("/categories", CategoryController)
     resources("/programmes", ProgrammeController)
     resources("/deadlines", DeadlineController)
