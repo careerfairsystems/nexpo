@@ -2,7 +2,7 @@ defmodule Nexpo.StudentController do
   use Nexpo.Web, :controller
   use Guardian.Phoenix.Controller
 
-  alias Nexpo.{Student, Programme}
+  alias Nexpo.{Student, Programme, Interest}
   alias Nexpo.{CvSv, CvEn}
   alias Guardian.Plug.{EnsurePermissions}
 
@@ -51,6 +51,7 @@ defmodule Nexpo.StudentController do
       Student
       |> Repo.get!(id)
       |> Repo.preload([:student_sessions, :student_session_applications])
+      |> IO.inspect()
 
     render(conn, "show.json", student: student)
   end
@@ -71,9 +72,11 @@ defmodule Nexpo.StudentController do
   end
 
   def update_student(conn, %{"student" => student_params}, user, _claims) do
+    student_params |> IO.inspect()
+
     student =
       Repo.get_by!(Student, %{user_id: user.id})
-      |> Repo.preload(:programme)
+      |> Repo.preload([:programme, :interests])
 
     # We need to set "null" to nil, since FormData can't send null values
     null_params =
@@ -87,6 +90,7 @@ defmodule Nexpo.StudentController do
     changeset =
       Student.changeset(student, student_params)
       |> Programme.put_assoc(student_params)
+      |> Interest.put_assoc(student_params)
 
     Map.keys(student_params)
     |> Enum.filter(fn k -> k in ["resume_sv_url", "resume_en_url"] end)

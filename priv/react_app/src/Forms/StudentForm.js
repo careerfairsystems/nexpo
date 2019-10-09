@@ -33,7 +33,7 @@ type Props = {
 };
 const StudentForm = ({ handleSubmit, pristine, programmes }: Props) => (
   <Form onSubmit={handleSubmit}>
-    <Field name="year" label="Starting Year" component={TextInput} />
+    <Field name="year" label="Graduation Year" component={TextInput} />
     <Field
       name="programme"
       label="Guild:"
@@ -44,6 +44,12 @@ const StudentForm = ({ handleSubmit, pristine, programmes }: Props) => (
     >
       {map(renderProgrammeItem, programmes)}
     </Field>
+    <Field
+      name="master"
+      label="Master's specialization:"
+      component={TextInput}
+    />
+    <Field name="linkedIn" label="LinkedIn URL:" component={TextInput} />
     <Field
       name="resumeSvUrl"
       label="Swedish CV"
@@ -58,7 +64,7 @@ const StudentForm = ({ handleSubmit, pristine, programmes }: Props) => (
     />
 
     <Button disabled={pristine} htmlType="submit">
-      Submit Student Info
+      Submit Student Information
     </Button>
   </Form>
 );

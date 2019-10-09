@@ -17,7 +17,10 @@ type StudentObj = {
   studentSessionApplications?: Array<{ companyId: number }>,
   studentSessions?: Array<{ companyId: number }>,
   programme?: { name: string },
-  year?: string
+  year?: string,
+  master?: string,
+  interest?: Array<string>,
+  linkedin?: string
 };
 
 type Props = {
@@ -81,6 +84,10 @@ class CurrentUser extends Component<Props> {
 
   render() {
     const { currentUser = {}, currentStudent, fetching } = this.props;
+
+    console.log(currentUser);
+    console.log(currentStudent);
+
     if (fetching) {
       return <LoadingSpinner />;
     }
@@ -94,19 +101,24 @@ class CurrentUser extends Component<Props> {
       <div>
         <h1>
           {firstName} {lastName}
-          <Button
-            onClick={this.showConfirm}
-            style={{ float: 'right' }}
-            type="danger"
-          >
-            Delete Account
-          </Button>
         </h1>
+
+        <Button
+          onClick={this.showConfirm}
+          style={{ float: 'right' }}
+          type="danger"
+        >
+          Delete Account
+        </Button>
+
         <p>Email: {email}</p>
+
+        <h2>User Information</h2>
         <CurrentUserForm
           onSubmit={this.updateUser}
           initialValues={currentUser}
         />
+
         {!isEmpty(currentStudent) && (
           <>
             <br />

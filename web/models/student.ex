@@ -31,7 +31,7 @@ defmodule Nexpo.Student do
   """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:year, :user_id])
+    |> cast(params, [:year, :user_id, :master, :linked_in])
     |> cast_attachments(params, [:resume_en_url, :resume_sv_url])
     |> validate_required([:user_id])
     |> unique_constraint(:user_id, message: "Student already has a User")
