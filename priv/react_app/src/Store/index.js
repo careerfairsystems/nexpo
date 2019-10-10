@@ -2,7 +2,7 @@
  *  This is the center of state. It should expose all methods needed by other parts of application
  */
 
-import { createStore, combineReducers, applyMiddleware } from 'redux';
+import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import type { Store as ReduxStore } from 'redux';
 import thunk from 'redux-thunk';
 import reducers from './reducers';
@@ -21,11 +21,13 @@ if (process.env.NODE_ENV === 'development') {
   middlewares.push(logger);
 }
 
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
 const createStoreIfNotExist = () => {
   if (!store) {
     store = createStore(
       combineReducers(reducers),
-      applyMiddleware(...middlewares)
+      composeEnhancers(applyMiddleware(...middlewares))
     );
   }
 };

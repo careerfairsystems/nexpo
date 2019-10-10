@@ -9,6 +9,8 @@ defmodule Nexpo.Student do
     field(:year, :integer)
     field(:resume_en_url, Nexpo.CvEn.Type)
     field(:resume_sv_url, Nexpo.CvSv.Type)
+    field(:linked_in, :string)
+    field(:master, :string)
 
     belongs_to(:user, Nexpo.User, foreign_key: :user_id)
     belongs_to(:programme, Nexpo.Programme, on_replace: :delete)
@@ -19,6 +21,8 @@ defmodule Nexpo.Student do
       on_delete: :nilify_all
     )
 
+    many_to_many(:interests, Nexpo.Interest, join_through: "student_interests")
+
     timestamps()
   end
 
@@ -27,7 +31,7 @@ defmodule Nexpo.Student do
   """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:year, :user_id])
+    |> cast(params, [:year, :user_id, :master, :linked_in])
     |> cast_attachments(params, [:resume_en_url, :resume_sv_url])
     |> validate_required([:user_id])
     |> unique_constraint(:user_id, message: "Student already has a User")
