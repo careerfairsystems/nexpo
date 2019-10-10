@@ -25,7 +25,7 @@ defmodule Nexpo.Email do
 
   defp base_email do
     new_email()
-    |> from("nexpo@arkad.se")
+    |> from("no-reply@arkadtlth.se")
     |> put_html_layout({Nexpo.LayoutView, "email.html"})
   end
 end
