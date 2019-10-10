@@ -37,7 +37,7 @@ const StudentForm = ({ handleSubmit, pristine, programmes }: Props) => (
     <Field name="year" label="Graduation Year" component={TextInput} />
     <Field
       name="programme"
-      label="Guild:"
+      label="Educational programme:"
       showSearch
       format={null}
       optionFilterProp="children"
