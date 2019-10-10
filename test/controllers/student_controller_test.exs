@@ -28,7 +28,10 @@ defmodule Nexpo.StudentControllerTest do
              "resume_en_url" => student.resume_en_url,
              "resume_sv_url" => student.resume_sv_url,
              "student_sessions" => [],
-             "student_session_applications" => []
+             "student_session_applications" => [],
+             "interests" => [],
+             "linked_in" => nil,
+             "master" => nil
            }
   end
 

@@ -24,7 +24,14 @@ defmodule Nexpo.UserController do
   )
 
   def index(conn, %{}, _user, _claims) do
-    users = Repo.all(User)
+    users =
+      Repo.all(User)
+      |> Repo.preload([
+        :roles,
+        [student: [:interests, :programme, :student_sessions, :student_session_applications]],
+        [representative: :company]
+      ])
+
     render(conn, "index.json", users: users)
   end
 
@@ -33,7 +40,7 @@ defmodule Nexpo.UserController do
       Repo.get!(User, id)
       |> Repo.preload([
         :roles,
-        [student: [:programme, :student_sessions, :student_session_applications]],
+        [student: [:interests, :programme, :student_sessions, :student_session_applications]],
         [representative: :company]
       ])
 
@@ -43,7 +50,10 @@ defmodule Nexpo.UserController do
   def update(conn, %{"id" => id, "user" => user_params}, _user, _claims) do
     user =
       Repo.get!(User, id)
-      |> Repo.preload([:roles, :student])
+      |> Repo.preload([
+        :roles,
+        student: [:interests, :programme, :student_sessions, :student_session_applications]
+      ])
 
     changeset = User.changeset(user, user_params)
 
@@ -140,7 +150,7 @@ defmodule Nexpo.UserController do
   @apiUse BadRequestError
   """
   def update_me(conn, %{"user" => user_params}, user, _claims) do
-    user = Repo.preload(user, [:roles, :student])
+    user = Repo.preload(user, [:roles, student: [:interests]])
     changeset = User.changeset(user, user_params)
 
     case Repo.update(changeset) do
