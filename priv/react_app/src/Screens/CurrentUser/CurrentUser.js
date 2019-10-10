@@ -18,6 +18,7 @@ type StudentObj = {
   studentSessions?: Array<{ companyId: number }>,
   programme?: { name: string },
   year?: string,
+  interests?: Array<string>,
   master?: string,
   interest?: Array<string>,
   linkedin?: string
@@ -84,9 +85,6 @@ class CurrentUser extends Component<Props> {
 
   render() {
     const { currentUser = {}, currentStudent, fetching } = this.props;
-
-    console.log(currentUser);
-    console.log(currentStudent);
 
     if (fetching) {
       return <LoadingSpinner />;

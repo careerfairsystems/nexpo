@@ -31,6 +31,7 @@ type Props = {
   programmes: {},
   pristine: boolean
 };
+
 const StudentForm = ({ handleSubmit, pristine, programmes }: Props) => (
   <Form onSubmit={handleSubmit}>
     <Field name="year" label="Graduation Year" component={TextInput} />
@@ -90,7 +91,13 @@ const mapStateToProps = (state, props) => {
 
   return {
     programmes: state.entities.programmes,
-    initialValues: { ...initialValues, resumeSvUrl, resumeEnUrl, programme },
+    initialValues: {
+      ...initialValues,
+      resumeSvUrl,
+      resumeEnUrl,
+      programme,
+      interests: []
+    },
     formState: state.form.StudentForm
   };
 };
