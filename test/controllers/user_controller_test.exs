@@ -38,7 +38,6 @@ defmodule Nexpo.UserControllerTest do
                "student_session_applications" => [],
                "student_sessions" => [],
                "user_id" => user.id,
-               "interests" => [],
                "linked_in" => nil,
                "master" => nil
              }
