@@ -12,7 +12,7 @@ const FieldSelect = makeField(Select);
 
 const renderProgrammeItem = programme => (
   <Select.Option key={programme.id} value={programme.id}>
-    {programme.code}
+    {programme.name} - {programme.code}
   </Select.Option>
 );
 
