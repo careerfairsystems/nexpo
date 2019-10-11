@@ -271,7 +271,7 @@ class App extends Component<Props> {
                   this.restrictedMenuItem({
                     route: 'session/application',
                     title: 'Apply',
-                    disabled: true
+                    disabled: false
                   }),
                   this.restrictedMenuItem({
                     route: 'session/applications',
