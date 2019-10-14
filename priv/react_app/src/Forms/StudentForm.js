@@ -12,7 +12,7 @@ const FieldSelect = makeField(Select);
 
 const renderProgrammeItem = programme => (
   <Select.Option key={programme.id} value={programme.id}>
-    {programme.code}
+    {programme.name} - {programme.code}
   </Select.Option>
 );
 
@@ -31,12 +31,13 @@ type Props = {
   programmes: {},
   pristine: boolean
 };
+
 const StudentForm = ({ handleSubmit, pristine, programmes }: Props) => (
   <Form onSubmit={handleSubmit}>
-    <Field name="year" label="Starting Year" component={TextInput} />
+    <Field name="year" label="Graduation Year" component={TextInput} />
     <Field
       name="programme"
-      label="Guild:"
+      label="Educational programme:"
       showSearch
       format={null}
       optionFilterProp="children"
@@ -44,6 +45,12 @@ const StudentForm = ({ handleSubmit, pristine, programmes }: Props) => (
     >
       {map(renderProgrammeItem, programmes)}
     </Field>
+    <Field
+      name="master"
+      label="Master's specialization:"
+      component={TextInput}
+    />
+    <Field name="linkedIn" label="LinkedIn URL:" component={TextInput} />
     <Field
       name="resumeSvUrl"
       label="Swedish CV"
@@ -58,7 +65,7 @@ const StudentForm = ({ handleSubmit, pristine, programmes }: Props) => (
     />
 
     <Button disabled={pristine} htmlType="submit">
-      Submit Student Info
+      Submit Student Information
     </Button>
   </Form>
 );
@@ -84,7 +91,13 @@ const mapStateToProps = (state, props) => {
 
   return {
     programmes: state.entities.programmes,
-    initialValues: { ...initialValues, resumeSvUrl, resumeEnUrl, programme },
+    initialValues: {
+      ...initialValues,
+      resumeSvUrl,
+      resumeEnUrl,
+      programme,
+      interests: []
+    },
     formState: state.form.StudentForm
   };
 };

@@ -14,7 +14,9 @@ defmodule Nexpo do
 
     # Configure Sentry to catch all errors in prod
     if Mix.env() == :prod do
-      :ok = :error_logger.add_report_handler(Sentry.Logger)
+      {:ok, _} = Logger.add_backend(Sentry.LoggerBackend)
+      # todo:remove
+      # :ok = :error_logger.add_report_handler(Sentry.LoggerBackend)
     end
 
     Supervisor.start_link(children, opts)

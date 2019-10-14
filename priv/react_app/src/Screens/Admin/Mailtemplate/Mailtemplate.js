@@ -34,7 +34,12 @@ class Mailtemplate extends Component<Props> {
     if (id) getMailtemplate(id);
   }
 
-  updateMailtemplate = (values: MailTemplateObj) => {
+  updateMailtemplate = (values: {
+    name?: string,
+    subject?: string,
+    content?: string,
+    signature?: string
+  }) => {
     const {
       id,
       mailtemplate,
@@ -43,9 +48,9 @@ class Mailtemplate extends Component<Props> {
     } = this.props;
 
     if (isEmpty(mailtemplate)) {
-      createMailtemplate({ mailtemplate: values });
+      createMailtemplate({ mailtemplate: { id, ...values } });
     } else if (id) {
-      updateMailtemplate(id, { mailtemplate: values });
+      updateMailtemplate(id, { mailtemplate: { id, ...values } });
     }
   };
 

@@ -5,7 +5,7 @@ defmodule Nexpo.Mixfile do
     [
       app: :nexpo,
       version: "0.0.1",
-      elixir: "~> 1.2",
+      elixir: "~> 1.8.2",
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
       build_embedded: Mix.env() == :prod,
@@ -24,18 +24,18 @@ defmodule Nexpo.Mixfile do
       mod: {Nexpo, []},
       applications: [
         :bamboo,
-        :bamboo_smtp,
         :ex_machina,
         :phoenix,
         :phoenix_pubsub,
         :phoenix_html,
-        :cowboy,
         :sentry,
         :logger,
         :gettext,
         :phoenix_ecto,
         :postgrex,
-        :arc_ecto
+        :arc_ecto,
+        :plug_cowboy,
+        :cowboy
       ]
     ]
   end
@@ -49,26 +49,26 @@ defmodule Nexpo.Mixfile do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:phoenix, "~> 1.2.4"},
+      {:phoenix, "~> 1.3.0"},
       {:phoenix_pubsub, "~> 1.0"},
       {:phoenix_ecto, "~> 3.0"},
       {:postgrex, ">= 0.0.0"},
       {:phoenix_html, "~> 2.6"},
       {:phoenix_live_reload, "~> 1.0", only: :dev},
       {:gettext, "~> 0.11"},
-      {:cowboy, "~> 1.0"},
+      {:jason, "~> 1.0"},
+      {:plug_cowboy, "~> 1.0"},
       {:ex_machina, "~> 2.0"},
       {:poison, "~> 2.0"},
       {:mix_test_watch, "~> 0.3", only: :dev, runtime: false},
       {:cors_plug, "~> 1.3"},
       {:plug_static_index_html, "~> 0.1.2"},
       {:ex_json_schema, "~> 0.5.4"},
-      {:sentry, "~> 6.0.0"},
+      {:sentry, "~> 7.0.0"},
       {:comeonin, "~> 4.0"},
       {:bcrypt_elixir, "~> 0.12"},
       {:guardian, "~> 0.14.5"},
       {:bamboo, "~> 0.8"},
-      {:bamboo_smtp, "~> 1.4.0"},
       {:excoveralls, "~> 0.7", only: :test},
       {:arc, "~> 0.10.0"},
       {:arc_ecto, "~> 0.10.0"},

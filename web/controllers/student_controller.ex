@@ -2,7 +2,7 @@ defmodule Nexpo.StudentController do
   use Nexpo.Web, :controller
   use Guardian.Phoenix.Controller
 
-  alias Nexpo.{Student, Programme}
+  alias Nexpo.{Student, Programme, Interest}
   alias Nexpo.{CvSv, CvEn}
   alias Guardian.Plug.{EnsurePermissions}
 
@@ -25,7 +25,10 @@ defmodule Nexpo.StudentController do
   )
 
   def index(conn, %{}, _user, _claims) do
-    students = Repo.all(Student)
+    students =
+      Repo.all(Student)
+      |> Repo.preload([:interests, :student_sessions, :student_session_applications])
+
     render(conn, "index.json", students: students)
   end
 
@@ -37,7 +40,7 @@ defmodule Nexpo.StudentController do
         conn
         |> put_status(:created)
         |> put_resp_header("location", student_path(conn, :show, student))
-        |> render("show.json", student: student)
+        |> render("show.json", student: student |> Repo.preload(:interests))
 
       {:error, changeset} ->
         conn
@@ -50,13 +53,16 @@ defmodule Nexpo.StudentController do
     student =
       Student
       |> Repo.get!(id)
-      |> Repo.preload([:student_sessions, :student_session_applications])
+      |> Repo.preload([:interests, :student_sessions, :student_session_applications])
 
     render(conn, "show.json", student: student)
   end
 
   def update(conn, %{"id" => id, "student" => student_params}, _user, _claims) do
-    student = Repo.get!(Student, id)
+    student =
+      Repo.get!(Student, id)
+      |> Repo.preload([:interests, :programme])
+
     changeset = Student.changeset(student, student_params)
 
     case Repo.update(changeset) do
@@ -73,7 +79,7 @@ defmodule Nexpo.StudentController do
   def update_student(conn, %{"student" => student_params}, user, _claims) do
     student =
       Repo.get_by!(Student, %{user_id: user.id})
-      |> Repo.preload(:programme)
+      |> Repo.preload([:programme, :interests])
 
     # We need to set "null" to nil, since FormData can't send null values
     null_params =
@@ -87,6 +93,7 @@ defmodule Nexpo.StudentController do
     changeset =
       Student.changeset(student, student_params)
       |> Programme.put_assoc(student_params)
+      |> Interest.put_assoc(student_params)
 
     Map.keys(student_params)
     |> Enum.filter(fn k -> k in ["resume_sv_url", "resume_en_url"] end)

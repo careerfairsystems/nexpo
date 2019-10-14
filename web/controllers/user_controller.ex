@@ -24,7 +24,14 @@ defmodule Nexpo.UserController do
   )
 
   def index(conn, %{}, _user, _claims) do
-    users = Repo.all(User)
+    users =
+      Repo.all(User)
+      |> Repo.preload([
+        :roles,
+        [student: [:interests, :programme, :student_sessions, :student_session_applications]],
+        [representative: :company]
+      ])
+
     render(conn, "index.json", users: users)
   end
 
@@ -33,7 +40,7 @@ defmodule Nexpo.UserController do
       Repo.get!(User, id)
       |> Repo.preload([
         :roles,
-        [student: [:programme, :student_sessions, :student_session_applications]],
+        [student: [:interests, :programme, :student_sessions, :student_session_applications]],
         [representative: :company]
       ])
 
@@ -43,7 +50,10 @@ defmodule Nexpo.UserController do
   def update(conn, %{"id" => id, "user" => user_params}, _user, _claims) do
     user =
       Repo.get!(User, id)
-      |> Repo.preload([:roles, :student])
+      |> Repo.preload([
+        :roles,
+        student: [:interests, :programme, :student_sessions, :student_session_applications]
+      ])
 
     changeset = User.changeset(user, user_params)
 
@@ -68,6 +78,51 @@ defmodule Nexpo.UserController do
     send_resp(conn, :no_content, "")
   end
 
+  @apidoc """
+  @api {GET} api/me Request user information
+
+  @apiGroup User
+
+  @apiSuccessExample {json} Success
+    HTTP 200 OK
+    {
+      "data": {
+          "student": {
+              "year": 2019,
+              "user_id": 000,
+              "student_sessions": [],
+              "student_session_applications": [],
+              "resume_sv_url": null,
+              "resume_en_url": null,
+              "programme": {
+                  "name": "D-Guild",
+                  "id": 7,
+                  "code": "D"
+              },
+              "id": 000
+          },
+          "roles": [
+              {
+                  "type": "admin",
+                  "permissions": [
+                      "read_all",
+                      "write_all"
+                  ],
+                  "id": 1
+              }
+          ],
+          "representative": null,
+          "phone_number": "0713371337",
+          "last_name": "Developer",
+          "id": 000,
+          "food_preferences": null,
+          "first_name": "Developer",
+          "email": "developer@nexpo.com"
+      }
+  }
+
+  @apiUse BadRequestError
+  """
   def show_me(conn, %{}, user, _claims) do
     user =
       Repo.preload(user, [
@@ -75,6 +130,7 @@ defmodule Nexpo.UserController do
         [
           student: [
             :programme,
+            :interests,
             student_sessions: [:company, :student_session_time_slot],
             student_session_applications: :company
           ]
@@ -85,8 +141,16 @@ defmodule Nexpo.UserController do
     conn |> put_status(200) |> render("show.json", user: user)
   end
 
+  @apidoc """
+  @api {POST} api/me Update user information
+  @apiGroup User
+  @apiParam {json} User Same structure as information recieved when requesting information
+  @apiSuccessExample {json} Success
+    HTTP 200 OK
+  @apiUse BadRequestError
+  """
   def update_me(conn, %{"user" => user_params}, user, _claims) do
-    user = Repo.preload(user, [:roles, :student])
+    user = Repo.preload(user, [:roles, student: [:interests]])
     changeset = User.changeset(user, user_params)
 
     case Repo.update(changeset) do
@@ -100,6 +164,13 @@ defmodule Nexpo.UserController do
     end
   end
 
+  @apidoc """
+  @api {DELETE} api/me Delete user
+  @apiGroup User
+  @apiSuccessExample {json} Success
+    HTTP 200 OK
+  @apiUse BadRequestError
+  """
   def delete_me(conn, %{}, user, _claims) do
     # Here we use delete! (with a bang) because we expect
     # it to always work (and if it does not, it will raise).
@@ -109,7 +180,7 @@ defmodule Nexpo.UserController do
   end
 
   @apidoc """
-  @api {POST} /password/forgot Init reset of password
+  @api {POST} api/password/forgot Init reset of password
   @apiGroup Forgot password
 
   @apiParam {String}  email   Email of user
@@ -137,7 +208,7 @@ defmodule Nexpo.UserController do
   end
 
   @apidoc """
-  @api {POST} /password/new/:key Reset forgotten password
+  @api {POST} api/password/new/:key Reset forgotten password
   @apiGroup Forgot password
 
   @apiParam {String}  key                   Key representing this password reset
@@ -199,7 +270,7 @@ defmodule Nexpo.UserController do
   end
 
   @apidoc """
-  @api {GET} /password/forgot/:key Verify password forgotten
+  @api {GET} api/password/forgot/:key Verify password forgotten
   @apiGroup Forgot password
 
   @apiParam {String}  key   Key representing a password reset

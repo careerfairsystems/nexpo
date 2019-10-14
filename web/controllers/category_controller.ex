@@ -64,6 +64,7 @@ defmodule Nexpo.CategoryController do
   @apiUse UnprocessableEntity
   @apiUse InternalServerError
   """
+
   def create(conn, %{"category" => category_params}) do
     changeset = Category.changeset(%Category{}, category_params)
 
@@ -103,6 +104,7 @@ defmodule Nexpo.CategoryController do
   @apiUse NotFoundError
   @apiUse InternalServerError
   """
+
   def show(conn, %{"id" => id}) do
     category =
       Repo.get!(Category, id)

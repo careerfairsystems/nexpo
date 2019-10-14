@@ -10,7 +10,7 @@ describe('RoleEdit', () => {
   beforeEach(() => {
     props = {
       role: { type: 'admin', permissions: ['read_all', 'write_all'] },
-      users: { '1': { id: 1, email: 'dev@it' } },
+      users: { '1': { id: 1, email: 'admin@test' } },
       getRole: jest.fn(),
       getAllUsers: jest.fn(),
       fetchingUsers: false,
@@ -56,7 +56,7 @@ describe('RoleEdit', () => {
 
   it('updateValues should call updateRole with correct values', () => {
     const id = '1';
-    const values = { type: 'admin', permissions: ['read_all'] };
+    const values = { user: 1, type: 'admin', permissions: ['read_all'] };
     const wrapper = shallow(<RoleEdit id={id} {...props} />);
     wrapper.instance().updateRole(values);
     expect(props.updateRole).toHaveBeenCalledWith(id, { role: values });

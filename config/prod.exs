@@ -37,20 +37,8 @@ config :sentry,
   included_environments: [:prod]
 
 config :nexpo, Nexpo.Mailer,
-  adapter: Bamboo.SMTPAdapter,
-  server: System.get_env("SMTP_SERVER_NAME"),
-  hostname: System.get_env("SMTP_SERVER_NAME"),
-  port: System.get_env("SMTP_SERVER_PORT"),
-  username: System.get_env("SMTP_USERNAME"),
-  # or {:system, "SMTP_PASSWORD"}
-  password: System.get_env("SMTP_PASSWORD"),
-  # can be `:always` or `:never`
-  tls: :if_available,
-  # or {":system", ALLOWED_TLS_VERSIONS"} w/ comma seprated values (e.g. "tlsv1.1,tlsv1.2")
-  allowed_tls_versions: [:tlsv1, :"tlsv1.1", :"tlsv1.2"],
-  # can be `true`
-  ssl: false,
-  retries: 1
+  adapter: Bamboo.SendgridAdapter,
+  api_key: System.get_env("SENDGRID_API_KEY")
 
 # Config prod specific settings for guardin
 config :guardian, Guardian, secret_key: System.get_env("SECRET_KEY_BASE")

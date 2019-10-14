@@ -58,7 +58,7 @@ defmodule Nexpo.SignupController do
   def create_representative(conn, %{"email" => email, "company_id" => company_id}) do
     case User.initial_signup(%{email: email}) do
       {:ok, user} ->
-        Email.pre_signup_email(user) |> Mailer.deliver_later()
+        user |> Email.pre_signup_email() |> Mailer.deliver_later()
         Representative.build_assoc!(user, company_id)
 
         conn

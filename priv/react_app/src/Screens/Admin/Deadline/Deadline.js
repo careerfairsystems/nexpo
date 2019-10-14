@@ -5,6 +5,11 @@ import DeadlineForm from '../../../Forms/DeadlineForm';
 import NotFound from '../../NotFound';
 import LoadingSpinner from '../../../Components/LoadingSpinner';
 
+type updateValues = {
+  name?: string,
+  start?: string,
+  end?: string
+};
 type Props = {
   id?: string,
   deadline: {},
@@ -23,7 +28,7 @@ class Deadline extends Component<Props> {
     if (id) getDeadline(id);
   }
 
-  updateDeadline = (values: { name: string, start: string, end: string }) => {
+  updateDeadline = (values: updateValues) => {
     const { id, deadline, createDeadline, updateDeadline } = this.props;
 
     if (isEmpty(deadline)) {

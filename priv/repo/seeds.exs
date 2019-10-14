@@ -33,54 +33,54 @@ alias Nexpo.Repo
 alias Nexpo.User
 
 Repo.insert!(%User{
-  email: "dev@it",
+  email: "admin@test",
   first_name: "Dev",
   last_name: "Dev",
   phone_number: "0707112233",
   food_preferences: "cake",
-  hashed_password: "legit_hash_123"
+  hashed_password: Comeonin.Bcrypt.hashpwsalt("password")
 })
 
 Repo.insert!(%User{
-  email: "test@it",
+  email: "student@test",
   first_name: "Test",
   last_name: "McTest",
   phone_number: "13371337",
   food_preferences: "Cookies",
-  hashed_password: "legit_hash_123"
+  hashed_password: Comeonin.Bcrypt.hashpwsalt("password")
 })
 
 Repo.insert!(%User{
-  email: "test@google",
+  email: "company@test",
   first_name: "Mr.",
   last_name: "Google",
   phone_number: "555123456",
   food_preferences: "User data only!",
-  hashed_password: "legit_hash_321"
+  hashed_password: Comeonin.Bcrypt.hashpwsalt("password")
 })
 
-user = Repo.get_by(User, %{email: "dev@it"}) |> Repo.preload([:roles, :student])
-test_user = Repo.get_by(User, %{email: "test@it"}) |> Repo.preload([:roles, :student])
-rep_user = Repo.get_by(User, %{email: "test@google"}) |> Repo.preload([:representative])
+admin_user = Repo.get_by(User, %{email: "admin@test"}) |> Repo.preload([:roles, :student])
+student_user = Repo.get_by(User, %{email: "student@test"}) |> Repo.preload([:roles, :student])
+company_user = Repo.get_by(User, %{email: "company@test"}) |> Repo.preload([:representative])
 
 # Create some roles
 alias Nexpo.Role
-role = Repo.insert!(%Role{type: "admin", permissions: ["read_all", "write_all"]})
+admin_role = Repo.insert!(%Role{type: "admin", permissions: ["read_all", "write_all"]})
 pleb_role = Repo.insert!(%Role{type: "pleb", permissions: []})
 
 # Associate roles with users
-User.changeset(user)
-|> Ecto.Changeset.put_assoc(:roles, [role])
+User.changeset(admin_user)
+|> Ecto.Changeset.put_assoc(:roles, [admin_role])
 |> Nexpo.Repo.update!()
 
-User.changeset(test_user)
+User.changeset(student_user)
 |> Ecto.Changeset.put_assoc(:roles, [pleb_role])
 |> Nexpo.Repo.update!()
 
 # Associate students with users
 alias Nexpo.Student
-Student.build_assoc!(user)
-Student.build_assoc!(test_user)
+Student.build_assoc!(admin_user)
+Student.build_assoc!(student_user)
 
 # Create some companies
 alias Nexpo.Company
@@ -118,7 +118,7 @@ google = Repo.get_by!(Company, %{name: "Google"})
 
 # Associate representatives with users
 alias Nexpo.Representative
-Representative.build_assoc!(rep_user, google.id)
+Representative.build_assoc!(company_user, google.id)
 
 # Create some Categories
 alias Nexpo.Category
@@ -217,10 +217,10 @@ Repo.insert!(%StudentSessionApplication{
 })
 
 # Create som student sessions
-alias Nexpo.StudentSession
-Repo.insert!(%StudentSession{student_id: 2, student_session_time_slot_id: 1})
-Repo.insert!(%StudentSession{student_id: 1, student_session_time_slot_id: 2})
-Repo.insert!(%StudentSession{student_id: 2, student_session_time_slot_id: 3})
+# alias Nexpo.StudentSession
+# Repo.insert!(%StudentSession{student_id: 2, student_session_time_slot_id: 1})
+# Repo.insert!(%StudentSession{student_id: 1, student_session_time_slot_id: 2})
+# Repo.insert!(%StudentSession{student_id: 2, student_session_time_slot_id: 3})
 
 # Create some mailtemplates
 alias Nexpo.Mailtemplate

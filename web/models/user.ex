@@ -13,6 +13,7 @@ defmodule Nexpo.User do
     field(:hashed_password, :string)
     field(:password, :string, virtual: true)
     field(:signup_key, :string)
+    field(:profile_image, Nexpo.ProfileImage.Type)
     field(:forgot_password_key, :string)
     field(:forgot_password_time, :naive_datetime)
 
@@ -34,11 +35,10 @@ defmodule Nexpo.User do
   end
 
   def get_permissions(user) do
-    Repo.all(
-      from(role in Ecto.assoc(user, :roles),
-        select: role.permissions
-      )
+    from(role in Ecto.assoc(user, :roles),
+      select: role.permissions
     )
+    |> Repo.all()
     |> List.flatten()
   end
 

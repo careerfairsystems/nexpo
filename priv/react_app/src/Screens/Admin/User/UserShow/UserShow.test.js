@@ -46,7 +46,7 @@ it('should render LoadingSpinner if fetching is true', () => {
 
 it('displayName and roles should function correctly', () => {
   const user = {
-    email: 'dev@it',
+    email: 'admin@test',
     firstName: 'Dev',
     lastName: 'X',
     roles: [{ type: 'admin' }]

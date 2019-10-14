@@ -1,6 +1,10 @@
 defmodule Nexpo.Endpoint do
   use Phoenix.Endpoint, otp_app: :nexpo
 
+  if Mix.env() == :prod do
+    use Sentry.Phoenix.Endpoint
+  end
+
   socket("/socket", Nexpo.UserSocket)
 
   # Serve at "/" the static files from "priv/static" directory.

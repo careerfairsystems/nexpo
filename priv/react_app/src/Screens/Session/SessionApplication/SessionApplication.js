@@ -8,8 +8,8 @@ import SessionForm from '../../../Forms/SessionForm';
 import '../Session.css';
 
 type StudentObj = {
-  resumeEnUrl?: string,
-  resumeSvUrl?: string
+  resumeEnUrl?: { uid: number, fileName: string },
+  resumeSvUrl?: { uid: number, fileName: string }
 };
 type Application = {
   companyId: number,

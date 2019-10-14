@@ -20,7 +20,7 @@ const CurrentUserForm = ({ handleSubmit, pristine, submitting }: Props) => (
       type="number"
     />
     <Button disabled={pristine || submitting} htmlType="submit">
-      Submit
+      Submit User Information
     </Button>
   </Form>
 );

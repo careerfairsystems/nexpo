@@ -36,7 +36,7 @@ defmodule Nexpo.RepresentativeControllerTest do
 
   @tag :logged_in
   test "creates and renders resource when data is valid", %{conn: conn} do
-    user = Repo.insert!(%User{email: "dev@it"})
+    user = Repo.insert!(%User{email: "admin@test"})
     company = Repo.insert!(%Company{name: "Company"})
     attrs = %{@valid_attrs | user_id: user.id, company_id: company.id}
     conn = post(conn, representative_path(conn, :create), representative: attrs)
@@ -52,7 +52,7 @@ defmodule Nexpo.RepresentativeControllerTest do
 
   @tag :logged_in
   test "updates and renders chosen resource when data is valid", %{conn: conn} do
-    user = Repo.insert!(%User{email: "dev@it"})
+    user = Repo.insert!(%User{email: "admin@test"})
     company = Repo.insert!(%Company{name: "Company"})
     attrs = %{@valid_attrs | user_id: user.id, company_id: company.id}
     representative = Repo.insert!(%Representative{user_id: user.id, company_id: company.id})

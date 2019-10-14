@@ -43,7 +43,7 @@ describe('users', () => {
         id: 2,
         firstName: 'Dev',
         lastName: 'Dev',
-        email: 'dev@it.now'
+        email: 'admin@test.now'
       }
     };
     const wrapper = shallow(<Users id="1" {...props} users={users} />);

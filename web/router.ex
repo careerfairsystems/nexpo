@@ -41,9 +41,15 @@ defmodule Nexpo.Router do
     put("/me", UserController, :update_me)
     delete("/me", UserController, :delete_me)
     put("/me/student", StudentController, :update_student)
+    post("/student_session_applications", StudentSessionApplicationController, :create)
     put("/me/student_session_applications/:id", StudentSessionApplicationController, :update_me)
 
-    # delete "/me/student_session_applications/:id", StudentSessionApplicationController, :delete_me
+    delete(
+      "/me/student_session_applications/:id",
+      StudentSessionApplicationController,
+      :delete_me
+    )
+
     put("/me/student_sessions/:id", StudentSessionController, :update_me)
     get("/me/company", CompanyController, :show_me)
     put("/me/company", CompanyController, :update_me)
@@ -54,7 +60,7 @@ defmodule Nexpo.Router do
     get("/statistics", StatisticsController, :index)
 
     resources "/students", StudentController do
-      # resources "/student_session_applications", StudentSessionApplicationController
+      # resources("/student_session_applications", StudentSessionApplicationController)
     end
 
     post("/initial_representative_signup", SignupController, :create_representative)
@@ -66,6 +72,7 @@ defmodule Nexpo.Router do
 
     resources("/industries", IndustryController)
     resources("/job_offers", JobOfferController)
+    resources("/interests", InterestController)
     resources("/categories", CategoryController)
     resources("/programmes", ProgrammeController)
     resources("/deadlines", DeadlineController)
@@ -75,7 +82,12 @@ defmodule Nexpo.Router do
     delete("/student_sessions", StudentSessionController, :delete_bulk)
     get("/student_session_reserves", StudentSessionController, :show_reserves)
 
-    # resources "/student_session_applications", StudentSessionApplicationController, only: [:create]
+    resources("/me/company/blips", BlipController,
+      only: [:create, :update, :show, :delete, :index]
+    )
+
+    # TODO implement
+    # get("/me/company/reps", BlipController, :get_reps)
   end
 
   # Not-protected endpoints
@@ -95,12 +107,6 @@ defmodule Nexpo.Router do
     post("/password/forgot", UserController, :forgot_password_init)
     get("/password/forgot/:key", UserController, :forgot_password_verification)
     post("/password/new/:key", UserController, :replace_forgotten_password)
-
-    # MOCKS
-    get("/me/company/blips", MockController, :get_blips)
-    get("/me/company/representatives", MockController, :get_reps)
-    get("/me/company/comments/:student_id", MockController, :get_student_comment)
-    post("/me/company/comments/:student_id", MockController, :comment_student)
   end
 
   scope "/", Nexpo do
