@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { sortBy } from 'lodash/fp';
-import { Icon, List, Avatar, Button } from 'antd';
+import { Icon, List, Avatar, Button, Popconfirm } from 'antd';
 import LoadingSpinner from '../../../Components/LoadingSpinner';
 import HtmlTitle from '../../../Components/HtmlTitle';
 import { toSessionTimeFormat } from '../../../Util/FormatHelper';
@@ -21,7 +21,6 @@ type Session = {
   studentId: number,
   companyId: number,
   studentSessionStatus?: Number,
-  studentConfirmed?: boolean,
   company: Company,
   studentSessionTimeSlot: TimeSlot
 };
@@ -51,12 +50,12 @@ class StudentSessions extends Component<Props> {
 
   confirmSession = (id: ?number) => {
     const { confirmSession } = this.props;
-    if (id) confirmSession(id);
+    if (id) confirmSession(id, 1);
   };
 
   declineSession = (id: ?number) => {
     const { declineSession } = this.props;
-    if (id) declineSession(id);
+    if (id) declineSession(id, 2);
   };
 
   renderSession = (session: Session) => (
@@ -76,12 +75,17 @@ class StudentSessions extends Component<Props> {
               </Button>
             </div>
             <div>
+	    <Popconfirm
+            	title="Sure to decline?"
+            	onConfirm={() => this.declineSession(session.id)}
+              >
               <Button
                 type="danger"
-                onClick={() => this.declineSession(session.id)}
               >
                 Decline
               </Button>
+	     </Popconfirm>
+
             </div>
           </>
         )

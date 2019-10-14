@@ -7,8 +7,12 @@ export const updateStudentSessionIsLoading = () => ({
   type: actionTypes.PUT_STUDENT_SESSION
 });
 
-export const updateStudentSessionSuccess = (studentSession: {}) => {
-  message.success('Your Session was successfully confirmed.');
+export const updateStudentSessionSuccess = (studentSession: {}, state: Number) => {
+  if (state==1) {
+    message.success('Your Session was successfully confirmed.');
+  } else if (state == 2) {
+    message.success('Your Session was successfully declined.');	
+  }
   return {
     type: actionTypes.PUT_STUDENT_SESSION_SUCCESS,
     studentSession
@@ -25,16 +29,27 @@ export const updateStudentSessionFailure = (): UpdateStudentSessionFailureAction
   };
 };
 
-export function updateStudentSession(id: string) {
+export function updateStudentSession(id: string, state: Number) {
   return (dispatch: Dispatch<{ type: string }>) => {
     dispatch(updateStudentSessionIsLoading());
-    return API.studentSessions
+    if (state === 1) {
+      return API.studentSessions
       .confirmSession(id)
       .then(session => {
-        dispatch(updateStudentSessionSuccess(session.data));
+        dispatch(updateStudentSessionSuccess(session.data, 1));
       })
       .catch(() => {
         dispatch(updateStudentSessionFailure());
       });
+	  } else if(state === 2) {
+		  return API.studentSessions
+		  .declineSession(id)
+		  .then(session => {
+			  dispatch(updateStudentSessionSuccess(session.data, 2));
+		  })
+		  .catch(() => {
+			  dispatch(updateStudentSessionFailure());
+		  });
+	  }
   };
 }

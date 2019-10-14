@@ -35,7 +35,7 @@ export default {
   /** Confirms a student session */
   confirmSession: (id: string) =>
     authPut(`/api/me/student_sessions/${id}`, {
-      studentSession: { studentConfirmed: 1 }
+      studentSession: { studentSessionStatus: 1 }
     }).then(handleHttpResponse),
 
   /** Decline a student session */
