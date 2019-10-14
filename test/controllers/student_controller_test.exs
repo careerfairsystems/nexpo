@@ -30,7 +30,8 @@ defmodule Nexpo.StudentControllerTest do
              "student_sessions" => [],
              "student_session_applications" => [],
              "linked_in" => nil,
-             "master" => nil
+             "master" => nil,
+             "interests" => []
            }
   end
 

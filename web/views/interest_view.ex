@@ -10,6 +10,9 @@ defmodule Nexpo.InterestView do
   end
 
   def render("interest.json", %{interest: interest}) do
-    %{id: interest.id, name: interest.name}
+    # Define own parameters to keep
+    base = [:id, :name]
+
+    Nexpo.Support.View.render_object(interest, base)
   end
 end
