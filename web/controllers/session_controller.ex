@@ -22,7 +22,10 @@ defmodule Nexpo.SessionController do
   @apiUse UnauthorizedError
   """
   def create(conn, %{"email" => email, "password" => password}) do
-    case User.authenticate(%{email: email, password: password}) do
+    case User.authenticate(%{
+           email: email |> String.trim() |> String.downcase(),
+           password: password
+         }) do
       {:ok, user} ->
         permissions = User.get_permissions(user)
         perms = %{default: permissions}
@@ -46,7 +49,7 @@ defmodule Nexpo.SessionController do
   This allows developers to login as anybody, by only specifying email
   """
   def development_create(conn, %{"email" => email}) do
-    case Repo.get_by(User, email: email) do
+    case Repo.get_by(User, email: email |> String.trim() |> String.downcase()) do
       nil ->
         conn
         |> put_status(404)
