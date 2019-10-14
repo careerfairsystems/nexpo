@@ -193,17 +193,20 @@ defmodule Nexpo.StudentSessionController do
         |> render(Nexpo.ErrorView, "400.json")
 
       session ->
-        changeset = StudentSession.student_changeset(session, student_sessions_params)
+	if session.student_session_status < Map.get(student_sessions_params, "student_session_status") do
+	    changeset = StudentSession.student_changeset(session, student_sessions_params)
 
-        case Repo.update(changeset) do
-          {:ok, sess} ->
-            render(conn, "show.json", student_session: sess)
+            case Repo.update(changeset) do
+              {:ok, sess} ->
+                render(conn, "show.json", student_session: sess)
 
-          {:error, changeset} ->
-            conn
-            |> put_status(:unprocessable_entity)
-            |> render(Nexpo.ChangesetView, "error.json", changeset: changeset)
-        end
+              {:error, changeset} ->
+                conn
+                |> put_status(:unprocessable_entity)
+                |> render(Nexpo.ChangesetView, "error.json", changeset: changeset)
+	    end
+          end  
+      
     end
   end
 end

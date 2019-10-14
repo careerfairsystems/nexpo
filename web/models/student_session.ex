@@ -7,7 +7,7 @@ defmodule Nexpo.StudentSession do
     field(:start, :naive_datetime)
     field(:end, :naive_datetime)
     # The different states are (0: not confirmed, 1: confirmed, 2: declined)
-    field(:student_session_state, :integer, default: 0)
+    field(:student_session_status, :integer, default: 0)
 
     belongs_to(:company, Nexpo.Company)
     belongs_to(:student, Nexpo.Student)
@@ -24,7 +24,7 @@ defmodule Nexpo.StudentSession do
     |> cast(params, [
       :start,
       :end,
-      :student_session_state,
+      :student_session_status,
       :company_id,
       :student_id,
       :student_session_time_slot_id
@@ -38,7 +38,7 @@ defmodule Nexpo.StudentSession do
 
   def student_changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:student_session_state])
+    |> cast(params, [:student_session_status])
   end
 
   def get_reserves() do

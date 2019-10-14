@@ -76,7 +76,8 @@ class StudentSessions extends Component<Props> {
             </div>
             <div>
 	    <Popconfirm
-            	title="Sure to decline?"
+		placement="left"
+            	title="You cannot edit your response after declining"
             	onConfirm={() => this.declineSession(session.id)}
               >
               <Button
