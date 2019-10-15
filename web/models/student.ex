@@ -21,7 +21,11 @@ defmodule Nexpo.Student do
       on_delete: :nilify_all
     )
 
-    many_to_many(:interests, Nexpo.Interest, join_through: "student_interests")
+    many_to_many(:interests, Nexpo.Interest,
+      join_through: "student_interests",
+      on_delete: :delete_all,
+      on_replace: :delete
+    )
 
     timestamps()
   end

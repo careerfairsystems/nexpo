@@ -7,7 +7,11 @@ defmodule Nexpo.Interest do
   schema "interests" do
     field(:name, :string)
 
-    many_to_many(:students, Nexpo.Student, join_through: "student_interests")
+    many_to_many(:students, Nexpo.Student,
+      join_through: "student_interests",
+      on_delete: :delete_all,
+      on_replace: :delete
+    )
 
     timestamps()
   end
@@ -22,12 +26,15 @@ defmodule Nexpo.Interest do
   end
 
   def put_assoc(changeset, params) do
-    case Map.get(params, "interest_ids") do
+    case Map.get(params, "interests") do
       nil ->
         changeset
 
       interest_ids ->
-        interests = get_assoc(interest_ids)
+        interests =
+          interest_ids
+          |> Enum.map(fn {_, v} -> v end)
+          |> get_assoc()
 
         changeset
         |> Ecto.Changeset.put_assoc(:interests, interests)

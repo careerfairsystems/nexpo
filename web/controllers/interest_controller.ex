@@ -45,7 +45,11 @@ defmodule Nexpo.InterestController do
   end
 
   def show(conn, %{"id" => id}) do
-    interest = Repo.get!(Interest, id)
+    interest =
+      Interest
+      |> Repo.get!(id)
+      |> Repo.preload(:students)
+
     render(conn, "show.json", interest: interest)
   end
 

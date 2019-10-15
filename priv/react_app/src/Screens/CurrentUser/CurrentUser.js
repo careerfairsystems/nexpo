@@ -18,9 +18,8 @@ type StudentObj = {
   studentSessions?: Array<{ companyId: number }>,
   programme?: { name: string },
   year?: string,
-  interests?: Array<string>,
+  interests?: [number],
   master?: string,
-  interest?: Array<string>,
   linkedin?: string
 };
 

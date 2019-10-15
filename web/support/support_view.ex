@@ -72,6 +72,9 @@ defmodule Nexpo.Support.View do
       :programme ->
         %{:programme => render_one(object.programme, Nexpo.ProgrammeView, "programme.json")}
 
+      :interests ->
+        %{:interests => render_many(object.interests, Nexpo.InterestView, "interest.json")}
+
       :student_session_applications ->
         %{
           :student_session_applications =>
