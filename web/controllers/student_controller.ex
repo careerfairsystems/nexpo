@@ -53,7 +53,7 @@ defmodule Nexpo.StudentController do
     student =
       Student
       |> Repo.get!(id)
-      |> Repo.preload([:interests, :student_sessions, :student_session_applications])
+      |> Repo.preload([:interests, :programme, :student_sessions, :student_session_applications])
 
     render(conn, "show.json", student: student)
   end

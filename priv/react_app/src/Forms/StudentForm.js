@@ -10,6 +10,21 @@ import UploadButton from './UploadButton';
 const TextInput = makeField(Input);
 const FieldSelect = makeField(Select);
 
+const interestsValues = [
+  { id: 1, name: 'Foreign Opportunities' },
+  { id: 2, name: 'Internships' },
+  { id: 3, name: 'Part-time job' },
+  { id: 4, name: 'Summer job' },
+  { id: 5, name: 'Thesis' },
+  { id: 6, name: 'Trainee employment' }
+];
+
+const renderInterestItem = interest => (
+  <Select.Option key={interest.id} value={interest.id}>
+    {interest.name}
+  </Select.Option>
+);
+
 const renderProgrammeItem = programme => (
   <Select.Option key={programme.id} value={programme.id}>
     {programme.name} - {programme.code}
@@ -46,6 +61,16 @@ const StudentForm = ({ handleSubmit, pristine, programmes }: Props) => (
       {map(renderProgrammeItem, programmes)}
     </Field>
     <Field
+      name="interests"
+      label="Interests:"
+      mode="multiple"
+      format={null}
+      optionFilterProp="children"
+      component={FieldSelect}
+    >
+      {map(renderInterestItem, interestsValues)}
+    </Field>
+    <Field
       name="master"
       label="Master's specialization:"
       component={TextInput}
@@ -74,12 +99,16 @@ const mapStateToProps = (state, props) => {
   const { initialValues = {} } = props;
   const {
     programme: currentProgramme,
+    interests: currentInterests,
     resumeSvUrl: currentResumeSvUrl,
     resumeEnUrl: currentResumeEnUrl
   } = initialValues;
 
   let programme = null;
   if (!isNil(currentProgramme)) programme = currentProgramme.id;
+
+  let interests = null;
+  if (!isNil(currentInterests)) interests = currentInterests.map(v => v.id);
 
   let resumeSvUrl = null;
   if (!isNil(currentResumeSvUrl))
@@ -96,7 +125,7 @@ const mapStateToProps = (state, props) => {
       resumeSvUrl,
       resumeEnUrl,
       programme,
-      interests: []
+      interests
     },
     formState: state.form.StudentForm
   };

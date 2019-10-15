@@ -55,9 +55,7 @@ defmodule Nexpo.RoleController do
   end
 
   def update(conn, %{"id" => id, "role" => role_params}) do
-    role =
-      Repo.get!(Role, id)
-      |> Repo.preload(:users)
+    role = Repo.get!(Role, id) |> Repo.preload(:users)
 
     changeset =
       Role.changeset(role, role_params)
