@@ -52,6 +52,7 @@ describe('SessionApplications', () => {
     wrapper.instance().toggleEditMode('2');
     expect(wrapper.state().editing).toEqual({ '2': true });
   });
+
   it('calls updateStudentSessionApplwith correct parameters', () => {
     const wrapper = shallow(<SessionApplications {...props} />);
     const data = { motivation: 'Lul' };
