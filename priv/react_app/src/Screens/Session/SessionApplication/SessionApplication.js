@@ -7,10 +7,6 @@ import InvisibleLink from '../../../Components/InvisibleLink';
 import SessionForm from '../../../Forms/SessionForm';
 import '../Session.css';
 
-type StudentObj = {
-  resumeEnUrl?: { uid: number, fileName: string },
-  resumeSvUrl?: { uid: number, fileName: string }
-};
 type Application = {
   companyId: number,
   motivation: string
@@ -21,13 +17,11 @@ type Props = {
     email?: string,
     student?: {}
   },
-  currentStudent: StudentObj,
   getAllCompanies: () => Promise<void>,
   getAllProgrammes: () => Promise<void>,
   createStudentSessionAppl: ({
     studentSessionApplication: Application
   }) => Promise<void>,
-  updateCurrentStudent: ({ student: StudentObj }) => Promise<void>,
   resetForm: string => Promise<void>
 };
 class SessionApplication extends Component<Props> {
@@ -36,11 +30,6 @@ class SessionApplication extends Component<Props> {
     getAllCompanies();
     getAllProgrammes();
   }
-
-  updateStudent = (values: StudentObj) => {
-    const { updateCurrentStudent } = this.props;
-    return updateCurrentStudent({ student: values });
-  };
 
   resetStudentForm = () => {
     const { resetForm } = this.props;
@@ -55,7 +44,7 @@ class SessionApplication extends Component<Props> {
   };
 
   render() {
-    const { currentUser, currentStudent, fetching } = this.props;
+    const { currentUser, fetching } = this.props;
 
     if (fetching) {
       return <LoadingSpinner />;

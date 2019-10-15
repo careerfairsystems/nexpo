@@ -29,16 +29,6 @@ describe('SessionApplication', () => {
     expect(wrapper.find(LoadingSpinner)).toHaveLength(1);
   });
 
-  it('updateStudent should call updateCurrentStudent with correct values', () => {
-    const newCvEn = { uid: -1, fileName: 'New file' };
-    const values = { resumeEnUrl: newCvEn };
-    const wrapper = shallow(<SessionApplication {...props} />);
-    wrapper.instance().updateStudent(values);
-    expect(props.updateCurrentStudent).toHaveBeenCalledWith({
-      student: values
-    });
-  });
-
   it('calls should call createSessionAppl with correct values', () => {
     const appl = { companyId: 1, motivation: 'New motivation' };
     const wrapper = shallow(<SessionApplication {...props} />);
