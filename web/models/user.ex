@@ -13,6 +13,7 @@ defmodule Nexpo.User do
     field(:hashed_password, :string)
     field(:password, :string, virtual: true)
     field(:signup_key, :string)
+    field(:profile_image, Nexpo.ProfileImage.Type)
     field(:forgot_password_key, :string)
     field(:forgot_password_time, :naive_datetime)
 

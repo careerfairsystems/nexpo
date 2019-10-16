@@ -25,14 +25,14 @@ defmodule Nexpo.UserAcceptanceTest do
   end
 
   describe "PUT /api/me" do
-    test "PUT /api/me return 401 on invalid jwt", %{conn: conn} do
+    test "return 401 on invalid jwt", %{conn: conn} do
       conn = put(conn, "/api/me", %{})
 
       assert json_response(conn, 401)
     end
 
     @tag :logged_in
-    test "PUT /api/me returns 200 and current user on valid jwt", %{conn: conn, user: user} do
+    test "returns 200 and current user on valid jwt", %{conn: conn, user: user} do
       conn = put(conn, "/api/me", %{user: %{}})
 
       assert json_response(conn, 200)

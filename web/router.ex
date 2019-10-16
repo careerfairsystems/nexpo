@@ -41,6 +41,7 @@ defmodule Nexpo.Router do
     put("/me", UserController, :update_me)
     delete("/me", UserController, :delete_me)
     put("/me/student", StudentController, :update_student)
+    post("/student_session_applications", StudentSessionApplicationController, :create)
     put("/me/student_session_applications/:id", StudentSessionApplicationController, :update_me)
 
     delete(
@@ -59,7 +60,7 @@ defmodule Nexpo.Router do
     get("/statistics", StatisticsController, :index)
 
     resources "/students", StudentController do
-      # resources "/student_session_applications", StudentSessionApplicationController
+      # resources("/student_session_applications", StudentSessionApplicationController)
     end
 
     post("/initial_representative_signup", SignupController, :create_representative)
@@ -71,6 +72,7 @@ defmodule Nexpo.Router do
 
     resources("/industries", IndustryController)
     resources("/job_offers", JobOfferController)
+    resources("/interests", InterestController)
     resources("/categories", CategoryController)
     resources("/programmes", ProgrammeController)
     resources("/deadlines", DeadlineController)
