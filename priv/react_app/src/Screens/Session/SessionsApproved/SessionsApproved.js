@@ -53,9 +53,6 @@ class StudentSessions extends Component<Props> {
   };
 
   sessionStatusView(session: Session) {
-    return this.sessionUnanswered(session);
-
-    /*
     if (session.studentSessionStatus === 2) {
       return this.sessionDeclined();
     }
@@ -63,7 +60,6 @@ class StudentSessions extends Component<Props> {
       return this.sessionConfirmed(session);
     }
     return this.sessionUnanswered(session);
-    */
   }
 
   sessionUnanswered(session: Session) {
