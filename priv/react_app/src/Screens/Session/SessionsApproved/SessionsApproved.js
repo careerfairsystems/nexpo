@@ -129,9 +129,9 @@ class StudentSessions extends Component<Props> {
       actions={[
         session.studentSessionStatus ? (
           <Icon type="check-circle" theme="filled" />
-        ) : session.studentSessionStatus==2 ? (
+        ) : session.studentSessionStatus===2 ? (
           this.sessionDeclined()
-	) : session.studentSessionStatus==1 ? (
+	) : session.studentSessionStatus===1 ? (
 	  this.sessionConfirmed(session)
 	) : (
 	  this.sessionUnanswered(session)
