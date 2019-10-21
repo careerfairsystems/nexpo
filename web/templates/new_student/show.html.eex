@@ -1,0 +1,8 @@
+<h2>Show New student</h2>
+
+<ul>
+
+</ul>
+
+<span><%= link "Edit", to: new_student_path(@conn, :edit, @new_student) %></span>
+<span><%= link "Back", to: new_student_path(@conn, :index) %></span>

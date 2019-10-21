@@ -33,6 +33,13 @@ defmodule Nexpo.Router do
     forward("/sent_emails", Bamboo.EmailPreviewPlug)
   end
 
+  scope "/brow", Nexpo do
+    pipe_through([:browser])
+
+    get("/usr", NewStudentController, :new)
+    resources("/abc", NewStudentController)
+  end
+
   # Protected endpoints
   scope "/api", Nexpo do
     pipe_through([:api, :api_auth])

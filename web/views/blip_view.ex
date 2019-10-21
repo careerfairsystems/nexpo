@@ -30,7 +30,10 @@ defmodule Nexpo.BlipView do
       :inserted_at,
       :year,
       :resume_en_url,
+      :master,
+      :linked_in,
       :resume_sv_url,
+      :profile_image,
       :programme
     ]
 

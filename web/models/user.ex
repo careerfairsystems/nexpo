@@ -106,6 +106,29 @@ defmodule Nexpo.User do
     |> unique_constraint(:email)
   end
 
+  def full_signup_changeset(%User{} = user, params \\ %{}) do
+    user
+    |> cast(params, [:email, :password, :first_name, :last_name, :phone_number, :food_preferences])
+    |> validate_required([:email, :password, :first_name, :last_name])
+    |> validate_length(:password, min: 6)
+    |> hash_password(params)
+    |> update_change(:email, &String.downcase(&1))
+    |> update_change(:email, &String.trim(&1))
+    |> validate_change(:email, fn :email, email ->
+      cond do
+        # Email canot be empty
+        email == "" -> [email: "Email cannot be empty"]
+        # Validate username is not empty
+        !String.contains?(email, "@") -> [email: "Has to include @"]
+        # Validate email does not contains whitespace
+        String.contains?(email, " ") -> [email: "Cannot contain blank spaces"]
+        # Return no errors if the above does not match
+        true -> []
+      end
+    end)
+    |> unique_constraint(:email, message: "Has already been taken")
+  end
+
   def forgot_password_changeset(user, params \\ %{}) do
     changeset(user, params)
     |> generate_forgot_password_key()
@@ -147,7 +170,7 @@ defmodule Nexpo.User do
   end
 
   defp hash_password(changeset, params) do
-    case Map.get(params, :password) do
+    case Map.get(params, :password, Map.get(params, "password")) do
       nil ->
         changeset
 
