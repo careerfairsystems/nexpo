@@ -13,7 +13,10 @@ defmodule Nexpo.Company do
     field(:website, :string)
     field(:student_session_days, :integer, default: 0)
     field(:top_students, {:array, :map}, default: [], virtual: true)
-
+    field(:host_name, :string)
+    field(:host_mail, :string)
+    field(:host_phone_number, :string)
+  
     has_many(:entries, Nexpo.CompanyEntry, on_delete: :delete_all)
     has_many(:representatives, Nexpo.Representative)
     has_many(:desired_programmes, Nexpo.DesiredProgramme)
