@@ -17,10 +17,7 @@ export function deleteStudentSessionSuccess(company: {}) {
   };
 }
 
-export type deleteStudentSessionFailureAction = {
-  type: string
-};
-export function deleteStudentSessionFailure(): deleteStudentSessionFailureAction {
+export function deleteStudentSessionFailure() {
   message.warning('Something went wrong, please try again later');
   return {
     type: actionTypes.DELETE_STUDENT_SESSION_FAILURE

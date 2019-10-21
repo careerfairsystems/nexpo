@@ -1,0 +1,24 @@
+<h2>Listing New students</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for new_student <- @new_students do %>
+    <tr>
+
+      <td class="text-right">
+        <span><%= link "Show", to: new_student_path(@conn, :show, new_student), class: "btn btn-default btn-xs" %></span>
+        <span><%= link "Edit", to: new_student_path(@conn, :edit, new_student), class: "btn btn-default btn-xs" %></span>
+        <span><%= link "Delete", to: new_student_path(@conn, :delete, new_student), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %></span>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New New student", to: new_student_path(@conn, :new) %></span>

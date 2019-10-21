@@ -52,6 +52,7 @@ type RouteItem = {
 };
 
 const privateRoutes: Array<RouteItem> = [
+  { path: '/', component: Home },
   { path: '/admin', component: AdminHome },
   { path: '/admin/categories', component: Categories },
   { path: '/admin/categories/:id', component: Category },
@@ -93,14 +94,13 @@ const privateRoutes: Array<RouteItem> = [
 
 const routes = (
   <Switch>
-    <PrivateRoute exact path="/" component={Home} />
     <Route path="/info" component={Info} />
-    {privateRoutes.map((props: RouteItem) => (
-      <PrivateRoute key={props.path} exact {...props} />
-    ))}
     <Route path="/login" component={Login} />
     <Route path="/signup" component={Signup} />
     <Route path="/forgot-password" component={ForgotPassword} />
+    {privateRoutes.map((props: RouteItem) => (
+      <PrivateRoute key={props.path} exact {...props} />
+    ))}
     <Route component={NotFound} />
   </Switch>
 );
@@ -141,6 +141,11 @@ class App extends Component<Props> {
       <Menu.Item key="/logout">Logout</Menu.Item>
     ];
   };
+
+  loggedOutMenuItem = () => [
+    <Menu.Item key="/login">Login</Menu.Item>,
+    <Menu.Item key="/signup">Sign Up</Menu.Item>
+  ];
 
   restrictedSubMenu = ({
     route,
@@ -187,11 +192,6 @@ class App extends Component<Props> {
     }
     return null;
   };
-
-  loggedOutMenuItem = () => [
-    <Menu.Item key="/login">Login</Menu.Item>,
-    <Menu.Item key="/signup">Sign Up</Menu.Item>
-  ];
 
   render() {
     const { isLoggedIn, redirect, pathname } = this.props;
@@ -271,7 +271,7 @@ class App extends Component<Props> {
                   this.restrictedMenuItem({
                     route: 'session/application',
                     title: 'Apply',
-                    disabled: true
+                    disabled: false
                   }),
                   this.restrictedMenuItem({
                     route: 'session/applications',
