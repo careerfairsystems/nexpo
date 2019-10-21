@@ -38,13 +38,13 @@ class YourCompanyTimeSlots extends Component<Props> {
 
     if (isEmpty(currentCompany) || isNil(currentCompany)) return <NotFound />;
 
-    const studentConfirmed = studentSession => {
+    const studentSessionStatus = studentSession => {
       if (studentSession) {
         return statusLabel[studentSession.studentSessionStatus].text;
       }
       return 'Not assigned';
     };
-    const studentConfirmedColor = studentSession => {
+    const studentSessionStatusColor = studentSession => {
       if (studentSession) {
         return statusLabel[studentSession.studentSessionStatus].color;
       }
@@ -81,8 +81,8 @@ class YourCompanyTimeSlots extends Component<Props> {
               />
               {studentSession && studentInfo(studentSession)}
               Student:{' '}
-              <Tag color={studentConfirmedColor(studentSession)}>
-                {studentConfirmed(studentSession)}
+              <Tag color={studentSessionStatusColor(studentSession)}>
+                {studentSessionStatus(studentSession)}
               </Tag>
             </List.Item>
           )}
