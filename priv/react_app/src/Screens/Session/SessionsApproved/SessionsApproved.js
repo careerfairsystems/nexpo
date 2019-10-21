@@ -140,8 +140,6 @@ class StudentSessions extends Component<Props> {
   render() {
     const { sessions, fetching } = this.props;
 
-    console.log(sessions);
-
     if (fetching) {
       return <LoadingSpinner />;
     }

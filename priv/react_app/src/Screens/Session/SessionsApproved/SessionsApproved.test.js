@@ -1,5 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
+import { stat } from 'fs';
 import LoadingSpinner from '../../../Components/LoadingSpinner';
 import SessionApplications from './SessionsApproved';
 
@@ -12,6 +13,7 @@ describe('SessionApplications', () => {
           id: 1,
           companyId: 1,
           studentId: 1,
+          studentSessionStatus: 0,
           company: {
             name: 'Google',
             logoUrl: 'www.google.com/profile.jpg'
@@ -25,6 +27,7 @@ describe('SessionApplications', () => {
           id: 2,
           companyId: 2,
           studentId: 1,
+          studentSessionStatus: 0,
           company: {
             name: 'Victor AB',
             logoUrl: 'www.victorab.com/profile.jpg'
@@ -38,7 +41,7 @@ describe('SessionApplications', () => {
       companies: {},
       fetching: false,
       getAllCompanies: jest.fn(),
-      confirmSession: jest.fn()
+      updateSession: jest.fn()
     };
   });
 
@@ -51,13 +54,14 @@ describe('SessionApplications', () => {
     expect(wrapper.find(LoadingSpinner)).toHaveLength(1);
   });
 
-  it('calls confirmSession with correct parameters', () => {
+  it('calls updateSession with correct parameters', () => {
     const wrapper = shallow(<SessionApplications {...props} />);
     const id = 1;
-    expect(props.confirmSession).toHaveBeenCalledTimes(0);
-    wrapper.instance().confirmSession(id);
-    expect(props.confirmSession).toHaveBeenCalledWith(id);
-    expect(props.confirmSession).toHaveBeenCalledTimes(1);
+    const status = 1;
+    expect(props.updateSession).toHaveBeenCalledTimes(0);
+    wrapper.instance().updateSession(id, status);
+    expect(props.updateSession).toHaveBeenCalledWith(id, status);
+    expect(props.updateSession).toHaveBeenCalledTimes(1);
   });
 
   it('can render listitems', () => {
