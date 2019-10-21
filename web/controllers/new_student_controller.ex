@@ -13,7 +13,6 @@ defmodule Nexpo.NewStudentController do
     %User{}
     |> User.full_signup_changeset(user_params)
     |> Repo.insert()
-    |> IO.inspect()
     |> case do
       {:ok, user} ->
         conn
