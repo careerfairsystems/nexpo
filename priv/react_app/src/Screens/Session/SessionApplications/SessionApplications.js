@@ -71,7 +71,8 @@ class SessionApplications extends Component<Props, State> {
             {editing[application.id] ? 'Cancel' : 'Edit'}
           </Button>,
           <Popconfirm
-            title="Sure to delete?"
+	    placement="topLeft"
+            title="Are you sure you want to delete the application?"
             onConfirm={() => deleteStudentSessionAppl(application.id)}
           >
             <span style={{ color: '#ff4d4f', cursor: 'pointer' }}>Delete</span>

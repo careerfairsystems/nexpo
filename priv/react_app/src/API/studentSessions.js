@@ -1,6 +1,6 @@
 /*
-*   This file contains methods to access the /student_sessions resource on the server.
-*/
+ *   This file contains methods to access the /student_sessions resource on the server.
+ */
 
 import {
   authPost,
@@ -32,10 +32,10 @@ export default {
   deleteNonConfirmed: () =>
     authDelete('/api/student_sessions').then(handleHttpResponse),
 
-  /** Confirms a student session */
-  confirmSession: (id: string) =>
+  /** Updates a student session */
+  updateSession: (id: string, status: number) =>
     authPut(`/api/me/student_sessions/${id}`, {
-      studentSession: { studentConfirmed: true }
+      studentSession: { studentSessionStatus: status }
     }).then(handleHttpResponse),
 
   /** Fetches all reserves for student sessions */

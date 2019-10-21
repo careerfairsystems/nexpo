@@ -8,7 +8,7 @@ export const updateStudentSessionIsLoading = () => ({
 });
 
 export const updateStudentSessionSuccess = (studentSession: {}) => {
-  message.success('Your Session was successfully confirmed.');
+  message.success('Your Session was successfully updated.');
   return {
     type: actionTypes.PUT_STUDENT_SESSION_SUCCESS,
     studentSession
@@ -25,11 +25,11 @@ export const updateStudentSessionFailure = (): UpdateStudentSessionFailureAction
   };
 };
 
-export function updateStudentSession(id: string) {
+export function updateStudentSession(id: string, status: number) {
   return (dispatch: Dispatch<{ type: string }>) => {
     dispatch(updateStudentSessionIsLoading());
     return API.studentSessions
-      .confirmSession(id)
+      .updateSession(id, status)
       .then(session => {
         dispatch(updateStudentSessionSuccess(session.data));
       })

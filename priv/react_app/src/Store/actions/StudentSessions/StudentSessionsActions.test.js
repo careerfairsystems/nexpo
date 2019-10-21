@@ -236,9 +236,10 @@ describe('updateStudentSession', () => {
     mockHttpResponse({ status: 200, body: {} });
     const store = createMockStore();
     const id = '1';
+    const status = 1;
 
     return store
-      .dispatch(Actions.studentSessions.updateStudentSession(id))
+      .dispatch(Actions.studentSessions.updateStudentSession(id, status))
       .then(() => {
         const calledActions = store.getActions();
         expect(calledActions[0]).toEqual(
@@ -250,6 +251,7 @@ describe('updateStudentSession', () => {
   it('should call failure action on failure', () => {
     mockHttpResponse({ status: 401, body: {} });
     const id = '1';
+    const status = 1;
     const expectedActions = [
       Actions.studentSessions.updateStudentSessionIsLoading(),
       Actions.studentSessions.updateStudentSessionFailure()
@@ -258,7 +260,7 @@ describe('updateStudentSession', () => {
     const store = createMockStore();
 
     return store
-      .dispatch(Actions.studentSessions.updateStudentSession(id))
+      .dispatch(Actions.studentSessions.updateStudentSession(id, status))
       .then(() => {
         const calledActions = store.getActions();
         expect(calledActions).toEqual(expectedActions);
@@ -267,6 +269,7 @@ describe('updateStudentSession', () => {
 
   it('should call success action on success', () => {
     const id = '1';
+    const status = 1;
     const data = { motivation: 'New motivation' };
 
     const appl = {
@@ -290,7 +293,7 @@ describe('updateStudentSession', () => {
 
     const store = createMockStore();
     return store
-      .dispatch(Actions.studentSessions.updateStudentSession(id))
+      .dispatch(Actions.studentSessions.updateStudentSession(id, status))
       .then(() => {
         const calledActions = store.getActions();
         expect(calledActions).toEqual(expectedActions);

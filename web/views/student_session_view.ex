@@ -11,7 +11,7 @@ defmodule Nexpo.StudentSessionView do
 
   def render("student_session.json", %{student_session: student_session}) do
     # Define own parameters to keep
-    base = [:id, :company_id, :student_id, :student_confirmed]
+    base = [:id, :company_id, :student_id, :student_session_status]
 
     Nexpo.Support.View.render_object(student_session, base)
   end

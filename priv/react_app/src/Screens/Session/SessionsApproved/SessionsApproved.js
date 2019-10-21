@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { sortBy } from 'lodash/fp';
-import { Icon, List, Avatar, Button } from 'antd';
+import { Icon, List, Avatar, Button, Popconfirm } from 'antd';
 import LoadingSpinner from '../../../Components/LoadingSpinner';
 import HtmlTitle from '../../../Components/HtmlTitle';
 import { toSessionTimeFormat } from '../../../Util/FormatHelper';
@@ -17,10 +17,10 @@ type TimeSlot = {
   location?: string
 };
 type Session = {
-  id?: number,
+  id: number,
   studentId: number,
   companyId: number,
-  studentConfirmed?: boolean,
+  studentSessionStatus: number,
   company: Company,
   studentSessionTimeSlot: TimeSlot
 };
@@ -32,7 +32,7 @@ type Props = {
     description?: string,
     website?: string
   },
-  confirmSession: number => Promise<void>,
+  updateSession: (id: number, status: number) => Promise<void>,
   getAllCompanies: () => Promise<void>,
   fetching: boolean
 };
@@ -47,26 +47,75 @@ class StudentSessions extends Component<Props> {
     getAllCompanies();
   }
 
-  confirmSession = (id: ?number) => {
-    const { confirmSession } = this.props;
-    if (id) confirmSession(id);
+  updateSession = (id: number, status: number) => {
+    const { updateSession } = this.props;
+    if (id) updateSession(id, status);
   };
 
-  renderSession = (session: Session) => (
-    <List.Item
-      actions={[
-        session.studentConfirmed ? (
-          <Icon type="check-circle" theme="filled" />
-        ) : (
+  sessionStatusView(session: Session) {
+    if (session.studentSessionStatus === 2) {
+      return this.sessionDeclined();
+    }
+    if (session.studentSessionStatus === 1) {
+      return this.sessionConfirmed(session);
+    }
+    return this.sessionUnanswered(session);
+  }
+
+  sessionUnanswered(session: Session) {
+    return (
+      <div>
+        <div>
           <Button
+            className="sessionButton"
             type="primary"
-            onClick={() => this.confirmSession(session.id)}
+            onClick={() => this.updateSession(session.id, 1)}
           >
             Confirm
           </Button>
-        )
-      ]}
-    >
+        </div>
+        <div>
+          <Popconfirm
+            placement="left"
+            title="You cannot edit your response after declining"
+            onConfirm={() => this.updateSession(session.id, 2)}
+          >
+            <Button type="danger">Decline</Button>
+          </Popconfirm>
+        </div>
+      </div>
+    );
+  }
+
+  sessionConfirmed(session: Session) {
+    return (
+      <div>
+        <div>
+          <p style={{ color: 'green' }}>Confirmed</p>
+        </div>
+        <div>
+          <Popconfirm
+            placement="left"
+            title="You cannot edit your response after declining"
+            onConfirm={() => this.updateSession(session.id, 2)}
+          >
+            <Button type="danger">Decline</Button>
+          </Popconfirm>
+        </div>
+      </div>
+    );
+  }
+
+  sessionDeclined() {
+    return (
+      <div>
+        <p style={{ color: 'red' }}>Declined</p>
+      </div>
+    );
+  }
+
+  renderSession = (session: Session) => (
+    <List.Item actions={[this.sessionStatusView(session)]}>
       <List.Item.Meta
         title={session.company.name}
         description={this.renderDescription(session.studentSessionTimeSlot)}

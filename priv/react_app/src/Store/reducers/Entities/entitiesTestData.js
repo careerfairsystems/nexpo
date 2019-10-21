@@ -123,7 +123,7 @@ const testData = {
       studentid: '1',
       start: '2018-01-01',
       end: '2018-01-01',
-      studentConfirmed: false
+      studentSessionStatus: 0
     }
   },
   studentSessionDays: {
