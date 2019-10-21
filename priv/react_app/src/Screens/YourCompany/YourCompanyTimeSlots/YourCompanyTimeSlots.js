@@ -8,7 +8,7 @@ import '../YourCompany.css';
 
 const statusLabel = [
   { text: 'Unanswered', color: 'gold' },
-  { text: 'Comfirmed', color: 'green' },
+  { text: 'Confirmed', color: 'green' },
   { text: 'Declined', color: 'red' }
 ];
 
