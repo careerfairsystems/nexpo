@@ -66,7 +66,7 @@ defmodule Nexpo.StudentSessionTimeSlot do
     Repo.all(
       from(slot in TimeSlot,
         left_join: session in assoc(slot, :student_session),
-        where: is_nil(session.id) or session.student_confirmed != true
+        where: is_nil(session.id) or session.student_session_status == 0
       )
     )
   end
