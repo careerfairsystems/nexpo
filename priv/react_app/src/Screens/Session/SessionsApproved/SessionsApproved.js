@@ -58,38 +58,84 @@ class StudentSessions extends Component<Props> {
     if (id) declineSession(id, 2);
   };
 
+  sessionUnanswered (session: Session) {
+  return (
+  <div>
+    <div>
+      <Button
+        className="sessionButton"
+        type="primary"
+        onClick={() => this.confirmSession(session.id)}
+       >
+         Confirm
+       </Button>
+     </div>
+     <div>
+       <Popconfirm
+         placement="left"
+         title="You cannot edit your response after declining"
+         onConfirm={() => this.declineSession(session.id)}
+         >
+         <Button
+           type="danger"
+          >
+            Decline
+          </Button>
+	</Popconfirm>
+      </div>
+    </div>
+  );
+  };
+  sessionConfirmed(session: Session) {
+  return (
+  <div>
+    <div>
+      <p
+        style={{color: 'green'}}
+      >
+        Confirmed
+      </p>
+    </div>
+    <div>
+      <Popconfirm
+        placement="left"
+        title="You cannot edit your response after declining"
+        onConfirm={() => this.declineSession(session.id)}
+      >
+        <Button
+           type="danger"
+        >
+          Decline
+        </Button>
+      </Popconfirm>
+    </div> 
+  </div>
+  );
+  };
+  sessionDeclined() {
+    return (
+    <div>
+      <p
+        style={{color: 'red'}}
+      >
+        Declined
+      </p>
+    </div>
+  );
+  };
+  
   renderSession = (session: Session) => (
     <List.Item
       actions={[
         session.studentSessionStatus ? (
           <Icon type="check-circle" theme="filled" />
-        ) : (
-          <>
-            <div>
-              <Button
-                className="sessionButton"
-                type="primary"
-                onClick={() => this.confirmSession(session.id)}
-              >
-                Confirm
-              </Button>
-            </div>
-            <div>
-	    <Popconfirm
-		placement="left"
-            	title="You cannot edit your response after declining"
-            	onConfirm={() => this.declineSession(session.id)}
-              >
-              <Button
-                type="danger"
-              >
-                Decline
-              </Button>
-	     </Popconfirm>
-
-            </div>
-          </>
-        )
+        ) : session.studentSessionStatus==2 ? (
+          this.sessionDeclined()
+	) : session.studentSessionStatus==1 ? (
+	  this.sessionConfirmed(session)
+	) : (
+	  this.sessionUnanswered(session)
+	)
       ]}
     >
       <List.Item.Meta
@@ -119,7 +165,8 @@ class StudentSessions extends Component<Props> {
     if (fetching) {
       return <LoadingSpinner />;
     }
-
+    
+    console.log(sessions);
     return (
       <div className="sessions-approved">
         <HtmlTitle title="Student Session" />

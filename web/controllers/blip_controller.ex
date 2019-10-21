@@ -46,7 +46,7 @@ defmodule Nexpo.BlipController do
       )
       |> Repo.all()
       |> Repo.preload([
-        [student: [:user, :programme]]
+        [student: [:interests, :user, :programme]]
       ])
       |> Enum.map(fn blip ->
         blip
@@ -153,7 +153,7 @@ defmodule Nexpo.BlipController do
     user
     |> get_blip(student_id)
     |> Repo.preload([
-      [student: [:user, :programme]]
+      [student: [:interests, :user, :programme]]
     ])
     |> case do
       blip = %{} ->
@@ -195,9 +195,9 @@ defmodule Nexpo.BlipController do
 
   # Should be protected with guardian so that only company reps can reach
   # TODO If doesn't exist we should create it.
-  # Ska vi se till att siffran är inom 1-5 eller låta frontend
   def update(conn, %{"id" => student_id} = blip_params, user, _claims) do
-    get_blip(user, student_id)
+    user
+    |> get_blip(student_id)
     |> Blip.changeset(blip_params)
     |> Repo.update()
     |> case do
