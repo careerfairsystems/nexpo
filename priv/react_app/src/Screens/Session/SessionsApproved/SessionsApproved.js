@@ -17,10 +17,10 @@ type TimeSlot = {
   location?: string
 };
 type Session = {
-  id?: number,
+  id: number,
   studentId: number,
   companyId: number,
-  studentSessionStatus?: Number,
+  studentSessionStatus: number,
   company: Company,
   studentSessionTimeSlot: TimeSlot
 };
@@ -32,8 +32,7 @@ type Props = {
     description?: string,
     website?: string
   },
-  confirmSession: number => Promise<void>,
-  declineSession: number => Promise<void>,
+  updateSession: (id: number, status: number) => Promise<void>,
   getAllCompanies: () => Promise<void>,
   fetching: boolean
 };
@@ -48,96 +47,79 @@ class StudentSessions extends Component<Props> {
     getAllCompanies();
   }
 
-  confirmSession = (id: ?number) => {
-    const { confirmSession } = this.props;
-    if (id) confirmSession(id, 1);
+  updateSession = (id: number, status: number) => {
+    const { updateSession } = this.props;
+    if (id) updateSession(id, status);
   };
 
-  declineSession = (id: ?number) => {
-    const { declineSession } = this.props;
-    if (id) declineSession(id, 2);
-  };
+  sessionStatusView(session: Session) {
+    return this.sessionUnanswered(session);
 
-  sessionUnanswered (session: Session) {
-  return (
-  <div>
-    <div>
-      <Button
-        className="sessionButton"
-        type="primary"
-        onClick={() => this.confirmSession(session.id)}
-       >
-         Confirm
-       </Button>
-     </div>
-     <div>
-       <Popconfirm
-         placement="left"
-         title="You cannot edit your response after declining"
-         onConfirm={() => this.declineSession(session.id)}
-         >
-         <Button
-           type="danger"
+    /*
+    if (session.studentSessionStatus === 2) {
+      return this.sessionDeclined();
+    }
+    if (session.studentSessionStatus === 1) {
+      return this.sessionConfirmed(session);
+    }
+    return this.sessionUnanswered(session);
+    */
+  }
+
+  sessionUnanswered(session: Session) {
+    return (
+      <div>
+        <div>
+          <Button
+            className="sessionButton"
+            type="primary"
+            onClick={() => this.updateSession(session.id, 1)}
           >
-            Decline
+            Confirm
           </Button>
-	</Popconfirm>
+        </div>
+        <div>
+          <Popconfirm
+            placement="left"
+            title="You cannot edit your response after declining"
+            onConfirm={() => this.updateSession(session.id, 2)}
+          >
+            <Button type="danger">Decline</Button>
+          </Popconfirm>
+        </div>
       </div>
-    </div>
-  );
-  };
+    );
+  }
+
   sessionConfirmed(session: Session) {
-  return (
-  <div>
-    <div>
-      <p
-        style={{color: 'green'}}
-      >
-        Confirmed
-      </p>
-    </div>
-    <div>
-      <Popconfirm
-        placement="left"
-        title="You cannot edit your response after declining"
-        onConfirm={() => this.declineSession(session.id)}
-      >
-        <Button
-           type="danger"
-        >
-          Decline
-        </Button>
-      </Popconfirm>
-    </div> 
-  </div>
-  );
-  };
+    return (
+      <div>
+        <div>
+          <p style={{ color: 'green' }}>Confirmed</p>
+        </div>
+        <div>
+          <Popconfirm
+            placement="left"
+            title="You cannot edit your response after declining"
+            onConfirm={() => this.updateSession(session.id, 2)}
+          >
+            <Button type="danger">Decline</Button>
+          </Popconfirm>
+        </div>
+      </div>
+    );
+  }
+
   sessionDeclined() {
     return (
-    <div>
-      <p
-        style={{color: 'red'}}
-      >
-        Declined
-      </p>
-    </div>
-  );
-  };
-  
+      <div>
+        <p style={{ color: 'red' }}>Declined</p>
+      </div>
+    );
+  }
+
   renderSession = (session: Session) => (
-    <List.Item
-      actions={[
-        session.studentSessionStatus ? (
-          <Icon type="check-circle" theme="filled" />
-        ) : session.studentSessionStatus===2 ? (
-          this.sessionDeclined()
-	) : session.studentSessionStatus===1 ? (
-	  this.sessionConfirmed(session)
-	) : (
-	  this.sessionUnanswered(session)
-	)
-      ]}
-    >
+    <List.Item actions={[this.sessionStatusView(session)]}>
       <List.Item.Meta
         title={session.company.name}
         description={this.renderDescription(session.studentSessionTimeSlot)}
@@ -162,11 +144,12 @@ class StudentSessions extends Component<Props> {
   render() {
     const { sessions, fetching } = this.props;
 
+    console.log(sessions);
+
     if (fetching) {
       return <LoadingSpinner />;
     }
-    
-    console.log(sessions);
+
     return (
       <div className="sessions-approved">
         <HtmlTitle title="Student Session" />
