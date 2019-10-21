@@ -165,7 +165,8 @@ class StudentSessions extends Component<Props> {
     if (fetching) {
       return <LoadingSpinner />;
     }
-
+    
+    console.log(sessions);
     return (
       <div className="sessions-approved">
         <HtmlTitle title="Student Session" />
