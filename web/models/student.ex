@@ -13,7 +13,7 @@ defmodule Nexpo.Student do
     field(:master, :string)
 
     belongs_to(:user, Nexpo.User, foreign_key: :user_id)
-    belongs_to(:programme, Nexpo.Programme, on_replace: :delete)
+    belongs_to(:programme, Nexpo.Programme, on_replace: :nilify)
 
     has_many(:student_sessions, Nexpo.StudentSession, on_delete: :nilify_all)
 

@@ -11,12 +11,13 @@ const TextInput = makeField(Input);
 const FieldSelect = makeField(Select);
 
 const interestsValues = [
-  { id: 1, name: 'Foreign Opportunities' },
-  { id: 2, name: 'Internships' },
+  { id: 1, name: 'Foreign Opportunity' },
+  { id: 2, name: 'Internship' },
   { id: 3, name: 'Part-time job' },
   { id: 4, name: 'Summer job' },
   { id: 5, name: 'Thesis' },
-  { id: 6, name: 'Trainee employment' }
+  { id: 6, name: 'Trainee employment' },
+  { id: 7, name: 'Full-time job' }
 ];
 
 const renderInterestItem = interest => (
