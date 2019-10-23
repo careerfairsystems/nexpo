@@ -1,0 +1,21 @@
+<h1>Welcome to ARKAD!</h1>
+
+<div>This mail was sent by Nexpo, the inhouse project management system for ARKAD.</div>
+
+<br/>
+<a href=<%= signup_url(@user) %>>
+  Please click this link to verify your email and then complete the registration.
+</a>
+
+<br/>
+<br/>
+<div>
+  You have been invited as an representative for the company, <%= @company.name %>, by either an admin or a co-representative.
+  <br/><br/>
+  On Nexpo you will be able to rate students who have applied for student session at your company. Doing this will ensure that you get matched with students you are intrested in.
+  To rate students you go to "Your Company" > "Applications" or click here: <a href="https://arkad-nexpo.herokuapp.com/company/applications">Applications</a>.
+  <br/><br/>
+  Later on you will also be able to view your scans here after the fair. So remember to log in here during and after the fair!
+  <br/><br/>
+  If you have any questions about the platform please send an email to: <a href="mailto:internal_it.arkad@tlth.se">internal_it.arkad@tlth.se</a>
+</div>
