@@ -72,6 +72,24 @@ defmodule Nexpo.SignupController do
     end
   end
 
+  # Called by co-worker
+  def invite_representative(conn, %{"email" => email, "company_id" => company_id}) do
+    case User.initial_signup(%{email: email}) do
+      {:ok, user} ->
+        user |> Email.pre_signup_email() |> Mailer.deliver_later()
+        Representative.build_assoc!(user, company_id)
+
+        conn
+        |> put_status(201)
+        |> render(UserView, "show.json", %{user: user})
+
+      {:error, changeset} ->
+        conn
+        |> put_status(400)
+        |> render(ChangesetView, "error.json", changeset: changeset)
+    end
+  end
+
   @apidoc """
   @api {GET} /initial_signup/:signup_key Get current signup
   @apiGroup Sign up
