@@ -283,3 +283,14 @@ Repo.insert!(%Programme{name: "V-Guild", code: "V"})
 Repo.insert!(%Programme{name: "A-Guild", code: "A"})
 Repo.insert!(%Programme{name: "K-Guild", code: "K"})
 Repo.insert!(%Programme{name: "D-Guild", code: "D"})
+
+# Create the interests
+
+alias Nexpo.Interest
+Repo.insert(%Interest{id: 1, name: "Foreign Opportunity"})
+Repo.insert(%Interest{id: 2, name: "Internship"})
+Repo.insert(%Interest{id: 3, name: "Part-time job"})
+Repo.insert(%Interest{id: 4, name: "Summer job"})
+Repo.insert(%Interest{id: 5, name: "Thesis"})
+Repo.insert(%Interest{id: 6, name: "Trainee employment"})
+Repo.insert(%Interest{id: 7, name: "Full-time job"})
