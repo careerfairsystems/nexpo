@@ -13,7 +13,15 @@ type StudentObj = {
     lastName: string
   },
   resumeSvUrl: string,
-  resumeEnUrl: string
+  resumeEnUrl: string,
+  linkedIn: string,
+  master: string,
+  year: number,
+  programme: {
+    code: string,
+    name: string
+  },
+  interests: Array<string>
 };
 type Application = {
   id: number,
@@ -64,6 +72,12 @@ class YourCompanyApplications extends Component<Props> {
           disabled={!application.student.resumeEnUrl}
         >
           English Resume
+        </a>,
+        <a
+          href={application.student.linkedIn}
+          disabled={!application.student.linkedIn}
+        >
+          LinkedIn
         </a>
       ]}
     >
@@ -72,7 +86,25 @@ class YourCompanyApplications extends Component<Props> {
           application.student.user.firstName,
           application.student.user.lastName
         ].join(' ')}
-        description={application.student.user.email}
+        description={[
+          `Email: ${application.student.user.email}`,
+          `Graduation year: ${
+            application.student.year ? application.student.year : 'Not set'
+          }`,
+          `Programme: ${
+            application.student.programme
+              ? application.student.programme.name
+              : 'Not set'
+          }`,
+          `Master: ${
+            application.student.master ? application.student.master : 'Not set'
+          }`,
+          `Interests: ${
+            application.student.interests.length !== 0
+              ? application.student.interests.map(i => i.name).join(', ')
+              : 'Not set'
+          }`
+        ].join('\t|\t')}
       />
       {application.motivation}
     </List.Item>
@@ -83,6 +115,8 @@ class YourCompanyApplications extends Component<Props> {
 
     if (fetching) return <LoadingSpinner />;
     if (isEmpty(currentCompany) || isNil(currentCompany)) return <NotFound />;
+
+    console.log(currentCompany.studentSessionApplications);
 
     return (
       <div className="company-show-view">
