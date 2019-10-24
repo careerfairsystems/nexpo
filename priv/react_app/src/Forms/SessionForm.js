@@ -24,12 +24,14 @@ const requiredMotivation = value =>
 type Props = {
   availableCompanies: Array<any>,
   handleSubmit: () => Promise<void>,
-  submitting: boolean
+  submitting: boolean,
+  disabled: boolean
 };
 const StudentSessionForm = ({
   handleSubmit,
   availableCompanies,
-  submitting
+  submitting,
+  disabled
 }: Props) => (
   <Form onSubmit={handleSubmit}>
     <Field
@@ -53,7 +55,7 @@ const StudentSessionForm = ({
       maxLength="2400"
       rows={6}
     />
-    <Button disabled={submitting} htmlType="submit">
+    <Button disabled={submitting || disabled} htmlType="submit">
       Submit Student Session
     </Button>
   </Form>

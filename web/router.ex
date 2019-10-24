@@ -48,7 +48,8 @@ defmodule Nexpo.Router do
     put("/me", UserController, :update_me)
     delete("/me", UserController, :delete_me)
     put("/me/student", StudentController, :update_student)
-    post("/student_session_applications", StudentSessionApplicationController, :create)
+
+    # post("/student_session_applications", StudentSessionApplicationController, :create) #STUDENT_SESSIONS_ACTIVE
     put("/me/student_session_applications/:id", StudentSessionApplicationController, :update_me)
 
     delete(

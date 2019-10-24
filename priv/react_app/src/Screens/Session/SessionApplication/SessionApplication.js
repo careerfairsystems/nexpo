@@ -69,7 +69,10 @@ class SessionApplication extends Component<Props> {
         </h4>
         <br />
 
-        <SessionForm onSubmit={this.createStudentSessionAppl} />
+        <SessionForm
+          onSubmit={this.createStudentSessionAppl}
+          disabled={!false} // STUDENT_SESSIONS_ACTIVE
+        />
       </div>
     );
   }
