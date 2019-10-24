@@ -6,9 +6,9 @@ import CurrentCompanyForm from '../../../../Forms/CurrentCompanyForm';
 import LoadingSpinner from '../../../../Components/LoadingSpinner';
 
 type CurrentCompany = {
-  id: number,
-  name: string,
-  studentSessionDays: number
+  id?: number,
+  name?: string,
+  studentSessionDays?: number
 };
 
 type Props = {

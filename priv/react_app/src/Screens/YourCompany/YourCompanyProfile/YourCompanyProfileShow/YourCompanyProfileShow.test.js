@@ -3,7 +3,12 @@ import { shallow } from 'enzyme';
 import YourCompanyProfileShow from './YourCompanyProfileShow';
 
 describe('current company show should function correctly', () => {
-  beforeEach(() => {});
+  let props;
+  beforeEach(() => {
+    props = {
+      resetForm: jest.fn()
+    };
+  });
 
   it('should render without crashing', () => {
     shallow(
@@ -12,6 +17,7 @@ describe('current company show should function correctly', () => {
         getCurrentCompany={jest.fn()}
         currentCompany={{}}
         fetching={false}
+        {...props}
       />
     );
   });

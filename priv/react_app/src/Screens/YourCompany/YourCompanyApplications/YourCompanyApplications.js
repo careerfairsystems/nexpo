@@ -21,7 +21,7 @@ type StudentObj = {
     code: string,
     name: string
   },
-  interests: Array<string>
+  interests: Array<{ id: number, name: string }>
 };
 type Application = {
   id: number,
@@ -115,8 +115,6 @@ class YourCompanyApplications extends Component<Props> {
 
     if (fetching) return <LoadingSpinner />;
     if (isEmpty(currentCompany) || isNil(currentCompany)) return <NotFound />;
-
-    console.log(currentCompany.studentSessionApplications);
 
     return (
       <div className="company-show-view">
