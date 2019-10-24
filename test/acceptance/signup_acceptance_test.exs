@@ -99,7 +99,7 @@ defmodule Nexpo.SignupAcceptanceTest do
     email = params.email
     user = Repo.get_by!(User, email: email)
 
-    assert_delivered_email(Nexpo.Email.pre_signup_email(user))
+    assert_delivered_email(Nexpo.Email.pre_signup_student_email(user))
   end
 
   test "POST /final_signup/:key fails given no passwords", %{conn: conn} do

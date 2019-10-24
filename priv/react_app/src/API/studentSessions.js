@@ -32,16 +32,10 @@ export default {
   deleteNonConfirmed: () =>
     authDelete('/api/student_sessions').then(handleHttpResponse),
 
-  /** Confirms a student session */
-  confirmSession: (id: string) =>
+  /** Updates a student session */
+  updateSession: (id: string, status: number) =>
     authPut(`/api/me/student_sessions/${id}`, {
-      studentSession: { studentSessionStatus: 1 }
-    }).then(handleHttpResponse),
-
-  /** Decline a student session */
-  declineSession: (id: string) =>
-    authPut(`/api/me/student_sessions/${id}`, {
-      studentSession: { studentSessionStatus: 2 }
+      studentSession: { studentSessionStatus: status }
     }).then(handleHttpResponse),
 
   /** Fetches all reserves for student sessions */

@@ -81,7 +81,7 @@ const state = {
         id: 1,
         company: 2,
         companyApproved: false,
-        studentConfirmed: false,
+        studentSessionStatus: 0,
         motivation: 'Please talk to me!',
         student: 1
       }
@@ -90,7 +90,7 @@ const state = {
       '1': {
         id: 1,
         company: 2,
-        studentConfirmed: false,
+        studentSessionStatus: 0,
         student: 1
       }
     },

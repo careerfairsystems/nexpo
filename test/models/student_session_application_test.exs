@@ -7,7 +7,7 @@ defmodule Nexpo.StudentSessionApplicationTest do
     company_approved: true,
     motivation: "some content",
     score: 42,
-    student_confirmed: true,
+    student_session_status: 1,
     student_id: 1,
     company_id: 1
   }

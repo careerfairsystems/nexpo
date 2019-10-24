@@ -41,7 +41,7 @@ defmodule Nexpo.SignupController do
   def create(conn, %{"email" => email}) do
     case User.initial_signup(%{email: email}) do
       {:ok, user} ->
-        Email.pre_signup_email(user) |> Mailer.deliver_later()
+        Email.pre_signup_student_email(user) |> Mailer.deliver_later()
         Student.build_assoc!(user)
 
         conn
@@ -58,7 +58,27 @@ defmodule Nexpo.SignupController do
   def create_representative(conn, %{"email" => email, "company_id" => company_id}) do
     case User.initial_signup(%{email: email}) do
       {:ok, user} ->
-        user |> Email.pre_signup_email() |> Mailer.deliver_later()
+        company = Nexpo.Company |> Repo.get(company_id)
+        user |> Email.pre_signup_representative_email(company) |> Mailer.deliver_later()
+        Representative.build_assoc!(user, company_id)
+
+        conn
+        |> put_status(201)
+        |> render(UserView, "show.json", %{user: user})
+
+      {:error, changeset} ->
+        conn
+        |> put_status(400)
+        |> render(ChangesetView, "error.json", changeset: changeset)
+    end
+  end
+
+  # Called by co-worker
+  def invite_representative(conn, %{"email" => email, "company_id" => company_id}) do
+    case User.initial_signup(%{email: email}) do
+      {:ok, user} ->
+        company = Nexpo.Company |> Repo.get(company_id)
+        user |> Email.pre_signup_representative_email(company) |> Mailer.deliver_later()
         Representative.build_assoc!(user, company_id)
 
         conn

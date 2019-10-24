@@ -24,6 +24,12 @@ export default {
     authPost('/api/initial_representative_signup', data),
 
   /**
+   * Initiates a representative signup for a co-worker
+   */
+  inviteRepresentative: (data: {}) =>
+    authPost('/api/me/company/invite_representative', data),
+
+  /**
    * Gets an ongoing signup process
    */
   getCurrentSignup: (signupKey: string) =>

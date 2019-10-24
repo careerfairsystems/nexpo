@@ -29,6 +29,7 @@ defmodule Nexpo.UserControllerTest do
              "phone_number" => user.phone_number,
              "roles" => [],
              "representative" => user.representative,
+             "profile_image" => nil,
              "student" => %{
                "id" => user.student.id,
                "resume_en_url" => user.student.resume_en_url,
