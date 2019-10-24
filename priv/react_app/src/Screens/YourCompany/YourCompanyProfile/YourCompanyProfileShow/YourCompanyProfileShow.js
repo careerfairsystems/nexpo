@@ -1,29 +1,50 @@
 import React, { Component } from 'react';
 import { isEmpty, isNil } from 'lodash/fp';
-import { Avatar, Button } from 'antd';
+import { Avatar, Button, message } from 'antd';
 import { toExternal } from '../../../../Util/URLHelper';
 import NotFound from '../../../NotFound';
 import HtmlTitle from '../../../../Components/HtmlTitle';
 import InvisibleLink from '../../../../Components/InvisibleLink';
 import LoadingSpinner from '../../../../Components/LoadingSpinner';
 import '../../YourCompany.css';
+import API from '../../../../API';
+import InviteForm from '../../../../Forms/InviteForm';
 
 type Props = {
   fetching: boolean,
   currentCompany: {
+    id: number,
     studentSessionDays?: number,
     name?: string,
     description?: string,
     website?: string,
     logoUrl?: string
   },
-  getCurrentCompany: () => Promise<void>
+  getCurrentCompany: () => Promise<void>,
+  resetForm: string => any
 };
 class YourCompanyProfileShow extends Component<Props> {
   componentWillMount() {
     const { getCurrentCompany } = this.props;
     getCurrentCompany();
   }
+
+  invite = ({ email }: { email: string }) => {
+    const { currentCompany, resetForm } = this.props;
+    API.signup
+      .inviteRepresentative({
+        email,
+        companyId: currentCompany.id
+      })
+      .then(res => {
+        if (res.ok) {
+          message.success(`Invitation sent to ${email}`);
+          resetForm('invite');
+        } else {
+          message.warning('Invitation could not be sent');
+        }
+      });
+  };
 
   showStudentSession() {
     const { currentCompany } = this.props;
@@ -73,6 +94,9 @@ class YourCompanyProfileShow extends Component<Props> {
             Edit
           </Button>
         </InvisibleLink>
+        <br />
+        <br />
+        <InviteForm onSubmit={this.invite} />
       </div>
     );
   }

@@ -2,11 +2,20 @@ defmodule Nexpo.Email do
   import Bamboo.Email
   use Bamboo.Phoenix, view: Nexpo.EmailView
 
-  def pre_signup_email(user) do
+  def pre_signup_student_email(user) do
     base_email()
     |> to(user.email)
     |> subject("Nexpo | Verify your email")
-    |> render("pre_signup.html", user: user)
+    |> render("pre_signup_student.html", user: user)
+  end
+
+  def pre_signup_representative_email(user, company) do
+    company |> IO.inspect()
+
+    base_email()
+    |> to(user.email)
+    |> subject("Nexpo | Verify your email")
+    |> render("pre_signup_representative.html", user: user, company: company)
   end
 
   def completed_sign_up_mail(user) do

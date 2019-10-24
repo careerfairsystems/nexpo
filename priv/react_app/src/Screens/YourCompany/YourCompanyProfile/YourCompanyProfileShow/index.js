@@ -1,3 +1,4 @@
+import { reset } from 'redux-form';
 import { connect } from 'react-redux';
 import { Actions, Selectors } from '../../../../Store';
 import YourCompanyProfileShow from './YourCompanyProfileShow';
@@ -9,7 +10,8 @@ const mapStateToProps = (state: State) => ({
 });
 
 const mapDispatchToProps = {
-  getCurrentCompany: Actions.companies.getCurrentCompany
+  getCurrentCompany: Actions.companies.getCurrentCompany,
+  resetForm: reset
 };
 
 const stateful = connect(

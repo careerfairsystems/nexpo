@@ -5,10 +5,16 @@ import NotFound from '../../../NotFound';
 import CurrentCompanyForm from '../../../../Forms/CurrentCompanyForm';
 import LoadingSpinner from '../../../../Components/LoadingSpinner';
 
+type CurrentCompany = {
+  id: number,
+  name: string,
+  studentSessionDays: number
+};
+
 type Props = {
   fetching: boolean,
   history: RouterHistory,
-  currentCompany: { name?: string, studentSessionDays?: number },
+  currentCompany: CurrentCompany,
   getCurrentCompany: () => Promise<void>,
   updateCurrentCompany: ({ company: {} }) => Promise<void>
 };
