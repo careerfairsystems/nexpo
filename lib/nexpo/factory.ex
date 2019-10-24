@@ -19,7 +19,10 @@ defmodule Nexpo.Factory do
       name: sequence("Generated Company"),
       logo_url: image,
       description: sequence("Generated description"),
-      website: sequence("Generated website")
+      website: sequence("Generated website"),
+      host_name: sequence("Generated host name"),
+      host_mail: sequence("Generated host email"),
+      host_phone_number: sequence("0733112233")
     }
   end
 
