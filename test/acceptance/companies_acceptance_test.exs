@@ -50,7 +50,10 @@ defmodule Nexpo.CompaniesAcceptanceTest do
             "entries" => %{
               "type" => "array",
               "minItems" => 2
-            }
+            },
+            "host_name" => %{"type" => "string"},
+            "host_mail" => %{"type" => "string"},
+            "host_phone_number" => %{"type" => "string"}
           }
         }
       }
@@ -85,7 +88,10 @@ defmodule Nexpo.CompaniesAcceptanceTest do
           "users" => %{"type" => "array"},
           "student_session_applications" => %{"type" => "array"},
           "student_sessions" => %{"type" => "array"},
-          "student_session_time_slots" => %{"type" => "array"}
+          "student_session_time_slots" => %{"type" => "array"},
+          "host_name" => %{"type" => "string"},
+          "host_mail" => %{"type" => "string"},
+          "host_phone_number" => %{"type" => "string"}
         }
       }
       |> ExJsonSchema.Schema.resolve()
