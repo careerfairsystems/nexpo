@@ -169,7 +169,7 @@ defmodule Nexpo.CompanyController do
         :entries,
         :representatives,
         :desired_programmes,
-        [student_session_applications: [student: :user]],
+        [student_session_applications: [student: [:user, :programme, :interests]]],
         [student_sessions: [student: :user]],
         [
           student_session_time_slots: [
