@@ -13,7 +13,7 @@ import InviteForm from '../../../../Forms/InviteForm';
 type Props = {
   fetching: boolean,
   currentCompany: {
-    id: number,
+    id?: number,
     studentSessionDays?: number,
     name?: string,
     description?: string,
