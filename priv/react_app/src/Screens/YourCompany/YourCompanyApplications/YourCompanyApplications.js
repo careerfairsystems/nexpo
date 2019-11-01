@@ -77,7 +77,7 @@ class YourCompanyApplications extends Component<Props> {
           English Resume
         </a>,
         <a
-          href={application.student.linkedIn}
+          href={`//${application.student.linkedIn}`}
           disabled={!application.student.linkedIn}
         >
           LinkedIn
