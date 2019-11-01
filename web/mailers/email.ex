@@ -10,8 +10,6 @@ defmodule Nexpo.Email do
   end
 
   def pre_signup_representative_email(user, company) do
-    company |> IO.inspect()
-
     base_email()
     |> to(user.email)
     |> subject("Nexpo | Verify your email")
