@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { isEmpty, isNil, orderBy } from 'lodash/fp';
-import { List, Rate, Checkbox } from 'antd';
+import { List, Rate, Button } from 'antd';
 import NotFound from '../../NotFound';
 import HtmlTitle from '../../../Components/HtmlTitle';
 import LoadingSpinner from '../../../Components/LoadingSpinner';
@@ -27,8 +27,7 @@ type Application = {
   id: number,
   score: number,
   motivation: string,
-  student: StudentObj,
-  companyApproved: boolean
+  student: StudentObj
 };
 type Props = {
   currentCompany: { studentSessionApplications?: Array<Application> },
@@ -50,24 +49,12 @@ class YourCompanyApplications extends Component<Props> {
     });
   };
 
-  updateInteretedIn = (id: number, value: boolean) => {
-    const { updateStudentSessionAppl } = this.props;
-    updateStudentSessionAppl(id, {
-      studentSessionApplication: { companyApproved: value }
-    });
-  };
-
   renderSessionApplication = (application: Application) => (
     <List.Item
       actions={[
-        <Checkbox
-          checked={application.companyApproved}
-          onChange={t =>
-            this.updateInteretedIn(application.id, t.target.checked)
-          }
-        >
-          Interested in student
-        </Checkbox>,
+        <Button onClick={_ => this.scoreSessionApplication(application.id, 0)}>
+          Reset Score
+        </Button>,
         <>
           Score:{' '}
           <Rate
@@ -145,8 +132,9 @@ class YourCompanyApplications extends Component<Props> {
           <br />
           <br />
           In case you are not interested in having a student session with a
-          particular student, or do not wish for them to be able to get a spot.
-          Make sure to uncheck the checkbox <i>Interested in student</i>
+          particular student, and wish for them to not be able to get a spot.
+          Make sure to leave that student without a rating. There is the{' '}
+          <i>Reset Score</i> button in case you need to reset the score to 0.
         </p>
         <List
           size="large"
