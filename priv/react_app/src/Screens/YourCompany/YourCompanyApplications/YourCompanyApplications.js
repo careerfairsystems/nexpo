@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { isEmpty, isNil, orderBy } from 'lodash/fp';
-import { List, Rate } from 'antd';
+import { List, Rate, Button } from 'antd';
 import NotFound from '../../NotFound';
 import HtmlTitle from '../../../Components/HtmlTitle';
 import LoadingSpinner from '../../../Components/LoadingSpinner';
@@ -52,6 +52,9 @@ class YourCompanyApplications extends Component<Props> {
   renderSessionApplication = (application: Application) => (
     <List.Item
       actions={[
+        <Button onClick={_ => this.scoreSessionApplication(application.id, 0)}>
+          Reset Score
+        </Button>,
         <>
           Score:{' '}
           <Rate
@@ -126,6 +129,12 @@ class YourCompanyApplications extends Component<Props> {
           carefully. Also note that the rating will not be shown to the
           students, the rating is only there for you to decide which students
           you want to have sessions with.
+          <br />
+          <br />
+          In case you are not interested in having a student session with a
+          particular student, and wish for them to not be able to get a spot.
+          Make sure to leave that student without a rating. There is the{' '}
+          <i>Reset Score</i> button in case you need to reset the score to 0.
         </p>
         <List
           size="large"
