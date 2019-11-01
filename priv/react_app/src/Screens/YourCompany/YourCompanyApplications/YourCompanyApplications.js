@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { isEmpty, isNil, orderBy } from 'lodash/fp';
-import { List, Rate } from 'antd';
+import { List, Rate, Checkbox } from 'antd';
 import NotFound from '../../NotFound';
 import HtmlTitle from '../../../Components/HtmlTitle';
 import LoadingSpinner from '../../../Components/LoadingSpinner';
@@ -27,7 +27,8 @@ type Application = {
   id: number,
   score: number,
   motivation: string,
-  student: StudentObj
+  student: StudentObj,
+  companyApproved: boolean
 };
 type Props = {
   currentCompany: { studentSessionApplications?: Array<Application> },
@@ -49,9 +50,24 @@ class YourCompanyApplications extends Component<Props> {
     });
   };
 
+  updateInteretedIn = (id: number, value: boolean) => {
+    const { updateStudentSessionAppl } = this.props;
+    updateStudentSessionAppl(id, {
+      studentSessionApplication: { companyApproved: value }
+    });
+  };
+
   renderSessionApplication = (application: Application) => (
     <List.Item
       actions={[
+        <Checkbox
+          checked={application.companyApproved}
+          onChange={t =>
+            this.updateInteretedIn(application.id, t.target.checked)
+          }
+        >
+          Interested in student
+        </Checkbox>,
         <>
           Score:{' '}
           <Rate
@@ -126,6 +142,11 @@ class YourCompanyApplications extends Component<Props> {
           carefully. Also note that the rating will not be shown to the
           students, the rating is only there for you to decide which students
           you want to have sessions with.
+          <br />
+          <br />
+          In case you are not interested in having a student session with a
+          particular student, or do not wish for them to be able to get a spot.
+          Make sure to uncheck the checkbox <i>Interested in student</i>
         </p>
         <List
           size="large"

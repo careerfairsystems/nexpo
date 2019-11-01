@@ -3,7 +3,7 @@ defmodule Nexpo.StudentSessionApplication do
 
   schema "student_session_applications" do
     field(:motivation, :string)
-    field(:company_approved, :boolean, default: false)
+    field(:company_approved, :boolean, default: true)
     field(:score, :integer, default: 0)
     belongs_to(:company, Nexpo.Company)
     belongs_to(:student, Nexpo.Student)
