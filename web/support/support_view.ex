@@ -126,7 +126,10 @@ defmodule Nexpo.Support.View do
         }
 
       :logo_url ->
-        %{:logo_url => Nexpo.ProfileImage.url(get_url(object, relation), :original)}
+        %{:logo_url => Nexpo.CompanyLogo.url(get_url(object, relation), :original)}
+
+      :profile_image ->
+        %{:profile_image => Nexpo.ProfileImage.url(get_url(object, relation), :original)}
 
       :resume_en_url ->
         %{:resume_en_url => Nexpo.CvEn.url(get_url(object, relation), :original)}

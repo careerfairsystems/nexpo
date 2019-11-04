@@ -158,8 +158,7 @@ defmodule Nexpo.BlipController do
     ])
     |> case do
       blip = %{} ->
-        student =
-          blip
+        blip = blip
           |> Map.merge(blip.student)
           |> Map.merge(blip.student.user)
           |> Map.put(:blipped_at, blip.inserted_at)
