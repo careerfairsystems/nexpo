@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { sortBy } from 'lodash/fp';
-import { Icon, List, Avatar, Button, Popconfirm } from 'antd';
+import { List, Avatar, Button, Popconfirm } from 'antd';
 import LoadingSpinner from '../../../Components/LoadingSpinner';
 import HtmlTitle from '../../../Components/HtmlTitle';
 import { toSessionTimeFormat } from '../../../Util/FormatHelper';
@@ -54,7 +54,11 @@ class StudentSessions extends Component<Props> {
 
   sessionStatusView(session: Session) {
     if (session.studentSessionStatus === 2) {
-      return this.sessionDeclined();
+      return (
+        <div>
+          <p style={{ color: 'red' }}>Declined</p>
+        </div>
+      );
     }
     if (session.studentSessionStatus === 1) {
       return this.sessionConfirmed(session);
@@ -102,14 +106,6 @@ class StudentSessions extends Component<Props> {
             <Button type="danger">Decline</Button>
           </Popconfirm>
         </div>
-      </div>
-    );
-  }
-
-  sessionDeclined() {
-    return (
-      <div>
-        <p style={{ color: 'red' }}>Declined</p>
       </div>
     );
   }

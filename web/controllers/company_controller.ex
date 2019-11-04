@@ -2,7 +2,7 @@ defmodule Nexpo.CompanyController do
   use Nexpo.Web, :controller
   use Guardian.Phoenix.Controller
 
-  alias Nexpo.{Company, ProfileImage, Representative}
+  alias Nexpo.{Company, CompanyLogo, Representative}
   alias Guardian.Plug.{EnsurePermissions}
 
   plug(
@@ -246,7 +246,7 @@ defmodule Nexpo.CompanyController do
     case Map.get(params, Atom.to_string(attr)) do
       nil ->
         case attr do
-          :logo_url -> ProfileImage.delete({file, model})
+          :logo_url -> CompanyLogo.delete({file, model})
         end
 
       _ ->

@@ -96,7 +96,7 @@ defmodule Nexpo.Student do
     |> Enum.empty?()
   end
 
-  def get_available(company, time_slots) do
+  def get_available(company, _time_slots) do
     sessions = Nexpo.StudentSession |> Repo.all()
 
     Nexpo.StudentSessionApplication

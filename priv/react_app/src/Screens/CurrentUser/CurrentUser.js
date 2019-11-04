@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
 import { isEmpty } from 'lodash/fp';
-import { Button, Modal } from 'antd';
+import { Button, Modal, Avatar } from 'antd';
 import LoadingSpinner from '../../Components/LoadingSpinner';
 import NotFound from '../NotFound';
 import CurrentUserForm from '../../Forms/CurrentUserForm';
 import StudentForm from '../../Forms/StudentForm';
 
 type UserObj = {
-  firstName: string,
-  lastName: string,
-  phoneNumber: string
+  email?: string,
+  firstName?: string,
+  lastName?: string,
+  profileImage?: string,
+  phoneNumber?: string
 };
 type StudentObj = {
   resumeSvUrl?: string,
@@ -24,13 +26,7 @@ type StudentObj = {
 };
 
 type Props = {
-  currentUser?: {
-    email?: string,
-    firstName?: string,
-    lastName?: string,
-    phoneNumber?: string,
-    student?: {}
-  },
+  currentUser?: UserObj,
   currentStudent?: StudentObj,
   fetching: boolean,
   updateCurrentUser: ({ user: UserObj }) => Promise<void>,
@@ -92,14 +88,10 @@ class CurrentUser extends Component<Props> {
       return <NotFound />;
     }
 
-    const { email, firstName, lastName } = currentUser;
+    const { email, firstName, lastName, profileImage } = currentUser;
 
     return (
       <div>
-        <h1>
-          {firstName} {lastName}
-        </h1>
-
         <Button
           onClick={this.showConfirm}
           style={{ float: 'right' }}
@@ -108,9 +100,19 @@ class CurrentUser extends Component<Props> {
           Delete Account
         </Button>
 
-        <p>Email: {email}</p>
+        <Avatar
+          src={profileImage}
+          size={128}
+          shape="circle"
+          alt="User Profile Image"
+        />
+        <h1 style={{ fontSize: '48px' }}>
+          {firstName} {lastName}
+        </h1>
 
         <h2>User Information</h2>
+
+        <h4>Email: {email}</h4>
         <CurrentUserForm
           onSubmit={this.updateUser}
           initialValues={currentUser}
