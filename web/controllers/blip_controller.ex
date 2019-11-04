@@ -54,6 +54,7 @@ defmodule Nexpo.BlipController do
         |> Map.merge(blip.student.user)
         |> Map.put(:blipped_at, blip.inserted_at)
         |> Map.drop([:user])
+        |> Map.put(:id, blip.student.id)
       end)
 
     render(conn, "index.json", blips: blips)
