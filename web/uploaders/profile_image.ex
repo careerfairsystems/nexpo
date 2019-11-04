@@ -23,6 +23,8 @@ defmodule Nexpo.ProfileImage do
 
   # We use this so other file name can't be guessed
   def filename(version, {_, scope}) do
+    IO.inspect(scope)
+
     :crypto.hash(:sha256, "a_very_long_string_#{scope.id}_#{version}")
     |> Base.encode16()
     |> String.downcase()
@@ -30,7 +32,7 @@ defmodule Nexpo.ProfileImage do
 
   # Override the storage directory:
   def storage_dir(_, {_, scope}) do
-    "uploads/students/#{scope.id}/image"
+    "uploads/users/#{scope.id}/image"
   end
 
   # Provide a default URL if there hasn't been a file uploaded
