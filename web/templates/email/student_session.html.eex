@@ -1,0 +1,29 @@
+<h1>Confirm your student session spot now!</h1>
+
+<div>
+Hello <%= Map.get(@user, :first_name) %>,
+
+<br /><br />
+
+Times for the Student Sessions are now set. 
+Therefore you must log into your Nexpo account and see whether you have been chosen to have student session with a company or not! 
+If you have been chosen, you have until the 5th of November (5/11) 23:59 o’clock to accept or decline the session.
+
+<br />
+To find all sessions proposed to you, do the following:
+<ol>
+  <li>Click the following link: <a href="https://arkad-nexpo.herokuapp.com/">Nexpo</a>, and log in.</li>
+  <li>Find your way to the tab <i>Student Sessions</i> and click on <i>View Approved Applications</i>.</li>
+</ol>
+<br />
+
+All declined spots will be distributed during this week, 7/11 – 9/11 either through mail, text or a call. 
+So even if you didn’t get a session on the first draft you still have a chance during the weekend!
+If you have any questions, please contact us at company.arkad@tlth.se. 
+</div>
+
+<br/><br/>
+
+<div>
+  This mail was sent by Nexpo, the inhouse project management system for ARKAD.
+</div>

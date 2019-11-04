@@ -67,30 +67,47 @@ defmodule Nexpo.Student do
     |> is_nil()
   end
 
-  def get_available(company, time_slots) do
-    ids =
-      Repo.all(
-        from(appl in Ecto.assoc(company, :student_session_applications),
-          join: student in assoc(appl, :student),
-          where: not is_nil(appl.score) and appl.score > 0,
-          order_by: [desc: appl.score, asc: student.id],
-          # Check that student does not already have session with given company
-          left_join: session in Nexpo.StudentSession,
-          on: student.id == session.student_id and session.company_id == ^company.id,
-          where: is_nil(session.id),
-          limit: ^length(time_slots),
-          select: student.id
-        )
-      )
+  defp sessions_count(sessions, student_id) do
+    sessions
+    |> Enum.filter(&(&1.student_id == student_id))
+    |> Enum.count()
+  end
 
-    Repo.all(
-      from(student in Student,
-        where: student.id in ^ids,
-        left_join: session in assoc(student, :student_sessions),
-        group_by: student.id,
-        order_by: count(session.id),
-        select: student
-      )
-    )
+  defp application_compare?(sessions, %{score: s1} = appl1, %{score: s2} = appl2) when s1 == s2 do
+    count1 = sessions_count(sessions, appl1.student_id)
+    count2 = sessions_count(sessions, appl2.student_id)
+
+    case count1 == count2 do
+      true ->
+        [true, false] |> Enum.random()
+
+      false ->
+        count1 < count2
+    end
+  end
+
+  defp application_compare?(_sessions, appl1, appl2) do
+    appl1.score > appl2.score
+  end
+
+  defp free?(sessions, student_id, company_id) do
+    sessions
+    |> Enum.filter(&(&1.student_id == student_id and &1.company_id == company_id))
+    |> Enum.empty?()
+  end
+
+  def get_available(company, time_slots) do
+    sessions = Nexpo.StudentSession |> Repo.all()
+
+    Nexpo.StudentSessionApplication
+    |> Repo.all()
+    |> Enum.filter(&(&1.company_id == company.id))
+    |> Enum.filter(&(&1.score > 0))
+    |> Enum.filter(&free?(sessions, &1.student_id, company.id))
+    |> Enum.sort(&application_compare?(sessions, &1, &2))
+    |> Repo.preload(:student)
+    |> Enum.map(& &1.student)
+
+    # |> Enum.take(length(time_slots))
   end
 end

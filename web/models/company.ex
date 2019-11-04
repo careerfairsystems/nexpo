@@ -16,7 +16,7 @@ defmodule Nexpo.Company do
     field(:host_name, :string)
     field(:host_mail, :string)
     field(:host_phone_number, :string)
-  
+
     has_many(:entries, Nexpo.CompanyEntry, on_delete: :delete_all)
     has_many(:representatives, Nexpo.Representative)
     has_many(:desired_programmes, Nexpo.DesiredProgramme)
@@ -75,8 +75,7 @@ defmodule Nexpo.Company do
   def get_available() do
     Repo.all(
       from(company in Company,
-        join: slot in assoc(company, :student_session_time_slots),
-        group_by: company.id
+        where: company.student_session_days > 0
       )
     )
   end

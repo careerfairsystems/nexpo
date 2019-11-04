@@ -34,72 +34,130 @@ alias Nexpo.User
 
 Repo.insert!(%User{
   email: "admin@test",
-  first_name: "Dev",
-  last_name: "Dev",
+  first_name: "Admin",
+  last_name: "Developer",
   phone_number: "0707112233",
-  food_preferences: "cake",
+  food_preferences: "",
   hashed_password: Comeonin.Bcrypt.hashpwsalt("password")
 })
 
 Repo.insert!(%User{
-  email: "student@test",
-  first_name: "Test",
-  last_name: "McTest",
-  phone_number: "13371337",
-  food_preferences: "Cookies",
+  email: "student1@test",
+  first_name: "Alfa",
+  last_name: "Student",
+  phone_number: "0708334455",
+  food_preferences: "",
   hashed_password: Comeonin.Bcrypt.hashpwsalt("password")
 })
 
 Repo.insert!(%User{
-  email: "company@test",
-  first_name: "Mr.",
-  last_name: "Google",
+  email: "student2@test",
+  first_name: "Bravo",
+  last_name: "Student",
+  phone_number: "0708334455",
+  food_preferences: "",
+  hashed_password: Comeonin.Bcrypt.hashpwsalt("password")
+})
+
+Repo.insert!(%User{
+  email: "student3@test",
+  first_name: "Charlie",
+  last_name: "Student",
+  phone_number: "0708334455",
+  food_preferences: "",
+  hashed_password: Comeonin.Bcrypt.hashpwsalt("password")
+})
+
+Repo.insert!(%User{
+  email: "company1@test",
+  first_name: "Alfa",
+  last_name: "Company",
   phone_number: "555123456",
-  food_preferences: "User data only!",
+  food_preferences: "",
+  hashed_password: Comeonin.Bcrypt.hashpwsalt("password")
+})
+
+Repo.insert!(%User{
+  email: "company2@test",
+  first_name: "Bravo",
+  last_name: "Company",
+  phone_number: "555123456",
+  food_preferences: "",
+  hashed_password: Comeonin.Bcrypt.hashpwsalt("password")
+})
+
+Repo.insert!(%User{
+  email: "company3@test",
+  first_name: "Charlie",
+  last_name: "Company",
+  phone_number: "555123456",
+  food_preferences: "",
+  hashed_password: Comeonin.Bcrypt.hashpwsalt("password")
+})
+
+Repo.insert!(%User{
+  email: "company4@test",
+  first_name: "Delta",
+  last_name: "Company",
+  phone_number: "555123456",
+  food_preferences: "",
+  hashed_password: Comeonin.Bcrypt.hashpwsalt("password")
+})
+
+Repo.insert!(%User{
+  email: "company5@test",
+  first_name: "Echo",
+  last_name: "Company",
+  phone_number: "555123456",
+  food_preferences: "",
   hashed_password: Comeonin.Bcrypt.hashpwsalt("password")
 })
 
 admin_user = Repo.get_by(User, %{email: "admin@test"}) |> Repo.preload([:roles, :student])
-student_user = Repo.get_by(User, %{email: "student@test"}) |> Repo.preload([:roles, :student])
-company_user = Repo.get_by(User, %{email: "company@test"}) |> Repo.preload([:representative])
+student_user1 = Repo.get_by(User, %{email: "student1@test"}) |> Repo.preload([:roles, :student])
+student_user2 = Repo.get_by(User, %{email: "student2@test"}) |> Repo.preload([:roles, :student])
+student_user3 = Repo.get_by(User, %{email: "student3@test"}) |> Repo.preload([:roles, :student])
+company_user1 = Repo.get_by(User, %{email: "company1@test"}) |> Repo.preload([:representative])
+company_user2 = Repo.get_by(User, %{email: "company2@test"}) |> Repo.preload([:representative])
+company_user3 = Repo.get_by(User, %{email: "company3@test"}) |> Repo.preload([:representative])
+company_user4 = Repo.get_by(User, %{email: "company4@test"}) |> Repo.preload([:representative])
+company_user5 = Repo.get_by(User, %{email: "company5@test"}) |> Repo.preload([:representative])
 
 # Create some roles
 alias Nexpo.Role
 admin_role = Repo.insert!(%Role{type: "admin", permissions: ["read_all", "write_all"]})
-pleb_role = Repo.insert!(%Role{type: "pleb", permissions: []})
+
+# OBS! meant for business manager in project group
+company_role =
+  Repo.insert!(%Role{type: "company", permissions: ["read_company", "write_company"]})
 
 # Associate roles with users
 User.changeset(admin_user)
 |> Ecto.Changeset.put_assoc(:roles, [admin_role])
 |> Nexpo.Repo.update!()
 
-User.changeset(student_user)
-|> Ecto.Changeset.put_assoc(:roles, [pleb_role])
-|> Nexpo.Repo.update!()
-
 # Associate students with users
 alias Nexpo.Student
-Student.build_assoc!(admin_user)
-Student.build_assoc!(student_user)
+Student.build_assoc!(student_user1)
+Student.build_assoc!(student_user2)
+Student.build_assoc!(student_user3)
 
 # Create some companies
 alias Nexpo.Company
 
 Repo.insert!(%Company{
-  name: "Spotify",
-  description: "We do music!",
-  website: "www.spotify.com",
+  name: "Google",
+  description: "We code!",
+  website: "www.google.com",
   student_session_days: 1
 })
 
 Repo.insert!(%Company{
-  name: "Google",
-  description: "We code!",
-  website: "www.google.com",
+  name: "Spotify",
+  description: "We do music!",
+  website: "www.spotify.com",
   student_session_days: 2
 })
-
-Repo.insert!(%Company{name: "IBM", description: "We make things!", website: "www.ibm.com"})
 
 Repo.insert!(%Company{
   name: "Intel",
@@ -109,16 +167,24 @@ Repo.insert!(%Company{
 })
 
 Repo.insert!(%Company{
+  name: "IBM",
+  description: "We make things, especially electronics!",
+  website: "www.ibm.com"
+})
+
+Repo.insert!(%Company{
   name: "Jesus wine makers",
   description: "We do wine!",
   website: "www.jesus.com"
 })
 
-google = Repo.get_by!(Company, %{name: "Google"})
-
 # Associate representatives with users
 alias Nexpo.Representative
-Representative.build_assoc!(company_user, google.id)
+Representative.build_assoc!(company_user1, 1)
+Representative.build_assoc!(company_user2, 2)
+Representative.build_assoc!(company_user3, 3)
+Representative.build_assoc!(company_user4, 4)
+Representative.build_assoc!(company_user5, 4)
 
 # Create some Categories
 alias Nexpo.Category
@@ -157,6 +223,7 @@ SeedEntries.seed(Repo, CompanyEntry, 100)
 # Create some student-session time slots
 alias Nexpo.StudentSessionTimeSlot
 
+# Company 1
 Repo.insert(%StudentSessionTimeSlot{
   start: ~N[2000-01-01 08:00:00],
   end: ~N[2000-01-01 08:15:00],
@@ -167,60 +234,108 @@ Repo.insert(%StudentSessionTimeSlot{
 Repo.insert(%StudentSessionTimeSlot{
   start: ~N[2000-01-01 08:15:00],
   end: ~N[2000-01-01 08:30:00],
+  location: "Bjerhammar",
+  company_id: 1
+})
+
+# Company 2
+Repo.insert(%StudentSessionTimeSlot{
+  start: ~N[2000-01-01 08:00:00],
+  end: ~N[2000-01-01 08:15:00],
   location: "Albatraoz",
   company_id: 2
 })
 
 Repo.insert(%StudentSessionTimeSlot{
-  start: ~N[2000-01-01 08:30:00],
-  end: ~N[2000-01-01 08:45:00],
+  start: ~N[2000-01-01 08:15:00],
+  end: ~N[2000-01-01 08:30:00],
   location: "Bjerhammar",
   company_id: 2
 })
 
+# Company 3
 Repo.insert(%StudentSessionTimeSlot{
-  start: ~N[2000-01-01 08:45:00],
-  end: ~N[2000-01-01 09:00:00],
-  location: "Chalmers",
-  company_id: 2
+  start: ~N[2000-01-01 08:00:00],
+  end: ~N[2000-01-01 08:15:00],
+  location: "Albatraoz",
+  company_id: 3
+})
+
+Repo.insert(%StudentSessionTimeSlot{
+  start: ~N[2000-01-01 08:15:00],
+  end: ~N[2000-01-01 08:30:00],
+  location: "Bjerhammar",
+  company_id: 3
 })
 
 # Create some student-session applications
 alias Nexpo.StudentSessionApplication
 
+# Student 1
 Repo.insert!(%StudentSessionApplication{
-  motivation: "Im really good",
-  company_id: 1,
-  student_id: 2,
-  score: 1
-})
-
-Repo.insert!(%StudentSessionApplication{
-  motivation: "I love Google!",
-  company_id: 2,
+  motivation: "",
   student_id: 1,
+  company_id: 1,
+  score: 5
+})
+
+Repo.insert!(%StudentSessionApplication{
+  motivation: "",
+  student_id: 1,
+  company_id: 2,
+  score: 4
+})
+
+Repo.insert!(%StudentSessionApplication{
+  motivation: "",
+  student_id: 1,
+  company_id: 3,
+  score: 5
+})
+
+# Student 2
+Repo.insert!(%StudentSessionApplication{
+  motivation: "",
+  student_id: 2,
+  company_id: 1,
+  score: 2
+})
+
+Repo.insert!(%StudentSessionApplication{
+  motivation: "",
+  student_id: 2,
+  company_id: 2,
+  score: 5
+})
+
+Repo.insert!(%StudentSessionApplication{
+  motivation: "",
+  student_id: 2,
+  company_id: 3,
   score: 1
 })
 
+# Student 3
 Repo.insert!(%StudentSessionApplication{
-  motivation: "Im awesome good",
+  motivation: "",
+  student_id: 3,
+  company_id: 1,
+  score: 2
+})
+
+Repo.insert!(%StudentSessionApplication{
+  motivation: "",
+  student_id: 3,
   company_id: 2,
-  student_id: 2,
   score: 3
 })
 
 Repo.insert!(%StudentSessionApplication{
-  motivation: "Im awesome really good",
-  company_id: 4,
-  student_id: 2,
-  score: 3
+  motivation: "",
+  student_id: 3,
+  company_id: 3,
+  score: 4
 })
-
-# Create som student sessions
-# alias Nexpo.StudentSession
-# Repo.insert!(%StudentSession{student_id: 2, student_session_time_slot_id: 1})
-# Repo.insert!(%StudentSession{student_id: 1, student_session_time_slot_id: 2})
-# Repo.insert!(%StudentSession{student_id: 2, student_session_time_slot_id: 3})
 
 # Create some mailtemplates
 alias Nexpo.Mailtemplate

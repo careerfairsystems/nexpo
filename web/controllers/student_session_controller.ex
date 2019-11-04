@@ -4,6 +4,7 @@ defmodule Nexpo.StudentSessionController do
 
   alias Nexpo.Repo
   alias Nexpo.{Student, Company, StudentSession}
+  alias Nexpo.{Email, Mailer}
   alias Nexpo.StudentSessionTimeSlot, as: TimeSlot
   alias Guardian.Plug.{EnsurePermissions}
 
@@ -55,6 +56,7 @@ defmodule Nexpo.StudentSessionController do
 
   def create_bulk(conn, %{}, _user, _claims) do
     Company.get_available()
+    |> Enum.shuffle()
     |> Enum.each(fn company ->
       time_slots = TimeSlot.get_available(company)
       students = Student.get_available(company, time_slots)
@@ -78,6 +80,13 @@ defmodule Nexpo.StudentSessionController do
     end)
 
     student_sessions = Repo.all(StudentSession)
+
+    student_sessions
+    |> Enum.uniq_by(& &1.student_id)
+    |> Repo.preload(student: [:user])
+    |> Enum.map(& &1.student.user)
+    |> Enum.each(&(Email.student_session(&1) |> Mailer.deliver_later()))
+
     render(conn, "index.json", student_sessions: student_sessions)
   end
 
@@ -96,7 +105,7 @@ defmodule Nexpo.StudentSessionController do
     Enum.reduce(students, {[], Enum.shuffle(time_slots)}, fn student, {acc, slots} ->
       case Enum.find_index(slots, fn time_slot -> Student.is_available?(student, time_slot) end) do
         nil ->
-          {[], []}
+          {acc, slots}
 
         index ->
           {time_slot, new_slots} = List.pop_at(slots, index)

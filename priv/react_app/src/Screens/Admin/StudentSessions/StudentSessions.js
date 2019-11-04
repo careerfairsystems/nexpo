@@ -19,14 +19,14 @@ const StudentSessions = ({ createBulkStudentSessions }: Props) => (
     >
       <Button onClick={() => null}>Assign all</Button>
     </Popconfirm>
-    <br />
+    <br /><br />
     <Popconfirm
       title="Sure to delete all non confirmed student sessions?"
       onConfirm={API.studentSessions.deleteNonConfirmed}
     >
       <Button onClick={() => null}>Remove non-confirmed sessions</Button>
     </Popconfirm>
-    <br />
+    <br /><br />
     <Button icon="download" onClick={API.studentSessions.downloadReserves}>
       Download reserves
     </Button>

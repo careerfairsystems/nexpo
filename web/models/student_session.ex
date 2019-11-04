@@ -4,8 +4,6 @@ defmodule Nexpo.StudentSession do
   alias Nexpo.Repo
 
   schema "student_sessions" do
-    field(:start, :naive_datetime)
-    field(:end, :naive_datetime)
     # The different states are (0: not confirmed, 1: confirmed, 2: declined)
     field(:student_session_status, :integer, default: 0)
 
@@ -22,8 +20,6 @@ defmodule Nexpo.StudentSession do
   def changeset(struct, params \\ %{}) do
     struct
     |> cast(params, [
-      :start,
-      :end,
       :student_session_status,
       :company_id,
       :student_id,
