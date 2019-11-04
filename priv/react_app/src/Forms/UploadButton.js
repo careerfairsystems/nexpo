@@ -1,6 +1,6 @@
 import React from 'react';
 import { isEmpty } from 'lodash/fp';
-import { Button, Icon, Upload } from 'antd';
+import { message, Button, Icon, Upload } from 'antd';
 import makeField from './helper';
 
 type Props = {
@@ -15,7 +15,8 @@ const UploadButton = ({ accept = '', value, onChange }: Props) => (
     accept={accept}
     fileList={isEmpty(value) ? [] : [value]}
     beforeUpload={file => {
-      onChange(file);
+      if (file.size < 1e6) onChange(file);
+      else message.warning('Cannot upload files larger than 1MB');
       return false;
     }}
     onRemove={() => onChange(null)}

@@ -23,8 +23,6 @@ defmodule Nexpo.ProfileImage do
 
   # We use this so other file name can't be guessed
   def filename(version, {_, scope}) do
-    IO.inspect(scope)
-
     :crypto.hash(:sha256, "a_very_long_string_#{scope.id}_#{version}")
     |> Base.encode16()
     |> String.downcase()
