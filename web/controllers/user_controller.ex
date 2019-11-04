@@ -192,7 +192,7 @@ defmodule Nexpo.UserController do
   @apiUse BadRequestError
   """
   def forgot_password_init(conn, %{"email" => email}, _user, _claims) do
-    user = Repo.get_by(User, email: email)
+    user = Repo.get_by(User, email: email |> String.downcase())
 
     if user != nil and user.hashed_password != nil do
       user = User.forgot_password_changeset(user) |> Repo.update!()

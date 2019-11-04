@@ -30,6 +30,13 @@ defmodule Nexpo.Email do
     |> render("reset_password.html", user: user)
   end
 
+  def student_session(user) do
+    base_email()
+    |> to(user.email)
+    |> subject("Nexpo | Student Session at ARKAD")
+    |> render("student_session.html", user: user)
+  end
+
   defp base_email do
     new_email()
     |> from("no-reply@arkadtlth.se")
