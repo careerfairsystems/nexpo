@@ -29,7 +29,7 @@ defmodule Nexpo.SessionController do
       {:ok, user} ->
         permissions = User.get_permissions(user)
         perms = %{default: permissions}
-        {_status, jwt, _decoded_jwt} = Guardian.encode_and_sign(user, %{}, perms: perms)
+        {_status, jwt, _decoded_jwt} = Guardian.encode_and_sign(user, %{}, perms: perms, ttl: {72, :hours})
         session = %{jwt: jwt}
 
         conn
