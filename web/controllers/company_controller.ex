@@ -2,7 +2,7 @@ defmodule Nexpo.CompanyController do
   use Nexpo.Web, :controller
   use Guardian.Phoenix.Controller
 
-  alias Nexpo.{Company, ProfileImage, Representative, User}
+  alias Nexpo.{Company, Representative, User}
   alias Nexpo.{Email, Mailer}
   alias Guardian.Plug.{EnsurePermissions}
 
