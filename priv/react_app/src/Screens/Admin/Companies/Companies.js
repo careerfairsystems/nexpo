@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, Button, Popconfirm, Divider } from 'antd';
+import { Icon, Upload, Table, Button, Popconfirm, Divider } from 'antd';
 import { size, sortBy, toLower } from 'lodash/fp';
 
 import { toExternal } from '../../../Util/URLHelper';
@@ -15,7 +15,8 @@ type Props = {
   companies?: {},
   fetching: boolean,
   getAllCompanies: () => Promise<void>,
-  deleteCompany: string => Promise<void>
+  deleteCompany: string => Promise<void>,
+  onChange: (?File) => Promise<void>
 };
 class Companies extends Component<Props> {
   static defaultProps = {
@@ -26,7 +27,6 @@ class Companies extends Component<Props> {
     const { getAllCompanies } = this.props;
     getAllCompanies();
   }
-
   companyColumns = () => [
     {
       title: 'Name',
@@ -82,6 +82,7 @@ class Companies extends Component<Props> {
 
   renderCompanies() {
     const { companies = {} } = this.props;
+    const { onChange } = this.props;
 
     return (
       <div>
@@ -99,11 +100,27 @@ class Companies extends Component<Props> {
             }))
           )}
         />
-        <InvisibleLink to="companies/new">
-          <Button onClick={() => null} type="primary">
-            New company
-          </Button>
-        </InvisibleLink>
+	<div>
+          <InvisibleLink to="companies/new">
+            <Button onClick={() => null} type="primary">
+              New company
+            </Button>
+          </InvisibleLink>
+          <Upload
+            key="uploadButton"
+            accept=".csv"
+            beforeUpload={file => {
+              onChange(file);
+              return false;
+            }}
+          >
+          <Button>
+	    <Icon type="upload" />
+	    Create Bulk
+	  </Button>
+    </Upload>
+
+	</div>
         <br />
         <br />
       </div>
