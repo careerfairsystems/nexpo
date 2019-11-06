@@ -66,6 +66,19 @@ defmodule Nexpo.CompanyController do
     end
   end
 
+  def create_bulk(conn, %{"companies" => companies_params}, _user, _claims) do
+    companies_params
+    |> IO.inspect()
+    |> Enum.map(fn company -> company |> Company.changeset() end)
+    |> IO.inspect()
+    |> Enum.reduce(Ecto.Multi.new(), fn {changeset, index}, multi ->
+      Ecto.Multi.insert(multi, Integer.to_string(index), changeset)
+    end)
+    |> IO.inspect()
+    |> Repo.transaction()
+    |> IO.inspect()
+  end
+
   @apidoc """
   @api {GET} /companies/:id Get company
   @apiGroup Company
