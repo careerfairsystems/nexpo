@@ -79,6 +79,8 @@ defmodule Nexpo.Router do
       resources("/desired_programmes", DesiredProgrammeController)
     end
 
+    post("/companies/create_bulk", CompanyController, :create_bulk)
+
     resources("/industries", IndustryController)
     resources("/job_offers", JobOfferController)
     resources("/interests", InterestController)

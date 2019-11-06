@@ -20,7 +20,7 @@ defmodule Nexpo.CompanyController do
       handler: Nexpo.SessionController,
       one_of: [%{default: ["write_all"]}, %{default: ["write_companies"]}]
     ]
-    when action in [:create, :update, :delete]
+    when action in [:create, :update, :delete, :create_bulk]
   )
 
   @apidoc """
@@ -64,6 +64,19 @@ defmodule Nexpo.CompanyController do
         |> put_status(:unprocessable_entity)
         |> render(Nexpo.ChangesetView, "error.json", changeset: changeset)
     end
+  end
+
+  def create_bulk(conn, %{"companies" => companies_params}, _user, _claims) do
+    companies_params
+    |> IO.inspect()
+    |> Enum.map(fn company -> company |> Company.changeset() end)
+    |> IO.inspect()
+    |> Enum.reduce(Ecto.Multi.new(), fn {changeset, index}, multi ->
+      Ecto.Multi.insert(multi, Integer.to_string(index), changeset)
+    end)
+    |> IO.inspect()
+    |> Repo.transaction()
+    |> IO.inspect()
   end
 
   @apidoc """
