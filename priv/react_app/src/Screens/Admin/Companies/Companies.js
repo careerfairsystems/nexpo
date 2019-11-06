@@ -16,12 +16,28 @@ type Props = {
   fetching: boolean,
   getAllCompanies: () => Promise<void>,
   deleteCompany: string => Promise<void>,
-  onChange: (?File) => Promise<void>
-};
+  };
 class Companies extends Component<Props> {
   static defaultProps = {
     companies: {}
   };
+
+  csvToJSON(text) {
+    var lines = text.split("\n");
+    var result = [];
+    var headers = lines[0].split(",");
+    
+    for(var i=1; i<lines.length-1;i++) {
+      var obj = {};
+      var currentLine = lines[i].split(",");
+      for(var j = 0; j < headers.length;j++) {
+        obj[headers[j]] = currentLine[j];
+      }
+      console.log(obj);
+      result.push(obj);
+    }
+    return JSON.stringify(result);
+  }
 
   componentWillMount() {
     const { getAllCompanies } = this.props;
@@ -109,16 +125,21 @@ class Companies extends Component<Props> {
           <Upload
             key="uploadButton"
             accept=".csv"
+	    showUploadList="false"
             beforeUpload={file => {
-              onChange(file);
-              return false;
+	      const reader = new FileReader();
+	      reader.onload = e => {
+	        this.csvToJSON(e.target.result);
+	      }
+	      reader.readAsText(file);
+	      return false;
             }}
           >
-          <Button>
-	    <Icon type="upload" />
-	    Create Bulk
-	  </Button>
-    </Upload>
+            <Button>
+	      <Icon type="upload" />
+	      Create Bulk
+	    </Button>
+          </Upload>
 
 	</div>
         <br />
