@@ -2,7 +2,7 @@ defmodule Nexpo.UserController do
   use Nexpo.Web, :controller
   use Guardian.Phoenix.Controller
 
-  alias Nexpo.{User, Email, Mailer}
+  alias Nexpo.{User, ProfileImage, Email, Mailer}
   alias Guardian.Plug.{EnsurePermissions}
 
   plug(
@@ -149,6 +149,12 @@ defmodule Nexpo.UserController do
   """
   def update_me(conn, %{"user" => user_params}, user, _claims) do
     changeset = User.changeset(user, user_params)
+
+    Map.keys(user_params)
+    |> Enum.filter(fn k -> k in ["profile_image"] end)
+    |> Enum.each(fn k ->
+      delete_file?(user, user_params, String.to_atom(k))
+    end)
 
     case Repo.update(changeset) do
       {:ok, user} ->
@@ -302,6 +308,25 @@ defmodule Nexpo.UserController do
 
   def forgot_password_verification(conn, _, _, _) do
     conn |> put_status(404) |> render(Nexpo.ErrorView, "404.json")
+  end
+
+  defp delete_file?(model, params, attr) do
+    case Map.get(model, attr) do
+      nil -> nil
+      existing_file -> delete_file!(model, params, attr, existing_file)
+    end
+  end
+
+  defp delete_file!(model, params, attr, file) do
+    case Map.get(params, Atom.to_string(attr)) do
+      nil ->
+        case attr do
+          :profile_image -> ProfileImage.delete({file, model})
+        end
+
+      _ ->
+        nil
+    end
   end
 
   @apidoc

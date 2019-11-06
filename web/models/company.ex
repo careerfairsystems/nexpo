@@ -8,7 +8,7 @@ defmodule Nexpo.Company do
 
   schema "companies" do
     field(:name, :string)
-    field(:logo_url, Nexpo.ProfileImage.Type)
+    field(:logo_url, Nexpo.CompanyLogo.Type)
     field(:description, :string)
     field(:website, :string)
     field(:student_session_days, :integer, default: 0)

@@ -54,6 +54,7 @@ defmodule Nexpo.BlipController do
         |> Map.merge(blip.student.user)
         |> Map.put(:blipped_at, blip.inserted_at)
         |> Map.drop([:user])
+        |> Map.put(:id, blip.student.id)
       end)
 
     render(conn, "index.json", blips: blips)
@@ -157,8 +158,7 @@ defmodule Nexpo.BlipController do
     ])
     |> case do
       blip = %{} ->
-        student =
-          blip
+        blip = blip
           |> Map.merge(blip.student)
           |> Map.merge(blip.student.user)
           |> Map.put(:blipped_at, blip.inserted_at)
@@ -192,9 +192,6 @@ defmodule Nexpo.BlipController do
   @apiUse NotFoundError
   @apiUse BadRequestError
   """
-
-  # Should be protected with guardian so that only company reps can reach
-  # TODO If doesn't exist we should create it.
   def update(conn, %{"id" => student_id} = blip_params, user, _claims) do
     user
     |> get_blip(student_id)
@@ -231,22 +228,15 @@ defmodule Nexpo.BlipController do
     send_resp(conn, :no_content, "")
   end
 
-  def get_reps(conn, _params, user, _claims) do
-    # Currently sends the rep who asked for the värd instead of the värd since we don't have'em
-    rep =
-      user
-      |> Repo.preload(representative: [:user])
-      |> Map.get(:representative)
-
-    render(conn, "rep.json", rep: rep)
-  end
-
-  defp get_blip(user, student_id) do
-    company_id =
-      user
+  defp company_id(user) do
+    user
       |> Repo.preload(:representative)
       |> Map.get(:representative)
       |> Map.get(:company_id)
+  end
+
+  defp get_blip(user, student_id) do
+    company_id = company_id(user)
 
     from(b in Blip,
       where: b.company_id == ^company_id and b.student_id == ^student_id
