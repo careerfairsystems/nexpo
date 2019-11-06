@@ -20,7 +20,7 @@ defmodule Nexpo.CompanyController do
       handler: Nexpo.SessionController,
       one_of: [%{default: ["write_all"]}, %{default: ["write_companies"]}]
     ]
-    when action in [:create, :update, :delete]
+    when action in [:create, :update, :delete, :create_bulk]
   )
 
   @apidoc """
