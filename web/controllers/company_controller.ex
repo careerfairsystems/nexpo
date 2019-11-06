@@ -2,7 +2,8 @@ defmodule Nexpo.CompanyController do
   use Nexpo.Web, :controller
   use Guardian.Phoenix.Controller
 
-  alias Nexpo.{Company, ProfileImage, Representative}
+  alias Nexpo.{Company, ProfileImage, Representative, User}
+  alias Nexpo.{Email, Mailer}
   alias Guardian.Plug.{EnsurePermissions}
 
   plug(
@@ -56,7 +57,6 @@ defmodule Nexpo.CompanyController do
       {:ok, company} ->
         conn
         |> put_status(:created)
-        |> put_resp_header("location", company_path(conn, :show, company))
         |> render("show.json", company: company)
 
       {:error, changeset} ->
@@ -66,17 +66,64 @@ defmodule Nexpo.CompanyController do
     end
   end
 
-  def create_bulk(conn, %{"companies" => companies_params}, _user, _claims) do
-    companies_params
-    |> IO.inspect()
-    |> Enum.map(fn company -> company |> Company.changeset() end)
-    |> IO.inspect()
-    |> Enum.reduce(Ecto.Multi.new(), fn {changeset, index}, multi ->
-      Ecto.Multi.insert(multi, Integer.to_string(index), changeset)
-    end)
-    |> IO.inspect()
-    |> Repo.transaction()
-    |> IO.inspect()
+  def create_bulk(
+        conn,
+        %{"companies" => companies_params, "representatives" => representatives_params},
+        _user,
+        _claims
+      ) do
+    companies_changeset =
+      companies_params |> Enum.map(fn params -> Company.changeset(%Company{}, params) end)
+
+    representatives_changeset =
+      representatives_params
+      |> IO.inspect()
+      |> Enum.map(fn params ->
+        User.initial_signup_changeset(%User{}, params)
+      end)
+      |> IO.inspect()
+
+    case Enum.concat(companies_changeset, representatives_changeset)
+         |> Enum.with_index()
+         |> Enum.reduce(Ecto.Multi.new(), fn {changeset, index}, multi ->
+           Ecto.Multi.insert(multi, Integer.to_string(index), changeset)
+         end)
+         |> Repo.transaction() do
+      {:ok, companies_and_representatives} ->
+        companies =
+          companies_and_representatives
+          |> Map.values()
+          |> Enum.filter(fn
+            %Company{} -> true
+            _ -> false
+          end)
+
+        representatives =
+          companies_and_representatives
+          |> Map.values()
+          |> Enum.filter(fn
+            %User{} -> true
+            _ -> false
+          end)
+
+        representatives_params
+        |> Enum.each(fn params ->
+          user = representatives |> Enum.find(&(&1.email == Map.get(params, "email")))
+          company = companies |> Enum.find(&(&1.name == Map.get(params, "name")))
+
+          user |> Email.pre_signup_representative_email(company) |> Mailer.deliver_later()
+          Representative.build_assoc!(user, company.id)
+        end)
+
+        conn
+        |> put_status(:created)
+        |> render("index.json", companies: companies)
+
+      {:error, _index, changeset, _company} ->
+        conn
+        |> put_status(:unprocessable_entity)
+        |> render(Nexpo.ChangesetView, "error.json", changeset: changeset)
+    end
   end
 
   @apidoc """

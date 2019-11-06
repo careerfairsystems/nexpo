@@ -1,8 +1,9 @@
 /*
-*   This file contains methods to access the /companies resource on the server.
-*/
+ *   This file contains methods to access the /companies resource on the server.
+ */
 
 import {
+  authPost,
   authFormPost,
   authFetch,
   authFormPut,
@@ -25,14 +26,19 @@ export default {
   /**
    * Removes the current company
    */
-  deleteMyCompany: () =>
-    authDelete('/api/me/company').then(handleHttpResponse),
+  deleteMyCompany: () => authDelete('/api/me/company').then(handleHttpResponse),
 
   /**
    * Create a company
    */
   create: (data: {}) =>
     authFormPost('/api/companies', data).then(handleHttpResponse),
+
+  /**
+   * Create multiple companies
+   */
+  createBulk: (data: {}) =>
+    authPost('/api/companies/create_bulk', data).then(handleHttpResponse),
 
   /**
    * Fetches all companies

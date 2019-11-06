@@ -41,3 +41,41 @@ export function createCompany(data: {}) {
       });
   };
 }
+
+export const createCompanyBulkIsLoading = () => ({
+  type: actionTypes.POST_COMPANY_BULK
+});
+
+export const createCompanyBulkSuccess = (company: {}) => {
+  message.success('Company successfully created');
+  return {
+    type: actionTypes.POST_COMPANY_BULK_SUCCESS,
+    company
+  };
+};
+
+export type CreateCompanyBulkFailureAction = {
+  type: string
+};
+export const createCompanyBulkFailure = (): CreateCompanyBulkFailureAction => {
+  message.error('Something went wrong, please try again later');
+  return {
+    type: actionTypes.POST_COMPANY_BULK_FAILURE
+  };
+};
+
+export function createBulk(data: {}) {
+  return (dispatch: Dispatch<{ type: string }>) => {
+    dispatch(createCompanyBulkIsLoading());
+    return API.companies
+      .createBulk(data)
+      .then(companies => {
+        companies.data.forEach(company => {
+          dispatch(createCompanyBulkSuccess(company));
+        });
+      })
+      .catch(() => {
+        dispatch(createCompanyBulkFailure());
+      });
+  };
+}

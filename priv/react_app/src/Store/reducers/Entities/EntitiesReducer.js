@@ -124,7 +124,7 @@ type CurrentUserActions = {
 
 type CurrentUserDelete = {
   type: typeof actionTypes.DELETE_CURRENT_USER_SUCCESS
-}
+};
 
 type CurrentStudentActions = {
   type: typeof actionTypes.PUT_CURRENT_STUDENT_SUCCESS,
@@ -216,6 +216,7 @@ export const EntitiesReducer = (
     }
     case actionTypes.FETCH_COMPANY_SUCCESS:
     case actionTypes.POST_COMPANY_SUCCESS:
+    case actionTypes.POST_COMPANY_BULK_SUCCESS:
     case actionTypes.PUT_COMPANY_SUCCESS: {
       normalized = normalize(action.company, Schema.companySchema());
       return mergeWith(handleMerge, state, normalized.entities);
@@ -250,7 +251,7 @@ export const EntitiesReducer = (
       return { ...state, users: omit([`${action.id}`], state.users) };
     }
     case actionTypes.POST_STUDENT_SESSION_SUCCESS:
-    case actionTypes.DELETE_STUDENT_SESSION_SUCCESS:{
+    case actionTypes.DELETE_STUDENT_SESSION_SUCCESS: {
       normalized = normalize(action.company, Schema.companySchema());
       return mergeWith(handleMerge, state, normalized.entities);
     }
