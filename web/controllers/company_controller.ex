@@ -75,14 +75,16 @@ defmodule Nexpo.CompanyController do
     companies_changeset =
       companies_params
       |> Enum.map(fn params -> Company.changeset(%Company{}, params) end)
-      |> IO.inspect()
 
     representatives_changeset =
       representatives_params
       |> Enum.map(fn params ->
         User.initial_signup_changeset(%User{}, params)
       end)
-      |> IO.inspect()
+
+    Enum.concat(companies_params, representatives_changeset)
+    |> Enum.filter(&(!&1.valid?))
+    |> IO.inspect()
 
     case Enum.concat(companies_changeset, representatives_changeset)
          |> Enum.with_index()
