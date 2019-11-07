@@ -82,7 +82,7 @@ defmodule Nexpo.CompanyController do
         User.initial_signup_changeset(%User{}, params)
       end)
 
-    Enum.concat(companies_params, representatives_changeset)
+    Enum.concat(companies_changeset, representatives_changeset)
     |> Enum.filter(&(!&1.valid?))
     |> IO.inspect()
 
