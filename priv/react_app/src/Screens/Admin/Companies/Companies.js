@@ -85,12 +85,12 @@ class Companies extends Component<Props> {
     const lines = text.split('\n');
     const result = { companies: [], representatives: [] };
     const headers = [
-      'email',
       'name',
       'description',
       'website',
-      'hostName',
+      'email',
       'hostMail',
+      'hostName',
       'hostPhoneNumber'
     ];
 
@@ -98,12 +98,13 @@ class Companies extends Component<Props> {
       const company = {};
       const representative = {};
       const currentLine = lines[i].split(',');
-      for (let j = 0; j < 2; j += 1) {
+
+      [0, 3].forEach(j => {
         representative[headers[j]] = currentLine[j];
-      }
-      for (let j = 1; j < headers.length; j += 1) {
+      });
+      [0, 1, 2, 4, 5, 6].forEach(j => {
         company[headers[j]] = currentLine[j];
-      }
+      });
 
       result.companies.push(company);
       result.representatives.push(representative);
