@@ -73,11 +73,12 @@ defmodule Nexpo.CompanyController do
         _claims
       ) do
     companies_changeset =
-      companies_params |> Enum.map(fn params -> Company.changeset(%Company{}, params) end)
+      companies_params
+      |> Enum.map(fn params -> Company.changeset(%Company{}, params) end)
+      |> IO.inspect()
 
     representatives_changeset =
       representatives_params
-      |> IO.inspect()
       |> Enum.map(fn params ->
         User.initial_signup_changeset(%User{}, params)
       end)
@@ -120,6 +121,8 @@ defmodule Nexpo.CompanyController do
         |> render("index.json", companies: companies)
 
       {:error, _index, changeset, _company} ->
+        changeset |> IO.inspect()
+
         conn
         |> put_status(:unprocessable_entity)
         |> render(Nexpo.ChangesetView, "error.json", changeset: changeset)

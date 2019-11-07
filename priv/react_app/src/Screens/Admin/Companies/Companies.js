@@ -86,7 +86,6 @@ class Companies extends Component<Props> {
     const result = { companies: [], representatives: [] };
     const headers = [
       'name',
-      'description',
       'website',
       'email',
       'hostMail',
@@ -99,12 +98,13 @@ class Companies extends Component<Props> {
       const representative = {};
       const currentLine = lines[i].split(',');
 
-      [0, 3].forEach(j => {
+      [0, 2].forEach(j => {
         representative[headers[j]] = currentLine[j];
       });
-      [0, 1, 2, 4, 5, 6].forEach(j => {
+      [0, 1, 3, 4, 5].forEach(j => {
         company[headers[j]] = currentLine[j];
       });
+      company.description = '.';
 
       result.companies.push(company);
       result.representatives.push(representative);
