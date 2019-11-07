@@ -166,7 +166,7 @@ class Companies extends Component<Props> {
           <p>
             This button expects an .csv file with the following headers:
             <br />
-            email,name,description,website,hostName,hostMail,hostPhoneNumber
+            name,description,website,email,hostName,hostMail,hostPhoneNumber
           </p>
         </div>
       </div>
