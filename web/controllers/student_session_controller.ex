@@ -151,6 +151,12 @@ defmodule Nexpo.StudentSessionController do
     conn |> send_resp(200, reserves)
   end
 
+  defp format_time(naive_date_time) do
+    String.pad_leading(Integer.to_string(naive_date_time.hour), 2, "0") <>
+      ":" <>
+      String.pad_leading(Integer.to_string(naive_date_time.minute), 2, "0")
+  end
+
   def show_all(conn, %{}, _user, _claims) do
     info =
       Company
@@ -163,8 +169,9 @@ defmodule Nexpo.StudentSessionController do
         |> Enum.map(fn session ->
           ~s"""
           #{company.name},\
-          #{session.student_session_time_slot.start},\
-          #{session.student_session_time_slot.start},\
+          #{session.student_session_time_slot.start.day},\
+          #{format_time(session.student_session_time_slot.start)},\
+          #{format_time(session.student_session_time_slot.end)},\
           #{session.student_session_time_slot.location},\
           #{session.student.user.first_name} #{session.student.user.last_name},\
           #{session.student.user.email},\
@@ -178,7 +185,7 @@ defmodule Nexpo.StudentSessionController do
     conn
     |> send_resp(
       200,
-      "company_name,session_start,session_end,session_location,student_name,student_email,student_phone_number\n" <>
+      "company_name,session_day,session_start,session_end,session_location,student_name,student_email,student_phone_number\n" <>
         info
     )
   end
