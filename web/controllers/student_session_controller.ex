@@ -165,6 +165,8 @@ defmodule Nexpo.StudentSessionController do
       |> Repo.preload(student_sessions: [:student_session_time_slot, student: [:user]])
       |> Enum.map(fn company ->
         company.student_sessions
+        # Only show accepted sessions
+        |> Enum.filter(&StudentSession.confirmed?(&1))
         |> Enum.sort_by(& &1.student_session_time_slot.start)
         |> Enum.map(fn session ->
           ~s"""
