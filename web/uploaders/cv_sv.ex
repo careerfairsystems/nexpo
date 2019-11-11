@@ -34,7 +34,22 @@ defmodule Nexpo.CvSv do
 
   # Override the storage directory:
   def storage_dir(_, {_, scope}) do
-    "uploads/students/#{scope.id}/cv/sv"
+    case scope do
+      %Nexpo.User{} ->
+        case Map.get(scope, :student_id) do
+          nil ->
+            "uploads/students/#{scope.student.id}/cv/sv"
+
+          id ->
+            "uploads/students/#{id}/cv/sv"
+        end
+
+      %Nexpo.Student{} ->
+        "uploads/students/#{scope.id}/cv/sv"
+
+      _ ->
+        nil
+    end
   end
 
   # Provide a default URL if there hasn't been a file uploaded
