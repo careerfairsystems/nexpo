@@ -11,7 +11,8 @@ const mapStateToProps = (state: State) => ({
 const mapDispatchToProps = {
   deleteCompany: Actions.companies.deleteCompany,
   getAllCompanies: Actions.companies.getAllCompanies,
-  createBulkStudentSessions: Actions.studentSessions.createBulkStudentSessions
+  createBulkStudentSessions: Actions.studentSessions.createBulkStudentSessions,
+  createBulk: Actions.companies.createBulk
 };
 
 const stateful = connect(

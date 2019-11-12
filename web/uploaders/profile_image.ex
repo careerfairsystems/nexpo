@@ -30,7 +30,22 @@ defmodule Nexpo.ProfileImage do
 
   # Override the storage directory:
   def storage_dir(_, {_, scope}) do
-    "uploads/users/#{scope.id}/image"
+    case scope do
+      %Nexpo.User{} ->
+        "uploads/users/#{scope.id}/image"
+
+      %Nexpo.Student{} ->
+        case Map.get(scope, :user_id) do
+          nil ->
+            "uploads/users/#{scope.user.id}/image"
+
+          id ->
+            "uploads/users/#{id}/image"
+        end
+
+      _ ->
+        nil
+    end
   end
 
   # Provide a default URL if there hasn't been a file uploaded

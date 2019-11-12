@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, Button, Popconfirm, Divider } from 'antd';
+import { Icon, Upload, Table, Button, Popconfirm, Divider } from 'antd';
 import { size, sortBy, toLower } from 'lodash/fp';
 
 import { toExternal } from '../../../Util/URLHelper';
@@ -15,7 +15,8 @@ type Props = {
   companies?: {},
   fetching: boolean,
   getAllCompanies: () => Promise<void>,
-  deleteCompany: string => Promise<void>
+  deleteCompany: string => Promise<void>,
+  createBulk: (data: {}) => Promise<void>
 };
 class Companies extends Component<Props> {
   static defaultProps = {
@@ -80,6 +81,42 @@ class Companies extends Component<Props> {
     }
   ];
 
+  csvToObj = (text: string) => {
+    const lines = text.split('\n');
+    const result = { companies: [], representatives: [] };
+    const headers = [
+      'name',
+      'website',
+      'email',
+      'hostMail',
+      'hostName',
+      'hostPhoneNumber'
+    ];
+
+    for (let i = 1; i < lines.length - 1; i += 1) {
+      const company = {};
+      const representative = {};
+      const currentLine = lines[i].split(',');
+
+      [0, 2].forEach(j => {
+        representative[headers[j]] = currentLine[j];
+      });
+      [0, 1, 3, 4, 5].forEach(j => {
+        company[headers[j]] = currentLine[j];
+      });
+      company.description = '.';
+
+      result.companies.push(company);
+      result.representatives.push(representative);
+    }
+    return result;
+  };
+
+  createBulk = (data: {}) => {
+    const { createBulk } = this.props;
+    createBulk(data);
+  };
+
   renderCompanies() {
     const { companies = {} } = this.props;
 
@@ -99,13 +136,39 @@ class Companies extends Component<Props> {
             }))
           )}
         />
-        <InvisibleLink to="companies/new">
-          <Button onClick={() => null} type="primary">
-            New company
-          </Button>
-        </InvisibleLink>
-        <br />
-        <br />
+        <div>
+          <InvisibleLink to="companies/new">
+            <Button onClick={() => null} type="primary">
+              New company
+            </Button>
+          </InvisibleLink>
+          <br />
+          <br />
+          <Upload
+            key="uploadButton"
+            accept=".csv"
+            showUploadList={false}
+            beforeUpload={file => {
+              const reader = new FileReader();
+              reader.onload = e => {
+                const obj = this.csvToObj(e.target.result);
+                this.createBulk(obj);
+              };
+              reader.readAsText(file);
+              return false;
+            }}
+          >
+            <Button>
+              <Icon type="upload" />
+              Create Multiple Companies
+            </Button>
+          </Upload>
+          <p>
+            This button expects an .csv file with the following headers:
+            <br />
+            name,description,website,email,hostName,hostMail,hostPhoneNumber
+          </p>
+        </div>
       </div>
     );
   }
