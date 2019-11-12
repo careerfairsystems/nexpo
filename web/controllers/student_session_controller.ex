@@ -126,7 +126,6 @@ defmodule Nexpo.StudentSessionController do
   def show_reserves(conn, %{}, _user, _claims) do
     reserves =
       StudentSession.get_reserves()
-      |> IO.inspect()
       |> Enum.map(fn company ->
         reserve =
           company.student_session_applications

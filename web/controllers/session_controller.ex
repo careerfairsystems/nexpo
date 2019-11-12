@@ -29,7 +29,10 @@ defmodule Nexpo.SessionController do
       {:ok, user} ->
         permissions = User.get_permissions(user)
         perms = %{default: permissions}
-        {_status, jwt, _decoded_jwt} = Guardian.encode_and_sign(user, %{}, perms: perms)
+
+        {_status, jwt, _decoded_jwt} =
+          Guardian.encode_and_sign(user, %{}, perms: perms, ttl: {72, :hours})
+
         session = %{jwt: jwt}
 
         conn
@@ -47,24 +50,28 @@ defmodule Nexpo.SessionController do
   @doc """
   Endpoint only available in development
   This allows developers to login as anybody, by only specifying email
+
+  OBS! Only use when run in development mode!
   """
   def development_create(conn, %{"email" => email}) do
-    case Repo.get_by(User, email: email |> String.trim() |> String.downcase()) do
-      nil ->
-        conn
-        |> put_status(404)
-        |> render(Nexpo.ErrorView, "404.json")
+    if Mix.env() == :dev do
+      case Repo.get_by(User, email: email |> String.trim() |> String.downcase()) do
+        nil ->
+          conn
+          |> put_status(404)
+          |> render(Nexpo.ErrorView, "404.json")
 
-      user ->
-        permissions = User.get_permissions(user)
-        perms = %{default: permissions}
-        new_conn = Guardian.Plug.api_sign_in(conn, user, %{}, perms: perms)
-        jwt = Guardian.Plug.current_token(new_conn)
-        session = %{jwt: jwt, user: user}
+        user ->
+          permissions = User.get_permissions(user)
+          perms = %{default: permissions}
+          new_conn = Guardian.Plug.api_sign_in(conn, user, %{}, perms: perms, ttl: {72, :hours})
+          jwt = Guardian.Plug.current_token(new_conn)
+          session = %{jwt: jwt, user: user}
 
-        new_conn
-        |> put_resp_header("authorization", "Bearer #{jwt}")
-        |> render("login.json", session: session)
+          new_conn
+          |> put_resp_header("authorization", "Bearer #{jwt}")
+          |> render("login.json", session: session)
+      end
     end
   end
 
