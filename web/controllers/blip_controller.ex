@@ -44,6 +44,7 @@ defmodule Nexpo.BlipController do
       from(b in Blip,
         where: b.company_id == ^company_id
       )
+      |> order_by(desc: :inserted_at)
       |> Repo.all()
       |> Repo.preload([
         [student: [:interests, :user, :programme]]
@@ -55,7 +56,6 @@ defmodule Nexpo.BlipController do
         |> Map.put(:blipped_at, blip.inserted_at)
         |> Map.drop([:user])
       end)
-      |> order_by(asc: :inserted_at)
 
     render(conn, "index.json", blips: blips)
   end
