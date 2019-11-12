@@ -44,6 +44,7 @@ defmodule Nexpo.BlipController do
       from(b in Blip,
         where: b.company_id == ^company_id
       )
+      |> order_by(desc: :inserted_at)
       |> Repo.all()
       |> Repo.preload([
         [student: [:interests, :user, :programme]]
