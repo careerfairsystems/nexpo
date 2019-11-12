@@ -22,8 +22,6 @@ defmodule Nexpo.SessionController do
   @apiUse UnauthorizedError
   """
   def create(conn, %{"email" => email, "password" => password}) do
-    IO.inspect("CREATE")
-
     case User.authenticate(%{
            email: email |> String.trim() |> String.downcase(),
            password: password
@@ -56,8 +54,6 @@ defmodule Nexpo.SessionController do
   OBS! Only use when run in development mode!
   """
   def development_create(conn, %{"email" => email}) do
-    IO.inspect("DEV CREATE")
-
     if Mix.env() == :dev do
       case Repo.get_by(User, email: email |> String.trim() |> String.downcase()) do
         nil ->
