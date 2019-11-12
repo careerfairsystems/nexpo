@@ -39,15 +39,4 @@ defmodule Nexpo.BlipView do
 
     Nexpo.Support.View.render_object(blip, base)
   end
-
-  def render("rep.json", %{rep: rep}) do
-    base = [
-      :email,
-      :first_name,
-      :last_name,
-      :phone
-    ]
-
-    Nexpo.Support.View.render_object(rep, base)
-  end
 end

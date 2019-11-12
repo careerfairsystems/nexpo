@@ -54,4 +54,8 @@ defmodule Nexpo.StudentSession do
       )
     )
   end
+
+  def unanswered?(session), do: session.student_session_status == 0
+  def confirmed?(session), do: session.student_session_status == 1
+  def declined?(session), do: session.student_session_status == 2
 end

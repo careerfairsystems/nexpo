@@ -16,33 +16,18 @@ type Props = {
   fetching: boolean,
   getAllCompanies: () => Promise<void>,
   deleteCompany: string => Promise<void>,
-  };
+  createBulk: (data: {}) => Promise<void>
+};
 class Companies extends Component<Props> {
   static defaultProps = {
     companies: {}
   };
 
-  csvToJSON(text) {
-    var lines = text.split("\n");
-    var result = [];
-    var headers = lines[0].split(",");
-    
-    for(var i=1; i<lines.length-1;i++) {
-      var obj = {};
-      var currentLine = lines[i].split(",");
-      for(var j = 0; j < headers.length;j++) {
-        obj[headers[j]] = currentLine[j];
-      }
-      console.log(obj);
-      result.push(obj);
-    }
-    return JSON.stringify(result);
-  }
-
   componentWillMount() {
     const { getAllCompanies } = this.props;
     getAllCompanies();
   }
+
   companyColumns = () => [
     {
       title: 'Name',
@@ -96,9 +81,44 @@ class Companies extends Component<Props> {
     }
   ];
 
+  csvToObj = (text: string) => {
+    const lines = text.split('\n');
+    const result = { companies: [], representatives: [] };
+    const headers = [
+      'name',
+      'website',
+      'email',
+      'hostMail',
+      'hostName',
+      'hostPhoneNumber'
+    ];
+
+    for (let i = 1; i < lines.length - 1; i += 1) {
+      const company = {};
+      const representative = {};
+      const currentLine = lines[i].split(',');
+
+      [0, 2].forEach(j => {
+        representative[headers[j]] = currentLine[j];
+      });
+      [0, 1, 3, 4, 5].forEach(j => {
+        company[headers[j]] = currentLine[j];
+      });
+      company.description = '.';
+
+      result.companies.push(company);
+      result.representatives.push(representative);
+    }
+    return result;
+  };
+
+  createBulk = (data: {}) => {
+    const { createBulk } = this.props;
+    createBulk(data);
+  };
+
   renderCompanies() {
     const { companies = {} } = this.props;
-    const { onChange } = this.props;
 
     return (
       <div>
@@ -116,34 +136,39 @@ class Companies extends Component<Props> {
             }))
           )}
         />
-	<div>
+        <div>
           <InvisibleLink to="companies/new">
             <Button onClick={() => null} type="primary">
               New company
             </Button>
           </InvisibleLink>
+          <br />
+          <br />
           <Upload
             key="uploadButton"
             accept=".csv"
-	    showUploadList="false"
+            showUploadList={false}
             beforeUpload={file => {
-	      const reader = new FileReader();
-	      reader.onload = e => {
-	        this.csvToJSON(e.target.result);
-	      }
-	      reader.readAsText(file);
-	      return false;
+              const reader = new FileReader();
+              reader.onload = e => {
+                const obj = this.csvToObj(e.target.result);
+                this.createBulk(obj);
+              };
+              reader.readAsText(file);
+              return false;
             }}
           >
             <Button>
-	      <Icon type="upload" />
-	      Create Bulk
-	    </Button>
+              <Icon type="upload" />
+              Create Multiple Companies
+            </Button>
           </Upload>
-
-	</div>
-        <br />
-        <br />
+          <p>
+            This button expects an .csv file with the following headers:
+            <br />
+            name,description,website,email,hostName,hostMail,hostPhoneNumber
+          </p>
+        </div>
       </div>
     );
   }

@@ -13,7 +13,7 @@ defmodule Nexpo.Factory do
   Create a Company
   """
   def company_factory do
-    {:ok, image} = Nexpo.ProfileImage.Type.load("x.jpg?1234567")
+    {:ok, image} = Nexpo.CompanyLogo.Type.load("x.jpg?1234567")
 
     %Nexpo.Company{
       name: sequence("Generated Company"),

@@ -27,14 +27,42 @@ defmodule Nexpo.CvSv do
   # Override the persisted filenames:
   # We use this so other file name can't be guessed
   def filename(version, {_, scope}) do
-    :crypto.hash(:sha256, "a_very_long_string_#{scope.id}_#{version}")
-    |> Base.encode16()
-    |> String.downcase()
+    case scope do
+      %Nexpo.User{} ->
+        case Map.get(scope, :student_id) do
+          nil ->
+            :crypto.hash(:sha256, "a_very_long_string_#{scope.student.id}_#{version}")
+            |> Base.encode16()
+            |> String.downcase()
+
+          id ->
+            :crypto.hash(:sha256, "a_very_long_string_#{id}_#{version}")
+            |> Base.encode16()
+            |> String.downcase()
+        end
+
+      %Nexpo.Student{} ->
+        :crypto.hash(:sha256, "a_very_long_string_#{scope.id}_#{version}")
+        |> Base.encode16()
+        |> String.downcase()
+    end
   end
 
   # Override the storage directory:
   def storage_dir(_, {_, scope}) do
-    "uploads/students/#{scope.id}/cv/sv"
+    case scope do
+      %Nexpo.User{} ->
+        case Map.get(scope, :student_id) do
+          nil ->
+            "uploads/students/#{scope.student.id}/cv/sv"
+
+          id ->
+            "uploads/students/#{id}/cv/sv"
+        end
+
+      %Nexpo.Student{} ->
+        "uploads/students/#{scope.id}/cv/sv"
+    end
   end
 
   # Provide a default URL if there hasn't been a file uploaded

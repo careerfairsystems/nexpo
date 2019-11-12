@@ -14,7 +14,7 @@ defmodule Nexpo.StudentSessionController do
       handler: Nexpo.SessionController,
       one_of: [%{default: ["read_all"]}, %{default: ["read_sessions"]}]
     ]
-    when action in [:show_reserves]
+    when action in [:show_reserves, :show_all]
   )
 
   plug(
@@ -148,6 +148,47 @@ defmodule Nexpo.StudentSessionController do
       end)
 
     conn |> send_resp(200, reserves)
+  end
+
+  defp format_time(naive_date_time) do
+    String.pad_leading(Integer.to_string(naive_date_time.hour), 2, "0") <>
+      ":" <>
+      String.pad_leading(Integer.to_string(naive_date_time.minute), 2, "0")
+  end
+
+  def show_all(conn, %{}, _user, _claims) do
+    info =
+      Company
+      |> Repo.all()
+      |> Enum.filter(&(&1.student_session_days > 0))
+      |> Repo.preload(student_sessions: [:student_session_time_slot, student: [:user]])
+      |> Enum.map(fn company ->
+        company.student_sessions
+        # Only show accepted sessions
+        |> Enum.filter(&StudentSession.confirmed?(&1))
+        |> Enum.sort_by(& &1.student_session_time_slot.start)
+        |> Enum.map(fn session ->
+          ~s"""
+          #{company.name},\
+          #{session.student_session_time_slot.start.day},\
+          #{format_time(session.student_session_time_slot.start)},\
+          #{format_time(session.student_session_time_slot.end)},\
+          #{session.student_session_time_slot.location},\
+          #{session.student.user.first_name} #{session.student.user.last_name},\
+          #{session.student.user.email},\
+          #{session.student.user.phone_number}\
+          """
+        end)
+        |> Enum.join("\n")
+      end)
+      |> Enum.join("\n\n")
+
+    conn
+    |> send_resp(
+      200,
+      "company_name,session_day,session_start,session_end,session_location,student_name,student_email,student_phone_number\n" <>
+        info
+    )
   end
 
   def delete(conn, %{"id" => id}, _user, _claims) do

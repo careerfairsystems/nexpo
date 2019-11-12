@@ -1,4 +1,4 @@
-defmodule Nexpo.ProfileImage do
+defmodule Nexpo.CompanyLogo do
   use Arc.Definition
   use Arc.Ecto.Definition
 
@@ -11,6 +11,7 @@ defmodule Nexpo.ProfileImage do
   # def bucket do
   #   :custom_bucket_name
   # end
+
   # Whitelist file extensions:
   def validate({file, _}) do
     ~w(.jpg .jpeg .gif .png) |> Enum.member?(Path.extname(file.file_name))
@@ -30,22 +31,7 @@ defmodule Nexpo.ProfileImage do
 
   # Override the storage directory:
   def storage_dir(_, {_, scope}) do
-    case scope do
-      %Nexpo.User{} ->
-        "uploads/users/#{scope.id}/image"
-
-      %Nexpo.Student{} ->
-        case Map.get(scope, :user_id) do
-          nil ->
-            "uploads/users/#{scope.user.id}/image"
-
-          id ->
-            "uploads/users/#{id}/image"
-        end
-
-      _ ->
-        nil
-    end
+    "uploads/companies/#{scope.id}/logo"
   end
 
   # Provide a default URL if there hasn't been a file uploaded

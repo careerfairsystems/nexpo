@@ -8,7 +8,7 @@ defmodule Nexpo.Company do
 
   schema "companies" do
     field(:name, :string)
-    field(:logo_url, Nexpo.ProfileImage.Type)
+    field(:logo_url, Nexpo.CompanyLogo.Type)
     field(:description, :string)
     field(:website, :string)
     field(:student_session_days, :integer, default: 0)
@@ -37,6 +37,7 @@ defmodule Nexpo.Company do
   def changeset(%Company{} = company, params \\ %{}) do
     company
     |> cast(params, [:name, :description, :website, :student_session_days])
+    |> cast(params, [:host_name, :host_mail, :host_phone_number])
     |> cast_attachments(params, [:logo_url])
     |> validate_required([:name, :description, :website])
     |> unique_constraint(:name)

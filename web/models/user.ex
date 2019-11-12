@@ -1,5 +1,6 @@
 defmodule Nexpo.User do
   use Nexpo.Web, :model
+  use Arc.Ecto.Schema
 
   alias Nexpo.Repo
   alias Nexpo.User
@@ -28,6 +29,7 @@ defmodule Nexpo.User do
     struct
     |> cast(params, [:email, :password, :first_name, :last_name])
     |> cast(params, [:food_preferences, :phone_number])
+    |> cast_attachments(params, [:profile_image])
     |> unique_constraint(:email)
     |> validate_length(:password, min: 6)
     |> hash_password(params)

@@ -42,6 +42,10 @@ export default {
   downloadReserves: () =>
     download('/api/student_session_reserves', 'reserves.csv'),
 
+  /** Fetches all reserves for student sessions */
+  downloadSessionInformation: () =>
+    download('/api/student_session_info', 'student_sessions.csv'),
+
   /** Create a student session application */
   createAppl: (data: {}) =>
     authPost('/api/student_session_applications', data).then(

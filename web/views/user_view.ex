@@ -17,8 +17,7 @@ defmodule Nexpo.UserView do
       :first_name,
       :last_name,
       :food_preferences,
-      :phone_number,
-      :profile_image
+      :phone_number
     ]
 
     Nexpo.Support.View.render_object(user, base)

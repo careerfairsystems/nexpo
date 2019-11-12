@@ -1,6 +1,6 @@
 /*
-*   This file contains methods to access the /users resource on the server.
-*/
+ *   This file contains methods to access the /users resource on the server.
+ */
 
 import {
   authPost,
@@ -20,7 +20,7 @@ export default {
   /**
    * Updates the current user
    */
-  updateMe: (data: {}) => authPut('/api/me', data).then(handleHttpResponse),
+  updateMe: (data: {}) => authFormPut('/api/me', data).then(handleHttpResponse),
 
   /**
    * Delete the current user

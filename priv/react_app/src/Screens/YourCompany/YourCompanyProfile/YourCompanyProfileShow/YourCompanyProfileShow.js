@@ -72,7 +72,6 @@ class YourCompanyProfileShow extends Component<Props> {
     return (
       <div className="company-show-view">
         <HtmlTitle title={name} />
-
         <div className="centering">
           <Avatar
             src={logoUrl}
@@ -83,11 +82,12 @@ class YourCompanyProfileShow extends Component<Props> {
           <h1>{name}</h1>
           <a href={toExternal(website)}>{website}</a>
         </div>
-
         <p>
           {name} has student sessions: {this.showStudentSession()}
         </p>
         <p>{description}</p>
+        <br />
+        Press the button below to edit your company information.
         <br />
         <InvisibleLink to="/company/profile/edit">
           <Button onClick={() => null} type="primary">
@@ -95,6 +95,10 @@ class YourCompanyProfileShow extends Component<Props> {
           </Button>
         </InvisibleLink>
         <br />
+        <br />
+        Use the Form below to send a Nexpo invitation to a colleague. They will
+        be able to edit the company, log into the ARKAD app and see all student
+        sessions.
         <br />
         <InviteForm onSubmit={this.invite} />
       </div>
