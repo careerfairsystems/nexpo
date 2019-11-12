@@ -84,7 +84,6 @@ defmodule Nexpo.CompanyController do
 
     Enum.concat(companies_changeset, representatives_changeset)
     |> Enum.filter(&(!&1.valid?))
-    |> IO.inspect()
 
     case Enum.concat(companies_changeset, representatives_changeset)
          |> Enum.with_index()
@@ -123,8 +122,6 @@ defmodule Nexpo.CompanyController do
         |> render("index.json", companies: companies)
 
       {:error, _index, changeset, _company} ->
-        changeset |> IO.inspect()
-
         conn
         |> put_status(:unprocessable_entity)
         |> render(Nexpo.ChangesetView, "error.json", changeset: changeset)
