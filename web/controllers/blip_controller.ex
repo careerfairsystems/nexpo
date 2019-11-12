@@ -55,6 +55,7 @@ defmodule Nexpo.BlipController do
         |> Map.put(:blipped_at, blip.inserted_at)
         |> Map.drop([:user])
       end)
+      |> order_by(asc: :inserted_at)
 
     render(conn, "index.json", blips: blips)
   end
