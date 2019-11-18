@@ -231,12 +231,11 @@ defmodule Nexpo.CompanyController do
         :entries,
         :representatives,
         :desired_programmes,
-        [student_session_applications: [student: [:user, :programme, :interests]]],
-        [student_sessions: [student: :user]],
-        [
-          student_session_time_slots: [
-            student_session: [student: [:user]]
-          ]
+        blips: [:student],
+        student_sessions: [student: :user],
+        student_session_applications: [student: [:user, :programme, :interests]],
+        student_session_time_slots: [
+          student_session: [student: [:user]]
         ]
       ])
 
@@ -256,9 +255,12 @@ defmodule Nexpo.CompanyController do
         :entries,
         :representatives,
         :desired_programmes,
-        [student_sessions: [student: :user]],
-        [student_session_applications: [student: :user]],
-        :student_session_time_slots
+        blips: [:student],
+        student_sessions: [student: :user],
+        student_session_applications: [student: [:user, :programme, :interests]],
+        student_session_time_slots: [
+          student_session: [student: [:user]]
+        ]
       ])
 
     # We need to set "null" to nil, since FormData can't send null values
