@@ -12,7 +12,8 @@ describe('companies', () => {
       fetching: false,
       getAllCompanies: jest.fn(),
       deleteCompany: jest.fn(),
-      createBulkStudentSessions: jest.fn()
+      createBulkStudentSessions: jest.fn(),
+      createBulk: jest.fn()
     };
   });
 
