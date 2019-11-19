@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
-import { Actions, Selectors } from '../../../Store';
-import YourCompanyTimeSlots from './YourCompanyTimeSlots';
 import type { State } from '../../../Store/reducers/index';
+import YourCompanyScans from './YourCompanyScans';
+import { Selectors, Actions } from '../../../Store';
 
 const mapStateToProps = (state: State) => ({
   currentCompany: Selectors.companies.getCurrentCompany(state),
@@ -17,4 +17,4 @@ const stateful = connect(
   mapDispatchToProps
 );
 
-export default stateful(YourCompanyTimeSlots);
+export default stateful(YourCompanyScans);

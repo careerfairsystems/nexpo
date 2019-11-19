@@ -30,6 +30,7 @@ import {
 } from '../Screens/YourCompany/YourCompanyProfile';
 import YourCompanyApplications from '../Screens/YourCompany/YourCompanyApplications';
 import YourCompanyTimeSlots from '../Screens/YourCompany/YourCompanyTimeSlots';
+import YourCompanyScans from '../Screens/YourCompany/YourCompanyScans';
 import SessionHome from '../Screens/Session/SessionHome';
 import SessionApplication from '../Screens/Session/SessionApplication';
 import SessionApplications from '../Screens/Session/SessionApplications';
@@ -89,7 +90,8 @@ const privateRoutes: Array<RouteItem> = [
   { path: '/company/profile', component: YourCompanyProfileShow },
   { path: '/company/profile/edit', component: YourCompanyProfileEdit },
   { path: '/company/applications', component: YourCompanyApplications },
-  { path: '/company/timeslots', component: YourCompanyTimeSlots }
+  { path: '/company/timeslots', component: YourCompanyTimeSlots },
+  { path: '/company/scans', component: YourCompanyScans }
 ];
 
 const routes = (
@@ -302,6 +304,10 @@ class App extends Component<Props> {
                   this.restrictedMenuItem({
                     route: 'company/timeslots',
                     title: 'Time Slots'
+                  }),
+                  this.restrictedMenuItem({
+                    route: 'company/scans',
+                    title: 'Student Scans'
                   })
                 ]
               })}

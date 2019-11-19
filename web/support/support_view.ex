@@ -54,6 +54,9 @@ defmodule Nexpo.Support.View do
       :roles ->
         %{:roles => render_many(object.roles, Nexpo.RoleView, "role.json")}
 
+      :blips ->
+        %{:blips => render_many(object.blips, Nexpo.BlipView, "blip.json")}
+
       :user ->
         %{:user => render_one(object.user, Nexpo.UserView, "user.json")}
 

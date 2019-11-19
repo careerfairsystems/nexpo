@@ -410,11 +410,10 @@ Repo.insert(%Interest{id: 5, name: "Thesis"})
 Repo.insert(%Interest{id: 6, name: "Trainee employment"})
 Repo.insert(%Interest{id: 7, name: "Full-time job"})
 
-
 # Create some blips
 
 alias Nexpo.Blip
 
-Repo.insert(%Blip{company_id: 1, student_id: 1})
-Repo.insert(%Blip{company_id: 1, student_id: 2})
-Repo.insert(%Blip{company_id: 1, student_id: 3})
+Repo.insert(%Blip{comment: "Cool boi", rating: 3, company_id: 1, student_id: 1})
+Repo.insert(%Blip{comment: "Cool gril", rating: 1, company_id: 1, student_id: 2})
+Repo.insert(%Blip{comment: "who dis?", rating: 4, company_id: 1, student_id: 3})
