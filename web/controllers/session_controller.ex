@@ -54,7 +54,7 @@ defmodule Nexpo.SessionController do
   OBS! Only use when run in development mode!
   """
   def development_create(conn, %{"email" => email}) do
-    if Mix.env() == :dev do
+    if Mix.env() != :prod do
       case Repo.get_by(User, email: email |> String.trim() |> String.downcase()) do
         nil ->
           conn
@@ -72,6 +72,10 @@ defmodule Nexpo.SessionController do
           |> put_resp_header("authorization", "Bearer #{jwt}")
           |> render("login.json", session: session)
       end
+    else
+      conn
+      |> put_status(401)
+      |> render(Nexpo.ErrorView, "401.json")
     end
   end
 
