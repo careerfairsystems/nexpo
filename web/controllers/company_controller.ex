@@ -231,7 +231,7 @@ defmodule Nexpo.CompanyController do
         :entries,
         :representatives,
         :desired_programmes,
-        blips: [:student],
+        blips: [student: [:user, :interests]],
         student_sessions: [student: :user],
         student_session_applications: [student: [:user, :programme, :interests]],
         student_session_time_slots: [
@@ -255,7 +255,7 @@ defmodule Nexpo.CompanyController do
         :entries,
         :representatives,
         :desired_programmes,
-        blips: [:student],
+        blips: [student: [:user, :interests]],
         student_sessions: [student: :user],
         student_session_applications: [student: [:user, :programme, :interests]],
         student_session_time_slots: [

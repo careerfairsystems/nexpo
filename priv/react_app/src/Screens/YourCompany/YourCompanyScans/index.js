@@ -4,7 +4,8 @@ import YourCompanyScans from './YourCompanyScans';
 import { Selectors, Actions } from '../../../Store';
 
 const mapStateToProps = (state: State) => ({
-  currentCompany: Selectors.companies.getCurrentCompany(state)
+  currentCompany: Selectors.companies.getCurrentCompany(state),
+  fetching: state.api.currentCompany.fetching
 });
 
 const mapDispatchToProps = {

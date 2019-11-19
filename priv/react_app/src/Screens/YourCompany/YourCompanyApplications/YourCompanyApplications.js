@@ -107,7 +107,7 @@ class YourCompanyApplications extends Component<Props> {
               ? application.student.interests.map(i => i.name).join(', ')
               : 'Not set'
           }`
-        ].join('\t|\t')}
+        ].join('   |   ')}
       />
       {application.motivation}
     </List.Item>
