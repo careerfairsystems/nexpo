@@ -11,6 +11,7 @@ type User = {
 };
 
 type Programme = {
+  code: string,
   name: string
 };
 
@@ -50,6 +51,36 @@ class YourCompanyScans extends Component<Props> {
     const { getCurrentCompany } = this.props;
     getCurrentCompany();
   }
+
+  blipToCsv = (blip: Blip) => {
+    const { email } = blip.student.user;
+    const name = `${blip.student.user.firstName} ${blip.student.user.lastName}`;
+    const year = blip.student.year ? blip.student.year : 'Not set';
+    const programme = blip.student.programme
+      ? blip.student.programme.name
+      : 'Not set';
+    const interests = blip.student.interests.map(i => i.name).join('. ');
+    const rating = blip.rating ? blip.rating : 0;
+    const comment = blip.comment ? blip.comment : '';
+
+    return `${email},${name},${year},${programme},${interests},${rating},${comment}`;
+  };
+
+  exportBlips = () => {
+    const { currentCompany } = this.props;
+
+    const data = [
+      'Email,Name,Graduation year,Programme,Interests,Rating,Comment',
+      ...currentCompany.blips.map(this.blipToCsv)
+    ].join('\n');
+
+    const blob = new Blob([data]);
+    const url = URL.createObjectURL(blob);
+    const element = document.createElement('a');
+    element.href = url;
+    element.download = 'exported_scans.csv';
+    element.click();
+  };
 
   renderBlip = (blip: Blip) => (
     <List.Item
@@ -107,13 +138,22 @@ class YourCompanyScans extends Component<Props> {
           >
             <h2>Student Scans</h2>
           </div>
-          <Button icon="download" style={{ float: 'left' }} onClick={() => {}}>
+          <Button
+            icon="download"
+            style={{ float: 'left' }}
+            onClick={this.exportBlips}
+          >
             Export Scans
           </Button>
         </div>
         <p>
           The exported data will be on <i>.csv</i> (Comma Seperated Values)
           format. This can be read by programs such as Excel.
+        </p>
+        <br />
+        <p>
+          For every student their email, name, graduation year, programme and
+          interests along with your rating and comment will be exported.
         </p>
         <hr />
         <List
