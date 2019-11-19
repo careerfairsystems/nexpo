@@ -55,10 +55,8 @@ class YourCompanyScans extends Component<Props> {
   blipToCsv = (blip: Blip) => {
     const { email } = blip.student.user;
     const name = `${blip.student.user.firstName} ${blip.student.user.lastName}`;
-    const year = blip.student.year ? blip.student.year : 'Not set';
-    const programme = blip.student.programme
-      ? blip.student.programme.name
-      : 'Not set';
+    const year = blip.student.year ? blip.student.year : '';
+    const programme = blip.student.programme ? blip.student.programme.name : '';
     const interests = blip.student.interests.map(i => i.name).join('. ');
     const rating = blip.rating ? blip.rating : 0;
     const comment = blip.comment ? blip.comment : '';
@@ -119,7 +117,7 @@ class YourCompanyScans extends Component<Props> {
           }`
         ].join('   |   ')}
       />
-      Comment: {blip.comment}
+      {blip.comment ? `Comment: ${blip.comment}` : 'No comment'}
     </List.Item>
   );
 
